@@ -1,0 +1,312 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Add trees to the terrain</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<meta property="relative-path-to-manual" content="">
+<meta property="version-switcher-versions-with-this-page" content="Versions with this page:">
+<meta property="version-switcher-versions-without-this-page" content="Versions without this page:">
+<meta property="version-switcher-supported" content="Supported">
+<meta property="version-switcher-legacy" content="Legacy">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/Manual/terrain-Trees.html">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20260626"></script><script type="text/javascript" src="docdata/toc.js?ts=20260626"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20260626"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20260626">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20260626">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/terrain-Trees.html">English</a></li>
+<li><a href="/cn/current/Manual/terrain-Trees.html">中文</a></li>
+<li><a href="/ja/current/Manual/terrain-Trees.html">日本語</a></li>
+<li><a href="/kr/current/Manual/terrain-Trees.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: Unity 6.7 Beta</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/terrain-Trees.html">English</a></li>
+<li><a href="/cn/current/Manual/terrain-Trees.html">中文</a></li>
+<li><a href="/ja/current/Manual/terrain-Trees.html">日本語</a></li>
+<li><a href="/kr/current/Manual/terrain-Trees.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="CreatingEnvironments.html">World building</a></li>
+<li><a href="script-Terrain.html">Terrain</a></li>
+<li><a href="terrain-Trees-Landing.html">Trees</a></li>
+<li>Add trees to the terrain</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="terrain-Tree-Colliders.html"></a></span><div class="tip">Add collision to trees</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="terrain-trees-wind-zones.html"></a></span><div class="tip">Animate trees with Wind Zones</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Add trees to the terrain</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Use the Paint Trees tool to place trees on the <span class="tooltip" tabindex="0" ><strong>terrain</strong><span class="tooltiptext">The landscape in your scene. A Terrain GameObject adds a large flat plane to your scene and you can use the Terrain’s Inspector window to create a detailed landscape. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about terrain-UsingTerrains.html" href="terrain-UsingTerrains.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Terrain" aria-label="Go to glossary anchor for Terrain">Glossary</a></span></span></span> and customize their painting. You can paint trees with a brush or mass place trees across the entire terrain tile.</p>
+<div class="res-examples" style="background-color: #f2dede; font-size: 14px;">
+<p style="margin: 0; font-size: 14px;">
+<strong style="font-size: 14px;">Important</strong>: The Built-In Render Pipeline is deprecated and will be made obsolete in a future release.<br>It remains supported, including bug fixes and maintenance, through the full Unity 6.7 LTS lifecycle.<br>For more information on migration, refer to <a href="urp/upgrading-from-birp.html">Migrating from the Built-In Render Pipeline to the Universal Render Pipeline</a> and <a href="render-pipelines-feature-comparison.html">Render pipeline feature comparison</a>.</p>
+</div>
+<div class="clear"></div>
+
+<p>As an example, use the <a href="https://assetstore.unity.com/packages/3d/environments/unity-terrain-hdrp-demo-scene-213198">free Unity Terrain - HDRP Demo Scene</a>, which has six SpeedTree models. You can also create trees with the <a href="class-Tree.html">Tree Editor</a> (for the Built-In Render Pipeline).</p>
+
+<h2>The Paint Trees tool</h2>
+
+<p>To access tree painting:</p>
+
+<ol>
+<li>In the <strong>Hierarchy</strong> window, select the terrain.</li>
+<li>In the terrain’s <strong><span class="tooltip" tabindex="0" ><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheInspector.html" href="UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span></strong> window, from the <strong>Terrain</strong> <span class="tooltip" tabindex="0" ><strong>toolbar</strong><span class="tooltiptext">A row of buttons and basic controls at the top of the Unity Editor that allows you to interact with the Editor in various ways (e.g. scaling, translation). <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Toolbar.html" href="Toolbar.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#toolbar" aria-label="Go to glossary anchor for toolbar">Glossary</a></span></span></span>, select <strong>Paint Trees</strong>.</li>
+</ol>
+
+<h3>Select trees</h3>
+
+<p>To add trees to the terrain, add a tree prototype to the Paint Tree tool:</p>
+
+<ol>
+<li>Select <strong>Edit Trees</strong> &gt; <strong>Add Tree</strong>.</li>
+<li>Select a tree.</li>
+</ol>
+
+<p>The <strong>Add Tree</strong> window has different options based on the tree you’re adding:</p>
+
+<ul>
+<li><p>
+<strong>Bend Factor</strong>: Adjust the tree’s responsiveness to the wind in the <span class="tooltip" tabindex="0" ><strong>scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html" href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span>. Trees from the SpeedTree Modeler don’t have a <strong>Bend Factor</strong>; only Tree Editor trees do. Refer to <a href="class-WindZone.html">Animate trees with Wind Zones</a> for more information.</p></li>
+<li>
+<strong><span class="tooltip" tabindex="0" ><strong>NavMesh</strong><span class="tooltiptext">A mesh that Unity generates to approximate the walkable areas and obstacles in your environment for path finding and AI-controlled navigation. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about https://docs.unity3d.com/Packages/com.unity.ai.navigation@latest/index.html?subfolder=/manual/NavInnerWorkings.html%23walkable-areas" href="https://docs.unity3d.com/Packages/com.unity.ai.navigation@latest/index.html?subfolder=/manual/NavInnerWorkings.html%23walkable-areas">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#NavMesh" aria-label="Go to glossary anchor for NavMesh">Glossary</a></span></span></span> <span class="tooltip" tabindex="0" ><strong>LOD</strong><span class="tooltiptext">The <em>Level Of Detail</em> (LOD) technique is an optimization that reduces the number of triangles that Unity has to render for a GameObject when its distance from the Camera increases. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about LevelOfDetail.html" href="LevelOfDetail.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#LOD" aria-label="Go to glossary anchor for LOD">Glossary</a></span></span></span> Index</strong>: SpeedTree uses level of detail (LOD) groups. The Unity Editor manages the transitions between groups, but if you’re placing trees that are never going to be near the <span class="tooltip" tabindex="0" ><strong>camera</strong><span class="tooltiptext">A component which creates an image of a particular viewpoint in your scene. The output is either drawn to the screen or captured as a texture. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CamerasOverview.html" href="CamerasOverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Camera" aria-label="Go to glossary anchor for Camera">Glossary</a></span></span></span>, or if you need to limit the display quality of trees without editing the model, you can select a specific <span class="tooltip" tabindex="0" ><strong>LOD group</strong><span class="tooltiptext">A component to manage level of detail (LOD) for GameObjects. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-LODGroup.html" href="class-LODGroup.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#LODGroup" aria-label="Go to glossary anchor for LODGroup">Glossary</a></span></span></span>. The options are:
+
+<ul>
+<li>
+<strong>First</strong>: The highest LOD, for trees that are close to the player.</li>
+<li>
+<strong>Last</strong>: The lowest LOD, for trees that are far away from the player.</li>
+<li>
+<strong>Custom</strong>: To select a different level.</li>
+</ul>
+
+<p>Refer to <a href="terrain-Tree-LOD.html">Tree level of detail (LOD)</a> for more information.</p>
+</li>
+<li><p>
+<strong>Cast Shadows</strong>: For Tree Editor trees. This is not editable; it lists the option selected in the tree’s <strong>Mesh Renderer</strong> &gt; <strong>Lighting</strong> &gt; <strong>Cast Shadows</strong> setting.</p></li>
+</ul>
+
+<h3>Customize trees for painting</h3>
+
+<p>Customize tree placement and characteristics. Except for <strong>Brush Size</strong> and <strong>Tree Density</strong>, the settings apply to both mass placed trees and brush painted trees.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Property</strong></th>
+	<th style="text-align:left;"><strong>Function</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Brush Size</strong></td>
+	<td style="text-align:left;">The size of the area each brush stroke covers with trees.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Tree Density</strong></td>
+	<td style="text-align:left;">How far apart trees must be. This limits the number of trees a single brush stroke adds. Note that the limit is by brush stroke, not area, so repeated brush strokes in the same area create higher densities. Note also that the larger the brush, the farther apart the trees, even if the density is 100.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Tree Height</strong></td>
+	<td style="text-align:left;">A range for tree height randomization. Use a wide range for a varied look, and a narrow range for a uniform look. To specify a value instead of a range, disable <strong>Random</strong>. The possible values are a scale of <code>0.01</code> to <code>2</code> of the tree’s original height.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Lock Width to Height</strong></td>
+	<td style="text-align:left;">By default, a tree’s width is locked to its height so that trees are always scaled uniformly. To specify a width, disable <strong>Lock Width to Height</strong>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Tree Width</strong></td>
+	<td style="text-align:left;">A range for tree width randomization. Use a wide range for a varied look, and a narrow range for a uniform look. To specify a value instead of a range, disable <strong>Random</strong>. The possible values are a scale of <code>0.01</code> to <code>2</code> of the tree’s original width.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Random Tree Rotation</strong></td>
+	<td style="text-align:left;">If your tree has a level of detail (LOD) Group (for example, a tree imported from SpeedTree), use the <strong>Random Tree Rotation</strong> setting to help create the impression of a random, natural-looking forest. Disable this option if you want to place trees with a fixed rotation.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Color Variation</strong></td>
+	<td style="text-align:left;">The amount of random shading applied to trees. This works only if the <span class="tooltip" tabindex="0" ><strong>shader</strong><span class="tooltiptext">A program that runs on the GPU. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Shaders.html" href="Shaders.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#shader" aria-label="Go to glossary anchor for shader">Glossary</a></span></span></span> reads the <code>_TreeInstanceColor</code> property. All trees created with Tree Editor read the <code>_TreeInstanceColor</code> property, because they all use built-in shaders. Some SpeedTree trees might not read it.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Tree Contribute Global Illumination</strong></td>
+	<td style="text-align:left;">Non-editable; indicates whether the tree asset’s <strong>Lighting</strong> &gt; <strong>Contribute Global Illumination</strong> option is enabled.</td>
+</tr>
+</tbody>
+</table>
+
+<h3>Mass place trees</h3>
+
+<p>You can place trees across the entire terrain tile in a single action. Refer to Customize trees for painting (above) for information about customizing trees before painting.</p>
+
+<p>To place trees on an entire terrain tile:</p>
+
+<ol>
+<li>Select tree assets as explained above. Note that mass placing uses all the trees in the <strong>Trees</strong> list, not just the highlighted tree.</li>
+<li>Select <strong>Mass Place Trees</strong>. The <strong>Place Trees</strong> window opens.</li>
+<li>Enter the number of trees you want to place.</li>
+<li>To keep the trees you already have, check the <strong>Keep Existing Trees</strong> box. If you don’t check this box, Unity removes all existing trees and replaces them with the new trees.</li>
+</ol>
+
+<p>You can use the brush tools to add or remove trees that you mass placed.</p>
+
+<h3>Paint trees with a brush</h3>
+
+<p>You can paint trees onto the terrain with a brush. </p>
+
+<p>To paint trees:</p>
+
+<ol>
+<li>Select trees as explained above.</li>
+<li>Refer to Customize trees for painting (above) for information about the brush settings and customizing trees for painting.</li>
+<li>Paint trees on the terrain using the brush.</li>
+<li>To remove:
+
+<ul>
+<li>All trees from an area: hold <strong>Shift</strong> as you paint.</li>
+<li>Only the tree selected in the <strong>Trees</strong> list: hold <strong>Ctrl</strong> as you paint.</li>
+</ul>
+</li>
+</ol>
+
+<h2>Edit trees</h2>
+
+<p>You can edit the tree’s properties before you place it, or between painting strokes. For example, for SpeedTree trees, you can change the LOD group you use when painting different parts of the terrain. </p>
+
+<p>To edit a tree:</p>
+
+<ol>
+<li>In the <strong>Trees</strong> list, select the tree you want to edit.</li>
+<li>Select <strong>Edit Trees</strong> &gt; <strong>Edit Tree</strong>. The <strong>Edit Tree</strong> window opens. It has the same options as the <strong>Add Tree</strong> window.</li>
+</ol>
+
+<h2>Update imported trees</h2>
+
+<p>If you change an imported tree in a separate 3D modeling application, you need to refresh the tree in the Paint Tool to update its appearance on the terrain.</p>
+
+<p>To update the trees, in the Terrain tile’s <strong>Inspector</strong> window, go to <strong>Paint Trees</strong> &gt; <strong>Trees</strong> &gt; <strong>Refresh</strong>.</p>
+
+<p>
+<strong>Note:</strong> Trees from SpeedTree use their own shader to animate wind movement. The Unity Editor adds this shader only to trees that SpeedTree exports with the file type <code>spm</code> or <code>st8</code>. If you edit the trees using a different 3D modeling software and export them as <code>fbx</code> or <code>obj</code> files, the Unity Editor assigns them built-in shaders, and the wind effect is lost. To preserve the wind animation, always use SpeedTree to edit and re-export SpeedTree trees.</p>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="class-Tree.html">Create trees with Tree Editor</a></li>
+<li><a href="terrain-Tree-Colliders.html">Add collision to trees</a></li>
+<li><a href="terrain-Tree-LOD.html">Tree level of detail (LOD)</a></li>
+<li><a href="class-WindZone.html">Animate trees with Wind Zones</a></li>
+<li><a href="terrain-OtherSettings.html">Terrain Settings reference</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="terrain-Tree-Colliders.html"></a></span><div class="tip">Add collision to trees</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="terrain-trees-wind-zones.html"></a></span><div class="tip">Animate trees with Wind Zones</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

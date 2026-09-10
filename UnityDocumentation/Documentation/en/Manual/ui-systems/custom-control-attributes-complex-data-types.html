@@ -1,0 +1,299 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Define custom control attributes for complex data types</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<meta property="relative-path-to-manual" content="../">
+<meta property="version-switcher-versions-with-this-page" content="Versions with this page:">
+<meta property="version-switcher-versions-without-this-page" content="Versions without this page:">
+<meta property="version-switcher-supported" content="Supported">
+<meta property="version-switcher-legacy" content="Legacy">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/Manual/ui-systems/custom-control-attributes-complex-data-types.html">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../../StaticFilesManual/js/jquery.js?ts=20260626"></script><script type="text/javascript" src="../../StaticFilesManual/js/core.js?ts=20260626"></script><script type="text/javascript" src="../../StaticFilesManual/js/image-comp.js?ts=20260626"></script><script type="text/javascript" src="../docdata/toc.js?ts=20260626"></script><script type="text/javascript" src="../docdata/global_toc.js?ts=20260626"></script><link rel="stylesheet" type="text/css" href="../../StaticFilesManual/css/core.css?ts=20260626">
+<link rel="stylesheet" type="text/css" href="../../StaticFilesManual/css/icons.css?ts=20260626">
+<link rel="stylesheet" href="../../StaticFilesManual/css/prism.css">
+<script src="../../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="../30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../index.html" class="selected">Manual</a></li>
+<li><a href="../../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/ui-systems/custom-control-attributes-complex-data-types.html">English</a></li>
+<li><a href="/cn/current/Manual/ui-systems/custom-control-attributes-complex-data-types.html">中文</a></li>
+<li><a href="/ja/current/Manual/ui-systems/custom-control-attributes-complex-data-types.html">日本語</a></li>
+<li><a href="/kr/current/Manual/ui-systems/custom-control-attributes-complex-data-types.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: Unity 6.7 Beta</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/ui-systems/custom-control-attributes-complex-data-types.html">English</a></li>
+<li><a href="/cn/current/Manual/ui-systems/custom-control-attributes-complex-data-types.html">中文</a></li>
+<li><a href="/ja/current/Manual/ui-systems/custom-control-attributes-complex-data-types.html">日本語</a></li>
+<li><a href="/kr/current/Manual/ui-systems/custom-control-attributes-complex-data-types.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="../UIToolkits.html">UI systems</a></li>
+<li><a href="../UIElements.html">UI Toolkit</a></li>
+<li><a href="../UIE-structure-ui.html">Structure UI</a></li>
+<li><a href="../UIE-custom-controls.html">Custom controls</a></li>
+<li>Define custom control attributes for complex data types</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="../ui-systems/custom-control-attributes-built-in-types.html"></a></span><div class="tip">Define UXML attributes for built-in types</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="../ui-systems/custom-control-customize-uxml-attributes.html"></a></span><div class="tip">Customize UXML attributes</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Define custom control attributes for complex data types</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>You can use attribute converters and UxmlObject to support complex data types attributes for your custom controls.</p>
+
+<h2>Attribute converters</h2>
+
+<p>
+<a href="../../ScriptReference/UIElements.UxmlAttributeConverter_1.html">Attribute converters</a> convert a <a href="../../ScriptReference/UIElements.UxmlAttributeAttribute.html">UxmlAttribute</a> type to and from a string. It provides a set of <a href="../../ScriptReference/UIElements.UxmlAttributeConverter_1.html">built-in converters</a> for common types, such as <code>int</code>, <code>float</code>, <code>bool</code>, <code>string</code>, and <code>Vector2</code>. For complex data types, such as lists or custom classes, you need to create custom converters.</p>
+
+<p>The following C# code example creates a custom class called <code>Person</code> and a custom control class called <code>Department</code>. The <code>Department</code> class contains a <code>Person</code> field for the manager and a list of <code>Person</code> objects for the employees.</p>
+
+<pre><code class="lang-cs">using System;
+using System.Collections.Generic;
+using UnityEngine.UIElements;
+
+namespace AttributeConverterExample
+{
+    [Serializable]
+    public class Person
+    {
+        public string name;
+        public int age;
+        public string nationality;
+    }
+
+    [UxmlElement]
+    public partial class Department : VisualElement
+    {
+        [UxmlAttribute]
+        public Person manager;
+
+        [UxmlAttribute]
+        public List&lt;Person&gt; employees;
+    }
+}
+</code></pre>
+
+<p>If you edit the custom control in UI Builder, you get the following error message:</p>
+
+<pre><code class="lang-plain">[UxmlElement] 'Department' has a [UxmlAttribute] 'manager' of an unknown type 'Person'. To fix this error, define a custom UxmlAttributeConverter&lt;Person&gt;.
+</code></pre>
+
+<p>To address this, create an attribute converter for the <code>Person</code> class that inherits from <code>UxmlAttributeConverter&lt;Person&gt;</code> and implements the <code>ToString</code> and <code>FromString</code> methods to convert the <code>Person</code> object to and from a string. The following example creates a converter for the <code>Person</code> class:</p>
+
+<pre><code class="lang-cs">
+using UnityEditor.UIElements;
+
+namespace AttributeConverterExample
+{
+    public class PersonConverter : UxmlAttributeConverter&lt;Person&gt;
+    {
+        const char k_Separator = ':';
+
+        public override string ToString(Person value)
+        {
+            return $&quot;{value.name}{k_Separator}{value.age}{k_Separator}{value.nationality}&quot;;
+        }
+
+        public override Person FromString(string value)
+        {
+            var person = new Person();
+            var split = value.Split(k_Separator);
+            if (split.Length == 3)
+            {
+                person.name = split[0];
+                person.age = int.Parse(split[1]);
+                person.nationality = split[2];
+            }
+            return person;
+        }
+    }
+}
+</code></pre>
+
+<p>The converter combines the three values into a single string format, with the pattern of <code>[name]:[age]:[nationality]</code>. The <code>FromString</code> method splits the string into the three values and assigns them to the <code>Person</code> object.</p>
+
+<p>The following shows an example usage of the <code>Department</code> element in a UXML file:</p>
+
+<pre><code class="lang-xml">&lt;ui:UXML xmlns:ui=&quot;UnityEngine.UIElements&quot;&gt;
+    &lt;AttributeConverterExample.Department name=&quot;Dunder Mifflin&quot; manager=&quot;Michael Scott:58:USA&quot; employees=&quot;Dwight Schrute:53:USA,Jim Halpert:44:USA&quot; /&gt;
+&lt;/ui:UXML&gt;
+</code></pre>
+
+<h2>UxmlObjects</h2>
+
+<p>When using attribute converters, as data types become more intricate or when dealing with extensive lists, the generated strings can quickly grow convoluted and unwieldy. To simplify this, you can use <code>UxmlObjects</code>.</p>
+
+<p>
+<a href="../../ScriptReference/UIElements.UxmlObjectAttribute.html"><code>UxmlObjects</code></a> are classes instantiated from UXML that contain UXML attributes. </p>
+
+<p>To understand how to use <code>UxmlObjects</code>, take the previous <code>Person</code> and <code>Department</code> classes example, convert them into <code>UxmlObjects</code> as shown in the following example:</p>
+
+<pre><code class="lang-cs">using System;
+using System.Collections.Generic;
+using UnityEngine.UIElements;
+
+namespace UxmlObjectExample
+{
+    [UxmlObject]
+    public partial class Person
+    {
+        [UxmlAttribute]
+        public string name;
+
+        [UxmlAttribute]
+        public int age;
+
+        [UxmlAttribute]
+        public string nationality;
+    }
+
+    [UxmlElement]
+    public partial class Department : VisualElement
+    {
+        [UxmlObjectReference(&quot;manager&quot;)]
+        public Person manager;
+
+        [UxmlObjectReference(&quot;employees&quot;)]
+        public List&lt;Person&gt; employees;
+    }
+}
+</code></pre>
+
+<p>The <code>Person</code> class now resembles a custom element, and uses <code>UxmlAttribute</code> for attribute declaration and introducing the <a href="../../ScriptReference/UIElements.UxmlObjectAttribute.html">UxmlObject</a> attribute to signify its status as a <code>UxmlObject</code>.</p>
+
+<p>Instead of using <code>UxmlAttribute</code> for <code>UxmlObject</code> fields, this example uses <a href="ScriptRefe:UIElements.UxmlObjectReferenceAttribute">UxmlObjectReference</a> to assign a <a href="../../ScriptReference/UIElements.UxmlObjectReferenceAttribute-name.html"><code>name</code></a>. The name specifies the parent element of the <code>UxmlObject</code>.</p>
+
+<p>Previously, all <code>UxmlObjects</code> were stored as direct children of the element, which caused scalability issues when multiple <code>UxmlObject</code> fields were present. It was difficult to distinguish which <code>UxmlObjects</code> belonged to which field.</p>
+
+<p>The <code>UxmlObjectReference</code> attribute resolves this issue by specifying a name for the <code>UxmlObject</code>. This name corresponds to the UXML tag name. In the previous example, the <code>manager</code> and <code>employees</code> fields belong to the <code>Person</code> class. The <code>UxmlObjectReference</code> attribute ensures that the <code>Person</code> class is correctly assigned to the <code>manager</code> and <code>employees</code> fields.</p>
+
+<p>The following shows an example usage in a UXML file:</p>
+
+<pre><code class="lang-xml">&lt;ui:UXML xmlns:ui=&quot;UnityEngine.UIElements&quot;&gt;
+    &lt;UxmlObjectExample.Department name=&quot;Department One&quot;&gt;
+        &lt;manager&gt;
+            &lt;UxmlObjectExample.Person name=&quot;Manager One&quot; age=&quot;58&quot; nationality=&quot;Canadian&quot; /&gt;
+        &lt;/manager&gt;
+        &lt;employees&gt;
+            &lt;UxmlObjectExample.Person name=&quot;Person Two&quot; age=&quot;53&quot; nationality=&quot;Canadian&quot; /&gt;
+            &lt;UxmlObjectExample.Person name=&quot;Person Three&quot; age=&quot;44&quot; nationality=&quot;Canadian&quot; /&gt;
+        &lt;/employees&gt;
+    &lt;/UxmlObjectExample.Department&gt;
+&lt;/ui:UXML&gt;
+</code></pre>
+
+<p>
+<strong>Note:</strong> <code>UxmlObjectReferenceFields</code> also works with interfaces. However, you can only assign <code>UxmlObjects</code> that implement the specified interface. For an example of using interfaces, refer to <a href="../../ScriptReference/UIElements.UxmlObjectReferenceAttribute.html">UxmlObjectReferenceAttribute</a>.</p>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="custom-control-attributes-built-in-types.html">Define custom control attributes for built-in types</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="../ui-systems/custom-control-attributes-built-in-types.html"></a></span><div class="tip">Define UXML attributes for built-in types</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="../ui-systems/custom-control-customize-uxml-attributes.html"></a></span><div class="tip">Customize UXML attributes</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

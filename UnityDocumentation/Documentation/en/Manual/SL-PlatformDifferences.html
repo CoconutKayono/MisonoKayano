@@ -1,0 +1,307 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Write HLSL for different graphics APIs</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<meta property="relative-path-to-manual" content="">
+<meta property="version-switcher-versions-with-this-page" content="Versions with this page:">
+<meta property="version-switcher-versions-without-this-page" content="Versions without this page:">
+<meta property="version-switcher-supported" content="Supported">
+<meta property="version-switcher-legacy" content="Legacy">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/Manual/SL-PlatformDifferences.html">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20260626"></script><script type="text/javascript" src="docdata/toc.js?ts=20260626"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20260626"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20260626">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20260626">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/SL-PlatformDifferences.html">English</a></li>
+<li><a href="/cn/current/Manual/SL-PlatformDifferences.html">中文</a></li>
+<li><a href="/ja/current/Manual/SL-PlatformDifferences.html">日本語</a></li>
+<li><a href="/kr/current/Manual/SL-PlatformDifferences.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: Unity 6.7 Beta</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/SL-PlatformDifferences.html">English</a></li>
+<li><a href="/cn/current/Manual/SL-PlatformDifferences.html">中文</a></li>
+<li><a href="/ja/current/Manual/SL-PlatformDifferences.html">日本語</a></li>
+<li><a href="/kr/current/Manual/SL-PlatformDifferences.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="materials-and-shaders.html">Materials and shaders</a></li>
+<li><a href="Shaders.html">Custom shaders</a></li>
+<li><a href="writing-custom-shaders.html">Writing custom shaders</a></li>
+<li><a href="shader-writing.html">Writing shaders in code</a></li>
+<li><a href="SL-landing.html">Writing a custom shader in ShaderLab and HLSL</a></li>
+<li><a href="writing-shader-writing-shader-programs-hlsl.html">Writing HLSL shader programs</a></li>
+<li>Write HLSL for different graphics APIs</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="SL-SamplerStates.html"></a></span><div class="tip">Sample a texture in HLSL</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="SL-Use16BitPrecisionInShaders.html"></a></span><div class="tip">Use 16-bit precision in shaders</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Write HLSL for different graphics APIs</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+<div class="res-examples" style="background-color: #f2dede; font-size: 14px;">
+<p style="margin: 0; font-size: 14px;">
+<strong style="font-size: 14px;">Important</strong>: The Built-In Render Pipeline is deprecated and will be made obsolete in a future release.<br>It remains supported, including bug fixes and maintenance, through the full Unity 6.7 LTS lifecycle.<br>For more information on migration, refer to <a href="urp/upgrading-from-birp.html">Migrating from the Built-In Render Pipeline to the Universal Render Pipeline</a> and <a href="render-pipelines-feature-comparison.html">Render pipeline feature comparison</a>.</p>
+</div>
+<div class="clear"></div>
+
+<p>There are differences in how graphics rendering behaves between different graphics APIs. Most of the time the Unity Editor hides the differences, but there are some situations where Unity can’t do this for you.</p>
+
+<h2>Check floating point exception handling</h2>
+
+<p>Desktop platforms and mobile platforms can handle exceptions differently during floating point operations such as division by zero. Exceptions can result in <code>NaN</code>, zero, or another value. Test your <span class="tooltip" tabindex="0" ><strong>shaders</strong><span class="tooltiptext">A program that runs on the GPU. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Shaders.html" href="Shaders.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#shader" aria-label="Go to glossary anchor for shader">Glossary</a></span></span></span> on the different platforms you target.</p>
+
+<h2>Use consistent semantics</h2>
+
+<p>Use the following semantics to ensure shaders work on all platforms:</p>
+
+<ul>
+<li>
+<code>SV_POSITION</code> instead of <code>POSITION</code> for the position the <span class="tooltip" tabindex="0" ><strong>vertex shader</strong><span class="tooltiptext">A program that runs on each vertex of a 3D model when the model is being rendered. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about writing-shader-writing-shader-programs-hlsl.html" href="writing-shader-writing-shader-programs-hlsl.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#vertexshader" aria-label="Go to glossary anchor for vertexshader">Glossary</a></span></span></span> outputs.</li>
+<li>
+<code>SV_Target</code> instead of <code>COLOR</code> or <code>COLOR0</code> for the output of the fragment shader.</li>
+<li>
+<code>PSIZE</code> if you render meshes as points. For example, set <code>PSIZE</code> to 1. This avoids some platforms like Metal reading point size as undefined.</li>
+</ul>
+
+<p>For more information about semantics, refer to <a href="SL-HLSLSemantics.html">High-Level Shader Language (HLSL) semantics reference</a>.</p>
+
+<h2>Use const for constants</h2>
+
+<p>Don’t use <code>const</code> for values that come from outside the shader or that you calculate at runtime, as this only works in HLSL, not OpenGL Shading Language (GLSL). Use <code>const</code> only for compile-time constants.</p>
+
+<h2>Avoid mismatched buffer layouts</h2>
+
+<p>If you use the standard HLSL <code>cbuffer</code> type, or Unity’s <code>CBUFFERSTART</code> and <code>CBUFFEREND</code> macros, a <code>float3</code> might become a <code>float4</code>, or a <code>float</code> might become a <code>float2</code>.</p>
+
+<p>To ensure all graphics APIs compile a buffer with the same data layout, do the following:</p>
+
+<ul>
+<li>Use <code>float4</code> and <code>float4x4</code> instead of <code>float3</code> and <code>float3x3</code>, because <code>float4</code> variables are the same size on all graphics APIs, while <code>float3</code> variables can become a different size on some graphics APIs.</li>
+<li>Declare variables in decreasing size order, for example <code>float4</code> then <code>float2</code> then <code>float</code>, so all graphics APIs structure the data in the same way.</li>
+</ul>
+
+<p>For example:</p>
+
+<pre><code class="lang-hlsl">cbuffer myConstantBuffer {
+    float4x4 matWorld;
+    float4 vObjectPosition; // Uses a float4 instead of a float3
+    float arrayIndex;
+}
+</code></pre>
+
+<p>
+<strong>Note:</strong> You can’t add structs to constant buffers.</p>
+
+<h2>Handle reversed coordinate spaces</h2>
+
+<p>DirectX, Metal, and Vulkan use different coordinate systems to other graphics APIs. To make sure shaders work correctly on all platforms, adjust your code to handle reversed textures.</p>
+
+<p>To check for reversed textures, use pre-processor conditionals like <code>#if</code> and <code>#ifdef</code> with Unity’s built-in macros or methods.</p>
+
+<h3>Check for upside-down render textures</h3>
+
+<p>If you sample a <span class="tooltip" tabindex="0" ><strong>render texture</strong><span class="tooltiptext">A special type of Texture that is created and updated at runtime. To use them, first create a new Render Texture and designate one of your Cameras to render into it. Then you can use the Render Texture in a Material just like a regular Texture. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-RenderTexture.html" href="class-RenderTexture.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#RenderTexture" aria-label="Go to glossary anchor for RenderTexture">Glossary</a></span></span></span> at <code>(0,0)</code>, DirectX, Metal, and Vulkan return the top-left of the texture. Other graphics APIs return the bottom-left of the texture. Unity handles this internally for most render textures by flipping render textures upside-down internally where needed, so coordinates you use return the same texels on all platforms.</p>
+
+<p>To check if the current platform uses reversed coordinates for render textures, use either of the following methods:</p>
+
+<ul>
+<li>
+<p>Check if Unity defines <code>UNITY_UV_STARTS_AT_TOP</code>, which means the graphics API uses <code>(0,0)</code> for the top-left of the texture.</p>
+
+<p>For example, to check for reversed render textures then flip vertical uv coordinates:</p>
+
+<pre><code class="lang-hlsl">#if UNITY_UV_STARTS_AT_TOP
+    if (_MainTex_TexelSize.y &lt; 0)
+        uv.y = 1-uv.y;
+#endif
+</code></pre>
+</li>
+<li><p>Check the built-in <code>ProjectionParams.x</code> variable. If the value is <code>-1</code>, Unity flipped the render texture, so you must also flip vertical UV coordinates. </p></li>
+</ul>
+
+<p>
+<strong>Note</strong>: If you use <a href="SL-GrabPass.html">GrabPass</a> in the Built-In <span class="tooltip" tabindex="0" ><strong>Render Pipeline</strong><span class="tooltiptext">A series of operations that take the contents of a Scene, and displays them on a screen. Unity lets you choose from pre-built render pipelines, or write your own. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about render-pipelines.html" href="render-pipelines.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#renderpipeline" aria-label="Go to glossary anchor for renderpipeline">Glossary</a></span></span></span>, Unity might not reverse the texture. To calculate the coordinates to use to sample the texture, use the <code>ComputeGrabScreenPos</code> method. For more information, refer to <a href="SL-BuiltinFunctions.html">Use built-in shader functions in the Built-In Render Pipeline</a>.</p>
+
+<h3>Check for reversed depth direction</h3>
+
+<p>The direction of depth in clip space, the <span class="tooltip" tabindex="0" ><strong>depth buffer</strong><span class="tooltiptext">A memory store that holds the z-value depth of each pixel in an image, where the z-value is the depth for each rendered pixel from the projection plane. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-RenderTexture.html" href="class-RenderTexture.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#depthbuffer" aria-label="Go to glossary anchor for depthbuffer">Glossary</a></span></span></span>, and depth textures is different depending on the graphics API you target.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Coordinate space</strong></th>
+	<th style="text-align:left;"><strong>Z coordinate in DirectX, Metal, and Vulkan</strong></th>
+	<th style="text-align:left;"><strong>Z coordinate in OpenGL ES and <span class="tooltip" tabindex="0" ><strong>WebGL</strong><span class="tooltiptext">A JavaScript API that renders 2D and 3D graphics in a web browser. The Unity Web build option allows Unity to publish content as JavaScript programs which use HTML5 technologies and the WebGL rendering API to run Unity content in a web browser. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about webgl.html" href="webgl.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#WebGL" aria-label="Go to glossary anchor for WebGL">Glossary</a></span></span></span></strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">Depth buffer and depth textures</td>
+	<td style="text-align:left;">
+<code>1.0</code> near to <code>0.0</code> far</td>
+	<td style="text-align:left;">
+<code>0.0</code> near to <code>1.0</code> far</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Clip space</td>
+	<td style="text-align:left;">
+<code>1.0</code> near to <code>0.0</code> far</td>
+	<td style="text-align:left;">
+<code>-1.0</code> near to <code>1.0</code> far</td>
+</tr>
+</tbody>
+</table>
+
+<p>Use the following in custom HLSL code to handle these differences:</p>
+
+<ul>
+<li><p>Use <a href="../ScriptReference/SystemInfo-usesReversedZBuffer.html">SystemInfo.usesReversedZBuffer</a> to check if the graphics API uses 1.0 to 0.0 for depth.</p></li>
+<li>
+<p>Check if Unity defines <code>UNITY_REVERSED_Z</code>, which means the graphics API uses 1.0 to 0.0 for depth, then flip the z value.</p>
+
+<p>For example, in the Built-In Render Pipeline:</p>
+
+<pre><code class="lang-hlsl">float z = tex2D(_CameraDepthTexture, uv);
+#if defined(UNITY_REVERSED_Z)
+    z = 1.0f - z;
+#endif
+</code></pre>
+</li>
+</ul>
+
+<p>You might also need to flip depth bias values if you use a code rendering <span class="tooltip" tabindex="0" ><strong>plug-in</strong><span class="tooltiptext">A set of code created outside of Unity that creates functionality in Unity. There are two kinds of plug-ins you can use in Unity: Managed plug-ins (managed .NET assemblies created with tools like Visual Studio) and Native plug-ins (platform-specific native code libraries). <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ./plug-ins.html" href="./plug-ins.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#plug-in" aria-label="Go to glossary anchor for plug-in">Glossary</a></span></span></span>.</p>
+
+<p>For more macros that help with depth, refer to <a href="use-built-in-shader-methods-birp.html">Shader methods in the Built-In Render Pipeline</a> or <a href="urp/use-built-in-shader-methods.html">Shader methods in the Universal Render Pipeline (URP)</a>.</p>
+
+<h2>Compiling on DirectX platforms</h2>
+
+<p>If you target the DirectX graphics API, the compiler is stricter than other compilers. Check the following:</p>
+
+<ul>
+<li>Set all the components of a vector. For example, if you declare a <code>float4</code>, ensure you set all four components.</li>
+<li>Don’t use the <code>tex2D</code> method in the vertex shader. Instead, use the <code>tex2Dlod</code> method to sample a specific mip level, and use <code>#pragma target 3.0</code> to ensure compatibility.</li>
+<li>If you use a vertex shader with an <code>out</code> parameter in a <span class="tooltip" tabindex="0" ><strong>surface shader</strong><span class="tooltiptext">A streamlined way of writing shaders for the Built-in Render Pipeline. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about SL-SurfaceShaders.html" href="SL-SurfaceShaders.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#SurfaceShader" aria-label="Go to glossary anchor for SurfaceShader">Glossary</a></span></span></span>, initialize the output using the <code>UNITY_INITIALIZE_OUTPUT</code> macro.</li>
+</ul>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li>
+<a href="SL-Use16BitPrecisionInShaders.html">Use 16-bit precision in shaders</a>.</li>
+<li><a href="PlatformSpecific.html">Platform development</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="SL-SamplerStates.html"></a></span><div class="tip">Sample a texture in HLSL</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="SL-Use16BitPrecisionInShaders.html"></a></span><div class="tip">Use 16-bit precision in shaders</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

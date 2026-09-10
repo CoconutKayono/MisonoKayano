@@ -1,0 +1,343 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Prevent unnecessary zero initialization</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<meta property="relative-path-to-manual" content="../">
+<meta property="version-switcher-versions-with-this-page" content="Versions with this page:">
+<meta property="version-switcher-versions-without-this-page" content="Versions without this page:">
+<meta property="version-switcher-supported" content="Supported">
+<meta property="version-switcher-legacy" content="Legacy">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/Manual/burst/optimization-skiplocalsinit.html">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../../StaticFilesManual/js/jquery.js?ts=20260626"></script><script type="text/javascript" src="../../StaticFilesManual/js/core.js?ts=20260626"></script><script type="text/javascript" src="../../StaticFilesManual/js/image-comp.js?ts=20260626"></script><script type="text/javascript" src="../docdata/toc.js?ts=20260626"></script><script type="text/javascript" src="../docdata/global_toc.js?ts=20260626"></script><link rel="stylesheet" type="text/css" href="../../StaticFilesManual/css/core.css?ts=20260626">
+<link rel="stylesheet" type="text/css" href="../../StaticFilesManual/css/icons.css?ts=20260626">
+<link rel="stylesheet" href="../../StaticFilesManual/css/prism.css">
+<script src="../../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="../30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../index.html" class="selected">Manual</a></li>
+<li><a href="../../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/burst/optimization-skiplocalsinit.html">English</a></li>
+<li><a href="/cn/current/Manual/burst/optimization-skiplocalsinit.html">中文</a></li>
+<li><a href="/ja/current/Manual/burst/optimization-skiplocalsinit.html">日本語</a></li>
+<li><a href="/kr/current/Manual/burst/optimization-skiplocalsinit.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: Unity 6.7 Beta</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/burst/optimization-skiplocalsinit.html">English</a></li>
+<li><a href="/cn/current/Manual/burst/optimization-skiplocalsinit.html">中文</a></li>
+<li><a href="/ja/current/Manual/burst/optimization-skiplocalsinit.html">日本語</a></li>
+<li><a href="/kr/current/Manual/burst/optimization-skiplocalsinit.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="../scripting.html">Programming in Unity</a></li>
+<li><a href="../compilation-and-code-reload.html">Compilation and code reload </a></li>
+<li><a href="../script-compilation.html">Script compilation</a></li>
+<li><a href="../burst/script-compilation-burst.html">Burst compilation</a></li>
+<li><a href="../burst/optimization-overview.html">Burst optimization</a></li>
+<li>Prevent unnecessary zero initialization</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="../burst/optimization-constant.html"></a></span><div class="tip">Check for compile-time constraints</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="../burst/modding-support.html"></a></span><div class="tip">Burst modding support </div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Prevent unnecessary zero initialization</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Use <a href="../../ScriptReference/Unity.Burst.CompilerServices.SkipLocalsInitAttribute.html"><code>SkipLocalsInitAttribute</code></a> to tell Burst that any stack allocations within a method don’t have to be initialized to zero.</p>
+
+<p>In C# all local variables are initialized to zero by default, which prevents a class of bugs related to undefined data. But this can impact runtime performance because initializing this data to zero takes work:</p>
+
+<pre><code class="lang-cs">static unsafe int DoSomethingWithLUT(int* data);
+
+static unsafe int DoSomething(int size)
+{
+    int* data = stackalloc int[size];
+
+    // Initialize every field of data to be an incrementing set of values.
+    for (int i = 0; i &lt; size; i++)
+    {
+        data[i] = i;
+    }
+
+    // Use the data elsewhere.
+    return DoSomethingWithLUT(data);
+}
+</code></pre>
+
+<p>The X86 assembly for this is:</p>
+
+<pre><code class="x86asm">        push    rbp
+        .seh_pushreg rbp
+        push    rsi
+        .seh_pushreg rsi
+        push    rdi
+        .seh_pushreg rdi
+        mov     rbp, rsp
+        .seh_setframe rbp, 0
+        .seh_endprologue
+        mov     edi, ecx
+        lea     r8d, [4*rdi]
+        lea     rax, [r8 + 15]
+        and     rax, -16
+        movabs  r11, offset __chkstk
+        call    r11
+        sub     rsp, rax
+        mov     rsi, rsp
+        sub     rsp, 32
+        movabs  rax, offset burst.memset.inline.X64_SSE4.i32@@32
+        mov     rcx, rsi
+        xor     edx, edx
+        xor     r9d, r9d
+        call    rax
+        add     rsp, 32
+        test    edi, edi
+        jle     .LBB0_7
+        mov     eax, edi
+        cmp     edi, 8
+        jae     .LBB0_3
+        xor     ecx, ecx
+        jmp     .LBB0_6
+.LBB0_3:
+        mov     ecx, eax
+        and     ecx, -8
+        movabs  rdx, offset __xmm@00000003000000020000000100000000
+        movdqa  xmm0, xmmword ptr [rdx]
+        mov     rdx, rsi
+        add     rdx, 16
+        movabs  rdi, offset __xmm@00000004000000040000000400000004
+        movdqa  xmm1, xmmword ptr [rdi]
+        movabs  rdi, offset __xmm@00000008000000080000000800000008
+        movdqa  xmm2, xmmword ptr [rdi]
+        mov     rdi, rcx
+        .p2align        4, 0x90
+.LBB0_4:
+        movdqa  xmm3, xmm0
+        paddd   xmm3, xmm1
+        movdqu  xmmword ptr [rdx - 16], xmm0
+        movdqu  xmmword ptr [rdx], xmm3
+        paddd   xmm0, xmm2
+        add     rdx, 32
+        add     rdi, -8
+        jne     .LBB0_4
+        cmp     rcx, rax
+        je      .LBB0_7
+        .p2align        4, 0x90
+.LBB0_6:
+        mov     dword ptr [rsi + 4*rcx], ecx
+        inc     rcx
+        cmp     rax, rcx
+        jne     .LBB0_6
+.LBB0_7:
+        sub     rsp, 32
+        movabs  rax, offset &quot;DoSomethingWithLUT&quot;
+        mov     rcx, rsi
+        call    rax
+        nop
+        mov     rsp, rbp
+        pop     rdi
+        pop     rsi
+        pop     rbp
+        ret
+</code></pre>
+
+<p>In this example, the <code>movabs  rax, offset burst.memset.inline.X64_SSE4.i32@@32</code> line means that you’ve had to inject a memset to zero out the data. In the above example, you know that the array is entirely initialized in the following loop, but Burst doesn’t know that. </p>
+
+<p>To fix this problem, use <a href="../../ScriptReference/Unity.Burst.CompilerServices.SkipLocalsInitAttribute.html"><code>Unity.Burst.CompilerServices.SkipLocalsInitAttribute</code></a>, which tells Burst that any stack allocations within a method don’t have to be initialized to zero. </p>
+
+<p>
+<strong>Note</strong>: Only use this attribute if you’re certain that you won’t run into undefined behavior bugs. </p>
+
+<p>For example:</p>
+
+<pre><code class="lang-cs">using Unity.Burst.CompilerServices;
+
+static unsafe int DoSomethingWithLUT(int* data);
+
+[SkipLocalsInit]
+static unsafe int DoSomething(int size)
+{
+    int* data = stackalloc int[size];
+
+    // Initialize every field of data to be an incrementing set of values.
+    for (int i = 0; i &lt; size; i++)
+    {
+        data[i] = i;
+    }
+
+    // Use the data elsewhere.
+    return DoSomethingWithLUT(data);
+}
+</code></pre>
+
+<p>The assembly after adding the <code>[SkipLocalsInit]</code> on the method is:</p>
+
+<pre><code class="x86asm">        push    rbp
+        .seh_pushreg rbp
+        mov     rbp, rsp
+        .seh_setframe rbp, 0
+        .seh_endprologue
+        mov     edx, ecx
+        lea     eax, [4*rdx]
+        add     rax, 15
+        and     rax, -16
+        movabs  r11, offset __chkstk
+        call    r11
+        sub     rsp, rax
+        mov     rcx, rsp
+        test    edx, edx
+        jle     .LBB0_7
+        mov     r8d, edx
+        cmp     edx, 8
+        jae     .LBB0_3
+        xor     r10d, r10d
+        jmp     .LBB0_6
+.LBB0_3:
+        mov     r10d, r8d
+        and     r10d, -8
+        movabs  rax, offset __xmm@00000003000000020000000100000000
+        movdqa  xmm0, xmmword ptr [rax]
+        mov     rax, rcx
+        add     rax, 16
+        movabs  rdx, offset __xmm@00000004000000040000000400000004
+        movdqa  xmm1, xmmword ptr [rdx]
+        movabs  rdx, offset __xmm@00000008000000080000000800000008
+        movdqa  xmm2, xmmword ptr [rdx]
+        mov     r9, r10
+        .p2align        4, 0x90
+.LBB0_4:
+        movdqa  xmm3, xmm0
+        paddd   xmm3, xmm1
+        movdqu  xmmword ptr [rax - 16], xmm0
+        movdqu  xmmword ptr [rax], xmm3
+        paddd   xmm0, xmm2
+        add     rax, 32
+        add     r9, -8
+        jne     .LBB0_4
+        cmp     r10, r8
+        je      .LBB0_7
+        .p2align        4, 0x90
+.LBB0_6:
+        mov     dword ptr [rcx + 4*r10], r10d
+        inc     r10
+        cmp     r8, r10
+        jne     .LBB0_6
+.LBB0_7:
+        sub     rsp, 32
+        movabs  rax, offset &quot;DoSomethingWithLUT&quot;
+        call    rax
+        nop
+        mov     rsp, rbp
+        pop     rbp
+        ret
+</code></pre>
+
+<p>The call to memset is now gone, because you’ve told Burst that any stack allocations within a method don’t have to be initialized to zero. </p>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="../../ScriptReference/Unity.Burst.CompilerServices.SkipLocalsInitAttribute.html"><code>[SkipLocalsInitAttribute]</code> API reference</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="../burst/optimization-constant.html"></a></span><div class="tip">Check for compile-time constraints</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="../burst/modding-support.html"></a></span><div class="tip">Burst modding support </div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

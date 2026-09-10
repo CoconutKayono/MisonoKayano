@@ -1,0 +1,284 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Use the CommandBuffer interface in a render graph</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<meta property="relative-path-to-manual" content="../">
+<meta property="version-switcher-versions-with-this-page" content="Versions with this page:">
+<meta property="version-switcher-versions-without-this-page" content="Versions without this page:">
+<meta property="version-switcher-supported" content="Supported">
+<meta property="version-switcher-legacy" content="Legacy">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/Manual/urp/render-graph-unsafe-pass.html">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../../StaticFilesManual/js/jquery.js?ts=20260626"></script><script type="text/javascript" src="../../StaticFilesManual/js/core.js?ts=20260626"></script><script type="text/javascript" src="../../StaticFilesManual/js/image-comp.js?ts=20260626"></script><script type="text/javascript" src="../docdata/toc.js?ts=20260626"></script><script type="text/javascript" src="../docdata/global_toc.js?ts=20260626"></script><link rel="stylesheet" type="text/css" href="../../StaticFilesManual/css/core.css?ts=20260626">
+<link rel="stylesheet" type="text/css" href="../../StaticFilesManual/css/icons.css?ts=20260626">
+<link rel="stylesheet" href="../../StaticFilesManual/css/prism.css">
+<script src="../../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="../30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../index.html" class="selected">Manual</a></li>
+<li><a href="../../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/urp/render-graph-unsafe-pass.html">English</a></li>
+<li><a href="/cn/current/Manual/urp/render-graph-unsafe-pass.html">中文</a></li>
+<li><a href="/ja/current/Manual/urp/render-graph-unsafe-pass.html">日本語</a></li>
+<li><a href="/kr/current/Manual/urp/render-graph-unsafe-pass.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: Unity 6.7 Beta</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/urp/render-graph-unsafe-pass.html">English</a></li>
+<li><a href="/cn/current/Manual/urp/render-graph-unsafe-pass.html">中文</a></li>
+<li><a href="/ja/current/Manual/urp/render-graph-unsafe-pass.html">日本語</a></li>
+<li><a href="/kr/current/Manual/urp/render-graph-unsafe-pass.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="../render-pipelines.html">Render pipelines</a></li>
+<li><a href="../universal-render-pipeline.html">Using the Universal Render Pipeline</a></li>
+<li><a href="../urp/customizing-urp.html">Custom rendering and post-processing in URP</a></li>
+<li><a href="../urp/render-graph.html">Render graph system in URP</a></li>
+<li>Use the CommandBuffer interface in a render graph</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="../urp/render-graph-optimize.html"></a></span><div class="tip">Optimize a render graph</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="../urp/render-graph-viewer-reference.html"></a></span><div class="tip">Render Graph Viewer window reference for URP</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Use the CommandBuffer interface in a render graph</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>You can use the render graph <code>AddUnsafePass</code> API to use <a href="../../ScriptReference/Rendering.CommandBuffer.html">CommandBuffer</a> interface APIs such as <code>SetRenderTarget</code> in render graph system render passes.</p>
+
+<p>The <code>AddUnsafePass</code> API gives access to the <a href="../../ScriptReference/Rendering.UnsafeCommandBuffer.html">UnsafeCommandBuffer</a>, which gives access to more <code>CommandBuffer</code> functions than the <a href="../../ScriptReference/Rendering.RasterCommandBuffer.html">RasterCommandBuffer</a> API.</p>
+
+<p>
+<strong>Note</strong>: Both <code>AddUnsafePass</code> and <code>RasterCommandBuffer</code> restrict access to certain <code>commandBuffer</code> functions so that <code>RenderGraph</code> can better optimize the frame. The most important function <code>UnsafeCommandbuffer</code> gives you access to is <code>SetRenderTarget</code>.</p>
+
+<p>If you use the <code>AddUnsafePass</code> API, the following applies:</p>
+
+<ul>
+<li>You can’t use the <code>SetRenderAttachment</code> method in the <code>RecordRenderGraph</code> method. Use <code>SetRenderTarget</code> in the <code>SetRenderFunc</code> method instead.</li>
+<li>Rendering might be slower because the render graph system can’t optimize the render pass. For example, if your render pass writes to the active color buffer, the render graph system can’t detect if a later render pass writes to the same buffer. As a result, the render graph system can’t merge the two render passes, and the GPU unnecessarily transfers the buffer in and out of memory.</li>
+</ul>
+
+<h2>Create an unsafe render pass</h2>
+
+<p>To create an unsafe render pass, follow these steps:</p>
+
+<ol>
+<li>
+<p>In your <code>RecordRenderGraph</code> method, use the <code>AddUnsafePass</code> method instead of the <code>AddRasterRenderPass</code> method.</p>
+
+<p>For example:</p>
+
+<pre><code class="lang-cs">using (var builder = renderGraph.AddUnsafePass&lt;PassData&gt;(&quot;My unsafe render pass&quot;, out var passData))
+</code></pre>
+</li>
+<li>
+<p>When you call the <code>SetRenderFunc</code> method, use the <code>UnsafeGraphContext</code> type instead of <code>RasterGraphContext</code>.</p>
+
+<p>For example:</p>
+
+<pre><code class="lang-cs">builder.SetRenderFunc(
+    static (PassData passData, UnsafeGraphContext context) =&gt; ExecutePass(passData, context)
+);
+</code></pre>
+</li>
+<li>
+<p>If your render pass writes to a texture, add the texture as a field in your pass data class.</p>
+
+<p>For example:</p>
+
+<pre><code class="lang-cs">class PassData
+{
+    public TextureHandle textureToWriteTo;
+}
+</code></pre>
+</li>
+<li>
+<p>If your render pass writes to a texture, set the texture as writeable using the <code>UseTexture</code> method.</p>
+
+<p>For example:</p>
+
+<pre><code class="lang-cs">builder.UseTexture(passData.textureToWriteTo, AccessFlags.Write);
+</code></pre>
+</li>
+</ol>
+
+<p>You can now use CommandBuffer interface APIs in your <code>SetRenderFunc</code> method.</p>
+
+<h2>Example</h2>
+
+<p>The following example uses the CommandBuffer interface <code>SetRenderTarget</code> API to set the render target to the active color buffer during the render pass, then draw objects using their surface normals as colors.</p>
+
+<pre><code class="lang-cs">using UnityEngine;
+using UnityEngine.Rendering.RenderGraphModule;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
+
+public class DrawNormalsToActiveColorTexture : ScriptableRendererFeature
+{
+
+    DrawNormalsPass unsafePass;
+
+    public override void Create()
+    {
+        unsafePass = new DrawNormalsPass();
+        unsafePass.renderPassEvent = RenderPassEvent.AfterRenderingPostProcessing;
+    }
+
+    public override void AddRenderPasses(ScriptableRenderer renderer, ref RenderingData renderingData)
+    {
+        renderer.EnqueuePass(unsafePass);
+    }
+
+    class DrawNormalsPass : ScriptableRenderPass
+    {
+        class PassData
+        {
+            public TextureHandle activeColorBuffer;
+            public TextureHandle cameraNormalsTexture;
+        }
+
+        public override void RecordRenderGraph(RenderGraph renderGraph, ContextContainer frameContext)
+        {
+            using (var builder = renderGraph.AddUnsafePass&lt;PassData&gt;(&quot;Draw normals&quot;, out var passData))
+            {
+                // Make sure URP generates the normals texture
+                ConfigureInput(ScriptableRenderPassInput.Normal);
+
+                // Get the frame data
+                UniversalResourceData resourceData = frameContext.Get&lt;UniversalResourceData&gt;();
+
+                // Add the active color buffer to our pass data, and set it as writeable 
+                passData.activeColorBuffer = resourceData.activeColorTexture;
+                builder.UseTexture(passData.activeColorBuffer, AccessFlags.Write);                
+
+                // Add the camera normals texture to our pass data 
+                passData.cameraNormalsTexture = resourceData.cameraNormalsTexture;
+                builder.UseTexture(passData.cameraNormalsTexture);
+
+                // Make sure the render graph system keeps the render pass, even if it's not used in the final frame.
+                // Don't use this in production code, because it prevents the render graph system from removing the render pass if it's not needed.
+                builder.AllowPassCulling(false);
+
+                builder.SetRenderFunc(static (PassData data, UnsafeGraphContext context) =&gt; ExecutePass(data, context));
+            }
+        }
+
+        static void ExecutePass(PassData passData, UnsafeGraphContext context)
+        {
+            // Create a command buffer for a list of rendering methods
+            CommandBuffer unsafeCommandBuffer = CommandBufferHelpers.GetNativeCommandBuffer(context.cmd);
+
+            // Add a command to set the render target to the active color buffer so URP draws to it
+            context.cmd.SetRenderTarget(passData.activeColorBuffer);
+
+            // Add a command to copy the camera normals texture to the render target
+            Blitter.BlitTexture(unsafeCommandBuffer, passData.cameraNormalsTexture, new Vector4(1, 1, 0, 0), 0, false);
+        }
+
+    }
+
+}
+</code></pre>
+
+<p>For another example, refer to the example called <strong>UnsafePass</strong> in the <a href="package-samples.html">Universal Render Pipeline (URP) package samples</a>.</p>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="../urp/render-graph-optimize.html"></a></span><div class="tip">Optimize a render graph</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="../urp/render-graph-viewer-reference.html"></a></span><div class="tip">Render Graph Viewer window reference for URP</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

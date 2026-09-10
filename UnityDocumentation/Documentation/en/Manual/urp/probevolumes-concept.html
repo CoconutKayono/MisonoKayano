@@ -1,0 +1,282 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Introduction to Adaptive Probe Volumes</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<meta property="relative-path-to-manual" content="../">
+<meta property="version-switcher-versions-with-this-page" content="Versions with this page:">
+<meta property="version-switcher-versions-without-this-page" content="Versions without this page:">
+<meta property="version-switcher-supported" content="Supported">
+<meta property="version-switcher-legacy" content="Legacy">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/Manual/urp/probevolumes-concept.html">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../../StaticFilesManual/js/jquery.js?ts=20260626"></script><script type="text/javascript" src="../../StaticFilesManual/js/core.js?ts=20260626"></script><script type="text/javascript" src="../../StaticFilesManual/js/image-comp.js?ts=20260626"></script><script type="text/javascript" src="../docdata/toc.js?ts=20260626"></script><script type="text/javascript" src="../docdata/global_toc.js?ts=20260626"></script><link rel="stylesheet" type="text/css" href="../../StaticFilesManual/css/core.css?ts=20260626">
+<link rel="stylesheet" type="text/css" href="../../StaticFilesManual/css/icons.css?ts=20260626">
+<link rel="stylesheet" href="../../StaticFilesManual/css/prism.css">
+<script src="../../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="../30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../index.html" class="selected">Manual</a></li>
+<li><a href="../../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/urp/probevolumes-concept.html">English</a></li>
+<li><a href="/cn/current/Manual/urp/probevolumes-concept.html">中文</a></li>
+<li><a href="/ja/current/Manual/urp/probevolumes-concept.html">日本語</a></li>
+<li><a href="/kr/current/Manual/urp/probevolumes-concept.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: Unity 6.7 Beta</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/urp/probevolumes-concept.html">English</a></li>
+<li><a href="/cn/current/Manual/urp/probevolumes-concept.html">中文</a></li>
+<li><a href="/ja/current/Manual/urp/probevolumes-concept.html">日本語</a></li>
+<li><a href="/kr/current/Manual/urp/probevolumes-concept.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="../LightingOverview.html">Lighting</a></li>
+<li><a href="../urp/lighting-landing.html">Lighting in URP</a></li>
+<li><a href="../urp/probevolumes.html">Adaptive Probe Volumes (APV) in URP</a></li>
+<li>Introduction to Adaptive Probe Volumes</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="../urp/probevolumes.html"></a></span><div class="tip">Adaptive Probe Volumes (APV) in URP</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="../urp/probevolumes-use.html"></a></span><div class="tip">Use Adaptive Probe Volumes</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Introduction to Adaptive Probe Volumes</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>An Adaptive Probe Volume is a group of <span class="tooltip" tabindex="0" ><a href="https://docs.unity3d.com/Manual/LightProbes.html">Light Probes</a><span class="tooltiptext">Light probes store information about how light passes through space in your scene. A collection of light probes arranged within a given space can improve lighting on moving objects and static LOD scenery within that space. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about LightProbes.html" href="../LightProbes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#LightProbe" aria-label="Go to glossary anchor for LightProbe">Glossary</a></span></span></span> that Unity places automatically based on the geometry density in your <span class="tooltip" tabindex="0" ><strong>Scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html" href="../CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span>, to create baked indirect lighting. You can use Adaptive Probe Volumes instead of manually placing and configuring Light Probes.</p>
+
+<h2>Advantages and limitations</h2>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Feature</strong></th>
+	<th style="text-align:left;"><strong>Light Probe Groups</strong></th>
+	<th style="text-align:left;"><strong>Adaptive Probe Volumes</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">Selection of surrounding probes</td>
+	<td style="text-align:left;">Per <span class="tooltip" tabindex="0" ><strong>GameObject</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-GameObject.html" href="../class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span></td>
+	<td style="text-align:left;">Per <span class="tooltip" tabindex="0" ><strong>pixel</strong><span class="tooltiptext">The smallest unit in a computer image. Pixel size depends on your screen resolution. Pixel lighting is calculated at every screen pixel. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ShadowPerformance.html" href="../ShadowPerformance.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#pixel" aria-label="Go to glossary anchor for pixel">Glossary</a></span></span></span></td>
+</tr>
+<tr>
+	<td style="text-align:left;">Optimize memory use with streaming</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Place probes automatically</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Blend between different bakes</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Place probes manually</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">No</td>
+</tr>
+</tbody>
+</table>
+
+<p>Adaptive Probe Volumes have the following advantages:</p>
+
+<ul>
+<li>Unity samples surrounding probes per-pixel rather than per GameObject. This sampling approach results in better lighting consistency, and fewer seams between adjacent GameObjects.</li>
+<li>You can adjust Light Probe layouts across a scene, for example using a denser set of Light Probes in an interior area with more detailed lighting or geometry. Refer to <a href="probevolumes-changedensity.html">Configure the size and density of Adaptive Probe Volumes</a> for more information.</li>
+<li>Adaptive Probe Volumes work well if you <a href="https://docs.unity3d.com/Manual/MultiSceneEditing.html">work with multiple scenes</a>. Refer to <a href="probevolumes-concept.html#baking-sets">Baking Sets</a> for more information.</li>
+<li>Adaptive Probe Volumes include <a href="probevolumes-streaming.html">streaming</a> functionality to support large open worlds.</li>
+<li>You can use Adaptive Probe Volumes to <a href="probevolumes-skyocclusion.html">update light from the sky at runtime with sky occlusion</a>.</li>
+</ul>
+
+<figure>
+<img src="../../uploads/urp/probe-volumes/probevolumes-per-pixel.jpg" alt="The car model is made up of separate GameObjects. The left scene uses Light Probe Groups, which use per-object lighting, so each part of the car samples a single blended probe value. The right scene uses Adaptive Probe Volumes, which use per-pixel lighting, so each part of the car samples its nearest probes. This image uses the ArchVizPRO Photostudio URP asset from the Unity Asset Store.">
+<figcaption>The car model is made up of separate GameObjects. The left scene uses Light Probe Groups, which use per-object lighting, so each part of the car samples a single blended probe value. The right scene uses Adaptive Probe Volumes, which use per-pixel lighting, so each part of the car samples its nearest probes. This image uses the ArchVizPRO Photostudio URP asset from the Unity Asset Store.</figcaption>
+</figure>
+
+<p>Adaptive Probe Volumes have the following limitations:</p>
+
+<ul>
+<li>You can’t adjust the locations of Light Probes inside an Adaptive Probe Volume. You can use settings and overrides to try to fix visible artifacts, but it might not be possible to make sure Light Probes follow walls or are at the exact boundary between different lighting areas. Refer to <a href="probevolumes-fixissues.html">Fix issues with Adaptive Probe Volumes</a> for more information.</li>
+<li>You can’t convert <span class="tooltip" tabindex="0" ><a href="https://docs.unity3d.com/Manual/LightProbes.html">Light Probe Groups</a><span class="tooltiptext">A component that enables you to add Light Probes to GameObjects in your scene. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-LightProbeGroup.html" href="../class-LightProbeGroup.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#LightProbeGroup" aria-label="Go to glossary anchor for LightProbeGroup">Glossary</a></span></span></span> into an Adaptive Probe Volume.</li>
+</ul>
+
+<p><a name="how-probe-volumes-work" aria-hidden="true"></a></p>
+
+<h2>How Adaptive Probe Volumes work</h2>
+
+<p>The Universal <span class="tooltip" tabindex="0" ><strong>Render Pipeline</strong><span class="tooltiptext">A series of operations that take the contents of a Scene, and displays them on a screen. Unity lets you choose from pre-built render pipelines, or write your own. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about render-pipelines.html" href="../render-pipelines.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#renderpipeline" aria-label="Go to glossary anchor for renderpipeline">Glossary</a></span></span></span> (URP) automatically fills an Adaptive Probe Volume with a 3D structure of ‘bricks’. Each brick contains 64 Light Probes, arranged in a 4 × 4 × 4 grid.</p>
+
+<p>URP uses bricks with different sizes to match the amount of geometry in different areas of your scene. For example, in areas with more geometry, URP uses small bricks with a short distance between Light Probes. The Light Probes capture lighting at a higher resolution, so lighting is more accurate.</p>
+
+<p>The default Light Probe spacing is 1, 3, 9, or 27 m.</p>
+
+<p>
+<img src="../../uploads/urp/probe-volumes/probevolumes-debug-displayprobebricks1.PNG" alt="In this screenshot from the Rendering Debugger, the small purple bricks contain Light Probes spaced 1 meter apart, to capture data from high-geometry areas. The large blue bricks contain Light Probes spaced 3 meters apart, to capture data from areas with less geometry."><br>
+</p>
+
+<p>Each pixel of a GameObject samples lighting data from the eight closest Light Probes around it.</p>
+
+<p>You can do the following:</p>
+
+<ul>
+<li>Use the Rendering Debugger to visualize the layout of bricks and Light Probes. Refer to <a href="probevolumes-showandadjust.html">Display Adaptive Probe Volumes</a>.</li>
+<li>
+<a href="probevolumes-changedensity.html">Configure the size and density of Adaptive Probe Volumes</a>.</li>
+<li>
+<a href="probevolumes-troubleshoot-light-leaks.html#volume">Add a Volume to your scene</a> to adjust which Light Probes GameObjects sample.</li>
+</ul>
+
+<p><a name="baking-sets" aria-hidden="true"></a></p>
+
+<h2>Baking Sets</h2>
+
+<p>To store lighting from a scene in an Adaptive Probe Volume, the scene must be part of a Baking Set.</p>
+
+<p>A Baking Set contains the following:</p>
+
+<ul>
+<li>One or more scenes, which optionally include Adaptive Probe Volumes.</li>
+<li>A single collection of settings.</li>
+</ul>
+
+<p>By default, URP uses <strong>Single Scene</strong> mode, and places each scene in its own Baking Set automatically. However, only one Baking Set can be active at any time, so if you <a href="https://docs.unity3d.com/Manual/MultiSceneEditing.html">work with multiple scenes</a>, you must add these scenes to a single Baking Set if you want to bake them together. Refer to <a href="probevolumes-usebakingsets.html">Bake multiple scenes together with Baking Sets</a> for more information.</p>
+
+<p><a name="lighting-scenarios" aria-hidden="true"></a></p>
+
+<h3>Lighting Scenarios</h3>
+
+<p>A Lighting Scenario asset contains the baked lighting data for a scene or Baking Set. You can bake different lighting setups into different Lighting Scenario assets, and change which one URP uses at runtime, or blend between them.</p>
+
+<p>Refer to <a href="probevolumes-bakedifferentlightingsetups.html">Bake different lighting setups with Lighting Scenarios</a> for more information.</p>
+
+<h4>How Lighting Scenarios store data</h4>
+
+<p>Adaptive Probe Volumes splits Lighting Scenario data into two parts, to avoid duplicating data:</p>
+
+<ul>
+<li>The shared data, which contains mainly the scene subdivision information and probe placement.</li>
+<li>The per scenario data, which contains the probe lighting information.</li>
+</ul>
+
+<p>URP can’t share the data or blend between Lighting Scenarios if you move geometry between bakes, because the Light Probe positions might change. Refer to <a href="probevolumes-bakedifferentlightingsetups.html#keep-light-probes-the-same-in-different-lighting-scenarios">Keep Light Probes the same in different Lighting Scenarios</a> for more information.</p>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="https://docs.unity3d.com/Manual/LightProbes.html">Light Probes</a></li>
+<li><a href="https://docs.unity3d.com/Documentation/Manual/MultiSceneEditing.html">Work with multiple scenes in Unity</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="../urp/probevolumes.html"></a></span><div class="tip">Adaptive Probe Volumes (APV) in URP</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="../urp/probevolumes-use.html"></a></span><div class="tip">Use Adaptive Probe Volumes</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

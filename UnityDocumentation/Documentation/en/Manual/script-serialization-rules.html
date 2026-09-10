@@ -1,0 +1,359 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Serialization rules</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<meta property="relative-path-to-manual" content="">
+<meta property="version-switcher-versions-with-this-page" content="Versions with this page:">
+<meta property="version-switcher-versions-without-this-page" content="Versions without this page:">
+<meta property="version-switcher-supported" content="Supported">
+<meta property="version-switcher-legacy" content="Legacy">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/Manual/script-serialization-rules.html">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20260626"></script><script type="text/javascript" src="docdata/toc.js?ts=20260626"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20260626"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20260626">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20260626">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/script-serialization-rules.html">English</a></li>
+<li><a href="/cn/current/Manual/script-serialization-rules.html">中文</a></li>
+<li><a href="/ja/current/Manual/script-serialization-rules.html">日本語</a></li>
+<li><a href="/kr/current/Manual/script-serialization-rules.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: Unity 6.7 Beta</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/script-serialization-rules.html">English</a></li>
+<li><a href="/cn/current/Manual/script-serialization-rules.html">中文</a></li>
+<li><a href="/ja/current/Manual/script-serialization-rules.html">日本語</a></li>
+<li><a href="/kr/current/Manual/script-serialization-rules.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="scripting.html">Programming in Unity</a></li>
+<li><a href="compilation-and-code-reload.html">Compilation and code reload </a></li>
+<li><a href="script-serialization.html">Script serialization</a></li>
+<li>Serialization rules</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="script-serialization.html"></a></span><div class="tip">Script serialization</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="script-serialization-analyzer.html"></a></span><div class="tip">Serialization rules analyzer reference</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Serialization rules</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Unity uses its own serialization system, designed to operate efficiently at runtime. Because of this, serialization in Unity behaves differently to serialization in other programming environments. This page describes the conditions that fields and types must meet for Unity to serialize them.</p>
+
+<h2>Key principles</h2>
+
+<p>The following principles apply to Unity serialization:</p>
+
+<ul>
+<li>Unity serializes fields of your C# classes rather than their properties. Refer to <a href="#properties">Serialization of properties</a> for details.</li>
+<li>Unity supports the standard .NET <a href="https://learn.microsoft.com/en-us/dotnet/api/system.serializableattribute?view=net-9.0"><code>[Serializable]</code></a> and <a href="https://learn.microsoft.com/en-us/dotnet/api/system.nonserializedattribute?view=net-9.0"><code>[NonSerialized]</code></a> attributes, but their behavior is subject to the additional Unity-specific rules described in the following sections.</li>
+<li>Unity automatically serializes built-in types that inherit from <a href="class-Object.html"><code>UnityEngine.Object</code></a>. You only need to apply <code>[Serializable]</code> to custom classes or structs used as fields in Unity objects.</li>
+<li>The <code>[Serializable]</code> attribute is not inherited by subclasses. You must apply it to each class in an inheritance hierarchy. Unity does not require <code>[Serializable]</code> on system base classes (such as <code>System.Object</code>) that you can’t modify. For other non-modifiable base classes, such as types from third-party libraries, use <a href="../ScriptReference/MakeSerializableAttribute.html"><code>[MakeSerializable]</code></a> to include them in the serialization hierarchy.</li>
+<li>
+<code>[NonSerialized]</code> excludes a field from both serialization and the <span class="tooltip" tabindex="0" ><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheInspector.html" href="UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span>. To hide a field in the Inspector without preventing serialization, use <a href="../ScriptReference/HideInInspector.html"><code>[HideInInspector]</code></a>.</li>
+</ul>
+
+<h2>Field serialization rules</h2>
+
+<p>Serializers in Unity work directly on the <strong>fields</strong> of your C# classes rather than their properties, so Unity only serializes your fields if they meet certain conditions.</p>
+
+<p>To use field serialization you must ensure that the field:</p>
+
+<ul>
+<li>Is <code>public</code>, or has a <a href="../ScriptReference/SerializeField.html"><code>[SerializeField]</code></a> attribute
+
+<ul>
+<li>
+<strong>Note</strong>: In some cases <code>private</code> fields are serialized. For more information, refer to <a href="script-serialization-how-unity-uses.html#hot-reload">Hot reloading</a>.</li>
+</ul>
+</li>
+<li>Is not <code>static</code>
+</li>
+<li>Is not <code>const</code>
+</li>
+<li>Is not <code>readonly</code>
+</li>
+<li>Has a field type that can be serialized:
+
+<ul>
+<li>Primitive data types (int, float, double, bool, string, etc.).</li>
+<li>Enum types (32 bits or smaller).</li>
+<li>Fixed-size buffers.</li>
+<li>Unity built-in types, for example, Vector2, Vector3, Rect, Matrix4x4, Color, AnimationCurve.</li>
+<li>Custom structs with the <code>[Serializable]</code> attribute.</li>
+<li>References to objects that derive from <a href="../ScriptReference/Object.html">UnityEngine.Object</a>.</li>
+<li>Custom classes with the <code>[Serializable]</code> attribute. (Refer to <a href="#CustomClasses">Serialization of custom classes</a>).</li>
+<li>An array or <code>List&lt;T&gt;</code> of a field type listed above.</li>
+<li>
+<code>Dictionary&lt;TKey, TValue&gt;</code> with a <code>[SerializeField]</code> attribute. Refer to <a href="script-serialization-dictionaries.html">Dictionary serialization</a>.</li>
+</ul>
+</li>
+</ul>
+
+<p>
+<strong>Note</strong>: With default inline serialization, if the same element appears in a collection twice, the serialized collection contains two separate copies rather than two references to the same object. To preserve multiple references to the same object, use <a href="../ScriptReference/SerializeReference.html"><code>[SerializeReference]</code></a>.</p>
+
+<p>
+<strong>Note</strong>: Unity doesn’t support serialization of multidimensional arrays, jagged arrays, or collections nested directly in another collection (for example, <code>List&lt;Dictionary&lt;string, int&gt;&gt;</code> or <code>Dictionary&lt;string, int&gt;[]</code>). If you need to serialize such a structure, you have two options:</p>
+
+<ul>
+<li>Wrap the nested type in a class or struct.</li>
+<li>Use serialization callbacks by implementing <a href="../ScriptReference/ISerializationCallbackReceiver.html">ISerializationCallbackReceiver</a> to perform <a href="script-serialization-custom-serialization.html">custom serialization</a>.</li>
+</ul>
+
+<p>The following example demonstrates a common mistake where <code>[Serializable]</code> is missing from a custom class:</p>
+
+<pre><code class="lang-csharp">// INCORRECT: Missing [Serializable] — Unity won't serialize PlayerStats
+public class PlayerStats
+{
+    public int health;
+    public int mana;
+}
+
+public class Player : MonoBehaviour
+{
+    public PlayerStats stats; // This field won't be serialized
+}
+</code></pre>
+
+<p>To make the class serializable, add the <code>[Serializable]</code> attribute:</p>
+
+<pre><code class="lang-csharp">// CORRECT: PlayerStats is now serializable
+[System.Serializable]
+public class PlayerStats
+{
+    public int health;
+    public int mana;
+}
+
+public class Player : MonoBehaviour
+{
+    public PlayerStats stats; // Serialized correctly
+}
+</code></pre>
+
+<p>For more examples and compile-time detection of serialization issues, refer to the <a href="script-serialization-analyzer.html">serialization rules analyzer</a>.</p>
+
+<h2>
+<a name="CustomClasses" aria-hidden="true"></a> Serialization of custom classes</h2>
+
+<p>For Unity to serialize a custom class, you must ensure the class:</p>
+
+<ul>
+<li>Has the <a href="https://learn.microsoft.com/en-us/dotnet/api/system.serializableattribute?view=net-9.0"><code>[Serializable]</code></a> attribute.</li>
+<li>Is not static.</li>
+</ul>
+
+<p>When you assign an instance of a <code>UnityEngine.Object</code>-derived class to a field and Unity saves that field, Unity serializes the field as a reference to that instance. Unity serializes the instance itself independently, so it isn’t duplicated when multiple fields are assigned to the instance. But for custom classes which don’t derive from <code>UnityEngine.Object</code>, Unity includes the state of the instance directly in the serialized data of the MonoBehaviour or ScriptableObject that references them. There are two ways that this can happen: <strong>inline</strong> and by <strong><code>[SerializeReference]</code></strong>.</p>
+
+<ul>
+<li>
+<strong>Inline serialization</strong>: By default, Unity serializes custom classes inline by value when you don’t specify <code>[SerializeReference]</code> on the field that references the class. This means that if you store a reference to an instance of a custom class in several different fields, they become separate objects when serialized. Then, when Unity deserializes the fields, they contain different distinct objects with identical data.</li>
+<li>
+<strong><code>[SerializeReference]</code> serialization</strong>: If you do specify <code>[SerializeReference]</code>, Unity establishes the object as a managed reference. The host object still stores the objects directly in its serialized data, but in a dedicated registry section.</li>
+</ul>
+
+<p>
+<strong>Important</strong>: You can use <code>[SerializeReference]</code> only on fields with reference types (classes). You cannot use it on value types such as structs, enums, or primitive types (int, float, etc.). Value types are always serialized inline and cannot be serialized by reference.</p>
+
+<p>
+<code>[SerializeReference]</code> adds some overhead but supports the following cases:</p>
+
+<ul>
+<li>
+<strong>Null fields</strong>. Inline serialization can’t represent null. Instead, it replaces null with an inline object that has unassigned fields.</li>
+<li>
+<strong>Shared references</strong>. If you store a reference to an instance of a custom class in several different fields without using <code>[SerializeReference]</code>, they become separate objects when serialized.</li>
+<li>
+<strong>Graphs and cyclical data</strong> (for example, an object that has a reference back to itself). Inline serialization duplicates the full object graph by value, so it can’t represent cycles. Refer to <a href="#serialization-cycles">Serialization cycles</a> for details.</li>
+<li>
+<strong>Polymorphism</strong>. If you create a class that derives from a parent class and assign it to a field that uses the parent class as its type, without <code>[SerializeReference]</code> Unity only serializes the fields that belong to the parent class. When Unity deserializes the class instance, it instantiates the parent class instead of the derived class.</li>
+<li>
+<strong>Stable identifiers</strong> for pointing to a specific object without hard-coding the object’s array position or searching the entire array. Refer to <a href="../ScriptReference/Serialization.ManagedReferenceUtility.SetManagedReferenceIdForObject.html">Serialization.ManagedReferenceUtility.SetManagedReferenceIdForObject</a>.</li>
+</ul>
+
+<p>
+<strong>Note</strong>: Inline serialization is more efficient, and you should use it unless you specifically need one of the features that <code>[SerializeReference]</code> supports. For full details on how to use <code>[SerializeReference]</code>, refer to the <a href="../ScriptReference/SerializeReference.html">SerializeReference</a> documentation.</p>
+
+<p>When you use <code>[SerializeReference]</code>, Unity doesn’t strictly enforce <code>[Serializable]</code>, but displays a warning in the Console if a class isn’t marked <code>[Serializable]</code>. You can suppress this warning with the <a href="../ScriptReference/MakeSerializableAttribute.html"><code>[MakeSerializable]</code></a> attribute.</p>
+
+<h3 id="serialization-cycles">Serialization cycles</h3>
+
+<p>When using inline serialization (without <code>[SerializeReference]</code>), Unity handles cycles as follows:</p>
+
+<ul>
+<li>
+<strong>Direct self-reference</strong> (a class contains a field of its own type): Unity ignores the class entirely during serialization. Any field of this type is always null after deserialization.</li>
+<li>
+<strong>Indirect cycles</strong> (for example, <strong>A</strong> &gt; <strong>B</strong> &gt; <strong>A</strong>): Unity serializes the structure but stops after 10 levels of recursion and discards the remaining data.</li>
+</ul>
+
+<p>For direct self-references, Unity silently ignores the field. For indirect cycles, Unity logs a warning indicating that the serialization depth limit is exceeded and discards the remaining data. Use <code>[SerializeReference]</code> on the relevant fields to correctly serialize data structures with cycles. For compile-time detection of cycle issues, refer to analyzer rules <a href="script-serialization-analyzer.html#uac1005">UAC1005</a> through <a href="script-serialization-analyzer.html#uac1008">UAC1008</a>.</p>
+
+<h2 id="properties">Serialization of properties</h2>
+
+<p>Unity doesn’t serialize properties. However, if the property is backed by a field, the field can be serialized.</p>
+
+<ul>
+<li>If a property has an explicit backing field, Unity serializes it according to regular serialization rules. For example:</li>
+</ul>
+
+<pre><code class="lang-csharp">public int MyInt
+{
+get =&gt; m_backing;
+private set =&gt; m_backing = value;
+}
+[SerializeField] private int m_backing;
+</code></pre>
+
+<ul>
+<li>If a property is an auto-property, then a private backing field is generated for it implicitly by the compiler, and the regular serialization rules apply to this backing field. You can apply attributes to this field by using the <code>field:</code> prefix on attributes for the property. For example:</li>
+</ul>
+
+<pre><code class="lang-csharp">// Serialize the implicit backing field behind this property
+[field: SerializeField]
+public int MyInt { get; set; }
+
+// Serialize the implicit backing field behind this property as a reference instead of inline
+[field: SerializeReference]
+public MyType MyReferenceToType { get; set;}
+
+// Do not serialize the backing field for this property even when hot-reloading
+[field: NonSerialized]
+public bool NeverSerializedProperty { get; set;}
+</code></pre>
+
+<h2 id="common-issues">Avoid common serialization issues</h2>
+
+<p>Unity skips fields that don’t follow its serialization rules, often without producing a visible error, which can cause unexpected data loss. To avoid the most common problems, follow these practices:</p>
+
+<ul>
+<li>
+<strong>Add <code>[Serializable]</code> to every custom class and struct you intend to serialize.</strong> This applies to both inline serialization and <code>[SerializeReference]</code>.</li>
+<li>
+<strong>Mark every class in an inheritance hierarchy with <code>[Serializable]</code>.</strong> The attribute isn’t inherited, so each class must be explicitly marked.</li>
+<li>
+<strong>Use <code>[SerializeReference]</code> for complex relationships.</strong> If your data structure involves null references, polymorphism, shared references, or cycles, use <code>[SerializeReference]</code> instead of inline serialization.</li>
+<li>
+<strong>Avoid cycles in inline serialization.</strong> Without <code>[SerializeReference]</code>, direct self-reference cycles cause Unity to ignore the field entirely, and indirect cycles are serialized with a 10-level recursion limit. Use indices, IDs, or <code>[SerializeReference]</code> to avoid these issues.</li>
+<li>
+<strong>Don’t use <code>[SerializeReference]</code> on value types.</strong> Structs, primitives, and enums are always serialized inline. <code>[SerializeReference]</code> only works with reference types (classes).</li>
+</ul>
+
+<p>The <a href="script-serialization-analyzer.html">serialization rules analyzer</a> detects these issues at compile time and provides real-time feedback in your IDE.</p>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="script-serialization-analyzer.html">Serialization rules analyzer</a></li>
+<li><a href="script-serialization-how-unity-uses.html">How Unity uses serialization</a></li>
+<li><a href="script-serialization-custom-serialization.html">Custom serialization</a></li>
+<li><a href="json-serialization.html">JSON Serialization</a></li>
+<li><a href="script-serialization-best-practices.html">Serialization best practices</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="script-serialization.html"></a></span><div class="tip">Script serialization</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="script-serialization-analyzer.html"></a></span><div class="tip">Serialization rules analyzer reference</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

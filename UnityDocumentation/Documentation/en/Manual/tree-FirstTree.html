@@ -1,0 +1,385 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Design a tree</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<meta property="relative-path-to-manual" content="">
+<meta property="version-switcher-versions-with-this-page" content="Versions with this page:">
+<meta property="version-switcher-versions-without-this-page" content="Versions without this page:">
+<meta property="version-switcher-supported" content="Supported">
+<meta property="version-switcher-legacy" content="Legacy">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/Manual/tree-FirstTree.html">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20260626"></script><script type="text/javascript" src="docdata/toc.js?ts=20260626"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20260626"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20260626">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20260626">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/tree-FirstTree.html">English</a></li>
+<li><a href="/cn/current/Manual/tree-FirstTree.html">中文</a></li>
+<li><a href="/ja/current/Manual/tree-FirstTree.html">日本語</a></li>
+<li><a href="/kr/current/Manual/tree-FirstTree.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: Unity 6.7 Beta</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/tree-FirstTree.html">English</a></li>
+<li><a href="/cn/current/Manual/tree-FirstTree.html">中文</a></li>
+<li><a href="/ja/current/Manual/tree-FirstTree.html">日本語</a></li>
+<li><a href="/kr/current/Manual/tree-FirstTree.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="CreatingEnvironments.html">World building</a></li>
+<li><a href="script-Terrain.html">Terrain</a></li>
+<li><a href="terrain-Trees-Landing.html">Trees</a></li>
+<li><a href="class-Tree.html">Create trees with Tree Editor</a></li>
+<li>Design a tree</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="terrain-Trees-Mat-Shaders.html"></a></span><div class="tip">Shaders and the Ambient-Occlusion folder</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="terrain-Tree-From-Mesh.html"></a></span><div class="tip">Create trees and leaves from meshes</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Design a tree</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Design a tree in the Tree Editor, create its materials, and add <span class="tooltip" tabindex="0" ><strong>colliders</strong><span class="tooltiptext">An invisible shape that is used to handle physical collisions for an object. A collider doesn’t need to be exactly the same shape as the object’s mesh - a rough approximation is often more efficient and indistinguishable in gameplay. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CollidersOverview.html" href="CollidersOverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#collider" aria-label="Go to glossary anchor for collider">Glossary</a></span></span></span>.</p>
+
+<p>If you want to use an imported <span class="tooltip" tabindex="0" ><strong>mesh</strong><span class="tooltiptext">The main graphics primitive of Unity. Meshes make up a large part of your 3D worlds. Unity supports triangulated or Quadrangulated polygon meshes. Nurbs, Nurms, Subdiv surfaces must be converted to polygons. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about mesh.html" href="mesh.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Mesh" aria-label="Go to glossary anchor for Mesh">Glossary</a></span></span></span>, refer to <a href="terrain-Tree-From-Mesh.html">Create trees and leaves from meshes</a>.</p>
+
+<h2>Add a new tree</h2>
+
+<p>To create a new <strong>Tree</strong> asset, from the main menu, select <strong>GameObject</strong> &gt; <strong>3D Object</strong> &gt; <strong>Tree</strong>.</p>
+
+<p>This action adds a tree to your <span class="tooltip" tabindex="0" ><strong>Scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html" href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span> view. It also adds a tree <span class="tooltip" tabindex="0" ><strong>prefab</strong><span class="tooltiptext">An asset type that allows you to store a GameObject complete with components and properties. The prefab acts as a template from which you can create new object instances in the scene. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Prefabs.html" href="Prefabs.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#prefab" aria-label="Go to glossary anchor for prefab">Glossary</a></span></span></span> (<code>Tree.prefab</code>) and a texture folder (<code>Tree_Textures</code>) in the <code>Assets</code> folder of your <strong>Project</strong> window.</p>
+
+<h2>Place the tree in the Ambient-Occlusion folder</h2>
+
+<p>Trees can render correctly only when placed in a folder called <code>Ambient-Occlusion</code>.</p>
+
+<ol>
+<li>In the <strong>Project</strong> window, select the <code>Assets</code> folder.</li>
+<li>Select <strong>Add</strong> (+) &gt; <strong>Folder</strong>.</li>
+<li>Give the folder the name <code>Ambient-Occlusion</code>.</li>
+<li>Move the tree prefab and its texture folder into the <code>Ambient-Occlusion</code> folder.</li>
+</ol>
+
+<h2>Add branches and leaves</h2>
+
+<p>The first branch functions as the trunk - it starts on the ground and grows upwards. This example creates a single trunk, but you can create multiple trunks, for example for a group of reeds (refer to the Frequency property in the <a href="tree-Branches.html">Branch group reference</a>). </p>
+
+<figure>
+<img src="../uploads/Main/TreeCreator-BasicBranch.png" alt="A new tree, showing only the first branch, which functions as the tree trunk.">
+<figcaption>A new tree, showing only the first branch, which functions as the tree trunk.</figcaption>
+</figure>
+
+<h3>Available group actions</h3>
+
+<p>Select the tree to view it in the <strong>Inspector</strong> window. The <strong>Tree Hierarchy</strong> view shows the <span class="no tooltip">root node</span> and the branch group that functions as the trunk. To learn more, refer to <a href="tree-Structure.html">Tree Editor concepts</a>.</p>
+
+<p>Use the <strong>Tree Hierarchy</strong> view controls to manage branch and leaf groups:</p>
+
+<ul>
+<li>
+<strong>Add Leaf Group</strong>. You can add a leaf group to the tree <span class="tooltip" tabindex="0" ><strong>root node</strong><span class="tooltiptext">A transform in an animation hierarchy that allows Unity to establish consistency between Animation clips for a generic model. It also enables Unity to properly blend between Animations that have not been authored “in place” (that is, where the whole Model moves its world position while animating). <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-AnimationClip.html#AllClipProperties" href="class-AnimationClip.html#AllClipProperties">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Rootnode" aria-label="Go to glossary anchor for Rootnode">Glossary</a></span></span></span> or any branch group, but not to another leaf group. The leaf group is always one level above the branch group to which you added it.</li>
+<li>
+<strong>Add Branch Group</strong>. You can add a branch group to the tree root node or another branch group, but not to a leaf group. The branch group is always one level above the branch group to which you added it.</li>
+<li>
+<strong>Duplicate Selected Group</strong>. Create a copy of the group, with the same settings and at the same level.</li>
+<li>
+<strong>Delete Selected Group</strong>. Note that if you delete a group that has subgroups, the subgroups are also deleted.</li>
+</ul>
+
+<figure>
+<img src="../uploads/Main/TreeGroupTools.png" alt="Four options for managing branches and leaves. From left to right: Add Leaf Group, Add Branch Group, Duplicate Selected Group, and Delete Selected Group.">
+<figcaption>Four options for managing branches and leaves. From left to right: Add Leaf Group, Add Branch Group, Duplicate Selected Group, and Delete Selected Group.</figcaption>
+</figure>
+
+<h3>Add branches</h3>
+
+<p>Branches are managed in groups. To add branches to the tree trunk, in the <strong>Tree Hierarchy</strong> view, select the existing branch group (the trunk) and click <strong>Add Branch Group</strong>.</p>
+
+<p>A new branch group has only one branch. To add more branches, in the <strong>Inspector</strong> window &gt; <strong>Tree Hierarchy</strong> view, select the new branch group and change its <strong>Frequency</strong> setting.</p>
+
+<figure>
+<img src="../uploads/Main/TreeCreator-AddingBranches1.png" alt="A tree trunk with a single branch group.">
+<figcaption>A tree trunk with a single branch group.</figcaption>
+</figure>
+
+<p>To add smaller branches to the existing branches, select the branch group you just added (not the trunk) and click <strong>Add Branch Group</strong>. The new branch group is added at a level above the selected branch group. Change the new group’s frequency to add more branches. </p>
+
+<p>
+<strong>Note</strong>: The frequency isn’t always the final number of branches. The number of branches in the first group does equal its frequency, because those branches all grow out of a single branch (the trunk). In this new group, however, the branches grow from all the branches in the previous group, and so their frequency is distributed. To create a natural look, the growth isn’t uniform, meaning the distribution isn’t even. As a result, the final number of branches in the second group isn’t a simple product of the two frequencies. </p>
+
+<figure>
+<img src="../uploads/Main/TreeCreator-AddingBranches2.png" alt="The tree has two branch groups, one growing from the trunk and one growing from the first branch group. The Tree Hierarchy view shows both branch groups, the trunk, and the root node.">
+<figcaption>The tree has two branch groups, one growing from the trunk and one growing from the first branch group. The Tree Hierarchy view shows both branch groups, the trunk, and the root node.</figcaption>
+</figure>
+
+<p>A new branch group’s growth angle is parallel to the ground. To change the angle, select the branch group and adjust its <strong>Growth Angle</strong> setting. You can also change its <strong>Seek Sun</strong> setting to make the branches bend upwards or downwards.</p>
+
+<p>For more branch group settings and to learn about fronds, refer to <a href="tree-Branches.html">Branch group reference</a>.</p>
+
+<h3>Add leaves</h3>
+
+<p>You can add leaves to any branch group, including the trunk. You can also add leaves to the tree root node, which gives the effect of leaves scattered on the ground. Like branches, leaves are managed in groups.</p>
+
+<p>To add leaves to a branch group, select the branch group and click <strong>Add Leaf Group</strong>.</p>
+
+<figure>
+<img src="../uploads/Main/TreeCreator-AddingLeaves.png" alt="The tree has leaves growing from both branch groups, but not the trunk or root node. The Tree Hierarchy view shows one leaf group attached to each branch group.">
+<figcaption>The tree has leaves growing from both branch groups, but not the trunk or root node. The Tree Hierarchy view shows one leaf group attached to each branch group.</figcaption>
+</figure>
+
+<p>Leaves are added as an opaque plane. Change the group settings until you like the leaves’ appearance before adding materials. For more information, refer to <a href="tree-Leaves.html">Leaf group reference</a>.</p>
+
+<h3>Add fruit</h3>
+
+<p>You can use the leaf group to add fruit. Refer to <a href="terrain-Tree-From-Mesh.html">Create trees and leaves from meshes</a> for more information.</p>
+
+<p>To create fruit and leaves that overlap, add two leaf groups at the same level, and give them the same frequency and distribution.</p>
+
+<h2>Add materials</h2>
+
+<p>Trees have four materials: for the leaves, the fronds, the bark, and the cross-section visible on broken branches.</p>
+
+<h3>Create a material</h3>
+
+<p>To create a material:</p>
+
+<ol>
+<li><p>From the main menu, select <strong>Assets</strong> &gt; <strong>Create</strong> &gt; <strong>Material</strong>.</p></li>
+<li><p>Name the material.</p></li>
+<li>In the <strong><span class="tooltip" tabindex="0" ><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheInspector.html" href="UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span></strong> window, select the <strong><span class="tooltip" tabindex="0" ><strong>Shader</strong><span class="tooltiptext">A program that runs on the GPU. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Shaders.html" href="Shaders.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#shader" aria-label="Go to glossary anchor for shader">Glossary</a></span></span></span></strong> drop-down and choose either:
+
+<ul>
+<li>For leaves: <strong>Nature</strong> &gt; <strong>Tree Creator Leaves</strong>.</li>
+<li>For bark (trunk and branches): <strong>Nature</strong> &gt; <strong>Tree Creator Bark</strong>.</li>
+</ul>
+
+<p>Tree Editor trees and leaves must use these shaders. You can’t use your own shaders.</p>
+</li>
+<li>
+<p>Add textures. If you don’t have textures yet, you can rely on the <strong>Main color</strong> selection for testing, or download assets from the <a href="https://assetstore.unity.com/">Unity Asset Store</a>.</p>
+
+<p>To learn more about textures, refer to <span class="tooltip" tabindex="0" ><a href="Textures.html">Textures</a><span class="tooltiptext">An image used when rendering a GameObject, Sprite, or UI element. Textures are often applied to the surface of a mesh to give it visual detail. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-TextureImporter.html" href="class-TextureImporter.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#texture" aria-label="Go to glossary anchor for texture">Glossary</a></span></span></span>.</p>
+</li>
+</ol>
+
+<figure>
+<img src="../uploads/Main/TreeCreator-LeavesMaterial.png" alt="The Inspector window showing a new leaf material and its textures. The shader is Nature/Tree Creator Leaves.">
+<figcaption>The Inspector window showing a new leaf material and its textures. The shader is Nature/Tree Creator Leaves.</figcaption>
+</figure>
+
+<h3>Add a material to the tree</h3>
+
+<p>To add a material to a group, select the group in the <strong>Tree Hierarchy</strong> view and assign the material in its <strong>Geometry</strong> section:</p>
+
+<ul>
+<li>Leaves have only one material.</li>
+<li>Branches have two materials: <strong>Branch Material</strong> for the bark of the branch, and <strong>Break Material</strong> for the cross-section of a broken branch.</li>
+</ul>
+
+<figure>
+<img src="../uploads/Main/TreeCreator-material-closeup.png" alt="A close up of a tree showing the branch material and the break material.">
+<figcaption>A close up of a tree showing the branch material and the break material.</figcaption>
+</figure>
+
+<h2>Transform individual branches and leaves</h2>
+
+<p>GameObject transforms work only on the tree as a whole and are available when you select the tree root node. </p>
+
+<p>To transform individual branches and leaves, use the tree creator’s control points.</p>
+
+<p>
+<strong>Tip</strong>: To <a href="class-Transform.html">transform</a> the entire tree, click the <strong>Tree Root Node</strong> button.</p>
+
+<h3>Display the branch or leaf control points</h3>
+
+<p>When you select a branch group in the <strong>Tree Hierarchy</strong> view, the Unity Editor selects its branches in the <span class="tooltip" tabindex="0" ><strong>Scene view</strong><span class="tooltiptext">An interactive view into the world you are creating. You use the Scene View to select and position scenery, characters, cameras, lights, and all other types of Game Object. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheSceneView.html" href="UsingTheSceneView.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#SceneView" aria-label="Go to glossary anchor for SceneView">Glossary</a></span></span></span>. The branch or leaf group in the Scene view includes control points, which you can use to edit the branch or leaf. The following example shows a tree with a single branch selected.</p>
+
+<figure>
+<img src="../uploads/Main/TreeWithControlPoints01.png" alt="A single tree branch, the trunk, showing multiple control points along its length.">
+<figcaption>A single tree branch, the trunk, showing multiple control points along its length.</figcaption>
+</figure>
+
+<p>The control options are available from a <span class="tooltip" tabindex="0" ><strong>toolbar</strong><span class="tooltiptext">A row of buttons and basic controls at the top of the Unity Editor that allows you to interact with the Editor in various ways (e.g. scaling, translation). <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Toolbar.html" href="Toolbar.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#toolbar" aria-label="Go to glossary anchor for toolbar">Glossary</a></span></span></span> below the <strong>Tree Hierarchy</strong> view.</p>
+
+<figure>
+<img src="../uploads/Main/TreeHandEditTools.png" alt="The toolbar showing the three branch control options. From left to right: Move, Rotate, and Free Hand">
+<figcaption>The toolbar showing the three branch control options. From left to right: Move, Rotate, and Free Hand</figcaption>
+</figure>
+
+<h3>Transform branches</h3>
+
+<p>The control points of the branches pass through the center line of each branch. You can click and drag any of the control points to move the branch.</p>
+
+<p>For a branch, the control options are:</p>
+
+<ul>
+<li>
+<strong>Move Branch</strong>: Move a point on the branch. The rest of the branch remains in place, so the branch bends around the control point.</li>
+<li>
+<strong>Rotate Branch</strong>: Rotate the branch around the control point. The movement is only from the part of the branch above the control point.</li>
+<li>
+<strong>Free Hand</strong>: Draw a branch as a spline. Click and drag from the highest control point to add a part of the branch. Click on a lower control point to trim the branch down to that point.</li>
+</ul>
+
+<figure>
+<img src="../uploads/Main/TreeWithControlPoints02.png" alt="One of the control points on the tree trunk is to the side of the center line, creating a curving trunk">
+<figcaption>One of the control points on the tree trunk is to the side of the center line, creating a curving trunk</figcaption>
+</figure>
+
+<h3>Transform leaves</h3>
+
+<p>For leaves, the control options are:</p>
+
+<ul>
+<li>
+<strong>Move Leaf</strong>: Move a leaf up or down a branch. You can’t move a leaf to another branch.</li>
+<li>
+<strong>Rotate Leaf</strong>: Click the point at the center of the leaf and drag it to rotate the leaf around its axis.</li>
+</ul>
+
+<h3>Impact on procedural properties</h3>
+
+<p>Some branch and leaf properties are procedural, meaning that the Tree Editor generates them. When you edit a branch or leaf, the Tree Editor disables the procedural properties. </p>
+
+<p>To restore the procedural properties, click <strong>Convert to Procedural Group</strong>. This removes any edits you made by hand.</p>
+
+<h2>Add a collider</h2>
+
+<p>Colliders define the shape of an object. They calculate physical <span class="tooltip" tabindex="0" ><strong>collisions</strong><span class="tooltiptext">A collision occurs when the physics engine detects that the colliders of two GameObjects make contact or overlap, when at least one has a Rigidbody component and is in motion. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CollidersOverview.html" href="CollidersOverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#collision" aria-label="Go to glossary anchor for collision">Glossary</a></span></span></span> so that a character can’t walk through a tree, for example. Trees use the <strong><span class="tooltip" tabindex="0" ><strong>Capsule Collider</strong><span class="tooltiptext">A capsule-shaped collider component that handles collisions for GameObjects like barrels and character limbs. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-CapsuleCollider.html" href="class-CapsuleCollider.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#CapsuleCollider" aria-label="Go to glossary anchor for CapsuleCollider">Glossary</a></span></span></span></strong> component.</p>
+
+<p>To learn more about tree colliders, refer to <a href="terrain-Tree-Colliders.html">Add collision to trees</a>.</p>
+
+<h2>Add wind</h2>
+
+<p>Wind Zones animate tree movements. </p>
+
+<p>To add a <span class="tooltip" tabindex="0" ><strong>Wind Zone</strong><span class="tooltiptext">A GameObject that adds the effect of wind to your terrain. For instance, Trees within a wind zone will bend in a realistic animated fashion and the wind itself will move in pulses to create natural patterns of movement among the tree. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-WindZone.html" href="class-WindZone.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#windzone" aria-label="Go to glossary anchor for windzone">Glossary</a></span></span></span> <span class="tooltip" tabindex="0" ><strong>GameObject</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-GameObject.html" href="class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span>, in the tree’s <strong>Inspector</strong> window, click <strong>Create Wind Zone</strong>. You can do this from any branch or leaf group, but not from the tree root node.</p>
+
+<p>The Wind Zone’s default settings create a gentle breeze, and you can use it for your trees without changing it. If you want to create a stronger wind effect, refer to <a href="class-WindZone.html">Animate trees with Wind Zones</a>.</p>
+
+<h2>Hide the tree</h2>
+
+<p>The tree is now ready to be painted onto the <span class="tooltip" tabindex="0" ><strong>terrain</strong><span class="tooltiptext">The landscape in your scene. A Terrain GameObject adds a large flat plane to your scene and you can use the Terrain’s Inspector window to create a detailed landscape. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about terrain-UsingTerrains.html" href="terrain-UsingTerrains.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Terrain" aria-label="Go to glossary anchor for Terrain">Glossary</a></span></span></span> in groups. It’s a good idea to make the tree GameObject invisible so that you don’t accidentally move it or change its settings. </p>
+
+<p>Select the tree GameObject in the <strong>Hierarchy</strong> window, and in the <strong>Inspector</strong> window, disable the <strong>Visibility</strong> checkbox next to the GameObject’s name.</p>
+
+<h2>Add the tree to the terrain</h2>
+
+<p>Use the Paint Trees tool to add clumps of your tree to the terrain. Refer to <a href="terrain-Trees.html">Add trees to the terrain</a> for more information.</p>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="terrain-Tree-From-Mesh.html">Create trees and leaves from meshes</a></li>
+<li><a href="terrain-Trees-Mat-Shaders.html">Shaders and the Ambient-Occlusion folder</a></li>
+<li><a href="tree-Root-Node.html">Root node reference</a></li>
+<li><a href="tree-Branches.html">Branch group reference</a></li>
+<li><a href="tree-Leaves.html">Leaf group reference</a></li>
+<li><a href="tree-Structure.html">Tree Editor concepts</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="terrain-Trees-Mat-Shaders.html"></a></span><div class="tip">Shaders and the Ambient-Occlusion folder</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="terrain-Tree-From-Mesh.html"></a></span><div class="tip">Create trees and leaves from meshes</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

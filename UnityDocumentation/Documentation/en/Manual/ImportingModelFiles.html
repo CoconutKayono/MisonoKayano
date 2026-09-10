@@ -1,0 +1,338 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Importing a model</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<meta property="relative-path-to-manual" content="">
+<meta property="version-switcher-versions-with-this-page" content="Versions with this page:">
+<meta property="version-switcher-versions-without-this-page" content="Versions without this page:">
+<meta property="version-switcher-supported" content="Supported">
+<meta property="version-switcher-legacy" content="Legacy">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/Manual/ImportingModelFiles.html">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20260626"></script><script type="text/javascript" src="docdata/toc.js?ts=20260626"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20260626"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20260626">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20260626">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/ImportingModelFiles.html">English</a></li>
+<li><a href="/cn/current/Manual/ImportingModelFiles.html">中文</a></li>
+<li><a href="/ja/current/Manual/ImportingModelFiles.html">日本語</a></li>
+<li><a href="/kr/current/Manual/ImportingModelFiles.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: Unity 6.7 Beta</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/ImportingModelFiles.html">English</a></li>
+<li><a href="/cn/current/Manual/ImportingModelFiles.html">中文</a></li>
+<li><a href="/ja/current/Manual/ImportingModelFiles.html">日本語</a></li>
+<li><a href="/kr/current/Manual/ImportingModelFiles.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="assets-and-media.html">Assets and media</a></li>
+<li><a href="AssetTypes.html">Types of assets</a></li>
+<li><a href="models.html">Models</a></li>
+<li><a href="models-importing.html">Importing models into Unity</a></li>
+<li>Importing a model</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="models-importing.html"></a></span><div class="tip">Importing models into Unity</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="ConfiguringtheAvatar.html"></a></span><div class="tip">Importing a model with humanoid animations</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Importing a model</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Model files can contain a variety of data, such as meshes, animation rigs and clips, materials, and textures. </p>
+
+<p>Unity’s primary support for <span class="tooltip" tabindex="0" ><strong>model files</strong><span class="tooltiptext">A file containing a 3D data, which may include definitions for meshes, bones, animation, materials and textures. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about 3D-formats.html" href="3D-formats.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#modelfile" aria-label="Go to glossary anchor for modelfile">Glossary</a></span></span></span> is the FBX format. However, you can save your 3D files from most common 3D modeling software in <a href="HOWTO-ImportObjectsFrom3DApps.html">their native format</a> (for example, .max, .blend, .mb, .ma). When Unity finds these file types in your <code>Assets</code> folder, it calls your 3D modeling software’s FBX export <span class="tooltip" tabindex="0" ><strong>plug-in</strong><span class="tooltiptext">A set of code created outside of Unity that creates functionality in Unity. There are two kinds of plug-ins you can use in Unity: Managed plug-ins (managed .NET assemblies created with tools like Visual Studio) and Native plug-ins (platform-specific native code libraries). <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ./plug-ins.html" href="./plug-ins.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#plug-in" aria-label="Go to glossary anchor for plug-in">Glossary</a></span></span></span>, and imports the file. The 3D modeling software must be installed on the same computer as Unity, so in most cases it’s best practice to directly export as FBX from your application into your <code>Assets</code> folder.</p>
+
+<h2>Adjusting model settings</h2>
+
+<p>To open a model’s Import Settings, select the model from the <span class="tooltip" tabindex="0" ><a href="ProjectView.html">Project window</a><span class="tooltiptext">A window that shows the contents of your <code>Assets</code> folder (Project tab) <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ProjectView.html" href="ProjectView.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Projectwindow" aria-label="Go to glossary anchor for Projectwindow">Glossary</a></span></span></span>. The <span class="tooltip" tabindex="0" ><a href="UsingTheInspector.html">Inspector</a><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheInspector.html" href="UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span> then displays the Import Settings for the selected model.</p>
+
+<figure>
+<img src="../uploads/Main/model-import-settings.png" alt="The Import Settings window">
+<figcaption>The Import Settings window</figcaption>
+</figure>
+
+<p>
+<strong>Note:</strong> A SpeedTree model has different importing settings. For more information, refer to <a href="SpeedTreeImporter-Model.html">SpeedTree Model tab reference</a>.</p>
+
+<h2>Rig and animation settings</h2>
+
+<p>If your file contains animation data, you can set up the rig with the <a href="FBXImporter-Rig.html">Rig tab</a> and then extract or define <span class="tooltip" tabindex="0" ><strong>Animation Clips</strong><span class="tooltiptext">Animation data that can be used for animated characters or simple animations. It is a simple “unit” piece of motion, such as (one specific instance of) “Idle”, “Walk” or “Run”. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-AnimationClip.html" href="class-AnimationClip.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#AnimationClip" aria-label="Go to glossary anchor for AnimationClip">Glossary</a></span></span></span> with the <a href="class-AnimationClip.html">Animation tab</a>. The workflow differs between humanoid and generic animation types because Unity needs the humanoid’s bone structure to be specific, but only needs to know which bone is the <span class="tooltip" tabindex="0" ><strong>root node</strong><span class="tooltiptext">A transform in an animation hierarchy that allows Unity to establish consistency between Animation clips for a generic model. It also enables Unity to properly blend between Animations that have not been authored “in place” (that is, where the whole Model moves its world position while animating). <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-AnimationClip.html#AllClipProperties" href="class-AnimationClip.html#AllClipProperties">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Rootnode" aria-label="Go to glossary anchor for Rootnode">Glossary</a></span></span></span> for the generic type. For more information, refer to <a href="ConfiguringtheAvatar.html">Importing a model with humanoid animations</a> and <a href="GenericAnimations.html">Importing a model with non-humanoid (generic) animations</a>.</p>
+
+<h2>Importing materials</h2>
+
+<p>If your file contains materials and textures, you can define how you want to deal with them:</p>
+
+<ol>
+<li>Select a model file from the Project window.</li>
+<li>In the Inspector, select <a href="FBXImporter-Materials.html">the Materials tab</a>.</li>
+<li>Use the <a href="FBXImporter-Materials.html">Material Creation Mode</a> drop-down menu to choose how you want to import the materials from the FBX file.</li>
+</ol>
+
+<h2>Importing textures</h2>
+
+<p>Unity follows a specific search pattern to automatically look for textures on import. First, the importer looks for a subfolder called <code>Textures</code> within the same folder as the <span class="tooltip" tabindex="0" ><strong>mesh</strong><span class="tooltiptext">The main graphics primitive of Unity. Meshes make up a large part of your 3D worlds. Unity supports triangulated or Quadrangulated polygon meshes. Nurbs, Nurms, Subdiv surfaces must be converted to polygons. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about mesh.html" href="mesh.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Mesh" aria-label="Go to glossary anchor for Mesh">Glossary</a></span></span></span>, or in any parent folder. If the <a href="../ScriptReference/ModelImporter-searchTexturesGlobally.html">Search Textures Globally</a> option is enabled, and the texture is not found near the model, Unity also performs an exhaustive search of all textures in the project. This is legacy behavior and can produce non-deterministic results when multiple textures share the same name.</p>
+
+<p>For newly imported assets, <strong>Search Textures Globally</strong> is disabled by default. Existing assets imported with previous versions of Unity retain the previous behavior (enabled) for backward compatibility. You can change this setting on the <a href="FBXImporter-Materials.html">Materials tab</a> of the model import settings.</p>
+
+<h2>Importing normal maps</h2>
+
+<p>If you have a character with a <span class="tooltip" tabindex="0" ><a href="StandardShaderMaterialParameterNormalMap.html">normal map</a><span class="tooltiptext">A type of Bump Map texture that allows you to add surface detail such as bumps, grooves, and scratches to a model which catch the light as if they are represented by real geometry.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#normalmap" aria-label="Go to glossary anchor for normalmap">Glossary</a></span></span></span> that was generated from a high-polygon version of the model, import the game-quality version with the <a href="FBXImporter-Model.html#geometry">Smoothing Angle</a> property set to 180°. This prevents odd-looking seams in lighting due to tangent splitting. If the seams are still present with these settings, choose the <a href="FBXImporter-Model.html#geometry">Calculate Legacy With Split Tangents</a> setting from the <strong>Tangents</strong> drop-down menu. If you’re converting a grayscale image into a normal map, you don’t need to do this.</p>
+
+<p><a id="importing-blend-shapes" aria-hidden="true"></a></p>
+
+<h2>Importing blend shapes</h2>
+
+<p>Unity supports blend shapes (morphing) and can import blend shapes from FBX and DAE files exported from 3D modeling applications. You can also import animation from FBX files. Unity supports vertex-level animation for blend shapes on vertices, normals and tangents.</p>
+
+<p>Skin and blend shapes can affect meshes at the same time. When Unity imports meshes containing blend shapes, it uses the <a href="class-SkinnedMeshRenderer.html"><code>SkinnedMeshRenderer</code></a> component instead of the <a href="class-MeshRenderer.html"><code>MeshRendere</code>r</a> component, regardless of whether it has skin or not.</p>
+
+<p>Unity imports blend shape animation as part of regular animation and animates blend shape weights on skinned <span class="tooltip" tabindex="0" ><strong>mesh renderers</strong><span class="tooltiptext">A mesh component that takes the geometry from the Mesh Filter and renders it at the position defined by the object’s Transform component. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-MeshRenderer.html" href="class-MeshRenderer.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#MeshRenderer" aria-label="Go to glossary anchor for MeshRenderer">Glossary</a></span></span></span>.</p>
+
+<p>To import blend shapes with normals perform one of the following:</p>
+
+<ul>
+<li>Use the normals from the FBX file. In the <strong>Model</strong> tab, set the <a href="FBXImporter-Model.html#geometry">Blend Shape Normals</a> property to <strong>Import</strong>.</li>
+<li>Use the same logic to calculate normals on a mesh and blend shapes. In the <strong>Model</strong> tab, set the <a href="FBXImporter-Model.html#geometry">Blend Shape Normals</a> property to <strong>Calculate</strong>.</li>
+</ul>
+
+<p>
+<strong>Note:</strong> If you want tangents on your blend shapes then set the <a href="FBXImporter-Model.html#geometry">Tangents</a> import setting to <strong>Calculate</strong>.</p>
+
+<p><a id="importing-visibility-properties" aria-hidden="true"></a></p>
+
+<h2>Importing visibility properties</h2>
+
+<p>Unity can read visibility properties from FBX files with the <a href="FBXImporter-Model.html#scene">Import Visibility</a> property. Values and <span class="tooltip" tabindex="0" ><strong>animation curves</strong><span class="tooltiptext">Allows you to add data to an imported clip so you can animate the timings of other items based on the state of an animator. For example, for a game set in icy conditions, you could use an extra animation curve to control the emission rate of a particle system to show the player’s condensing breath in the cold air. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about AnimationCurvesOnImportedClips.html" href="AnimationCurvesOnImportedClips.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#AnimationCurves" aria-label="Go to glossary anchor for AnimationCurves">Glossary</a></span></span></span> can enable or disable MeshRenderer components by controlling the <a href="../ScriptReference/Renderer-enabled.html"><code>Renderer.enabled</code></a> property.</p>
+
+<p>Visibility inheritance is true by default but can be overridden. For example, if the visibility on a parent mesh is set to 0, all the renderers on its children are also disabled. In this case, one animation curve is created for each child’s <code>Renderer.enabled</code> property.</p>
+
+<p>Some 3D modeling applications either don’t support or have limitations with visibility properties. For more information refer to <a href="HOWTO-ImportObjectsFrom3DApps.html">Support for proprietary model file formats</a>.</p>
+
+<p><a id="camera-support" aria-hidden="true"></a></p>
+
+<h2>Camera support</h2>
+
+<p>The following properties are supported when importing <span class="tooltip" tabindex="0" ><strong>cameras</strong><span class="tooltiptext">A component which creates an image of a particular viewpoint in your scene. The output is either drawn to the screen or captured as a texture. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CamerasOverview.html" href="CamerasOverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Camera" aria-label="Go to glossary anchor for Camera">Glossary</a></span></span></span> from an FBX file:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Property</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">
+<strong>Projection</strong> mode</td>
+	<td style="text-align:left;">Orthographic or perspective. Doesn’t support animation.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Field of View</strong></td>
+	<td style="text-align:left;">Supports animation.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">All <strong>Physical Camera</strong> properties</td>
+	<td style="text-align:left;">If you import a Camera with Physical Properties (for example, from Maya), Unity creates a Camera with the <strong>Physical Camera</strong> property enabled and the <strong>Focal Length</strong>, <strong>Sensor Type</strong>, <strong>Sensor Size</strong>, <strong>Lens Shift</strong>, and <strong>Gate Fit</strong> values from the FBX file.<br><br><strong>Note:</strong> Not all 3D modeling applications have a concept of <strong>Gate Fit</strong>. When not supported by the 3D modeling application, the default value in Unity is <strong>None</strong>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<strong>Near</strong> and <strong>Far</strong> <span class="tooltip" tabindex="0" ><strong>Clipping Plane</strong><span class="tooltiptext">A plane that limits how far or close a camera can see from its current position. A camera’s viewable range is between the far and near clipping planes. See far clipping plane and near clipping plane. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-Camera.html" href="class-Camera.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#clippingplane" aria-label="Go to glossary anchor for clippingplane">Glossary</a></span></span></span> distance</td>
+	<td style="text-align:left;">Unity doesn’t import any animation on these properties. When exporting from 3ds Max, enable the <strong>Clip Manually</strong> setting; otherwise the default values are applied on import.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Target Cameras</strong></td>
+	<td style="text-align:left;">If you import a Target Camera, Unity creates a camera with a <a href="class-LookAtConstraint.html">LookAt</a> constraint using the target object as the source.</td>
+</tr>
+</tbody>
+</table>
+
+<p>For more information, refer to <a href="class-Camera.html">Camera Inspector window reference</a>.</p>
+
+<p><a id="light-support" aria-hidden="true"></a></p>
+
+<h2>Light support</h2>
+
+<p>The following light types are supported:</p>
+
+<ul>
+<li>Omni</li>
+<li>Spot</li>
+<li>Directional</li>
+<li>Area</li>
+</ul>
+
+<p>The following light properties are supported:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Property</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Range</strong></td>
+	<td style="text-align:left;">The <strong>FarAttenuationEndValue</strong> is used if <strong>UseFarAttenuation</strong> is enabled. <strong>FarAttenuationEndValue</strong> does not support animation.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Color</strong></td>
+	<td style="text-align:left;">Supports animation.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Intensity</strong></td>
+	<td style="text-align:left;">Supports animation.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Spot Angle</strong></td>
+	<td style="text-align:left;">Supports animation. Only available for Spot Lights.</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+<strong>Note</strong>: In 3ds Max, the exported default value is the value of the property at the current selected frame. To avoid confusion, move the playhead to frame 0 when exporting.</p>
+
+<h3>Limitations</h3>
+
+<p>Some 3D modeling applications apply scaling on light properties. For instance, you can scale a spotlight by its hierarchy and affect the light cone. Unity doesn’t do this, which can cause lights to look different in Unity.</p>
+
+<p>The FBX format doesn’t define the width and height of area lights. Some 3D modeling applications don’t have this property and only allow you to use scaling to define the rectangle or disc area. Because of this, area lights always have a size of 1 when imported.</p>
+
+<p>Targeted light animations aren’t supported unless their animation is baked.</p>
+
+<h2>Using a model file</h2>
+
+<p>To add a model file to your <span class="tooltip" tabindex="0" ><strong>scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html" href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span> perform one of the following actions:</p>
+
+<ul>
+<li>If the model contains a mesh, drag the file into the <span class="tooltip" tabindex="0" ><strong>Scene view</strong><span class="tooltiptext">An interactive view into the world you are creating. You use the Scene View to select and position scenery, characters, cameras, lights, and all other types of Game Object. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheSceneView.html" href="UsingTheSceneView.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#SceneView" aria-label="Go to glossary anchor for SceneView">Glossary</a></span></span></span> to instantiate it as a <span class="tooltip" tabindex="0" ><a href="Prefabs.html">prefab</a><span class="tooltiptext">An asset type that allows you to store a GameObject complete with components and properties. The prefab acts as a template from which you can create new object instances in the scene. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Prefabs.html" href="Prefabs.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#prefab" aria-label="Go to glossary anchor for prefab">Glossary</a></span></span></span> for a <span class="tooltip" tabindex="0" ><strong>GameObject</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-GameObject.html" href="class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span>.</li>
+<li>If it contains Animation Clips, drag the file into <a href="AnimatorWindow.html">the Animator window</a> to use in <a href="StateMachineBasics.html">the State Machine</a>. You can also drag the animation directly onto an instantiated Prefab in the Scene view. This automatically creates an Animation Controller and connects the animation to the model.</li>
+</ul>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li>
+<a href="UsingHumanoidChars.html">Preparing humanoid models for export</a>.</li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="models-importing.html"></a></span><div class="tip">Importing models into Unity</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="ConfiguringtheAvatar.html"></a></span><div class="tip">Importing a model with humanoid animations</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

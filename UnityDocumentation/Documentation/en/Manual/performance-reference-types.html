@@ -1,0 +1,363 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Reference type management</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<meta property="relative-path-to-manual" content="">
+<meta property="version-switcher-versions-with-this-page" content="Versions with this page:">
+<meta property="version-switcher-versions-without-this-page" content="Versions without this page:">
+<meta property="version-switcher-supported" content="Supported">
+<meta property="version-switcher-legacy" content="Legacy">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/Manual/performance-reference-types.html">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20260626"></script><script type="text/javascript" src="docdata/toc.js?ts=20260626"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20260626"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20260626">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20260626">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/performance-reference-types.html">English</a></li>
+<li><a href="/cn/current/Manual/performance-reference-types.html">中文</a></li>
+<li><a href="/ja/current/Manual/performance-reference-types.html">日本語</a></li>
+<li><a href="/kr/current/Manual/performance-reference-types.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: Unity 6.7 Beta</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/performance-reference-types.html">English</a></li>
+<li><a href="/cn/current/Manual/performance-reference-types.html">中文</a></li>
+<li><a href="/ja/current/Manual/performance-reference-types.html">日本語</a></li>
+<li><a href="/kr/current/Manual/performance-reference-types.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="scripting.html">Programming in Unity</a></li>
+<li><a href="scripting-optimization.html">Code optimization</a></li>
+<li><a href="performance-optimizing-code-managed-memory.html">Optimizing your code for managed memory</a></li>
+<li>Reference type management</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="performance-optimizing-code-managed-memory.html"></a></span><div class="tip">Optimizing your code for managed memory</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="performance-reusable-code.html"></a></span><div class="tip">Pooling and reusing objects</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Reference type management</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Because all non-null <a href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/reference-types">reference-type objects</a> and all <a href="https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/types/boxing-and-unboxing">boxed value-typed objects</a> in managed code must be allocated on the managed heap, these objects might be the cause of performance issues in your application. The following sections outline approaches you can take to improve the performance of your code.</p>
+
+<h2>Avoid repeated string concatenation</h2>
+
+<p>Strings in C# are <a href="https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/reference-types">immutable reference types</a>. Unity allocates reference types on the managed heap and they are subject to garbage collection. Because strings are <span class="tooltip" tabindex="0" ><strong>immutable</strong><span class="tooltiptext">You cannot change the contents of an immutable (read-only) package. This is the opposite of <strong>mutable</strong>. Most packages are immutable, including packages downloaded from the package registry or by Git URL.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#immutable" aria-label="Go to glossary anchor for immutable">Glossary</a></span></span></span> and can’t change once created, avoid creating temporary strings wherever possible.</p>
+
+<p>The following example code combines an array of strings into a single string. Every time a new string is added inside the loop, the previous contents of the result variable become redundant, and the code allocates a whole new string.</p>
+
+<pre><code class="lang-cs">// Bad C# script example: repeated string concatenations creates lots of
+// temporary strings.
+using UnityEngine;
+
+public class ExampleScript : MonoBehaviour {
+    string ConcatExample(string[] stringArray) {
+        string result = &quot;&quot;;
+
+        for (int i = 0; i &lt; stringArray.Length; i++) {
+            result += stringArray[i];
+        }
+
+        return result;
+    }
+
+}
+</code></pre>
+
+<p>If the input <code>stringArray</code> contains <code>{ “A”, “B”, “C”, “D”, “E” }</code>, this method generates storage on the heap for the following strings:</p>
+
+<ul>
+<li><code>“A”</code></li>
+<li><code>“AB”</code></li>
+<li><code>“ABC”</code></li>
+<li><code>“ABCD”</code></li>
+<li><code>“ABCDE”</code></li>
+</ul>
+
+<p>In this example, you only need the final string, and the others are redundant allocations. The more items that there are in the input array, the more strings this method generates, each longer than the last. </p>
+
+<p>If you need to concatenate a lot of strings together then use Mono library’s <a href="http://msdn.microsoft.com/en-gb/library/system.text.stringbuilder.aspx"><code>System.Text.StringBuilder</code></a> class. An improved version of the previous script looks like this:</p>
+
+<pre><code class="lang-cs">// Good C# script example: StringBuilder avoids creating temporary strings,
+// and only allocates heap memory for the final result string.
+using UnityEngine;
+using System.Text;
+
+public class ExampleScript : MonoBehaviour {
+    private StringBuilder _sb = new StringBuilder(16);
+
+    string ConcatExample(string[] stringArray) {
+        _sb.Clear();
+
+        for (int i = 0; i &lt; stringArray.Length; i++) {
+            _sb.Append(stringArray[i]);
+        }
+
+        return _sb.ToString();
+    }
+}
+</code></pre>
+
+<p>A repeated concatenation doesn’t decrease performance too much unless it’s called frequently, like on every frame update. The following example allocates new strings each time <code>Update</code> is called, and generates a continuous stream of objects that garbage collector must handle:</p>
+
+<pre><code class="lang-cs">// Bad C# script example: Converting the score value to a string every frame
+// and concatenating it with “Score: “ generates strings every frame.
+using UnityEngine;
+using UnityEngine.UI;
+
+public class ExampleScript : MonoBehaviour {
+    public Text scoreBoard;
+    public int score;
+    
+    void Update() {
+        string scoreText = &quot;Score: &quot; + score.ToString();
+        scoreBoard.text = scoreText;
+    }
+}
+</code></pre>
+
+<p>To prevent this continuous requirement for garbage collection, you can configure the code so that the text only updates when the score changes: </p>
+
+<pre><code class="lang-cs">// Better C# script example: the score conversion is only performed when the
+// score has changed
+using UnityEngine;
+using UnityEngine.UI;
+
+public class ExampleScript : MonoBehaviour {
+    public Text scoreBoard;
+    public string scoreText;
+    public int score;
+    public int oldScore;
+    
+    void Update() {
+        if (score != oldScore) {
+            scoreText = &quot;Score: &quot; + score.ToString();
+            scoreBoard.text = scoreText;
+            oldScore = score;
+        }
+    }
+}
+</code></pre>
+
+<p>To improve this further, you can store the score title (the part that says <code>“Score: ”</code>) and the score display in two different <code>UI.Text</code> objects, which means that there’s no need for string concatenation. The code must still convert the score value into a string, but this is an improvement on the previous versions:</p>
+
+<pre><code class="lang-cs">// Best C# script example: the score conversion is only performed when the
+// score has changed, and the string concatenation has been removed
+using UnityEngine;
+using UnityEngine.UI;
+
+public class ExampleScript : MonoBehaviour {
+   public Text scoreBoardTitle;
+   public Text scoreBoardDisplay;
+   public string scoreText;
+   public int score;
+   public int oldScore;
+
+   void Start() {
+       scoreBoardTitle.text = &quot;Score: &quot;;
+   }
+
+   void Update() {
+       if (score != oldScore) {
+           scoreText = score.ToString();
+           scoreBoardDisplay.text = scoreText;
+           oldScore = score;
+       }
+   }
+}
+</code></pre>
+
+<p>For a more optimized version of this, you could use the <a href="https://docs.unity3d.com/Packages/com.unity.ugui@2.0/api/TMPro.TMP_Text.html#TMPro_TMP_Text_SetText_System_Char___"><code>SetText(Char [])</code> method</a> in the <code>TMPro.TMP_Text</code> class of the <a href="https://docs.unity3d.com/Packages/com.unity.ugui@latest">UGUI package</a>. The <code>SetText</code> method allows you to use and reuse a <code>char</code> array to build the score digit by digit and update the values in the <code>char</code> array without needing to use a string.</p>
+
+<p>For further information on the best practices with working with strings in C#, refer to Microsoft’s documentation on <a href="https://learn.microsoft.com/en-us/dotnet/standard/base-types/best-practices-strings">Best practices for comparing strings in .NET</a>.</p>
+
+<h2>Avoid closures and anonymous methods</h2>
+
+<p>In general, avoid closures in C# whenever possible. You should minimize the use of <a href="https://learn.microsoft.com/en-us/dotnet/csharp/fundamentals/types/anonymous-types">anonymous methods</a> and <a href="https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/method-parameters#reference-parameters">method references</a> in performance-sensitive code, especially in code that executes on a per-frame basis.</p>
+
+<p>Method references in C# are reference types, so they’re allocated on the managed heap. This means that if you pass a method reference as an argument, you might create temporary allocations. This allocation happens regardless of whether the method you pass is an anonymous method or a predefined one.</p>
+
+<p>Also, when you convert an anonymous method to a closure, the amount of memory required to pass the closure to a method increases a lot.</p>
+
+<p>Here’s a code sample in which a list of randomized numbers need to be sorted in a particular order. This uses an anonymous method to control the sorting order of the list, and the sorting doesn’t create any allocations. </p>
+
+<pre><code class="lang-cs">// Good C# script example: using an anonymous method to sort a list. 
+// This sorting method doesn’t create garbage
+
+List&lt;float&gt; listOfNumbers = getListOfRandomNumbers();
+
+listOfNumbers.Sort( (x, y) =&gt;
+
+(int)x.CompareTo((int)(y/2)) 
+
+);
+</code></pre>
+
+<p>To make this snippet reusable, you might substitute the constant 2 for a variable in local scope:</p>
+
+<pre><code class="lang-cs">// Bad C# script example: the anonymous method has become a closure,
+// and now allocates memory to store the value of desiredDivisor
+// every time it is called.
+
+List&lt;float&gt; listOfNumbers = getListOfRandomNumbers();
+
+int desiredDivisor = getDesiredDivisor();
+
+listOfNumbers.Sort( (x, y) =&gt;
+
+(int)x.CompareTo((int)(y/desiredDivisor))
+
+);
+</code></pre>
+
+<p>The anonymous method now needs to access the state of a variable which is outside of its scope, and so the method has become a closure. The <code>desiredDivisor</code> variable must be passed into the closure so that the closure’s code can use it.</p>
+
+<p>To ensure that the correct values are passed in to the closure, C# generates an anonymous class that can keep the externally scoped variables that the closure needs. A copy of this class is instantiated when the closure is passed to the <code>Sort</code> method, and the copy is initialized with the value of the <code>desiredDivisor</code> integer.</p>
+
+<p>Executing the closure requires instantiating a copy of its generated class, and all classes are reference types in C#. For this reason, executing the closure requires allocation of an object on the managed heap.</p>
+
+<h2>Avoid converting value types to reference types</h2>
+
+<p>When a value-typed variable gets automatically converted to a reference type this is called <a href="https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/types/boxing-and-unboxing">boxing</a>. Boxing is one of the most common sources of unintended temporary memory allocations found in Unity projects. This most often happens when passing primitive value-typed variables (such as <code>int</code> and <code>float</code>) to object-typed methods. </p>
+
+<p>In this example, the integer in <code>x</code> is boxed so that it can be passed to the <code>object.Equals</code> method, because the <code>Equals</code> method on an object requires that an object is passed to it.</p>
+
+<pre><code class="lang-cs">int x = 1;
+
+object y = new object();
+
+y.Equals(x);
+</code></pre>
+
+<p>C# IDEs and compilers don’t issue warnings about boxing, even though boxing leads to unintended memory allocations. This is because C# assumes that small temporary allocations are efficiently handled by generational garbage collectors and allocation-size-sensitive memory pools.</p>
+
+<p>While Unity’s managed memory allocator does use different memory pools for small and large allocations, Unity’s <a href="performance-garbage-collector.html">garbage collector</a> isn’t generational, so it can’t efficiently sweep out the small, frequent temporary allocations that boxing generates.</p>
+
+<h3>Identifying boxing</h3>
+
+<p>Boxing appears in CPU traces as calls to one of a few methods, depending on the scripting back end in use. These take one of the following forms, where <code>&lt;example class&gt;</code> is the name of a class or struct, and <code>…</code> is a number of arguments:</p>
+
+<pre><code class="lang-cs">&lt;example class&gt;::Box(…)
+Box(…)
+&lt;example class&gt;_Box(…)
+</code></pre>
+
+<p>To find boxing, you can also search the output of a decompiler or IL viewer, such as the <a href="https://www.jetbrains.com/help/resharper/Viewing_Intermediate_Language.html">IL viewer tool built into ReSharper</a> or the <a href="https://www.jetbrains.com/decompiler/">dotPeek decompiler</a>. The IL instruction is <code>box</code>.</p>
+
+<h2>Avoid the params modifier</h2>
+
+<p>Methods that list their optional parameters as with a <a href="https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/method-parameters#params-modifier"><code>params</code> modifier</a> allocate an array for the parameters you pass into them. If available, use overrides of these methods that don’t rely on that modifier.</p>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="performance-managed-memory-introduction.html">Managed memory introduction</a></li>
+<li><a href="performance-reusable-code.html">Creating reusable code</a></li>
+<li><a href="performance-optimizing-arrays.html">Optimizing arrays</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="performance-optimizing-code-managed-memory.html"></a></span><div class="tip">Optimizing your code for managed memory</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="performance-reusable-code.html"></a></span><div class="tip">Pooling and reusing objects</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

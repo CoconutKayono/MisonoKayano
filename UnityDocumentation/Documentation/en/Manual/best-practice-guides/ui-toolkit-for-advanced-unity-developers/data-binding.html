@@ -1,0 +1,961 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Data binding</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<meta property="relative-path-to-manual" content="../../">
+<meta property="version-switcher-versions-with-this-page" content="Versions with this page:">
+<meta property="version-switcher-versions-without-this-page" content="Versions without this page:">
+<meta property="version-switcher-supported" content="Supported">
+<meta property="version-switcher-legacy" content="Legacy">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../../../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../../../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../../../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../../../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../../../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../../../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../../../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/Manual/best-practice-guides/ui-toolkit-for-advanced-unity-developers/data-binding.html">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../../../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../../../StaticFilesManual/js/jquery.js?ts=20260626"></script><script type="text/javascript" src="../../../StaticFilesManual/js/core.js?ts=20260626"></script><script type="text/javascript" src="../../../StaticFilesManual/js/image-comp.js?ts=20260626"></script><script type="text/javascript" src="../../docdata/toc.js?ts=20260626"></script><script type="text/javascript" src="../../docdata/global_toc.js?ts=20260626"></script><link rel="stylesheet" type="text/css" href="../../../StaticFilesManual/css/core.css?ts=20260626">
+<link rel="stylesheet" type="text/css" href="../../../StaticFilesManual/css/icons.css?ts=20260626">
+<link rel="stylesheet" href="../../../StaticFilesManual/css/prism.css">
+<script src="../../../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../../../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../../../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../../../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="../../30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../../index.html" class="selected">Manual</a></li>
+<li><a href="../../../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/best-practice-guides/ui-toolkit-for-advanced-unity-developers/data-binding.html">English</a></li>
+<li><a href="/cn/current/Manual/best-practice-guides/ui-toolkit-for-advanced-unity-developers/data-binding.html">中文</a></li>
+<li><a href="/ja/current/Manual/best-practice-guides/ui-toolkit-for-advanced-unity-developers/data-binding.html">日本語</a></li>
+<li><a href="/kr/current/Manual/best-practice-guides/ui-toolkit-for-advanced-unity-developers/data-binding.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: Unity 6.7 Beta</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/best-practice-guides/ui-toolkit-for-advanced-unity-developers/data-binding.html">English</a></li>
+<li><a href="/cn/current/Manual/best-practice-guides/ui-toolkit-for-advanced-unity-developers/data-binding.html">中文</a></li>
+<li><a href="/ja/current/Manual/best-practice-guides/ui-toolkit-for-advanced-unity-developers/data-binding.html">日本語</a></li>
+<li><a href="/kr/current/Manual/best-practice-guides/ui-toolkit-for-advanced-unity-developers/data-binding.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="../../best-practice-guides.html">Best practice guides</a></li>
+<li><a href="../../best-practice-guides/ui-toolkit-for-advanced-unity-developers/bpg-uiad-index.html">UI Toolkit for advanced Unity developers</a></li>
+<li>Data binding</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="../../best-practice-guides/ui-toolkit-for-advanced-unity-developers/text.html"></a></span><div class="tip">Text</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="../../best-practice-guides/ui-toolkit-for-advanced-unity-developers/localization.html"></a></span><div class="tip">Localization</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Data binding</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Table of Contents</p>
+
+<ul>
+<li><p><a href="#ui-that-reflects-your-game-data">UI that reflects your game data</a></p></li>
+<li><p><a href="#enter-runtime-data-binding">Enter runtime data binding</a></p></li>
+<li><p><a href="#data-binding-concepts">Data binding concepts</a></p></li>
+<li>
+<p><a href="#prepare-a-data-source">Prepare a data source</a></p>
+
+<ul>
+<li><a href="#use-the-createproperty-attribute">Use the CreateProperty attribute</a></li>
+<li><a href="#data-sources-and-paths">Data sources and paths</a></li>
+<li><a href="#inherit-data-sources">Inherit data sources</a></li>
+</ul>
+</li>
+<li>
+<p><a href="#binding-modes">Binding modes</a></p>
+
+<ul>
+<li><a href="#example-data-binding-a-health-bar">Example: Data binding a health bar</a></li>
+<li><a href="#demo-scene">Demo scene</a></li>
+<li><a href="#prepare-the-data-source">Prepare the data source</a></li>
+</ul>
+</li>
+<li><p><a href="#data-binding-in-ui-builder-uxml">Data binding in UI Builder/UXML</a></p></li>
+<li><p><a href="#set-up-data-binding-in-c">Set up data binding in C#</a></p></li>
+<li><p><a href="#unresolved-data-bindings-workflow">Unresolved data bindings workflow</a></p></li>
+<li>
+<p><a href="#type-converters">Type converters</a></p>
+
+<ul>
+<li><a href="#example-value-to-color-conversion">Example: Value to color conversion</a></li>
+<li><a href="#healthdataconverter-setup">HealthDataConverter setup</a></li>
+<li><a href="#the-healthbarwithconverter">The HealthBarWithConverter</a></li>
+<li><a href="#dataconverter-application-in-ui-builder">DataConverter application in UI Builder</a></li>
+</ul>
+</li>
+<li><p><a href="#best-practices">Best practices</a></p></li>
+<li>
+<p><a href="#example-list-binding-to-a-listview">Example: List binding to a ListView</a></p>
+
+<ul>
+<li><a href="#set-up-the-list-and-templates">Set up the list and templates</a></li>
+<li><a href="#complete-the-binding-at-runtime">Complete the binding at runtime</a></li>
+</ul>
+</li>
+<li>
+<p><a href="#optimize-data-binding">Optimize data binding</a></p>
+
+<ul>
+<li><a href="#manage-value-types">Manage value types</a></li>
+<li><a href="#minimize-overhead">Minimize overhead</a></li>
+<li><a href="#use-update-triggers">Use update triggers</a></li>
+<li><a href="#versioning-and-change-tracking">Versioning and change tracking</a></li>
+</ul>
+</li>
+</ul>
+
+<p>At its core, the user interface is your players’ connection to the data driving your application. It’s their primary way of seeing, touching, and engaging with your game’s internal state and logic.</p>
+
+<p>Players won’t see raw stats; instead, they’ll see a health bar. Rather than reading item lists directly, they use a drag-and-drop inventory. This interplay between the UI and its data will impact how you structure your project.</p>
+
+<p><a name="ui-that-reflects-your-game-data" aria-hidden="true"></a></p>
+
+<h2>UI that reflects your game data</h2>
+
+<p>Here’s the character stats window in <em>UI Toolkit Sample – Dragon Crashers</em>. This user interface shows off key attributes from an RPG-like game.</p>
+
+<p>The <strong>view</strong> represents the UI itself – the part players interact with. Tabbed containers neatly organize the character’s abilities for easy navigation.</p>
+
+<figure>
+<img src="../../../uploads/Main/bpg/uitk/image9.png" alt="The character stats window represents game data.">
+<figcaption>The character stats window represents game data.</figcaption>
+</figure>
+
+<p>Behind the <span class="tooltip" tabindex="0" ><strong>scenes</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html" href="../../CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../../Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span>, the data lives in a model, such as a ScriptableObject storing each character’s stats.</p>
+
+<figure>
+<img src="../../../uploads/Main/bpg/uitk/image227.png" alt="The ScriptableObject asset contains the characters data.">
+<figcaption>The ScriptableObject asset contains the character’s data.</figcaption>
+</figure>
+
+<p>This <a href="https://en.wikipedia.org/wiki/Separation_of_concerns">separation of concerns</a> between the view and the model is a core principle in UI architecture. Decoupling the visual interface from the underlying data makes your code more flexible, reusable, and easier to manage.</p>
+
+<p>However, once separated, connecting the model to the view requires some synchronization. Traditionally, this involves direct updates or event-driven systems, where observers update the UI when the data changes. While effective, these sync operations can introduce repetitive, boilerplate code.</p>
+
+<p>As your project grows, these systems can become difficult to manage. Adding new elements or dependencies often requires additional update logic or event handlers. This can clutter your <span class="tooltip" tabindex="0" ><strong>scripts</strong><span class="tooltiptext">A piece of code that allows you to create your own Components, trigger game events, modify Component properties over time and respond to user input in any way you like. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about creating-scripts.html" href="../../creating-scripts.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../../Glossary.html#Scripts" aria-label="Go to glossary anchor for Scripts">Glossary</a></span></span></span>, making them harder to read and maintain.</p>
+
+<p><a name="enter-runtime-data-binding" aria-hidden="true"></a></p>
+
+<h2>Enter runtime data binding</h2>
+
+<p>Runtime data binding in Unity 6 offers a streamlined solution to this problem. It links your application’s data directly to UI elements, ensuring that changes in one are automatically reflected in the other.</p>
+
+<p>This <a href="https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93viewmodel">Model-view-viewmodel (MVVM)</a> architecture adds a layer of presentation logic between the view and model. The viewmodel acts as a mediator, exposing data from the model formatted for the view.</p>
+
+<p>Learn more about MVVM along with more design patterns in the Unity e-book <a href="https://unity.com/resources/design-patterns-solid-ebook"><em>Level up your code with design patterns and SOLID</em></a>.</p>
+
+<figure>
+<img src="../../../uploads/Main/bpg/uitk/image93.png" alt="The MVVM architecture (Source: Wikipedia)">
+<figcaption>The MVVM architecture (Source: Wikipedia)</figcaption>
+</figure>
+
+<p>For instance, a health bar can automatically display a player’s health, or a score label can update in real-time without requiring extra script logic or manual event handling. With less sync logic to manage, your project can scale more effectively.</p>
+
+<p>Let’s explore examples of UI Toolkit’s runtime data binding to see how you can use it in your project.</p>
+
+<p><a name="data-binding-concepts" aria-hidden="true"></a></p>
+
+<h2>Data binding concepts</h2>
+
+<p>Unity 6 introduces a runtime data binding system that provides a structured way to connect UI elements with application data. To bind a property of a <span class="tooltip" tabindex="0" ><strong>visual element</strong><span class="tooltiptext">A node of a visual tree that instantiates or derives from the C# <a href="../../../ScriptReference/UIElements.VisualElement.html"><code>VisualElement</code></a> class. You can style the look, define the behaviour, and display it on screen as part of the UI. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UIE-VisualTree.html" href="../../UIE-VisualTree.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../../Glossary.html#visualelement" aria-label="Go to glossary anchor for visualelement">Glossary</a></span></span></span> to a data source, you will create an instance of <a href="../../../ScriptReference/UIElements.DataBinding.html">DataBinding</a>.</p>
+
+<p>Here are a few important concepts:</p>
+
+<ul>
+<li><p>
+<a href="../../../ScriptReference/UIElements.DataBinding-dataSource.html">Data source</a>: This is the object that holds the data for UI bindings.</p></li>
+<li><p>
+<a href="../../../ScriptReference/UIElements.DataBinding-dataSourcePath.html">Data source path</a>: This property or field in the data source is what the UI element connects to.</p></li>
+<li><p>
+<a href="../../UIE-runtime-binding-mode-update.html">Binding mode</a>: This controls how data flows between the source and the UI and can be either one-way or two-way.</p></li>
+</ul>
+
+<p>These parts work together to create the data bindings. Let’s explore them in more detail.</p>
+
+<p><a name="prepare-a-data-source" aria-hidden="true"></a></p>
+
+<h2>Prepare a data source</h2>
+
+<p>A <a href="../../../ScriptReference/UIElements.DataBinding-dataSource.html">data source</a> is the object that holds the data for UI bindings. Any C# object can serve as a data source, including ScriptableObjects, MonoBehaviours, or custom C# objects. Using structs as data sources can improve performance through lightweight memory allocations and reduced garbage collection. Data binding can be set up both through code and through the <span class="tooltip" tabindex="0" ><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheInspector.html" href="../../UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../../Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span>.</p>
+
+<p>This demo project uses ScriptableObjects as data sources for their convenient ability to serialize data within the Unity Inspector.</p>
+
+<h3>Use the CreateProperty attribute</h3>
+
+<p>To expose properties for binding, UI Toolkit relies on <a href="../../property-bags.html">property bags</a> generated by the <a href="../../properties.html">Unity Properties</a> module. These define which properties in your data source are accessible to UI bindings.</p>
+
+<p>To make properties bindable, use the <a href="../../../ScriptReference/Unity.Properties.CreatePropertyAttribute.html">CreateProperty</a> attribute. This explicitly marks properties for the binding system. Here’s a common setup pattern:</p>
+
+<pre><code class="lang-csharp">[SerializeField, DontCreateProperty]
+int m_Value;
+
+[CreateProperty]
+public int Value
+{
+    get =&gt; m_Value;
+    set =&gt; m_Value = value;
+}
+</code></pre>
+
+<p>In this example, <code>m_Value</code> is marked with the <code>SerializeField</code> attribute for serialization but excluded from binding by the <code>DontCreateProperty</code> attribute.</p>
+
+<p>The <code>Value</code> property, on the other hand, is marked with <code>CreateProperty</code>, making it accessible to the binding system. This clear separation helps manage data flow between the model and the UI.</p>
+
+<p>Runtime data bindings use <a href="../../property-bags.html">property bags</a> to traverse and manipulate a type’s data efficiently. By default, Unity generates property bags using reflection the first time a type is accessed, which adds a small runtime overhead.</p>
+
+<p>To avoid this, use the <code>CreateProperty</code> attribute when defining properties. This generates binding code at compile time, eliminating the need for runtime reflection and reducing performance overhead.</p>
+
+<p><a name="data-sources-and-paths" aria-hidden="true"></a></p>
+
+<h3>Data sources and paths</h3>
+
+<p>Once your data source is ready, it can be bound to the UI. A <a href="../../../ScriptReference/UIElements.DataBinding-dataSourcePath.html">data source path</a> specifies the property or field within that data source that you want to connect to a UI element. For example, if your data source has a “health” property, the path would point directly to the property using it in UXML or via a binding setup in C#. Let’s look at how this looks in practice.</p>
+
+<p>
+<strong>In the UI Builder:</strong> Select a Hierarchy element, go to the Inspector, and use the <strong>Add Binding</strong> option from the options <strong>(⋮)</strong> menu.</p>
+
+<figure>
+<img src="../../../uploads/Main/bpg/uitk/image201.png" alt="Add a binding from the Inspector.">
+<figcaption>Add a binding from the Inspector.</figcaption>
+</figure>
+
+<p>Then, assign your <strong>Data Source</strong>, like a <code>PlayerDataSO</code> ScriptableObject, and specify the <strong>Data Source Path</strong>, such as <code>CurrentHealth</code>.</p>
+
+<figure>
+<img src="../../../uploads/Main/bpg/uitk/image202.png" alt="Set the Data Source and Data Source Path in the UI Builder.">
+<figcaption>Set the Data Source and Data Source Path in the UI Builder.</figcaption>
+</figure>
+
+<p>
+<strong>In UXML:</strong> When you set up data binding in UI Builder, it generates the corresponding UXML. You can also add or edit the data source path manually in a text editor. This is the code block that creates the binding:</p>
+
+<pre><code class="lang-xml">&lt;Bindings&gt;
+    &lt;ui:DataBinding property=&quot;text&quot; data-source-path=&quot;Health&quot;/&gt;
+&lt;/Bindings&gt;
+</code></pre>
+
+<p>
+<strong>Using C#:</strong> Instantiate or reference a data source object in your script, such as a ScriptableObject. Assign it to the <code>dataSource</code> property of the root element. Use the <code>dataSourcePath</code> to specify the exact property to bind.</p>
+
+<p>Here’s a snippet that shows how to set the <code>dataSource</code> and <code>dataSourcePath</code> properties in script. We discuss this in more detail in the section below on setting up data binding in C#.</p>
+
+<pre><code class="lang-csharp">var label = new Label();
+var parentData = ScriptableObject.CreateInstance&lt;PlayerDataSO&gt;();
+playerData.Health = 100;
+
+label.SetBinding(&quot;text&quot;, new DataBinding()
+{
+    dataSource = playerData,
+    dataSourcePath = new PropertyPath(nameof(PlayerDataSO.Health)),
+});
+</code></pre>
+
+<p>Note: It’s possible to create a conflict if you’re defining data bindings for the same UI element. To avoid confusion:</p>
+
+<ul>
+<li><p>
+<strong>Use UI Builder/UXML bindings</strong> for static or default data configurations that don’t need runtime adjustments.</p></li>
+<li><p>
+<strong>Use C# bindings</strong> for dynamic updates or cases where the data source needs to change during gameplay.</p></li>
+</ul>
+
+<p>You can also set up part of the binding in UI Builder/UXML and complete the binding at runtime. See <a href="#unresolved-data-bindings-workflow">Unresolved data bindings workflow</a> for additional context.</p>
+
+<p><a name="inherit-data-sources" aria-hidden="true"></a></p>
+
+<h3>Inherit data sources</h3>
+
+<p>Visual elements automatically inherit the data source of their parent unless explicitly assigned a new one. For example, if the root element has a data source, all child elements use it by default. This diagram illustrates this behavior:</p>
+
+<figure>
+<img src="../../../uploads/Main/bpg/uitk/image234.png" alt="A child element can override a parent data source.">
+<figcaption>A child element can override a parent data source.</figcaption>
+</figure>
+
+<p>When a parent element has a data source, its child elements automatically inherit it. In UI Builder, the Data Source field for a child is pre-filled with the parent’s data source but can be overridden as needed.</p>
+
+<p>The same inheritance logic applies when working with C#, as demonstrated in the following example:</p>
+
+<pre><code class="lang-csharp">var root = new VisualElement();
+var parentData = ScriptableObject.CreateInstance&lt;PlayerDataSO&gt;();
+parentData.Health = 100;
+
+// Assign a data source to the root element
+root.dataSource = parentData;
+
+var child = new VisualElement();
+var childData = ScriptableObject.CreateInstance&lt;PlayerDataSO&gt;();
+childData.Health = 50;
+
+// Override the inherited data source for the child
+child.dataSource = childData;
+
+root.Add(child);
+</code></pre>
+
+<p>Here, the child overrides the parent, giving it an independent data source.</p>
+
+<p><a name="binding-modes" aria-hidden="true"></a></p>
+
+<h2>Binding modes</h2>
+
+<p>
+<a href="../../UIE-runtime-binding-mode-update.html"><strong>Binding modes</strong></a> control the flow of data between the data source and the UI.</p>
+
+<figure>
+<img src="../../../uploads/Main/bpg/uitk/image274.png" alt="Binding modes in the UI Builder allows you to control the flow of data between data source and the UI.">
+<figcaption>Binding modes in the UI Builder allows you to control the flow of data between data source and the UI.</figcaption>
+</figure>
+
+<p>These options appear in the UI Builder and C# API:</p>
+
+<ul>
+<li><p>
+<strong>TwoWay (Default):</strong> Changes propagate both from the data source to the UI and from the UI to the data source. Use this for interactive elements like sliders or text fields where the user can change the data.</p></li>
+<li><p>
+<strong>ToTarget:</strong> Data flows only from the data source to the UI. Use this for read-only UI elements.</p></li>
+<li><p>
+<strong>ToSource:</strong> Data flows only from the UI to the data source. This is useful for inputs where you don’t need to display the current value initially.</p></li>
+<li><p>
+<strong>ToTargetOnce:</strong> Data flows from the data source to the UI only once and doesn’t track further changes in the data source.</p></li>
+</ul>
+
+<p><a name="example-data-binding-a-health-bar" aria-hidden="true"></a></p>
+
+<h3>Example: Data binding a health bar</h3>
+
+<p>Let’s look at a practical example to see how to create some basic data bindings in UI Toolkit. Here’s an example from the demo scene – a simple health bar that dynamically updates based on a player’s health.</p>
+
+<p><a name="demo-scene" aria-hidden="true"></a></p>
+
+<h3>Demo scene</h3>
+
+<p>You can find the following examples in the <strong>Data Binding</strong> how-to demo included in the <a href="https://assetstore.unity.com/packages/essentials/tutorial-projects/quizu-a-ui-toolkit-sample-268492#description">QuizU sample project</a>.</p>
+
+<p>To access it at runtime, navigate to Main Menu and select <strong>Demos</strong> &gt; <strong>Data Binding</strong>, or load the <strong>DataBindingDemo</strong> scene directly after disabling the bootloader (<strong>Quiz &gt; Don’t Load Bootstrap Scene on Play</strong>).</p>
+
+<p>The demo scene includes two health bars, one with bindings created in UXML with UI Builder and another with bindings created in C#.</p>
+
+<figure>
+<img src="../../../uploads/Main/bpg/uitk/image146.png" alt="The health bar represents player data">
+<figcaption>The health bar represents player data</figcaption>
+</figure>
+
+<p><a name="prepare-the-data-source" aria-hidden="true"></a></p>
+
+<h3>Prepare the data source</h3>
+
+<p>The sample project includes Player information and stats that are stored in a <code>PlayerDataSO</code> ScriptableObject. Relevant properties in <code>PlayerDataSO</code> are marked with the <a href="../../../ScriptReference/Unity.Properties.CreatePropertyAttribute.html">CreateProperty</a> attribute, making them available for binding.</p>
+
+<p>Each health bar represents only a subset of the data in <code>PlayerDataSO</code>, including the player name and health values. A snippet of the class shows some of its properties and related fields:</p>
+
+<pre><code class="lang-csharp">using System;
+using Unity.Properties;
+using UnityEngine;
+using UnityEngine.UIElements;
+
+[CreateAssetMenu(fileName = &quot;PlayerDataSO&quot;, menuName = &quot;Demos/Player_Data&quot;)]
+public class PlayerDataSO : ScriptableObject
+{
+    [CreateProperty] public string PlayerName =&gt; m_PlayerName;
+    [CreateProperty] public int CurrentHealth =&gt;
+        Mathf.Clamp(m_CurrentHealth, 0, m_MaximumHealth);
+    [CreateProperty] public int MaximumHealth =&gt; m_MaximumHealth;
+
+    [SerializeField] string m_PlayerName;
+    [SerializeField] int m_MaximumHealth = 100;
+    [SerializeField] [Range(0, k_MaxHealthRange)]
+    int m_CurrentHealth = 100;
+
+    const int k_MaxHealthRange = 200;
+}
+</code></pre>
+
+<p>The UI uses specific data paths, such as <code>PlayerName</code>, <code>CurrentHealth</code>, and <code>MaximumHealth</code>, to display this information visually on the screen.</p>
+
+<figure>
+<img src="../../../uploads/Main/bpg/uitk/image248.png" alt="The data source contains health data from the PlayerDataSO ScriptableObject.">
+<figcaption>The data source contains health data from the PlayerDataSO ScriptableObject.</figcaption>
+</figure>
+
+<p><a name="data-binding-in-ui-builder-uxml" aria-hidden="true"></a></p>
+
+<h2>Data binding in UI Builder/UXML</h2>
+
+<p>UI Builder offers a visual, interactive way to bind UI elements to data. It’s ideal for UI artists who prefer a design-centric workflow and developers who benefit from real-time feedback during setup. It also serves as a helpful learning tool for anyone new to data bindings.</p>
+
+<p>In the demo scene, the Player One health bar’s data bindings are set up entirely in UI Builder. This involves:</p>
+
+<ul>
+<li><p>
+<strong>Selecting the root element</strong>: Choose the root element in the hierarchy which contains the health bar. In this example, the topmost container is the <strong>demo_container-uxml</strong> element.</p></li>
+<li><p>
+<strong>Assigning the data source</strong>: In the Data Binding section of the Inspector, set the data source to the ScriptableObject asset. This assigns the data source and propagates it to all child elements.</p></li>
+<li><p>
+<strong>Defining data source paths</strong>: Specify the data source paths to link individual UI elements to their respective properties in the ScriptableObject (e.g., <code>PlayerDataSO.PlayerName</code>).</p></li>
+</ul>
+
+<figure>
+<img src="../../../uploads/Main/bpg/uitk/image192.png" alt="The basic health bar">
+<figcaption>The basic health bar</figcaption>
+</figure>
+
+<p>Once the data source is set on the root, it should appear as the default data source for the child elements. Simply fill in the correct data source path. This table illustrates the data bindings join the UI element properties with the ScriptableObject:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>UI Element</strong></th>
+	<th style="text-align:left;"><strong>UI Element Property</strong></th>
+	<th style="text-align:left;"><strong>Bound Property</strong></th>
+	<th style="text-align:left;"><strong>Notes</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><code>health-bar__player-name</code></td>
+	<td style="text-align:left;"><code>text</code></td>
+	<td style="text-align:left;"><code>PlayerName</code></td>
+	<td style="text-align:left;">Displays the player’s name</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>health-bar__current-health</code></td>
+	<td style="text-align:left;"><code>text</code></td>
+	<td style="text-align:left;"><code>CurrentHealth</code></td>
+	<td style="text-align:left;">Shows the current health value</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>health-bar__max-health</code></td>
+	<td style="text-align:left;"><code>text</code></td>
+	<td style="text-align:left;"><code>MaximumHealth</code></td>
+	<td style="text-align:left;">Displays the maximum health</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>health-bar__progress</code></td>
+	<td style="text-align:left;"><code>style.width</code></td>
+	<td style="text-align:left;"><code>Progress</code></td>
+	<td style="text-align:left;">Adjusts the bar width dynamically</td>
+</tr>
+</tbody>
+</table>
+
+<p>When the data binding is complete, the health bar updates in real-time, showing labels and a progress bar for the player’s health.</p>
+
+<p>Swapping data sources is simple – just assign a new ScriptableObject asset, and the UI automatically reflects the new values while keeping the same bindings.</p>
+
+<figure>
+<img src="../../../uploads/Main/bpg/uitk/image189.png" alt="Swapping data sources updates the data bindings.">
+<figcaption>Swapping data sources updates the data bindings.</figcaption>
+</figure>
+
+<p>When you set up data bindings in UI Builder, they are added directly to the UXML file, creating a <code>&lt;Bindings&gt;</code> block for each bound element.</p>
+
+<p>Here is a snippet of the resulting UXML when binding the <code>health-bar__player-name</code> element’s <code>text</code> property to the <code>PlayerName</code> property (some attributes are omitted for readability):</p>
+
+<pre><code class="lang-xml">&lt;ui:Label text=&quot;Placeholder&quot; name=&quot;health-bar__player-name&quot; class=&quot;health-bar__player-name&quot;&gt;
+    &lt;Bindings&gt;
+        &lt;ui:DataBinding property=&quot;text&quot; data-source-path=&quot;PlayerName&quot; binding-mode=&quot;ToTarget&quot; /&gt;
+    &lt;/Bindings&gt;
+&lt;/ui:Label&gt;
+</code></pre>
+
+<p>Experienced users can also create these bindings directly in UXML. Doing it in code can give precise control and be faster to edit when working with a lot of bindings. Hand-written UXML also offers clearer diffs for <span class="tooltip" tabindex="0" ><strong>version control</strong><span class="tooltiptext">A system for managing file changes. You can use Unity in conjunction with most common version control tools, including Perforce, Git, Mercurial and Unity Version Control (UVCS). <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about VersionControl.html" href="../../VersionControl.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../../Glossary.html#versioncontrol" aria-label="Go to glossary anchor for versioncontrol">Glossary</a></span></span></span>, making it easier to resolve merge conflicts or track changes.</p>
+
+<p><a name="set-up-data-binding-in-c" aria-hidden="true"></a></p>
+
+<h2>Set up data binding in C#</h2>
+
+<p>UI Builder is great for prototyping with static data (like pre-defined ScriptableObject assets), but runtime data often requires dynamic handling in C#. This code example shows how Player Two’s health bar works in the demo scene:</p>
+
+<pre><code class="lang-csharp">using UnityEngine;
+using UnityEngine.UIElements;
+using Unity.Properties;
+
+public class HealthBar : MonoBehaviour
+{
+    [SerializeField] PlayerDataSO m_HealthData;
+
+    public void Initialize(VisualElement root)
+    {
+        var m_PlayerName = root.Q&lt;Label&gt;(&quot;health-bar__player-name&quot;);
+
+        root.dataSource = m_HealthData;
+
+        m_PlayerName.SetBinding(&quot;text&quot;, new DataBinding()
+        {
+            dataSourcePath = new PropertyPath(nameof(PlayerDataSO.PlayerName)),
+            bindingMode = BindingMode.ToTarget
+        });
+    }
+}
+</code></pre>
+
+<p>The <code>HealthBar</code> script handles this in its <code>Initialize</code> method, which is called from the main controller script in <code>OnEnable</code>.</p>
+
+<ul>
+<li><p>First, we query for the <code>health-bar__player-name</code> element. Then, we assign the ScriptableObject data as a source.</p></li>
+<li><p>The <code>SetBinding</code> method then binds the <code>text</code> property to a new DataBinding instance and sets the <code>dataSourcePath</code> and <code>bindingMode</code> parameters.</p></li>
+</ul>
+
+<p>All four bindings in the above table are set up similarly. Use the ScriptableObject slider or custom Editor <span class="tooltip" tabindex="0" ><strong>property drawer</strong><span class="tooltiptext">A Unity feature that allows you to customize the look of certain controls in the Inspector window by using attributes on your scripts, or by controlling how a specific Serializable class should look <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about editor-PropertyDrawers.html" href="../../editor-PropertyDrawers.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../../Glossary.html#PropertyDrawer" aria-label="Go to glossary anchor for PropertyDrawer">Glossary</a></span></span></span> to adjust the <code>CurrentHealth</code>. The demo includes play test controls (+, -, Select) to increment, decrement, or select the ScriptableObject. The health bar updates dynamically as the changes occur.</p>
+
+<figure>
+<img src="../../../uploads/Main/bpg/uitk/image155.png" alt="The HealthBar syncs to the CurrentHealth value.">
+<figcaption>The HealthBar syncs to the CurrentHealth value.</figcaption>
+</figure>
+
+<p><a name="unresolved-data-bindings-workflow" aria-hidden="true"></a></p>
+
+<h2>Unresolved data bindings workflow</h2>
+
+<p>Unity 6 also supports a hybrid data binding workflow that blends UI Builder’s visual setup with the flexibility of scripting.</p>
+
+<p>Instead of hard-coding data sources in UXML, you can specify a Data Source Type and leave the actual data source unresolved. UI Builder marks these incomplete bindings with a hollow icon. This means that the paths and types are set but the data source is not yet assigned.</p>
+
+<figure>
+<img src="../../../uploads/Main/bpg/uitk/image120.png" alt="Unresolved data binding shows a hollow icon.">
+<figcaption>Unresolved data binding shows a hollow icon.</figcaption>
+</figure>
+
+<p>At runtime, you can assign the data source with just <a href="../../UIE-runtime-binding-define-data-source.html">one line of code</a>. For example:</p>
+
+<pre><code class="lang-csharp">myElement.dataSource = myNewDataSource;
+</code></pre>
+
+<p>Here, assigning the <code>myNewDataSource</code> to <code>myElement</code> resolves the placeholder bindings defined in UXML, allowing the UI to update automatically. This eliminates repetitive SetBinding calls and keeps the UXML flexible.</p>
+
+<p>The <em>Dragon Crashers</em> sample, for example, predefines data paths in UXML while setting the actual data sources at runtime.</p>
+
+<p>Clicking the next and last buttons in the UI sets the currently selected character as the data source. Changing the data source requires no modification to the UXML.</p>
+
+<p>The unresolved bindings show the correct character stats once the new data source is set.</p>
+
+<figure>
+<img src="../../../uploads/Main/bpg/uitk/image210.png" alt="Updating the data source in the Dragon Crashers sample">
+<figcaption>Updating the data source in the Dragon Crashers sample</figcaption>
+</figure>
+
+<p>Note: If the UXML file sets a specific data source (e.g., <code>data-source=&quot;PlayerDataSO.asset&quot;</code>), the binding becomes fixed and cannot be altered at runtime. To enable runtime changes, leave the <code>data-source</code> attribute empty or use a <code>data-source-type</code> instead.</p>
+
+<p>See <a href="data-binding.html#example-list-binding-to-a-listview">Binding a list to a ListView</a> for an example of this hybrid data binding workflow.</p>
+
+<p><a name="type-converters" aria-hidden="true"></a></p>
+
+<h2>Type converters</h2>
+
+<p>Type converters in Unity 6 allow you to transform raw data into more user-friendly formats for display in your UI. They act as intermediaries between your data source and the UI, transforming the data into a more intuitive format for the user.</p>
+
+<p>For example, type converters can convert radians into degrees or raw health values into colors for a health bar. This allows the UI to present information in a format that’s clear and easy to understand. Type converters do this without requiring a lot of manual transformation logic.</p>
+
+<p>Unity 6 supports two categories of type of converters:</p>
+
+<ul>
+<li><p>
+<strong>Global converters:</strong> Apply these to any bindings that need a specific type conversion. For example, global converters can turn any float health percentage into a color value or convert <code>Color</code> objects into <code>StyleColor</code> types, ensuring consistent behavior across your UI.</p></li>
+<li><p>
+<strong>Per-binding converters:</strong> Apply these to specific data bindings for more granular control.</p></li>
+</ul>
+
+<p><a name="example-value-to-color-conversion" aria-hidden="true"></a></p>
+
+<h3>Example: Convert a value to a color</h3>
+
+<p>A health bar that changes color based on the player’s health illustrates the use of a data binding with a type converter. By mapping the player’s current health to a color gradient (e.g. green for high health, yellow for low health, and red for critical health), players can quickly gauge their status during gameplay.</p>
+
+<p>You can see this in action in the <strong>DataBindingDemo</strong> scene within the QuizU project.</p>
+
+<p><a name="healthdataconverter-setup" aria-hidden="true"></a></p>
+
+<h3>HealthDataConverter setup</h3>
+
+<p>In the DataBindingDemo scene, the <code>HealthBarWithConverter</code> class uses some functionality from a static <code>HealthDataConverter</code> to register a few DataConverters:</p>
+
+<ul>
+<li><p>The health percentage drives a color gradient for a health bar, transitioning from green (full health) to red (critical health).</p></li>
+<li><p>A label can represent the numerical value as a percentage string (e.g., “75%”).</p></li>
+<li><p>Another label can map the same health percentage to a status label like “Full,” “Mid,” or “Critical.”</p></li>
+</ul>
+
+<p>Here’s a snippet of the <code>HealthDataConverter</code> class:</p>
+
+<pre><code class="lang-csharp">public static class HealthDataConverter
+{
+    static readonly Color s_FullColor = new Color(0.2f, 1f, 0.2f);
+    static readonly Color s_MidColor = Color.yellow;
+    static readonly Color s_LowColor = new Color(1f, 0.3f, 0f);
+    static readonly Color s_CriticalColor = Color.red;
+
+    public static void Register()
+    {
+        RegisterHealthColorConverter();
+        // ...
+    }
+
+    static void RegisterHealthColorConverter()
+    {
+        var colorConverter = new ConverterGroup(&quot;HealthColor&quot;);
+
+        colorConverter.AddConverter((ref float healthPercentage) =&gt;
+        {
+            if (healthPercentage &gt; 0.5f)
+            {
+                return new StyleColor(Color.Lerp(s_MidColor, s_FullColor,
+                    (healthPercentage - 0.5f) * 2f));
+            }
+            else if (healthPercentage &gt; 0.25f)
+            {
+                return new StyleColor(Color.Lerp(s_LowColor, s_MidColor,
+                    (healthPercentage - 0.25f) * 4f));
+            }
+            else
+            {
+                return new StyleColor(Color.Lerp(s_CriticalColor, s_LowColor,
+                    healthPercentage * 4f));
+            }
+        });
+
+        ConverterGroups.RegisterConverterGroup(colorConverter);
+    }
+
+    // ...
+}
+</code></pre>
+
+<p>The above logic creates a <code>HealthColor</code> ConverterGroup, which transforms a <code>float</code> health percentage (from 0 to 1) into a matching <code>StyleColor</code> value between red (low health) and green (full health).</p>
+
+<p>The <code>HealthDataConverter</code> class also includes converters for the two labels. These can represent the <code>HealthPercentage</code> property of the <code>PlayerDataSO</code> as formatted string values. Although you can bundle multiple converters into a single ConverterGroup, this demo separates them into distinct ConverterGroups for readability.</p>
+
+<figure>
+<img src="../../../uploads/Main/bpg/uitk/image68.png" alt="Use type converters in the UI Builder.">
+<figcaption>Use type converters in the UI Builder.</figcaption>
+</figure>
+
+<p><a name="the-healthbarwithconverter" aria-hidden="true"></a></p>
+
+<h3>The HealthBarWithConverter</h3>
+
+<p>Note that the <code>HealthDataConverter</code> class contains the actual functionality. The <code>HealthBarWithConverter</code> is simply:</p>
+
+<pre><code class="lang-csharp">public class HealthBarWithConverter : HealthBar
+{
+#if UNITY_EDITOR
+    [UnityEditor.InitializeOnLoadMethod]
+#else
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+#endif
+    public static void RegisterConverters()
+    {
+        HealthDataConverter.Register();
+    }
+}
+</code></pre>
+
+<p>Note the following:</p>
+
+<ul>
+<li><p>
+<code>UnityEditor.InitializeOnLoadMethod</code> ensures the ConverterGroup is registered and available for the UI Builder, allowing you to see and apply it in the Editor.</p></li>
+<li><p>
+<code>RuntimeInitializeOnLoadMethod</code> ensures the ConverterGroup is available during runtime when the game is running.</p></li>
+</ul>
+
+<p>The <code>#if UNITY_EDITOR</code> preprocessor directive ensures the appropriate method runs, depending on whether the code executes in the Editor or during gameplay.</p>
+
+<p><a name="dataconverter-application-in-ui-builder" aria-hidden="true"></a></p>
+
+<h3>DataConverter application in UI Builder</h3>
+
+<p>Once registered, this DataConverter can be applied to any binding that needs this conversion. To use it directly in the UI Builder:</p>
+
+<ol>
+<li><p>Open your UXML file and select the progress bar element. In the QuizU project, you can open the <strong>RuntimeDataBinding.uxml</strong> file to see how it’s set up.</p></li>
+<li><p>Set the Data Source to your <code>PlayerDataSO</code> ScriptableObject.</p></li>
+<li><p>Bind the progress bar’s <code>backgroundColor</code> style property to the HealthPercentage data path.</p></li>
+<li>
+<p>Use the <code>HealthColor</code> ConverterGroup to transform the health percentage value into a color background for the progress bar.</p>
+
+<figure>
+<img src="../../../uploads/Main/bpg/uitk/image151.png" alt="Set up the data binding for the health bar.">
+<figcaption>Set up the data binding for the health bar.</figcaption>
+</figure>
+</li>
+<li><p>Dragging the <code>CurrentHealth</code> value of the <code>PlayerDataSO</code> ScriptableObject now updates the health bar color. The gradient smoothly lerps from green (full health) to yellow (medium), orange (low), and red (critical).</p></li>
+</ol>
+
+<p>This global DataConverter is now available anywhere in your application where you need to convert a float value to this color gradient.</p>
+
+<figure>
+<img src="../../../uploads/Main/bpg/uitk/image158.png" alt="The HealthColor converter changes the progress bar color.">
+<figcaption>The HealthColor converter changes the progress bar color.</figcaption>
+</figure>
+
+<p><a name="best-practices" aria-hidden="true"></a></p>
+
+<h2>Best practices</h2>
+
+<p>When working with type converters, keep these tips in mind:</p>
+
+<ul>
+<li><p>
+<strong>Minimize allocations:</strong> Keep conversion delegates lightweight, especially for frequent operations, to avoid unnecessary performance overhead.</p></li>
+<li><p>
+<strong>Keep it simple:</strong> Write simple, focused converters for quick transformations. Avoid embedding complex or resource-intensive logic.</p></li>
+<li><p>
+<strong>Integrate conversion into the data source:</strong> Handle basic conversions in the data source itself (e.g., pre-format health percentages in a ScriptableObject property). Reserve DataConverters for conversions specific to UI bindings.</p></li>
+</ul>
+
+<p><a name="example-list-binding-to-a-listview" aria-hidden="true"></a></p>
+
+<h2>Example: Bind a list to a ListView</h2>
+
+<p>Depending on your game UI, your application may need to display dynamic lists of data, like a character inventory listing items, a quest log tracking objectives, a leaderboard ranking players, etc.</p>
+
+<p>A <a href="../../../ScriptReference/UIElements.ListView.html">ListView</a> offers a clean, scrollable interface that makes it easy to manage and present this information. Unity 6 streamlines this process with runtime data binding, eliminating the need for manual updates or custom scripts to refresh the UI when data changes.</p>
+
+<p>In earlier versions of Unity, setting up a ListView required writing custom code to populate the list and handle updates as data changed. With Unity 6, a ListView can bind directly to a data source, automatically tracking and reflecting changes in the UI.</p>
+
+<p>The demo scene includes a simple ListView that binds to a list of PlayerDataSO ScriptableObjects. This lets us create an interface similar to one found in a multiplayer game lobby or high-score leaderboard.</p>
+
+<figure>
+<img src="../../../uploads/Main/bpg/uitk/image51.png" alt="The TeamList binds a list with a ListView.">
+<figcaption>The TeamList binds a list with a ListView.</figcaption>
+</figure>
+
+<p>With runtime data binding, you can link a ListView directly to a data source, such as a ScriptableObject. The ListView automatically tracks changes to the data, streamlining setup and maintenance.</p>
+
+<p>Data binding a ListView to a list involves setting up some unresolved bindings and then completing the data binding at runtime.</p>
+
+<p><a name="set-up-the-list-and-templates" aria-hidden="true"></a></p>
+
+<h3>Set up the list and templates</h3>
+
+<p>To set up the list and templates, use the following three-step workflow:</p>
+
+<ol>
+<li><p>
+<strong>Define a data source:</strong> Your ListView needs a list of data. In this demo, a TeamSO ScriptableObject holds a list of PlayerDataSO objects. Each item in that list corresponds to a row in the ListView.</p></li>
+<li>
+<p>
+<strong>Create a UXML item template:</strong> In the UI Builder, design a UXML template (a VisualTreeAsset) that defines what a single list item looks like. For example, the <code>team-list-item</code> template in the demo includes a player’s name and some Texture2D properties. Instead of directly referencing a data source, set a Data Source Type and Data Source Path in UI Builder. This leaves the binding unresolved, ready to be completed later at runtime.</p>
+
+<figure>
+<img src="../../../uploads/Main/bpg/uitk/image56.png" alt="Design a visual tree asset in UI Builder.">
+<figcaption>Design a visual tree asset in UI Builder.</figcaption>
+</figure>
+</li>
+<li><p>
+<strong>Add the ListView to the main user interface:</strong> In another UXML file, add a ListView element that will display the entire list of players. Assign your item template as the ListView’s <strong>Item Template</strong>. At this point, the ListView knows how each row should look, but it doesn’t know which specific data source to use yet.</p></li>
+</ol>
+
+<figure>
+<img src="../../../uploads/Main/bpg/uitk/image43.png" alt="Add the template to the ListView.">
+<figcaption>Add the template to the ListView.</figcaption>
+</figure>
+
+<p>The demo scene’s ListView uses only a few basic settings (shown above). For more advanced features, consult the official <a href="../../UIE-uxml-element-ListView.html">ListView</a> documentation.</p>
+
+<p><a name="complete-the-binding-at-runtime" aria-hidden="true"></a></p>
+
+<h3>Complete the binding at runtime</h3>
+
+<p>At runtime, a simple <code>TeamList</code> script finalizes the binding by providing the actual data source. These lines complete the previously unresolved bindings:</p>
+
+<pre><code class="lang-csharp">// Set the data source
+m_ListView.dataSource = m_TeamData;
+
+// Bind the &quot;itemsSource&quot; to the Players list
+m_ListView.SetBinding(&quot;itemsSource&quot;, new DataBinding
+{
+    dataSourcePath = new PropertyPath(&quot;Players&quot;)
+});
+</code></pre>
+
+<p>Here, <code>m_TeamData</code> (an instance of <code>TeamSO</code>) is assigned to the ListView. Calling <code>SetBinding</code> once associates the <code>Players</code> property with the <code>itemsSource</code>. This allows the ListView to populate the rows of the UI.</p>
+
+<p>Because these bindings remain unresolved in the UXML until runtime, you don’t need to individually connect each list element. UI Toolkit resolves these bindings on its own and fills in the data for every list item.</p>
+
+<p>Any changes to the list in the data source (e.g., adding, removing, or rearranging players) immediately appear in the UI without requiring further scripting.</p>
+
+<figure>
+<img src="../../../uploads/Main/bpg/uitk/image143.png" alt="The UI reflects changes to the Player list.">
+<figcaption>The UI reflects changes to the Player list.</figcaption>
+</figure>
+
+<p>Remember that this hybrid approach to data binding can reduce a lot of repetitive boilerplate code. By setting up placeholder data paths in UXML, you can postpone assigning the actual data source until runtime.</p>
+
+<p>If you change the data model, there’s no need to rewrite your entire binding logic. A single update at startup can rewire the UI to the new
+source.</p>
+
+<p>For a comprehensive look at binding a ListView to a list, refer to this <a href="../../UIE-bind-to-list.html">documentation page</a>.</p>
+
+<p><a name="optimize-data-binding" aria-hidden="true"></a></p>
+
+<h2>Optimize data binding</h2>
+
+<p>Efficient binding can help you maintain a performant UI. Redundant or excessive bindings can overload the system, leading to unnecessary updates and reduced performance. This is especially important if your interface is complex or resource-intensive.</p>
+
+<p>By default, the runtime binding system updates UI elements every frame. This is responsive for a small application but can become a performance bottleneck with more bindings.</p>
+
+<p>This section covers methods to improve data binding efficiency for larger projects.</p>
+
+<p><a name="manage-value-types" aria-hidden="true"></a></p>
+
+<h3>Manage value types</h3>
+
+<p>If your data source uses value types (e.g., int, float, struct), watch out for boxing costs. Because the dataSource property operates as an object, frequent conversions from value types can add overhead.</p>
+
+<p>To reduce this, minimize unnecessary bindings or redundant updates when working with value-type properties.</p>
+
+<p><a name="minimize-overhead" aria-hidden="true"></a></p>
+
+<h3>Minimize overhead</h3>
+
+<p>Start by identifying bindings that update the same elements multiple times or track data that rarely changes. Consolidate or remove these bindings to reduce unnecessary work. Use flat, simple data structures instead of complex hierarchies when possible. This can avoid performance bottlenecks caused by frequent data lookups.</p>
+
+<p>Consider precomputing or caching values that require heavy calculations. Binding to these precomputed values reduces the computational load on the binding system and avoids repeated recalculations.</p>
+
+<p>Make sure your bindings are only on elements that need frequent updates. For elements that don’t require constant synchronization, remove unnecessary bindings and instead assign values directly or update them only when triggered by events.</p>
+
+<p><a name="use-update-triggers" aria-hidden="true"></a></p>
+
+<h3>Use update triggers</h3>
+
+<p>Bindings refresh based on <a href="../../UIE-runtime-binding-mode-update.html">update triggers</a>, which determine how often the UI synchronizes with the data source. This allows you to balance performance with responsiveness. These options determines how often the bindings update:</p>
+
+<ul>
+<li><p>
+<strong>Every frame:</strong> This updates continuously. Use this for elements that require constant updates, like the example health bars.</p></li>
+<li><p>
+<strong>On change detection:</strong> This updates when the data source changes, or every frame if detection isn’t possible. For instance, use this for stats panels or inventory lists that depend on observable data.</p></li>
+<li><p>
+<strong>When marked as dirty:</strong> In scenarios where updates are infrequent, explicitly marking bindings as dirty with <code>MarkDirty</code> avoids unnecessary refresh cycles. This update triggers works for elements like settings menus that change only in specific contexts.</p></li>
+</ul>
+
+<p>By matching update triggers to the needs of each UI element, you can balance responsiveness with efficiency.</p>
+
+<p><a name="versioning-and-change-tracking" aria-hidden="true"></a></p>
+
+<h3>Versioning and change tracking</h3>
+
+<p>To reduce unnecessary updates, you can integrate versioning and change tracking into your data sources.</p>
+
+<p>Two interfaces can help make your data binding more efficient:</p>
+
+<ul>
+<li><p>
+<a href="../../../ScriptReference/UIElements.IDataSourceViewHashProvider.html">IDataSourceViewHashProvider</a>: This tracks overall changes using a version hash, triggering updates only when the data source changes. This is useful for static or semi-static data, where updates are infrequent.</p></li>
+<li><p>
+<a href="../../../ScriptReference/UIElements.INotifyBindablePropertyChanged.html">INotifyBindablePropertyChanged</a>: This tracks changes at the property level, ensuring that affected bindings are refreshed. This offers granular control.</p></li>
+</ul>
+
+<p>Add these interfaces to the data source. They can be used independently or together for greater control over updates. Refer to this <a href="../../UIE-runtime-binding-define-data-source.html">documentation page</a> for usage and best practices.</p>
+
+<p>💡 <strong>Tip: More UI Toolkit optimization tips</strong>
+</p>
+
+<p>In this <a href="https://www.youtube.com/watch?v=bECmaYIvZJg">Unite 2024 talk</a> on UI Toolkit optimizations, you’ll learn about topics like the chained draw-calls implementation and the implications of buffer sizes, dynamic atlasing best practices, and dealing with limitations like custom <span class="tooltip" tabindex="0" ><strong>shaders</strong><span class="tooltiptext">A program that runs on the GPU. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Shaders.html" href="../../Shaders.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../../Glossary.html#shader" aria-label="Go to glossary anchor for shader">Glossary</a></span></span></span> and 3D UI.</p>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="../../best-practice-guides/ui-toolkit-for-advanced-unity-developers/text.html"></a></span><div class="tip">Text</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="../../best-practice-guides/ui-toolkit-for-advanced-unity-developers/localization.html"></a></span><div class="tip">Localization</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

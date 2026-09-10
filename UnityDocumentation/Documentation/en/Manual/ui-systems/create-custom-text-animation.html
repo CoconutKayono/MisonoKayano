@@ -1,0 +1,335 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Create custom text animation</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<meta property="relative-path-to-manual" content="../">
+<meta property="version-switcher-versions-with-this-page" content="Versions with this page:">
+<meta property="version-switcher-versions-without-this-page" content="Versions without this page:">
+<meta property="version-switcher-supported" content="Supported">
+<meta property="version-switcher-legacy" content="Legacy">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/Manual/ui-systems/create-custom-text-animation.html">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../../StaticFilesManual/js/jquery.js?ts=20260626"></script><script type="text/javascript" src="../../StaticFilesManual/js/core.js?ts=20260626"></script><script type="text/javascript" src="../../StaticFilesManual/js/image-comp.js?ts=20260626"></script><script type="text/javascript" src="../docdata/toc.js?ts=20260626"></script><script type="text/javascript" src="../docdata/global_toc.js?ts=20260626"></script><link rel="stylesheet" type="text/css" href="../../StaticFilesManual/css/core.css?ts=20260626">
+<link rel="stylesheet" type="text/css" href="../../StaticFilesManual/css/icons.css?ts=20260626">
+<link rel="stylesheet" href="../../StaticFilesManual/css/prism.css">
+<script src="../../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="../30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../index.html" class="selected">Manual</a></li>
+<li><a href="../../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/ui-systems/create-custom-text-animation.html">English</a></li>
+<li><a href="/cn/current/Manual/ui-systems/create-custom-text-animation.html">中文</a></li>
+<li><a href="/ja/current/Manual/ui-systems/create-custom-text-animation.html">日本語</a></li>
+<li><a href="/kr/current/Manual/ui-systems/create-custom-text-animation.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: Unity 6.7 Beta</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/ui-systems/create-custom-text-animation.html">English</a></li>
+<li><a href="/cn/current/Manual/ui-systems/create-custom-text-animation.html">中文</a></li>
+<li><a href="/ja/current/Manual/ui-systems/create-custom-text-animation.html">日本語</a></li>
+<li><a href="/kr/current/Manual/ui-systems/create-custom-text-animation.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="../UIToolkits.html">UI systems</a></li>
+<li><a href="../UIElements.html">UI Toolkit</a></li>
+<li><a href="../UIE-work-with-text.html">Work with text</a></li>
+<li>Create custom text animation</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="../UIE-fallback-font.html"></a></span><div class="tip">Fallback font</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="../ui-systems/use-legacy-text-core.html"></a></span><div class="tip">Use the legacy Text Core in UI Toolkit</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Create custom text animation</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>
+<strong>Version</strong>: 6000.3+</p>
+
+<p>The <a href="../../ScriptReference/UIElements.TextElement.PostProcessTextVertices.html"><code>TextElement.PostProcessTextVertices</code></a> API lets you modify the <span class="tooltip" tabindex="0" ><strong>mesh</strong><span class="tooltiptext">The main graphics primitive of Unity. Meshes make up a large part of your 3D worlds. Unity supports triangulated or Quadrangulated polygon meshes. Nurbs, Nurms, Subdiv surfaces must be converted to polygons. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about mesh.html" href="../mesh.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#Mesh" aria-label="Go to glossary anchor for Mesh">Glossary</a></span></span></span> vertices of each glyph immediately before UI Toolkit renders them. You can use this callback to customize the position, tint, and UV coordinates of the text at a low level.</p>
+
+<p>Each enumerated <code>Glyph</code> also exposes stable metadata that makes it possible to drive per-glyph effects from rich-text markup:</p>
+
+<ul>
+<li>
+<code>line</code> — zero-based visual line number the glyph sits on.</li>
+<li>
+<code>linkID</code> — value of the enclosing <code>&lt;link=...&gt;</code> tag (the same string surfaced through <code>PointerDownLinkTagEvent.linkID</code>), or <code>null</code> when the glyph is not inside a <code>&lt;link&gt;</code>. All glyphs that belong to the same link span share the same value. <code>&lt;a href=...&gt;</code> hyperlinks are not reported through this field.</li>
+<li>
+<code>kind</code> — classifies the glyph as <code>Character</code> or <code>Sprite</code>.</li>
+</ul>
+
+<h2>Example overview</h2>
+
+<p>This example creates a custom Editor window that animates text by fading glyphs in and out when you press <strong>Spacebar</strong>. It uses the <code>TextElement.PostProcessTextVertices</code> API to modify the vertex data of the text glyphs.</p>
+
+<figure>
+<img src="../../uploads/Main/uitk/text-animation-demo.gif" alt="Text animation demo">
+<figcaption>Text animation demo</figcaption>
+</figure>
+
+<p>You can find the completed files that this example creates in this <a href="https://github.com/Unity-Technologies/ui-toolkit-manual-code-examples/tree/master/text-animation-example">GitHub repository</a>.</p>
+
+<h2>Prerequisites</h2>
+
+<p>This guide is for developers familiar with the Unity Editor, UI Toolkit, and C# scripting. Before you start, get familiar with the following:</p>
+
+<ul>
+<li><a href="../../ScriptReference/UIElements.TextElement.html"><code>TextElement</code></a></li>
+</ul>
+
+<h2>Create a custom Editor window with text animation</h2>
+
+<p>Create a C# script for a custom Editor window. Use a scheduled job to track animation time. In the <code>OnPostProcessTextVertices</code> method, iterate through <code>GlyphsEnumerable</code> and adjust each vertex tint’s alpha channel until the fade completes.</p>
+
+<ol>
+<li>Create a Unity project with any template.</li>
+<li>Create a folder named <code>Editor</code> if you don’t have one.</li>
+<li>Inside the <code>Editor</code> folder, create a C# script named <code>TextAnimation.cs</code> with the following content:</li>
+</ol>
+
+<pre><code class="lang-cs">using UnityEditor;
+using UnityEngine;
+using UnityEngine.UIElements;
+using TextElement = UnityEngine.UIElements.TextElement;
+
+public class TextAnimation : EditorWindow
+{
+    [MenuItem(&quot;Window/UI Toolkit/TextAnimation&quot;)]
+    public static void ShowExample()
+    {
+        TextAnimation wnd = GetWindow&lt;TextAnimation&gt;();
+        wnd.titleContent = new GUIContent(&quot;TextAnimation&quot;);
+    }
+
+    Label label;
+    float animationDuration = 1f; // in seconds
+    float elapsed = 0f;
+    float startRealtime;
+    IVisualElementScheduledItem animationJob;
+    bool isTextVisible = true;
+
+    public void CreateGUI()
+    {
+        VisualElement root = rootVisualElement;
+
+        var container = new VisualElement()
+        {
+            style =
+            {
+                flexGrow = 1,
+                top = 0,
+                bottom = 0,
+                right = 0,
+                left = 0
+            },
+            focusable = true // We can only receive key events on a window with a focusable element.
+        };
+        label = new Label(&quot;Hello ❤️ World!&quot;) { style = { flexGrow = 1, fontSize = 24, unityTextAlign = TextAnchor.MiddleCenter } };
+        container.Add(label);
+        root.Add(container);
+
+        rootVisualElement.RegisterCallback&lt;KeyDownEvent&gt;(evt =&gt; OnSpacebarPressed(evt), TrickleDown.TrickleDown);
+        label.PostProcessTextVertices += OnPostProcessTextVertices;
+
+        const int targetHz = 60;
+        animationJob = label.schedule.Execute(UpdateTime).Every(1000 / targetHz);
+        animationJob.Pause(); // Pause the job until the animation starts
+    }
+
+    private void UpdateTime()
+    {
+        elapsed = Mathf.Min(Time.realtimeSinceStartup - startRealtime, animationDuration);
+        if (elapsed &gt;= animationDuration)
+        {
+            elapsed = animationDuration; // Cap at max duration
+            animationJob.Pause();
+        }
+
+        label.MarkDirtyRepaint();
+    }
+
+    public void OnSpacebarPressed(KeyDownEvent evt)
+    {
+        if (evt.keyCode != KeyCode.Space || animationJob.isActive)
+            return;
+
+        elapsed = 0f;
+        startRealtime = Time.realtimeSinceStartup;
+        animationJob.Resume();
+        isTextVisible = !isTextVisible;
+    }
+
+    void OnPostProcessTextVertices(TextElement.GlyphsEnumerable glyphs)
+    {
+        int glyphsToToggle = (int)(elapsed * glyphs.Count / animationDuration);
+
+        int toggled = 0;
+        foreach (TextElement.Glyph glyph in glyphs)
+        {
+            if (toggled++ &gt;= glyphsToToggle)
+                break;
+
+            var verts = glyph.vertices;
+            for (int i = 0; i &lt; verts.Length; i++)
+            {
+                var v = verts[i];
+                var tint = v.tint;
+                tint.a = isTextVisible ? (byte)255 : (byte)0;
+                v.tint = tint;
+                verts[i] = v;
+            }
+        }
+    }
+}
+</code></pre>
+
+<h2>Test the sample</h2>
+
+<p>Test the text animation sample in the custom Editor window. </p>
+
+<ol>
+<li>From the menu, select <strong>Window</strong> &gt; <strong>UI Toolkit</strong> &gt; <strong>TextAnimation</strong> to open the sample window.</li>
+<li>Press the <strong>Spacebar</strong> to start the animation.</li>
+</ol>
+
+<h2>Animate per-glyph outline and shadow tints</h2>
+
+<p>By default <code>vertices[i].tint</code> only controls the <strong>face</strong> color of a glyph. To animate
+the <strong>outline</strong> and <strong>text-shadow</strong> tints per glyph, call
+<a href="../../ScriptReference/UIElements.TextElement.Glyph.SetTints.html"><code>Glyph.SetTints</code></a> inside your
+<code>PostProcessTextVertices</code> callback:</p>
+
+<pre><code class="csharp">m_TextElement.PostProcessTextVertices += (glyphs) =&gt;
+{
+    int i = 0;
+    foreach (var glyph in glyphs)
+    {
+        var t = (i++ / (float)glyphs.Count); // 0..1 across the line
+        glyph.SetTints(
+            outline: new Color(1, 0, 0, t),
+            shadow:  new Color(0, 0, 1, t));
+    }
+};
+</code></pre>
+
+<p>
+<code>SetTints</code> takes nullable <code>outline</code> and <code>shadow</code> arguments — pass <code>null</code> for either
+field to leave it at the element’s baseline (<code>unityTextOutlineColor</code> /
+<code>textShadow.color</code>).</p>
+
+<blockquote>
+<p>[!IMPORTANT]
+Calls to <code>SetTints</code> are <strong>not additive across calls</strong> on the same glyph. Each call
+rebuilds the glyph’s effective settings from the element baseline, so calling
+<code>glyph.SetTints(outline: red)</code> and then <code>glyph.SetTints(shadow: blue)</code> in sequence
+reverts the outline to baseline. To set both outline and shadow on the same glyph,
+pass both arguments in <strong>one</strong> call: <code>glyph.SetTints(outline: red, shadow: blue)</code>.</p>
+</blockquote>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="../UIE-rich-text-tags.html">Style text with rich text tags</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="../UIE-fallback-font.html"></a></span><div class="tip">Fallback font</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="../ui-systems/use-legacy-text-core.html"></a></span><div class="tip">Use the legacy Text Core in UI Toolkit</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

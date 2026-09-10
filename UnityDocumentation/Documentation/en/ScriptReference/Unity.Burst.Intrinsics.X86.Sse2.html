@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+  <head>
+    <script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true">
+    </script>
+    <script type="text/javascript">function OptanonWrapper() {}</script>
+    <script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script>
+    <script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&amp;l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script>
+    <link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet" />
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Unity - Scripting API: Sse2</title>
+    <meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg" />
+    <meta name="author" content="Unity Technologies" />
+    <link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico" />
+    <link rel="icon" type="image/png" href="../../../StaticFiles/images/favicons/favicon.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFiles/images/favicons/apple-touch-icon-152x152.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFiles/images/favicons/apple-touch-icon-144x144.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFiles/images/favicons/apple-touch-icon-120x120.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFiles/images/favicons/apple-touch-icon-114x114.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFiles/images/favicons/apple-touch-icon-72x72.png" />
+    <link rel="apple-touch-icon-precomposed" href="../StaticFiles/images/favicons/apple-touch-icon.png" />
+    <link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/ScriptReference/Unity.Burst.Intrinsics.X86.Sse2.html" />
+    <meta name="msapplication-TileColor" content="#222c37" />
+    <meta name="msapplication-TileImage" content="../StaticFiles/images/favicons/tileicon-144x144.png" />
+    <script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js">
+    </script>
+    <script type="text/javascript" src="../StaticFiles/js/jquery.js">
+    </script>
+    <script type="text/javascript" src="docdata/toc.js">//toc</script>
+    <!--local TOC-->
+    <script type="text/javascript" src="docdata/global_toc.js">//toc</script>
+    <!--global TOC, including other platforms-->
+    <script type="text/javascript" src="../StaticFiles/js/core.js">
+    </script>
+    <link rel="stylesheet" href="../StaticFiles/css/prism.css" />
+    <script type="text/javascript" src="../StaticFiles/js/prism.js">
+    </script>
+    <link rel="stylesheet" type="text/css" href="../StaticFiles/css/core.css" />
+    <script src="/StaticFilesConfig/feedback/feedback.js">
+    </script>
+    <script src="../StaticFiles/js/jquery.sidebar.min.js">
+    </script>
+    <script type="text/javascript" src="../StaticFiles/js/mobileoptimisation.js">
+    </script>
+    <link rel="stylesheet" href="../StaticFiles/css/mobileoptimisation.css" />
+    <link rel="stylesheet" href="../StaticFiles/css/icons.css" />
+  </head>
+  <body>
+    <div id="DocsAnalyticsData" data-area="none" data-pagetype="scriptref">
+    </div>
+    <div class="header-wrapper">
+      <div id="header" class="header">
+        <div class="content">
+          <div class="spacer">
+            <div class="menu">
+              <div id="nav-open" for="nav-input">
+                <span>
+                </span>
+              </div>
+              <div class="logo">
+                <a aria-label="go to the homepage" href="">
+                </a>
+              </div>
+              <div class="search-form">
+                <form action="30_search.html" method="get" class="apisearch">
+                  <input type="text" name="q" aria-label="Search scripting documentation" placeholder="Search scripting..." autosave="Unity Reference" results="5" class="sbox field" id="q">
+                  </input>
+                  <input type="submit" class="submit">
+                  </input>
+                </form>
+              </div>
+              <ul>
+                <li>
+                  <a href="../Manual/index.html">Manual</a>
+                </li>
+                <li>
+                  <a href="../ScriptReference/index.html" class="selected">Scripting API</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="more">
+            <div class="filler">
+            </div>
+            <ul>
+              <li>
+                <a href="https://unity.com/">unity.com</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="toolbar">
+        <div class="content clear">
+          <div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;"><ul id="OtherVersionsContentUl"></ul><div id="otherVersionsLegend"><ul><li><div id="supportedColour" class="legendBox"></div>Supported</li><li><div id="notFoundColour" class="legendBox"></div>Legacy</li></ul></div></div><div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div></div>
+          <div class="lang-switcher hide">
+            <div class="current toggle" data-target=".lang-list">
+              <div class="lbl">Language<span class="b">English</span></div>
+              <div class="arrow">
+              </div>
+            </div>
+            <div class="lang-list" style="display:none;">
+              <ul>
+                <li>
+                  <a href="">English</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="script-lang">
+            <ul>
+              <li class="selected" data-lang="CS">C#</li>
+            </ul>
+          </div>
+          <div class="mobileLogo">
+            <a aria-label="go to the homepage" href="https://docs.unity3d.com">
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="master-wrapper" class="master-wrapper clear">
+      <div id="sidebar" class="sidebar">
+        <div class="sidebar-wrap">
+          <div class="content">
+            <div class="sidebar-menu">
+              <div class="toc" id="customScrollbar">
+                <h2>Scripting API</h2>
+                <div class="search-form sidebar-search-form">
+                  <form action="30_search.html" method="get" class="apisearch">
+                    <input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q">
+                    </input>
+                    <input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+                    </input>
+                  </form>
+                </div>
+                <div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent">
+                  <form id="otherVersionsContentMobileForm">
+                    <div class="ui-field-contain">
+                      <label for="select-native-4">Version: Unity 6.7 Beta</label>
+                      <select name="select-native-4" id="versionsSelectMobile">
+                        <option>Select a different version</option>
+                        <optgroup id="versionsWithThisPageMobile" label="Versions with this page">
+                        </optgroup>
+                        <optgroup id="versionsWithoutThisPageMobile" label="Versions without this page">
+                        </optgroup>
+                      </select>
+                    </div>
+                  </form>
+                </div>
+                <div class="lang-switcher hide">
+                  <div class="toggle" data-target=".lang-list">
+                    <div class="lbl">Language<span class="b">English</span></div>
+                    <div class="arrow">
+                    </div>
+                  </div>
+                  <div class="lang-list" style="display:none;">
+                    <ul>
+                      <li>
+                        <a href="">English</a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="content-wrap" class="content-wrap">
+        <div class="content-block">
+          <div class="content">
+            <div class="section">
+              <div class="mb20 clear" id="">
+                <h1 class="heading inherit">Sse2</h1>
+                <div class="clear">
+                </div>
+                <p class="cl mb0 left mr10">class in
+          Unity.Burst.Intrinsics</p>
+                <div class="scrollToFeedback">
+                  <a id="scrollToFeedback" role="button" tabindex="0">Leave feedback</a>
+                </div>
+                <div class="clear">
+                </div>
+                <div class="suggest">
+                  <a class="blue-btn sbtn">Suggest a change</a>
+                  <div class="suggest-wrap rel hide">
+                    <div class="loading hide">
+                      <div>
+                      </div>
+                      <div>
+                      </div>
+                      <div>
+                      </div>
+                    </div>
+                    <div class="suggest-success hide">
+                      <h2>Success!</h2>
+                      <p>Thank you for helping us improve the quality of Unity Documentation. Although we cannot accept all submissions, we do read each suggested change from our users and will make updates where applicable.</p>
+                      <a class="gray-btn sbtn close">Close</a>
+                    </div>
+                    <div class="suggest-failed hide">
+                      <h2>Submission failed</h2>
+                      <p>For some reason your suggested change could not be submitted. Please &lt;a&gt;try again&lt;/a&gt; in a few minutes. And thank you for taking the time to help us improve the quality of Unity Documentation.</p>
+                      <a class="gray-btn sbtn close">Close</a>
+                    </div>
+                    <div class="suggest-form clear">
+                      <label for="suggest_name">Your name</label>
+                      <input id="suggest_name" type="text">
+                      </input>
+                      <label for="suggest_email">Your email</label>
+                      <input id="suggest_email" type="email">
+                      </input>
+                      <label for="suggest_body" class="clear">Suggestion<span class="r">*</span></label>
+                      <textarea id="suggest_body" class="req">
+                      </textarea>
+                      <button id="suggest_submit" class="blue-btn mr10">Submit suggestion</button>
+                      <p class="mb0">
+                        <a class="cancel left lh42 cn">Cancel</a>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="clear">
+                </div>
+              </div>
+              <div class="subsection">
+                <div class="signature">
+                  <div class="signature-CS sig-block">
+                    <span style="color:red;">
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div class="subsection">
+                <h3>Description</h3>
+                <p>
+ SSE2 intrinsics
+ </p>
+              </div>
+              <div class="subsection">
+                <h3>Static Properties</h3>
+                <table class="list">
+                  <thead>
+                    <tr>
+                      <th>Property</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2.IsSse2Supported.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2.IsSse2Supported.html">IsSse2Supported</a></td><td class="desc">
+ Evaluates to true at compile time if SSE2 intrinsics are supported.
+ </td></tr>
+    </table>
+              </div>
+              <div class="subsection">
+                <h3>Static Methods</h3>
+                <table class="list">
+                  <thead>
+                    <tr>
+                      <th>Method</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-adds_epi16.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-adds_epi16.html">adds_epi16</a></td><td class="desc"> Add packed 16-bit integers in "a" and "b" using saturation, and store the results in "dst". </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-adds_epi8.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-adds_epi8.html">adds_epi8</a></td><td class="desc"> Add packed 8-bit integers in "a" and "b" using saturation, and store the results in "dst". </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-adds_epu16.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-adds_epu16.html">adds_epu16</a></td><td class="desc"> Add packed unsigned 16-bit integers in "a" and "b" using saturation, and store the results in "dst". </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-adds_epu8.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-adds_epu8.html">adds_epu8</a></td><td class="desc"> Add packed unsigned 8-bit integers in "a" and "b" using saturation, and store the results in "dst". </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-and_pd.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-and_pd.html">and_pd</a></td><td class="desc"> Compute the bitwise AND of packed double-precision (64-bit) floating-point elements in "a" and "b", and store the results in "dst". </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-and_si128.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-and_si128.html">and_si128</a></td><td class="desc"> Compute the bitwise AND of 128 bits (representing integer data) in "a" and "b", and store the result in "dst". </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-andnot_pd.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-andnot_pd.html">andnot_pd</a></td><td class="desc"> Compute the bitwise NOT of packed double-precision (64-bit) floating-point elements in "a" and then AND with "b", and store the results in "dst". </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-andnot_si128.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-andnot_si128.html">andnot_si128</a></td><td class="desc"> Compute the bitwise NOT of 128 bits (representing integer data) in "a" and then AND with "b", and store the result in "dst". </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-avg_epu16.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-avg_epu16.html">avg_epu16</a></td><td class="desc"> Average packed unsigned 16-bit integers in "a" and "b", and store the results in "dst". </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-avg_epu8.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-avg_epu8.html">avg_epu8</a></td><td class="desc"> Average packed unsigned 8-bit integers in "a" and "b", and store the results in "dst". </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-bslli_si128.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-bslli_si128.html">bslli_si128</a></td><td class="desc"> Shift "a" left by "imm8" bytes while shifting in zeros, and store the results in "dst". </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-bsrli_si128.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-bsrli_si128.html">bsrli_si128</a></td><td class="desc"> Shift "a" right by "imm8" bytes while shifting in zeros, and store the results in "dst". </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-clflush.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-clflush.html">clflush</a></td><td class="desc">
+ Invalidate and flush the cache line that contains p from all levels of the cache hierarchy.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-cmpeq_epi16.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-cmpeq_epi16.html">cmpeq_epi16</a></td><td class="desc"> Compare packed 16-bit integers in "a" and "b" for equality, and store the results in "dst". </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-cmpeq_epi32.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-cmpeq_epi32.html">cmpeq_epi32</a></td><td class="desc"> Compare packed 32-bit integers in "a" and "b" for equality, and store the results in "dst". </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-cmpeq_epi8.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-cmpeq_epi8.html">cmpeq_epi8</a></td><td class="desc"> Compare packed 8-bit integers in "a" and "b" for equality, and store the results in "dst". </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-cmpeq_pd.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-cmpeq_pd.html">cmpeq_pd</a></td><td class="desc"> Compare packed double-precision (64-bit) floating-point elements in "a" and "b" for equality, and store the results in "dst". </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-cmpeq_sd.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-cmpeq_sd.html">cmpeq_sd</a></td><td class="desc"> Compare the lower double-precision (64-bit) floating-point elements in "a" and "b" for equality, store the result in the lower element of "dst", and copy the upper element from "a" to the upper element of "dst". </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-cmpge_pd.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-cmpge_pd.html">cmpge_pd</a></td><td class="desc"> Compare packed double-precision (64-bit) floating-point elements in "a" and "b" for greater-than-or-equal, and store the results in "dst". </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-cmpge_sd.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-cmpge_sd.html">cmpge_sd</a></td><td class="desc"> Compare the lower double-precision (64-bit) floating-point elements in "a" and "b" for greater-than-or-equal, store the result in the lower element of "dst", and copy the upper element from "a" to the upper element of "dst". </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-cmpgt_epi16.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-cmpgt_epi16.html">cmpgt_epi16</a></td><td class="desc"> Compare packed 16-bit integers in "a" and "b" for greater-than, and store the results in "dst". </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-cmpgt_epi32.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-cmpgt_epi32.html">cmpgt_epi32</a></td><td class="desc"> Compare packed 32-bit integers in "a" and "b" for greater-than, and store the results in "dst". </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-cmpgt_epi8.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-cmpgt_epi8.html">cmpgt_epi8</a></td><td class="desc"> Compare packed 8-bit integers in "a" and "b" for greater-than, and store the results in "dst". </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-cmpgt_pd.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-cmpgt_pd.html">cmpgt_pd</a></td><td class="desc"> Compare packed double-precision (64-bit) floating-point elements in "a" and "b" for greater-than, and store the results in "dst". </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-cmpgt_sd.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-cmpgt_sd.html">cmpgt_sd</a></td><td class="desc"> Compare the lower double-precision (64-bit) floating-point elements in "a" and "b" for greater-than, store the result in the lower element of "dst", and copy the upper element from "a" to the upper element of "dst". </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-cmple_pd.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-cmple_pd.html">cmple_pd</a></td><td class="desc"> Compare packed double-precision (64-bit) floating-point elements in "a" and "b" for less-than-or-equal, and store the results in "dst". </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-cmple_sd.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-cmple_sd.html">cmple_sd</a></td><td class="desc"> Compare the lower double-precision (64-bit) floating-point elements in "a" and "b" for less-than-or-equal, store the result in the lower element of "dst", and copy the upper element from "a" to the upper element of "dst". </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-cmplt_epi16.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-cmplt_epi16.html">cmplt_epi16</a></td><td class="desc"> Compare packed 16-bit integers in "a" and "b" for less-than, and store the results in "dst". Note: This intrinsic emits the pcmpgtw instruction with the order of the operands switched. </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-cmplt_epi32.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-cmplt_epi32.html">cmplt_epi32</a></td><td class="desc"> Compare packed 32-bit integers in "a" and "b" for less-than, and store the results in "dst". Note: This intrinsic emits the pcmpgtd instruction with the order of the operands switched. </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-cmplt_epi8.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-cmplt_epi8.html">cmplt_epi8</a></td><td class="desc"> Compare packed 8-bit integers in "a" and "b" for less-than, and store the results in "dst". Note: This intrinsic emits the pcmpgtb instruction with the order of the operands switched. </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-cmplt_pd.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-cmplt_pd.html">cmplt_pd</a></td><td class="desc"> Compare packed double-precision (64-bit) floating-point elements in "a" and "b" for less-than, and store the results in "dst". </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-cmplt_sd.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-cmplt_sd.html">cmplt_sd</a></td><td class="desc"> Compare the lower double-precision (64-bit) floating-point elements in "a" and "b" for less-than, store the result in the lower element of "dst", and copy the upper element from "a" to the upper element of "dst". </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-cmpneq_pd.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-cmpneq_pd.html">cmpneq_pd</a></td><td class="desc"> Compare packed double-precision (64-bit) floating-point elements in "a" and "b" for not-equal, and store the results in "dst". </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-cmpneq_sd.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-cmpneq_sd.html">cmpneq_sd</a></td><td class="desc"> Compare the lower double-precision (64-bit) floating-point elements in "a" and "b" for not-equal, store the result in the lower element of "dst", and copy the upper element from "a" to the upper element of "dst". </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-cmpnge_pd.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-cmpnge_pd.html">cmpnge_pd</a></td><td class="desc"> Compare packed double-precision (64-bit) floating-point elements in "a" and "b" for not-greater-than-or-equal, and store the results in "dst". </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-cmpnge_sd.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-cmpnge_sd.html">cmpnge_sd</a></td><td class="desc"> Compare the lower double-precision (64-bit) floating-point elements in "a" and "b" for not-greater-than-or-equal, store the result in the lower element of "dst", and copy the upper element from "a" to the upper element of "dst". </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-cmpngt_pd.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-cmpngt_pd.html">cmpngt_pd</a></td><td class="desc"> Compare packed double-precision (64-bit) floating-point elements in "a" and "b" for not-greater-than, and store the results in "dst". </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-cmpngt_sd.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-cmpngt_sd.html">cmpngt_sd</a></td><td class="desc"> Compare the lower double-precision (64-bit) floating-point elements in "a" and "b" for not-greater-than, store the result in the lower element of "dst", and copy the upper element from "a" to the upper element of "dst". </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-cmpnle_pd.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-cmpnle_pd.html">cmpnle_pd</a></td><td class="desc"> Compare packed double-precision (64-bit) floating-point elements in "a" and "b" for not-less-than-or-equal, and store the results in "dst". </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-cmpnle_sd.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-cmpnle_sd.html">cmpnle_sd</a></td><td class="desc"> Compare the lower double-precision (64-bit) floating-point elements in "a" and "b" for not-less-than-or-equal, store the result in the lower element of "dst", and copy the upper element from "a" to the upper element of "dst". </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-cmpnlt_pd.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-cmpnlt_pd.html">cmpnlt_pd</a></td><td class="desc"> Compare packed double-precision (64-bit) floating-point elements in "a" and "b" for not-less-than, and store the results in "dst". </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-cmpnlt_sd.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-cmpnlt_sd.html">cmpnlt_sd</a></td><td class="desc"> Compare the lower double-precision (64-bit) floating-point elements in "a" and "b" for not-less-than, store the result in the lower element of "dst", and copy the upper element from "a" to the upper element of "dst". </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-cmpord_pd.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-cmpord_pd.html">cmpord_pd</a></td><td class="desc"> Compare packed double-precision (64-bit) floating-point elements in "a" and "b" to see if neither is NaN, and store the results in "dst". </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-cmpord_sd.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-cmpord_sd.html">cmpord_sd</a></td><td class="desc"> Compare the lower double-precision (64-bit) floating-point elements in "a" and "b" to see if neither is NaN, store the result in the lower element of "dst", and copy the upper element from "a" to the upper element of "dst". </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-cmpunord_pd.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-cmpunord_pd.html">cmpunord_pd</a></td><td class="desc"> Compare packed double-precision (64-bit) floating-point elements in "a" and "b" to see if either is NaN, and store the results in "dst". </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-cmpunord_sd.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-cmpunord_sd.html">cmpunord_sd</a></td><td class="desc"> Compare the lower double-precision (64-bit) floating-point elements in "a" and "b" to see if either is NaN, store the result in the lower element of "dst", and copy the upper element from "a" to the upper element of "dst". </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-comieq_sd.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-comieq_sd.html">comieq_sd</a></td><td class="desc"> Compare the lower double-precision (64-bit) floating-point element in "a" and "b" for equality, and return the boolean result (0 or 1). </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-comige_sd.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-comige_sd.html">comige_sd</a></td><td class="desc"> Compare the lower double-precision (64-bit) floating-point element in "a" and "b" for greater-than-or-equal, and return the boolean result (0 or 1). </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-comigt_sd.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-comigt_sd.html">comigt_sd</a></td><td class="desc"> Compare the lower double-precision (64-bit) floating-point element in "a" and "b" for greater-than, and return the boolean result (0 or 1). </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-comile_sd.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-comile_sd.html">comile_sd</a></td><td class="desc"> Compare the lower double-precision (64-bit) floating-point element in "a" and "b" for less-than-or-equal, and return the boolean result (0 or 1). </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-comilt_sd.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-comilt_sd.html">comilt_sd</a></td><td class="desc"> Compare the lower double-precision (64-bit) floating-point element in "a" and "b" for less-than, and return the boolean result (0 or 1). </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-comineq_sd.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-comineq_sd.html">comineq_sd</a></td><td class="desc"> Compare the lower double-precision (64-bit) floating-point element in "a" and "b" for not-equal, and return the boolean result (0 or 1). </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-cvtepi32_pd.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-cvtepi32_pd.html">cvtepi32_pd</a></td><td class="desc"> Convert packed 32-bit integers in "a" to packed double-precision (64-bit) floating-point elements, and store the results in "dst". </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-cvtepi32_ps.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-cvtepi32_ps.html">cvtepi32_ps</a></td><td class="desc"> Convert packed 32-bit integers in "a" to packed single-precision (32-bit) floating-point elements, and store the results in "dst". </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-cvtpd_epi32.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-cvtpd_epi32.html">cvtpd_epi32</a></td><td class="desc"> Convert packed double-precision (64-bit) floating-point elements in "a" to packed 32-bit integers, and store the results in "dst". </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-cvtpd_ps.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-cvtpd_ps.html">cvtpd_ps</a></td><td class="desc"> Convert packed double-precision (64-bit) floating-point elements in "a" to packed single-precision (32-bit) floating-point elements, and store the results in "dst". </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-cvtps_epi32.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-cvtps_epi32.html">cvtps_epi32</a></td><td class="desc"> Convert packed single-precision (32-bit) floating-point elements in "a" to packed 32-bit integers, and store the results in "dst". </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-cvtps_pd.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-cvtps_pd.html">cvtps_pd</a></td><td class="desc"> Convert packed single-precision (32-bit) floating-point elements in "a" to packed double-precision (64-bit) floating-point elements, and store the results in "dst". </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-cvtsd_f64.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-cvtsd_f64.html">cvtsd_f64</a></td><td class="desc"> Copy the lower double-precision (64-bit) floating-point element of "a" to "dst". </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-cvtsd_si32.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-cvtsd_si32.html">cvtsd_si32</a></td><td class="desc"> Convert the lower double-precision (64-bit) floating-point element in "a" to a 32-bit integer, and store the result in "dst". </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-cvtsd_si64.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-cvtsd_si64.html">cvtsd_si64</a></td><td class="desc"> Convert the lower double-precision (64-bit) floating-point element in "a" to a 64-bit integer, and store the result in "dst". </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-cvtsd_si64x.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-cvtsd_si64x.html">cvtsd_si64x</a></td><td class="desc"> Convert the lower double-precision (64-bit) floating-point element in "a" to a 64-bit integer, and store the result in "dst". </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-cvtsd_ss.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-cvtsd_ss.html">cvtsd_ss</a></td><td class="desc"> Convert the lower double-precision (64-bit) floating-point element in "b" to a single-precision (32-bit) floating-point element, store the result in the lower element of "dst", and copy the upper element from "a" to the upper element of "dst". </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-cvtsi128_si32.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-cvtsi128_si32.html">cvtsi128_si32</a></td><td class="desc"> Copy the lower 32-bit integer in "a" to "dst". </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-cvtsi128_si64.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-cvtsi128_si64.html">cvtsi128_si64</a></td><td class="desc"> Copy the lower 64-bit integer in "a" to "dst". </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-cvtsi128_si64x.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-cvtsi128_si64x.html">cvtsi128_si64x</a></td><td class="desc"> Copy the lower 64-bit integer in "a" to "dst". </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-cvtsi32_sd.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-cvtsi32_sd.html">cvtsi32_sd</a></td><td class="desc"> Convert the 32-bit integer "b" to a double-precision (64-bit) floating-point element, store the result in the lower element of "dst", and copy the upper element from "a" to the upper element of "dst".  </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-cvtsi32_si128.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-cvtsi32_si128.html">cvtsi32_si128</a></td><td class="desc"> Copy 32-bit integer "a" to the lower elements of "dst", and zero the upper elements of "dst". </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-cvtsi64_sd.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-cvtsi64_sd.html">cvtsi64_sd</a></td><td class="desc"> Convert the 64-bit integer "b" to a double-precision (64-bit) floating-point element, store the result in the lower element of "dst", and copy the upper element from "a" to the upper element of "dst".  </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-cvtsi64_si128.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-cvtsi64_si128.html">cvtsi64_si128</a></td><td class="desc"> Copy 64-bit integer "a" to the lower element of "dst", and zero the upper element. </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-cvtsi64x_sd.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-cvtsi64x_sd.html">cvtsi64x_sd</a></td><td class="desc"> Convert the 64-bit integer "b" to a double-precision (64-bit) floating-point element, store the result in the lower element of "dst", and copy the upper element from "a" to the upper element of "dst".  </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-cvtsi64x_si128.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-cvtsi64x_si128.html">cvtsi64x_si128</a></td><td class="desc"> Copy 64-bit integer "a" to the lower element of "dst", and zero the upper element. </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-cvtss_sd.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-cvtss_sd.html">cvtss_sd</a></td><td class="desc"> Convert the lower single-precision (32-bit) floating-point element in "b" to a double-precision (64-bit) floating-point element, store the result in the lower element of "dst", and copy the upper element from "a" to the upper element of "dst". </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-cvttpd_epi32.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-cvttpd_epi32.html">cvttpd_epi32</a></td><td class="desc"> Convert packed double-precision (64-bit) floating-point elements in "a" to packed 32-bit integers with truncation, and store the results in "dst". </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-cvttps_epi32.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-cvttps_epi32.html">cvttps_epi32</a></td><td class="desc"> Convert packed single-precision (32-bit) floating-point elements in "a" to packed 32-bit integers with truncation, and store the results in "dst". </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-cvttsd_si32.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-cvttsd_si32.html">cvttsd_si32</a></td><td class="desc"> Convert the lower double-precision (64-bit) floating-point element in "a" to a 32-bit integer with truncation, and store the result in "dst". </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-cvttsd_si64.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-cvttsd_si64.html">cvttsd_si64</a></td><td class="desc"> Convert the lower double-precision (64-bit) floating-point element in "a" to a 64-bit integer with truncation, and store the result in "dst". </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-cvttsd_si64x.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-cvttsd_si64x.html">cvttsd_si64x</a></td><td class="desc"> Convert the lower double-precision (64-bit) floating-point element in "a" to a 64-bit integer with truncation, and store the result in "dst". </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-div_pd.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-div_pd.html">div_pd</a></td><td class="desc"> Divide packed double-precision (64-bit) floating-point elements in "a" by packed elements in "b", and store the results in "dst". </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-div_sd.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-div_sd.html">div_sd</a></td><td class="desc"> Divide the lower double-precision (64-bit) floating-point element in "a" by the lower double-precision (64-bit) floating-point element in "b", store the result in the lower element of "dst", and copy the upper element from "a" to the upper element of "dst".  </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-extract_epi16.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-extract_epi16.html">extract_epi16</a></td><td class="desc"> Extract a 16-bit integer from "a", selected with "imm8", and store the result in the lower element of "dst". </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-insert_epi16.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-insert_epi16.html">insert_epi16</a></td><td class="desc"> Copy "a" to "dst", and insert the 16-bit integer "i" into "dst" at the location specified by "imm8".  </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-load_si128.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-load_si128.html">load_si128</a></td><td class="desc">
+ Load 128-bits of integer data from memory into dst.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-loadu_si128.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-loadu_si128.html">loadu_si128</a></td><td class="desc">
+ Load 128-bits of integer data from memory into dst.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-loadu_si32.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-loadu_si32.html">loadu_si32</a></td><td class="desc">
+ Load unaligned 32-bit integer from memory into the first element of dst.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-madd_epi16.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-madd_epi16.html">madd_epi16</a></td><td class="desc"> Multiply packed signed 16-bit integers in "a" and "b", producing intermediate signed 32-bit integers. Horizontally add adjacent pairs of intermediate 32-bit integers, and pack the results in "dst".</td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-max_epi16.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-max_epi16.html">max_epi16</a></td><td class="desc"> Compare packed 16-bit integers in "a" and "b", and store packed maximum values in "dst". </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-max_epu8.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-max_epu8.html">max_epu8</a></td><td class="desc"> Compare packed unsigned 8-bit integers in "a" and "b", and store packed maximum values in "dst". </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-max_pd.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-max_pd.html">max_pd</a></td><td class="desc"> Compare packed double-precision (64-bit) floating-point elements in "a" and "b", and store packed maximum values in "dst". </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-max_sd.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-max_sd.html">max_sd</a></td><td class="desc"> Compare the lower double-precision (64-bit) floating-point elements in "a" and "b", store the maximum value in the lower element of "dst", and copy the upper element from "a" to the upper element of "dst". </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-min_epi16.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-min_epi16.html">min_epi16</a></td><td class="desc"> Compare packed 16-bit integers in "a" and "b", and store packed minimum values in "dst". </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-min_epu8.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-min_epu8.html">min_epu8</a></td><td class="desc"> Compare packed unsigned 8-bit integers in "a" and "b", and store packed minimum values in "dst". </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-min_pd.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-min_pd.html">min_pd</a></td><td class="desc"> Compare packed double-precision (64-bit) floating-point elements in "a" and "b", and store packed minimum values in "dst". </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-min_sd.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-min_sd.html">min_sd</a></td><td class="desc"> Compare the lower double-precision (64-bit) floating-point elements in "a" and "b", store the minimum value in the lower element of "dst", and copy the upper element from "a" to the upper element of "dst". </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-move_epi64.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-move_epi64.html">move_epi64</a></td><td class="desc"> Copy the lower 64-bit integer in "a" to the lower element of "dst", and zero the upper element. </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-move_sd.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-move_sd.html">move_sd</a></td><td class="desc"> Move the lower double-precision (64-bit) floating-point element from "b" to the lower element of "dst", and copy the upper element from "a" to the upper element of "dst". </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-movemask_epi8.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-movemask_epi8.html">movemask_epi8</a></td><td class="desc"> Create mask from the most significant bit of each 8-bit element in "a", and store the result in "dst". </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-movemask_pd.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-movemask_pd.html">movemask_pd</a></td><td class="desc"> Set each bit of mask "dst" based on the most significant bit of the corresponding packed double-precision (64-bit) floating-point element in "a". </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-mul_epu32.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-mul_epu32.html">mul_epu32</a></td><td class="desc"> Multiply the low unsigned 32-bit integers from each packed 64-bit element in "a" and "b", and store the unsigned 64-bit results in "dst".  </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-mul_pd.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-mul_pd.html">mul_pd</a></td><td class="desc"> Multiply packed double-precision (64-bit) floating-point elements in "a" and "b", and store the results in "dst".  </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-mul_sd.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-mul_sd.html">mul_sd</a></td><td class="desc"> Multiply the lower double-precision (64-bit) floating-point element in "a" and "b", store the result in the lower element of "dst", and copy the upper element from "a" to the upper element of "dst". </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-mulhi_epi16.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-mulhi_epi16.html">mulhi_epi16</a></td><td class="desc"> Multiply the packed 16-bit integers in "a" and "b", producing intermediate 32-bit integers, and store the high 16 bits of the intermediate integers in "dst".  </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-mulhi_epu16.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-mulhi_epu16.html">mulhi_epu16</a></td><td class="desc"> Multiply the packed unsigned 16-bit integers in "a" and "b", producing intermediate 32-bit integers, and store the high 16 bits of the intermediate integers in "dst".  </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-mullo_epi16.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-mullo_epi16.html">mullo_epi16</a></td><td class="desc"> Multiply the packed 16-bit integers in "a" and "b", producing intermediate 32-bit integers, and store the low 16 bits of the intermediate integers in "dst".  </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-or_pd.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-or_pd.html">or_pd</a></td><td class="desc"> Compute the bitwise OR of packed double-precision (64-bit) floating-point elements in "a" and "b", and store the results in "dst". </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-or_si128.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-or_si128.html">or_si128</a></td><td class="desc"> Compute the bitwise OR of 128 bits (representing integer data) in "a" and "b", and store the result in "dst". </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-packs_epi16.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-packs_epi16.html">packs_epi16</a></td><td class="desc"> Convert packed 16-bit integers from "a" and "b" to packed 8-bit integers using signed saturation, and store the results in "dst". </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-packs_epi32.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-packs_epi32.html">packs_epi32</a></td><td class="desc"> Convert packed 32-bit integers from "a" and "b" to packed 16-bit integers using signed saturation, and store the results in "dst". </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-packus_epi16.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-packus_epi16.html">packus_epi16</a></td><td class="desc"> Convert packed 16-bit integers from "a" and "b" to packed 8-bit integers using unsigned saturation, and store the results in "dst". </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-sad_epu8.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-sad_epu8.html">sad_epu8</a></td><td class="desc"> Compute the absolute differences of packed unsigned 8-bit integers in "a" and "b", then horizontally sum each consecutive 8 differences to produce two unsigned 16-bit integers, and pack these unsigned 16-bit integers in the low 16 bits of 64-bit elements in "dst". </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-set_epi16.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-set_epi16.html">set_epi16</a></td><td class="desc"> Set packed 16-bit integers in "dst" with the supplied values. </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-set_epi32.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-set_epi32.html">set_epi32</a></td><td class="desc"> Set packed 32-bit integers in "dst" with the supplied values. </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-set_epi64x.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-set_epi64x.html">set_epi64x</a></td><td class="desc"> Set packed 64-bit integers in "dst" with the supplied values. </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-set_epi8.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-set_epi8.html">set_epi8</a></td><td class="desc"> Set packed 8-bit integers in "dst" with the supplied values in reverse order. </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-set_pd.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-set_pd.html">set_pd</a></td><td class="desc"> Set packed double-precision (64-bit) floating-point elements in "dst" with the supplied values. </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-set_pd1.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-set_pd1.html">set_pd1</a></td><td class="desc"> Broadcast double-precision (64-bit) floating-point value "a" to all elements of "dst". </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-set_sd.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-set_sd.html">set_sd</a></td><td class="desc"> Copy double-precision (64-bit) floating-point element "a" to the lower element of "dst", and zero the upper element. </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-set1_epi16.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-set1_epi16.html">set1_epi16</a></td><td class="desc"> Broadcast 16-bit integer "a" to all all elements of "dst". This intrinsic may generate "vpbroadcastw". </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-set1_epi32.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-set1_epi32.html">set1_epi32</a></td><td class="desc"> Broadcast 32-bit integer "a" to all elements of "dst". This intrinsic may generate "vpbroadcastd". </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-set1_epi64x.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-set1_epi64x.html">set1_epi64x</a></td><td class="desc"> Broadcast 64-bit integer "a" to all elements of "dst". This intrinsic may generate the "vpbroadcastq". </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-set1_epi8.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-set1_epi8.html">set1_epi8</a></td><td class="desc"> Broadcast 8-bit integer "a" to all elements of "dst". This intrinsic may generate "vpbroadcastb". </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-set1_pd.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-set1_pd.html">set1_pd</a></td><td class="desc"> Broadcast double-precision (64-bit) floating-point value "a" to all elements of "dst". </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-setr_epi16.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-setr_epi16.html">setr_epi16</a></td><td class="desc"> Set packed 16-bit integers in "dst" with the supplied values in reverse order. </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-setr_epi32.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-setr_epi32.html">setr_epi32</a></td><td class="desc"> Set packed 32-bit integers in "dst" with the supplied values in reverse order. </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-setr_epi8.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-setr_epi8.html">setr_epi8</a></td><td class="desc"> Set packed 8-bit integers in "dst" with the supplied values in reverse order. </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-setr_pd.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-setr_pd.html">setr_pd</a></td><td class="desc"> Set packed double-precision (64-bit) floating-point elements in "dst" with the supplied values in reverse order. </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-setzero_si128.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-setzero_si128.html">setzero_si128</a></td><td class="desc"> Return vector of type __m128i with all elements set to zero. </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-shuffle_epi32.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-shuffle_epi32.html">shuffle_epi32</a></td><td class="desc"> Shuffle 32-bit integers in "a" using the control in "imm8", and store the results in "dst". </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-shuffle_pd.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-shuffle_pd.html">shuffle_pd</a></td><td class="desc"> Shuffle double-precision (64-bit) floating-point elements using the control in "imm8", and store the results in "dst".  </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2.SHUFFLE2.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2.SHUFFLE2.html">SHUFFLE2</a></td><td class="desc">
+ Return a shuffle immediate suitable for use with _mm_shuffle_ps and similar instructions.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-shufflehi_epi16.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-shufflehi_epi16.html">shufflehi_epi16</a></td><td class="desc"> Shuffle 16-bit integers in the high 64 bits of "a" using the control in "imm8". Store the results in the high 64 bits of "dst", with the low 64 bits being copied from from "a" to "dst". </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-shufflelo_epi16.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-shufflelo_epi16.html">shufflelo_epi16</a></td><td class="desc"> Shuffle 16-bit integers in the low 64 bits of "a" using the control in "imm8". Store the results in the low 64 bits of "dst", with the high 64 bits being copied from from "a" to "dst". </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-sll_epi16.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-sll_epi16.html">sll_epi16</a></td><td class="desc"> Shift packed 16-bit integers in "a" left by "count" while shifting in zeros, and store the results in "dst".  </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-sll_epi32.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-sll_epi32.html">sll_epi32</a></td><td class="desc"> Shift packed 32-bit integers in "a" left by "count" while shifting in zeros, and store the results in "dst".  </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-sll_epi64.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-sll_epi64.html">sll_epi64</a></td><td class="desc"> Shift packed 64-bit integers in "a" left by "count" while shifting in zeros, and store the results in "dst".  </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-slli_epi16.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-slli_epi16.html">slli_epi16</a></td><td class="desc"> Shift packed 16-bit integers in "a" left by "imm8" while shifting in zeros, and store the results in "dst".  </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-slli_epi32.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-slli_epi32.html">slli_epi32</a></td><td class="desc"> Shift packed 32-bit integers in "a" left by "imm8" while shifting in zeros, and store the results in "dst". </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-slli_epi64.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-slli_epi64.html">slli_epi64</a></td><td class="desc"> Shift packed 64-bit integers in "a" left by "imm8" while shifting in zeros, and store the results in "dst".  </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-slli_si128.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-slli_si128.html">slli_si128</a></td><td class="desc"> Shift "a" left by "imm8" bytes while shifting in zeros, and store the results in "dst". </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-sqrt_pd.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-sqrt_pd.html">sqrt_pd</a></td><td class="desc"> Compute the square root of packed double-precision (64-bit) floating-point elements in "a", and store the results in "dst". </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-sqrt_sd.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-sqrt_sd.html">sqrt_sd</a></td><td class="desc"> Compute the square root of the lower double-precision (64-bit) floating-point element in "b", store the result in the lower element of "dst", and copy the upper element from "a" to the upper element of "dst". </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-sra_epi16.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-sra_epi16.html">sra_epi16</a></td><td class="desc"> Shift packed 16-bit integers in "a" right by "count" while shifting in sign bits, and store the results in "dst".  </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-sra_epi32.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-sra_epi32.html">sra_epi32</a></td><td class="desc"> Shift packed 32-bit integers in "a" right by "count" while shifting in sign bits, and store the results in "dst".  </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-srai_epi16.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-srai_epi16.html">srai_epi16</a></td><td class="desc"> Shift packed 16-bit integers in "a" right by "imm8" while shifting in sign bits, and store the results in "dst".  </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-srai_epi32.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-srai_epi32.html">srai_epi32</a></td><td class="desc"> Shift packed 32-bit integers in "a" right by "imm8" while shifting in sign bits, and store the results in "dst".  </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-srl_epi16.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-srl_epi16.html">srl_epi16</a></td><td class="desc"> Shift packed 16-bit integers in "a" right by "count" while shifting in zeros, and store the results in "dst".  </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-srl_epi32.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-srl_epi32.html">srl_epi32</a></td><td class="desc"> Shift packed 32-bit integers in "a" right by "count" while shifting in zeros, and store the results in "dst".  </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-srl_epi64.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-srl_epi64.html">srl_epi64</a></td><td class="desc"> Shift packed 64-bit integers in "a" right by "count" while shifting in zeros, and store the results in "dst".  </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-srli_epi16.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-srli_epi16.html">srli_epi16</a></td><td class="desc"> Shift packed 16-bit integers in "a" right by "imm8" while shifting in zeros, and store the results in "dst".  </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-srli_epi32.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-srli_epi32.html">srli_epi32</a></td><td class="desc"> Shift packed 32-bit integers in "a" right by "imm8" while shifting in zeros, and store the results in "dst". </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-srli_epi64.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-srli_epi64.html">srli_epi64</a></td><td class="desc"> Shift packed 64-bit integers in "a" right by "imm8" while shifting in zeros, and store the results in "dst".  </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-srli_si128.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-srli_si128.html">srli_si128</a></td><td class="desc"> Shift "a" right by "imm8" bytes while shifting in zeros, and store the results in "dst". </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-store_si128.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-store_si128.html">store_si128</a></td><td class="desc">
+ Store 128-bits of integer data from a into memory.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-storeu_si128.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-storeu_si128.html">storeu_si128</a></td><td class="desc">
+ Store 128-bits of integer data from a into memory.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-storeu_si32.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-storeu_si32.html">storeu_si32</a></td><td class="desc">
+ Store 32-bit integer from the first element of a into memory.
+ mem_addr does not need to be aligned on any particular
+ boundary.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-stream_pd.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-stream_pd.html">stream_pd</a></td><td class="desc">
+ Store 128-bits (composed of 2 packed double-precision (64-bit) floating-point elements) from "a" into memory using a non-temporal memory hint. "mem_addr" must be aligned on a 16-byte boundary or a general-protection exception will be generated.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-stream_si128.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-stream_si128.html">stream_si128</a></td><td class="desc">
+ Store 128-bits of integer data from a into memory using a non-temporal memory hint.mem_addr must be aligned on a 16-byte boundary or a general-protection exception may be generated.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-stream_si32.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-stream_si32.html">stream_si32</a></td><td class="desc">
+ Store 32-bit integer "a" into memory using a non-temporal hint to minimize cache pollution. If the cache line containing address "mem_addr" is already in the cache, the cache will be updated.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-stream_si64.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-stream_si64.html">stream_si64</a></td><td class="desc">
+ Store 64-bit integer a into memory using a non-temporal hint to minimize cache pollution. If the cache line containing address mem_addr is already in the cache, the cache will be updated.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-sub_epi16.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-sub_epi16.html">sub_epi16</a></td><td class="desc"> Subtract packed 16-bit integers in "b" from packed 16-bit integers in "a", and store the results in "dst". </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-sub_epi32.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-sub_epi32.html">sub_epi32</a></td><td class="desc"> Subtract packed 32-bit integers in "b" from packed 32-bit integers in "a", and store the results in "dst". </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-sub_epi64.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-sub_epi64.html">sub_epi64</a></td><td class="desc"> Subtract packed 64-bit integers in "b" from packed 64-bit integers in "a", and store the results in "dst". </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-sub_epi8.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-sub_epi8.html">sub_epi8</a></td><td class="desc"> Subtract packed 8-bit integers in "b" from packed 8-bit integers in "a", and store the results in "dst". </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-sub_pd.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-sub_pd.html">sub_pd</a></td><td class="desc"> Subtract packed double-precision (64-bit) floating-point elements in "b" from packed double-precision (64-bit) floating-point elements in "a", and store the results in "dst". </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-sub_sd.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-sub_sd.html">sub_sd</a></td><td class="desc"> Subtract the lower double-precision (64-bit) floating-point element in "b" from the lower double-precision (64-bit) floating-point element in "a", store the result in the lower element of "dst", and copy the upper element from "a" to the upper element of "dst". </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-subs_epi16.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-subs_epi16.html">subs_epi16</a></td><td class="desc"> Subtract packed 16-bit integers in "b" from packed 16-bit integers in "a" using saturation, and store the results in "dst". </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-subs_epi8.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-subs_epi8.html">subs_epi8</a></td><td class="desc"> Subtract packed 8-bit integers in "b" from packed 8-bit integers in "a" using saturation, and store the results in "dst". </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-subs_epu16.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-subs_epu16.html">subs_epu16</a></td><td class="desc"> Subtract packed unsigned 16-bit integers in "b" from packed unsigned 16-bit integers in "a" using saturation, and store the results in "dst". </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-subs_epu8.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-subs_epu8.html">subs_epu8</a></td><td class="desc"> Subtract packed unsigned 8-bit integers in "b" from packed unsigned 8-bit integers in "a" using saturation, and store the results in "dst". </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-ucomieq_sd.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-ucomieq_sd.html">ucomieq_sd</a></td><td class="desc"> Compare the lower double-precision (64-bit) floating-point element in "a" and "b" for equality, and return the boolean result (0 or 1). This instruction will not signal an exception for QNaNs. </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-ucomige_sd.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-ucomige_sd.html">ucomige_sd</a></td><td class="desc"> Compare the lower double-precision (64-bit) floating-point element in "a" and "b" for greater-than-or-equal, and return the boolean result (0 or 1). This instruction will not signal an exception for QNaNs. </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-ucomigt_sd.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-ucomigt_sd.html">ucomigt_sd</a></td><td class="desc"> Compare the lower double-precision (64-bit) floating-point element in "a" and "b" for greater-than, and return the boolean result (0 or 1). This instruction will not signal an exception for QNaNs. </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-ucomile_sd.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-ucomile_sd.html">ucomile_sd</a></td><td class="desc"> Compare the lower double-precision (64-bit) floating-point element in "a" and "b" for less-than-or-equal, and return the boolean result (0 or 1). This instruction will not signal an exception for QNaNs. </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-ucomilt_sd.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-ucomilt_sd.html">ucomilt_sd</a></td><td class="desc"> Compare the lower double-precision (64-bit) floating-point element in "a" and "b" for less-than, and return the boolean result (0 or 1). This instruction will not signal an exception for QNaNs. </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-ucomineq_sd.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-ucomineq_sd.html">ucomineq_sd</a></td><td class="desc"> Compare the lower double-precision (64-bit) floating-point element in "a" and "b" for not-equal, and return the boolean result (0 or 1). This instruction will not signal an exception for QNaNs. </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-unpackhi_epi16.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-unpackhi_epi16.html">unpackhi_epi16</a></td><td class="desc"> Unpack and interleave 16-bit integers from the high half of "a" and "b", and store the results in "dst".  </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-unpackhi_epi32.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-unpackhi_epi32.html">unpackhi_epi32</a></td><td class="desc"> Unpack and interleave 32-bit integers from the high half of "a" and "b", and store the results in "dst".  </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-unpackhi_epi64.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-unpackhi_epi64.html">unpackhi_epi64</a></td><td class="desc"> Unpack and interleave 64-bit integers from the high half of "a" and "b", and store the results in "dst".  </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-unpackhi_epi8.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-unpackhi_epi8.html">unpackhi_epi8</a></td><td class="desc"> Unpack and interleave 8-bit integers from the high half of "a" and "b", and store the results in "dst".  </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-unpackhi_pd.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-unpackhi_pd.html">unpackhi_pd</a></td><td class="desc"> Unpack and interleave double-precision (64-bit) floating-point elements from the high half of "a" and "b", and store the results in "dst".  </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-unpacklo_epi16.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-unpacklo_epi16.html">unpacklo_epi16</a></td><td class="desc"> Unpack and interleave 16-bit integers from the low half of "a" and "b", and store the results in "dst".  </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-unpacklo_epi32.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-unpacklo_epi32.html">unpacklo_epi32</a></td><td class="desc"> Unpack and interleave 32-bit integers from the low half of "a" and "b", and store the results in "dst".  </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-unpacklo_epi64.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-unpacklo_epi64.html">unpacklo_epi64</a></td><td class="desc"> Unpack and interleave 64-bit integers from the low half of "a" and "b", and store the results in "dst".  </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-unpacklo_epi8.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-unpacklo_epi8.html">unpacklo_epi8</a></td><td class="desc"> Unpack and interleave 8-bit integers from the low half of "a" and "b", and store the results in "dst".  </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-unpacklo_pd.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-unpacklo_pd.html">unpacklo_pd</a></td><td class="desc"> Unpack and interleave double-precision (64-bit) floating-point elements from the low half of "a" and "b", and store the results in "dst".  </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-xor_pd.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-xor_pd.html">xor_pd</a></td><td class="desc"> Compute the bitwise XOR of packed double-precision (64-bit) floating-point elements in "a" and "b", and store the results in "dst". </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Sse2-xor_si128.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Sse2-xor_si128.html">xor_si128</a></td><td class="desc"> Compute the bitwise XOR of 128 bits (representing integer data) in "a" and "b", and store the result in "dst". </td></tr>
+    </table>
+              </div>
+            </div>
+            <div class="section">
+              <div id="_content">
+              </div>
+            </div>
+            <div class="footer-wrapper">
+              <div class="footer clear">
+                <div class="copy">
+                  <p>
+                    <known_issues>Is something described here not working as you expect it to? It might be a <b>Known Issue</b>. Please check with the Issue Tracker at </known_issues>
+                    <a href="https://issuetracker.unity3d.com">issuetracker.unity3d.com</a>.</p>Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.
+                                        </div>
+                <div class="menu">
+                  <a href="https://unity3d.com/learn">Tutorials</a>
+                  <a href="https://answers.unity3d.com">Community Answers</a>
+                  <a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a>
+                  <a href="https://forum.unity3d.com">Forums</a>
+                  <a href="https://unity3d.com/asset-store">Asset Store</a>
+                  <a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a>
+                  <a href="https://unity.com/legal">Legal</a>
+                  <a href="https://unity.com/legal/privacy-policy">Privacy Policy</a>
+                  <a href="https://unity.com/legal/cookie-policy">Cookies</a>
+                  <a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a>
+                  <div id="ot-sdk-btn-container">
+                    <a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

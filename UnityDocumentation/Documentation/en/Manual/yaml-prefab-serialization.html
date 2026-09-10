@@ -1,0 +1,370 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: YAML serialization of prefabs</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<meta property="relative-path-to-manual" content="">
+<meta property="version-switcher-versions-with-this-page" content="Versions with this page:">
+<meta property="version-switcher-versions-without-this-page" content="Versions without this page:">
+<meta property="version-switcher-supported" content="Supported">
+<meta property="version-switcher-legacy" content="Legacy">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/Manual/yaml-prefab-serialization.html">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20260626"></script><script type="text/javascript" src="docdata/toc.js?ts=20260626"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20260626"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20260626">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20260626">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/yaml-prefab-serialization.html">English</a></li>
+<li><a href="/cn/current/Manual/yaml-prefab-serialization.html">中文</a></li>
+<li><a href="/ja/current/Manual/yaml-prefab-serialization.html">日本語</a></li>
+<li><a href="/kr/current/Manual/yaml-prefab-serialization.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: Unity 6.7 Beta</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/yaml-prefab-serialization.html">English</a></li>
+<li><a href="/cn/current/Manual/yaml-prefab-serialization.html">中文</a></li>
+<li><a href="/ja/current/Manual/yaml-prefab-serialization.html">日本語</a></li>
+<li><a href="/kr/current/Manual/yaml-prefab-serialization.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="working-with-scenes.html">Scenes</a></li>
+<li><a href="TextSceneFormat.html">Text-based scene files</a></li>
+<li>YAML serialization of prefabs</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="YAMLSceneExample.html"></a></span><div class="tip">YAML scene file example</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="yaml-prefab-example.html"></a></span><div class="tip">YAML prefab serialization example</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>YAML serialization of prefabs</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Unity represents <span class="tooltip" tabindex="0" ><strong>prefab</strong><span class="tooltiptext">An asset type that allows you to store a GameObject complete with components and properties. The prefab acts as a template from which you can create new object instances in the scene. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Prefabs.html" href="Prefabs.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#prefab" aria-label="Go to glossary anchor for prefab">Glossary</a></span></span></span> instances, nested prefabs, and prefab variants in serialized <span class="tooltip" tabindex="0" ><strong>scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html" href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span> (<code>.unity</code>) and prefab (<code>.prefab</code>) files using a small set of related YAML elements. This page describes those elements and how they fit together.</p>
+
+<p>Understanding this format is useful when you resolve merge conflicts in prefab files manually, inspect files produced by an automated build, or work with Unity assets from <span class="tooltip" tabindex="0" ><strong>scripts</strong><span class="tooltiptext">A piece of code that allows you to create your own Components, trigger game events, modify Component properties over time and respond to user input in any way you like. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about creating-scripts.html" href="creating-scripts.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scripts" aria-label="Go to glossary anchor for Scripts">Glossary</a></span></span></span> that run outside the Editor.</p>
+
+<p>For general information about Unity serialization format, refer to <a href="FormatDescription.html">Format of text serialized files</a> and <a href="UnityYAML.html">UnityYAML</a>. For annotated YAML examples from prefab files, refer to <a href="yaml-prefab-example.html">Example of YAML prefab serialization</a>.</p>
+
+<h2>Prefab serialization elements</h2>
+
+<p>Unity represents a reference to a prefab inside a scene or another prefab file using four related elements:</p>
+
+<ul>
+<li>A <strong><a href="#prefabinstance">PrefabInstance</a></strong> YAML element that links to the source prefab asset and records a set of override changes.</li>
+<li>An <strong><a href="#m-modification">m_Modification</a></strong> block inside the <code>PrefabInstance</code> element that records individual <a href="#property-modifications">property modifications</a> and the objects added or removed relative to the source prefab.</li>
+<li>
+<strong><a href="#stripped-objects">Stripped placeholder objects</a></strong> that let other objects in the same file reference specific objects inside the prefab instance (such as a child <code>Transform</code>).</li>
+<li>A <strong><a href="#prefab-asset-handle">prefab asset handle</a></strong> in the source prefab asset. Its fileID is always <code>100100000</code>, and <code>PrefabInstance</code> objects reference it through the <code>m_SourcePrefab</code> property.</li>
+</ul>
+
+<p>For information on how these elements are arranged in prefab variant files, refer to <a href="#prefab-variants">Prefab variants</a>.</p>
+
+<h2 id="prefabinstance">PrefabInstance element</h2>
+
+<p>Unity represents a prefab instance as a YAML document with class ID <code>1001</code> and document type <code>PrefabInstance</code>:</p>
+
+<pre><code class="lang-yml">--- !u!1001 &amp;&lt;fileID&gt;
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    ...
+  m_SourcePrefab: {fileID: 100100000, guid: &lt;prefab-guid&gt;, type: 3}
+</code></pre>
+
+<p>The key properties are:</p>
+
+<ul>
+<li>
+<strong><code>m_Modification</code></strong>: a block of data that records everything that differs between this instance and the source prefab. For more information, refer to <a href="#m-modification">The m_Modification block</a>.</li>
+<li>
+<strong><code>m_SourcePrefab</code></strong>: a cross-file reference to the source prefab asset. The fileID is always <code>100100000</code> (the prefab asset handle), so only the <code>guid</code> value varies between references. For more information, refer to <a href="#prefab-asset-handle">The prefab asset handle</a>.</li>
+</ul>
+
+<p>For a complete example of a prefab instance in a scene, refer to <a href="yaml-prefab-example.html#prefab-instance-in-a-scene">Prefab instance in a scene</a>.</p>
+
+<h2 id="m-modification">The m_Modification block</h2>
+
+<p>The <code>m_Modification</code> block stores data that differs between the instance and the source prefab, including property overrides and any objects that are added or removed. It has the following fields:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;">Field</th>
+	<th style="text-align:left;">Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><code>m_TransformParent</code></td>
+	<td style="text-align:left;">Reference to this instance’s parent <code>Transform</code> component in the containing file. <code>{fileID: 0}</code> means that the instance has no parent, which is a characteristic of prefab variants because the instance is the root of the variant file.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>m_Modifications</code></td>
+	<td style="text-align:left;">Array of property override entries. Each entry points to an object in the source prefab and records a new value for one property. For more information, refer to <a href="#property-modifications">Property modifications</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>m_RemovedComponents</code></td>
+	<td style="text-align:left;">Components from the source prefab that are removed in this instance.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>m_RemovedGameObjects</code></td>
+	<td style="text-align:left;"><span class="tooltip" tabindex="0" ><strong>GameObjects</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-GameObject.html" href="class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span> from the source prefab that are removed in this instance.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>m_AddedGameObjects</code></td>
+	<td style="text-align:left;">GameObjects added to this instance that don’t exist in the source prefab.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>m_AddedComponents</code></td>
+	<td style="text-align:left;">Components added to this instance that don’t exist in the source prefab.</td>
+</tr>
+</tbody>
+</table>
+
+<p>Unity writes empty lists for any of these fields even when there are no entries. A clean prefab instance with no overrides still contains <code>m_Modifications: []</code>, <code>m_RemovedComponents: []</code>, and so on.</p>
+
+<p>
+<strong>Note:</strong> <code>m_Modification</code> (singular) is the name of the block. <code>m_Modifications</code> (plural) is the name of the property-override array inside the block. The two names differ by one letter.</p>
+
+<h2 id="property-modifications">Property modifications</h2>
+
+<p>Each entry in the <code>m_Modifications</code> array has four fields:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;">Field</th>
+	<th style="text-align:left;">Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><code>target</code></td>
+	<td style="text-align:left;">Cross-file reference to the object inside the source prefab whose property this entry overrides. The <code>guid</code> matches the source prefab asset.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>propertyPath</code></td>
+	<td style="text-align:left;">Path to the property being overridden. Matches <a href="../ScriptReference/SerializedProperty-propertyPath.html"><code>SerializedProperty.propertyPath</code></a>. Dotted paths such as <code>m_LocalPosition.x</code> describe subproperties.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>value</code></td>
+	<td style="text-align:left;">The override value, stored as a string. Empty for object-reference overrides.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>objectReference</code></td>
+	<td style="text-align:left;">Reference to another object when the override value is a reference. <code>{fileID: 0}</code> when the override isn’t an object reference.</td>
+</tr>
+</tbody>
+</table>
+
+<p>A typical property override uses the <code>value</code> field:</p>
+
+<pre><code class="lang-yml">- target: {fileID: 599465214307944399, guid: 95cf80858ee0c4940b72f62b17aefd41, type: 3}
+  propertyPath: m_LocalPosition.x
+  value: 39.341
+  objectReference: {fileID: 0}
+</code></pre>
+
+<p>An object-reference override uses <code>objectReference</code> instead, with an empty <code>value</code> field:</p>
+
+<pre><code class="lang-yml">- target: {fileID: 1773024279374141337, guid: 89d4c08db6b9096438cb6c7718d47f26, type: 3}
+  propertyPath: m_Material
+  value: 
+  objectReference: {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+</code></pre>
+
+<p>For more information about the <code>{fileID, guid, type}</code> format in references, refer to <a href="assets-direct-reference.html">Direct reference asset management</a>.</p>
+
+<h2 id="stripped-objects">Stripped placeholder objects</h2>
+
+<p>A scene file or a containing prefab file can reference specific objects inside a prefab instance. For example, if a prefab instance’s root is a child of a GameObject in the scene, the parent GameObject’s <code>Transform</code> component contains the prefab instance’s root in its <code>m_Children</code> array.</p>
+
+<p>In these cases, Unity doesn’t serialize the referenced object directly into the scene or containing prefab file. Instead, it adds a <strong>stripped</strong> placeholder element to that file. The placeholder contains only the information needed to identify the source object:</p>
+
+<pre><code class="lang-yml">--- !u!4 &amp;&lt;fileID&gt; stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: &lt;source-fileID&gt;, guid: &lt;source-guid&gt;, type: 3}
+  m_PrefabInstance: {fileID: &lt;PrefabInstance-fileID&gt;}
+  m_PrefabAsset: {fileID: 0}
+</code></pre>
+
+<p>The <code>stripped</code> keyword on the document header indicates that the object is a placeholder. The fields are:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;">Field</th>
+	<th style="text-align:left;">Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><code>m_CorrespondingSourceObject</code></td>
+	<td style="text-align:left;">Cross-file reference to the matching object in the source prefab asset.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>m_PrefabInstance</code></td>
+	<td style="text-align:left;">Local reference to the <code>PrefabInstance</code> element in the current file that this placeholder belongs to.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>m_PrefabAsset</code></td>
+	<td style="text-align:left;">Has the value <code>{fileID: 0}</code> in scenes and containing prefabs. This field is only set when the object is itself part of a prefab asset on disk.</td>
+</tr>
+</tbody>
+</table>
+
+<h2 id="prefab-asset-handle">The prefab asset handle</h2>
+
+<p>When Unity imports a <code>.prefab</code> asset, it creates a special object called the prefab asset handle with fileID <code>100100000</code>. The handle doesn’t appear as a YAML document in the source <code>.prefab</code> file on disk. It’s generated during import and is stored in the prefab’s serialized artifact in the <code>Library</code> folder.</p>
+
+<p>The handle is the target of the <code>m_SourcePrefab</code> reference on a <code>PrefabInstance</code>:</p>
+
+<pre><code class="lang-yml">  m_SourcePrefab: {fileID: 100100000, guid: 95cf80858ee0c4940b72f62b17aefd41, type: 3}
+</code></pre>
+
+<p>Because fileID <code>100100000</code> is constant for every prefab, only the <code>guid</code> changes between references to different prefabs. The <code>type: 3</code> indicates that the reference resolves to the imported artifact in the <code>Library</code> folder rather than to a file in the <code>Assets</code> folder. For more information about type values, refer to <a href="assets-direct-reference.html#type-field-values">Type field values</a>.</p>
+
+<h2 id="prefab-variants">Prefab variants</h2>
+
+<p>A prefab variant is a <code>.prefab</code> file that inherits from a base prefab.</p>
+
+<p>On disk, Unity represents a prefab variant’s root as a <code>PrefabInstance</code> element (class ID <code>1001</code>) rather than as a separately serialized <code>GameObject</code> element. Inside that <code>PrefabInstance</code>, the <code>m_Modification.m_TransformParent</code> field has the value <code>{fileID: 0}</code>, because the instance has no parent inside the file. This is how Unity identifies a prefab as a variant.</p>
+
+<p>The <code>m_SourcePrefab</code> field references the base prefab that the variant inherits from. The <code>m_Modification</code> block records the data unique to the variant, such as overridden property values, components, and added or removed objects, using the same format as any other prefab instance.</p>
+
+<p>For an annotated example of a variant file, refer to <a href="yaml-prefab-example.html#prefab-variant">Prefab variant</a>.</p>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="yaml-prefab-example.html">Example of YAML prefab serialization</a></li>
+<li><a href="FormatDescription.html">Format of text serialized files</a></li>
+<li><a href="YAMLSceneExample.html">An example of a YAML scene file</a></li>
+<li><a href="assets-direct-reference.html">Direct reference asset management</a></li>
+<li><a href="NestedPrefabs.html">Nest prefab instances in other prefabs</a></li>
+<li><a href="PrefabVariants.html">Create variations of prefabs</a></li>
+<li><a href="SmartMerge.html">Smart merge</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="YAMLSceneExample.html"></a></span><div class="tip">YAML scene file example</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="yaml-prefab-example.html"></a></span><div class="tip">YAML prefab serialization example</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

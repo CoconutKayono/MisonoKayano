@@ -1,0 +1,408 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Hydraulic erosion</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<meta property="relative-path-to-manual" content="">
+<meta property="version-switcher-versions-with-this-page" content="Versions with this page:">
+<meta property="version-switcher-versions-without-this-page" content="Versions without this page:">
+<meta property="version-switcher-supported" content="Supported">
+<meta property="version-switcher-legacy" content="Legacy">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/Manual/terrain-Erosion-Hydraulic.html">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20260626"></script><script type="text/javascript" src="docdata/toc.js?ts=20260626"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20260626"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20260626">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20260626">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/terrain-Erosion-Hydraulic.html">English</a></li>
+<li><a href="/cn/current/Manual/terrain-Erosion-Hydraulic.html">中文</a></li>
+<li><a href="/ja/current/Manual/terrain-Erosion-Hydraulic.html">日本語</a></li>
+<li><a href="/kr/current/Manual/terrain-Erosion-Hydraulic.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: Unity 6.7 Beta</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/terrain-Erosion-Hydraulic.html">English</a></li>
+<li><a href="/cn/current/Manual/terrain-Erosion-Hydraulic.html">中文</a></li>
+<li><a href="/ja/current/Manual/terrain-Erosion-Hydraulic.html">日本語</a></li>
+<li><a href="/kr/current/Manual/terrain-Erosion-Hydraulic.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="CreatingEnvironments.html">World building</a></li>
+<li><a href="script-Terrain.html">Terrain</a></li>
+<li><a href="terrain-Height-Landing.html">Height</a></li>
+<li><a href="terrain-Erosion.html">Erode the terrain</a></li>
+<li>Hydraulic erosion</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="terrain-Erosion-Considerations.html"></a></span><div class="tip">Considerations when using erosion tools</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="terrain-Erosion-Thermal.html"></a></span><div class="tip">Thermal erosion</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Hydraulic erosion</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>
+<strong>Note:</strong> This tool is only available in the <a href="https://docs.unity3d.com/Packages/com.unity.terrain-tools@latest/">Terrain Tools package</a>.</p>
+
+<p>In hydraulic erosion, water carries sediment as it flows along the <span class="tooltip" tabindex="0" ><strong>terrain</strong><span class="tooltiptext">The landscape in your scene. A Terrain GameObject adds a large flat plane to your scene and you can use the Terrain’s Inspector window to create a detailed landscape. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about terrain-UsingTerrains.html" href="terrain-UsingTerrains.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Terrain" aria-label="Go to glossary anchor for Terrain">Glossary</a></span></span></span>. The movement of sediment creates channels and redistributes the sediment along those channels. </p>
+
+<p>You can use the tool to simulate either temporary flow from rain or snow melt, or permanent and semi-permanent bodies of water. Remember that the tool deposits the sediment along the channel, it doesn’t remove it from the terrain.</p>
+
+<h2>Considerations when using hydraulic erosion</h2>
+
+<p>When using the Hydraulic erosion tool, consider the following.</p>
+
+<h3>Natural impacts on erosion</h3>
+
+<p>Hydraulic erosion takes into account: </p>
+
+<ul>
+<li>The way the environment impacts the water’s ability to erode it. For example, higher evaporation rates limits the erosion because as water loses volume it slows down, lift less sediment, and deposits more sediment.</li>
+<li>Water’s ability to lift and carry different sediment types.</li>
+<li>The way different sediment types settle. The thermal smoothing property accounts for the steepness of the slope the sediment can sustain.</li>
+<li>Sediment deposition on vertical or near vertical surfaces (the riverbank) is different to deposition on horizontal or near horizontal surfaces (the riverbed).</li>
+</ul>
+
+<h3>Riverbeds and riverbanks</h3>
+
+<p>Hydraulic erosion builds river banks and river beds according to how the sediment flows with the water. </p>
+
+<h3>Erosion around 3D objects</h3>
+
+<p>The Hydraulic erosion tool doesn’t build up sediment against a <span class="tooltip" tabindex="0" ><strong>3D object</strong><span class="tooltiptext">A 3D GameObject such as a cube, terrain or ragdoll. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about GameObjects.html" href="GameObjects.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#3DObject" aria-label="Go to glossary anchor for 3DObject">Glossary</a></span></span></span>, or maintain sediment below it. For example, if you have a 3D rock in a river bed, the tool erodes around and under it, but it doesn’t build up sediment against the rock.</p>
+
+<h3>Water speed</h3>
+
+<p>When working with Hydraulic erosion, consider the following:</p>
+
+<ul>
+<li>The river’s width and depth impact the speed of the water, and therefore the erosion. A wider river moves more slowly than a narrow river moving the same volume of water, and therefore erodes less.</li>
+<li>To simulate the slower movement of water along the banks, use a brush with weaker edges, rather than a solid brush.</li>
+</ul>
+
+<h2>Access the tool</h2>
+
+<p>To erode the terrain, in the Terrain tile’s <strong>Inspector</strong> window, select the <strong>Paint Terrain</strong> tool &gt; tool dropdown &gt; <strong>Erosion</strong> &gt; <strong>Hydraulic</strong>.</p>
+
+<h2>Tool options</h2>
+
+<p>The Erosion tool is brush-based. To learn about working with brushes, refer to <a href="class-Brush.html">Brushes</a>.</p>
+
+<p>
+<strong>Tip:</strong> To invert the erosion effect, hold <strong>Ctrl</strong> (macOS: <strong>Cmd</strong>). For example, use inversion to add detail to a flat surface.</p>
+
+<h2>Hydraulic Erosion Controls</h2>
+
+<p>If you change property values but the sculpting results don’t change, try:</p>
+
+<ul>
+<li>Increasing the <strong>Simulation Scale</strong> value.</li>
+<li>Decreasing the <strong>Iterations</strong> value.</li>
+<li>Decreasing the <strong>Perception</strong> value.</li>
+<li>Increasing the <strong>Evaporation</strong> value.</li>
+</ul>
+
+<p>These four properties can have a significant impact on the erosion simulation, which hides the impact of all other properties. </p>
+
+<h3>General properties</h3>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Property</strong></th>
+	<th style="text-align:left;"><strong>Function</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Simulation Scale</strong></td>
+	<td style="text-align:left;">How detailed the terrain’s height and features are after they’re eroded. Lower values create a smooth terrain and reduce a lot of its height; higher values keep more of the original finer details and height. This is a simple way to change the erosion simulation to work for most needs. You can use the other controls in this section for more precise simulation changes, but you can’t disable the <strong>Simluation Scale</strong> control - all other controls work within its context.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<strong>Advanced</strong> &gt; <strong>Time Interval (dt)</strong>
+</td>
+	<td style="text-align:left;">How much time passes during each iteration of the simulation. A low value gives each iteration a small impact, because the erosion doesn’t have a lot of time to act. A higher value gives each iteration greater impact, because the erosion runs for longer. When you change <strong>Time Interval</strong>, you need to think of changing <strong>Iterations</strong>, too. If both values are low, each brush stroke has a low visual impact. If the values are high, the effect can be so strong that all the other parameters have little impact.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<strong>Advanced</strong> &gt; <strong>Iterations</strong>
+</td>
+	<td style="text-align:left;">How many times the simulation runs for each brush stroke. The higher the value, the more each stroke impacts the terrain, because the simulation runs more times.</td>
+</tr>
+</tbody>
+</table>
+
+<h3>Advanced &gt; Thermal Smoothing</h3>
+
+<p>Smooths the terrain where the soil type is steeper than its resting angle. </p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Property</strong></th>
+	<th style="text-align:left;"><strong>Function</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Physical Material Presets</strong></td>
+	<td style="text-align:left;">Choose a soil type to use realistic resting angles. Refer to Physical Material Presets above for more information.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Iterations</strong></td>
+	<td style="text-align:left;">The number of times the erosion is applied for each brush stroke. A low values gives each iteration a small impact.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Time Interval (dt)</strong></td>
+	<td style="text-align:left;">How much time passes during each iteration of the simulation. A low value gives each iteration a small impact.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Resting Angle</strong></td>
+	<td style="text-align:left;">The maximum slope angle for the material. Lower resting angles limit the details the erosion can create, because it can’t create a lot of variation when the slopes are low.</td>
+</tr>
+</tbody>
+</table>
+
+<h3>Advanced &gt; Water Transport</h3>
+
+<p>How much water each iteration of the simulation moves across the terrain, and how quickly it flows.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Property</strong></th>
+	<th style="text-align:left;"><strong>Function</strong></th>
+	<th style="text-align:left;"><strong>Real world considertions</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Precipitation Rate</strong></td>
+	<td style="text-align:left;">How much rainfall to apply during each iteration.</td>
+	<td style="text-align:left;">High precipitation with a strong flow (see <strong>Flow Rate</strong> below) has the strongest impact on the terrain.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Evaporation Rate</strong></td>
+	<td style="text-align:left;">How much water to remove during each iteration. Evaporation means the amount of water eroding the terrain goes down as the brush moves.</td>
+	<td style="text-align:left;">Evaporation rates change along the course of a water channel. For example, shade and a deep, narrow channel lower precipitation compared to sunlight and shallow, wide channels.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Flow Rate</strong></td>
+	<td style="text-align:left;">How quickly the water flows. Faster water lifts more sediment, so higher <strong>Flow Rate</strong> values have a larger impact on the terrain. Note, however, that <code>0</code> has the biggest impact.</td>
+	<td style="text-align:left;">Water channel flow rates aren’t steady. For example, the flow rate is higher where the angle is steeper, or where there is lower friction because of a smoother bed.</td>
+</tr>
+</tbody>
+</table>
+
+<h3>Advanced &gt; Sediment Transport</h3>
+
+<p>How the sediment moves with the water. </p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Property</strong></th>
+	<th style="text-align:left;"><strong>Function</strong></th>
+	<th style="text-align:left;"><strong>Real world considertions</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Seidment Capacity</strong></td>
+	<td style="text-align:left;">The amount of sediment the water can carry, as a percentage of the available sediment.</td>
+	<td style="text-align:left;">Sediment capacity changes based on soil type along the water’s path.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Seidment Deposition Rate</strong></td>
+	<td style="text-align:left;">The rate at which the simulation adds sediment back to the terrain.</td>
+	<td style="text-align:left;">Deposition rates change along the path of the water. For example, in turbulent areas, sediment doesn’t settle well.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Seidment Dissolution Rate</strong></td>
+	<td style="text-align:left;">The rate at which the simulation removes sediment from the terrain.</td>
+	<td style="text-align:left;">Whereas <strong>Sediment Capacity</strong> changes how much the water can carry away, the <strong>Sediment Dissolution Rate</strong> is local damage to the terrain.</td>
+</tr>
+</tbody>
+</table>
+
+<h3>Advanced &gt; Riverbank</h3>
+
+<p>How the water carves channels in the terrain. The result of carving depends building up or tearing down the banks, and how much sediment is deposited in the channel to create its bed.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Property</strong></th>
+	<th style="text-align:left;"><strong>Function</strong></th>
+	<th style="text-align:left;"><strong>Real world considertions</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Riverbank Despoit Rate</strong></td>
+	<td style="text-align:left;">The rate at which the simulation builds up the sides of the channels.</td>
+	<td style="text-align:left;">Higher values raise the banks and create deeper channels.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Riverbank Dissolution Rate</strong></td>
+	<td style="text-align:left;">The rate at which the simulation breaks down the sides of the channels.</td>
+	<td style="text-align:left;">Higher values lower the banks and create shallow channels.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Riverbed Deposit Rate</strong></td>
+	<td style="text-align:left;">The rate at which the simulation fills the channel by depositing water in the channel bed.</td>
+	<td style="text-align:left;">Higher values built up the bed and create shallow channel.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Riverbed Dissolution Rate</strong></td>
+	<td style="text-align:left;">The rate at which the simulation carries sediment away from the channel.</td>
+	<td style="text-align:left;">Lower values protect the river bed from erosion and keep the channel shallow.</td>
+</tr>
+</tbody>
+</table>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="terrain-Erosion-Considerations.html">Considerations for working with the Erosion tool</a></li>
+<li><a href="terrain-Erosion-Thermal.html">Thermal erosion</a></li>
+<li><a href="terrain-Erosion-Wind.html">Wind erosion</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="terrain-Erosion-Considerations.html"></a></span><div class="tip">Considerations when using erosion tools</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="terrain-Erosion-Thermal.html"></a></span><div class="tip">Thermal erosion</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

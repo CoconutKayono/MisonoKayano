@@ -1,0 +1,357 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Dictionary serialization</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<meta property="relative-path-to-manual" content="">
+<meta property="version-switcher-versions-with-this-page" content="Versions with this page:">
+<meta property="version-switcher-versions-without-this-page" content="Versions without this page:">
+<meta property="version-switcher-supported" content="Supported">
+<meta property="version-switcher-legacy" content="Legacy">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/Manual/script-serialization-dictionaries.html">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20260626"></script><script type="text/javascript" src="docdata/toc.js?ts=20260626"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20260626"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20260626">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20260626">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/script-serialization-dictionaries.html">English</a></li>
+<li><a href="/cn/current/Manual/script-serialization-dictionaries.html">中文</a></li>
+<li><a href="/ja/current/Manual/script-serialization-dictionaries.html">日本語</a></li>
+<li><a href="/kr/current/Manual/script-serialization-dictionaries.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: Unity 6.7 Beta</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/script-serialization-dictionaries.html">English</a></li>
+<li><a href="/cn/current/Manual/script-serialization-dictionaries.html">中文</a></li>
+<li><a href="/ja/current/Manual/script-serialization-dictionaries.html">日本語</a></li>
+<li><a href="/kr/current/Manual/script-serialization-dictionaries.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="scripting.html">Programming in Unity</a></li>
+<li><a href="compilation-and-code-reload.html">Compilation and code reload </a></li>
+<li><a href="script-serialization.html">Script serialization</a></li>
+<li>Dictionary serialization</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="script-serialization-custom-serialization.html"></a></span><div class="tip">Custom serialization</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="script-serialization-how-unity-uses.html"></a></span><div class="tip">How Unity uses serialization</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Dictionary serialization</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Unity serializes fields declared as <a href="https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.dictionary-2"><code>Dictionary&lt;TKey, TValue&gt;</code></a> directly, so you can author dictionary data in scripts and edit it in the <strong>Inspector</strong> window without writing custom serialization code. The declared field type must be exactly <code>Dictionary&lt;TKey, TValue&gt;</code>.</p>
+
+<p>Dictionary serialization is opt-in: you must apply <a href="../ScriptReference/SerializeField.html"><code>[SerializeField]</code></a> to each dictionary field that you want Unity to serialize. Unity only supports <a href="#supported-types">certain types</a> as dictionary keys and values. The <a href="script-serialization-analyzer.html">serialization rules analyzer</a> detects unsupported key and value types at compile time and points to the rule that explains the limitation. The <span class="tooltip" tabindex="0" ><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheInspector.html" href="UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span> renders a two-column key/value editor with sort, duplicate-key detection, and column resizing.</p>
+
+<p>Unity serializes a dictionary as a sequence of key/value pairs in insertion order. The order shown in the Inspector is independent of the serialized order. Refer to <a href="#sort-order">Sort order in the Inspector</a>.</p>
+
+<h2>Declare a serialized dictionary field</h2>
+
+<p>You can serialize a dictionary field on a <code>MonoBehaviour</code>, a <code>ScriptableObject</code>, or any nested <code>[Serializable]</code> class or struct. Apply <code>[SerializeField]</code> to a private or a public dictionary field, to make Unity serialize the dictionary:</p>
+
+<pre><code class="lang-csharp">using System.Collections.Generic;
+using UnityEngine;
+
+public class Inventory : MonoBehaviour
+{
+    [SerializeField]
+    private Dictionary&lt;string, int&gt; itemCounts = new Dictionary&lt;string, int&gt;();
+}
+</code></pre>
+
+<p>Public dictionary fields aren’t serialized automatically. Without <code>[SerializeField]</code>, Unity skips the field, and the dictionary doesn’t persist across domain reloads, <span class="tooltip" tabindex="0" ><strong>scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html" href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span> saves, or Play mode transitions. The analyzer reports <a href="script-serialization-analyzer.html#uac1015">UAC1015</a> when a public dictionary field is missing <code>[SerializeField]</code>, so you can decide whether to opt in or to mark the field <a href="https://learn.microsoft.com/en-us/dotnet/api/system.nonserializedattribute"><code>[NonSerialized]</code></a>.</p>
+
+<p>
+<a href="../ScriptReference/SerializeReference.html"><code>[SerializeReference]</code></a> isn’t valid on dictionary fields, because Unity serializes a dictionary as an inline collection of entries rather than as a polymorphic single reference. The analyzer reports <a href="script-serialization-analyzer.html#uac1014">UAC1014</a> if you apply <code>[SerializeReference]</code> to a dictionary field.</p>
+
+<h2 id="supported-types">Supported key and value types</h2>
+
+<p>Both <code>TKey</code> and <code>TValue</code> must be types that Unity can serialize:</p>
+
+<ul>
+<li>Primitive types (<code>int</code>, <code>float</code>, <code>double</code>, <code>bool</code>, <code>string</code>).</li>
+<li>Enum types (32 bits or smaller).</li>
+<li>Unity built-in types, such as <code>Vector2</code>, <code>Vector3</code>, <code>Color</code>.</li>
+<li>Custom classes and structs marked <code>[Serializable]</code>.</li>
+<li>References to types derived from <a href="../ScriptReference/Object.html"><code>UnityEngine.Object</code></a>.</li>
+</ul>
+
+<p>As a key or a value, you can’t use an interface or an abstract type (other than a <code>UnityEngine.Object</code> hierarchy), or a type that isn’t marked <code>[Serializable]</code>. The analyzer reports <a href="script-serialization-analyzer.html#uac1012">UAC1012</a> and <a href="script-serialization-analyzer.html#uac1016">UAC1016</a> respectively.</p>
+
+<p>Collections are valid as values but not as keys:</p>
+
+<ul>
+<li>As a <strong>value</strong>, you can use any supported type, or a collection of supported types such as a <code>List&lt;T&gt;</code>, an array, or another <code>Dictionary&lt;TKey, TValue&gt;</code>. For example, <code>Dictionary&lt;int, List&lt;int&gt;&gt;</code> and <code>Dictionary&lt;int, Dictionary&lt;string, int&gt;&gt;</code> are both valid.</li>
+<li>As a <strong>key</strong>, you can’t use a type that implements <code>IEnumerable</code> - the interface that collection types such as <code>List&lt;T&gt;</code> and arrays implement. The <code>string</code> type is an exception, even though it implements <code>IEnumerable</code>. For example, Unity can’t serialize a <code>Dictionary&lt;List&lt;int&gt;, int&gt;</code> field, because its key type <code>List&lt;int&gt;</code> implements <code>IEnumerable</code>. The analyzer reports <a href="script-serialization-analyzer.html#uac1013">UAC1013</a>.</li>
+</ul>
+
+<p>Unity also doesn’t serialize a dictionary that’s nested directly inside another collection. For example, <code>List&lt;Dictionary&lt;string, int&gt;&gt;</code> and <code>Dictionary&lt;string, int&gt;[]</code> aren’t supported. Wrap the dictionary in a <code>[Serializable]</code> class or struct that you can use as the element type. The analyzer reports this case as <a href="script-serialization-analyzer.html#uac1009">UAC1009</a>.</p>
+
+<p>For the full set of analyzer rules and usage examples, refer to the <a href="script-serialization-analyzer.html">serialization rules analyzer</a>.</p>
+
+<h3>Custom struct and class keys</h3>
+
+<p>If you use a custom struct or class as a dictionary key, override <code>GetHashCode</code> and <code>Equals</code> so the dictionary can place and find entries correctly:</p>
+
+<ul>
+<li>Custom classes without overrides use reference equality. Two instances with identical field values are treated as different keys, which breaks dictionary lookups.</li>
+<li>Custom structs without overrides fall back to reflection-based hashing and equality. The dictionary works correctly but is slow. Add overrides for better performance.</li>
+<li>Primitives, <code>string</code>, enums, Unity built-in types such as <code>Vector3</code> and <code>Color</code>, and <code>UnityEngine.Object</code> subclasses already implement <code>GetHashCode</code> and <code>Equals</code> correctly. You don’t need to override them.</li>
+</ul>
+
+<p>For value-type keys, also implement <a href="https://learn.microsoft.com/en-us/dotnet/api/system.iequatable-1"><code>IEquatable&lt;T&gt;</code></a> to avoid boxing allocations during key comparisons. <code>IEquatable&lt;T&gt;</code> isn’t required, but it improves runtime performance.</p>
+
+<p>If a custom <code>GetHashCode</code> or <code>Equals</code> implementation throws an exception while Unity loads a serialized dictionary, Unity skips the affected entries and logs one console warning.</p>
+
+<h2>Edit a dictionary in the Inspector</h2>
+
+<p>When you select a <span class="tooltip" tabindex="0" ><strong>GameObject</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-GameObject.html" href="class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span> or an asset that contains a serialized dictionary, the Inspector renders the dictionary as a two-column list with the keys on the left and the values on the right.</p>
+
+<figure>
+<img src="../uploads/Main/serialization-dictionary-inspector.png" alt="The Inspector displays a dictionary field as a two-column list with the keys on the left and the values on the right.">
+<figcaption>The Inspector displays a dictionary field as a two-column list with the keys on the left and the values on the right.</figcaption>
+</figure>
+
+<p>The Inspector provides the following features:</p>
+
+<ul>
+<li>Add or remove an entry with the <strong>+</strong> and <strong>-</strong> buttons at the bottom of the list.</li>
+<li>Change the width of columns. The width persists per property path and per Inspector window.</li>
+<li>Right-click the column header and select <strong>Reset to Defaults</strong> to restore the default column split.</li>
+<li>Toggle the sort direction by clicking the <strong>Key</strong> column header.</li>
+</ul>
+
+<p>Dictionary fields don’t support multi-object editing. When you select more than one GameObject or asset, the Inspector displays a help box in place of the dictionary editor.</p>
+
+<h3 id="sort-order">Sort order in the Inspector</h3>
+
+<p>The Inspector sorts entries by key for display only. Sorting doesn’t change the serialized order, which always reflects the order in which entries were added. Click the <strong>Key</strong> column header to toggle between ascending and descending order.</p>
+
+<p>The Inspector reads each key directly from the serialized data and compares fields based on their property type. It doesn’t call the comparison interface <code>IComparable&lt;T&gt;</code> or its <code>CompareTo</code> method on the key type, so you don’t need to implement them for sorting in the Inspector.</p>
+
+<p>The following table describes the sort behavior for each supported key type:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;">Key type</th>
+	<th style="text-align:left;">Sort behavior</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">
+<code>int</code>, <code>long</code>, <code>short</code>, <code>byte</code>, and other integer types</td>
+	<td style="text-align:left;">Numeric order.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<code>float</code>, <code>double</code>
+</td>
+	<td style="text-align:left;">Numeric order. <code>NaN</code> values sort last.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>string</code></td>
+	<td style="text-align:left;">Case-insensitive natural order: digit runs are compared as numbers, so <code>item2</code> appears before <code>item10</code>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>bool</code></td>
+	<td style="text-align:left;">
+<code>false</code> before <code>true</code>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Enum types</td>
+	<td style="text-align:left;">Sorted by enum value index, which matches the order in which you declared the enum members.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">References to <code>UnityEngine.Object</code> subclasses</td>
+	<td style="text-align:left;">Sorted by internal entity identifier.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Structs and classes</td>
+	<td style="text-align:left;">Sorted field by field, in declaration order. Refer to <a href="#complex-key-sort-order">Complex key sort order</a>.</td>
+</tr>
+</tbody>
+</table>
+
+<h4 id="complex-key-sort-order">Complex key sort order</h4>
+
+<p>When a dictionary key is a struct or serializable class, the Inspector compares entries one field at a time, in the order the fields are declared in your script. It compares the first field of each key. If those values are equal, it moves to the second field, and so on. To change the sort priority, reorder the field declarations in your class.</p>
+
+<p>Only fields visible in the Inspector contribute to the comparison. Fields marked <a href="../ScriptReference/HideInInspector.html"><code>[HideInInspector]</code></a> are skipped. The comparison recurses into nested structs and classes up to eight levels deep. Beyond that, remaining nested fields are treated as equal and Unity logs a one-time console warning.</p>
+
+<h4>When sort order updates</h4>
+
+<p>The Inspector re-sorts the displayed entries in the following situations:</p>
+
+<ul>
+<li>When you add or remove an entry.</li>
+<li>When a key field changes, after you commit the edit (for example, by leaving the field or pressing Enter).</li>
+<li>When external code modifies the serialized property.</li>
+</ul>
+
+<p>While you’re actively typing in a key field or dragging a slider, the Inspector defers the re-sort to avoid moving the row out from under you. Duplicate-key markers update in real time so you still see immediate feedback. When you complete the edit, the Inspector re-sorts and your current selection is preserved across the new order.</p>
+
+<h3>Customize the column header</h3>
+
+<p>Apply <a href="../ScriptReference/DictionaryHeaderAttribute.html"><code>[DictionaryHeader]</code></a> to a dictionary field to set the column labels and the initial column split:</p>
+
+<pre><code class="lang-csharp">using System.Collections.Generic;
+using UnityEngine;
+
+public class LootTable : MonoBehaviour
+{
+    [SerializeField]
+    [DictionaryHeader(keyColumnLabel = &quot;Item&quot;, valueColumnLabel = &quot;Drop chance&quot;, keyColumnFraction = 0.6f)]
+    private Dictionary&lt;string, float&gt; drops = new Dictionary&lt;string, float&gt;();
+}
+</code></pre>
+
+<p>The <code>keyColumnFraction</code> parameter sets the fraction of the available width assigned to the key column. Valid values are between <code>0.01</code> and <code>0.99</code>. The default fraction is <code>0.5</code>.</p>
+
+<h3>Duplicate keys</h3>
+
+<p>A dictionary can contain only one value for each key at runtime, but the Inspector lets you create duplicate keys temporarily so you can resolve them incrementally. Unity marks each duplicate row with an icon and a tooltip, and preserves the duplicate entries in the asset until you correct or remove them. Duplicate entries are tracked per host object only in the Editor; the Player runtime always enforces unique keys.</p>
+
+<p>When Unity loads a scene, <span class="tooltip" tabindex="0" ><strong>prefab</strong><span class="tooltiptext">An asset type that allows you to store a GameObject complete with components and properties. The prefab acts as a template from which you can create new object instances in the scene. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Prefabs.html" href="Prefabs.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#prefab" aria-label="Go to glossary anchor for prefab">Glossary</a></span></span></span>, or asset that contains a serialized dictionary with duplicate keys, or when you instantiate an object that contains such a dictionary, the Editor writes a warning in the console. Unity adds only the first occurrence of each duplicate key to the runtime dictionary.</p>
+
+<p>If you need to read the duplicate indices from a custom Inspector or other tooling, use <a href="../ScriptReference/SerializedProperty.GetDictionaryDuplicateEntryIndices.html"><code>SerializedProperty.GetDictionaryDuplicateEntryIndices</code></a>.</p>
+
+<h3 id="dictionaries-in-prefabs">Dictionaries in prefabs</h3>
+
+<p>You can override individual entries of a serialized dictionary on a <a href="PrefabInstanceOverrides.html">prefab instance</a>. The Inspector indicates each overridden key or value the same way it indicates other property overrides, and you can apply or revert each overridden key or value independently.</p>
+
+<p>Unity records dictionary overrides using the serialized position of the entry, the same way it records overrides on array and list fields.</p>
+
+<p>Dictionaries add extra complexity for prefab overrides. The Inspector displays entries in sorted order rather than in the order they were added or stored, so the row position you see doesn’t correspond to the entry’s storage position. After you delete or add an entry on the prefab asset, review the instance overrides to confirm they still apply to the entries you intended.</p>
+
+<p>For the logic behind this behavior and an example, refer to <a href="PrefabInstanceOverrides.html#collection-overrides">Overrides on arrays, lists, and dictionaries</a>.</p>
+
+<h2>Limitations</h2>
+
+<ul>
+<li>Multi-object editing isn’t supported. The Inspector shows a help box when more than one target is selected.</li>
+<li>Since Unity records dictionary overrides using the serialized array index, editing a dictionary on a prefab asset can leave existing instance overrides applied to a different entry. For more information, refer to <a href="PrefabInstanceOverrides.html#collection-overrides">Overrides on arrays, lists, and dictionaries</a>.</li>
+<li>The Inspector sort order doesn’t change the serialized order, which always reflects insertion order.</li>
+</ul>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="script-serialization-rules.html">Serialization rules</a></li>
+<li><a href="script-serialization-analyzer.html">Serialization rules analyzer</a></li>
+<li><a href="script-serialization-custom-serialization.html">Custom serialization</a></li>
+<li><a href="../ScriptReference/DictionaryHeaderAttribute.html"><code>DictionaryHeaderAttribute</code></a></li>
+<li><a href="../ScriptReference/SerializedProperty.GetDictionaryDuplicateEntryIndices.html"><code>SerializedProperty.GetDictionaryDuplicateEntryIndices</code></a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="script-serialization-custom-serialization.html"></a></span><div class="tip">Custom serialization</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="script-serialization-how-unity-uses.html"></a></span><div class="tip">How Unity uses serialization</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

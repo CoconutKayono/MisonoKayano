@@ -1,0 +1,553 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Import and configure plug-ins</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<meta property="relative-path-to-manual" content="">
+<meta property="version-switcher-versions-with-this-page" content="Versions with this page:">
+<meta property="version-switcher-versions-without-this-page" content="Versions without this page:">
+<meta property="version-switcher-supported" content="Supported">
+<meta property="version-switcher-legacy" content="Legacy">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/Manual/plug-in-inspector.html">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20260626"></script><script type="text/javascript" src="docdata/toc.js?ts=20260626"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20260626"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20260626">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20260626">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/plug-in-inspector.html">English</a></li>
+<li><a href="/cn/current/Manual/plug-in-inspector.html">中文</a></li>
+<li><a href="/ja/current/Manual/plug-in-inspector.html">日本語</a></li>
+<li><a href="/kr/current/Manual/plug-in-inspector.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: Unity 6.7 Beta</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/plug-in-inspector.html">English</a></li>
+<li><a href="/cn/current/Manual/plug-in-inspector.html">中文</a></li>
+<li><a href="/ja/current/Manual/plug-in-inspector.html">日本語</a></li>
+<li><a href="/kr/current/Manual/plug-in-inspector.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="scripting.html">Programming in Unity</a></li>
+<li><a href="compilation-and-code-reload.html">Compilation and code reload </a></li>
+<li><a href="plug-ins.html">Integrating third-party code libraries (plug-ins)</a></li>
+<li>Import and configure plug-ins</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="plug-ins.html"></a></span><div class="tip">Integrating third-party code libraries (plug-ins)</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="plug-ins-managed.html"></a></span><div class="tip">Managed plug-ins</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Import and configure plug-ins</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>If you have a <span class="tooltip" tabindex="0" ><a href="plug-ins-managed.html">managed plug-in</a><span class="tooltiptext">A managed .NET assembly that is created with tools like Visual Studio for use in Unity. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ./plug-ins.html" href="./plug-ins.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#managedplug-in" aria-label="Go to glossary anchor for managedplug-in">Glossary</a></span></span></span> or a <span class="tooltip" tabindex="0" ><a href="plug-ins-native.html">native plug-in</a><span class="tooltiptext">A platform-specific native code library that is created outside of Unity for use in Unity. Allows you can access features like OS calls and third-party code libraries that would otherwise not be available to Unity. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ./plug-ins.html" href="./plug-ins.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#nativeplug-in" aria-label="Go to glossary anchor for nativeplug-in">Glossary</a></span></span></span>, you can import it into Unity, then configure it. The Unity Editor treats a <span class="tooltip" tabindex="0" ><strong>plug-in</strong><span class="tooltiptext">A set of code created outside of Unity that creates functionality in Unity. There are two kinds of plug-ins you can use in Unity: Managed plug-ins (managed .NET assemblies created with tools like Visual Studio) and Native plug-ins (platform-specific native code libraries). <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ./plug-ins.html" href="./plug-ins.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#plug-in" aria-label="Go to glossary anchor for plug-in">Glossary</a></span></span></span> as an asset, similar to a script, and you can configure it in an Inspector window.</p>
+
+<p>You can use the plug-in configurations to specify where a plug-in runs, on which platforms and platform configurations, and under what conditions.</p>
+
+<h2>Import a plug-in</h2>
+
+<p>The easiest way to import a plug-in to your project is to click and drag the plug-in to the Assets folder or one of its subfolders. Unity recognizes specific file and folder types as plug-ins. It can also apply default settings that match the plug-in’s intended platform.</p>
+
+<p>
+<strong>Note</strong>: After Unity loads a native plug-in into memory, it remains loaded in the Unity Editor session. To change a native plug-in’s code after it has been loaded, you must restart Unity. Otherwise, the previous version of the plug-in remains in use. This problem only affects native plug-ins that run in the Editor, including in Play mode when the native plug-in architecture matches that of the currently running Editor.</p>
+
+<h3>Supported plug-in file and folder types</h3>
+
+<p>Unity treats files with the following extensions as a plug-in:</p>
+
+<ul>
+<li>.a</li>
+<li>.aar</li>
+<li>.bc</li>
+<li>.c</li>
+<li>.cc</li>
+<li>.cpp</li>
+<li>.dll</li>
+<li>.def</li>
+<li>.dylib</li>
+<li>.h</li>
+<li>.jar</li>
+<li>.jslib</li>
+<li>.jspre</li>
+<li>.m</li>
+<li>.mm</li>
+<li>.prx</li>
+<li>.rpl</li>
+<li>.so</li>
+<li>.sprx</li>
+<li>.suprx</li>
+<li>.swift</li>
+<li>.winmd</li>
+<li>.xcframework</li>
+<li>.xex</li>
+<li>.xib</li>
+</ul>
+
+<p>Unity also treats certain folders as bundled plug-ins. Unity doesn’t look for additional plug-in files within these folders, so everything within the folder is considered a single plug-in. Unity treats folders with the following extensions as a bundled plug-in:</p>
+
+<ul>
+<li>.androidlib</li>
+<li>.bundle</li>
+<li>.framework</li>
+<li>.plugin</li>
+</ul>
+
+<h3>Plug-in default settings</h3>
+
+<p>Unity automatically applies platform-specific default settings to the plug-in if the plug-in’s path within the Assets folder matches a platform-specific pattern. If the path doesn’t match any pattern, Unity applies the Editor platform default settings to the plug-in.</p>
+
+<p>The following table shows the path patterns Unity recognizes. Portions of the path that appear in brackets are optional. When the path includes double dots, it can include more folders.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Folder path patterns</strong></th>
+	<th style="text-align:left;"><strong>Default settings</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">
+<strong>Assets/../Editor/(x86</strong> or <strong>x86_64 or x64)</strong>
+</td>
+	<td style="text-align:left;">
+<strong>Platform</strong>: Editor only<br><br><strong>CPU</strong> (optional): Based on the subfolder, if present.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<strong>Assets/../Plugins/(x86_64</strong> or <strong>x86 or x64)</strong>
+</td>
+	<td style="text-align:left;">
+<strong>Platform</strong>: Windows, Linux and macOS<br><br><strong>CPU</strong> (optional): Based on the subfolder, if present.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Assets/Plugins/iOS</strong></td>
+	<td style="text-align:left;">
+<strong>Platform</strong>: iOS</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<strong>Assets/Plugins/WSA/(SDK80</strong> or <strong>SDK81</strong> or <strong>PhoneSDK81)/(x86</strong> or <strong>ARM)</strong>
+</td>
+	<td style="text-align:left;">
+<strong>Platform</strong>: Universal Windows Platform<br><br><strong>SDK</strong> (optional): Based on the subfolder, if present. For compatibility reasons, SDK81 is Win81, PhoneSDK81 is WindowsPhone81.<br><br><strong>CPU</strong> (optional): Based on the subfolder, if present<br><br><strong>Note</strong>: You can use the keyword <strong>Metro</strong> instead of <strong>WSA</strong>.</td>
+</tr>
+</tbody>
+</table>
+
+<h2 id="change-plug-in-settings">Change plug-in settings</h2>
+
+<p>In Unity, plug-ins are either <strong>managed</strong> or <strong>native</strong>. The following table shows which settings are relevant for each type of plug-in:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Setting</strong></th>
+	<th style="text-align:left;"><strong>Managed</strong></th>
+	<th style="text-align:left;"><strong>Native</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><a href="#select-platform">Select platforms for plugin</a></td>
+	<td style="text-align:left;">yes</td>
+	<td style="text-align:left;">yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="#platform-settings">Platform settings</a></td>
+	<td style="text-align:left;">yes</td>
+	<td style="text-align:left;">yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="https://docs.unity3d.com/Manual/organizing-assets-with-labels.html">Asset Labels</a></td>
+	<td style="text-align:left;">yes</td>
+	<td style="text-align:left;">yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="AssetBundles-Workflow">Asset Bundles</a></td>
+	<td style="text-align:left;">yes</td>
+	<td style="text-align:left;">yes</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="#general">General</a></td>
+	<td style="text-align:left;">yes</td>
+	<td style="text-align:left;"></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="#define-constraints">Define Constraints</a></td>
+	<td style="text-align:left;">yes</td>
+	<td style="text-align:left;"></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="#plugin-load-settings">Plugin load settings</a></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">yes</td>
+</tr>
+</tbody>
+</table>
+
+<p>To view and change plug-in settings in the <span class="tooltip" tabindex="0" ><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheInspector.html" href="UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span>, select the plug-in file in the <strong>Project</strong> window.</p>
+
+<figure>
+<img src="../uploads/Main/PlugInsCombined.png" alt="Settings for a managed plug-in (left) and a native plug-in (right).">
+<figcaption>Settings for a managed plug-in (left) and a native plug-in (right).</figcaption>
+</figure>
+
+<p>
+<strong>Note:</strong> If a plug-in is a Roslyn source code generator or analyzer, you must assign <code>RoslynAnalyzer</code> as an <strong>Asset Label</strong> in the plug-in settings.</p>
+
+<h2 id="platform">Common plug-in settings</h2>
+
+<p>
+<strong>Select platform for plugin</strong> and <strong>Platform settings</strong> specify in which builds Unity includes the plug-in.</p>
+
+<h3 id="select-platform">Select platform for plugin</h3>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Platform</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Any Platform</strong></td>
+	<td style="text-align:left;">Allows the plug-in to work with any platforms, including those that aren’t installed yet. If selected, this option changes the following individual platform selections from include to exclude logic.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Editor</strong></td>
+	<td style="text-align:left;">For Play mode and for any <span class="tooltip" tabindex="0" ><strong>scripts</strong><span class="tooltiptext">A piece of code that allows you to create your own Components, trigger game events, modify Component properties over time and respond to user input in any way you like. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about creating-scripts.html" href="creating-scripts.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scripts" aria-label="Go to glossary anchor for Scripts">Glossary</a></span></span></span> that run in Edit mode.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Standalone</strong></td>
+	<td style="text-align:left;">Windows, Linux and macOS.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Any installed platform.</td>
+	<td style="text-align:left;">Any platform included in your Unity installation, such as Android, iOS and Web.</td>
+</tr>
+</tbody>
+</table>
+
+<h3 id="platform-settings">Platform settings</h3>
+
+<p>For each selected platform, you can specify additional platform-specific settings such as CPU architecture and dependencies. Unity shows only settings that apply to your platforms and, where possible, to the specific plug-in type on that platform. For example, a native plug-in file with a .dll extension can only run on Windows, so Unity shows only Windows settings.</p>
+
+<p>
+<strong>Note:</strong> Platforms can have their own specific plug-in settings, which aren’t described here. Refer to the appropriate <a href="PlatformSpecific.html">Platform development</a> topic for information about settings and behavior on individual platforms.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Platform</strong></th>
+	<th style="text-align:left;"><strong>Options</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">Editor</td>
+	<td style="text-align:left;"><ul>
+<li>CPU architecture</li>
+<li>OS</li>
+</ul></td>
+	<td style="text-align:left;">Most managed plug-ins are compatible with any CPU and OS.<br><br>Most native plug-ins are only compatible with a single OS and, depending on how they were compiled, might be compatible with only a single CPU architecture.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Windows, Linux and macOS</td>
+	<td style="text-align:left;"><ul>
+<li>CPU architecture</li>
+<li>OS</li>
+</ul></td>
+	<td style="text-align:left;">Managed libraries are typically compatible with any OS and CPU architecture, unless they access specific system APIs.<br><br>Native libraries are only compatible with a single OS, but can be compatible with the 32-bit, the 64-bit, or both CPU architectures.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Universal Windows Platform</td>
+	<td style="text-align:left;"><ul>
+<li>SDK</li>
+<li>CPU architecture</li>
+<li>Scripting backend</li>
+</ul></td>
+	<td style="text-align:left;">For more information, refer to <a href="uwp-il2cpp-plugins.html">Use UWP plug-ins with IL2CPP</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Android</td>
+	<td style="text-align:left;">CPU architecture</td>
+	<td style="text-align:left;">The CPU architecture must match the architecture that the library was compiled for. Unity does not validate your settings.<br><br>See also: <a href="AndroidAARPlugins.html">AAR plug-ins and Android Libraries</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">iOS and tvOS</td>
+	<td style="text-align:left;">
+<ul>
+<li>Framework dependencies</li>
+<li>CPU architecture</li>
+<li>Add to Embedded Binaries</li>
+<li>Compile flags</li>
+</ul>
+<br>
+</td>
+	<td style="text-align:left;">Specify the CPU architecture your plug-in is compatible with. Unity provides ARM64 and X64 Simulator architectures for testing purposes. <br><br>When you select <strong>Add to Embedded Binaries</strong> option, Unity sets the Xcode project options to copy the plug-in file into the final application package. Do this for:<br>• Dynamically loaded libraries.<br>• Bundles and frameworks containing dynamically loaded libraries.<br>• Any assets and resources that need to be loaded at run time.<br><br>In the <strong>Compile Flags</strong> field, set the compile flags for plug-in source code files that Unity must compile as part of the build.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Web</td>
+	<td style="text-align:left;"><ul>
+<li>Minimum Unity Version and Maximum Unity Version</li>
+<li>Minimum Emscripten Version and Maximum Emscripten Version</li>
+<li>WebAssembly Architecture</li>
+<li>Enable Exceptions</li>
+<li>Enable Native C/C++ Multithreading</li>
+<li>Target WebAssembly 2023</li>
+</ul></td>
+	<td style="text-align:left;">Specify the minimum and maximum Unity version and Emscripten version the plug-in is compatible with. Leave these fields empty if the plug-in supports all versions. Unity versions use either the short format (for example, <code>6000.6</code>) or the long format (for example, <code>6000.6.0a1</code>). Emscripten versions use the X.Y.Z format (for example, <code>4.0.10</code>). <br><br>Specify the WebAssembly architecture the plug-in is compatible with: <strong>Wasm</strong> (32-bit) or <strong>Wasm64</strong> (64-bit).<br><br>The <strong>Enable Exceptions</strong>, <strong>Enable Native C/C++ Multithreading</strong>, and <strong>Target WebAssembly 2023</strong> settings specify whether the plug-in is compatible or incompatible with these features. Select <strong>Any Configuration</strong> if the plug-in is compatible with both configurations.<br><br>Unity does not validate your settings. See also: <a href="webgl-native-plugins-with-emscripten.html">Web native plug-ins for Emscripten</a>
+</td>
+</tr>
+</tbody>
+</table>
+
+<h3>Define Constraints</h3>
+
+<p>You can specify conditions under which Unity loads the plug-in to memory and references it. These conditions are symbols that must be satisfied, which means either defined or undefined.</p>
+
+<p>Define constraints work like the #if preprocessor directive in C#, but on the plug-in or assembly level instead of the script level. For more information on how define constraints work, refer to <a href="class-AssemblyDefinitionImporter.html#define-constraints">Define Constraints</a>.</p>
+
+<p>You can use any of <a href="scripting-symbol-reference.html">Unity’s built-in scripting symbols</a> or define your own <a href="custom-scripting-symbols.html">custom symbols</a>.</p>
+
+<p>The following example constrains Unity to load and reference the plug-in only on non-IL2CPP scripting runtimes for Unity 6000.3 or newer. It defines two constraints, and both must be met:</p>
+
+<ul>
+<li>
+<code>ENABLE_IL2CPP</code> is not defined</li>
+<li>
+<code>UNITY_6000_3_OR_NEWER</code> is defined</li>
+</ul>
+
+<figure>
+<img src="../uploads/Main/plug-in-define-constraints.png" alt="Define Constraints for a specific runtime and Unity version">
+<figcaption>Define Constraints for a specific runtime and Unity version</figcaption>
+</figure>
+
+<p>
+<strong>Tip</strong>: For information on the other common settings, see <a href="AssetBundlesIntro.html">Asset Bundles</a> and <a href="editor-searching.html">Searching in the Editor</a>.</p>
+
+<h2>Managed plug-in settings</h2>
+
+<p>Managed plug-ins can be third-party libraries or user-compiled assemblies that you want to include in the project.</p>
+
+<h3>General - Auto Reference</h3>
+
+<p>The <strong>Auto Reference</strong> setting controls how assembly definitions in the project reference a plug-in file. When you enable Auto Reference, all predefined assemblies and assembly definitions automatically reference the plug-in file.</p>
+
+<p>
+<strong>Auto Reference</strong> is enabled by default.</p>
+
+<p>To limit the scope in which a plug-in can be referenced, disable <strong>Auto Reference</strong>. You then need to explicitly declare all references to that plug-in. You might want to do this if:</p>
+
+<ul>
+<li>You want to prevent scripts from mistakenly using the plug-in.</li>
+<li>You are iterating on the plug-in and want to reduce compilation time. If you explicitly declare a plug-in, Unity recompiles only the dependent assemblies, not your entire project.</li>
+<li>You want to prevent plug-ins used in an <span class="tooltip" tabindex="0" ><a href="AssetStorePackages.html">Asset Store package</a><span class="tooltiptext">A bundled collection of assets or tools available for purchase or download on the Unity Asset Store, compressed and stored as an asset package (<code>.unitypackage</code> extension) or a UPM package. You can manage your packages from the Asset Store either on the online store or through the Package Manager window. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about AssetStorePackages.html" href="AssetStorePackages.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#AssetStorepackage" aria-label="Go to glossary anchor for AssetStorepackage">Glossary</a></span></span></span> from conflicting with other code in a project into which the package is imported.</li>
+</ul>
+
+<p>When you disable <strong>Auto Reference</strong> Unity cannot reference a plug-in from the predefined assemblies it creates for your project. These predefined assemblies contain all the scripts in your project that you have not assigned to another assembly using an assembly definition file. To reference classes, functions, or other resources from a plug-in that has the <strong>Auto Reference</strong> property disabled, the referencing code must be in an assembly created with an assembly definition file. For example, if a set of scripts in your project uses a plug-in, you must create an assembly definition file for those scripts, and add an explicit reference to the plug-in in the definition file.</p>
+
+<p>More than one assembly can use the plug-in, but all assemblies must explicitly declare the dependency. To learn more about assembly definitions in Unity, refer to <a href="assembly-definition-files.html">Assembly definitions</a>.</p>
+
+<p>
+<strong>Note</strong>: The <strong>Auto Reference</strong> option has no effect on whether a file is included in the build. To control build settings for plug-ins use <a href="#platform-settings">Platform settings</a>.</p>
+
+<h3 id="general">General - Validate References</h3>
+
+<p>Unity can check that your plug-in’s references are available in the project. If you don’t perform this validation, users can encounter runtime errors when the application tries to use a missing reference.</p>
+
+<p>Enable the <strong>Validate References</strong> option to check:</p>
+
+<ul>
+<li>Whether the plug-in’s references exist. For example, if your plug-in references the plug-in Newtonsoft.Json.dll, and Unity cannot find Newtonsoft.Json.dll, Unity displays an error.</li>
+<li>Whether strong named references will be able to load. This is important because strong named references need to match the version. For example, if you compile a plug-in with a reference to “b.dll” version 2.0.0, that version must be in the project.</li>
+</ul>
+
+<p>If you don’t want to check strong named references, but still want to check that references exist:</p>
+
+<ol>
+<li>In the <strong>Plugin</strong> inspector, enable <strong>Validate References</strong>.</li>
+<li>In <strong>Project Settings</strong> &gt; <strong>Player</strong> &gt; <strong>Other Settings</strong> &gt; disable <strong>Assembly Version Validation</strong>.</li>
+</ol>
+
+<h3 id="define-constraints">Define Constraints</h3>
+
+<p>You can specify conditions under which Unity loads the plug-in to memory and references it. These conditions are symbols that must be satisfied, which means either defined or undefined.</p>
+
+<p>Constraints work like the #if preprocessor directive in C#, but on the assembly level instead of the script level. You can learn more about constraints in <a href="class-AssemblyDefinitionImporter.html">Assembly Definition properties</a>.</p>
+
+<p>You can use any of Unity’s built-in define symbols, or add symbols in <strong>Project Settings</strong> &gt; <strong>Player</strong> &gt; <strong>Other Settings</strong> &gt; <strong>Script Compilation</strong> &gt; <strong>Scripting Define Symbols</strong>. The symbols you add are platform-specific, so you need to define them for each relevant platform. See <a href="platform-dependent-compilation.html">Platform dependent compilation</a> for more information, including a list of the built-in symbols.</p>
+
+<p>
+<strong>Tip</strong>: To specify that a symbol must be undefined, prefix it with a negating ! (exclamation mark) symbol.</p>
+
+<p>In the following example, we want Unity to load and reference the plug-in only on non-IL2CPP scripting runtimes for Unity 2018.3 or newer. We define two constraints, and both must be met:</p>
+
+<ul>
+<li>
+<code>ENABLE_IL2CPP</code> is not defined</li>
+<li>
+<code>UNITY_2018_3_OR_NEWER</code> is defined</li>
+</ul>
+
+<figure>
+<img src="../uploads/Main/Define_Constraints.png" alt="Define Constraints for a specific runtime and Unity version">
+<figcaption>Define Constraints for a specific runtime and Unity version</figcaption>
+</figure>
+
+<h2 id="plugin-load-settings">Plugin load settings - Load on startup</h2>
+
+<p>You can start executing unmanaged code that is independent of graphics initialization, scripts, asset loading, <span class="tooltip" tabindex="0" ><strong>scenes</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html" href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span>, and so on. This is different to the default way a player loads a native plug-in, which is to wait until the first call to one of the plug-in’s functions, usually performed by a script.</p>
+
+<p>To load plug-ins before the application executes any scripts:</p>
+
+<ol>
+<li>Implement <code>UnityPluginLoad</code> in the plug-in. Refer to <a href="native-plugin-interface.html">Low-level native plug-in interface</a>.</li>
+<li>In the Editor, select <strong>Plugin load settings</strong> &gt; <strong>Load on startup</strong>.</li>
+</ol>
+
+<p>
+<strong>Tip</strong>: For an example of a C# script calling plug-in functions, refer to <a href="plug-ins-native.html">Manual: Native plug-ins</a>.</p>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="plug-ins-managed.html">Managed plug-ins</a></li>
+<li><a href="plug-ins-native.html">Native plug-ins</a></li>
+<li><a href="plug-ins-for-desktop.html">Plugins for desktop</a></li>
+<li><a href="native-plugin-interface.html">Native plug-in interface</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="plug-ins.html"></a></span><div class="tip">Integrating third-party code libraries (plug-ins)</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="plug-ins-managed.html"></a></span><div class="tip">Managed plug-ins</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

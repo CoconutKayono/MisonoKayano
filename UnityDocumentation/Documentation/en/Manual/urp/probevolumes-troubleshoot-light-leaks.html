@@ -1,0 +1,280 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Troubleshooting light leaks in Adaptive Probe Volumes in URP</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<meta property="relative-path-to-manual" content="../">
+<meta property="version-switcher-versions-with-this-page" content="Versions with this page:">
+<meta property="version-switcher-versions-without-this-page" content="Versions without this page:">
+<meta property="version-switcher-supported" content="Supported">
+<meta property="version-switcher-legacy" content="Legacy">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/Manual/urp/probevolumes-troubleshoot-light-leaks.html">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../../StaticFilesManual/js/jquery.js?ts=20260626"></script><script type="text/javascript" src="../../StaticFilesManual/js/core.js?ts=20260626"></script><script type="text/javascript" src="../../StaticFilesManual/js/image-comp.js?ts=20260626"></script><script type="text/javascript" src="../docdata/toc.js?ts=20260626"></script><script type="text/javascript" src="../docdata/global_toc.js?ts=20260626"></script><link rel="stylesheet" type="text/css" href="../../StaticFilesManual/css/core.css?ts=20260626">
+<link rel="stylesheet" type="text/css" href="../../StaticFilesManual/css/icons.css?ts=20260626">
+<link rel="stylesheet" href="../../StaticFilesManual/css/prism.css">
+<script src="../../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="../30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../index.html" class="selected">Manual</a></li>
+<li><a href="../../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/urp/probevolumes-troubleshoot-light-leaks.html">English</a></li>
+<li><a href="/cn/current/Manual/urp/probevolumes-troubleshoot-light-leaks.html">中文</a></li>
+<li><a href="/ja/current/Manual/urp/probevolumes-troubleshoot-light-leaks.html">日本語</a></li>
+<li><a href="/kr/current/Manual/urp/probevolumes-troubleshoot-light-leaks.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: Unity 6.7 Beta</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/urp/probevolumes-troubleshoot-light-leaks.html">English</a></li>
+<li><a href="/cn/current/Manual/urp/probevolumes-troubleshoot-light-leaks.html">中文</a></li>
+<li><a href="/ja/current/Manual/urp/probevolumes-troubleshoot-light-leaks.html">日本語</a></li>
+<li><a href="/kr/current/Manual/urp/probevolumes-troubleshoot-light-leaks.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="../LightingOverview.html">Lighting</a></li>
+<li><a href="../urp/lighting-landing.html">Lighting in URP</a></li>
+<li><a href="../urp/probevolumes.html">Adaptive Probe Volumes (APV) in URP</a></li>
+<li><a href="../urp/probevolumes-fixissues.html">Troubleshooting Adaptive Probe Volumes</a></li>
+<li>Troubleshooting light leaks in Adaptive Probe Volumes in URP</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="../urp/probevolumes-troubleshoot-artefacts.html"></a></span><div class="tip">Troubleshooting dark blotches or streaks in Adaptive Probe Volumes in URP</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="../urp/probevolumes-inspector-reference.html"></a></span><div class="tip">Adaptive Probe Volume Inspector reference</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Troubleshooting light leaks in Adaptive Probe Volumes in URP</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Light leaks are areas that are too light or dark, often in the corners of a wall or ceiling.</p>
+
+<p>
+<img src="../../uploads/urp/probe-volumes/probevolumes-lightleak.JPG" alt="A light leak."><br>
+<br>
+</p>
+
+<p>Light leaks often occur when geometry receives light from a <span class="tooltip" tabindex="0" ><strong>Light Probe</strong><span class="tooltiptext">Light probes store information about how light passes through space in your scene. A collection of light probes arranged within a given space can improve lighting on moving objects and static LOD scenery within that space. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about LightProbes.html" href="../LightProbes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#LightProbe" aria-label="Go to glossary anchor for LightProbe">Glossary</a></span></span></span> that isn’t visible to the geometry, for example because the Light Probe is on the other side of a wall. Adaptive Probe Volumes use regular grids of Light Probes, so Light Probes might not follow walls or be at the boundary between different lighting areas.</p>
+
+<p>To fix light leaks, you can do the following:</p>
+
+<ul>
+<li>
+<a href="#thickerwalls">Create thicker walls</a>.</li>
+<li>
+<a href="#volume">Add an Adaptive Probe Volumes Options override to your scene</a>.</li>
+<li>
+<a href="#layers">Enable Rendering Layers</a>.</li>
+<li>
+<a href="#probevolumesettings">Adjust Baking Set properties</a>.</li>
+<li>
+<a href="#probevolumeadjustment">Use a Probe Adjustment Volume</a>.</li>
+</ul>
+
+<p><a name="thickerwalls" aria-hidden="true"></a></p>
+
+<h3>Create thicker walls</h3>
+
+<p>Adjust walls so their width is closer to the distance between probes in the local <a href="probevolumes-concept.html#how-probe-volumes-work">brick</a>
+</p>
+
+<p><a name="volume" aria-hidden="true"></a></p>
+
+<h3>Add an Adaptive Probe Volumes Options override to your scene</h3>
+
+<p>You can add a <a href="volumes-landing-page.html">Volume</a>, then add an <strong>Adaptive Probe Volumes Options</strong> override to the Volume. This adjusts the position that <span class="tooltip" tabindex="0" ><strong>GameObjects</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-GameObject.html" href="../class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span> use to sample the Light Probes.</p>
+
+<ol>
+<li>Add a <a href="set-up-a-volume.html">Volume</a> to your <span class="tooltip" tabindex="0" ><strong>scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html" href="../CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span> and make sure its area overlaps the <span class="tooltip" tabindex="0" ><strong>camera</strong><span class="tooltiptext">A component which creates an image of a particular viewpoint in your scene. The output is either drawn to the screen or captured as a texture. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CamerasOverview.html" href="../CamerasOverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#Camera" aria-label="Go to glossary anchor for Camera">Glossary</a></span></span></span> position.</li>
+<li>Select <strong>Add Override</strong>, then select <strong>Lighting</strong> &gt; <strong>Adaptive Probe Volumes Options</strong>.</li>
+<li>Enable <strong>Normal Bias</strong>, then adjust the value to move the position that GameObject pixels use to sample the Light Probes, along the <span class="tooltip" tabindex="0" ><strong>pixel</strong><span class="tooltiptext">The smallest unit in a computer image. Pixel size depends on your screen resolution. Pixel lighting is calculated at every screen pixel. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ShadowPerformance.html" href="../ShadowPerformance.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#pixel" aria-label="Go to glossary anchor for pixel">Glossary</a></span></span></span>’s surface normal.</li>
+<li>Enable <strong>View Bias</strong>, then adjust the value to move the position that GameObject pixels use to sample the Light Probes, towards the camera.</li>
+<li>Disable and enable <strong>Leak Reduction Mode</strong> to check if it improves light leaks.</li>
+</ol>
+
+<p>Volumes only affect the scene if the camera is near or inside the volume. Refer to <a href="Volumes.html">Understand volumes</a> for more information.</p>
+
+<p>Refer to <a href="probevolumes-options-override-reference.html">Probe Volumes Options Override reference</a> for more information on <strong>Adaptive Probe Volumes Options</strong> settings.</p>
+
+<p><a name="layers" aria-hidden="true"></a></p>
+
+<h3>Use Rendering Layer Masks</h3>
+
+<p>You can configure the <strong>Rendering <span class="tooltip" tabindex="0" ><strong>Layer Masks</strong><span class="tooltiptext">A value defining which layers to include or exclude from an operation, such as rendering, collision or your own code. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Layers.html" href="../Layers.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#LayerMask" aria-label="Go to glossary anchor for LayerMask">Glossary</a></span></span></span></strong> in the <a href="probevolumes-lighting-panel-reference.html">Adaptive Probe Volumes panel</a> in the Lighting window. This allow APV to assign a <span class="tooltip" tabindex="0" ><strong>Rendering Layer Mask</strong><span class="tooltiptext">A bitmask that aggregates multiple rendering layers. By assigning one or more rendering layers to an object’s MeshRenderer or an effect such as light, decals, or APVs, you can control how and where Unity applies the effect in the scene.<br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#renderinglayermask" aria-label="Go to glossary anchor for renderinglayermask">Glossary</a></span></span></span> to each Light Probe.</p>
+
+<p>For performance reasons, Adaptive Probe Volumes only supports up to 4 Rendering Layers Masks. You can use the list to create a new mask and use the dropdown to assign it any Rendering Layer.
+When lighting is generated, Unity will try to automatically assign a mask to each probe by looking at the Rendering Layer Masks of objects surrounding the probe. Additionally, you can use a <strong>Probe Adjustment Volume</strong> to override the Rendering Layer Mask assigned to Light Probes.</p>
+
+<p>At runtime, renderers will only sample lighting data from probes that have a matching Rendering Layer Mask. If the object doesn’t match any of the Masks defined in the Lighting window, it will sample lighting from all the valid surrounding probes.
+Note that this feature requires <strong>Use Rendering Layers</strong> to be enabled in the URP Asset.</p>
+
+<p>For example, in order to fix light leaking issues, you can create an Interior and an Exterior Rendering Layer Mask to ensure interior objects will never sample lighting data from exterior probes and fix light leaking through the walls.
+A renderer can have several Rendering Layers enabled in it’s Rendering Layer Masks. This is useful when dealing with dynamic objects that may want to sample lighting from both the exterior and interior probes.</p>
+
+<p>You can visualize which layers are assigned to a probe:
+- Go to the Probe Volumes tab
+- Enable <strong>Display Probes</strong>
+- Set the <strong>Probe Shading Mode</strong> field to <strong>Rendering Layer Masks</strong>
+- Use the toggles in the <span class="tooltip" tabindex="0" ><strong>Scene View</strong><span class="tooltiptext">An interactive view into the world you are creating. You use the Scene View to select and position scenery, characters, cameras, lights, and all other types of Game Object. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheSceneView.html" href="../UsingTheSceneView.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#SceneView" aria-label="Go to glossary anchor for SceneView">Glossary</a></span></span></span> Overlay to hide Probes matching a Rendering Layer Mask</p>
+
+<p><a name="probevolumesettings" aria-hidden="true"></a></p>
+
+<h3>Adjust Baking Set properties</h3>
+
+<p>If adding a Volume doesn’t work, use the <a href="probevolumes-lighting-panel-reference.html">Adaptive Probe Volumes panel</a> in the Lighting window to adjust Virtual Offset and Dilation settings.</p>
+
+<ol>
+<li>In <strong>Probe Dilation Settings</strong>, reduce <strong>Search Radius</strong>. This can help in situations where invalid Light Probes are receiving lighting data from more distant Light Probes. However, a lower <strong>Search Radius</strong> might cause light leaks.</li>
+<li>In <strong>Virtual Offset Settings</strong>, reduce <strong>Search Distance Multiplier</strong> and <strong>Ray Origin Bias</strong>.</li>
+<li>If there are light leaks in multiple locations, adjust <strong>Min Probe Spacing</strong> and <strong>Max Probe Spacing</strong> to increase the density of Light Probes.</li>
+<li>Select <strong>Generate Lighting</strong> to rebake the scene using the new settings.</li>
+</ol>
+
+<p>Note: Don’t use very low values for the settings, or Dilation and Virtual Offset might not work.</p>
+
+<p><a name="probevolumeadjustment" aria-hidden="true"></a></p>
+
+<h3>Add a Probe Adjustment Volume component</h3>
+
+<p>Use a Probe Adjustment Volume component to make Light Probes invalid in a small area. This triggers Dilation during baking, and improves the results of <strong>Leak Reduction Mode</strong> at runtime.</p>
+
+<ol>
+<li>In the Adaptive Probe Volume Inspector, select <strong>Add Component</strong>, then select <strong>Light</strong> &gt; <strong>Probe Adjustment Volume</strong>.</li>
+<li>Set the <strong>Size</strong> so the <strong>Probe Adjustment Volume</strong> area overlaps the Light Probes causing light leaks.</li>
+<li>Set <strong>Probe Volume Overrides</strong> &gt; <strong>Mode</strong> to <strong>Invalidate Probes</strong>, to invalidate the Light Probes in the Volume.</li>
+<li>If you have a <a href="#volume">Volume with a Probe Volumes Options override</a>, enable <strong>Leak Reduction Mode</strong>.</li>
+<li>In <strong>Probe Volume Settings</strong>, select <strong>Generate Lighting</strong> to rebake the scene using the new settings.</li>
+</ol>
+
+<p>Using a Probe Adjustment Volume component solves most light leak issues, but often not all.</p>
+
+<p>If you use many Probe Adjustment Volumes in a scene, your bake will be slower, and your scene might be harder to understand and maintain.</p>
+
+<p>Refer to <a href="probevolumes-adjustment-volume-component-reference.html">Probe Adjustment Volume component reference</a> for more information.</p>
+
+<p><a name="fix-seams" aria-hidden="true"></a></p>
+
+<h2>Fix seams</h2>
+
+<p>Seams are artefacts that appear when one lighting condition transitions immediately into another. Seams are caused when two adjacent bricks have different Light Probe densities. Refer to <a href="probevolumes-concept.html#how-probe-volumes-work">bricks</a> for more information.</p>
+
+<p>
+<img src="../../uploads/urp/probe-volumes/probevolumes-seams.JPG" alt="Two seams."><br>
+<br>
+</p>
+
+<p>To fix seams, do the following:</p>
+
+<ol>
+<li>Add a <a href="set-up-a-volume.html">Volume</a> to your scene and make sure its area overlaps the position of the camera.</li>
+<li>Select <strong>Add Override</strong>, then select <strong>Lighting</strong> &gt; <strong>Probe Volumes Options</strong>.</li>
+<li>Enable <strong>Sampling Noise</strong>, then try adjusting the value to add noise and make the transition more diffuse. Noise can help break up noticeable edges in indirect lighting at brick boundaries.</li>
+</ol>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="probevolumes-changedensity.html">Configure the size and density of Adaptive Probe Volumes</a></li>
+<li><a href="probevolumes-lighting-panel-reference.html">Adaptive Probe Volumes panel reference</a></li>
+<li><a href="probevolumes-options-override-reference.html">Probe Volumes Options Override reference</a></li>
+<li><a href="probevolumes-adjustment-volume-component-reference.html">Probe Adjustment Volume component reference</a></li>
+<li><a href="features/rendering-layer-masks-apv-landing.html">Light management with rendering layer masks</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="../urp/probevolumes-troubleshoot-artefacts.html"></a></span><div class="tip">Troubleshooting dark blotches or streaks in Adaptive Probe Volumes in URP</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="../urp/probevolumes-inspector-reference.html"></a></span><div class="tip">Adaptive Probe Volume Inspector reference</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

@@ -1,0 +1,468 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Convert custom shaders for URP compatibility</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<meta property="relative-path-to-manual" content="../../">
+<meta property="version-switcher-versions-with-this-page" content="Versions with this page:">
+<meta property="version-switcher-versions-without-this-page" content="Versions without this page:">
+<meta property="version-switcher-supported" content="Supported">
+<meta property="version-switcher-legacy" content="Legacy">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../../../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../../../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../../../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../../../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../../../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../../../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../../../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/Manual/urp/urp-shaders/birp-urp-custom-shader-upgrade-guide.html">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../../../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../../../StaticFilesManual/js/jquery.js?ts=20260626"></script><script type="text/javascript" src="../../../StaticFilesManual/js/core.js?ts=20260626"></script><script type="text/javascript" src="../../../StaticFilesManual/js/image-comp.js?ts=20260626"></script><script type="text/javascript" src="../../docdata/toc.js?ts=20260626"></script><script type="text/javascript" src="../../docdata/global_toc.js?ts=20260626"></script><link rel="stylesheet" type="text/css" href="../../../StaticFilesManual/css/core.css?ts=20260626">
+<link rel="stylesheet" type="text/css" href="../../../StaticFilesManual/css/icons.css?ts=20260626">
+<link rel="stylesheet" href="../../../StaticFilesManual/css/prism.css">
+<script src="../../../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../../../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../../../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../../../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="../../30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../../index.html" class="selected">Manual</a></li>
+<li><a href="../../../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/urp/urp-shaders/birp-urp-custom-shader-upgrade-guide.html">English</a></li>
+<li><a href="/cn/current/Manual/urp/urp-shaders/birp-urp-custom-shader-upgrade-guide.html">中文</a></li>
+<li><a href="/ja/current/Manual/urp/urp-shaders/birp-urp-custom-shader-upgrade-guide.html">日本語</a></li>
+<li><a href="/kr/current/Manual/urp/urp-shaders/birp-urp-custom-shader-upgrade-guide.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: Unity 6.7 Beta</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/urp/urp-shaders/birp-urp-custom-shader-upgrade-guide.html">English</a></li>
+<li><a href="/cn/current/Manual/urp/urp-shaders/birp-urp-custom-shader-upgrade-guide.html">中文</a></li>
+<li><a href="/ja/current/Manual/urp/urp-shaders/birp-urp-custom-shader-upgrade-guide.html">日本語</a></li>
+<li><a href="/kr/current/Manual/urp/urp-shaders/birp-urp-custom-shader-upgrade-guide.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="../../render-pipelines.html">Render pipelines</a></li>
+<li><a href="../../universal-render-pipeline.html">Using the Universal Render Pipeline</a></li>
+<li><a href="../../urp/introduction-landing.html">Get started with URP</a></li>
+<li><a href="../../urp/InstallingAndConfiguringURP.html">Installing and upgrading URP</a></li>
+<li><a href="../../urp/upgrading-from-birp.html">Migrating from the Built-In Render Pipeline to URP</a></li>
+<li>Convert custom shaders for URP compatibility</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="../../urp/convert-assets-to-urp.html"></a></span><div class="tip">Convert assets and quality levels from the Built-In Render Pipeline to URP</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="../../urp/birp-onboarding/quality-presets.html"></a></span><div class="tip">Match the quality level performance of the Built-In Render Pipeline in URP</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Convert custom shaders for URP compatibility</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Custom <span class="tooltip" tabindex="0" ><strong>shaders</strong><span class="tooltiptext">A program that runs on the GPU. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Shaders.html" href="../../Shaders.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../../Glossary.html#shader" aria-label="Go to glossary anchor for shader">Glossary</a></span></span></span> written for the Built-In <span class="tooltip" tabindex="0" ><strong>Render Pipeline</strong><span class="tooltiptext">A series of operations that take the contents of a Scene, and displays them on a screen. Unity lets you choose from pre-built render pipelines, or write your own. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about render-pipelines.html" href="../../render-pipelines.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../../Glossary.html#renderpipeline" aria-label="Go to glossary anchor for renderpipeline">Glossary</a></span></span></span> aren’t compatible with the Universal Render Pipeline (URP). When you migrate your project to URP, you can’t convert custom shaders automatically with the <a href="../features/rp-converter.html">Render Pipeline Converter</a>. Instead, you must manually rewrite the incompatible sections of shader code to work with URP.</p>
+
+<p>You can also recreate custom shaders in Shader Graph. For more information, refer to <a href="https://docs.unity3d.com/Packages/com.unity.shadergraph@latest">Shader Graph documentation</a>.</p>
+
+<p>
+<strong>Note</strong>: You can identify any materials in a <span class="tooltip" tabindex="0" ><strong>scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html" href="../../CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../../Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span> that use custom shaders when you upgrade to URP as they turn bright pink (magenta) to indicate an error.</p>
+
+<p>This guide demonstrates how to upgrade a custom unlit shader from Built-In Render Pipeline to be fully compatible with URP through the following sections:</p>
+
+<ul>
+<li><a href="#example-built-in-render-pipeline-custom-shader">Example Built-In Render Pipeline custom shader</a></li>
+<li><a href="#make-the-custom-shader-urp-compatible">Make the custom shader URP compatible</a></li>
+<li><a href="#enable-tiling-and-offset-for-the-shader">Enable tiling and offset for the shader</a></li>
+<li><a href="#complete-shader-code">Complete shader code</a></li>
+</ul>
+
+<p><a name="example-built-in-render-pipeline-custom-shader" aria-hidden="true"></a></p>
+
+<h2>Example Built-In Render Pipeline custom shader</h2>
+
+<p>The following shader is a simple unlit shader that works with the Built-In Render Pipeline. This guide demonstrates how to upgrade this shader to be compatible with URP.</p>
+
+<pre><code class="lang-cpp">Shader &quot;Custom/UnlitShader&quot;
+{
+    Properties
+    {
+        [NoScaleOffset] _MainTex(&quot;Main Texture&quot;, 2D) = &quot;white&quot; {}
+        _Color(&quot;Color&quot;, Color) = (1,1,1,1)
+    }
+
+    SubShader
+    {
+        Tags { &quot;RenderType&quot; = &quot;Opaque&quot; }
+
+        Pass
+        {
+            CGPROGRAM
+
+            #pragma vertex vert
+            #pragma fragment frag
+
+            #include &quot;UnityCG.cginc&quot;
+
+            struct v2f
+            {
+                float4 position : SV_POSITION;
+                float2 uv: TEXCOORD0;
+            };
+
+            float4 _Color;
+            sampler2D _MainTex;
+
+            v2f vert(appdata_base v)
+            {
+                v2f o;
+
+                o.position = UnityObjectToClipPos(v.vertex);
+                o.uv = v.texcoord;
+
+                return o;
+            }
+
+            fixed4 frag(v2f i) : SV_Target
+            {
+                fixed4 texel = tex2D(_MainTex, i.uv);
+                return texel * _Color;
+            }
+            ENDCG
+        }
+    }
+}
+</code></pre>
+
+<p><a name="make-the-custom-shader-urp-compatible" aria-hidden="true"></a></p>
+
+<h2>Make the custom shader compatible with URP</h2>
+
+<p>Built-In Render Pipeline shaders have two issues, which Unity displays in the <span class="tooltip" tabindex="0" ><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheInspector.html" href="../../UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../../Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span> window:</p>
+
+<ul>
+<li>A warning that <strong>Material property is found in another cbuffer</strong>.</li>
+<li>The <strong>SRP Batcher</strong> property displays <strong>not compatible</strong>.</li>
+</ul>
+
+<p>To solve these issues and make a shader compatible with URP and the <a href="../../SRPBatcher.html">Scriptable Render Pipeline (SRP) Batcher</a>, do the following:</p>
+
+<ol>
+<li><p>Change <code>CGPROGRAM</code> and <code>ENDCG</code> to <code>HLSLPROGRAM</code> and <code>ENDHLSL</code>.</p></li>
+<li>
+<p>Update the include statement to reference the <code>Core.hlsl</code> file.</p>
+
+<pre><code class="lang-cpp">#include &quot;Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl&quot;
+</code></pre>
+
+<p>
+<strong>Note</strong>: <code>Core.hlsl</code> includes the core SRP library, URP shader variables, and matrix defines and transformations, but it does not include lighting functions or default structs.</p>
+</li>
+<li>
+<p>Add <code>&quot;RenderPipeline&quot; = &quot;UniversalPipeline&quot;</code> to the shader tags.</p>
+
+<pre><code class="lang-cpp">Tags { &quot;RenderType&quot; = &quot;Opaque&quot; &quot;RenderPipeline&quot; = &quot;UniversalPipeline&quot; }
+</code></pre>
+
+<p>
+<strong>Note</strong>: URP does not support all <span class="tooltip" tabindex="0" ><strong>ShaderLab</strong><span class="tooltiptext">Unity’s language for defining the structure of Shader objects. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about SL-Shader.html" href="../../SL-Shader.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../../Glossary.html#ShaderLab" aria-label="Go to glossary anchor for ShaderLab">Glossary</a></span></span></span> tags. For more information on which tags URP supports, refer to <a href="./urp-shaderlab-pass-tags.html">URP ShaderLab Pass tags</a>.</p>
+</li>
+<li>
+<p>Replace the <code>struct v2f</code> code block with the following <code>struct Varyings</code> code block. This changes the struct to use the URP name of <code>Varyings</code> instead of <code>v2f</code>, and updates the shader to use the correct variables for URP.</p>
+
+<pre><code class="lang-cpp">struct Varyings
+{
+    // The positions in this struct must have the SV_POSITION semantic.
+    float4 positionHCS  : SV_POSITION;
+    float2 uv : TEXCOORD0;
+};
+</code></pre>
+</li>
+<li><p>Beneath the include statement and above the <code>Varyings</code> struct, define a new struct with the name <code>Attributes</code>. This is equivalent to the Built-In Render Pipeline’s <code>appdata</code> struct.</p></li>
+<li>
+<p>Add the following variables to the <code>Attributes</code> struct:</p>
+
+<pre><code class="lang-cpp">struct Attributes
+{
+    float4 positionOS   : POSITION;
+    float2 uv : TEXCOORD0;
+};
+</code></pre>
+</li>
+<li>
+<p>Update the <code>v2f vert</code> function definition to use the new <code>Varyings</code> struct and take an instance of the <code>Attributes</code> struct as an input:</p>
+
+<pre><code class="lang-cpp">Varyings vert(Attributes IN)
+</code></pre>
+</li>
+<li>
+<p>Update the vert function to output an instance of the <code>Varyings</code> struct and use the <code>TransformObjectToHClip</code> function to convert from object space to clip space. The function also needs to take the input <code>Attributes</code> UV and pass it to the output <code>Varyings</code> UV.</p>
+
+<pre><code class="lang-cpp">Varyings vert(Attributes IN)
+{
+    Varyings OUT;
+
+    OUT.positionHCS = TransformObjectToHClip(IN.positionOS.xyz);
+    OUT.uv = IN.uv;
+
+    return OUT;
+}
+</code></pre>
+
+<p>
+<strong>Note</strong>: URP shaders use suffixes to indicate the space. <code>OS</code> means object space, and <code>HCS</code> means homogeneous clip space.</p>
+</li>
+<li>
+<p>Place a <code>CBUFFER</code> code block around the properties the shader uses, along with the <code>UnityPerMaterial</code> parameter.</p>
+
+<pre><code class="lang-cpp">CBUFFER_START(UnityPerMaterial)
+float4 _Color;
+sampler2D _MainTex;
+CBUFFER_END
+</code></pre>
+
+<p>
+<strong>Note</strong>: For a shader to be SRP Batcher compatible, you must declare all material properties within a <code>CBUFFER</code> code block. Even if a shader has multiple passes, all passes must use the same <code>CBUFFER</code> block.</p>
+</li>
+<li>
+<p>Update the <code>frag</code> function to use the <code>Varyings</code> input and the type <code>half4</code>. The <code>frag</code> function must now use this type, as URP shaders do not support fixed types.</p>
+
+<pre><code class="lang-cpp">half4 frag(Varyings IN) : SV_Target
+{
+    half4 texel = tex2D(_MainTex, IN.uv);
+    return texel * _Color;
+}
+</code></pre>
+</li>
+</ol>
+
+<p>This custom unlit shader is now compatible with the SRP Batcher and ready for use within URP. You can check this in the Inspector window:</p>
+
+<ul>
+<li>The warning that <strong>Material property is found in another cbuffer</strong> no longer appears.</li>
+<li>The <strong>SRP Batcher</strong> property displays <strong>compatible</strong>.</li>
+</ul>
+
+<p><a name="enable-tiling-and-offset-for-the-shader" aria-hidden="true"></a></p>
+
+<h2>Enable tiling and offset for the shader</h2>
+
+<p>Although the shader is now compatible with URP and the SRP Batcher, you can’t use the <strong>Tiling</strong> and <strong>Offset</strong> properties without further changes. To add this functionality to the custom unlit shader, use the following steps.</p>
+
+<ol>
+<li><p>Rename the property <code>_MainTex</code> to <code>_BaseMap</code> along with any references to this property.</p></li>
+<li><p>Remove the <code>[NoScaleOffset]</code> ShaderLab attribute from the <code>_BaseMap</code> property. Unity now displays the <strong>Tiling</strong> and <strong>Offset</strong> properties in the shader’s Inspector window.</p></li>
+<li>
+<p>Add the <code>[MainTexture]</code> ShaderLab attribute to the <code>_BaseMap</code> property and the <code>[MainColor]</code> attribute to the <code>_Color</code> property. This tells the Editor which property to return when you request the main texture or main color from another part of your project or in the Editor. The <code>Properties</code> section of your shader should now look as follows:</p>
+
+<pre><code class="lang-cpp">Properties
+{
+    [MainTexture] _BaseMap(&quot;Main Texture&quot;, 2D) = &quot;white&quot; {}
+    [MainColor] _Color(&quot;Color&quot;, Color) = (1,1,1,1)
+}
+</code></pre>
+</li>
+<li>
+<p>Add the <code>TEXTURE2D(_BaseMap)</code> and <code>SAMPLER(sampler_BaseMap)</code> macros above the <code>CBUFFER</code> block. These macros define the texture and sampler state variables for use later. For more information on sampler states, refer to <a href="../../SL-SamplerStates.html">Using sampler states</a>.</p>
+
+<pre><code class="lang-cpp">TEXTURE2D(_BaseMap);
+SAMPLER(sampler_BaseMap);
+</code></pre>
+</li>
+<li>
+<p>Change the <code>sampler2D _BaseMap</code> variable inside the <code>CBUFFER</code> block to <code>float4 _BaseMap_ST</code>. This variable now stores the tiling and offset values set in the Inspector.</p>
+
+<pre><code class="lang-cpp">CBUFFER_START(UnityPerMaterial)
+float4 _Color;
+float4 _BaseMap_ST;
+CBUFFER_END
+</code></pre>
+</li>
+<li>
+<p>Change the <code>frag</code> function to access the texture with a macro instead of <code>tex2D</code> directly. To do this, replace <code>tex2D</code> with the <code>SAMPLE_TEXTURE2D</code> macro and add <code>sampler_BaseMap</code> as an additional parameter, as shown below:</p>
+
+<pre><code class="lang-cpp">half4 frag(Varyings IN) : SV_Target
+{
+    half4 texel = SAMPLE_TEXTURE2D(_BaseMap, sampler_BaseMap, IN.uv);
+    return texel * _Color;
+}
+</code></pre>
+</li>
+<li>
+<p>In the <code>vert</code> function, change <code>OUT.uv</code> to use a macro instead of passing the texture coordinates as <code>IN.uv</code> directly. To do this, replace <code>IN.uv</code> with <code>TRANSFORM_TEX(IN.uv, _BaseMap)</code>. Your <code>vert</code> function should now look like the following example:</p>
+
+<pre><code class="lang-cpp">Varyings vert(Attributes IN)
+{
+    Varyings OUT;
+
+    OUT.positionHCS = TransformObjectToHClip(IN.positionOS.xyz);
+    OUT.uv = TRANSFORM_TEX(IN.uv, _BaseMap);
+
+    return OUT;
+}
+</code></pre>
+
+<p>
+<strong>Note</strong>: It’s important that you define the <code>vert</code> function after the <code>CBUFFER</code> block, as the <code>TRANSFORM_TEX</code> macro uses the parameter with the <code>_ST</code> suffix.</p>
+</li>
+</ol>
+
+<p>This shader now has a texture, modified by a color, and is fully SRP Batcher compatible. It also fully supports the <strong>Tiling</strong> and <strong>Offset</strong> properties.</p>
+
+<p>For an example of the complete shader code, refer to the <a href="#complete-shader-code">Complete shader code</a> section of this page.</p>
+
+<p><a name="complete-shader-code" aria-hidden="true"></a></p>
+
+<h2>Complete shader code</h2>
+
+<pre><code class="lang-cpp">Shader &quot;Custom/UnlitShader&quot;
+{
+    Properties
+    {
+        _BaseMap(&quot;Base Map&quot;, 2D) = &quot;white&quot; {}
+        _Color(&quot;Color&quot;, Color) = (1,1,1,1)
+    }
+
+    SubShader
+    {
+        Tags { &quot;RenderType&quot; = &quot;Opaque&quot; &quot;RenderPipeline&quot; = &quot;UniversalPipeline&quot; }
+
+        Pass
+        {
+            HLSLPROGRAM
+
+            #pragma vertex vert
+            #pragma fragment frag
+
+            #include &quot;Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl&quot;
+
+            struct Attributes
+            {
+                float4 positionOS   : POSITION;
+                float2 uv: TEXCOORD0;
+            };
+
+            struct Varyings
+            {
+                float4 positionCS  : SV_POSITION;
+                float2 uv: TEXCOORD0;
+            };
+
+            TEXTURE2D(_BaseMap);
+            SAMPLER(sampler_BaseMap);
+
+            CBUFFER_START(UnityPerMaterial)
+            float4 _Color;
+            float4 _BaseMap_ST;
+            CBUFFER_END
+
+            Varyings vert(Attributes IN)
+            {
+                Varyings OUT;
+
+                OUT.positionCS = TransformObjectToHClip(IN.positionOS.xyz);
+                OUT.uv = TRANSFORM_TEX(IN.uv, _BaseMap);
+
+                return OUT;
+            }
+
+            half4 frag(Varyings IN) : SV_Target
+            {
+                float4 texel = SAMPLE_TEXTURE2D(_BaseMap, sampler_BaseMap, IN.uv);
+                return texel * _Color;
+            }
+            ENDHLSL
+        }
+    }
+}
+</code></pre>
+
+<ul>
+<li><a href="../shader-built-in">Prebuilt shaders render pipeline compatibility reference</a></li>
+<li><a href="../shader-error">Error and loading shaders</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="../../urp/convert-assets-to-urp.html"></a></span><div class="tip">Convert assets and quality levels from the Built-In Render Pipeline to URP</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="../../urp/birp-onboarding/quality-presets.html"></a></span><div class="tip">Match the quality level performance of the Built-In Render Pipeline in URP</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

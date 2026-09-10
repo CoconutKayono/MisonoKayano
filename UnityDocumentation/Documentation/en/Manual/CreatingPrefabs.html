@@ -1,0 +1,247 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Create prefabs</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<meta property="relative-path-to-manual" content="">
+<meta property="version-switcher-versions-with-this-page" content="Versions with this page:">
+<meta property="version-switcher-versions-without-this-page" content="Versions without this page:">
+<meta property="version-switcher-supported" content="Supported">
+<meta property="version-switcher-legacy" content="Legacy">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/Manual/CreatingPrefabs.html">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20260626"></script><script type="text/javascript" src="docdata/toc.js?ts=20260626"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20260626"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20260626">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20260626">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/CreatingPrefabs.html">English</a></li>
+<li><a href="/cn/current/Manual/CreatingPrefabs.html">中文</a></li>
+<li><a href="/ja/current/Manual/CreatingPrefabs.html">日本語</a></li>
+<li><a href="/kr/current/Manual/CreatingPrefabs.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: Unity 6.7 Beta</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/CreatingPrefabs.html">English</a></li>
+<li><a href="/cn/current/Manual/CreatingPrefabs.html">中文</a></li>
+<li><a href="/ja/current/Manual/CreatingPrefabs.html">日本語</a></li>
+<li><a href="/kr/current/Manual/CreatingPrefabs.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="working-with-gameobjects.html">GameObjects</a></li>
+<li><a href="Prefabs.html">Prefabs</a></li>
+<li>Create prefabs</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="prefabs-introduction.html"></a></span><div class="tip">Introduction to prefabs</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="EditingInPrefabMode.html"></a></span><div class="tip">Edit prefab assets</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Create prefabs</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>To create and use <span class="tooltip" tabindex="0" ><strong>prefabs</strong><span class="tooltiptext">An asset type that allows you to store a GameObject complete with components and properties. The prefab acts as a template from which you can create new object instances in the scene. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Prefabs.html" href="Prefabs.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#prefab" aria-label="Go to glossary anchor for prefab">Glossary</a></span></span></span> in your project, you must do the following:</p>
+
+<ol>
+<li>
+<a href="#create-a-prefab-asset">Create a prefab asset</a>.</li>
+<li>
+<a href="#create-an-instance-of-a-prefab">Create an instance of the prefab asset</a>.</li>
+</ol>
+
+<p><a id="create-a-prefab-asset" aria-hidden="true"></a></p>
+
+<h2>Create a prefab asset</h2>
+
+<p>To create a prefab asset, perform the following steps:</p>
+
+<ol>
+<li>Create a <span class="tooltip" tabindex="0" ><a href="GameObjects.html">GameObject</a><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-GameObject.html" href="class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span> and configure its position, scale, rotation, components, and other properties as needed.</li>
+<li>Drag the GameObject into the <code>Assets</code> folder in the <span class="tooltip" tabindex="0" ><a href="ProjectView.html">Project window</a><span class="tooltiptext">A window that shows the contents of your <code>Assets</code> folder (Project tab) <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ProjectView.html" href="ProjectView.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Projectwindow" aria-label="Go to glossary anchor for Projectwindow">Glossary</a></span></span></span>. You can optionally select more than one GameObject to create multiple prefab assets.</li>
+</ol>
+
+<p>Unity then creates a prefab asset from the GameObject, all its components, and child GameObjects. The original GameObject becomes an instance of the newly created prefab asset. </p>
+
+<figure>
+<img src="../uploads/Main/prefab-workflow.png" alt="A GameObject named Health Pack in the left window. After dragging the GameObject into a child folder of the Assets folder, the Health Pack object is saved as a .prefab file, and the original GameObject becomes an instance of the prefab asset. The Inspector displays details of the Health Pack prefab asset.">
+<figcaption>A GameObject named Health Pack in the left window. After dragging the GameObject into a child folder of the <code>Assets</code> folder, the Health Pack object is saved as a .prefab file, and the original GameObject becomes an instance of the prefab asset. The Inspector displays details of the Health Pack prefab asset.</figcaption>
+</figure>
+
+<p>If you drag multiple GameObjects that aren’t already prefabs into the Project window, Unity creates new prefab assets for each one without any additional steps. However, if any of the GameObjects are existing prefabs or <a href="PrefabVariants.html">prefab variants</a>, Unity displays a dialog which asks you to confirm whether you want to create new prefab assets or new variants from the GameObjects.</p>
+
+<h3>Replace a prefab asset</h3>
+
+<p>You can replace a prefab asset with a GameObject or <a href="#create-an-instance-of-a-prefab">prefab instance</a> that’s in the <a href="Hierarchy.html">Hierarchy window</a>. To replace a prefab asset:</p>
+
+<ol>
+<li>Select the GameObject or prefab in the Hierarchy window.</li>
+<li>Drag it on top of an existing prefab asset in the Project window.</li>
+</ol>
+
+<p>If the contents of the GameObject or prefab instance differ from the prefab asset, then Unity displays a dialog to confirm that you intend to replace the prefab asset.</p>
+
+<p>Unity tries to preserve references to the prefab and the individual parts of the prefab such as child GameObjects and components. To do this, it matches the names of GameObjects between the new prefab and the existing prefab that you’re replacing.</p>
+
+<p>Because Unity performs this matching by name only, if there are multiple GameObjects with the same name in the prefab asset’s hierarchy, the matching is unpredictable. Therefore, to ensure Unity preserves the references when saving over an existing prefab, make sure all GameObjects within the prefab have unique names.</p>
+
+<p>Unity behaves in a similar way if a GameObject has more than one of the same type of component attached to it.</p>
+
+<p><a id="create-an-instance-of-a-prefab" aria-hidden="true"></a></p>
+
+<h2>Create an instance of a prefab</h2>
+
+<p>To create an instance of a prefab asset:</p>
+
+<ol>
+<li>Select the prefab asset in the Project window.</li>
+<li>Drag the prefab asset into the Hierarchy or <span class="tooltip" tabindex="0" ><strong>Scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html" href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span> view.</li>
+</ol>
+
+<p>By default, when you drag a prefab into the <strong>Hierarchy</strong> window, it is placed according to the <strong>3D Placement Mode</strong> setting. To place the prefab at the position saved in its root transform instead, in <strong>Edit</strong> &gt; <strong>Preferences</strong> &gt; <strong>Scene View</strong> (macOS: <strong>Unity</strong> &gt; <strong>Settings</strong> &gt; <strong>Scene View</strong>), enable <strong>Use prefab asset position when dropping on the Hierarchy window</strong>.</p>
+
+<p>You can also create instances of prefabs at runtime using scripting. For more information, refer to <a href="instantiating-prefabs.html">Instantiating prefabs</a>.</p>
+
+<h3>Replace a prefab instance’s prefab asset</h3>
+
+<p>You can replace a prefab instance’s parent prefab asset, while retaining the instance’s position, rotation, and scale. Unity merges the contents of the new prefab asset and preserves any overrides and references via name-based matching.</p>
+
+<p>You can replace a prefab asset in the following ways:</p>
+
+<ul>
+<li>In the <a href="prefab-instance-inspector-reference.html">Inspector for the prefab instance</a>:
+
+<ol>
+<li>Drag a prefab asset from the Project window into the <strong>Prefab</strong> field in the <span class="tooltip" tabindex="0" ><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheInspector.html" href="UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span>.</li>
+<li>If the prefab has any <a href="prefabs-override.html">overrides</a>, Unity displays a context menu and you can choose to either <strong>Replace and Keep Overrides</strong> to preserve any overrides, or <strong>Replace</strong> and discard any overrides.</li>
+</ol>
+</li>
+<li>In the Hierarchy window:
+
+<ol>
+<li>Right-click on a prefab instance or GameObject.</li>
+<li>Select <strong>Prefab</strong> &gt; <strong>Replace</strong>, or <strong>Replace and Keep Overrides</strong> to preserve overrides.</li>
+<li>A <strong>Select GameObject</strong> window appears and you can choose the prefab asset you want to replace it with.</li>
+</ol>
+</li>
+<li>In the Project window:
+
+<ol>
+<li>Hold down Ctrl (macOS: Command) and drag a prefab asset onto a prefab instance or GameObject in the Hierarchy.</li>
+<li>In the context menu, select <strong>Replace</strong>, or <strong>Replace and Keep Overrides</strong> to preserve overrides.</li>
+</ol>
+</li>
+</ul>
+
+<p>You can also use the <a href="../ScriptReference/PrefabUtility.ReplacePrefabAssetOfPrefabInstance.html"><code>PrefabUtility.ReplacePrefabAssetOfPrefabInstance</code></a> method to control this behavior in your <span class="tooltip" tabindex="0" ><strong>scripts</strong><span class="tooltiptext">A piece of code that allows you to create your own Components, trigger game events, modify Component properties over time and respond to user input in any way you like. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about creating-scripts.html" href="creating-scripts.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scripts" aria-label="Go to glossary anchor for Scripts">Glossary</a></span></span></span>.</p>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="EditingInPrefabMode.html">Edit prefab assets</a></li>
+<li><a href="NestedPrefabs.html">Nest prefab instances in other prefabs</a></li>
+<li><a href="PrefabVariants.html">Create variations of prefabs</a></li>
+<li><a href="yaml-prefab-serialization.html">YAML serialization of prefabs</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="prefabs-introduction.html"></a></span><div class="tip">Introduction to prefabs</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="EditingInPrefabMode.html"></a></span><div class="tip">Edit prefab assets</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

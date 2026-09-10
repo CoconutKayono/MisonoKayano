@@ -1,0 +1,424 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Troubleshooting lightmapping quality issues</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<meta property="relative-path-to-manual" content="">
+<meta property="version-switcher-versions-with-this-page" content="Versions with this page:">
+<meta property="version-switcher-versions-without-this-page" content="Versions without this page:">
+<meta property="version-switcher-supported" content="Supported">
+<meta property="version-switcher-legacy" content="Legacy">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/Manual/troubleshooting-lightmapping-quality.html">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20260626"></script><script type="text/javascript" src="docdata/toc.js?ts=20260626"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20260626"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20260626">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20260626">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/troubleshooting-lightmapping-quality.html">English</a></li>
+<li><a href="/cn/current/Manual/troubleshooting-lightmapping-quality.html">中文</a></li>
+<li><a href="/ja/current/Manual/troubleshooting-lightmapping-quality.html">日本語</a></li>
+<li><a href="/kr/current/Manual/troubleshooting-lightmapping-quality.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: Unity 6.7 Beta</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/troubleshooting-lightmapping-quality.html">English</a></li>
+<li><a href="/cn/current/Manual/troubleshooting-lightmapping-quality.html">中文</a></li>
+<li><a href="/ja/current/Manual/troubleshooting-lightmapping-quality.html">日本語</a></li>
+<li><a href="/kr/current/Manual/troubleshooting-lightmapping-quality.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="LightingOverview.html">Lighting</a></li>
+<li><a href="direct-and-indirect-lighting.html">Direct and indirect lighting</a></li>
+<li><a href="Lightmapping-landing.html">Precalculating surface lighting with lightmaps</a></li>
+<li><a href="Lightmapping-baking-before-runtime.html">Baking lightmaps before runtime</a></li>
+<li><a href="Lightmapping-troubleshooting.html">Troubleshooting baked lightmaps</a></li>
+<li>Troubleshooting lightmapping quality issues</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="troubleshooting-lightmapping-artifacts.html"></a></span><div class="tip">Troubleshooting lightmapping artifacts</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="troubleshooting-lightmapping-leaking.html"></a></span><div class="tip">Troubleshooting light leaking</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Troubleshooting lightmapping quality issues</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>If you use baked <a href="global-illumination-configure.html">Global Illumination (GI)</a>, troubleshoot baked lighting quality issues such as flat normal maps, visible texture coordinate (UV) seams, blurry <span class="tooltip" tabindex="0" ><strong>lightmaps</strong><span class="tooltiptext">A pre-rendered texture that contains the effects of light sources on static objects in the scene. Lightmaps are overlaid on top of scene geometry to create the effect of lighting. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Lightmapping.html" href="Lightmapping.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Lightmap" aria-label="Go to glossary anchor for Lightmap">Glossary</a></span></span></span>, and aliasing. These issues make surfaces appear flat, disrupt texture continuity, or cause shadows to lose detail.</p>
+
+<h2>Flat normal maps</h2>
+
+<p>This issue occurs if you use non-directional lightmaps with baked lighting. Non-directional lightmaps don’t capture the directionality of incoming light, which affects the appearance of surface detail when a <span class="tooltip" tabindex="0" ><strong>GameObject</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-GameObject.html" href="class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span> has a <span class="tooltip" tabindex="0" ><a href="StandardShaderMaterialParameterNormalMap.html">normal map</a><span class="tooltiptext">A type of Bump Map texture that allows you to add surface detail such as bumps, grooves, and scratches to a model which catch the light as if they are represented by real geometry.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#normalmap" aria-label="Go to glossary anchor for normalmap">Glossary</a></span></span></span>.</p>
+
+<p>For more information about directional lightmaps, refer to <a href="LightmappingDirectional.html">Store light direction with Directional Mode</a>.</p>
+
+<p>
+<strong>Note:</strong> Non-directional lightmaps store the intensity of light at various points but don’t account for the direction from which the light is coming, which means they don’t work with normal maps. As a result, details that help give an illusion of relief might be missing.</p>
+
+<h3>Symptoms</h3>
+
+<ul>
+<li>Objects lose their depth effect, and the lighting appears flat after you bake if <strong>Directional Mode</strong> is disabled.</li>
+<li>Normal maps don’t provide a clear representation of relief.</li>
+</ul>
+
+<figure>
+<img src="../uploads/Main/flat-normal-maps.jpg" alt="Non-directional lightmaps with a baked light - left. Directional lightmaps with a baked light - right.">
+<figcaption>Non-directional lightmaps with a baked light - left. Directional lightmaps with a baked light - right.</figcaption>
+</figure>
+
+<h3>Cause</h3>
+
+<p>When you bake in non-directional mode, Unity doesn’t generate a secondary texture to store the dominant light direction.</p>
+
+<h3>Resolution</h3>
+
+<p>To troubleshoot flat normal maps, do the following.</p>
+
+<ul>
+<li>Enable <a href="LightmappingDirectional.html">Directional Mode</a>, so Unity stores light direction.</li>
+<li>In the <strong><span class="tooltip" tabindex="0" ><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheInspector.html" href="UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span></strong> window for each light, set <strong>Light Mode</strong> to <strong>Mixed</strong>, so Unity bakes indirect diffuse lighting. For more information, refer to <span class="tooltip" tabindex="0" ><a href="LightModes-introduction.html">Light Modes</a><span class="tooltiptext">A Light property that defines the use of the Light. Can be set to Realtime, Baked and Mixed. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about LightModes.html" href="LightModes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#LightMode" aria-label="Go to glossary anchor for LightMode">Glossary</a></span></span></span>.</li>
+</ul>
+
+<h2>Lightmap UV seams</h2>
+
+<p>Visible seams can appear in lightmaps due to GPU limitations when blending color values between separate UV charts, especially with high filtering or low lightmap resolution. Seams between objects are more pronounced in modular meshes.</p>
+
+<h3>Symptoms</h3>
+
+<ul>
+<li>Visible seams in lightmaps after baking.</li>
+<li>More noticeable seams when using modular meshes.</li>
+<li>Increased seam visibility if you use high filtering or low lightmap resolution.</li>
+</ul>
+
+<figure>
+<img src="../uploads/Main/lightmap-uv-seams.jpg" alt="Left: The lightmap UV split is visible on the hand of the model after baking. Right: After you enable Stitch Seams and bake again, the lightmap UV split is no longer visible.">
+<figcaption>Left: The lightmap UV split is visible on the hand of the model after baking. Right: After you enable <strong>Stitch Seams</strong> and bake again, the lightmap UV split is no longer visible.</figcaption>
+</figure>
+
+<h3>Cause</h3>
+
+<p>By default, GPUs don’t blend color values between separate UV charts, leading to visible seams in baked lightmaps. Filtering and low lightmap resolution can further exacerbate the issue by bleeding texel color values into adjacent UV charts.</p>
+
+<h3>Resolution</h3>
+
+<p>To troubleshoot lightmap UV seams, do the following.</p>
+
+<h4>Enable Stitch Seams</h4>
+
+<p>Enable <a href="troubleshooting-lightmapping-artifacts.html#Lightmapping-SeamStitching">Stitch Seams</a> to blend color values between UV charts that share a stitchable common edge.</p>
+
+<p>
+<strong>Note:</strong> <strong>Stitch Seams</strong> only works for single GameObjects and doesn’t support multiple GameObjects.</p>
+
+<h4>Combine meshes in a digital content creation tool</h4>
+
+<p>To join overlapping vertices, do the following:</p>
+
+<ul>
+<li>Use a 3D modeling tool to merge modular meshes. Join overlapping vertices before you export, to prevent automatic lightmap unwrapping issues in Unity.</li>
+<li>Join overlapping vertices in the <a href="FBXImporter-Model.html">import Settings for a model</a>.</li>
+</ul>
+
+<figure>
+<img src="../uploads/Main/combine-meshes-in-a-dcc-tool.jpg" alt="Cornell Box scene assembled using modular meshes with visible seams after lightmap baking - left. Meshes combined in a digital content creation (DCC) tool before exporting, with no lightmap seams visible - right.">
+<figcaption>Cornell Box scene assembled using modular meshes with visible seams after lightmap baking - left. Meshes combined in a digital content creation (DCC) tool before exporting, with no lightmap seams visible - right.</figcaption>
+</figure>
+
+<h4>Other possible solutions</h4>
+
+<ul>
+<li><p>Use <a href="https://docs.unity3d.com/ScriptReference/Mesh.CombineMeshes.html">Mesh.CombineMeshes</a> to merge multiple meshes into one, achieving a similar result as in a DCC tool.</p></li>
+<li><p>Convert meshes to ProBuilder using the <a href="https://docs.unity3d.com/Packages/com.unity.probuilder@latest/?subfolder=/manual/Object_ProBuilderize.html">ProBuilderize</a> option. Use the <a href="https://docs.unity3d.com/Packages/com.unity.probuilder@latest/?subfolder=/manual/Object_Merge.html?q=merge">Merge Objects</a> option to combine multiple objects.</p></li>
+<li><p>Disable filtering and denoising. This prevents blurring and dilation issues but can require increasing sample counts for cleaner results.</p></li>
+<li><p>Adjust <strong>Lightmap Padding</strong> to increase spacing between UV layouts in the UV atlas, reducing texel bleeding.</p></li>
+<li><p>For low-end platforms, use <span class="tooltip" tabindex="0" ><a href="class-LightProbeGroup.html">Light Probe Groups</a><span class="tooltiptext">A component that enables you to add Light Probes to GameObjects in your scene. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-LightProbeGroup.html" href="class-LightProbeGroup.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#LightProbeGroup" aria-label="Go to glossary anchor for LightProbeGroup">Glossary</a></span></span></span>.</p></li>
+<li><p>For per-pixel lighting with streamlined placement, use <a href="urp/probevolumes-use.html">Adaptive Probe Volumes (APV)</a>.</p></li>
+<li><p>If possible, use trim meshes to hide seams between objects.</p></li>
+</ul>
+
+<h2>Blurry lightmaps</h2>
+
+<p>Low lightmap resolution results in blurry lighting effects due to insufficient texel density.</p>
+
+<h3>Symptoms</h3>
+
+<ul>
+<li>Shadows appear soft or lack detail.</li>
+<li>Lightmaps are stretched or distorted.</li>
+<li>Light leaks through geometry.</li>
+</ul>
+
+<h3>Cause</h3>
+
+<p>Lightmaps require a sufficient resolution to accurately capture lighting information. Too few texels per unit can result in a loss of detail, while non-uniform UV scaling can distort the baked lighting output.</p>
+
+<h3>Resolution</h3>
+
+<figure>
+<img src="../uploads/Main/blurry-lightmaps.jpg" alt="Cornell box scene baked at 8 texels per unit resolution - left. Same scene baked at 32 texels per unit resolution - right.">
+<figcaption>Cornell box scene baked at 8 texels per unit resolution - left. Same scene baked at 32 texels per unit resolution - right.</figcaption>
+</figure>
+
+<p>To troubleshoot blurry lightmaps, do the following:</p>
+
+<ul>
+<li><p>To adjust lightmap resolution globally, adjust the <strong>Lightmap Resolution</strong> property in the <a href="lighting-window.html">Lighting</a> window. This changes the resolution for all objects in the <span class="tooltip" tabindex="0" ><strong>scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html" href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span>.</p></li>
+<li><p>To adjust lightmap resolution per object, modify the <strong>Scale in Lightmap</strong> parameter in the <span class="tooltip" tabindex="0" ><a href="class-MeshRenderer.html">Mesh Renderer</a><span class="tooltiptext">A mesh component that takes the geometry from the Mesh Filter and renders it at the position defined by the object’s Transform component. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-MeshRenderer.html" href="class-MeshRenderer.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#MeshRenderer" aria-label="Go to glossary anchor for MeshRenderer">Glossary</a></span></span></span> component. This acts as a multiplier of the <strong>Lightmap Resolution</strong> setting.</p></li>
+</ul>
+
+<p>
+<strong>Note:</strong> Increasing lightmap resolution significantly increases baking times and memory usage.</p>
+
+<p>Recommended lightmap resolution settings:</p>
+
+<ul>
+<li>Use <strong>Low Resolution</strong> for:
+
+<ul>
+<li>Surfaces receiving uniform or indirect lighting.</li>
+<li>Small objects.</li>
+<li>Surfaces not visible to the player.</li>
+</ul>
+</li>
+<li>Use <strong>High Resolution</strong> for:
+
+<ul>
+<li>Areas of high importance.</li>
+<li>Surfaces receiving baked direct lighting and shadows.</li>
+</ul>
+</li>
+</ul>
+
+<h4>Adjust the Max Lightmap Size property</h4>
+
+<p>The <a href="Lightmaps-reference.html">Max Lightmap Size</a> property limits the final resolution of the lightmap. Increase this setting if:</p>
+
+<ul>
+<li>Objects exceed the maximum space in the lightmap atlas.</li>
+<li>Unity generates a high number of low-resolution lightmaps even after you increase the lightmap resolution.</li>
+</ul>
+
+<h4>Maintain uniform lightmap UV scale</h4>
+
+<p>To prevent stretched or distorted lightmaps, do the following:</p>
+
+<ul>
+<li>When you create custom lightmap UVs, scale UV charts uniformly across all axes.</li>
+<li>Avoid scaling individual UV charts disproportionately.</li>
+<li>When you scale GameObjects in the editor, ensure uniform scaling across all axes.</li>
+<li>Use the baked lightmap <a href="GIVis.html">Scene View Debug Draw Mode</a> to inspect lightmap uniformity, and enable <strong>Show Lightmap Resolution</strong> to visualize texel distribution.</li>
+</ul>
+
+<figure>
+<img src="../uploads/Main/maintain-uniform-lightmap-uv-scale.jpg" alt="Lightmap texels stretched horizontally resulting in distorted output - left. Uniformly scaled lightmap texels - right.">
+<figcaption>Lightmap texels stretched horizontally resulting in distorted output - left. Uniformly scaled lightmap texels - right.</figcaption>
+</figure>
+
+<h2>Lightmap aliasing</h2>
+
+<p>A stair-stepping effect can appear around edges, especially in high-contrast areas with baked direct lighting.</p>
+
+<p>To address lightmap aliasing, do the following:</p>
+
+<ul>
+<li>In the <strong>Lightmap Parameters Asset</strong>, increase <strong>Anti-aliasing Samples</strong>. For more information, refer to <a href="class-LightmapParameters.html">Lightmap Parameters Asset</a>.</li>
+<li>In the <strong>Inspector</strong> window for a light, adjust the <strong>Baked Shadow Angle</strong> property. For more information, refer to <a href="urp/light-component.html">Light component Inspector window reference</a>.</li>
+<li>In the <strong>Lighting</strong> window, set <strong>Filtering</strong> to <strong>Advanced</strong>, then under <strong>Direct Filter</strong> adjust <strong>Radius</strong>.</li>
+</ul>
+
+<h2>Area distortion</h2>
+
+<p>Uneven lighting and artifacts can appear due to improper scaling of UV charts, leading to lower resolution in certain areas.</p>
+
+<h3>Symptoms</h3>
+
+<ul>
+<li>Uneven lighting across the surface.</li>
+<li>Blurry or pixelated lightmap artifacts in some areas.</li>
+<li>Lower resolution in some regions despite adequate lightmap settings.</li>
+</ul>
+
+<p><strong>Example:</strong></p>
+
+<p>In the image below, two spotlights with the same parameters light the sides of a cylinder. The right-hand side has a higher <strong>Area Error value</strong>, in the <strong><span class="tooltip" tabindex="0" ><strong>Mesh</strong><span class="tooltiptext">The main graphics primitive of Unity. Meshes make up a large part of your 3D worlds. Unity supports triangulated or Quadrangulated polygon meshes. Nurbs, Nurms, Subdiv surfaces must be converted to polygons. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about mesh.html" href="mesh.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Mesh" aria-label="Go to glossary anchor for Mesh">Glossary</a></span></span></span> Import</strong> and <strong>Generate Lightmap UVs</strong> settings, which distorts the triangles and leads to a lower resolution, creating artifacts in the light.</p>
+
+<p>
+<img src="../uploads/Main/LightingGiUvs-GeneratingLightmappingUVs-4.png" alt="Cylinder with distortions.">
+<img src="../uploads/Main/LightingGiUvs-GeneratingLightmappingUVs-5.jpg" alt="Cylinder with distortions.">
+</p>
+
+<h3>Cause</h3>
+
+<p>Area distortion occurs when UV charts are scaled improperly, leading to uneven texel distribution. This can happen when:</p>
+
+<ul>
+<li>The <strong>Area Error</strong> value is too high, causing variation in triangle sizes.</li>
+<li>UV charts are disproportionate to the object’s geometry, causing stretched or compressed areas.</li>
+<li>The automatic UV unwrapping process fails to balance texel distribution.</li>
+</ul>
+
+<h3>Resolution</h3>
+
+<p>To minimize area distortion, do the following:</p>
+
+<ul>
+<li>Reduce the <strong>Area Error</strong> value in the UV settings.</li>
+<li>Inspect the UV layout to ensure charts are proportionally scaled.</li>
+<li>Manually adjust problematic UV charts in a 3D modeling application if necessary.</li>
+<li>Test different lightmap resolutions for optimal balance between texel density and memory usage.</li>
+<li>Re-bake the lightmap and check for improvements in resolution consistency.</li>
+</ul>
+
+<h2>Angle distortion</h2>
+
+<p>Lighting artifacts can appear due to improperly shaped UV charts, leading to skewed or stretched textures in the baked lightmap.</p>
+
+<h3>Symptoms</h3>
+
+<ul>
+<li>Warped or stretched lighting artifacts in baked lightmaps.</li>
+<li>Inconsistent shading or lighting across different areas of the same mesh.</li>
+<li>Skewed or distorted UV charts in the layout.</li>
+</ul>
+
+<p><strong>Example:</strong></p>
+
+<p>The first image has a high <strong>Angle Error</strong>, resulting in artifacts. The second image has the default <strong>Angle Error</strong> (8%). Meshes with more triangles can experience significant angle distortion.</p>
+
+<p>
+<img src="../uploads/Main/LightingGiUvs-GeneratingLightmappingUVs-2.png" alt="High angle error.">
+<img src="../uploads/Main/LightingGiUvs-GeneratingLightmappingUVs-3.jpg" alt="Default angle error (8%).">
+</p>
+
+<h3>Cause</h3>
+
+<p>Angle distortion occurs when the automatic UV unwrapping process fails to maintain correct angles between triangles. This can happen when:</p>
+
+<ul>
+<li>The <strong>Angle Error</strong> value, in the <strong>Mesh Import</strong> and <strong>Generate Lightmap UVs</strong> settings, is too high, causing excessive distortion in UV charts.</li>
+<li>The lightmap UV generation prioritizes minimizing seams over preserving accurate angles.</li>
+<li>The mesh has complex geometry, making it difficult to create an ideal UV layout.</li>
+</ul>
+
+<h3>Resolution</h3>
+
+<p>To reduce angle distortion, do the following:</p>
+
+<ul>
+<li>Lower the <strong>Angle Error</strong> value in the UV settings.</li>
+<li>Check the UV charts to ensure they accurately represent the mesh geometry.</li>
+<li>Manually adjust the UV layout in a 3D modeling tool if necessary.</li>
+<li>Re-bake the lightmap and inspect for improvements in lighting accuracy.</li>
+</ul>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="LightingGiUvs-GeneratingLightmappingUVs.html">Generate lightmap UVs</a></li>
+<li><a href="GIVis.html">Debug Draw Modes for lighting reference</a></li>
+<li><a href="Lightmaps-TechnicalInformation.html">Lightmap Data Format</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="troubleshooting-lightmapping-artifacts.html"></a></span><div class="tip">Troubleshooting lightmapping artifacts</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="troubleshooting-lightmapping-leaking.html"></a></span><div class="tip">Troubleshooting light leaking</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

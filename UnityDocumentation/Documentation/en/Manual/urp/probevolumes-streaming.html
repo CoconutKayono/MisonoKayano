@@ -1,0 +1,209 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Optimize loading Adaptive Probe Volume data</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<meta property="relative-path-to-manual" content="../">
+<meta property="version-switcher-versions-with-this-page" content="Versions with this page:">
+<meta property="version-switcher-versions-without-this-page" content="Versions without this page:">
+<meta property="version-switcher-supported" content="Supported">
+<meta property="version-switcher-legacy" content="Legacy">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/Manual/urp/probevolumes-streaming.html">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../../StaticFilesManual/js/jquery.js?ts=20260626"></script><script type="text/javascript" src="../../StaticFilesManual/js/core.js?ts=20260626"></script><script type="text/javascript" src="../../StaticFilesManual/js/image-comp.js?ts=20260626"></script><script type="text/javascript" src="../docdata/toc.js?ts=20260626"></script><script type="text/javascript" src="../docdata/global_toc.js?ts=20260626"></script><link rel="stylesheet" type="text/css" href="../../StaticFilesManual/css/core.css?ts=20260626">
+<link rel="stylesheet" type="text/css" href="../../StaticFilesManual/css/icons.css?ts=20260626">
+<link rel="stylesheet" href="../../StaticFilesManual/css/prism.css">
+<script src="../../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="../30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../index.html" class="selected">Manual</a></li>
+<li><a href="../../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/urp/probevolumes-streaming.html">English</a></li>
+<li><a href="/cn/current/Manual/urp/probevolumes-streaming.html">中文</a></li>
+<li><a href="/ja/current/Manual/urp/probevolumes-streaming.html">日本語</a></li>
+<li><a href="/kr/current/Manual/urp/probevolumes-streaming.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: Unity 6.7 Beta</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/urp/probevolumes-streaming.html">English</a></li>
+<li><a href="/cn/current/Manual/urp/probevolumes-streaming.html">中文</a></li>
+<li><a href="/ja/current/Manual/urp/probevolumes-streaming.html">日本語</a></li>
+<li><a href="/kr/current/Manual/urp/probevolumes-streaming.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="../LightingOverview.html">Lighting</a></li>
+<li><a href="../urp/lighting-landing.html">Lighting in URP</a></li>
+<li><a href="../urp/probevolumes.html">Adaptive Probe Volumes (APV) in URP</a></li>
+<li>Optimize loading Adaptive Probe Volume data</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="../urp/probevolumes-skyocclusion.html"></a></span><div class="tip">Update light from the sky at runtime with sky occlusion</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="../urp/probevolumes-fixissues.html"></a></span><div class="tip">Troubleshooting Adaptive Probe Volumes</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Optimize loading Adaptive Probe Volume data</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>To optimize loading Adaptive Probe Volume (APV) data at runtime, do either of the following:</p>
+
+<ul>
+<li>Stream APV data.</li>
+<li>Load APV data from AssetBundles or Addressables.</li>
+</ul>
+
+<p>You can’t use both methods at the same time.</p>
+
+<h2>Stream APV data</h2>
+
+<p>You can enable Adaptive Probe Volume streaming to enable Adaptive Probe Volume lighting in very large worlds. Using streaming means you can bake Adaptive Probe Volume data larger than available CPU or GPU memory, and load it at runtime when it’s needed. At runtime, as your <span class="tooltip" tabindex="0" ><strong>camera</strong><span class="tooltiptext">A component which creates an image of a particular viewpoint in your scene. The output is either drawn to the screen or captured as a texture. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CamerasOverview.html" href="../CamerasOverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#Camera" aria-label="Go to glossary anchor for Camera">Glossary</a></span></span></span> moves, the Universal <span class="tooltip" tabindex="0" ><strong>Render Pipeline</strong><span class="tooltiptext">A series of operations that take the contents of a Scene, and displays them on a screen. Unity lets you choose from pre-built render pipelines, or write your own. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about render-pipelines.html" href="../render-pipelines.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#renderpipeline" aria-label="Go to glossary anchor for renderpipeline">Glossary</a></span></span></span> (URP) loads only Adaptive Probe Volume data from cells within the camera’s view frustum.</p>
+
+<p>Unity uses Streaming Assets to store the lighting data. For more information about where Unity stores the files, refer to <a href="../StreamingAssets.html">Streaming Assets</a>.</p>
+
+<p>To enable streaming, follow these steps:</p>
+
+<ol>
+<li>From the main menu, select <strong>Edit</strong> &gt; <strong>Project Settings</strong> &gt; <strong>Quality</strong>.</li>
+<li>Select a Quality Level.</li>
+<li>Double-click the <strong>Render Pipeline Asset</strong> to open it in the <span class="tooltip" tabindex="0" ><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheInspector.html" href="../UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span>.</li>
+<li>Expand <strong>Lighting</strong>.</li>
+</ol>
+
+<p>You can now enable two types of streaming:</p>
+
+<ul>
+<li>Enable <strong>Enable GPU Streaming</strong> to stream from CPU memory to GPU memory.</li>
+<li>Enable <strong>Enable Disk Streaming</strong> to stream from disk to CPU memory. You must enable <strong>Enable GPU Streaming</strong> first.</li>
+</ul>
+
+<p>You can configure streaming settings in the same window. Refer to <a href="universalrp-asset.html">URP Asset</a> for more information.</p>
+
+<h3>Debug streaming</h3>
+
+<p>The smallest section URP loads and uses is a cell, which is the same size as the largest <a href="probevolumes-concept.html">brick</a> in an Adaptive Probe Volume. You can influence the size of cells in an Adaptive Probe Volume by <a href="probevolumes-changedensity.html">adjusting the density of Light Probes</a>
+</p>
+
+<p>To view the cells in an Adaptive Probe Volume, or debug streaming, use the <a href="features/rendering-debugger.html">Rendering Debugger</a>.</p>
+
+<p>
+<img src="../../uploads/urp/probe-volumes/probevolumes-debug-displayprobecells.PNG" alt="The Rendering Debugger with Display Cells enabled."><br>
+</p>
+
+<h2>Load APV data from AssetBundles or Addressables</h2>
+
+<p>To load only the APV data you need at runtime, add the baked APV data to an <a href="../AssetBundlesIntro.html">AssetBundle</a> or <a href="https://docs.unity3d.com/Packages/com.unity.addressables@1.22/manual/index.html">Addressable</a>.</p>
+
+<p>Follow these steps:</p>
+
+<ol>
+<li>To store APV data in normal assets instead of Streaming Assets, go to <strong>Project Settings</strong> &gt; <strong>Graphics</strong> &gt; <strong>Pipeline Specific Settings</strong> &gt; <strong>URP</strong>, then under <strong>Adaptive Probe Volumes</strong> enable <strong>Probe Volume Disable Streaming Assets</strong>. This automatically disables <strong>Enable Disk Streaming</strong>.</li>
+<li>Bake your lighting.</li>
+<li>Add the <span class="tooltip" tabindex="0" ><strong>scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html" href="../CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span> to an AssetBundle. For more information about how to add assets to AssetBundles and load them at runtime, refer to <a href="../AssetBundles-Building.html">AssetBundle workflow</a>.</li>
+</ol>
+
+<p>Enabling <strong>Probe Volume Disable Streaming Assets</strong> may increase the amount of memory APV uses at runtime. Unity has to keep all the lighting data associated with the current Baking Set in memory, regardless of whether all scenes are loaded.</p>
+
+<h1>Additional resources</h1>
+
+<ul>
+<li><a href="probevolumes-concept.html">Understanding Adaptive Probe Volumes</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="../urp/probevolumes-skyocclusion.html"></a></span><div class="tip">Update light from the sky at runtime with sky occlusion</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="../urp/probevolumes-fixissues.html"></a></span><div class="tip">Troubleshooting Adaptive Probe Volumes</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

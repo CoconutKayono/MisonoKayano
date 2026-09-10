@@ -1,0 +1,195 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Package creation</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<meta property="relative-path-to-manual" content="">
+<meta property="version-switcher-versions-with-this-page" content="Versions with this page:">
+<meta property="version-switcher-versions-without-this-page" content="Versions without this page:">
+<meta property="version-switcher-supported" content="Supported">
+<meta property="version-switcher-legacy" content="Legacy">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/Manual/cus-pkg-lp.html">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20260626"></script><script type="text/javascript" src="docdata/toc.js?ts=20260626"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20260626"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20260626">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20260626">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/cus-pkg-lp.html">English</a></li>
+<li><a href="/cn/current/Manual/cus-pkg-lp.html">中文</a></li>
+<li><a href="/ja/current/Manual/cus-pkg-lp.html">日本語</a></li>
+<li><a href="/kr/current/Manual/cus-pkg-lp.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: Unity 6.7 Beta</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/cus-pkg-lp.html">English</a></li>
+<li><a href="/cn/current/Manual/cus-pkg-lp.html">中文</a></li>
+<li><a href="/ja/current/Manual/cus-pkg-lp.html">日本語</a></li>
+<li><a href="/kr/current/Manual/cus-pkg-lp.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="PackagesList.html">Packages and package management</a></li>
+<li>Package creation</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="VRFeature.html"></a></span><div class="tip">VR feature set</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="cus-pkg-intro.html"></a></span><div class="tip">Get started with package creation</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Package creation</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Create packages that deliver Unity Editor or runtime tools to support game development workflows.</p>
+
+<p>This information focuses on creating Unity Package Manager (UPM) packages. <span class="tooltip" tabindex="0" ><strong>UPM packages</strong><span class="tooltiptext">A <strong>Package</strong> managed by the <strong>Unity Package Manager</strong>. Refer to <strong>Packages</strong>.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#UPMpackage" aria-label="Go to glossary anchor for UPMpackage">Glossary</a></span></span></span> typically include functional content, such as custom Editor windows, runtime tools, or utilities designed for use during development, rather than content-only assets like models or textures. These tools are often designed to streamline workflows for game designers, developers, or technical artists within a Unity project. </p>
+
+<p>UPM packages offer modularity, versioning, and reuse across projects. UPM packages support a wide range of content, including C# <span class="tooltip" tabindex="0" ><strong>scripts</strong><span class="tooltiptext">A piece of code that allows you to create your own Components, trigger game events, modify Component properties over time and respond to user input in any way you like. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about creating-scripts.html" href="creating-scripts.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scripts" aria-label="Go to glossary anchor for Scripts">Glossary</a></span></span></span>, managed assemblies, and built-in <span class="tooltip" tabindex="0" ><strong>plug-ins</strong><span class="tooltiptext">A set of code created outside of Unity that creates functionality in Unity. There are two kinds of plug-ins you can use in Unity: Managed plug-ins (managed .NET assemblies created with tools like Visual Studio) and Native plug-ins (platform-specific native code libraries). <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ./plug-ins.html" href="./plug-ins.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#plug-in" aria-label="Go to glossary anchor for plug-in">Glossary</a></span></span></span>. While the primary purpose is tool delivery, packages can also include supporting assets like animations, textures, <span class="tooltip" tabindex="0" ><strong>audio clips</strong><span class="tooltiptext">A container for audio data in Unity. Unity supports mono, stereo and multichannel audio assets (up to eight channels). Unity can import .aif, .wav, .mp3, and .ogg audio file format, and .xm, .mod, .it, and .s3m tracker module formats. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-AudioClip.html" href="class-AudioClip.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#AudioClip" aria-label="Go to glossary anchor for AudioClip">Glossary</a></span></span></span>, or models when necessary. </p>
+
+<p>For more information about the differences between UPM packages and <span class="tooltip" tabindex="0" ><strong>asset packages</strong><span class="tooltiptext">A collection of files and data from Unity projects, or elements of projects, which are compressed and stored in one file, similar to Zip files, with the <code>.unitypackage</code> extension. Asset packages are a handy way of sharing and re-using Unity projects and collections of assets. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about AssetPackages.html" href="AssetPackages.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#assetpackage" aria-label="Go to glossary anchor for assetpackage">Glossary</a></span></span></span> (<code>.unitypackage</code> format), refer to <a href="upm-package-types.html">package types</a>. If you want to create an asset package rather than a UPM package, refer to <a href="AssetPackagesCreate.html">create and export asset packages</a>.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Topic</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><a href="cus-pkg-intro.html">Get started with package creation</a></td>
+	<td style="text-align:left;">Get a high-level overview of creating UPM packages.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="cus-location.html">Comparison of package creation locations</a></td>
+	<td style="text-align:left;">Choose whether to create your package inside or outside of the project’s <code>Packages</code> folder.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="cus-pkg-development.html">Package development workflow</a></td>
+	<td style="text-align:left;">Develop your package by supplying the required and recommended components.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="cus-export.html">Export and sign your UPM package</a></td>
+	<td style="text-align:left;">Export and sign your package so you can share it with others.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="cus-share.html">Share your package</a></td>
+	<td style="text-align:left;">Learn the different ways you can share your UPM package when it’s ready for consumption.</td>
+</tr>
+</tbody>
+</table>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="upm-package-types.html">Package types</a></li>
+<li><a href="AssetPackagesCreate.html">Create and export asset packages</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="VRFeature.html"></a></span><div class="tip">VR feature set</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="cus-pkg-intro.html"></a></span><div class="tip">Get started with package creation</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

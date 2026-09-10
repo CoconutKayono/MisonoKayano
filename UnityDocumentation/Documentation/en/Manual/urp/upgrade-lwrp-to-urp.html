@@ -1,0 +1,281 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Upgrade from the Lightweight Render Pipeline to the Universal Render Pipeline</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<meta property="relative-path-to-manual" content="../">
+<meta property="version-switcher-versions-with-this-page" content="Versions with this page:">
+<meta property="version-switcher-versions-without-this-page" content="Versions without this page:">
+<meta property="version-switcher-supported" content="Supported">
+<meta property="version-switcher-legacy" content="Legacy">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/Manual/urp/upgrade-lwrp-to-urp.html">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../../StaticFilesManual/js/jquery.js?ts=20260626"></script><script type="text/javascript" src="../../StaticFilesManual/js/core.js?ts=20260626"></script><script type="text/javascript" src="../../StaticFilesManual/js/image-comp.js?ts=20260626"></script><script type="text/javascript" src="../docdata/toc.js?ts=20260626"></script><script type="text/javascript" src="../docdata/global_toc.js?ts=20260626"></script><link rel="stylesheet" type="text/css" href="../../StaticFilesManual/css/core.css?ts=20260626">
+<link rel="stylesheet" type="text/css" href="../../StaticFilesManual/css/icons.css?ts=20260626">
+<link rel="stylesheet" href="../../StaticFilesManual/css/prism.css">
+<script src="../../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="../30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../index.html" class="selected">Manual</a></li>
+<li><a href="../../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/urp/upgrade-lwrp-to-urp.html">English</a></li>
+<li><a href="/cn/current/Manual/urp/upgrade-lwrp-to-urp.html">中文</a></li>
+<li><a href="/ja/current/Manual/urp/upgrade-lwrp-to-urp.html">日本語</a></li>
+<li><a href="/kr/current/Manual/urp/upgrade-lwrp-to-urp.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: Unity 6.7 Beta</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/urp/upgrade-lwrp-to-urp.html">English</a></li>
+<li><a href="/cn/current/Manual/urp/upgrade-lwrp-to-urp.html">中文</a></li>
+<li><a href="/ja/current/Manual/urp/upgrade-lwrp-to-urp.html">日本語</a></li>
+<li><a href="/kr/current/Manual/urp/upgrade-lwrp-to-urp.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="../render-pipelines.html">Render pipelines</a></li>
+<li><a href="../universal-render-pipeline.html">Using the Universal Render Pipeline</a></li>
+<li><a href="../urp/introduction-landing.html">Get started with URP</a></li>
+<li><a href="../urp/InstallingAndConfiguringURP.html">Installing and upgrading URP</a></li>
+<li><a href="../urp/upgrade-guides.html">Upgrade URP</a></li>
+<li>Upgrade from the Lightweight Render Pipeline to the Universal Render Pipeline</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="../urp/upgrade-guide-7-2-0.html"></a></span><div class="tip">Upgrade to version 7.2.0 of the Universal Render Pipeline</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="../urp/known-issues.html"></a></span><div class="tip">Known issues in URP</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Upgrade from the Lightweight Render Pipeline to the Universal Render Pipeline</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>The Universal <span class="tooltip" tabindex="0" ><strong>Render Pipeline</strong><span class="tooltiptext">A series of operations that take the contents of a Scene, and displays them on a screen. Unity lets you choose from pre-built render pipelines, or write your own. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about render-pipelines.html" href="../render-pipelines.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#renderpipeline" aria-label="Go to glossary anchor for renderpipeline">Glossary</a></span></span></span> (URP) replaces the Lightweight Render Pipeline (LWRP) in Unity 2019.3. If your Project uses LWRP, you must upgrade it to use URP to use Unity 2019.3.</p>
+
+<p>Unity upgrades some things automatically, and you must make some manual changes. Follow the steps in this guide to transition from using LWRP to using URP.</p>
+
+<h2>Before upgrading</h2>
+
+<h3>Update Assembly Definition Assets</h3>
+
+<p>URP uses GUIDs instead of Assembly Definition string names. If you are using Assembly Definition Assets (ASMDefs) in your Project, you should ensure that <strong>Use GUIDs</strong> is enabled on each of them.</p>
+
+<p>Unity upgrades any existing string references to LWRP automatically as part of the upgrade process, but it is best practice to use GUIDs on your Assembly Definition Assets for future proofing.</p>
+
+<p>For each Assembly Definition Asset in your Project:</p>
+
+<ul>
+<li>Select the Assembly Defintion Asset</li>
+<li>In the <span class="tooltip" tabindex="0" ><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheInspector.html" href="../UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span>, enable <strong>Use GUIDs</strong>
+</li>
+</ul>
+
+<p>For information on using Assembly Definition files, refer to the <a href="https://docs.unity3d.com/Manual/ScriptCompilationAssemblyDefinitionFiles.html">documentation on Assembly Definitions</a>.</p>
+
+<h2>Upgrade process</h2>
+
+<h3>Upgrading your version of LWRP</h3>
+
+<p>To start the upgrade process:</p>
+
+<ul>
+<li>Open the Project you want to upgrade in Unity 2019.3</li>
+</ul>
+
+<p>Unity automatically updates LWRP to a 7.x.x version, and pulls in the URP package as a dependency of the updated LWRP package. The Unity script updater automatically upgrades your script files. When the script updater has finished, all of your <span class="tooltip" tabindex="0" ><strong>scripts</strong><span class="tooltiptext">A piece of code that allows you to create your own Components, trigger game events, modify Component properties over time and respond to user input in any way you like. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about creating-scripts.html" href="../creating-scripts.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#Scripts" aria-label="Go to glossary anchor for Scripts">Glossary</a></span></span></span> should compile properly.</p>
+
+<h3>Upgrading the Shader search path</h3>
+
+<p>If your LWRP Project uses <code>Shader.Find</code> to search for LWRP <span class="tooltip" tabindex="0" ><strong>Shaders</strong><span class="tooltiptext">A program that runs on the GPU. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Shaders.html" href="../Shaders.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#shader" aria-label="Go to glossary anchor for shader">Glossary</a></span></span></span>, you need to change the search path.</p>
+
+<p>To do this:</p>
+
+<ul>
+<li>Change all instances of <code>Shader.Find</code> that search for <code>Lightweight</code> to search for <code>Universal</code>.</li>
+</ul>
+
+<h3>Upgrading custom shaders</h3>
+
+<h4>Upgrading tags</h4>
+
+<p>URP uses its own scripting tags. If your Shaders use the LWRP <code>LightMode</code> tags, they will work in your URP Project, because Unity uses an internal alias for this. However, you should change the tags manually to future-proof your Project.</p>
+
+<p>To do this:</p>
+
+<ul>
+<li>Change all instances of <code>Lightweight2D</code> tag to <code>Universal2D</code>.</li>
+<li>Change all instances of <code>LightweightForward</code> tag to <code>UniversalForward</code>.</li>
+</ul>
+
+<p>In addition to this, URP also uses a different RenderPipeline tag to LWRP. If your own Shaders include this tag, you need to change it manually for the Shaders to work:</p>
+
+<ul>
+<li>Change all instances of <code>LightweightPipeline</code> tag to <code>UniversalPipeline</code>.</li>
+</ul>
+
+<h4>Upgrading Shader names</h4>
+
+<p>The following Shader names have been changed for URP, so you need to manually update your Shader files:</p>
+
+<ul>
+<li>Change all instances of <code>UsePass 'Lightweight Render Pipeline/...'</code> to <code>UsePass 'Universal Render Pipeline/...'</code>
+</li>
+</ul>
+
+<h4>Upgrading include paths</h4>
+
+<p>URP uses different include paths to LWRP. LWRP 7.x.x contains forwarding includes, so your custom Shaders will upgrade from LWRP to URP. However, URP 7.x.x does not contain forwarding includes, so you must then manually update the include paths.</p>
+
+<ul>
+<li>Change all instances of <code>#include 'Packages/com.unity.render-pipelines.lightweight/xxx'</code> to <code>#include 'Packages/com.unity.render-pipelines.universal/xxx'</code>
+</li>
+</ul>
+
+<h3>Upgrading namespaces</h3>
+
+<p>In the .cs files in your Project, find and replace references to the LWRP namespace with the new Universal namespace.</p>
+
+<ul>
+<li>Change all instances of <code>UnityEditor.Rendering.LWRP.xxx</code> to now <code>UnityEditor.Rendering.Universal.xxx</code>
+</li>
+</ul>
+
+<h2>Upgrading post-processing effects</h2>
+
+<p>URP version 7.x supports both <a href="integration-with-post-processing.html">Post Processing Stack v2 (PPv2) and its own integrated post-processing solution</a>. If you have the Post Processing Version 2 package installed in your Project and you want to use URP’s integrated <span class="tooltip" tabindex="0" ><strong>post-processing</strong><span class="tooltiptext">A process that improves product visuals by applying filters and effects before the image appears on screen. You can use post-processing effects to simulate physical camera and film properties, for example Bloom and Depth of Field. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about PostProcessingOverview.html" href="../PostProcessingOverview.html">More info</a> <span class="search-words">post processing, postprocessing, postprocess</span><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#post-processing" aria-label="Go to glossary anchor for post-processing">Glossary</a></span></span></span> solution, you need to delete the Post Processing Stack v2 package before you install URP into your Project. When you have installed URP, you can then recreate your post-processing effects.</p>
+
+<p>Upgrading post-processing effects from LWRP to URP is a manual process. You must manually recreate each Post-Processing Profile in your Project, using URP’s post-processing implementation.</p>
+
+<p>URP’s integrated post-processing solution does not currently support custom post-processing effects. If your Project uses custom post-processing effects, these cannot currently be recreated in URP’s integrated post-processing solution. Custom post-processing effects will be supported in a forthcoming release of URP.</p>
+
+<h2>Installing URP and removing LWRP</h2>
+
+<p>As part of the automatic upgrade process, Unity installed URP as a dependency of LWRP. You must now install URP as a dependency of the Project itself, so that when you remove LWRP, Unity does not automatically remove URP.</p>
+
+<p>To install URP as a dependency of the Project:</p>
+
+<ul>
+<li>Go to menu: <strong>Window</strong> &gt; <strong>Package Management</strong> &gt; <strong>Package Manager</strong>.</li>
+<li>Locate the <strong>Universal RP</strong> package, and note the version number to the right of its name. This is the version of URP that has been added to your Project.</li>
+<li>Close Unity.</li>
+<li>In your file explorer, open the root folder of your Unity Project.</li>
+<li>Open the Packages folder, and locate <em>manifest.json</em>. This is your Project’s <span class="tooltip" tabindex="0" ><strong>Project Manifest</strong><span class="tooltiptext">Each Unity project has a <em>project manifest</em>, which acts as an entry point for the Package Manager. This file must be available in the <code>&lt;project&gt;/Packages</code> directory. The Package Manager uses it to configure many things, including a list of dependencies for that project, as well as any package repository to query for packages. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about upm-manifestPrj.html" href="../upm-manifestPrj.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#projectmanifest" aria-label="Go to glossary anchor for projectmanifest">Glossary</a></span></span></span> file.</li>
+<li>Open the Project Manifest file using a text editor.</li>
+<li>At the top of the dependencies section, add the following entry:</li>
+</ul>
+
+<pre><code class="lang-json">&quot;com.unity.render-pipelines.universal&quot;: &quot;[Version number you noted earlier]&quot;
+</code></pre>
+
+<p>So, for example, if the version of URP was 7.1.1, your dependencies section would look like this:</p>
+
+<pre><code class="lang-json">&quot;dependencies&quot;: {
+    &quot;com.unity.render-pipelines.universal&quot;: &quot;7.1.1&quot;,
+    ...
+}
+</code></pre>
+
+<p>This marks the version of URP that you have installed as a dependency of the Project. You can now safely remove LWRP.</p>
+
+<ul>
+<li>Open your Project in Unity.</li>
+<li>Open the Package Manager Window.</li>
+<li>Locate <strong>Lightweight RP</strong> and select it.</li>
+<li>In the bottom right of the Package Manager window, click Remove. Unity completely removes the LWRP package from the Project.</li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="../urp/upgrade-guide-7-2-0.html"></a></span><div class="tip">Upgrade to version 7.2.0 of the Universal Render Pipeline</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="../urp/known-issues.html"></a></span><div class="tip">Known issues in URP</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

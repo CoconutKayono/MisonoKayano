@@ -1,0 +1,255 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: API compatibility levels for .NET</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<meta property="relative-path-to-manual" content="">
+<meta property="version-switcher-versions-with-this-page" content="Versions with this page:">
+<meta property="version-switcher-versions-without-this-page" content="Versions without this page:">
+<meta property="version-switcher-supported" content="Supported">
+<meta property="version-switcher-legacy" content="Legacy">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/Manual/dotnet-profile-support.html">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20260626"></script><script type="text/javascript" src="docdata/toc.js?ts=20260626"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20260626"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20260626">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20260626">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/dotnet-profile-support.html">English</a></li>
+<li><a href="/cn/current/Manual/dotnet-profile-support.html">中文</a></li>
+<li><a href="/ja/current/Manual/dotnet-profile-support.html">日本語</a></li>
+<li><a href="/kr/current/Manual/dotnet-profile-support.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: Unity 6.7 Beta</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/dotnet-profile-support.html">English</a></li>
+<li><a href="/cn/current/Manual/dotnet-profile-support.html">中文</a></li>
+<li><a href="/ja/current/Manual/dotnet-profile-support.html">日本語</a></li>
+<li><a href="/kr/current/Manual/dotnet-profile-support.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="scripting.html">Programming in Unity</a></li>
+<li><a href="environment-and-tools.html">Environment and tools</a></li>
+<li><a href="overview-of-dot-net-in-unity.html">Unity .NET features</a></li>
+<li>API compatibility levels for .NET</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="overview-of-dot-net-in-unity.html"></a></span><div class="tip">Unity .NET features</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="dotnet-incompatible-api.html"></a></span><div class="tip">Incompatible .NET API reference</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>API compatibility levels for .NET</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Unity supports two different .NET API compatibility levels that your project code can compile against. The compatibility level you select determines which .NET class libraries are available to your C# code. The available levels are:</p>
+
+<ul>
+<li>
+<strong>.NET Standard 2.1</strong>: <a href="https://learn.microsoft.com/en-us/dotnet/standard/net-standard?tabs=net-standard-1-0">.NET Standard</a> 2.1, as published by the .NET Foundation. This is the default API compatibility Level.</li>
+<li>
+<strong>.NET Framework</strong>: .NET Framework 4.8, as published by Microsoft, plus additional APIs from .NET Standard 2.1.</li>
+</ul>
+
+<p>To change the .NET profile:</p>
+
+<ul>
+<li>In the Unity Editor, go to <strong>Edit</strong> &gt; <strong>Project Settings</strong>. In the <strong>Player</strong> tab, navigate to the <strong>Other Settings</strong> tab and in the <strong>Configuration</strong> section, set <strong>Api Compatibility Level</strong> to the desired setting.</li>
+<li>From code, use <a href="../ScriptReference/PlayerSettings.SetApiCompatibilityLevel.html"><code>PlayerSettings.SetAPICompatibilityLevel</code></a>.</li>
+</ul>
+
+<h2>Choosing an API compatibility level</h2>
+
+<p>In general, prefer .NET Standard over .NET Framework for all new projects for the following reasons:</p>
+
+<ul>
+<li>.NET Standard is a smaller API surface and so has a smaller implementation. This reduces the size of your final executable file.</li>
+<li>.NET Standard has better cross-platform support, so your code is more likely to work across all platforms. Although some platforms don’t fully support the NET Standard, the .NET Framework option is less suitable for cross-platform compatibility. The .NET Framework profile includes all APIs in the .NET Standard profile plus additional APIs, some of which might work on few or no platforms.</li>
+<li>All .NET runtimes support .NET Standard, so your code works across more runtime environments (for example, .NET Framework, .NET Core, Xamarin, Unity) when you use .NET Standard.</li>
+<li>.NET Standard moves more errors to compile time. A number of APIs in .NET Framework are available at compile time, but have implementations on some platforms that throw an exception at runtime.</li>
+</ul>
+
+<p>The .NET Framework API compatibility level can be useful if, for example, you need to provide support for an older existing application.</p>
+
+<h2>Managed plug-ins</h2>
+
+<p><span class="tooltip" tabindex="0" ><a href="plug-ins-managed.html">Managed plug-ins</a><span class="tooltiptext">A managed .NET assembly that is created with tools like Visual Studio for use in Unity. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ./plug-ins.html" href="./plug-ins.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#managedplug-in" aria-label="Go to glossary anchor for managedplug-in">Glossary</a></span></span></span> are .NET assemblies that are managed outside of Unity and compiled into dynamically linked libraries (DLLs). You can use managed <span class="tooltip" tabindex="0" ><strong>plug-ins</strong><span class="tooltiptext">A set of code created outside of Unity that creates functionality in Unity. There are two kinds of plug-ins you can use in Unity: Managed plug-ins (managed .NET assemblies created with tools like Visual Studio) and Native plug-ins (platform-specific native code libraries). <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ./plug-ins.html" href="./plug-ins.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#plug-in" aria-label="Go to glossary anchor for plug-in">Glossary</a></span></span></span> with either of the available API compatibility levels. However, the level of support varies depending on the API level the managed plug-ins were compiled against. Because the .NET Framework API surface is larger than .NET Standard, if your project targets .NET Standard then it might not support all plug-ins compiled against .NET Framework. The following table indicates the configurations that Unity supports:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Managed plug-in compilation target</strong></th>
+	<th style="text-align:left;"><strong>.NET Standard 2.1</strong></th>
+	<th style="text-align:left;"><strong>.NET Framework 4.x</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>.NET Standard (any version)</strong></td>
+	<td style="text-align:left;">Supported</td>
+	<td style="text-align:left;">Supported</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>.NET Framework (any version)</strong></td>
+	<td style="text-align:left;">Limited support</td>
+	<td style="text-align:left;">Supported</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>.NET Core (any version)</strong></td>
+	<td style="text-align:left;">Not Supported</td>
+	<td style="text-align:left;">Not Supported</td>
+</tr>
+</tbody>
+</table>
+
+<h3>Third-party .NET libraries</h3>
+
+<p>Only use third-party .NET libraries that have been extensively tested on a wide range of Unity configurations and platforms.</p>
+
+<p>The <span class="tooltip" tabindex="0" ><a href="scripting-backends-mono.html">Mono</a><span class="tooltiptext">A scripting backend used in Unity. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ./scripting-backends-il2cpp.html" href="./scripting-backends-il2cpp.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Mono" aria-label="Go to glossary anchor for Mono">Glossary</a></span></span></span> scripting backend’s just-in-time (JIT) compilation enables dynamic C#/.NET Intermediate Language (IL) code generation during the runtime of your application. The <span class="tooltip" tabindex="0" ><a href="scripting-backends-il2cpp.html">IL2CPP</a><span class="tooltiptext">A Unity-developed scripting back-end which you can use as an alternative to Mono when building projects for some platforms. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ./scripting-backends-il2cpp.html" href="./scripting-backends-il2cpp.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#IL2CPP" aria-label="Go to glossary anchor for IL2CPP">Glossary</a></span></span></span> scripting backend’s ahead-of-time (AOT) compilation doesn’t support dynamic code generation.</p>
+
+<p>This is important to consider when you use third-party libraries, because they might have different code paths for JIT and <span class="tooltip" tabindex="0" ><strong>AOT compilation</strong><span class="tooltiptext">Ahead of Time (AOT) compilation is an optimization method used by all platforms except iOS for optimizing the size of the built player. . <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about iphone-playerSizeOptimization.html" href="iphone-playerSizeOptimization.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#AOTCompilation" aria-label="Go to glossary anchor for AOTCompilation">Glossary</a></span></span></span>, or they might use code paths that rely on dynamically generated code. For more information on how to generate code at runtime, refer to Microsoft’s <a href="https://docs.microsoft.com/en-us/dotnet/api/system.reflection.emit.modulebuilder?view=netcore-3.1">ModuleBuilder</a> documentation.</p>
+
+<p>The performance characteristics of JIT and AOT code paths in third-party libraries might be significantly different. AOT generally reduces startup times and is suited to larger applications for this reason but increases the binary file size to accommodate the compiled code. AOT also takes longer to build during development.</p>
+
+<p>JIT adjusts at runtime based on the platform it’s running on, which can improve runtime performance at the cost of a potentially longer application startup time. As such, it’s recommended to profile your application in both the Editor, and on your target platform. For more information, refer to <a href="Profiler.html">Profiler overview</a>.</p>
+
+<p>When you review a third-party library, consider the following areas:</p>
+
+<ul>
+<li>Compatibility: Third-party libraries might not be compatible with some Unity platforms and scripting backends.</li>
+<li>Performance: Third-party libraries might have very different performance characteristics in Unity compared to other .NET runtimes.</li>
+<li>AOT binary size: Third-party libraries might increase AOT binary size significantly because of the number of dependencies the library uses.</li>
+</ul>
+
+<h2>.NET System libraries</h2>
+
+<p>Unity supports many platforms and might use different <span class="tooltip" tabindex="0" ><a href="scripting-backends.html">scripting backends</a><span class="tooltiptext">A framework that powers scripting in Unity. Unity supports three different scripting backends depending on target platform: Mono, .NET and IL2CPP. Universal Windows Platform, however, supports only two: .NET and IL2CPP. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about scripting-backends.html" href="scripting-backends.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#ScriptingBackend" aria-label="Go to glossary anchor for ScriptingBackend">Glossary</a></span></span></span> depending on the platform. The libraries in the .NET <a href="https://learn.microsoft.com/en-us/dotnet/api/system?view=net-9.0"><code>System</code></a> namespace require platform-specific implementations to work correctly in some cases. While Unity tries to support as much of the .NET ecosystem as possible, there are some parts of the .NET <code>System</code> libraries that Unity explicitly doesn’t support:</p>
+
+<ul>
+<li>Unity makes no performance or allocation guarantees for the .NET <code>System</code> libraries across Unity versions.</li>
+<li>Generally, Unity doesn’t fix any performance regressions in the .NET <code>System</code> libraries.</li>
+<li>Unity doesn’t support the <a href="https://learn.microsoft.com/en-us/dotnet/api/system.drawing?view=net-8.0"><code>System.Drawing</code></a> library and it isn’t guaranteed to work on all platforms.</li>
+</ul>
+
+<p>
+<strong>Tip</strong>: Profile the usage of your .NET System libraries on all target platforms because their performance characteristics might vary depending on the scripting backends, .NET versions, and API compatibility level you use.</p>
+
+<h2>Transport Layer Security (TLS) 1.2</h2>
+
+<p>The <a href="../ScriptReference/Networking.UnityWebRequest.html"><code>UnityWebRequest</code></a> API and all .NET Framework Web APIs fully support TLS 1.2 on all platforms except Web. The Web platform uses the security settings from the browser the application runs in and the web server instead. The platform-specific local certificate store automatically verifies TLS certificates if available. If access to the certificate store isn’t possible, Unity uses an embedded root certificate store.</p>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="dotnet-profile-assemblies.html">Add class library references to .NET Framework</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="overview-of-dot-net-in-unity.html"></a></span><div class="tip">Unity .NET features</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="dotnet-incompatible-api.html"></a></span><div class="tip">Incompatible .NET API reference</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

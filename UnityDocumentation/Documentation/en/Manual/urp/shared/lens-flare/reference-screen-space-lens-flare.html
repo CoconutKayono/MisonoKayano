@@ -1,0 +1,314 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Screen Space Lens Flare override reference for URP</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<meta property="relative-path-to-manual" content="../../../">
+<meta property="version-switcher-versions-with-this-page" content="Versions with this page:">
+<meta property="version-switcher-versions-without-this-page" content="Versions without this page:">
+<meta property="version-switcher-supported" content="Supported">
+<meta property="version-switcher-legacy" content="Legacy">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../../../../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../../../../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../../../../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../../../../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../../../../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../../../../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../../../../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/Manual/urp/shared/lens-flare/reference-screen-space-lens-flare.html">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../../../../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../../../../StaticFilesManual/js/jquery.js?ts=20260626"></script><script type="text/javascript" src="../../../../StaticFilesManual/js/core.js?ts=20260626"></script><script type="text/javascript" src="../../../../StaticFilesManual/js/image-comp.js?ts=20260626"></script><script type="text/javascript" src="../../../docdata/toc.js?ts=20260626"></script><script type="text/javascript" src="../../../docdata/global_toc.js?ts=20260626"></script><link rel="stylesheet" type="text/css" href="../../../../StaticFilesManual/css/core.css?ts=20260626">
+<link rel="stylesheet" type="text/css" href="../../../../StaticFilesManual/css/icons.css?ts=20260626">
+<link rel="stylesheet" href="../../../../StaticFilesManual/css/prism.css">
+<script src="../../../../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../../../../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../../../../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../../../../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="../../../30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../../../index.html" class="selected">Manual</a></li>
+<li><a href="../../../../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/urp/shared/lens-flare/reference-screen-space-lens-flare.html">English</a></li>
+<li><a href="/cn/current/Manual/urp/shared/lens-flare/reference-screen-space-lens-flare.html">中文</a></li>
+<li><a href="/ja/current/Manual/urp/shared/lens-flare/reference-screen-space-lens-flare.html">日本語</a></li>
+<li><a href="/kr/current/Manual/urp/shared/lens-flare/reference-screen-space-lens-flare.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: Unity 6.7 Beta</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/urp/shared/lens-flare/reference-screen-space-lens-flare.html">English</a></li>
+<li><a href="/cn/current/Manual/urp/shared/lens-flare/reference-screen-space-lens-flare.html">中文</a></li>
+<li><a href="/ja/current/Manual/urp/shared/lens-flare/reference-screen-space-lens-flare.html">日本語</a></li>
+<li><a href="/kr/current/Manual/urp/shared/lens-flare/reference-screen-space-lens-flare.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="../../../visual-effects.html">Visual effects</a></li>
+<li><a href="../../../visual-effects-lens-flares.html">Lens flares</a></li>
+<li><a href="../../../urp/shared/lens-flare/lens-flare.html">Lens flares in URP</a></li>
+<li>Screen Space Lens Flare override reference for URP</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="../../../urp/shared/lens-flare/lens-flare-asset.html"></a></span><div class="tip">Lens Flare (SRP) Data Asset in URP</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="../../../lens-flare-birp.html"></a></span><div class="tip">Lens flares in the Built-In Render Pipeline</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Screen Space Lens Flare override reference for URP</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Refer to <a href="post-processing-screen-space-lens-flare.html">Add screen space lens flares</a> for more information.</p>
+
+<h2>Properties</h2>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Property</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Intensity</strong></td>
+	<td style="text-align:left;">Set the strength of all the types of <span class="tooltip" tabindex="0" ><strong>lens flares</strong><span class="tooltiptext">A component that simulates the effect of lights refracting inside a camera lens. Use a Lens Flare to represent very bright lights or add atmosphere to your scene. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-LensFlare.html" href="../../../class-LensFlare.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../../../Glossary.html#LensFlare" aria-label="Go to glossary anchor for LensFlare">Glossary</a></span></span></span>. If the value is 0, URP doesn’t calculate or render any lens flares. The default is 0.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Tint Color</strong></td>
+	<td style="text-align:left;">Set the color URP uses to tint all the types of lens flares. The default is white.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Bloom Mip Bias</strong></td>
+	<td style="text-align:left;">Set the mipmap level URP uses to sample the Bloom pyramid and create the lens flares. The higher the mipmap level, the smaller and more pixelated the sample source, and the blurrier the result. The range is 0 through 5. 0 is the full-resolution mipmap level. The default is 1. Refer to <a href="https://docs.unity3d.com/2023.1/Documentation/Manual/texture-mipmaps-introduction.html">Mipmaps introduction</a> for more information. This property only appears if you open the <strong>More</strong> (⋮) menu and select <strong>Advanced Properties</strong>.</td>
+</tr>
+</tbody>
+</table>
+
+<h3>Flares</h3>
+
+<p>Use the <strong>Flares</strong> settings to control regular flares, reversed flares and warped flares.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Property</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Regular Multiplier</strong></td>
+	<td style="text-align:left;">Set the strength of regular flares. If the value is 0, URP doesn’t calculate or render regular flares. The default is 1.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Reversed Multiplier</strong></td>
+	<td style="text-align:left;">Set the strength of reversed flares. If the value is 0, URP doesn’t calculate or render reversed flares. The default is 1.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Warped Multipler</strong></td>
+	<td style="text-align:left;">Set the strength of warped flares. If the value is 0, URP doesn’t calculate or render warped flares. The default is 1.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">    <strong>Scale</strong>
+</td>
+	<td style="text-align:left;">Scale the width (<strong>x</strong>) and height (<strong>y</strong>) of warped flares. The defaults are 1. This property only appears if you open the <strong>More</strong> (⋮) menu and select <strong>Advanced Properties</strong>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Samples</strong></td>
+	<td style="text-align:left;">Set the number of times URP repeats the regular, reversed and warped flares. The range is 1 through 3. The default is 1. Increasing <strong>Samples</strong> has a big impact on performance.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">    <strong>Sample Dimmer</strong>
+</td>
+	<td style="text-align:left;">Set the strength of the lens flares URP adds if you set <strong>Samples</strong> to 2 or 3. The higher the value, the less intense the flares. This property only appears if you open the <strong>More</strong> (⋮) menu and select <strong>Advanced Properties</strong>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Vignette Effect</strong></td>
+	<td style="text-align:left;">Set the strength of the regular, reversed and warped flares in a circular area in the center of the screen. Use <strong>Vignette Effect</strong> to avoid lens flare obscuring the <span class="tooltip" tabindex="0" ><strong>scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html" href="../../../CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../../../Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span> too much. The default value is 1, which means URP doesn’t render flares at the center of the screen.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Starting Position</strong></td>
+	<td style="text-align:left;">Control how far the position of the regular, reversed and warped flares differ from the bright area they’re sampled from, in metres. If the value is 0, URP places the lens flares at the same position as the bright areas they’re sampled from. The range is 1 through 3. The default is 1.25.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Scale</strong></td>
+	<td style="text-align:left;">Set the size of regular, reversed and warped lens flares. The range is 1 through 4. The default is 1.5.</td>
+</tr>
+</tbody>
+</table>
+
+<h3>Streaks</h3>
+
+<p>Use the <strong>Streaks</strong> settings to control flares stretched in one direction.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Property</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Multiplier</strong></td>
+	<td style="text-align:left;">Set the strength of streaks. If the value is 0, URP doesn’t calculate or render streaks. The default is 1.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">    <strong>Length</strong>
+</td>
+	<td style="text-align:left;">Set the length of streaks. The range is 0 through 1. 1 is the approximate width of the screen. The default value is 0.5.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">    <strong>Orientation</strong>
+</td>
+	<td style="text-align:left;">Set the angle of streaks, in degrees. The default value is 0, which creates horizontal streaks.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">    <strong>Threshold</strong>
+</td>
+	<td style="text-align:left;">Control how localized the streak effect is. The higher the <strong>Threshold</strong>, the more localized the effect. The range is 0 through 1. The default value is 0.25.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">    <strong>Resolution</strong>
+</td>
+	<td style="text-align:left;">Control the resolution detail of streaks. URP renders lower-resolution streaks faster. The options are <strong>Half</strong>, <strong>Quarter</strong> and <strong>Eighth</strong> full resolution. This property only appears if you open the <strong>More</strong> (⋮) menu and select <strong>Advanced Properties</strong>.</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+<img src="../../../../uploads/urp/shared/lens-flare/screenspacelensflares-threshold.gif" alt="The effect of changing Threshold from 0 (a larger flare effect) to 1 (a smaller flare effect)."><br>
+</p>
+
+<h3>Chromatic Aberration</h3>
+
+<p>Use the <strong>Chromatic Aberration</strong> settings to control chromatic aberration on all the lens flare types. Chromatic aberration splits light into its color components, which mimics the effect that a real-world <span class="tooltip" tabindex="0" ><strong>camera</strong><span class="tooltiptext">A component which creates an image of a particular viewpoint in your scene. The output is either drawn to the screen or captured as a texture. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CamerasOverview.html" href="../../../CamerasOverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../../../Glossary.html#Camera" aria-label="Go to glossary anchor for Camera">Glossary</a></span></span></span> produces when its lens fails to join all colors to the same point.</p>
+
+<p>The chromatic aberration effect is strongest at the edges of the screen, and decreases in strength towards the center of the screen.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Property</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Intensity</strong></td>
+	<td style="text-align:left;">Set the strength of the chromatic aberration effect. If the value is 0, URP doesn’t split the colors.</td>
+</tr>
+</tbody>
+</table>
+
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="../../../urp/shared/lens-flare/lens-flare-asset.html"></a></span><div class="tip">Lens Flare (SRP) Data Asset in URP</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="../../../lens-flare-birp.html"></a></span><div class="tip">Lens flares in the Built-In Render Pipeline</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

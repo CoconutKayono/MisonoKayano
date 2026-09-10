@@ -1,0 +1,323 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Convert shaders from HDRP to URP</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<meta property="relative-path-to-manual" content="../">
+<meta property="version-switcher-versions-with-this-page" content="Versions with this page:">
+<meta property="version-switcher-versions-without-this-page" content="Versions without this page:">
+<meta property="version-switcher-supported" content="Supported">
+<meta property="version-switcher-legacy" content="Legacy">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/Manual/urp/convert-hdrp-shaders-to-urp.html">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../../StaticFilesManual/js/jquery.js?ts=20260626"></script><script type="text/javascript" src="../../StaticFilesManual/js/core.js?ts=20260626"></script><script type="text/javascript" src="../../StaticFilesManual/js/image-comp.js?ts=20260626"></script><script type="text/javascript" src="../docdata/toc.js?ts=20260626"></script><script type="text/javascript" src="../docdata/global_toc.js?ts=20260626"></script><link rel="stylesheet" type="text/css" href="../../StaticFilesManual/css/core.css?ts=20260626">
+<link rel="stylesheet" type="text/css" href="../../StaticFilesManual/css/icons.css?ts=20260626">
+<link rel="stylesheet" href="../../StaticFilesManual/css/prism.css">
+<script src="../../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="../30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../index.html" class="selected">Manual</a></li>
+<li><a href="../../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/urp/convert-hdrp-shaders-to-urp.html">English</a></li>
+<li><a href="/cn/current/Manual/urp/convert-hdrp-shaders-to-urp.html">中文</a></li>
+<li><a href="/ja/current/Manual/urp/convert-hdrp-shaders-to-urp.html">日本語</a></li>
+<li><a href="/kr/current/Manual/urp/convert-hdrp-shaders-to-urp.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: Unity 6.7 Beta</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/urp/convert-hdrp-shaders-to-urp.html">English</a></li>
+<li><a href="/cn/current/Manual/urp/convert-hdrp-shaders-to-urp.html">中文</a></li>
+<li><a href="/ja/current/Manual/urp/convert-hdrp-shaders-to-urp.html">日本語</a></li>
+<li><a href="/kr/current/Manual/urp/convert-hdrp-shaders-to-urp.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="../render-pipelines.html">Render pipelines</a></li>
+<li><a href="../universal-render-pipeline.html">Using the Universal Render Pipeline</a></li>
+<li><a href="../urp/introduction-landing.html">Get started with URP</a></li>
+<li><a href="../urp/InstallingAndConfiguringURP.html">Installing and upgrading URP</a></li>
+<li><a href="../urp/migrating-from-hdrp.html">Migrating from HDRP to URP</a></li>
+<li>Convert shaders from HDRP to URP</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="../urp/hdrp-project-setup.html"></a></span><div class="tip">Set up your HDRP project to use URP</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="../urp/convert-hdrp-vfx-graph-to-urp.html"></a></span><div class="tip">Convert Visual Effect Graph from HDRP to URP</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Convert shaders from HDRP to URP</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Converting High Definition <span class="tooltip" tabindex="0" ><strong>Render Pipeline</strong><span class="tooltiptext">A series of operations that take the contents of a Scene, and displays them on a screen. Unity lets you choose from pre-built render pipelines, or write your own. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about render-pipelines.html" href="../render-pipelines.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#renderpipeline" aria-label="Go to glossary anchor for renderpipeline">Glossary</a></span></span></span> (HDRP) <span class="tooltip" tabindex="0" ><strong>shaders</strong><span class="tooltiptext">A program that runs on the GPU. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Shaders.html" href="../Shaders.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#shader" aria-label="Go to glossary anchor for shader">Glossary</a></span></span></span> for Universal Render Pipeline (URP) compatibility differs depending on your shader setup. </p>
+
+<p>HDRP and URP default shaders have different material types, features, and inputs. Converting HDRP shaders and materials to use URP might require you to do the following:</p>
+
+<ul>
+<li>Reassign shaders to URP equivalents.</li>
+<li>Remap material properties.</li>
+<li>Compromise on missing features or implement a replacement.</li>
+<li>Reauthor textures.</li>
+<li>Create new shaders.</li>
+</ul>
+
+<p>
+<strong>Tip</strong>: Automate this process using <span class="tooltip" tabindex="0" ><strong>scripts</strong><span class="tooltiptext">A piece of code that allows you to create your own Components, trigger game events, modify Component properties over time and respond to user input in any way you like. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about creating-scripts.html" href="../creating-scripts.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#Scripts" aria-label="Go to glossary anchor for Scripts">Glossary</a></span></span></span>, especially for large projects.</p>
+
+<p>For more information on supported shaders, refer to <a href="../render-pipelines-feature-comparison.html#shaders">Render pipeline feature comparison</a>.</p>
+
+<h2>Default shaders</h2>
+
+<p>Most <a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.high-definition@17.0/manual/shader-materials-reference.html">default HDRP shaders</a> and <a href="shaders-in-universalrp.html">default URP shaders</a> don’t map to each other. You must recreate the HDRP shaders manually in URP. For more information on writing custom shaders in URP, refer to <a href="writing-shaders-urp-landing.html">Examples of writing a custom shader in URP</a>.</p>
+
+<p>The following table lists the HDRP shaders that have a corresponding URP shader to map to.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>HDRP shader</strong></th>
+	<th style="text-align:left;"><strong>URP shader</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>HDRP/Lit</strong></td>
+	<td style="text-align:left;">
+<strong>Universal Render Pipeline/Lit</strong>. Use <strong>Universal Render Pipeline/Complex Lit</strong> if you have a <strong>Coat Mask</strong> texture.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>HDRP/LitTessellation</strong></td>
+	<td style="text-align:left;">
+<strong>Universal Render Pipeline/Lit</strong>. Use <strong>Universal Render Pipeline/Complex Lit</strong> if you have a <strong>Coat Mask</strong> texture. <br><strong>Note</strong>: Tessellation isn’t supported in URP. For an alternative solution, use the <a href="https://docs.unity3d.com/Packages/com.unity.shadergraph@17.5/manual/Parallax-Occlusion-Mapping-Node.html">Parallax Occlusion Mapping node</a> instead.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>HDRP/<span class="tooltip" tabindex="0" ><strong>Terrain</strong><span class="tooltiptext">The landscape in your scene. A Terrain GameObject adds a large flat plane to your scene and you can use the Terrain’s Inspector window to create a detailed landscape. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about terrain-UsingTerrains.html" href="../terrain-UsingTerrains.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#Terrain" aria-label="Go to glossary anchor for Terrain">Glossary</a></span></span></span> Lit</strong></td>
+	<td style="text-align:left;"><strong>Universal Render Pipeline/Terrain/Lit</strong></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>HDRP/Unlit</strong></td>
+	<td style="text-align:left;">
+<strong>Universal Render Pipeline/Unlit</strong>. <br><strong>Note</strong>: Not all properties are supported in URP.</td>
+</tr>
+</tbody>
+</table>
+
+<h3>Convert Lit shaders from HDRP to URP</h3>
+
+<h4>Surface types</h4>
+
+<p>The <strong>Surface Type</strong> property doesn’t map between HDRP and URP, so converting your shader to <strong>URP/Lit</strong> will break these settings. You must change these materials back to the correct surface types and blend modes.</p>
+
+<h4>Material types</h4>
+
+<p>
+<strong>Material Type</strong> in HDRP maps as follows:</p>
+
+<ul>
+<li>
+<strong>Standard</strong> maps to the URP <strong>Workflow Mode</strong> of <strong>Metallic</strong>
+</li>
+<li>
+<strong>Specular</strong> maps to the URP <strong>Workflow Mode</strong> of <strong>Specular</strong>
+</li>
+</ul>
+
+<p>Other <strong>Material Type</strong> values don’t map to a URP equivalent.</p>
+
+<p>To keep your settings for any materials that aren’t set to <strong>Standard</strong> or <strong>Specular</strong>, recreate them in a custom shader or Shader Graph.</p>
+
+<h4>Normal maps and scale</h4>
+
+<p>HDRP shaders use <code>_NormalMap</code> for the <span class="tooltip" tabindex="0" ><strong>normal map</strong><span class="tooltiptext">A type of Bump Map texture that allows you to add surface detail such as bumps, grooves, and scratches to a model which catch the light as if they are represented by real geometry.<br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#normalmap" aria-label="Go to glossary anchor for normalmap">Glossary</a></span></span></span> and <code>_NormalScale</code> for the normal scale. URP uses <code>_BumpMap</code> and <code>_BumpScale</code> instead. You must remap these properties.</p>
+
+<p>
+<strong>URP/Lit</strong> and <strong>URP/ComplexLit</strong> don’t have an equivalent to <strong>Bent Normal Map</strong>.</p>
+
+<h4>Mask map</h4>
+
+<p>In <strong>HDRP/Lit</strong>, the mask map relates to R: Metallic, G: AO, B: Detail Mask, and A: Smoothness. In <strong>URP/Lit</strong>, these are separate textures. These are channel-mapped so setting these maps with the Mask texture is recommended. </p>
+
+<h4>Detail inputs</h4>
+
+<p>The <strong>HDRP/Lit</strong> <strong>Detail Map</strong> doesn’t map to <strong>URP/Lit</strong> detail inputs. In HDRP, the detail map is a packed texture that contains multiple pieces of information that affect details of your material. URP uses separate <strong>Mask</strong>, <strong>Base Map</strong>, and <strong>Normal Map</strong> textures.</p>
+
+<p>To recreate this texture in URP, do one of the following:</p>
+
+<ul>
+<li>Create a custom shader or Shader Graph.</li>
+<li>Create new <strong>Mask</strong>, <strong>Base Map</strong>, and <strong>Normal Map</strong> textures from the HDRP <strong>Mask Map</strong> and <strong>Detail Map</strong> textures.</li>
+</ul>
+
+<h3>Convert Unlit shaders from HDRP to URP</h3>
+
+<h4>Surface types</h4>
+
+<p>The <strong>Surface type</strong> property doesn’t map between HDRP and URP, so converting your shader to <strong>URP/Unlit</strong> will break these settings. You must change these materials back to the correct surface types and blend modes.</p>
+
+<h4>Color and color map</h4>
+
+<p>HDRP shaders use <code>_UnlitColor</code> for color and <code>_UnlitColorMap</code> for color texture. URP uses <code>_BaseColor</code> and <code>_BaseMap</code> instead. You must remap these properties.</p>
+
+<h4>Emission inputs</h4>
+
+<p>
+<strong>URP/Unlit</strong> has no equivalent for emission. If you need to recreate emission in URP, you might be able to achieve the same result using <code>_BaseColor</code> and <code>_BaseMap</code>, or a custom shader or Shader Graph.</p>
+
+<h2>Shader Graph shaders</h2>
+
+<p>To convert a shader you created with Shader Graph, update the <a href="https://docs.unity3d.com/Packages/com.unity.shadergraph@17.5/manual/Graph-Target.html">graph target</a> to URP and update its fragment and vertex contexts. </p>
+
+<p>There might be missing features, and URP doesn’t support some output nodes in HDRP fragment and vertex contexts. </p>
+
+<p>If HDRP nodes have no URP equivalent, do one of the following:</p>
+
+<ul>
+<li>Create a custom shader solution</li>
+<li>Use a <a href="urp-renderer-feature-landing.html">Scriptable Renderer Feature</a> for advanced effects</li>
+<li>Design a similar alternative</li>
+</ul>
+
+<h2>Third-party shaders</h2>
+
+<p>If you use third-party shaders, contact the third party to understand their cross-platform support.</p>
+
+<h2>Custom shaders</h2>
+
+<p>If you created custom shaders in HDRP, you must rewrite them to be compatible with URP. This might take a significant amount of time if your shader is complex. For more information on how to write custom shaders in URP, refer to <a href="writing-shaders-urp-landing.html">Examples of writing a custom shader in URP</a> and <a href="use-built-in-shader-methods.html">Shader methods in URP</a>.</p>
+
+<p>
+<strong>Tip</strong>: To avoid breaking the original HDRP shader during the migration process, create a duplicate <a href="../SL-SubShader-object.html">SubShader</a> with the correct URP <span class="tooltip" tabindex="0" ><a href="../SL-SubShaderTags.html">tags</a><span class="tooltiptext"><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#tag" aria-label="Go to glossary anchor for tag">Glossary</a></span></span></span>: <code>{ &quot;RenderType&quot; = &quot;Opaque&quot; &quot;RenderPipeline&quot; = &quot;UniversalPipeline&quot; }</code>.</p>
+
+<p>If your shader writes into the G-buffer, use the <code>PackGBuffersBRDFData</code> method to pack data correctly. <a href="rendering/g-buffer-layout.html">URP uses a different G-buffer</a> layout than HDRP, so if you manually pack G-buffer data or use HDRP’s packing functions, your lighting will not work correctly.</p>
+
+<p>If your shader accesses the <span class="tooltip" tabindex="0" ><strong>camera</strong><span class="tooltiptext">A component which creates an image of a particular viewpoint in your scene. The output is either drawn to the screen or captured as a texture. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CamerasOverview.html" href="../CamerasOverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#Camera" aria-label="Go to glossary anchor for Camera">Glossary</a></span></span></span> texture of the render pipeline after a variety of passes, recreate this in URP with <a href="universalrp-asset.html#rendering">Opaque Texture</a>, which is stored directly after the opaque pass. If an effect needs access to the camera texture at a different point in the render pipeline, create a Scriptable Renderer Feature.</p>
+
+<h3>Custom lit shaders</h3>
+
+<p>To convert a custom lit shader to be compatible with URP, you must do the following:</p>
+
+<ul>
+<li>
+<p>Update the <a href="urp-shaders/urp-shaderlab-pass-tags.html">ShaderLab tags</a> to use URP.</p>
+
+<ul>
+<li>To tell URP which pass to use in different stages, use the <a href="urp-shaders/urp-shaderlab-pass-tags.html#lightmode">LightMode Pass tags</a>.</li>
+<li>To use shaders with <code>UniversalForward</code> and <code>UniversalForwardOnly</code>, call <code>UniversalFragmentPBR</code> so your shaders are correctly lit.</li>
+</ul>
+</li>
+<li><p>Use URP lighting functions. For more information, refer to <a href="lighting/custom-lighting-introduction.html">Introduction to custom lighting in URP</a>.</p></li>
+</ul>
+
+<h3>Custom unlit shaders</h3>
+
+<p>To convert a custom unlit shader to be compatible with URP, update the <a href="urp-shaders/urp-shaderlab-pass-tags.html">ShaderLab tags</a> to use URP.</p>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="migrating-from-hdrp-workflow.html">HDRP to URP migration workflow</a></li>
+<li><a href="../render-pipelines-feature-comparison.html">Render pipeline feature comparison</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="../urp/hdrp-project-setup.html"></a></span><div class="tip">Set up your HDRP project to use URP</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="../urp/convert-hdrp-vfx-graph-to-urp.html"></a></span><div class="tip">Convert Visual Effect Graph from HDRP to URP</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

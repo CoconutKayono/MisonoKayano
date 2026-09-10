@@ -1,0 +1,285 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Scriptable processors concepts</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<meta property="relative-path-to-manual" content="">
+<meta property="version-switcher-versions-with-this-page" content="Versions with this page:">
+<meta property="version-switcher-versions-without-this-page" content="Versions without this page:">
+<meta property="version-switcher-supported" content="Supported">
+<meta property="version-switcher-legacy" content="Legacy">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/Manual/audio-scriptable-processors-concepts.html">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20260626"></script><script type="text/javascript" src="docdata/toc.js?ts=20260626"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20260626"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20260626">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20260626">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/audio-scriptable-processors-concepts.html">English</a></li>
+<li><a href="/cn/current/Manual/audio-scriptable-processors-concepts.html">中文</a></li>
+<li><a href="/ja/current/Manual/audio-scriptable-processors-concepts.html">日本語</a></li>
+<li><a href="/kr/current/Manual/audio-scriptable-processors-concepts.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: Unity 6.7 Beta</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/audio-scriptable-processors-concepts.html">English</a></li>
+<li><a href="/cn/current/Manual/audio-scriptable-processors-concepts.html">中文</a></li>
+<li><a href="/ja/current/Manual/audio-scriptable-processors-concepts.html">日本語</a></li>
+<li><a href="/kr/current/Manual/audio-scriptable-processors-concepts.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="Audio.html">Audio</a></li>
+<li><a href="audio-scriptable-processors.html">Scriptable audio pipeline</a></li>
+<li>Scriptable processors concepts</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="audio-scriptable-processors.html"></a></span><div class="tip">Scriptable audio pipeline</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="audio-scriptable-processors-generators.html"></a></span><div class="tip">Generators</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Scriptable processors concepts</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>A scriptable processor lets you add your own audio processing to Unity at specific integration points in the audio system to customize its behavior. Currently, Unity supports two integration points, each with its own processor type:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Scriptable processor type</strong></th>
+	<th style="text-align:left;"><strong>Integration point</strong></th>
+	<th style="text-align:left;"><strong>Function</strong></th>
+	<th style="text-align:left;"><strong>Typical usage</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><a href="audio-scriptable-processors-generators.html">Generator</a></td>
+	<td style="text-align:left;"><span class="tooltip" tabindex="0" ><strong>Audio sources</strong><span class="tooltiptext">A component which plays back an Audio Clip in the scene to an audio listener or through an audio mixer. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-AudioSource.html" href="class-AudioSource.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#AudioSource" aria-label="Go to glossary anchor for AudioSource">Glossary</a></span></span></span></td>
+	<td style="text-align:left;">Produces audio samples</td>
+	<td style="text-align:left;">Custom sound generators that emit audio into a <span class="tooltip" tabindex="0" ><strong>scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html" href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span>, typically via an <code>AudioSource</code>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="audio-scriptable-processors-root-outputs.html">Root output</a></td>
+	<td style="text-align:left;">Audio engine main output</td>
+	<td style="text-align:left;">Produces audio samples</td>
+	<td style="text-align:left;">Custom audio systems with job system access, integration of middlewares, or sound generators that emit audio directly to the main output mix.</td>
+</tr>
+</tbody>
+</table>
+
+<h2>General architecture</h2>
+
+<p>All scriptable processors share the same high‑level structure. Each processor is split into the following two parts:</p>
+
+<ul>
+<li>
+<strong>Control part</strong>: Creates, configures, and manages the processor from game logic and typically runs on the main thread.</li>
+<li>
+<strong>Real‑time part</strong>: Generates and processes audio samples. It typically runs on the audio thread or in the Job System.</li>
+</ul>
+
+<p>Each part represents a separate interface: <code>Processor.IControl</code> for control logic and <code>Processor.IRealtime</code> for real‑time processing. You must implement both interfaces to create a working processor. Note that each processor type provides specific interfaces (derived from <code>Processor.IControl</code>/<code>Processor.IRealtime</code>). For instance, when implementing a generator, use <code>GeneratorInstance.IControl</code> and <code>GeneratorInstance.IRealtime</code>.</p>
+
+<h2>Control and real‑time contexts</h2>
+
+<p>The scriptable audio processor framework is controlled through two contexts:</p>
+
+<ul>
+<li><p>
+<strong>Control context</strong>: Lets you allocate and destroy processor instances, and interact with them from the game logic. The instance itself acts as a handle, and you access its capabilities through the control context. Typically, you use the built‑in control context, which connects and renders directly to the Unity audio system. You can also create a manual control context for offline rendering. Manual control contexts give you full control over allocation, rendering, and disposal, which is effective for offline rendering, audio analysis, visualization, and automated tests.</p></li>
+<li><p>
+<strong>Real‑time context</strong> : The real-time counterpart to a control context. Use it to perform real‑time operations on a processor instance, such as generating or processing audio samples during a mix cycle. When using the built‑in control context, Unity creates and destroys real‑time contexts automatically. If you use a manual control context, you’re responsible for managing the lifecycle of real‑time contexts yourself.</p></li>
+</ul>
+
+<h2>Mix cycles</h2>
+
+<p>A real‑time context always belongs to a specific mix cycle. When you use the built‑in control context, Unity’s audio system manages mix cycles for you. However, if you use a manual control context, you are responsible for starting and ending each cycle. To manage a mix cycle, perform the following steps:</p>
+
+<ol>
+<li>Start a new mix cycle by calling <code>ControlContext.Manual.BeginMix()</code>, which returns a temporary <code>RealtimeContext</code>.</li>
+<li>Use the <code>RealtimeContext</code> to perform real‑time functionality on processor instances.</li>
+<li>End the mix cycle by calling <code>ControlContext.Manual.EndMix()</code>.</li>
+</ol>
+
+<p>Following is a code example:</p>
+
+<pre><code class="csharp">var realtimeContext = ControlContext.Manual.BeginMix();
+
+foreach (var processor in processors)
+{
+    // Use realtimeContext to drive real-time functionality on the processor.
+}
+
+ControlContext.Manual.EndMix();
+</code></pre>
+
+<h2>Communication mechanisms</h2>
+
+<p>Processors use two main mechanisms for data communication: pipes and messages. </p>
+
+<h3>Pipes</h3>
+
+<p>Pipes are the primary communication channel between a processor’s control part and real‑time part. Pipes are efficient, real‑time safe (no locks or blocking system calls), and don’t allocate memory dynamically. They carry arbitrary byte‑serializable payloads, such as small structs with parameter changes, or pointers to managed data.</p>
+
+<p>Both parts (control/real-time) share a pipe for data exchange, accessible from the <code>IRealtime</code>/<code>IControl</code> callbacks. Data can flow in both directions. All data sent from the control part within the same frame arrives through the shared pipe in the real‑time part in the same mix cycle. Similarly, all data sent from the real‑time part within the same mix-cycle is visible to the control part in the same frame. Data sent to the real‑time part is available for only one mix cycle, and data sent back from the real‑time part is available on the control part for only one update frame.</p>
+
+<h3>Messages</h3>
+
+<p>Messages provide a structured and efficient way to send commands, events, or notifications from a processor instance to its control part. Messages are blocking and passed by reference. Although messages are primarily one‑way (processor instance to control part), the control part can modify message fields before returning them, to answer a query, for example. Use messages for tasks like parameter updates, data conversion (typically from managed Unity Objects to a lower, unmanaged representation), event notifications, or gameplay‑driven triggers that require coordination between game logic and real-time audio processing.</p>
+
+<h2>Updates</h2>
+
+<p>Update hooks let a processor respond to control‑side changes, external input, and time‑based behavior. There are two update surfaces:</p>
+
+<ul>
+<li>
+<strong>Control side</strong> — typically called once per rendered video frame. Use it to:
+
+<ul>
+<li>Advance game logic related to the processor.</li>
+<li>Read editor/UI parameters.</li>
+<li>Send/receive data to/from the real‑time part (via the pipe).</li>
+<li>Poll external sources (for example, timeline state or gameplay triggers).</li>
+<li>Schedule one‑shot events (for example, retrigger an envelope or switch clips).</li>
+</ul>
+</li>
+<li>
+<strong>Real‑time side</strong> — called once per mix cycle. Use it to:
+
+<ul>
+<li>Update audio logic and real-time‑dependent state.</li>
+<li>Send/receive data to/from the control part (via the pipe).</li>
+<li>Prepare state needed by the upcoming <code>Process</code> call(s).</li>
+</ul>
+</li>
+</ul>
+
+<p>You can throttle the update frequency on each side by setting <code>controlUpdateSetting</code> and <code>realtimeUpdateSetting</code> in the <code>CreationParameters</code> used when creating the processor. The following flags are supported:</p>
+
+<ul>
+<li>
+<code>Default</code> — Equivalent to <code>UpdateIfDataIsAvailable</code>.</li>
+<li>
+<code>NeverUpdate</code> — The update hook is disabled; it never runs.</li>
+<li>
+<code>UpdateIfDataIsAvailable</code> — The hook runs only when new data is available on the pipe.</li>
+<li>
+<code>UpdateAlways</code> — The hook runs every frame (control) or every mix cycle (real‑time), regardless of data availability.</li>
+</ul>
+
+<h2>Channel buffers and audio formats</h2>
+
+<p>A channel buffer (<code>ChannelBuffer</code>) holds audio sample data as it moves through the audio processing pipeline. It provides a two‑dimensional view, channels × frames, over an underlying block of samples, and is agnostic to the sample layout (planar or interleaved). This allows processors to work with audio data efficiently, regardless of how the samples are organized in memory. The backing buffer is transient and can be based on native/unmanaged memory, either persistent or temporarily allocated using the <code>stackalloc</code> construct in C# - or via a managed allocation.</p>
+
+<p>Channel buffers are typically used together with an audio format (<code>AudioFormat</code>). An audio format describes the properties of an audio stream, such as the sample rate, speaker configuration, and buffer size. When creating nested processors manually, you typically supply the audio format. Otherwise, it inherits the common audio format for the system.</p>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="audio-scriptable-processors.html"></a></span><div class="tip">Scriptable audio pipeline</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="audio-scriptable-processors-generators.html"></a></span><div class="tip">Generators</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

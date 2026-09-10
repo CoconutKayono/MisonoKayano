@@ -1,0 +1,278 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Organizing assets into AssetBundles</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<meta property="relative-path-to-manual" content="">
+<meta property="version-switcher-versions-with-this-page" content="Versions with this page:">
+<meta property="version-switcher-versions-without-this-page" content="Versions without this page:">
+<meta property="version-switcher-supported" content="Supported">
+<meta property="version-switcher-legacy" content="Legacy">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/Manual/AssetBundles-Preparing.html">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20260626"></script><script type="text/javascript" src="docdata/toc.js?ts=20260626"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20260626"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20260626">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20260626">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/AssetBundles-Preparing.html">English</a></li>
+<li><a href="/cn/current/Manual/AssetBundles-Preparing.html">中文</a></li>
+<li><a href="/ja/current/Manual/AssetBundles-Preparing.html">日本語</a></li>
+<li><a href="/kr/current/Manual/AssetBundles-Preparing.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: Unity 6.7 Beta</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/AssetBundles-Preparing.html">English</a></li>
+<li><a href="/cn/current/Manual/AssetBundles-Preparing.html">中文</a></li>
+<li><a href="/ja/current/Manual/AssetBundles-Preparing.html">日本語</a></li>
+<li><a href="/kr/current/Manual/AssetBundles-Preparing.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="assets-and-media.html">Assets and media</a></li>
+<li><a href="assets-managing-runtime.html">Managing assets at runtime</a></li>
+<li><a href="assetbundles-section.html">Use AssetBundles to load assets at runtime</a></li>
+<li><a href="assetbundles-creating.html">Creating AssetBundles</a></li>
+<li>Organizing assets into AssetBundles</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="assetbundles-creating.html"></a></span><div class="tip">Creating AssetBundles</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="assetbundles-assign-assets.html"></a></span><div class="tip">Assign assets to an AssetBundle</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Organizing assets into AssetBundles</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>When you create an AssetBundle, there are some <a href="#assetbundle-limitations">limitations</a> and organizational strategies to be aware of.</p>
+
+<p>There are some limitations to what assets you can put in an AssetBundle, and how you set them up. The following table contains limitations of AssetBundles:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Limitation</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>File types</strong></td>
+	<td style="text-align:left;"><ul>
+<li>You can’t combine scenes and assets into one AssetBundle. You must store scenes in a separate AssetBundle to one which contains assets.</li>
+<li>You can’t include script assets in AssetBundles.</li>
+<li>You can’t include files in the StreamingAssets folder.</li>
+<li>You can’t assign assets or scenes to more than one AssetBundle.</li>
+</ul></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Naming</strong></td>
+	<td style="text-align:left;">The name of the AssetBundle must differ from the output folder.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Platform support</strong></td>
+	<td style="text-align:left;">AssetBundles can only be loaded on the specific platform you build them for. The Editor can load any AssetBundle, regardless of the platform defined in the <span class="tooltip" tabindex="0" ><a href="build-profiles.html">Build Profile</a><span class="tooltiptext">A set of customizable configuration settings to use when creating a build for your target platform. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about build-profiles.html" href="build-profiles.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#buildprofile" aria-label="Go to glossary anchor for buildprofile">Glossary</a></span></span></span>, but some assets might not load properly if they use a platform-specific format not supported by the operating system the Editor is installed on.</td>
+</tr>
+</tbody>
+</table>
+
+<h2>AssetBundle naming conventions</h2>
+
+<p>Unity automatically puts any AssetBundle names in lowercase during the build process. For example, an AssetBundle named <code>Foo</code> will result in a file named <code>foo</code>. To avoid any conflicts or issues, use lowercase names for your AssetBundles.</p>
+
+<p>There’s no established or expected file extension for AssetBundles. You can provide a custom extension when defining an AssetBundle name, and Unity respects it. However, this can conflict with the AssetBundle variant feature, which expects variants to be distinguished by different extensions with the same root file name.</p>
+
+<p>You can use the <a href="../ScriptReference/BuildAssetBundleOptions.AppendHashToAssetBundleName.html"><code>BuildAssetBundleOptions.AppendHashToAssetBundleName</code></a> flag to include an AssetBundle’s content hash as part of its file name. This can be useful for web hosting, allowing different versions of the same AssetBundle to exist together. </p>
+
+<p>However, this flag has downsides:</p>
+
+<ul>
+<li>The built-in AssetBundle caching doesn’t automatically replace older versions, so multiple versions of the same AssetBundle might stay in the cache.</li>
+<li>It can affect file-level patching systems on console platforms, because small changes are treated as an entirely new file rather than a small patch.</li>
+</ul>
+
+<p><a id="assetbundle-variants" aria-hidden="true"></a></p>
+
+<h2>AssetBundle variants</h2>
+
+<p>You can use AssetBundle variants to create multiple versions of an AssetBundle optimized for different situations or configurations, such as varying graphics settings. For example, you can create variants for low, medium, and high resolution textures to support devices with varying performance capabilities or user-selected graphics settings.</p>
+
+<p>When using AssetBundle variants, Unity allows you to specify a variant name for each AssetBundle. The combination of AssetBundle name and variant name uniquely identifies each AssetBundle variant. For example, an AssetBundle named <code>environment</code> might have variants named <code>lowQuality</code>, <code>mediumQuality</code>, and <code>highQuality</code>.</p>
+
+<p>The asset file names within the AssetBundles must match, but the content can differ based on the purpose of the variant.</p>
+
+<p>You can create a variant in the <span class="tooltip" tabindex="0" ><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheInspector.html" href="UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span>, using the variant dropdown next to the AssetBundle, or use <a href="../ScriptReference/AssetImporter-assetBundleVariant.html"><code>AssetImporter.assetBundleVariant</code></a>.</p>
+
+<h2>Strategies for organizing AssetBundles</h2>
+
+<p>You can organize your assets in the following ways:</p>
+
+<ul>
+<li>
+<strong><a href="#organize-assets-by-function">By function</a></strong>: Organize assets based on functional portions of your project. Typical categories might include user interface, characters, environments, and other elements frequently used throughout your application.</li>
+<li>
+<strong><a href="#organize-assets-by-type">By type</a></strong>: Type Grouping focuses on bundling assets of the same type together, such as audio tracks or localization files.</li>
+<li>
+<strong><a href="#organize-assets-by-use-at-runtime">By use at runtime</a></strong>: Group assets that are loaded and used simultaneously. This strategy is often used for level-based projects.</li>
+</ul>
+
+<p>You can mix these strategies within your project to get the best efficiency for your application. For example, you might group UI elements for different platforms into one AssetBundle, but group its interactive content by level or <span class="tooltip" tabindex="0" ><strong>scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html" href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span>.</p>
+
+<p>Whatever organizational approach you take, it’s best practice to follow these general guidelines:</p>
+
+<ul>
+<li>Separate frequently updated objects from rarely changed ones into different AssetBundles.</li>
+<li>Create separate AssetBundles for sets of objects unlikely to be loaded at the same time, such as standard and high definition assets. You can use <a href="#assetbundle-variants">AssetBundle variants</a> to organize this.</li>
+<li>Group objects together that are commonly unloaded together. For example, a model, its textures, and its animations.</li>
+<li>Split an AssetBundle if less than half of its content is ever loaded at the same time.</li>
+<li>Combine small AssetBundles if the content is frequently loaded simultaneously.</li>
+<li>If multiple objects in one AssetBundle depend on a single asset from another AssetBundle, consider moving the dependency to its own AssetBundle. Similarly, if several AssetBundles reference the same group of assets, consider putting the dependencies into a shared AssetBundle.</li>
+</ul>
+
+<p><a id="organize-assets-by-function" aria-hidden="true"></a></p>
+
+<h3>Organize assets by function</h3>
+
+<p>Organizing assets by how they functionally work together is useful in situations like the following:</p>
+
+<ul>
+<li>Bundling all the textures and layout data for a UI screen.</li>
+<li>Bundling all the models and animations for a character or set of characters.</li>
+<li>Bundling the textures and models for pieces of the scenery shared across multiple levels.</li>
+</ul>
+
+<p>This approach is ideal for downloadable content (DLC), because you can make small changes to your project without having to distribute large amounts of unchanged assets to your users. However, when using this approach, you must be familiar with where and when each asset is used in the project.</p>
+
+<p><a id="organize-assets-by-type" aria-hidden="true"></a></p>
+
+<h3>Organize assets by type</h3>
+
+<p>You can organize assets of similar type, such as audio tracks or language localization files, into a single AssetBundle, which can be useful in AssetBundles that change rarely. </p>
+
+<p>Grouping AssetBundles this way can result in fewer AssetBundles changing and requiring distribution when creating an incremental build. However, more AssetBundles might need to be downloaded and loaded to assemble all dependent objects together at runtime.</p>
+
+<p><a id="organize-assets-by-use-at-runtime" aria-hidden="true"></a></p>
+
+<h3>Organize assets by use at runtime</h3>
+
+<p>You can group together assets that Unity loads and uses at the same time, which is useful if you want to load AssetBundles based on scenes. For example, you can use this approach for a level-based game where each level contains unique assets, and an AssetBundle contains all a scene’s dependencies.</p>
+
+<p>However, this approach means that an asset in one AssetBundle can only be used at the same time that the rest of the assets are going to be used, or it increases load times. </p>
+
+<p>
+<strong>Important</strong> An AssetBundle containing a scene automatically includes all assets referenced in that scene unless they are explicitly assigned to a separate AssetBundle. This might lead to duplicated assets if any other scenes use the referenced assets in other AssetBundles.</p>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="AssetDatabase.html">Managing assets with the Asset Database</a></li>
+<li><a href="AssetBundles-Building.html">Build assets into an AssetBundle</a></li>
+<li><a href="assets-avoid-duplication.html">Avoiding asset duplication</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="assetbundles-creating.html"></a></span><div class="tip">Creating AssetBundles</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="assetbundles-assign-assets.html"></a></span><div class="tip">Assign assets to an AssetBundle</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

@@ -32,7 +32,7 @@
 
 要开启唯一标识符，请打开 Aseprite，进入 **Sprite > Properties...** 并勾选 **Create UUID for layers** 复选框。注意：这需要对每个 Aseprite 文件执行。
 
-![为图层启用UUID](../UI/图片/Asprite/Faq_uuid_00.png)
+![为图层启用UUID](Faq_uuid_00.png)
 
 ## 如何将多个精灵表合并为一个？
 
@@ -42,7 +42,7 @@
 
 修改画布尺寸时，请确保勾选 **Trim content outside the canvas**（裁剪画布外的内容）复选框。这样存储的纹理就会被裁剪为指定尺寸。
 
-![裁剪画布外的内容](../UI/图片/Asprite/Faq_TrimContent.png)
+![裁剪画布外的内容](Faq_TrimContent.png)
 
 ## 如何向 Animation Clip 添加事件？
 
@@ -52,21 +52,21 @@
 
 1. 在 Aseprite 中，选择要添加事件的帧中的任意 cel（单元）。
 
-   ![选择cel](../UI/图片/Asprite/Faq_AddEvents_00.png)
+   ![选择cel](Faq_AddEvents_00.png)
 
 2. 右键点击该 cel，选择 **Cel Properties**。
 
-   ![Cel属性](../UI/图片/Asprite/Faq_AddEvents_01.png)
+   ![Cel属性](Faq_AddEvents_01.png)
 
 3. 点击 Opacity（不透明度）滑块右侧的 **User Data** 按钮，打开 User Data 字段。
 
-   ![用户数据按钮](../UI/图片/Asprite/Faq_AddEvents_02.png)
+   ![用户数据按钮](Faq_AddEvents_02.png)
 
 4. 按以下格式输入事件名称：`event:EventName`。例如 `event:OnIdle`。
 5. 保存文件并切换到 Unity。
 6. 打开 Animation 窗口并检查 Animation Clip。你可以看到事件已添加到帧中。
 
-   ![Animation窗口中的事件](../UI/图片/Asprite/Faq_AddEvents_03.png)
+   ![Animation窗口中的事件](Faq_AddEvents_03.png)
 
 要接收事件，请将以下脚本放在与 Animator 相同的 GameObject 上：
 
@@ -122,7 +122,7 @@ public class MyEventReceiver : MonoBehaviour
 
 有时你希望在一个方法中接收来自 Animator 的所有动画事件。为此，首先在 Aseprite Importer Inspector 中取消勾选 **Individual Events** 开关。
 
-![单一事件接收器](../UI/图片/Asprite/Faq_ComboEvents_00.png)
+![单一事件接收器](Faq_ComboEvents_00.png)
 
 取消勾选 **Individual Events** 开关并点击 **Apply** 后，Aseprite Importer 会将所有事件的 AnimationClip 更新为使用事件字符串 "OnAnimationEvent"。
 
@@ -146,7 +146,7 @@ public class MyEventReceiver : MonoBehaviour
 
 如果 Aseprite 文件包含多个帧，并且导入器中勾选了 **Animation Clip** 复选框，Aseprite Importer 会生成一个 Animator Controller。此 Animator Controller 是只读的，无法更改。
 
-![只读的Animator Controller](../UI/图片/Asprite/Faq_AnimController.png)
+![只读的Animator Controller](Faq_AnimController.png)
 
 如果你希望拥有可以更改的 Animator Controller，请按以下步骤操作：
 
@@ -155,7 +155,7 @@ public class MyEventReceiver : MonoBehaviour
 3. 在弹出的窗口中，确保勾选 **Animator Controller** 复选框。如果你不想编辑任何剪辑，请保持 **Animation Clips** 复选框为未勾选。
 4. 点击 **Export** 并选择一个文件夹来放置资源。
 
-![导出动画资源弹窗](../UI/图片/Asprite/Faq_ExportPopup.png)
+![导出动画资源弹窗](Faq_ExportPopup.png)
 
 现在所选文件夹中应该有一个 Animator Controller。如果 **Animation Clips** 复选框保持未勾选，Animator Controller 内的所有状态都会链接回 Aseprite 文件，意味着剪辑会随着 Aseprite 中的任何更改保持最新。
 
@@ -190,6 +190,6 @@ public class GameObjectInjector : AssetPostprocessor
 
 默认情况下，从 Aseprite 标签生成的 Animation Clip 会自动循环。要禁用循环，请打开 Aseprite，打开要设为非循环的标签的 Tag Property 窗口。在 **Repeat** 字段中，将值从 `∞` 改为 `1`（Aseprite Importer 只支持循环和非循环两种结果，任何大于 1 的值仍然只会播放一次）。
 
-![禁用循环设置](../UI/图片/Asprite/Faq_NonLoop_00.png)
+![禁用循环设置](Faq_NonLoop_00.png)
 
 在 Aseprite 中保存更改并切换到 Unity。Aseprite 文件会自动重新导入，Animation Clip 也会更新为非循环设置。

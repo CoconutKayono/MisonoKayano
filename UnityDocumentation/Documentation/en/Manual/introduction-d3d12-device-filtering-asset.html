@@ -1,0 +1,259 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Introduction to D3D12 Device Filtering Asset</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<meta property="relative-path-to-manual" content="">
+<meta property="version-switcher-versions-with-this-page" content="Versions with this page:">
+<meta property="version-switcher-versions-without-this-page" content="Versions without this page:">
+<meta property="version-switcher-supported" content="Supported">
+<meta property="version-switcher-legacy" content="Legacy">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/Manual/introduction-d3d12-device-filtering-asset.html">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20260626"></script><script type="text/javascript" src="docdata/toc.js?ts=20260626"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20260626"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20260626">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20260626">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/introduction-d3d12-device-filtering-asset.html">English</a></li>
+<li><a href="/cn/current/Manual/introduction-d3d12-device-filtering-asset.html">中文</a></li>
+<li><a href="/ja/current/Manual/introduction-d3d12-device-filtering-asset.html">日本語</a></li>
+<li><a href="/kr/current/Manual/introduction-d3d12-device-filtering-asset.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: Unity 6.7 Beta</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/introduction-d3d12-device-filtering-asset.html">English</a></li>
+<li><a href="/cn/current/Manual/introduction-d3d12-device-filtering-asset.html">中文</a></li>
+<li><a href="/ja/current/Manual/introduction-d3d12-device-filtering-asset.html">日本語</a></li>
+<li><a href="/kr/current/Manual/introduction-d3d12-device-filtering-asset.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="PlatformSpecific.html">Platform development  </a></li>
+<li><a href="Windows.html">Windows</a></li>
+<li><a href="windows-develop.html">Develop for Windows</a></li>
+<li><a href="d3d12-graphics-jobs-configuration.html">D3D12 API and graphics jobs mode configuration</a></li>
+<li>Introduction to D3D12 Device Filtering Asset</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="d3d12-graphics-jobs-configuration.html"></a></span><div class="tip">D3D12 API and graphics jobs mode configuration</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="create-d3d12-device-filtering-asset.html"></a></span><div class="tip">Create a D3D12 Device Filtering asset</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Introduction to D3D12 Device Filtering Asset</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>D3D12 Device Filtering Asset allows you to fine-tune which Windows devices should use the D3D12 API and define your preferred graphics jobs modes. This asset uses the following filter lists: </p>
+
+<ul>
+<li>
+<strong>Allow Filter List</strong>: Defines which Windows devices should use the D3D12 API when running Unity application.</li>
+<li>
+<strong>Deny Filter List</strong>: Defines which Windows devices shouldn’t use the D3D12 API when running Unity application.</li>
+<li>
+<strong>Preferred Graphics Jobs Filter List</strong>: Defines specific graphics jobs mode for Windows devices.</li>
+</ul>
+
+<figure>
+<img src="../uploads/Main/d3d12-device-filtering-asset.png" alt="D3D12 Device Filtering Asset">
+<figcaption>D3D12 Device Filtering Asset</figcaption>
+</figure>
+
+<h2>Default minimum specifications</h2>
+
+<p>Unity automatically applies the following specifications for D3D12 support. Devices that don’t meet these specifications don’t use D3D12 API when running Unity applications and fall back to the default graphics API configured in the <strong>Player</strong> settings. You can override these using the D3D12 Device Filtering Asset to define your custom set of criteria.</p>
+
+<h3>Deny Filter List</h3>
+
+<p>Unity restricts devices that meet any of the following specifications from using D3D12 API when running Unity applications. </p>
+
+<ul>
+<li>
+<strong>Feature level</strong>: &lt;<code>12.1</code>
+</li>
+<li>
+<strong>Processor core count</strong>: &lt;=<code>4</code>
+</li>
+<li>
+<strong>Graphics memory</strong>: &lt; <code>3600 MB</code>
+</li>
+<li>
+<strong>Device Type</strong>: <code>Integrated GPU</code> AND <strong>Vendor Name</strong>: <code>Intel</code> or <code>AMD</code>
+</li>
+</ul>
+
+<h3>Allow Filter List</h3>
+
+<p>Unity allows devices with <strong>Feature level</strong> <code>12.2</code> and higher to use D3D12 API when running Unity applications, regardless of the <strong>Device Type</strong>. For devices with <strong>Feature level</strong> <code>12.1</code>, refer to the <strong>Deny Filter List</strong> section for any applicable restrictions.</p>
+
+<h2>Filter list parameters</h2>
+
+<p>Each filter list contains a set of parameters to enter device specifications. You can add multiple entries to each filter list. Unity then allows or restricts the devices that match the specifications entered in the filter lists from using the D3D12 API and assigns any specific graphics jobs modes.</p>
+
+<p>You can specify values for the following parameters to identify a device or set of devices:</p>
+
+<ul>
+<li>Preferred Graphics Jobs Mode</li>
+<li>Graphics Device Vendor</li>
+<li>Graphics Device Name</li>
+<li>Graphics Driver Version</li>
+<li>D3D12 Feature Level</li>
+<li>Graphics Memory</li>
+<li>Processor Count</li>
+<li>Graphics Device Type</li>
+</ul>
+
+<p>The <strong>Preferred Graphics Jobs Mode</strong> parameter is available in the <strong>Preferred Graphics Jobs Filter List</strong> only.</p>
+
+<p>The device properties must match all the parameter values (logical AND) to determine whether it’s allowed or denied the ability to run your application with D3D12 API and use the preferred graphics jobs mode. You can use C# regular expressions for the Graphics Device Vendor and Graphics Device Name. For example, <code>\[I|i\]ntel .\*6\[0-9\]\[0-9\], Qual\*</code>. The Unity Editor displays an error for an invalid regular expression. If the parameter values are set with invalid regular expressions, the application build fails.</p>
+
+<p>The <strong>Allow Filter List</strong> uses your chosen comparison operators to identify devices that match the specified parameter values for driver version, D3D12 feature level, graphics memory, and processor count.</p>
+
+<p>For example, if you set up the following:</p>
+
+<ul>
+<li>GPU Vendor: NVIDIA</li>
+<li>GPU Model Name: RTX 3080</li>
+<li>Driver Version: 347.23.0.12</li>
+<li>Comparison Operator: Greater Than or Equal To</li>
+</ul>
+
+<p>In this case, the <strong>Allow Filter List</strong> includes all devices with an NVIDIA RTX 3080 GPU, and a driver version greater than or equal to 347.23.0.12</p>
+
+<p>The <strong>Deny Filter List</strong> uses your chosen comparison operators to restrict devices that match the specified parameter values for driver version, D3D12 feature level, graphics memory, and processor count.</p>
+
+<p>For example, if you specify: </p>
+
+<ul>
+<li>GPU vendor : ATI</li>
+<li>GPU model name : Radeon RX 9000</li>
+<li>Processor count : 8</li>
+<li>Comparison operator: Less Than Or Equal To</li>
+</ul>
+
+<p>In this case, the <strong>Deny Filter List</strong> restricts all the devices with ATI Radeon RX 9000 GPU that have less than or equal to 8 processors.</p>
+
+<p>The <strong>Preferred Graphics Jobs Filter List</strong> uses your chosen comparison operators to identify devices that match the specified parameter values for driver version, D3D12 feature level, graphics memory, and processor count in order to apply the specified graphics jobs mode.</p>
+
+<p>For example:</p>
+
+<ul>
+<li>Graphics Jobs Mode: Native</li>
+<li>GPU Model Name: RTX 3080</li>
+<li>Driver Version: 347.23.0.12</li>
+<li>Comparison Operator: Less Than</li>
+</ul>
+
+<p>In this case, the <strong>Preferred Graphics Jobs Filter List</strong> enables the Native graphics jobs mode on all devices with an RTX 3080 GPU that have a driver version less than 347.23.0.12.</p>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="create-d3d12-device-filtering-asset.html">Create a D3D12 Device Filtering Asset</a></li>
+<li><a href="allow-deny-d3d12-usage.html">Configure D3D12 API usage</a></li>
+<li><a href="configure-d3d12-graphics-jobs-mode.html">Configure graphics jobs mode on D3D12</a></li>
+<li><a href="d3d12-device-filter-list-asset-reference.html">D3D12 Device Filtering Asset reference</a></li>
+<li><a href="https://learn.microsoft.com/en-us/windows/win32/direct3d11/overviews-direct3d-11-devices-downlevel-intro">Direct3D feature levels (Microsoft)</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="d3d12-graphics-jobs-configuration.html"></a></span><div class="tip">D3D12 API and graphics jobs mode configuration</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="create-d3d12-device-filtering-asset.html"></a></span><div class="tip">Create a D3D12 Device Filtering asset</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

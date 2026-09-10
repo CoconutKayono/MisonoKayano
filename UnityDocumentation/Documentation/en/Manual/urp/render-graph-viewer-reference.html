@@ -1,0 +1,653 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Render Graph Viewer window reference for URP</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<meta property="relative-path-to-manual" content="../">
+<meta property="version-switcher-versions-with-this-page" content="Versions with this page:">
+<meta property="version-switcher-versions-without-this-page" content="Versions without this page:">
+<meta property="version-switcher-supported" content="Supported">
+<meta property="version-switcher-legacy" content="Legacy">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/Manual/urp/render-graph-viewer-reference.html">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../../StaticFilesManual/js/jquery.js?ts=20260626"></script><script type="text/javascript" src="../../StaticFilesManual/js/core.js?ts=20260626"></script><script type="text/javascript" src="../../StaticFilesManual/js/image-comp.js?ts=20260626"></script><script type="text/javascript" src="../docdata/toc.js?ts=20260626"></script><script type="text/javascript" src="../docdata/global_toc.js?ts=20260626"></script><link rel="stylesheet" type="text/css" href="../../StaticFilesManual/css/core.css?ts=20260626">
+<link rel="stylesheet" type="text/css" href="../../StaticFilesManual/css/icons.css?ts=20260626">
+<link rel="stylesheet" href="../../StaticFilesManual/css/prism.css">
+<script src="../../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="../30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../index.html" class="selected">Manual</a></li>
+<li><a href="../../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/urp/render-graph-viewer-reference.html">English</a></li>
+<li><a href="/cn/current/Manual/urp/render-graph-viewer-reference.html">中文</a></li>
+<li><a href="/ja/current/Manual/urp/render-graph-viewer-reference.html">日本語</a></li>
+<li><a href="/kr/current/Manual/urp/render-graph-viewer-reference.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: Unity 6.7 Beta</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/urp/render-graph-viewer-reference.html">English</a></li>
+<li><a href="/cn/current/Manual/urp/render-graph-viewer-reference.html">中文</a></li>
+<li><a href="/ja/current/Manual/urp/render-graph-viewer-reference.html">日本語</a></li>
+<li><a href="/kr/current/Manual/urp/render-graph-viewer-reference.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="../render-pipelines.html">Render pipelines</a></li>
+<li><a href="../universal-render-pipeline.html">Using the Universal Render Pipeline</a></li>
+<li><a href="../urp/customizing-urp.html">Custom rendering and post-processing in URP</a></li>
+<li><a href="../urp/render-graph.html">Render graph system in URP</a></li>
+<li>Render Graph Viewer window reference for URP</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="../urp/render-graph-unsafe-pass.html"></a></span><div class="tip">Use the CommandBuffer interface in a render graph</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="../urp/inject-a-render-pass.html"></a></span><div class="tip">Adding a Scriptable Render Pass to the frame rendering loop in URP</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Render Graph Viewer window reference for URP</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>The <strong>Render Graph Viewer</strong> window displays the <a href="render-graph.html">render graph</a> for the current <span class="tooltip" tabindex="0" ><strong>scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html" href="../CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span> in the Universal <span class="tooltip" tabindex="0" ><strong>Render Pipeline</strong><span class="tooltiptext">A series of operations that take the contents of a Scene, and displays them on a screen. Unity lets you choose from pre-built render pipelines, or write your own. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about render-pipelines.html" href="../render-pipelines.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#renderpipeline" aria-label="Go to glossary anchor for renderpipeline">Glossary</a></span></span></span> (URP). </p>
+
+<p>For more information about the <strong>Render Graph Viewer</strong> window, refer to <a href="render-graph-view.html">Analyze a render graph</a>.</p>
+
+<h2>Toolbar</h2>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Control</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Refresh</strong></td>
+	<td style="text-align:left;">Selects whether to update the window automatically. The options are: <ul>
+<li>
+<strong>Auto Update</strong>: Updates the window automatically.</li>
+<li>
+<strong>Pause</strong>: Doesn’t update the window automatically.</li>
+</ul>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Target Selection</strong></td>
+	<td style="text-align:left;">Selects which project the window connects to. For more information, refer to <a href="render-graph-view.html#built-project">View the render graph for a built project</a>. The options are:<ul>
+<li>
+<strong>Editor</strong>: Connects to the project in the Unity Editor.</li>
+<li>
+<strong>Local</strong>: Connects to a built project on the same device. </li>
+<li>
+<strong>Remote</strong>: Connects to a built project on a different device.<li>
+<strong>Direct Connection</strong>: Connects to an application through an IP address.</li>
+</ul>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><span class="tooltip" tabindex="0" ><strong>Camera</strong><span class="tooltiptext">A component which creates an image of a particular viewpoint in your scene. The output is either drawn to the screen or captured as a texture. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CamerasOverview.html" href="../CamerasOverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#Camera" aria-label="Go to glossary anchor for Camera">Glossary</a></span></span></span></strong></td>
+	<td style="text-align:left;">Selects the camera to display the rendering loop for.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Pass Filter</strong></td>
+	<td style="text-align:left;">Selects which render passes to display. For more information, refer to <a href="#pass-filter-property">Pass Filter dropdown</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Resource Filter</strong></td>
+	<td style="text-align:left;">Selects which resources to display. For more information, refer to <a href="#resource-filter-property">Resource Filter dropdown</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>View Options</strong></td>
+	<td style="text-align:left;">Selects whether to display how the render pass stores and loads the resource in the main window.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="pass-filter-property" aria-hidden="true"></a></p>
+
+<h3>Pass Filter dropdown</h3>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Control</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Culled Passes</strong></td>
+	<td style="text-align:left;">Displays render passes that URP hasn’t included in the render graph because they have no effect on the final image.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Raster Passes</strong></td>
+	<td style="text-align:left;">Displays only raster render passes created using <code>renderGraph.AddRasterRenderPass</code>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Unsafe Passes</strong></td>
+	<td style="text-align:left;">Displays only render passes that use the <code>AddUnsafePass</code> API to use <code>CommandBuffer</code> interface APIs such as <code>SetRenderTarget</code>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Compute Passes</strong></td>
+	<td style="text-align:left;">Displays only compute render passes created using <code>renderGraph.AddComputePass</code>.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="resource-filter-property" aria-hidden="true"></a></p>
+
+<h3>Resource Filter dropdown</h3>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Control</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Imported Resources</strong></td>
+	<td style="text-align:left;">Displays only resources imported into the render graph using <code>ImportTexure</code>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Textures</strong></td>
+	<td style="text-align:left;">Displays only textures.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Buffers</strong></td>
+	<td style="text-align:left;">Displays only buffers.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Acceleration Structures</strong></td>
+	<td style="text-align:left;">Displays only acceleration structures used in compute render passes.</td>
+</tr>
+</tbody>
+</table>
+
+<h2>Main window</h2>
+
+<p>The main window is a timeline graph that displays the render passes in the render graph. It displays the following:</p>
+
+<ul>
+<li>On the left, the list of resources the render passes use, in the order URP creates them.</li>
+<li>At the top, the list of render passes, in the order URP executes them.</li>
+</ul>
+
+<p>At the point where a render pass and a texture meet on the graph, a resource access block displays how the render pass uses the resource. The access block uses the following icons and colors:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Access block icon or color</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">Dotted lines</td>
+	<td style="text-align:left;">The resource hasn’t been created yet.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Green</td>
+	<td style="text-align:left;">The render pass has read-only access to the resource. The render pass can read the resource.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Red</td>
+	<td style="text-align:left;">The render pass has write-only access to the resource. The render pass can write to the resource.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Green and red</td>
+	<td style="text-align:left;">The render pass has read-write access to the resource. The render pass can read from or write to the resource.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Gray</td>
+	<td style="text-align:left;">The render pass can’t access the resource.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Globe icon</td>
+	<td style="text-align:left;">The render pass sets the texture as a global resource. If the globe icon has a gray background, the resource was imported into the render graph as a <code>TextureHandle</code> object, and the pass uses the <code>SetGlobalTextureAfterPass</code> API. Refer to <a href="render-graph-create-a-texture.html">Create a temporary texture for a single frame</a> and <a href="render-graph-pass-textures-between-passes.html">Transfer a texture between render passes</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>F</strong></td>
+	<td style="text-align:left;">The render pass can read the resource from on-chip GPU memory. Refer to <a href="render-graph-framebuffer-fetch.html">Get the current framebuffer from GPU memory in URP</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Blank</td>
+	<td style="text-align:left;">The resource has been deallocated in memory, so it no longer exists.</td>
+</tr>
+</tbody>
+</table>
+
+<p>If you enable <strong>View Options</strong> &gt; <strong>Load Store Actions</strong>, the access block displays triangles that represent how the render pass loads the resource (top-left) and stores the resource (bottom-right). The triangles use the following colors:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Triangle color</strong></th>
+	<th style="text-align:left;"><strong>Load or store action</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">Blue</td>
+	<td style="text-align:left;">Clear</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Green</td>
+	<td style="text-align:left;">Load</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Red</td>
+	<td style="text-align:left;">Store</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Gray</td>
+	<td style="text-align:left;">Don’t Care</td>
+</tr>
+</tbody>
+</table>
+
+<p>Select an access block to display the resource in the Resource List and the render pass in the Pass <span class="tooltip" tabindex="0" ><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheInspector.html" href="../UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span> List.</p>
+
+<h3>Render passes</h3>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Control</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">Render pass name</td>
+	<td style="text-align:left;">The name of the render pass. This name is set in the <code>AddRasterRenderPass</code> or <code>AddComputePass</code> method.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Merge bar</td>
+	<td style="text-align:left;">If URP merged this pass with other passes, the Render Graph Viewer displays a blue bar below the merged passes.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Resource access overview bar</td>
+	<td style="text-align:left;">When you select a render pass name, the resource access overview bar displays information about the pass you selected and related passes. Hover your cursor over an overview block for more information. Select an overview block to open the C# file for the render pass.<br><br>Overview blocks use the following colors:<ul>
+<li>White: The selected pass.</li>
+<li>Gray: The pass isn’t related to the selected pass.</li>
+<li>Blue: The pass reads from or writes to a resource the selected pass uses.</li>
+<li>Flashing blue: The pass reads from or writes to a resource the selected pass uses, and can be merged with the current pass.</li>
+<li>Yellow: Indicates graphics fences. The compute pass you selected waits for this render pass before it runs, or makes this render pass wait.</li>
+<li>Black: Render graph culls the pass.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+
+<h3>Resources</h3>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Property</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">Resource type</td>
+	<td style="text-align:left;">The type of the resource. Refer to the following screenshot.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Resource name</td>
+	<td style="text-align:left;">The resource name.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Imported resource</td>
+	<td style="text-align:left;">Displays a left-facing arrow if the resource is imported. Refer to <a href="render-graph-import-a-texture.html">Import a texture into the render graph system</a>.</td>
+</tr>
+</tbody>
+</table>
+
+<h3>Render graph viewer icons</h3>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Icon</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><img src="../../uploads/urp/render-graph-viewer-icon-texture.png" alt="Texture icon"></td>
+	<td style="text-align:left;">A texture.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><img src="../../uploads/urp/render-graph-viewer-icon-acceleration-structure.png" alt="Acceleration structure icon"></td>
+	<td style="text-align:left;">An acceleration structure.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><img src="../../uploads/urp/render-graph-viewer-icon-buffer.png" alt="Buffer icon"></td>
+	<td style="text-align:left;">A buffer.</td>
+</tr>
+</tbody>
+</table>
+
+<h2>Resource List</h2>
+
+<p>Select a resource in the Resource List to expand or collapse information about the resource.</p>
+
+<p>You can also use the Search bar to find a resource by name.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Property</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">Resource name</td>
+	<td style="text-align:left;">The resource name.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Imported resource</td>
+	<td style="text-align:left;">Displays a left-facing arrow if the resource is imported.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Size</strong></td>
+	<td style="text-align:left;">The resource size in <span class="tooltip" tabindex="0" ><strong>pixels</strong><span class="tooltiptext">The smallest unit in a computer image. Pixel size depends on your screen resolution. Pixel lighting is calculated at every screen pixel. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ShadowPerformance.html" href="../ShadowPerformance.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#pixel" aria-label="Go to glossary anchor for pixel">Glossary</a></span></span></span>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Format</strong></td>
+	<td style="text-align:left;">The <span class="tooltip" tabindex="0" ><strong>texture format</strong><span class="tooltiptext">A file format for handling textures during real-time rendering by 3D graphics hardware, such as a graphics card or mobile device. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about texture-choose-format-by-platform.html" href="../texture-choose-format-by-platform.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#textureformat" aria-label="Go to glossary anchor for textureformat">Glossary</a></span></span></span>. For more information about texture formats, refer to <a href="https://docs.unity3d.com/2023.3/Documentation/ScriptReference/Experimental.Rendering.GraphicsFormat.html">GraphicsFormat</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Clear</strong></td>
+	<td style="text-align:left;">Displays <strong>True</strong> if URP clears the texture.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>BindMS</strong></td>
+	<td style="text-align:left;">Whether the texture is bound as a multisampled texture. For more information about multisampled textures, refer to <a href="https://docs.unity3d.com/ScriptReference/RenderTextureDescriptor-bindMS.html">RenderTextureDescriptor.BindMS</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Samples</strong></td>
+	<td style="text-align:left;">How many times Multisample Anti-aliasing (MSAA) samples the texture. Refer to <a href="anti-aliasing.html">Anti-aliasing</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Memoryless</strong></td>
+	<td style="text-align:left;">Displays <strong>True</strong> if the resource is stored in tile memory on mobile platforms that use tile-based deferred rendering (TBDR). For more information about TBDR, refer to <a href="render-graph-introduction.html">Render graph system introduction</a>.</td>
+</tr>
+</tbody>
+</table>
+
+<h2>Pass List</h2>
+
+<p>Select a render pass in the main window to display information about the render pass in the Pass List.</p>
+
+<p>You can also use the Search bar to find a render pass by name.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Property</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">Pass name</td>
+	<td style="text-align:left;">The render pass name. If URP merged multiple passes, this property displays the names of all the merged passes.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Native Render Pass Info</strong></td>
+	<td style="text-align:left;">Displays information about whether URP created a native render pass for this render pass by merging multiple render passes. For more information about native render passes, refer to <a href="render-graph-introduction.html">Introduction to the render graph system</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Pass break reasoning</strong></td>
+	<td style="text-align:left;">Displays the reasons why URP could not merge this render pass with the next render pass.</td>
+</tr>
+</tbody>
+</table>
+
+<h3>Render Graph Pass Info</h3>
+
+<p>The <strong>Render Graph Pass Info</strong> section displays information about the render pass, and each of the resources it uses.</p>
+
+<p>If URP merged multiple passes into this pass, the section displays information for each merged pass.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Property</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Name</strong></td>
+	<td style="text-align:left;">The render pass name.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Attachment dimensions</strong></td>
+	<td style="text-align:left;">The size of a resource the render pass uses, in pixels. Displays <strong>0x0x0</strong> if the render pass doesn’t use a resource.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Has depth attachment</strong></td>
+	<td style="text-align:left;">Whether the resource has a depth texture.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>MSAA samples</strong></td>
+	<td style="text-align:left;">How many times Multisample Anti-aliasing (MSAA) samples the texture. Refer to <a href="anti-aliasing.html">Anti-aliasing</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Async compute</strong></td>
+	<td style="text-align:left;">Whether the render pass accesses the resource using a compute <span class="tooltip" tabindex="0" ><strong>shader</strong><span class="tooltiptext">A program that runs on the GPU. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Shaders.html" href="../Shaders.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#shader" aria-label="Go to glossary anchor for shader">Glossary</a></span></span></span>.</td>
+</tr>
+</tbody>
+</table>
+
+<h3>Attachments Load/Store Actions</h3>
+
+<p>The <strong>Attachments Load/Store Actions</strong> section displays the resources the render pass uses. The section displays <strong>No attachments</strong> if the render pass doesn’t use any resources.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Property</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Name</strong></td>
+	<td style="text-align:left;">The resource name.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Load Action</strong></td>
+	<td style="text-align:left;">The load action for the resource. Refer to <a href="https://docs.unity3d.com/ScriptReference/Rendering.RenderBufferLoadAction.html"><code>RenderBufferLoadAction</code></a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Store Action</strong></td>
+	<td style="text-align:left;">The store action for the resource, and how URP uses the resource later in another render pass or outside the graph. Refer to <a href="https://docs.unity3d.com/ScriptReference/Rendering.RenderBufferStoreAction.html"><code>RenderBufferStoreAction</code></a>.</td>
+</tr>
+</tbody>
+</table>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="https://docs.unity3d.com/2023.3/Documentation/Manual/frame-debugger-window.html">Frame Debugger</a></li>
+<li><a href="understand-performance.html">Understand performance</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="../urp/render-graph-unsafe-pass.html"></a></span><div class="tip">Use the CommandBuffer interface in a render graph</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="../urp/inject-a-render-pass.html"></a></span><div class="tip">Adding a Scriptable Render Pass to the frame rendering loop in URP</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

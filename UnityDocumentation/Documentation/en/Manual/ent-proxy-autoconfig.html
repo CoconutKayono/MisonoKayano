@@ -1,0 +1,367 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Use Unity through web proxies</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<meta property="relative-path-to-manual" content="">
+<meta property="version-switcher-versions-with-this-page" content="Versions with this page:">
+<meta property="version-switcher-versions-without-this-page" content="Versions without this page:">
+<meta property="version-switcher-supported" content="Supported">
+<meta property="version-switcher-legacy" content="Legacy">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/Manual/ent-proxy-autoconfig.html">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20260626"></script><script type="text/javascript" src="docdata/toc.js?ts=20260626"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20260626"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20260626">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20260626">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/ent-proxy-autoconfig.html">English</a></li>
+<li><a href="/cn/current/Manual/ent-proxy-autoconfig.html">中文</a></li>
+<li><a href="/ja/current/Manual/ent-proxy-autoconfig.html">日本語</a></li>
+<li><a href="/kr/current/Manual/ent-proxy-autoconfig.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: Unity 6.7 Beta</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/ent-proxy-autoconfig.html">English</a></li>
+<li><a href="/cn/current/Manual/ent-proxy-autoconfig.html">中文</a></li>
+<li><a href="/ja/current/Manual/ent-proxy-autoconfig.html">日本語</a></li>
+<li><a href="/kr/current/Manual/ent-proxy-autoconfig.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="get-started.html">Get started</a></li>
+<li><a href="install-and-upgrade.html">Install and upgrade</a></li>
+<li><a href="ent-deployment.html">Deploy Unity across your enterprise</a></li>
+<li><a href="ent-web-proxies.html">Set up Unity for web proxies</a></li>
+<li>Use Unity through web proxies</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="ent-web-proxies.html"></a></span><div class="tip">Set up Unity for web proxies</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="ent-proxy-autoconfig-enable.html"></a></span><div class="tip">Enable automatic proxy configuration</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Use Unity through web proxies</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Some organizations use a web proxy, which is an intermediary server between users and the internet resource they’re requesting. Organizations use web proxies for several reasons, including security, privacy, and network efficiency.</p>
+
+<p>If you are deploying Unity in an environment that requires internet access through a web proxy, you might need to configure the web proxy, client computers, or both. Depending on your environment, this configuration includes some or all of these tasks:</p>
+
+<p><a name="prep-env" aria-hidden="true"></a></p>
+
+<ol>
+<li><a href="#prep-env">Prepare your environment so Unity applications can use your web proxy</a></li>
+<li><a href="#interception">Configure client computers to trust the web proxy certificate</a></li>
+<li><a href="#allow-exe">Allow the web proxy to download executable files</a></li>
+</ol>
+
+<h2>1) Prepare your environment so Unity applications can use your web proxy</h2>
+
+<p>The automatic proxy configuration feature lets you use Unity applications seamlessly when they need to communicate through a web proxy. Unity applications can communicate with the web proxy without interruption and without installing additional software. The amount of configuration required depends on the following factors:</p>
+
+<ul>
+<li>
+<strong>Unity version and operating system</strong>: Unity applications can access web proxy configuration from your operating system. Support for different operating systems varies based on your version of the Unity Editor.
+
+<ul>
+<li>On Windows, Editor versions 2022.3.21f1 or later support automatic proxy configuration.</li>
+<li>On macOS, support for automatic proxy configuration within the 2022 stream of the Editor begins with 2022.3.21f1. In the 2023 (and Unity 6) stream, support for automatic proxy configuration begins with 2023.3.0a18, including Unity 6 Beta.</li>
+<li>Other Editor versions and other operating systems require extra configuration.</li>
+</ul>
+</li>
+<li>
+<strong>Authentication type</strong>: Check if your proxy supports basic authentication (username and password), or if it uses a SPNEGO mechanism and a protocol, such as Kerberos or NTLM.</li>
+</ul>
+
+<p>Use the following tables (grouped by operating system) to decide which solution matches your environment:</p>
+
+<h3>Windows</h3>
+<table style="width:100%">
+<thead>
+ <tr>
+ <th style="width:17%;font-weight:bold">Unity version</th>
+ <th style="width:19%;font-weight:bold">Proxy authentication</th>
+ <th style="width:40%;font-weight:bold">Solution</th>
+ <th style="width:24%;font-weight:bold">Other information</th>
+ </tr>
+</thead>
+<tbody>
+ <tr>
+ <td>Editor 2022.3.21f1 or later<br>and<br>Hub version 3.4.2 or later</td>
+ <td>Accepts basic authentication</td>
+ <td>Do these tasks:<ul>
+<li>
+<a href="ent-proxy-autoconfig-enable.html">Enable automatic proxy configuration</a>.</li>
+<li>
+<a href="ent-proxy-autoconfig-store.html">Store your credentials in Credential Manager (Windows)</a>.</li>
+</ul>
+</td>
+ <td>Refer to footnote 1 that follows this table.</td>
+ </tr>
+ <tr>
+ <td>Editor 2022.3.21f1 or later<br>and<br>Hub version 3.4.2 or later</td>
+ <td>Doesn’t accept basic authentication, or doesn’t require authentication</td>
+ <td>Do these tasks:<ul>
+<li>
+<a href="ent-proxy-autoconfig-enable.html">Enable automatic proxy configuration</a>.</li>
+<li>If your proxy requires authentication, <a href="ent-proxy-exception-list.html">allow unauthenticated access for Unity applications in a proxy exception list</a>.</li>
+</ul>
+</td>
+ <td>Refer to footnote 1 that follows this table.</td>
+ </tr>
+ <tr>
+ <td>Editor 2022.3.20f1 or earlier<br>or<br>Hub 3.4.1 or earlier</td>
+ <td>Accepts basic authentication</td>
+ <td>Do these tasks:<ul>
+<li>
+<a href="ent-proxy-env-vars.html">Use environment variables to identify the web proxy</a>.</li>
+<li>
+<a href="ent-proxy-exception-list.html">Allow unauthenticated access for Unity applications in a proxy exception list</a> (preferred), or <a href="ent-proxy-env-vars.html">store username and password in the environment variables</a> for the proxy.</li>
+</ul>
+</td>
+ <td>Refer to footnote 2 that follows this table.</td>
+ </tr>
+ <tr>
+ <td>Editor 2022.3.20f1 or earlier<br>or<br>Hub 3.4.1 or earlier</td>
+ <td>Requires authentication but doesn’t accept basic authentication</td>
+ <td>Do these tasks:<ul>
+<li>
+<a href="ent-proxy-env-vars.html">Use environment variables to identify the web proxy</a>.</li>
+<li><a href="ent-proxy-exception-list.html">Allow unauthenticated access for Unity applications in a proxy exception list</a></li>
+</ul>
+</td>
+ <td>Refer to footnote 2 that follows this table.</td>
+ </tr>
+</tbody>
+</table>
+
+<ol>
+<li>You must be able to store proxy information in the operating system settings or in environment variables.</li>
+<li>Automatic proxy configuration isn’t fully supported on Windows before Editor version 2022.3.</li>
+</ol>
+
+<h3>macOS</h3>
+<table style="width:100%">
+<thead>
+ <tr>
+ <th style="width:17%;font-weight:bold">Unity version</th>
+ <th style="width:19%;font-weight:bold">Proxy authentication</th>
+ <th style="width:40%;font-weight:bold">Solution</th>
+ <th style="width:24%;font-weight:bold">Other information</th>
+ </tr>
+</thead>
+<tbody>
+ <tr>
+ <td>Editor 2022.3.21f1, 2023.3.0a18 (or later)<br>and<br>Hub version 3.4.2 or later</td>
+ <td>Accepts basic authentication</td>
+ <td>Do these tasks:<ul>
+<li>
+<a href="ent-proxy-autoconfig-enable.html">Enable automatic proxy configuration</a>.</li>
+<li>
+<a href="ent-proxy-autoconfig-store-mac.html">Store your credentials for automatic proxy configuration (macOS)</a>.</li>
+</ul>
+</td>
+ <td>Refer to footnote 1 that follows this table.</td>
+ </tr>
+ <tr>
+ <td>Editor 2022.3.21f1, 2023.3.0a18 (or later)<br>and<br>Hub version 3.4.2 or later</td>
+ <td>Doesn’t accept basic authentication, or doesn’t require authentication</td>
+ <td>Do these tasks:<ul>
+<li>
+<a href="ent-proxy-autoconfig-enable.html">Enable automatic proxy configuration</a>.</li>
+<li>If your proxy requires authentication, <a href="ent-proxy-exception-list.html">allow unauthenticated access for Unity applications in a proxy exception list</a>.</li>
+</ul>
+</td>
+ <td>Refer to footnote 1 that follows this table.</td>
+ </tr>
+ <tr>
+ <td>Editor 2023.2, 2023.1, 2022.3.20f1 or earlier<br>or<br>Hub 3.4.1 or earlier</td>
+ <td>Accepts basic authentication</td>
+ <td>Do these tasks:<ul>
+<li>
+<a href="ent-proxy-env-vars.html">Use environment variables to identify the web proxy</a>.</li>
+<li>
+<a href="ent-proxy-exception-list.html">Allow unauthenticated access for Unity applications in a proxy exception list</a> (preferred), or <a href="ent-proxy-env-vars.html">store username and password in the environment variables</a> for the proxy.</li>
+</ul>
+</td>
+ <td>Refer to footnote 2 that follows this table.</td>
+ </tr>
+ <tr>
+ <td>Editor 2023.2, 2023.1, 2022.3.20f1 or earlier<br>or<br>Hub 3.4.1 or earlier</td>
+ <td>Requires authentication but doesn’t accept basic authentication</td>
+ <td>Do these tasks:<ul>
+<li>
+<a href="ent-proxy-env-vars.html">Use environment variables to identify the web proxy</a>.</li>
+<li><a href="ent-proxy-exception-list.html">Allow unauthenticated access for Unity applications in a proxy exception list</a></li>
+</ul>
+</td>
+ <td>Refer to footnote 2 that follows this table.</td>
+ </tr>
+</tbody>
+</table>
+
+<ol>
+<li>You must be able to store proxy information in the operating system settings or in environment variables.</li>
+<li>Automatic proxy configuration isn’t fully supported on macOS for Editor versions 2023.2 and 2023.1 and any version before 2022.2.</li>
+</ol>
+
+<h3>Linux</h3>
+
+<p><a name="interception" aria-hidden="true"></a></p>
+<table style="width:100%">
+<thead>
+ <tr>
+ <th style="width:17%;font-weight:bold">Unity version</th>
+ <th style="width:19%;font-weight:bold">Proxy authentication</th>
+ <th style="width:40%;font-weight:bold">Solution</th>
+ <th style="width:24%;font-weight:bold">Other information</th>
+ </tr>
+</thead>
+<tbody>
+ <tr>
+ <td>Any</td>
+ <td>Any</td>
+ <td>Do these tasks:<ul>
+<li>
+<a href="ent-proxy-env-vars.html">Use environment variables to identify the web proxy</a>.</li>
+<li>If your proxy requires authentication, <a href="ent-proxy-exception-list.html">allow unauthenticated access for Unity applications in a proxy exception list</a>.</li>
+</ul>
+</td>
+ <td></td>
+ </tr>
+</tbody>
+</table>
+
+<p><a name="allow-exe" aria-hidden="true"></a></p>
+
+<h2>2) Configure client computers to trust the web proxy certificate</h2>
+
+<p>Check if your web proxy uses SSL inspection, which some enterprises use to inspect the contents of secure (TLS) requests. If your enterprise uses SSL inspection, configure client computers to <a href="ent-proxy-cert-trust.html">trust the web proxy certificate</a>.</p>
+
+<h2>3) Allow the web proxy to download executable files</h2>
+
+<p>Check if your web proxy prevents downloading of executable files, or requires user confirmation before downloading executable files. If so, you need to configure the web proxy to allow this traffic on specific endpoints. Otherwise, users won’t be able to run the installers that the Unity Hub uses to install components required by the Unity Editor. For details, refer to <a href="ent-proxy-exception-list.html#endpoints-exe">Endpoints that download executable files</a>. </p>
+
+<p><a name="limitations" aria-hidden="true"></a></p>
+
+<h2>Known limitations</h2>
+
+<ul>
+<li>For organizations that configure the web proxy with a proxy auto configuration (PAC) file, the <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Proxy_servers_and_tunneling/Proxy_Auto-Configuration_PAC_file#history_and_implementation:~:text=support%20as%20well%3A-,HTTP,-host%3Aport" target="_blank" rel="noopener noreferrer"><code>HTTP</code> keyword</a> isn’t supported. Instead, use the <a href="https://chromium.googlesource.com/chromium/src/+/HEAD/net/docs/proxy.md#HTTP-proxy-scheme:~:text=Example%20identifier%20(PAC)%3A-,PROXY,-proxy%3A8080%2C" target="_blank" rel="noopener noreferrer"><code>PROXY</code> keyword</a> to specify a proxy that communicates over HTTP.</li>
+<li>For organizations that configure multiple web proxies with the same target URL, Unity applications will use only the first proxy discovered. If that web proxy isn’t reachable, Unity applications will not attempt to use any of the other web proxies.</li>
+</ul>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="ent-proxy-autoconfig-enable.html">Enable automatic proxy configuration</a></li>
+<li><a href="ent-proxy-autoconfig-store.html">Store credentials for automatic proxy configuration (Windows)</a></li>
+<li><a href="ent-proxy-autoconfig-store-mac.html">Store credentials for automatic proxy configuration (macOS)</a></li>
+<li><a href="ent-proxy-env-vars.html">Use environment variables to identify your web proxy</a></li>
+<li><a href="ent-proxy-exception-list.html">Define exceptions on your web proxy</a></li>
+<li><a href="ent-proxy-cert-trust.html">Trusting the web proxy security certificate</a></li>
+<li>
+<a href="https://docs.unity3d.com/licensing/manual/Requirements.html#client-requirements" target="_blank" rel="noopener noreferrer">Unity Licensing Client requirements</a> (Unity Floating Licensing)</li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="ent-web-proxies.html"></a></span><div class="tip">Set up Unity for web proxies</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="ent-proxy-autoconfig-enable.html"></a></span><div class="tip">Enable automatic proxy configuration</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

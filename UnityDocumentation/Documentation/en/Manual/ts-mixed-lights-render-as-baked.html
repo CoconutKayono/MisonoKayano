@@ -1,0 +1,178 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Troubleshooting objects appearing unlit or darker than intended</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<meta property="relative-path-to-manual" content="">
+<meta property="version-switcher-versions-with-this-page" content="Versions with this page:">
+<meta property="version-switcher-versions-without-this-page" content="Versions without this page:">
+<meta property="version-switcher-supported" content="Supported">
+<meta property="version-switcher-legacy" content="Legacy">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/Manual/ts-mixed-lights-render-as-baked.html">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20260626"></script><script type="text/javascript" src="docdata/toc.js?ts=20260626"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20260626"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20260626">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20260626">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/ts-mixed-lights-render-as-baked.html">English</a></li>
+<li><a href="/cn/current/Manual/ts-mixed-lights-render-as-baked.html">中文</a></li>
+<li><a href="/ja/current/Manual/ts-mixed-lights-render-as-baked.html">日本語</a></li>
+<li><a href="/kr/current/Manual/ts-mixed-lights-render-as-baked.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: Unity 6.7 Beta</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/ts-mixed-lights-render-as-baked.html">English</a></li>
+<li><a href="/cn/current/Manual/ts-mixed-lights-render-as-baked.html">中文</a></li>
+<li><a href="/ja/current/Manual/ts-mixed-lights-render-as-baked.html">日本語</a></li>
+<li><a href="/kr/current/Manual/ts-mixed-lights-render-as-baked.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="LightingOverview.html">Lighting</a></li>
+<li><a href="lighting-light-sources.html">Light sources</a></li>
+<li><a href="lighting-light-components.html">Light components</a></li>
+<li><a href="lighting-light-components-configuring.html">Configuring Light components</a></li>
+<li><a href="lighting-mode-landing.html">Configuring Mixed lights with Lighting Modes</a></li>
+<li>Troubleshooting objects appearing unlit or darker than intended</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="lighting-mode-runtime.html"></a></span><div class="tip">Adjust Mixed lights at runtime</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="lighting-ambient-light.html"></a></span><div class="tip">Add ambient light from the environment</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Troubleshooting objects appearing unlit or darker than intended</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Fix issues causing some objects to appear unlit or darker than intended.</p>
+
+<figure>
+<img src="../uploads/Main/ex-mixed-lights-render-as-baked.png" alt=" Three images depicting the same scene of a room filled by a 3 by 3 grid of spheres, baked in Shadowmask Lighting Mode. The first image shows that some of the spheres are unlit and appear dark compared to others. The second image shows the same scene in the Light Overlap debug view to highlight overlapping lights in red. The third image shows the same scene in the Shadowmask debug view.">
+<figcaption> Three images depicting the same scene of a room filled by a 3 by 3 grid of spheres, baked in Shadowmask Lighting Mode. The first image shows that some of the spheres are unlit and appear dark compared to others. The second image shows the same scene in the Light Overlap debug view to highlight overlapping lights in red. The third image shows the same scene in the Shadowmask debug view.</figcaption>
+</figure>
+
+<h2>Symptoms</h2>
+
+<p>Mixed lights in the <span class="tooltip" tabindex="0" ><strong>scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html" href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span> are rendered as <span class="tooltip" tabindex="0" ><strong>baked lights</strong><span class="tooltiptext">Light components whose Mode property is set to Baked. Unity pre-calculates the illumination from Baked Lights before runtime, and does not include them in any runtime lighting calculations. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about LightModes-introduction.html#baked" href="LightModes-introduction.html#baked">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#bakedlights" aria-label="Go to glossary anchor for bakedlights">Glossary</a></span></span></span> and some objects and areas in the scene appear unlit or darker than intended.</p>
+
+<h2>Cause</h2>
+
+<p>This issue can occur when Unity converts mixed lights to baked lights during the lighting setup. Baked lights don’t provide real-time lighting, so they don’t illuminate dynamically in the scene. Instead, their contribution is baked into <span class="tooltip" tabindex="0" ><strong>lightmaps</strong><span class="tooltiptext">A pre-rendered texture that contains the effects of light sources on static objects in the scene. Lightmaps are overlaid on top of scene geometry to create the effect of lighting. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Lightmapping.html" href="Lightmapping.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Lightmap" aria-label="Go to glossary anchor for Lightmap">Glossary</a></span></span></span>, <span class="tooltip" tabindex="0" ><strong>light probes</strong><span class="tooltiptext">Light probes store information about how light passes through space in your scene. A collection of light probes arranged within a given space can improve lighting on moving objects and static LOD scenery within that space. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about LightProbes.html" href="LightProbes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#LightProbe" aria-label="Go to glossary anchor for LightProbe">Glossary</a></span></span></span>, or <span class="tooltip" tabindex="0" ><strong>reflection probes</strong><span class="tooltiptext">A rendering component that captures a spherical view of its surroundings in all directions, rather like a camera. The captured image is then stored as a Cubemap that can be used by objects with reflective materials. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-ReflectionProbe.html" href="class-ReflectionProbe.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#ReflectionProbe" aria-label="Go to glossary anchor for ReflectionProbe">Glossary</a></span></span></span>. If you don’t properly configure the baked lighting setup, objects may remain dark due to missing or incomplete lighting data during the bake process.</p>
+
+<p>In <span class="tooltip" tabindex="0" ><a href="lighting-mode.html#shadowmask">Shadowmask</a><span class="tooltiptext">A shadowmask texture uses the same UV layout and resolution as its corresponding lightmap texture. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about lighting-mode.html#shadowmask" href="lighting-mode.html#shadowmask">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Shadowmask" aria-label="Go to glossary anchor for Shadowmask">Glossary</a></span></span></span> Lighting Mode, only four mixed lights can overlap. Unity converts lights that exceed this limit into baked lights.</p>
+
+<p>In <a href="lighting-mode.html#subtractive">Subtractive</a> Lighting Mode, no lights (except for directional lights) cast real-time shadows. This is a limitation of this lighting mode.</p>
+
+<p>When you use baked lighting, real-time adjustments (such as changing the light’s color, intensity, or position during runtime) are no longer possible, which may limit dynamic or interactive lighting effects in the scene and cause the objects to appear darker or lit in unintended ways.</p>
+
+<h2>Resolution - Change the light placement and radius</h2>
+
+<p>To verify that light overlap exceeding the limit is the main issue, switch to the <a href="GIVis.html#light-overlap-baked-global-illumination-only">Light Overlap</a> <strong>Scene</strong> view draw mode after generating lighting. This draw mode highlights overlapping lights in red so you can identify the number of overlapping lights.</p>
+
+<p>Move the affected lights so that they no longer overlap. You can also adjust the <strong>Range</strong> or <strong>Spot Angle</strong> properties in the <a href="class-Light.html">Light</a> component. Generate lighting again after making the changes to check if this fixes the issue.</p>
+
+<h2>Resolution - Switch to a different Lighting Mode</h2>
+
+<p>Each <a href="lighting-mode.html">Lighting Mode</a> has different advantages and limitations. If your project will be lit using a single directional light, then consider the <strong>Subtractive</strong> Lighting Mode instead of <strong>Shadowmask</strong>. Refer to <a href="lighting-mode.html">Lighting Modes</a> to view the different limits and ways Unity calculates lighting for each mode.</p>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="lighting-mode-runtime.html"></a></span><div class="tip">Adjust Mixed lights at runtime</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="lighting-ambient-light.html"></a></span><div class="tip">Add ambient light from the environment</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

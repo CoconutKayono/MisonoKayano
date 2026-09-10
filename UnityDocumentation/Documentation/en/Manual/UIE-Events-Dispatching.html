@@ -1,0 +1,226 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Dispatch events</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<meta property="relative-path-to-manual" content="">
+<meta property="version-switcher-versions-with-this-page" content="Versions with this page:">
+<meta property="version-switcher-versions-without-this-page" content="Versions without this page:">
+<meta property="version-switcher-supported" content="Supported">
+<meta property="version-switcher-legacy" content="Legacy">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/Manual/UIE-Events-Dispatching.html">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20260626"></script><script type="text/javascript" src="docdata/toc.js?ts=20260626"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20260626"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20260626">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20260626">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/UIE-Events-Dispatching.html">English</a></li>
+<li><a href="/cn/current/Manual/UIE-Events-Dispatching.html">中文</a></li>
+<li><a href="/ja/current/Manual/UIE-Events-Dispatching.html">日本語</a></li>
+<li><a href="/kr/current/Manual/UIE-Events-Dispatching.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: Unity 6.7 Beta</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/UIE-Events-Dispatching.html">English</a></li>
+<li><a href="/cn/current/Manual/UIE-Events-Dispatching.html">中文</a></li>
+<li><a href="/ja/current/Manual/UIE-Events-Dispatching.html">日本語</a></li>
+<li><a href="/kr/current/Manual/UIE-Events-Dispatching.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="UIToolkits.html">UI systems</a></li>
+<li><a href="UIElements.html">UI Toolkit</a></li>
+<li><a href="UIE-Events.html">Control behavior with events</a></li>
+<li>Dispatch events</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="UIE-Events.html"></a></span><div class="tip">Control behavior with events</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="UIE-capture-the-pointer.html"></a></span><div class="tip">Capture the pointer with a manipulator</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Dispatch events</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>The <span class="tooltip" tabindex="0" ><strong>event system</strong><span class="tooltiptext">A way of sending events to objects in the application based on input, be it keyboard, mouse, touch, or custom input. The Event System consists of a few components that work together to send events. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UIE-Runtime-Event-System.html" href="UIE-Runtime-Event-System.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#EventSystem" aria-label="Go to glossary anchor for EventSystem">Glossary</a></span></span></span> listens for events that come from the operating system or <span class="tooltip" tabindex="0" ><strong>scripts</strong><span class="tooltiptext">A piece of code that allows you to create your own Components, trigger game events, modify Component properties over time and respond to user input in any way you like. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about creating-scripts.html" href="creating-scripts.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scripts" aria-label="Go to glossary anchor for Scripts">Glossary</a></span></span></span>, then uses the <a href="../ScriptReference/UIElements.EventDispatcher.html">EventDispatcher</a> to dispatch those events to <span class="tooltip" tabindex="0" ><strong>visual elements</strong><span class="tooltiptext">A node of a visual tree that instantiates or derives from the C# <a href="../ScriptReference/UIElements.VisualElement.html"><code>VisualElement</code></a> class. You can style the look, define the behaviour, and display it on screen as part of the UI. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UIE-VisualTree.html" href="UIE-VisualTree.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#visualelement" aria-label="Go to glossary anchor for visualelement">Glossary</a></span></span></span>. The event dispatcher determines an appropriate dispatching strategy for each event it sends. Once determined, the dispatcher executes the strategy.</p>
+
+<p>Visual elements implement default behaviors for several events. This involves the creation and execution of additional events. For example, a <a href="../ScriptReference/UIElements.PointerMoveEvent.html"><code>PointerMoveEvent</code></a> can generate an additional <a href="../ScriptReference/UIElements.PointerEnterEvent.html"><code>PointerEnterEvent</code></a> and a <a href="../ScriptReference/UIElements.PointerLeaveEvent.html"><code>PointerLeaveEvent</code></a>. These events enter a queue and process after the current event. For example, the <code>PointerMoveEvent</code> finishes processing before the <code>PointerEnterEvent</code> and <code>PointerLeaveEvent</code> events.</p>
+
+<h2>Dispatch behavior of event types</h2>
+
+<p>Each event type has its own dispatch behavior. The behavior of each event type breaks down into two stages:</p>
+
+<ul>
+<li>
+<strong>Trickles down</strong>: Events sent to elements during the trickle-down phase.</li>
+<li>
+<strong>Bubbles up</strong>: Events sent to elements during the bubble-up phase.</li>
+</ul>
+
+<p>For a list of dispatch behavior for each event type, refer to the <a href="UIE-Events-Reference.html">Event reference page</a>.</p>
+
+<p><a name="event-propagation" aria-hidden="true"></a></p>
+
+<h2>Event propagation</h2>
+
+<p>After the event dispatcher selects the event target, it computes the propagation path of the event. The propagation path is an ordered list of visual elements that receive the event. The propagation path occurs in the following order:</p>
+
+<ol>
+<li>The path starts at the root of the visual element tree and descends towards the target. This is the <strong>trickle-down phase</strong>. The target element is the last to receive the event during this phase.</li>
+<li>The event then ascends the tree towards the root. This is the <strong>bubble-up phase</strong>. The target element is the first to receive the event during this phase.</li>
+</ol>
+
+<figure>
+<img src="../uploads/Main/UIElementsEvents.png" alt="Propagation path">
+<figcaption>Propagation path</figcaption>
+</figure>
+
+<p>Every element in the propagation path, including the target, receives the event twice: once during the trickle-down phase and once during the bubble-up phase. As a result, callbacks on the target registered with <code>TrickleDown.TrickleDown</code> are guaranteed to execute before those registered with the default <code>TrickleDown.NoTrickleDown</code>.</p>
+
+<p>Most event types are sent to all elements along the propagation path. Some event types skip the bubble-up phase, and some event types are sent to the event target only.</p>
+
+<p>If you hide or disable an element, it doesn’t receive events. Events still propagate to the ancestors and descendants of a hidden or disabled element.</p>
+
+<h2>Event target</h2>
+
+<p>As an event travels along the propagation path, <code>Event.currentTarget</code> updates to the element handling the event. Within an event callback function, there are two properties that log the dispatch behavior:</p>
+
+<ul>
+<li>
+<a href="../ScriptReference/UIElements.EventBase-currentTarget.html"><code>EventBase.currentTarget</code></a> is the visual element on which the callback was registered.</li>
+<li>
+<a href="../ScriptReference/UIElements.EventBase-target.html"><code>EventBase.target</code></a> is the element where the event occurs, for example, the element directly under the pointer.</li>
+</ul>
+
+<p>The target of an event depends on the event type. For pointer events, the target is most commonly the topmost pickable element, directly under the pointer. For keyboard events, the target is the element that has focus.</p>
+
+<p>UI Toolkit events have a <code>target</code> property that contains a reference to the element where the event occurred. For most events that originate from the operating system, the dispatch process finds the event target automatically.</p>
+
+<p>The target element is stored in <code>EventBase.target</code> and doesn’t change during the dispatch process. The property <code>Event.currentTarget</code> updates to the visual element currently handling the event.</p>
+
+<p>
+<a href="../ScriptReference/UIElements.ChangeEvent_1.html"><code>ChangeEvent</code></a> bubbles through the hierarchy. If you register a handler on an <strong>ancestor</strong> element, your callback runs when a <strong>child</strong> control dispatches a <code>ChangeEvent</code> of the same type; <code>target</code> is the control that <strong>originated</strong> the change, while <code>currentTarget</code> is the element where you registered the handler. To run logic for only one control, compare <code>evt.target</code> to that element. For details and caveats (including composite controls and nested dispatch), refer to <a href="UIE-Change-Events.html">Change events</a>.</p>
+
+<h2>Picking mode and custom shapes</h2>
+
+<p>Most pointer events use the picking mode to decide their target. The <code>VisualElement</code> class has a <code>pickingMode</code> property that supports the following values:</p>
+
+<ul>
+<li>
+<a href="../ScriptReference/UIElements.PickingMode.Position.html"><code>PickingMode.Position</code></a> (default): performs picking based on the position rectangle.</li>
+<li>
+<a href="../ScriptReference/UIElements.PickingMode.Ignore.html"><code>PickingMode.Ignore</code></a>: prevents picking as the result of a pointer event.</li>
+</ul>
+
+<p>You can override the <a href="../ScriptReference/UIElements.VisualElement.ContainsPoint.html"><code>VisualElement.ContainsPoint()</code></a> method to perform custom intersection logic.</p>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="UIE-Events-Handling.html">Handle event callbacks and value changes</a></li>
+<li><a href="UIE-Change-Events.html">Change events</a></li>
+<li><a href="UIE-Events-Synthesizing.html">Synthesize and send events</a></li>
+<li><a href="UIE-Events-Reference.html">Events reference</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="UIE-Events.html"></a></span><div class="tip">Control behavior with events</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="UIE-capture-the-pointer.html"></a></span><div class="tip">Capture the pointer with a manipulator</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

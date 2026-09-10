@@ -1,0 +1,328 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Example native audio plug-ins included in the SDK</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<meta property="relative-path-to-manual" content="">
+<meta property="version-switcher-versions-with-this-page" content="Versions with this page:">
+<meta property="version-switcher-versions-without-this-page" content="Versions without this page:">
+<meta property="version-switcher-supported" content="Supported">
+<meta property="version-switcher-legacy" content="Legacy">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/Manual/AudioNativePluginExamples.html">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20260626"></script><script type="text/javascript" src="docdata/toc.js?ts=20260626"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20260626"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20260626">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20260626">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/AudioNativePluginExamples.html">English</a></li>
+<li><a href="/cn/current/Manual/AudioNativePluginExamples.html">中文</a></li>
+<li><a href="/ja/current/Manual/AudioNativePluginExamples.html">日本語</a></li>
+<li><a href="/kr/current/Manual/AudioNativePluginExamples.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: Unity 6.7 Beta</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/AudioNativePluginExamples.html">English</a></li>
+<li><a href="/cn/current/Manual/AudioNativePluginExamples.html">中文</a></li>
+<li><a href="/ja/current/Manual/AudioNativePluginExamples.html">日本語</a></li>
+<li><a href="/kr/current/Manual/AudioNativePluginExamples.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="Audio.html">Audio</a></li>
+<li><a href="AudioMixerNativeAudioPlugin.html">Native audio plug-in SDK</a></li>
+<li>Example native audio plug-ins included in the SDK</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="AudioNativePluginImport.html"></a></span><div class="tip">Use your native audio DSP plug-in and GUI in Unity</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="AudioSpatializerSDK.html"></a></span><div class="tip">Audio Spatializer SDK</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Example native audio plug-ins included in the SDK</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>The <a href="https://github.com/Unity-Technologies/NativeAudioPlugins">audio plug-in SDK</a> contains a variety of different audio <span class="tooltip" tabindex="0" ><strong>plug-in</strong><span class="tooltiptext">A set of code created outside of Unity that creates functionality in Unity. There are two kinds of plug-ins you can use in Unity: Managed plug-ins (managed .NET assemblies created with tools like Visual Studio) and Native plug-ins (platform-specific native code libraries). <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ./plug-ins.html" href="./plug-ins.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#plug-in" aria-label="Go to glossary anchor for plug-in">Glossary</a></span></span></span> types. The plug-in code in the SDK is available in the public domain so you can use this code as a template. The project contains examples of native DSP plug-ins with and without a customized GUI. </p>
+
+<p>If you want to use an IDE to edit and compile the example plug-in code, the SDK includes projects for multiple IDEs. The following table shows you where to find the projects for each of the IDEs:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>IDE</strong></th>
+	<th style="text-align:left;"><strong>Location</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Visual Studio</strong></td>
+	<td style="text-align:left;">
+<code>NativeAudioPlugins-master\NativeCode\VisualStudio\AudioPluginDemo.sln</code> (Plug-in project).</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Visual Studio</strong></td>
+	<td style="text-align:left;">
+<code>NativeAudioPlugins-master\GUICode\AudioPluginDemoGUI\AudioPluginDemoGUI.sln</code> (GUI project).</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>XCode</strong></td>
+	<td style="text-align:left;"><code>NativeAudioPlugins-master\NativeCode\Xcode\AudioPluginDemo.xcodeproj</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>UWP</strong></td>
+	<td style="text-align:left;"><code>NativeAudioPlugins-master\NativeCode\UWP\AudioPluginDemo.sln</code></td>
+</tr>
+</tbody>
+</table>
+
+<p>To access the example plug-ins in Unity: </p>
+
+<ol>
+<li><p>Open the <code>demos</code> Unity project (folder: <strong>NativeAudioPlugin</strong> &gt; <strong>Assets</strong>).</p></li>
+<li><p>In the Unity project, go to <strong>Assets</strong> &gt; <strong>mixers</strong>. </p></li>
+<li><p>Click on the arrow next to some of the mixers to expand them. </p></li>
+<li><p>Click on any Audio Mixer Group Controller. In the <span class="tooltip" tabindex="0" ><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheInspector.html" href="UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span>, it shows any effects attached to the Audio Mixer Group Controller. </p></li>
+<li><p>To add an effect, click the <strong>Add Effect</strong> button. This lists all of the example plug-in effects that you can add. </p></li>
+<li><p>Select the effect you want to add. Unity displays your effect in the Inspector. </p></li>
+</ol>
+
+<p>If you enter Play mode with the Inspector open, some of the effects update as the sounds change. </p>
+
+<h2 id="example-no-gui">Example plug-ins without custom GUIs</h2>
+
+<p>This section lists a few example plug-ins included in the <code>AudioNativePlugin</code> project that have the default Unity sliders instead of a custom GUI.</p>
+
+<p>To access the plug-in code files directly, in the SDK folder, go to <code>NativeAudioPlugins/NativeCode</code>.</p>
+
+<figure>
+<img src="../uploads/Main/AudioMixerStereoWidener.png" alt="Simple plug-ins without custom GUIs.">
+<figcaption>Simple plug-ins without custom GUIs.</figcaption>
+</figure>
+
+<h3>The NoiseBox plug-in</h3>
+
+<p>The NoiseBox plug-in is a plug-in that adds and multiplies the input signal by white noise at variable frequencies. You could use this in combination with the Lofinator plug-in and animated parameters to simulate effects such as mobile phone sounds, poor radio reception, and broken loudspeakers. </p>
+
+<h3>The Ring Modulator example plug-in</h3>
+
+<p>The Ring Modulator example plug-in is an example of a simple modulator that multiplies any incoming signal by a sine wave. This gives a radio-noise or lost-signal effect. To increase the effect, chain together multiple ring modulation effects with different frequencies.</p>
+
+<h3>The StereoWidener example plug-in</h3>
+
+<p>The StereoWidener plug-in decomposes a stereo input signal into mono and side components with variable delay and then recombines these to increase the perceived stereo effect.</p>
+
+<h3>The Lofinator plug-in</h3>
+
+<p>The Lofinator plug-in does simple downsampling and quantization of the signal. You could use this in combination with the NoiseBox plug-in and animated parameters to simulate effects such as mobile phone sounds, poor radio reception, and broken loudspeakers. </p>
+
+<h2 id="example-with-gui">Example audio plug-ins with custom GUIs</h2>
+
+<p>This section provides advanced plug-in use cases, including effects for equalization and multiband <span class="tooltip" tabindex="0" ><strong>compression</strong><span class="tooltiptext">A method of storing data that reduces the amount of storage space it requires. See <a href="texture-choose-format-by-platform.html">Texture Compression</a>, <a href="class-AnimationClip.html#AssetProperties">Animation Compression</a>, <a href="class-AudioClip.html">Audio Compression</a>, <a href="ReducingFilesize.html">Build Compression</a>.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#compression" aria-label="Go to glossary anchor for compression">Glossary</a></span></span></span>. These plug-ins have a higher number of parameters than the plug-ins in the previous section. Some plug-in parameters are too complex for the default sliders.</p>
+
+<p>To access the example custom GUI code directly, in the SDK folder, navigate to <code>NativeAudioPlugins-master\GUICode\AudioPluginDemoGUI</code>. </p>
+
+<h3>The Equalizer example plug-in</h3>
+
+<p>The Equalizer plug-in includes a display graph showing the result curve and the individual filter contributions. To change one or multiple parameter values, click and drag on the parameter(s) on the control graph. This way, you don’t need to change each slider individually. </p>
+
+<figure>
+<img src="../uploads/Main/AudioMixerCustomGUI.png" alt="The Inspector window displays the Equalizer plug-in with control graph and sliders for individual configurable parameters.">
+<figcaption>The Inspector window displays the Equalizer plug-in with control graph and sliders for individual configurable parameters.</figcaption>
+</figure>
+
+<p>To change the gains and frequencies of the filter curve, drag the three bands on the control graph. To change the shape of each band, hold Shift and click and drag the band. </p>
+
+<p>You can use Unity’s internal API functions to plot the curves and draw antialiased curves for the frequency response.</p>
+
+<h3>Code to analyze plug-in data and GUI performance</h3>
+
+<p>Both Equalizer and Multiband plug-ins also provide code to overlay the input and output spectra for visualizing the effect of the plug-ins. The GUI code runs at much lower update rate than the audio processing and doesn’t have access to the audio streams. Therefore, to read this data, the native code provides the following function:</p>
+
+<pre><code class="lang-cpp">UNITY_AUDIODSP_RESULT UNITY_AUDIODSP_CALLBACK GetFloatParameterCallback(
+    UnityAudioEffectState* state,
+    int index,
+    float* value,
+    char *valuestr)
+{
+    EffectData::Data* data = &amp;state-&gt;GetEffectData&lt;EffectData&gt;()-&gt;data;
+    if(index &gt;= P_NUM)
+        return UNITY_AUDIODSP_ERR_UNSUPPORTED;
+    if(value != NULL)
+        *value = data-&gt;p[index];
+    if(valuestr != NULL)
+        valuestr[0] = 0;
+  return UNITY_AUDIODSP_OK;
+}
+</code></pre>
+
+<p>This function enables the GUI to read floating-point data from the <span class="tooltip" tabindex="0" ><strong>native plug-in</strong><span class="tooltiptext">A platform-specific native code library that is created outside of Unity for use in Unity. Allows you can access features like OS calls and third-party code libraries that would otherwise not be available to Unity. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ./plug-ins.html" href="./plug-ins.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#nativeplug-in" aria-label="Go to glossary anchor for nativeplug-in">Glossary</a></span></span></span>. There is also an array variant called <code>GetFloatBufferCallback</code>. The plug-in system accepts any data as long as the request doesn’t affect the performance of the UI or the native code. </p>
+
+<p>For the Equalizer and Multiband code, a utility class called <code>FFTAnalyzer</code> makes it easy to feed in input and output data from the plug-in and get a spectrum back. Then, <code>GetFloatBufferCallback</code> resamples this spectrum data and sends it to the C# GUI code. </p>
+
+<p>The data must be resampled so that the <code>FFTAnalyzer</code> runs the analysis at a fixed frequency resolution. <code>GetFloatBufferCallback</code> just returns the number of samples requested, which is determined by the width of the view that’s displaying the data. </p>
+
+<h3>The CorrelationMeter example plug-in</h3>
+
+<p>The CorrelationMeter plug-in has a minimal amount of DSP code. This plug-in plots the amplitude of the left channel against the amplitude of the right channel to show the stereo effects of the signal.</p>
+
+<figure>
+<img src="../uploads/Main/AudioMixerDemoCorrelationMeter.png" alt="Custom GUI of the CorrelationMeter plugin.">
+<figcaption>Custom GUI of the CorrelationMeter plugin.</figcaption>
+</figure>
+
+<figure>
+<img src="../uploads/Main/AudioMixerDemoMultiband.png" alt="Equalizer GUI with overlaid spectrum analysis (green curve is source, red is processed).">
+<figcaption>Equalizer GUI with overlaid spectrum analysis (green curve is source, red is processed).</figcaption>
+</figure>
+
+<p>Both the Equalizer and Multiband effects are kept intentionally simple and unoptimized, but they serve as good examples of more complex UIs that are supported by the plug-in system. </p>
+
+<h3>Loudness Monitoring tool</h3>
+
+<p>This is an example of a loudness monitoring tool measuring levels at 3 different time-scales.
+This is just for demonstration purposes, but lets you build a monitor tool that
+conforms to modern loudness standardizations. The curve rendering code is built into Unity.</p>
+
+<figure>
+<img src="../uploads/Main/AudioMixerDemoLoudnessMeter.png" alt="The Inspector window displays the loudness monitoring tool plug-in with graph and sliders for individual configurable parameters.">
+<figcaption>The Inspector window displays the loudness monitoring tool plug-in with graph and sliders for individual configurable parameters.</figcaption>
+</figure>
+
+<h3>Synchronizing to the DSP clock</h3>
+
+<p>You can also use the plug-in system to generate sound instead of processing it. </p>
+
+<p>
+<code>Plugin_TeeBee.cpp</code> and <code>Plugin_TeeDee.cpp</code> are simple synths that:
+* generate patterns with random notes
+* have parameters for tweaking the filters and envelopes in the synthesis engine</p>
+
+<p>
+<code>ProcessCallback</code> reads the <code>state-&gt;dsptick</code> parameter to determine the position in a song. This counter is a global sample position. To make all plug-in effects stay in sync to the same sample-based clock:</p>
+
+<ol>
+<li><p>Divide the counter by the length of each note specified in the sample.</p></li>
+<li><p>When this division has a zero remainder, fire a note event to the synthesis engine. </p></li>
+</ol>
+
+<p>If you want to play a pre-recorded piece of music with a known tempo through such an effect, use the timing information to apply tempo-synchronized filter effects or delays on the music.</p>
+
+<h2>Spatialization</h2>
+
+<p>The Spatialization SDK is an example of a plug-in that uses the native audio plug-in SDK as a foundation. The spatialization SDK lets you develop custom spatialization effects to instantiate per <span class="tooltip" tabindex="0" ><strong>audio source</strong><span class="tooltiptext">A component which plays back an Audio Clip in the scene to an audio listener or through an audio mixer. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-AudioSource.html" href="class-AudioSource.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#AudioSource" aria-label="Go to glossary anchor for AudioSource">Glossary</a></span></span></span>.
+For more information, refer to <a href="AudioSpatializerSDK.html">Audio Spatializer SDK</a>.</p>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><p><a href="AudioMixer.html">Audio Mixer</a></p></li>
+<li><p><a href="AudioMixerNativeAudioPlugin.html">Native audio plug-in SDK</a></p></li>
+<li><p><span class="tooltip" tabindex="0" ><a href="AudioSpatializerSDK.html">Audio Spatializer</a><span class="tooltiptext">A plug-in that changes the way audio is transmitted from an audio source into the surrounding space. It takes the source and regulates the gains of the left and right ear contributions based on the distance and angle between the AudioListener and the AudioSource. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about AudioSpatializerSDK.html" href="AudioSpatializerSDK.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#AudioSpatializer" aria-label="Go to glossary anchor for AudioSpatializer">Glossary</a></span></span></span></p></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="AudioNativePluginImport.html"></a></span><div class="tip">Use your native audio DSP plug-in and GUI in Unity</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="AudioSpatializerSDK.html"></a></span><div class="tip">Audio Spatializer SDK</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

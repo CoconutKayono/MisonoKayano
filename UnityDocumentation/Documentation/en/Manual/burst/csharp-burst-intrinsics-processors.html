@@ -1,0 +1,268 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Processor specific SIMD extensions</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<meta property="relative-path-to-manual" content="../">
+<meta property="version-switcher-versions-with-this-page" content="Versions with this page:">
+<meta property="version-switcher-versions-without-this-page" content="Versions without this page:">
+<meta property="version-switcher-supported" content="Supported">
+<meta property="version-switcher-legacy" content="Legacy">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/Manual/burst/csharp-burst-intrinsics-processors.html">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../../StaticFilesManual/js/jquery.js?ts=20260626"></script><script type="text/javascript" src="../../StaticFilesManual/js/core.js?ts=20260626"></script><script type="text/javascript" src="../../StaticFilesManual/js/image-comp.js?ts=20260626"></script><script type="text/javascript" src="../docdata/toc.js?ts=20260626"></script><script type="text/javascript" src="../docdata/global_toc.js?ts=20260626"></script><link rel="stylesheet" type="text/css" href="../../StaticFilesManual/css/core.css?ts=20260626">
+<link rel="stylesheet" type="text/css" href="../../StaticFilesManual/css/icons.css?ts=20260626">
+<link rel="stylesheet" href="../../StaticFilesManual/css/prism.css">
+<script src="../../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="../30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../index.html" class="selected">Manual</a></li>
+<li><a href="../../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/burst/csharp-burst-intrinsics-processors.html">English</a></li>
+<li><a href="/cn/current/Manual/burst/csharp-burst-intrinsics-processors.html">中文</a></li>
+<li><a href="/ja/current/Manual/burst/csharp-burst-intrinsics-processors.html">日本語</a></li>
+<li><a href="/kr/current/Manual/burst/csharp-burst-intrinsics-processors.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: Unity 6.7 Beta</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/burst/csharp-burst-intrinsics-processors.html">English</a></li>
+<li><a href="/cn/current/Manual/burst/csharp-burst-intrinsics-processors.html">中文</a></li>
+<li><a href="/ja/current/Manual/burst/csharp-burst-intrinsics-processors.html">日本語</a></li>
+<li><a href="/kr/current/Manual/burst/csharp-burst-intrinsics-processors.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="../scripting.html">Programming in Unity</a></li>
+<li><a href="../compilation-and-code-reload.html">Compilation and code reload </a></li>
+<li><a href="../script-compilation.html">Script compilation</a></li>
+<li><a href="../burst/script-compilation-burst.html">Burst compilation</a></li>
+<li><a href="../burst/csharp-burst-intrinsics.html">Burst intrinsics</a></li>
+<li>Processor specific SIMD extensions</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="../burst/csharp-burst-intrinsics-common.html"></a></span><div class="tip">Cross-platform Burst intrinsics</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="../burst/csharp-burst-intrinsics-neon.html"></a></span><div class="tip">Burst Arm Neon intrinsics reference</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Processor specific SIMD extensions</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Burst exposes all Intel SIMD intrinsics from SSE up to and including AVX2 in the <a href="../../ScriptReference/Unity.Burst.Intrinsics.X86.html"><code>Unity.Burst.Intrinsics.X86</code></a> family of nested classes. The <a href="../../ScriptReference/Unity.Burst.Intrinsics.Arm.Neon.html"><code>Unity.Burst.Intrinsics.Arm.Neon</code></a> class provides intrinsics for Arm Neon’s Armv7, Armv8, and Armv8.2 (RDMA, crypto, dotprod).</p>
+
+<h2>Organizing your code</h2>
+
+<p>You should statically import these intrinsics because they contain plain static functions:</p>
+
+<pre><code class="lang-cs">using static Unity.Burst.Intrinsics.X86;
+using static Unity.Burst.Intrinsics.X86.Sse;
+using static Unity.Burst.Intrinsics.X86.Sse2;
+using static Unity.Burst.Intrinsics.X86.Sse3;
+using static Unity.Burst.Intrinsics.X86.Ssse3;
+using static Unity.Burst.Intrinsics.X86.Sse4_1;
+using static Unity.Burst.Intrinsics.X86.Sse4_2;
+using static Unity.Burst.Intrinsics.X86.Popcnt;
+using static Unity.Burst.Intrinsics.X86.Avx;
+using static Unity.Burst.Intrinsics.X86.Avx2;
+using static Unity.Burst.Intrinsics.X86.Fma;
+using static Unity.Burst.Intrinsics.X86.F16C;
+using static Unity.Burst.Intrinsics.X86.Bmi1;
+using static Unity.Burst.Intrinsics.X86.Bmi2;
+using static Unity.Burst.Intrinsics.Arm.Neon;
+</code></pre>
+
+<p>Burst CPU intrinsics are translated into specific CPU instructions. However, Burst has a special compiler pass to check that your CPU target set in <a href="building-aot-settings.html">Burst AOT Settings</a> is compatible with the intrinsics used in your code. This ensures you don’t call unsupported instructions (for example, AArch64 Neon on an Intel CPU or AVX2 instructions on an SSE4 CPU), which causes the process to abort with an “Invalid instruction” exception. A compiler error is generated if the check fails.</p>
+
+<p>However, if you want to provide several code paths with different CPU targets, or to make sure your intrinsics code is compatible with any target CPU, you can wrap your intrinsics code with the following property checks:</p>
+
+<ul>
+<li><a href="../../ScriptReference/Unity.Burst.Intrinsics.Arm.Neon.IsNeonSupported.html"><code>IsNeonSupported</code></a></li>
+<li><a href="../../ScriptReference/Unity.Burst.Intrinsics.Arm.Neon.IsNeonArmv82FeaturesSupported.html"><code>IsNeonArmv82FeaturesSupported</code></a></li>
+<li><a href="../../ScriptReference/Unity.Burst.Intrinsics.Arm.Neon.IsNeonCryptoSupported.html"><code>IsNeonCryptoSupported</code></a></li>
+<li><a href="../../ScriptReference/Unity.Burst.Intrinsics.Arm.Neon.IsNeonDotProdSupported.html"><code>IsNeonDotProdSupported</code></a></li>
+<li><a href="../../ScriptReference/Unity.Burst.Intrinsics.Arm.Neon.IsNeonRDMASupported.html"><code>IsNeonRDMASupported</code></a></li>
+</ul>
+
+<p>For example:</p>
+
+<pre><code class="lang-cs">if (IsAvx2Supported)
+{
+    // Code path for AVX2 instructions
+}
+else if (IsSse42Supported)
+{
+    // Code path for SSE4.2 instructions
+}
+else if (IsNeonArmv82FeaturesSupported)
+{
+    // Code path for Armv8.2 Neon instructions
+}
+else if (IsNeonSupported)
+{
+    // Code path for Arm Neon instructions
+}
+else
+{
+    // Fallback path for everything else
+}
+</code></pre>
+
+<p>These branches don’t affect performance. Burst evaluates the <code>IsXXXSupported</code> properties at compile-time and eliminates unsupported branches as dead code, while the active branch stays there without the <code>if</code> check. Later feature levels implicitly include the previous ones, so you should organize tests from most recent to oldest. Burst emits compile-time errors if you’ve used intrinsics that aren’t part of the current compilation target. Burst doesn’t bracket these with a feature level test, which helps you to reduce the scope of a feature test.</p>
+
+<p>If you run your application in .NET, Mono or <span class="tooltip" tabindex="0" ><strong>IL2CPP</strong><span class="tooltiptext">A Unity-developed scripting back-end which you can use as an alternative to Mono when building projects for some platforms. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ./scripting-backends-il2cpp.html" href=".././scripting-backends-il2cpp.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#IL2CPP" aria-label="Go to glossary anchor for IL2CPP">Glossary</a></span></span></span> without Burst enabled, all the <code>IsXXXSupported</code> properties return <code>false</code>. However, if you skip the test you can still run a reference version of most intrinsics in Mono (exceptions listed below), which is helpful if you need to use the managed debugger. Reference implementations are slow and only intended for managed debugging.</p>
+
+<p>
+<strong>Note</strong>: There is no reference managed implementation of Arm Neon intrinsics. This means that you can’t use the technique mentioned in the previous paragraph to step through the intrinsics in Mono. FMA intrinsics that operate on doubles don’t have a software fallback because of the inherent complexity of emulating fused 64-bit floating point math.</p>
+
+<p>Intrinsics use the types <code>v64</code> (Arm only), <code>v128</code> and <code>v256</code>, which represent a 64-bit, 128-bit or 256-bit vector respectively. For example, given a <code>NativeArray&lt;float&gt;</code> and a <code>Lut</code> lookup table of v128 shuffle masks, a code fragment like this performs lane left packing, demonstrating the use of vector load/store reinterpretation and direct intrinsic calls:</p>
+
+<pre><code class="lang-cs">v128 a = Input.ReinterpretLoad&lt;v128&gt;(i);
+v128 mask = cmplt_ps(a, Limit);
+int m = movemask_ps(a);
+v128 packed = shuffle_epi8(a, Lut[m]);
+Output.ReinterpretStore(outputIndex, packed);
+outputIndex += popcnt_u32((uint)m);
+</code></pre>
+
+<h2>Intel intrinsics</h2>
+
+<p>The Intel intrinsics API mirrors the <a href="https://software.intel.com/sites/landingpage/IntrinsicsGuide/">C/C++ Intel intrinsics API</a>, with the following differences:</p>
+
+<ul>
+<li>All 128-bit vector types (<code>__m128</code>, <code>__m128i</code> and <code>__m128d</code>) are collapsed into <code>v128</code>
+</li>
+<li>All 256-bit vector types (<code>__m256</code>, <code>__m256i</code> and <code>__m256d</code>) are collapsed into <code>v256</code>
+</li>
+<li>All <code>_mm</code> prefixes on instructions and macros are dropped, because C# has namespaces</li>
+<li>All bitfield constants (for example, rounding mode selection) are replaced with C# bitflag enum values</li>
+</ul>
+
+<h2>Arm Neon intrinsics</h2>
+
+<p>The Arm Neon intrinsics API mirrors the <a href="https://developer.arm.com/architectures/instruction-sets/simd-isas/neon/intrinsics">Arm C Language Extensions</a>, with the following differences:</p>
+
+<ul>
+<li>All vector types are collapsed into <code>v64</code> and <code>v128</code>, becoming typeless. This means that the vector type must contain expected element types and count when calling an API.</li>
+<li>The <code>*x2</code>, <code>*x3</code>, <code>*x4</code> vector types aren’t supported.</li>
+<li>
+<code>poly*</code> types aren’t supported.</li>
+<li>
+<code>reinterpret*</code> functions aren’t supported (they aren’t needed because of the usage of <code>v64</code> and <code>v128</code> vector types).</li>
+<li>Intrinsic usage is only supported on Armv8 (64-bit) hardware.</li>
+</ul>
+
+<p>Burst’s CPU intrinsics use typeless vectors. Because of this, Burst doesn’t perform any type checks. For example, if you call an intrinsic which processes 4 ints on a vector that was initialized with 4 floats, then there’s no compiler error. The vector types have fields that represent every element type, in a union-like struct, which gives you flexibility to use these intrinsics in a way that best fits your code.</p>
+
+<p>Arm Neon C intrinsics (ACLE) use typed vectors, for example <code>int32x4_t</code>, and have special APIs (for example, <code>reinterpret_\*</code>) to convert to a vector of another element type. Burst CPU intrinsics vectors are typeless, so these APIs are not needed. The following APIs provide the equivalent functionality:</p>
+
+<ul>
+<li><a href="../../ScriptReference/Unity.Burst.Intrinsics.v64.html"><code>v64</code> (Arm Neon only)</a></li>
+<li><a href="../../ScriptReference/Unity.Burst.Intrinsics.v128.html"><code>v128</code></a></li>
+<li><a href="../../ScriptReference/Unity.Burst.Intrinsics.v256.html"><code>v256</code></a></li>
+</ul>
+
+<p>For a categorized index of Arm Neon intrinsics supported in Burst, refer to the <a href="csharp-burst-intrinsics-neon.html">Arm Neon intrinsics reference</a>.</p>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="csharp-burst-intrinsics-neon.html">Arm Neon intrinsics reference</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="../burst/csharp-burst-intrinsics-common.html"></a></span><div class="tip">Cross-platform Burst intrinsics</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="../burst/csharp-burst-intrinsics-neon.html"></a></span><div class="tip">Burst Arm Neon intrinsics reference</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

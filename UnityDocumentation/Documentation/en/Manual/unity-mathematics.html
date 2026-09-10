@@ -1,0 +1,266 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Unity Mathematics APIs</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<meta property="relative-path-to-manual" content="">
+<meta property="version-switcher-versions-with-this-page" content="Versions with this page:">
+<meta property="version-switcher-versions-without-this-page" content="Versions without this page:">
+<meta property="version-switcher-supported" content="Supported">
+<meta property="version-switcher-legacy" content="Legacy">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/Manual/unity-mathematics.html">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20260626"></script><script type="text/javascript" src="docdata/toc.js?ts=20260626"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20260626"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20260626">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20260626">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/unity-mathematics.html">English</a></li>
+<li><a href="/cn/current/Manual/unity-mathematics.html">中文</a></li>
+<li><a href="/ja/current/Manual/unity-mathematics.html">日本語</a></li>
+<li><a href="/kr/current/Manual/unity-mathematics.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: Unity 6.7 Beta</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/unity-mathematics.html">English</a></li>
+<li><a href="/cn/current/Manual/unity-mathematics.html">中文</a></li>
+<li><a href="/ja/current/Manual/unity-mathematics.html">日本語</a></li>
+<li><a href="/kr/current/Manual/unity-mathematics.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="scripting.html">Programming in Unity</a></li>
+<li><a href="programming-math.html">Programming with math</a></li>
+<li>Unity Mathematics APIs</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="class-Quaternion.html"></a></span><div class="tip">Controlling rotation with the Quaternion class</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="compilation-and-code-reload.html"></a></span><div class="tip">Compilation and code reload </div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Unity Mathematics APIs</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>The APIs in the <code>Unity.Mathematics</code> namespace are a <a href="burst/script-compilation-burst.html">Burst-compilable</a> C# math library that provides vector types and math functions that have a shader-like
+syntax, similar to <a href="https://en.wikipedia.org/wiki/Single_instruction,_multiple_data">Single Instruction, Multiple Data (SIMD)</a> or <a href="https://docs.microsoft.com/en-us/windows/win32/direct3dhlsl/dx-graphics-hlsl">High-Level Shading Language (HLSL)</a>.</p>
+
+<p>Unity Mathematics offers a <a href="burst/script-compilation-burst.html">Burst-compilable</a> alternative to Unity’s standard <a href="unity-engine-math.html">Unity Engine math APIs</a>. Unity Mathematics implements vector and matrix types such as <a href="../ScriptReference/Unity.Mathematics.float3.html"><code>float3</code></a>, <a href="../ScriptReference/Unity.Mathematics.quaternion.html"><code>quaternion</code></a>, <a href="../ScriptReference/Unity.Mathematics.float3x3.html"><code>float3×3</code></a>, and <a href="../ScriptReference/Unity.Mathematics.float4x4.html"><code>float4×4</code></a>. It also includes elementary functions such as min, max, fabs, sin, cos, sqrt, normalize, dot, and cross.</p>
+
+<p>To use Unity Mathematics, add <code>using Unity.Mathematics</code> to your code.</p>
+
+<p>Prefer Unity Mathematics APIs over Unity Engine math APIs in Burst-compiled code. For code that isn’t Burst compiled, prefer Unity Engine math APIs.</p>
+
+<h2>Naming convention</h2>
+
+<p>In C# <code>int</code> and <code>float</code> are built-in types. The Burst compiler extends this set of built-in types to also include vectors, matrices, and <span class="tooltip" tabindex="0" ><strong>quaternions</strong><span class="tooltiptext">Unity’s standard way of representing rotations as data. When writing code that deals with rotations, you should usually use the Quaternion class and its methods. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-Quaternion.html" href="class-Quaternion.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Quaternion" aria-label="Go to glossary anchor for Quaternion">Glossary</a></span></span></span>. The Burst compiler already has implementations of these types, and can use them to generate better code than for custom types.</p>
+
+<p>To signify that these types are built-in, their type names are in all lower case. The operators on these built-in types in <a href="../ScriptReference/Unity.Mathematics.math.html"><code>Unity.Mathematics.math</code></a> are intrinsics and are always in lower case. This convention has the added benefit of making the library highly compatible with <span class="tooltip" tabindex="0" ><strong>shader</strong><span class="tooltiptext">A program that runs on the GPU. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Shaders.html" href="Shaders.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#shader" aria-label="Go to glossary anchor for shader">Glossary</a></span></span></span> code and makes porting or sharing code between the two easier.</p>
+
+<h2>4×4 matrices</h2>
+
+<p>To create a 4×4 transformation matrix, use the constructors in <a href="../ScriptReference/Unity.Mathematics.float4x4.html"><code>float4x4</code></a> to assign one value to all elements of the matrix, or individually set all 16 elements directly:</p>
+
+<pre><code class="lang-cs">// Unity Mathematics example
+void Build4x4UnityMathematics()
+{
+   var c0 = new float4(1.0f, 0.0f, 0.0f, 0.0f);
+   var c1 = new float4(0.0f, 1.0f, 0.0f, 0.0f);
+   var c2 = new float4(0.0f, 0.0f, 1.0f, 0.0f);
+   var c3 = new float4(0.0f, 0.0f, 0.0f, 1.0f);
+   var m = new float4x4(c0, c1, c2, c3);
+}
+</code></pre>
+
+<h3>Multiplying a 4×4 matrix</h3>
+
+<p>The <code>Unity.Mathematics</code> and <code>UnityEngine</code> APIs define the <code>*</code> operator differently. The <code>*</code> operator for <a href="../ScriptReference/Unity.Mathematics.float4x4.html"><code>float4x4</code></a> implements componentwise multiplication. If you multiply a <code>float4x4</code> of all 1s with 0.5 on the diagonal, you get back the half identity because the upper and lower triangles of the matrix are multiplied by the respective zero entries from <code>f4x4_HalfIdentity</code>:</p>
+
+<pre><code class="lang-cs">// Unity Mathematics example
+void OperatorMultiply4x4UnityMathematics()
+{
+   float4x4 result = f4x4_Ones * f4x4_HalfIdentity;
+   // result:
+   // 0.5, 0.0, 0.0, 0.0,
+   // 0.0, 0.5, 0.0, 0.0,
+   // 0.0, 0.0, 0.5, 0.0,
+   // 0.0, 0.0, 0.0, 0.5
+}
+</code></pre>
+
+<h3>Multiplying a 4×4 matrix and a 4D vector</h3>
+
+<p>Use the <a href="../ScriptReference/Unity.Mathematics.math-mul.html"><code>math.mul</code></a> method to multiply a 4×4 matrix and a 4D vector. If you supply a <code>float4x4</code> as the first parameter and a <code>float4</code> as the second, it performs a 4×4 matrix multiplication with a 4×1 column vector, which returns a 4×1 column vector as a <code>float4</code>.</p>
+
+<p>
+<code>math.mul</code> can also multiply a 1×4 row vector by a 4×4 matrix to produce a 1×4 row vector by taking a <code>float4</code> as the first parameter and a <code>float4×4</code> as the second. Unity Mathematics stores the row vector in a <code>float4</code> and it isn’t treated as a separate type.</p>
+
+<pre><code class="lang-cs">// Unity Mathematics example
+void Multiply4x4AndVector4UnityMathematics()
+{
+   float4 result1 = math.mul(f4x4, f4); // 4x4 * 4x1 = 4x1
+   float4 result2 = math.mul(f4, f4x4); // 1x4 * 4x4 = 1x4
+}
+</code></pre>
+
+<h2>Vector multiplication</h2>
+
+<p>To multiply vectors, use the <code>*</code> operator:</p>
+
+<pre><code class="lang-cs">// Unity Mathematics example
+void ComponentwiseVectorMultiplyUnityMathematics()
+{
+   var v0 = new float4(2.0f, 4.0f, 6.0f, 8.0f);
+   var v1 = new float4(1.0f, -1.0f, 1.0f, -1.0f);
+   var result = v0 * v1;
+   // result == new float4(2.0f, -4.0f, 6.0f, -8.0f).
+}
+</code></pre>
+
+<p>This is a common way of writing <a href="https://en.wikipedia.org/wiki/Single_instruction,_multiple_data">SIMD</a> code, which applies a single instruction to multiple data elements. Other operators such as addition, subtraction, and division work in the same way.</p>
+
+<h2>Quaternion multiplication</h2>
+
+<p>To rotate a quaternion, use the <a href="../ScriptReference/Unity.Mathematics.quaternion.AxisAngle.html"><code>AxisAngle</code></a> method. You need to specify the axis of rotation and the angle of rotation, in that order. All are in radians rather than degrees. <code>math.mul</code> multiplies the quaternion, just as with matrices and vectors.</p>
+
+<pre><code class="lang-cs">// Unity Mathematics example
+void QuaternionMultiplicationUnityMathematics()
+{
+   var axis = new float3(0.0f, 1.0f, 0.0f);
+   var q = quaternion.AxisAngle(axis,math.radians(45.0f));
+   var orientation = quaternion.Euler(
+       math.radians(45.0f),
+       math.radians(90.0f),
+       math.radians(180.0f));
+   var result = math.mul(q, orientation);
+}
+</code></pre>
+
+<h2>Random numbers</h2>
+
+<p>To generate random numbers, you must create and manage the random number generator state yourself with the <a href="https://docs.unity3d.com/Packages/com.unity.mathematics@latest/index.html?subfolder=/api/Unity.Mathematics.Random.html"><code>Random</code></a> struct. You can control the random number generator state explicitly, which is useful if you’re using parallel code, or if you want to make sure that one source of random numbers is seeded differently than another source. You can also have as many <code>Random</code> instances as you like.</p>
+
+<p>Once you set up the state, use <a href="../ScriptReference/Unity.Mathematics.Random.NextFloat.html"><code>NextFloat</code></a> to get random floats. By default it returns random numbers between <code>[0, 1)</code>, exclusive:</p>
+
+<pre><code class="lang-cs">// Unity Mathematics example
+void RandomNumberUnityMathematics()
+{
+   // Choose some non-zero seed and set up the random number generator state.
+   uint seed = 1;
+   Unity.Mathematics.Random rng = new Unity.Mathematics.Random(seed);
+
+   // [0, 1) exclusive
+   float randomFloat1 = rng.NextFloat();
+
+   // [-5, 5) exclusive
+   float randomFloat2 = rng.NextFloat(-5.0f, 5.0f);
+}
+</code></pre>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="class-Mathf.html">Math coding with the Mathf API</a></li>
+<li><a href="burst/script-compilation-burst.html">Burst compiler</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="class-Quaternion.html"></a></span><div class="tip">Controlling rotation with the Quaternion class</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="compilation-and-code-reload.html"></a></span><div class="tip">Compilation and code reload </div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

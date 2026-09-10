@@ -1,0 +1,317 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Render passes in the Deferred and Deferred+ rendering paths in URP</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<meta property="relative-path-to-manual" content="../../">
+<meta property="version-switcher-versions-with-this-page" content="Versions with this page:">
+<meta property="version-switcher-versions-without-this-page" content="Versions without this page:">
+<meta property="version-switcher-supported" content="Supported">
+<meta property="version-switcher-legacy" content="Legacy">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../../../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../../../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../../../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../../../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../../../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../../../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../../../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/Manual/urp/rendering/render-passes-deferred.html">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../../../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../../../StaticFilesManual/js/jquery.js?ts=20260626"></script><script type="text/javascript" src="../../../StaticFilesManual/js/core.js?ts=20260626"></script><script type="text/javascript" src="../../../StaticFilesManual/js/image-comp.js?ts=20260626"></script><script type="text/javascript" src="../../docdata/toc.js?ts=20260626"></script><script type="text/javascript" src="../../docdata/global_toc.js?ts=20260626"></script><link rel="stylesheet" type="text/css" href="../../../StaticFilesManual/css/core.css?ts=20260626">
+<link rel="stylesheet" type="text/css" href="../../../StaticFilesManual/css/icons.css?ts=20260626">
+<link rel="stylesheet" href="../../../StaticFilesManual/css/prism.css">
+<script src="../../../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../../../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../../../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../../../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="../../30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../../index.html" class="selected">Manual</a></li>
+<li><a href="../../../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/urp/rendering/render-passes-deferred.html">English</a></li>
+<li><a href="/cn/current/Manual/urp/rendering/render-passes-deferred.html">中文</a></li>
+<li><a href="/ja/current/Manual/urp/rendering/render-passes-deferred.html">日本語</a></li>
+<li><a href="/kr/current/Manual/urp/rendering/render-passes-deferred.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: Unity 6.7 Beta</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/urp/rendering/render-passes-deferred.html">English</a></li>
+<li><a href="/cn/current/Manual/urp/rendering/render-passes-deferred.html">中文</a></li>
+<li><a href="/ja/current/Manual/urp/rendering/render-passes-deferred.html">日本語</a></li>
+<li><a href="/kr/current/Manual/urp/rendering/render-passes-deferred.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="../../render-pipelines.html">Render pipelines</a></li>
+<li><a href="../../universal-render-pipeline.html">Using the Universal Render Pipeline</a></li>
+<li><a href="../../urp/introduction-landing.html">Get started with URP</a></li>
+<li><a href="../../urp/urp-concepts.html">Universal Render Pipeline fundamentals</a></li>
+<li><a href="../../urp/rendering-paths-landing.html">Rendering paths in URP</a></li>
+<li><a href="../../urp/rendering/deferred-rendering-path-landing.html">Deferred and Deferred+ rendering paths in URP</a></li>
+<li>Render passes in the Deferred and Deferred+ rendering paths in URP</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="../../urp/rendering/deferred-rendering-path-landing.html"></a></span><div class="tip">Deferred and Deferred+ rendering paths in URP</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="../../urp/rendering/g-buffer-layout.html"></a></span><div class="tip">G-buffer layout in the Deferred and Deferred+ rendering paths in URP</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Render passes in the Deferred and Deferred+ rendering paths in URP</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>The following table lists the render passes that both the Deferred and Deferred+ <span class="tooltip" tabindex="0" ><strong>rendering paths</strong><span class="tooltiptext">The technique that a render pipeline uses to render graphics. Choosing a different rendering path affects how lighting and shading are calculated. Some rendering paths are more suited to different platforms and hardware than others. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about RenderingPaths.html" href="../../RenderingPaths.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../../Glossary.html#renderingpath" aria-label="Go to glossary anchor for renderingpath">Glossary</a></span></span></span> use.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Render event</strong></th>
+	<th style="text-align:left;"><strong>Render pass that occurs after the render event</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>BeforeRendering</strong></td>
+	<td style="text-align:left;">-</td>
+	<td style="text-align:left;">-</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>BeforeRenderingShadows</strong></td>
+	<td style="text-align:left;">-</td>
+	<td style="text-align:left;">-</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>AfterRenderingShadows</strong></td>
+	<td style="text-align:left;">-</td>
+	<td style="text-align:left;">-</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>BeforeRenderingPrePasses</strong></td>
+	<td style="text-align:left;">
+<strong>DepthPrepass</strong>, or <strong>DepthPrepass</strong> and <strong>DepthNormalPrepass</strong>.</td>
+	<td style="text-align:left;">Render depth and normal textures in a prepass, for materials that Unity renders in a Forward pass.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>AfterRenderingPrePasses</strong></td>
+	<td style="text-align:left;">-</td>
+	<td style="text-align:left;">-</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>BeforeRenderingGbuffer</strong></td>
+	<td style="text-align:left;"><strong>GBufferPass</strong></td>
+	<td style="text-align:left;">Render the G-Buffer, then copy the G-Buffer depth texture.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>AfterRenderingGbuffer</strong></td>
+	<td style="text-align:left;"><strong>SSAO</strong></td>
+	<td style="text-align:left;">Calculate the screen space <span class="tooltip" tabindex="0" ><strong>ambient occlusion</strong><span class="tooltiptext">A method to approximate how much ambient light (light not coming from a specific direction) can hit a point on a surface.<br/><span class="tooltipGlossaryLink">See in <a href="../../Glossary.html#ambientocclusion" aria-label="Go to glossary anchor for ambientocclusion">Glossary</a></span></span></span> (SSAO) texture. Unity calculates this here only if you <a href="../post-processing-ssao.html">enable SSAO</a>, and disable <strong>After Opaque</strong>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>BeforeRenderingDeferredLights</strong></td>
+	<td style="text-align:left;"><strong>Deferred Pass</strong></td>
+	<td style="text-align:left;">Deferred rendering. Unity uses the SSAO texture during this render pass, if it was created.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>AfterRenderingDeferredLights</strong></td>
+	<td style="text-align:left;">-</td>
+	<td style="text-align:left;">-</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>BeforeRenderingOpaques</strong></td>
+	<td style="text-align:left;">-</td>
+	<td style="text-align:left;">Render opaque forward-only materials.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>AfterRenderingOpaques</strong></td>
+	<td style="text-align:left;">-</td>
+	<td style="text-align:left;">Calculate and blend the screen space ambient occlusion (SSAO) texture. Unity calculates this here only if you <a href="../post-processing-ssao.html">enable SSAO</a>, and enable <strong>After Opaque</strong>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>BeforeRenderingSkybox</strong></td>
+	<td style="text-align:left;">-</td>
+	<td style="text-align:left;">-</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>AfterRenderingSkybox</strong></td>
+	<td style="text-align:left;">-</td>
+	<td style="text-align:left;">-</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>BeforeRenderingTransparents</strong></td>
+	<td style="text-align:left;">-</td>
+	<td style="text-align:left;">-</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>AfterRenderingTransparents</strong></td>
+	<td style="text-align:left;">-</td>
+	<td style="text-align:left;">-</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>BeforeRenderingPostProcessing</strong></td>
+	<td style="text-align:left;">-</td>
+	<td style="text-align:left;">-</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>AfterRenderingPostProcessing</strong></td>
+	<td style="text-align:left;">-</td>
+	<td style="text-align:left;">-</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>AfterRendering</strong></td>
+	<td style="text-align:left;">-</td>
+	<td style="text-align:left;">-</td>
+</tr>
+</tbody>
+</table>
+
+<p>For the full list of render events, and injection points for custom render passes, refer to <a href="../customize/custom-pass-injection-points.html">Injection points reference for URP</a>.</p>
+
+<h2>Source code reference</h2>
+
+<p>The following table lists the files that contain code related to the Deferred rendering path, located in the <code>com.unity.render-pipelines.universal</code> folder.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>File path</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><code>Runtime/DeferredLights.cs</code></td>
+	<td style="text-align:left;">Defines the main class that handles the Deferred rendering path.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>Runtime/Passes/GBufferPass.cs</code></td>
+	<td style="text-align:left;">Implements a <code>ScriptableRenderPass</code> for the G-buffer rendering pass.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>Runtime/Passes/DeferredPass.cs</code></td>
+	<td style="text-align:left;">Implements a <code>ScriptableRenderPass</code> for the <span class="tooltip" tabindex="0" ><strong>Deferred shading</strong><span class="tooltiptext">A rendering path in the Built-in Render Pipeline that places no limit on the number of Lights that can affect a GameObject. All Lights are evaluated per-pixel, which means that they all interact correctly with normal maps and so on. Additionally, all Lights can have cookies and shadows. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about RenderTech-DeferredShading.html" href="../../RenderTech-DeferredShading.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../../Glossary.html#deferredshading" aria-label="Go to glossary anchor for deferredshading">Glossary</a></span></span></span> pass.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>Shaders/Utils/StencilDeferred.shader</code></td>
+	<td style="text-align:left;">Defines the rendering behavior for stencil-based deferred lighting when using the Deferred rendering path.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>Shaders/Utils/ClusterDeferred.shader</code></td>
+	<td style="text-align:left;">Defines the rendering behavior for cluster-based deferred lighting when using the Deferred+ rendering path.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>ShaderLibrary/GBufferInput.hlsl</code></td>
+	<td style="text-align:left;">Contains utility functions for reading material properties from the G-buffers in the Universal <span class="tooltip" tabindex="0" ><strong>Render Pipeline</strong><span class="tooltiptext">A series of operations that take the contents of a Scene, and displays them on a screen. Unity lets you choose from pre-built render pipelines, or write your own. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about render-pipelines.html" href="../../render-pipelines.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../../Glossary.html#renderpipeline" aria-label="Go to glossary anchor for renderpipeline">Glossary</a></span></span></span> (URP).</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>ShaderLibrary/GBufferOutput.hlsl</code></td>
+	<td style="text-align:left;">Contains utility functions for writing material properties to the G-buffers in URP.</td>
+</tr>
+</tbody>
+</table>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="../customizing-urp.html">Custom rendering and post-processing in URP</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="../../urp/rendering/deferred-rendering-path-landing.html"></a></span><div class="tip">Deferred and Deferred+ rendering paths in URP</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="../../urp/rendering/g-buffer-layout.html"></a></span><div class="tip">G-buffer layout in the Deferred and Deferred+ rendering paths in URP</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

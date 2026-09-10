@@ -1,0 +1,248 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Introduction to Web multithreading</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<meta property="relative-path-to-manual" content="">
+<meta property="version-switcher-versions-with-this-page" content="Versions with this page:">
+<meta property="version-switcher-versions-without-this-page" content="Versions without this page:">
+<meta property="version-switcher-supported" content="Supported">
+<meta property="version-switcher-legacy" content="Legacy">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/Manual/web-multithreading-intro.html">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20260626"></script><script type="text/javascript" src="docdata/toc.js?ts=20260626"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20260626"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20260626">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20260626">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/web-multithreading-intro.html">English</a></li>
+<li><a href="/cn/current/Manual/web-multithreading-intro.html">中文</a></li>
+<li><a href="/ja/current/Manual/web-multithreading-intro.html">日本語</a></li>
+<li><a href="/kr/current/Manual/web-multithreading-intro.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: Unity 6.7 Beta</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/web-multithreading-intro.html">English</a></li>
+<li><a href="/cn/current/Manual/web-multithreading-intro.html">中文</a></li>
+<li><a href="/ja/current/Manual/web-multithreading-intro.html">日本語</a></li>
+<li><a href="/kr/current/Manual/web-multithreading-intro.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="PlatformSpecific.html">Platform development  </a></li>
+<li><a href="webgl.html">Web</a></li>
+<li><a href="webgl-develop.html">Web development</a></li>
+<li><a href="web-multithreading.html">Multithreading in Unity Web</a></li>
+<li>Introduction to Web multithreading</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="web-multithreading.html"></a></span><div class="tip">Multithreading in Unity Web</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="web-multithreading-burst.html"></a></span><div class="tip">Multithreading with Burst in Unity Web</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Introduction to Web multithreading</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Learn about the single-thread limitation for C# on the Web platform, the multithreading solutions Unity provides, and their prerequisites.</p>
+
+<p>The Web platform restricts standard C# code to a single thread. However, Unity provides multithreading for native C/C++ engine code and for C# code via the <a href="burst/script-compilation-burst.html">Burst compiler</a>. For tasks that don’t require parallelism, asynchronous programming provides an effective alternative.</p>
+
+<h2>Limitations of standard C# multithreading</h2>
+
+<p>Managed (C#) threads aren’t supported due to the lack of a multithreaded <a href="webgl-memory.html#garbagecollection">garbage collection</a> feature in WebAssembly.</p>
+
+<p>Due to this limitation, anything in the C# <a href="https://learn.microsoft.com/en-us/dotnet/api/system.threading?view=net-9.0"><code>System.Threading</code></a> namespace isn’t supported. For example, use of the <code>System.Threading.Timer</code> class doesn’t trigger in Web builds. Also, any timeouts you specify in <code>System.Threading.CancellationTokenSource</code> don’t actually time out, because the cancellation mechanism is based on <code>System.Threading.Timer</code>.</p>
+
+<p>The following code highlights these behavioral differences:</p>
+
+<pre><code class="lang-cs">using System.Threading;
+using UnityEngine;
+
+public class NoMultithreadedTimers : MonoBehaviour
+{
+    private Timer t;
+    private static void TimerCallbackElapsed(object obj)
+    {
+        // This will never fire in Web builds because
+        // multithreaded timers aren't available.
+        Debug.Log(&quot;Timer Callback Fired!&quot;);
+    }
+    private void Awake()
+    {
+        t = new Timer(new TimerCallback(TimerCallbackElapsed), this, 1, -1);
+    }
+}
+
+public class NoCancellationTokenSourceTimeouts : MonoBehaviour
+{
+    private CancellationTokenSource cs;
+    private void Awake()
+    {
+        // millisecondsDelay=0 to time out immediately.
+        cs = new CancellationTokenSource(0);
+    }
+    private void Update()
+    {
+        // Returns false in Web builds because timeouts
+        // aren't tracked for cancellation tokens.
+        Debug.Log(cs.IsCancellationRequested.ToString());
+    }
+}
+</code></pre>
+
+<h3>Technical reasons for the limitation</h3>
+
+<p>The following factors limit multithreading support for standard C# code.</p>
+
+<h4>Constraints on native stack scanning</h4>
+
+<p>The Web platform uses WebAssembly, which is a bytecode format for secure and efficient execution of Unity code in web browsers. Web browsers are designed to run the code in a secure and isolated environment which blocks direct access to the native WebAssembly stack. This affects multithreaded garbage collection as the Web garbage collector runs only once at the end of every frame unlike incrementally over multiple frames on other platforms.</p>
+
+<h4>No pre-emptive thread signaling support</h4>
+
+<p>Background Workers on the web execute code in parallel independently from each other. On native platforms, the main thread can synchronously send signals to the other threads to pause for garbage collection. This synchronous signaling isn’t supported on the web, which prevents WebAssembly compiled C# code from running in multiple threads.</p>
+
+<h2>Available multithreading solutions</h2>
+
+<p>Despite the limitations of standard C#, Unity has two solutions for parallel execution:</p>
+
+<ul>
+<li>Native C/C++ multithreading: Runs Unity’s internal engine systems (like physics and rendering) on separate threads.</li>
+<li>Burst-compiled C# multithreading: Runs your C# code in parallel using the <a href="job-system-overview.html">job system</a> and <a href="burst/script-compilation-burst.html">Burst compiler</a>. For details, refer to <a href="web-multithreading-burst.html">Multithreading with Burst in Unity Web</a>.</li>
+</ul>
+
+<p><a name="prerequisites" aria-hidden="true"></a></p>
+
+<h3>Prerequisites for multithreading</h3>
+
+<p>To enable either of these solutions, you must configure your Unity project and web server as follows:</p>
+
+<ul>
+<li>In Player Settings (menu: <strong>Edit</strong> &gt; <strong>Project Settings</strong> &gt; <strong>Player</strong>), under <strong>Publishing Settings</strong>, enable <strong>Enable Native C/C++ Multithreading</strong>. Note that while the name refers to the native C/C++ feature, this setting enables both native and Burst multithreading.</li>
+<li>Configure secure server headers. The Web platform supports multithreading when your document is within a secure context. The server must set the following HTTP response headers. Without these, browsers disable the <code>SharedArrayBuffer</code>, which is required for threads:
+
+<ul>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cross-Origin-Opener-Policy">Cross-Origin-Opener-Policy: same-origin</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cross-Origin-Embedder-Policy">Cross-Origin-Embedder-Policy: require-corp</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cross-Origin-Resource-Policy">Cross-Origin-Resource-Policy: cross-origin</a></li>
+</ul>
+</li>
+</ul>
+
+<h2>Asynchronous programming as an alternative</h2>
+
+<p>For complex, long-running tasks that don’t require true parallelism, you can use asynchronous programming to avoid blocking the main thread.</p>
+
+<p>The recommended way to perform asynchronous tasks is to use <code>Awaitable</code>, which can replace <code>System.Threading.Tasks.Task</code> in most cases. For details, refer to <a href="async-awaitable-introduction.html">Introduction to asynchronous programming with Awaitable</a>.</p>
+
+<p>You can also use <a href="Coroutines.html">coroutines</a> for asynchronous workflows. But note that <code>Awaitable</code> returns values directly and automatically throws errors, while coroutines require additional logic for both of these tasks.</p>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="webgl-server-configuration-code-samples.html">Server configuration code samples</a></li>
+<li><a href="job-system-creating-jobs.html">Create and run a job</a></li>
+<li><a href="webgl-performance.html">Web performance considerations</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="web-multithreading.html"></a></span><div class="tip">Multithreading in Unity Web</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="web-multithreading-burst.html"></a></span><div class="tip">Multithreading with Burst in Unity Web</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

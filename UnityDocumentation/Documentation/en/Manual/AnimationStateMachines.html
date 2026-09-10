@@ -1,0 +1,217 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Animation state machine</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<meta property="relative-path-to-manual" content="">
+<meta property="version-switcher-versions-with-this-page" content="Versions with this page:">
+<meta property="version-switcher-versions-without-this-page" content="Versions without this page:">
+<meta property="version-switcher-supported" content="Supported">
+<meta property="version-switcher-legacy" content="Legacy">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/Manual/AnimationStateMachines.html">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20260626"></script><script type="text/javascript" src="docdata/toc.js?ts=20260626"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20260626"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20260626">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20260626">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/AnimationStateMachines.html">English</a></li>
+<li><a href="/cn/current/Manual/AnimationStateMachines.html">中文</a></li>
+<li><a href="/ja/current/Manual/AnimationStateMachines.html">日本語</a></li>
+<li><a href="/kr/current/Manual/AnimationStateMachines.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: Unity 6.7 Beta</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/AnimationStateMachines.html">English</a></li>
+<li><a href="/cn/current/Manual/AnimationStateMachines.html">中文</a></li>
+<li><a href="/ja/current/Manual/AnimationStateMachines.html">日本語</a></li>
+<li><a href="/kr/current/Manual/AnimationStateMachines.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="AnimationSection.html">Animation</a></li>
+<li><a href="animation-mecanim.html">Mecanim Animation system</a></li>
+<li><a href="animation-animator-controller.html">Animator Controller</a></li>
+<li>Animation state machine</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="AnimatorWindow.html"></a></span><div class="tip">Animator window</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="StateMachineBasics.html"></a></span><div class="tip">State machine basics</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Animation state machine</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>It’s common for a character or a <span class="tooltip" tabindex="0" ><strong>GameObject</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-GameObject.html" href="class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span> to have several animations for the different actions it performs in a game. For example, a character might breath and sway slightly when idle, walk when commanded, and raise their arms when they fall from a platform. A sliding door might open, close, or jam.</p>
+
+<p>Mecanim uses a <span class="tooltip" tabindex="0" ><strong>state machine</strong><span class="tooltiptext">The set of states in an Animator Controller that a character or animated GameObject can be in, along with a set of transitions between those states and a variable to remember the current state. The states available will depend on the type of gameplay, but typical states include things like idling, walking, running and jumping. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about StateMachineBasics.html" href="StateMachineBasics.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#StateMachine" aria-label="Go to glossary anchor for StateMachine">Glossary</a></span></span></span> to arrange these actions. A state machine is a graph of nodes and connecting lines that resembles a flowchart. A state machine plays the animation linked to the current action and determines the next action. You can create a state machine for each character and GameObject in your <span class="tooltip" tabindex="0" ><strong>scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html" href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span>.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Topic</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong><a href="StateMachineBasics.html">State machine basics</a></strong></td>
+	<td style="text-align:left;">Learn core state machine concepts and build animation flow in the <span class="tooltip" tabindex="0" ><strong>Animator window</strong><span class="tooltiptext">The window where the Animator Controller is visualized and edited. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about AnimatorWindow.html" href="AnimatorWindow.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#AnimatorWindow" aria-label="Go to glossary anchor for AnimatorWindow">Glossary</a></span></span></span>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><a href="class-State.html">Animation states</a></strong></td>
+	<td style="text-align:left;">Configure states, motions, and defaults to control what each state plays.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><span class="tooltip" tabindex="0" ><a href="AnimationParameters.html">Animation parameters</a><span class="tooltiptext">Used to communicate between scripting and the Animator Controller. Some parameters can be set in scripting and used by the controller, while other parameters are based on Custom Curves in Animation Clips and can be sampled using the scripting API. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about AnimationParameters.html" href="AnimationParameters.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#AnimationParameters" aria-label="Go to glossary anchor for AnimationParameters">Glossary</a></span></span></span></strong></td>
+	<td style="text-align:left;">Control state logic with scriptable parameters.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><a href="StateMachineTransitions.html">State machine transitions</a></strong></td>
+	<td style="text-align:left;">Simplify complex controllers with Entry and Exit transitions between state machines.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><span class="tooltip" tabindex="0" ><a href="class-Transition.html">Animation transitions</a><span class="tooltiptext">Allows a state machine to switch or blend from one animation state to another. Transitions define how long a blend between states should take, and the conditions that activate them. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about StateMachineTransitions.html" href="StateMachineTransitions.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#AnimationTransition" aria-label="Go to glossary anchor for AnimationTransition">Glossary</a></span></span></span></strong></td>
+	<td style="text-align:left;">Blend between states and define when transitions are triggered.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><span class="tooltip" tabindex="0" ><a href="animation-blend-trees.html">Animation blend trees</a><span class="tooltiptext">Used for continuous blending between similar Animation Clips based on float Animation Parameters. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-BlendTree.html" href="class-BlendTree.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#AnimationBlendTree" aria-label="Go to glossary anchor for AnimationBlendTree">Glossary</a></span></span></span></strong></td>
+	<td style="text-align:left;">Blend similar motions smoothly using parameters and normalized time.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><a href="StateMachineBehaviours.html">State machine behaviors</a></strong></td>
+	<td style="text-align:left;">Attach behavior <span class="tooltip" tabindex="0" ><strong>scripts</strong><span class="tooltiptext">A piece of code that allows you to create your own Components, trigger game events, modify Component properties over time and respond to user input in any way you like. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about creating-scripts.html" href="creating-scripts.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scripts" aria-label="Go to glossary anchor for Scripts">Glossary</a></span></span></span> to states to run code on enter, update, and exit.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><a href="NestedStateMachines.html">Sub-state machines</a></strong></td>
+	<td style="text-align:left;">Group related states into nested machines to keep large graphs manageable.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><span class="tooltip" tabindex="0" ><a href="AnimationLayers.html">Animation layers</a><span class="tooltiptext">An Animation Layer contains an Animation State Machine that controls animations of a model or part of it. An example of this is if you have a full-body layer for walking or jumping and a higher layer for upper-body motions such as throwing an object or shooting. The higher layers take precedence for the body parts they control. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about AnimationLayers.html" href="AnimationLayers.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#AnimationLayer" aria-label="Go to glossary anchor for AnimationLayer">Glossary</a></span></span></span></strong></td>
+	<td style="text-align:left;">Separate animation with layered controllers, masks, and blending modes.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><a href="AnimationSoloMute.html">State machine solo and mute</a></strong></td>
+	<td style="text-align:left;">Preview transitions faster by soloing key paths and muting irrelevant ones.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><span class="tooltip" tabindex="0" ><a href="TargetMatching.html">Target matching</a><span class="tooltiptext">A scripting function that allows you to move characters in such a way that a hand or foot lands in a certain place at a certain time. For example, the character may need to jump across stepping stones or jump and grab an overhead beam. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about TargetMatching.html" href="TargetMatching.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#targetmatching" aria-label="Go to glossary anchor for targetmatching">Glossary</a></span></span></span></strong></td>
+	<td style="text-align:left;">Match character parts to precise world targets during specific animation windows.</td>
+</tr>
+</tbody>
+</table>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="AvatarCreationandSetup.html">Humanoid Avatar</a></li>
+<li><a href="AnimatorControllerCreation.html">Create an Animator Controller</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="AnimatorWindow.html"></a></span><div class="tip">Animator window</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="StateMachineBasics.html"></a></span><div class="tip">State machine basics</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

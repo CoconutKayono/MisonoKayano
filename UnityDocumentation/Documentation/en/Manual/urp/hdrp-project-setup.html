@@ -1,0 +1,247 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Set up your HDRP project to use URP</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<meta property="relative-path-to-manual" content="../">
+<meta property="version-switcher-versions-with-this-page" content="Versions with this page:">
+<meta property="version-switcher-versions-without-this-page" content="Versions without this page:">
+<meta property="version-switcher-supported" content="Supported">
+<meta property="version-switcher-legacy" content="Legacy">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/Manual/urp/hdrp-project-setup.html">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../../StaticFilesManual/js/jquery.js?ts=20260626"></script><script type="text/javascript" src="../../StaticFilesManual/js/core.js?ts=20260626"></script><script type="text/javascript" src="../../StaticFilesManual/js/image-comp.js?ts=20260626"></script><script type="text/javascript" src="../docdata/toc.js?ts=20260626"></script><script type="text/javascript" src="../docdata/global_toc.js?ts=20260626"></script><link rel="stylesheet" type="text/css" href="../../StaticFilesManual/css/core.css?ts=20260626">
+<link rel="stylesheet" type="text/css" href="../../StaticFilesManual/css/icons.css?ts=20260626">
+<link rel="stylesheet" href="../../StaticFilesManual/css/prism.css">
+<script src="../../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="../30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../index.html" class="selected">Manual</a></li>
+<li><a href="../../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/urp/hdrp-project-setup.html">English</a></li>
+<li><a href="/cn/current/Manual/urp/hdrp-project-setup.html">中文</a></li>
+<li><a href="/ja/current/Manual/urp/hdrp-project-setup.html">日本語</a></li>
+<li><a href="/kr/current/Manual/urp/hdrp-project-setup.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: Unity 6.7 Beta</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/urp/hdrp-project-setup.html">English</a></li>
+<li><a href="/cn/current/Manual/urp/hdrp-project-setup.html">中文</a></li>
+<li><a href="/ja/current/Manual/urp/hdrp-project-setup.html">日本語</a></li>
+<li><a href="/kr/current/Manual/urp/hdrp-project-setup.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="../render-pipelines.html">Render pipelines</a></li>
+<li><a href="../universal-render-pipeline.html">Using the Universal Render Pipeline</a></li>
+<li><a href="../urp/introduction-landing.html">Get started with URP</a></li>
+<li><a href="../urp/InstallingAndConfiguringURP.html">Installing and upgrading URP</a></li>
+<li><a href="../urp/migrating-from-hdrp.html">Migrating from HDRP to URP</a></li>
+<li>Set up your HDRP project to use URP</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="../urp/migrating-from-hdrp-workflow.html"></a></span><div class="tip">HDRP to URP migration workflow</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="../urp/convert-hdrp-shaders-to-urp.html"></a></span><div class="tip">Convert shaders from HDRP to URP</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Set up your HDRP project to use URP</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>To migrate an existing High Definition <span class="tooltip" tabindex="0" ><strong>Render Pipeline</strong><span class="tooltiptext">A series of operations that take the contents of a Scene, and displays them on a screen. Unity lets you choose from pre-built render pipelines, or write your own. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about render-pipelines.html" href="../render-pipelines.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#renderpipeline" aria-label="Go to glossary anchor for renderpipeline">Glossary</a></span></span></span> (HDRP) project to use the Universal Render Pipeline (URP) instead, you must first install and configure URP. </p>
+
+<p>For more information on the different render pipelines, refer to <a href="../choose-a-render-pipeline.html">Choose a render pipeline</a> and <a href="../render-pipelines-feature-comparison.html">Render pipeline feature comparison reference</a>.</p>
+
+<p>If you don’t have an existing HDRP project, refer to <a href="creating-a-new-project-with-urp.html">Create a new project that uses URP</a>.</p>
+
+<p>To set up your project to use URP, do the following:</p>
+
+<ol>
+<li>Optional: <a href="#duplicate">Duplicate your HDRP project</a>.</li>
+<li>
+<a href="#install">Install URP</a>.</li>
+<li>
+<a href="#configure">Configure URP</a>.</li>
+</ol>
+
+<p><a name="duplicate" aria-hidden="true"></a></p>
+
+<h2>Duplicate your HDRP project</h2>
+
+<ol>
+<li>Duplicate your existing HDRP project.</li>
+<li>Rename the duplicated project to clearly differentiate it as the project you’re migrating to URP.</li>
+</ol>
+
+<p>Keep both separate projects open during the migration process.</p>
+
+<p>
+<strong>Tip</strong>: You can use branches to manage your project.</p>
+
+<p><a name="install" aria-hidden="true"></a></p>
+
+<h2>Install URP</h2>
+
+<ol>
+<li>In Unity, open the project you’re migrating to URP.</li>
+<li>From the main menu, select <strong>Window</strong> &gt; <strong>Package Management</strong> &gt; <strong>Package Manager</strong> to open the <strong>Package Manager</strong> window.</li>
+<li>Go to <strong>Sources</strong> &gt; <strong>Unity Registry</strong>. This shows the list of available packages for the version of Unity that you’re currently running.</li>
+<li>Select <strong>Universal Render Pipeline</strong> from the list of packages.</li>
+<li>Select <strong>Install</strong>. Unity installs URP directly into your project.</li>
+</ol>
+
+<p>Keep both the URP and HDRP packages installed in your project during the migration process.</p>
+
+<p><a name="configure" aria-hidden="true"></a></p>
+
+<h2>Configure URP</h2>
+
+<p>Before you can start using URP, you need to configure it to work in your project. To do this, in your new URP project, do the following:</p>
+
+<ol>
+<li>
+<a href="#create-asset">Create URP assets</a>.</li>
+<li>
+<a href="#configure-asset">Configure URP assets</a>.</li>
+<li>
+<a href="#set-urp-active">Set URP as the active render pipeline</a>.</li>
+</ol>
+
+<h3>
+<a name="create-asset" aria-hidden="true"></a>Create URP assets</h3>
+
+<p>Create a URP asset and Universal Renderer asset for each HDRP asset in your project. To create these assets, refer to <a href="urp-asset-create.html">Create a Universal Render Pipeline asset</a>.</p>
+
+<h3>
+<a name="configure-asset" aria-hidden="true"></a>Configure URP assets</h3>
+
+<p>Configure the settings in each URP asset and Universal Renderer asset to correspond to the settings in your HDRP assets. For more information on each setting in URP, refer to <a href="universalrp-asset.html">URP asset reference</a> and <a href="urp-universal-renderer.html">Universal Renderer asset reference</a>.</p>
+
+<p>Many settings in HDRP aren’t identical or supported in URP. To find some of the corresponding settings, refer to <a href="hdrp-quality-settings-urp-reference.html">HDRP quality settings in URP reference</a>.</p>
+
+<h3>
+<a name="set-urp-active" aria-hidden="true"></a>Set URP as the active render pipeline</h3>
+
+<p>To set URP as the active render pipeline:</p>
+
+<ol>
+<li>Locate the URP asset that you want to use.<br><strong>Tip</strong>: To find all URP assets in a project, use the following query in the search field: <code>t:universalrenderpipelineasset</code>.</li>
+<li>Go to <strong>Edit</strong> &gt; <strong>Project Settings</strong> &gt; <strong>Graphics</strong>.</li>
+<li>In the <strong>Set Default Render Pipeline Asset</strong> section, set <strong>Default Render Pipeline</strong> to the URP asset. When you select the URP asset, the available Graphics settings change immediately.</li>
+</ol>
+
+<p>To optionally set a different URP asset for each quality level, follow these steps:</p>
+
+<ol>
+<li>Select <strong>Edit</strong> &gt; <strong>Project Settings</strong> &gt; <strong>Quality</strong>.</li>
+<li>Select a quality level.</li>
+<li>In the <strong>Render Pipeline Asset</strong> field, select the URP asset.</li>
+</ol>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="migrating-from-hdrp-workflow.html">HDRP to URP migration workflow</a></li>
+<li><a href="../choose-a-render-pipeline.html">Choose a render pipeline</a></li>
+<li><a href="../render-pipelines-feature-comparison.html">Render pipeline feature comparison</a></li>
+<li><a href="universal-render-pipeline.html">Using the Universal Render Pipeline</a></li>
+<li><a href="hdrp-quality-settings-urp-reference.html">HDRP quality settings in URP reference</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="../urp/migrating-from-hdrp-workflow.html"></a></span><div class="tip">HDRP to URP migration workflow</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="../urp/convert-hdrp-shaders-to-urp.html"></a></span><div class="tip">Convert shaders from HDRP to URP</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

@@ -1,0 +1,1032 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+  <head>
+    <script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true">
+    </script>
+    <script type="text/javascript">function OptanonWrapper() {}</script>
+    <script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script>
+    <script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&amp;l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script>
+    <link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet" />
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Unity - Scripting API: Avx</title>
+    <meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg" />
+    <meta name="author" content="Unity Technologies" />
+    <link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico" />
+    <link rel="icon" type="image/png" href="../../../StaticFiles/images/favicons/favicon.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFiles/images/favicons/apple-touch-icon-152x152.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFiles/images/favicons/apple-touch-icon-144x144.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFiles/images/favicons/apple-touch-icon-120x120.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFiles/images/favicons/apple-touch-icon-114x114.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFiles/images/favicons/apple-touch-icon-72x72.png" />
+    <link rel="apple-touch-icon-precomposed" href="../StaticFiles/images/favicons/apple-touch-icon.png" />
+    <link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/ScriptReference/Unity.Burst.Intrinsics.X86.Avx.html" />
+    <meta name="msapplication-TileColor" content="#222c37" />
+    <meta name="msapplication-TileImage" content="../StaticFiles/images/favicons/tileicon-144x144.png" />
+    <script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js">
+    </script>
+    <script type="text/javascript" src="../StaticFiles/js/jquery.js">
+    </script>
+    <script type="text/javascript" src="docdata/toc.js">//toc</script>
+    <!--local TOC-->
+    <script type="text/javascript" src="docdata/global_toc.js">//toc</script>
+    <!--global TOC, including other platforms-->
+    <script type="text/javascript" src="../StaticFiles/js/core.js">
+    </script>
+    <link rel="stylesheet" href="../StaticFiles/css/prism.css" />
+    <script type="text/javascript" src="../StaticFiles/js/prism.js">
+    </script>
+    <link rel="stylesheet" type="text/css" href="../StaticFiles/css/core.css" />
+    <script src="/StaticFilesConfig/feedback/feedback.js">
+    </script>
+    <script src="../StaticFiles/js/jquery.sidebar.min.js">
+    </script>
+    <script type="text/javascript" src="../StaticFiles/js/mobileoptimisation.js">
+    </script>
+    <link rel="stylesheet" href="../StaticFiles/css/mobileoptimisation.css" />
+    <link rel="stylesheet" href="../StaticFiles/css/icons.css" />
+  </head>
+  <body>
+    <div id="DocsAnalyticsData" data-area="none" data-pagetype="scriptref">
+    </div>
+    <div class="header-wrapper">
+      <div id="header" class="header">
+        <div class="content">
+          <div class="spacer">
+            <div class="menu">
+              <div id="nav-open" for="nav-input">
+                <span>
+                </span>
+              </div>
+              <div class="logo">
+                <a aria-label="go to the homepage" href="">
+                </a>
+              </div>
+              <div class="search-form">
+                <form action="30_search.html" method="get" class="apisearch">
+                  <input type="text" name="q" aria-label="Search scripting documentation" placeholder="Search scripting..." autosave="Unity Reference" results="5" class="sbox field" id="q">
+                  </input>
+                  <input type="submit" class="submit">
+                  </input>
+                </form>
+              </div>
+              <ul>
+                <li>
+                  <a href="../Manual/index.html">Manual</a>
+                </li>
+                <li>
+                  <a href="../ScriptReference/index.html" class="selected">Scripting API</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="more">
+            <div class="filler">
+            </div>
+            <ul>
+              <li>
+                <a href="https://unity.com/">unity.com</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="toolbar">
+        <div class="content clear">
+          <div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;"><ul id="OtherVersionsContentUl"></ul><div id="otherVersionsLegend"><ul><li><div id="supportedColour" class="legendBox"></div>Supported</li><li><div id="notFoundColour" class="legendBox"></div>Legacy</li></ul></div></div><div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div></div>
+          <div class="lang-switcher hide">
+            <div class="current toggle" data-target=".lang-list">
+              <div class="lbl">Language<span class="b">English</span></div>
+              <div class="arrow">
+              </div>
+            </div>
+            <div class="lang-list" style="display:none;">
+              <ul>
+                <li>
+                  <a href="">English</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="script-lang">
+            <ul>
+              <li class="selected" data-lang="CS">C#</li>
+            </ul>
+          </div>
+          <div class="mobileLogo">
+            <a aria-label="go to the homepage" href="https://docs.unity3d.com">
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="master-wrapper" class="master-wrapper clear">
+      <div id="sidebar" class="sidebar">
+        <div class="sidebar-wrap">
+          <div class="content">
+            <div class="sidebar-menu">
+              <div class="toc" id="customScrollbar">
+                <h2>Scripting API</h2>
+                <div class="search-form sidebar-search-form">
+                  <form action="30_search.html" method="get" class="apisearch">
+                    <input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q">
+                    </input>
+                    <input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+                    </input>
+                  </form>
+                </div>
+                <div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent">
+                  <form id="otherVersionsContentMobileForm">
+                    <div class="ui-field-contain">
+                      <label for="select-native-4">Version: Unity 6.7 Beta</label>
+                      <select name="select-native-4" id="versionsSelectMobile">
+                        <option>Select a different version</option>
+                        <optgroup id="versionsWithThisPageMobile" label="Versions with this page">
+                        </optgroup>
+                        <optgroup id="versionsWithoutThisPageMobile" label="Versions without this page">
+                        </optgroup>
+                      </select>
+                    </div>
+                  </form>
+                </div>
+                <div class="lang-switcher hide">
+                  <div class="toggle" data-target=".lang-list">
+                    <div class="lbl">Language<span class="b">English</span></div>
+                    <div class="arrow">
+                    </div>
+                  </div>
+                  <div class="lang-list" style="display:none;">
+                    <ul>
+                      <li>
+                        <a href="">English</a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="content-wrap" class="content-wrap">
+        <div class="content-block">
+          <div class="content">
+            <div class="section">
+              <div class="mb20 clear" id="">
+                <h1 class="heading inherit">Avx</h1>
+                <div class="clear">
+                </div>
+                <p class="cl mb0 left mr10">class in
+          Unity.Burst.Intrinsics</p>
+                <div class="scrollToFeedback">
+                  <a id="scrollToFeedback" role="button" tabindex="0">Leave feedback</a>
+                </div>
+                <div class="clear">
+                </div>
+                <div class="suggest">
+                  <a class="blue-btn sbtn">Suggest a change</a>
+                  <div class="suggest-wrap rel hide">
+                    <div class="loading hide">
+                      <div>
+                      </div>
+                      <div>
+                      </div>
+                      <div>
+                      </div>
+                    </div>
+                    <div class="suggest-success hide">
+                      <h2>Success!</h2>
+                      <p>Thank you for helping us improve the quality of Unity Documentation. Although we cannot accept all submissions, we do read each suggested change from our users and will make updates where applicable.</p>
+                      <a class="gray-btn sbtn close">Close</a>
+                    </div>
+                    <div class="suggest-failed hide">
+                      <h2>Submission failed</h2>
+                      <p>For some reason your suggested change could not be submitted. Please &lt;a&gt;try again&lt;/a&gt; in a few minutes. And thank you for taking the time to help us improve the quality of Unity Documentation.</p>
+                      <a class="gray-btn sbtn close">Close</a>
+                    </div>
+                    <div class="suggest-form clear">
+                      <label for="suggest_name">Your name</label>
+                      <input id="suggest_name" type="text">
+                      </input>
+                      <label for="suggest_email">Your email</label>
+                      <input id="suggest_email" type="email">
+                      </input>
+                      <label for="suggest_body" class="clear">Suggestion<span class="r">*</span></label>
+                      <textarea id="suggest_body" class="req">
+                      </textarea>
+                      <button id="suggest_submit" class="blue-btn mr10">Submit suggestion</button>
+                      <p class="mb0">
+                        <a class="cancel left lh42 cn">Cancel</a>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="clear">
+                </div>
+              </div>
+              <div class="subsection">
+                <div class="signature">
+                  <div class="signature-CS sig-block">
+                    <span style="color:red;">
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div class="subsection">
+                <h3>Description</h3>
+                <p>
+ AVX intrinsics
+ </p>
+              </div>
+              <div class="subsection">
+                <h3>Static Properties</h3>
+                <table class="list">
+                  <thead>
+                    <tr>
+                      <th>Property</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx.IsAvxSupported.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx.IsAvxSupported.html">IsAvxSupported</a></td><td class="desc">
+ Evaluates to true at compile time if AVX intrinsics are supported.
+ </td></tr>
+    </table>
+              </div>
+              <div class="subsection">
+                <h3>Static Methods</h3>
+                <table class="list">
+                  <thead>
+                    <tr>
+                      <th>Method</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-broadcast_ss.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-broadcast_ss.html">broadcast_ss</a></td><td class="desc">
+ Broadcast a single-precision (32-bit) floating-point element from memory to all elements of dst.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-cmp_pd.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-cmp_pd.html">cmp_pd</a></td><td class="desc">
+ Compare packed double-precision (64-bit) floating-point elements in a and b based on the comparison operand specified by imm8, and store the results in dst.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-cmp_ps.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-cmp_ps.html">cmp_ps</a></td><td class="desc">
+ Compare packed single-precision (32-bit) floating-point elements in a and b based on the comparison operand specified by imm8, and store the results in dst.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-cmp_sd.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-cmp_sd.html">cmp_sd</a></td><td class="desc">
+ Compare the lower double-precision (64-bit) floating-point
+ element in a and b based on the comparison operand specified by
+ imm8, store the result in the lower element of dst, and copy
+ the upper element from a to the upper element of dst.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-cmp_ss.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-cmp_ss.html">cmp_ss</a></td><td class="desc">
+ Compare the lower single-precision (32-bit) floating-point
+ element in a and b based on the comparison operand specified by
+ imm8, store the result in the lower element of dst, and copy
+ the upper 3 packed elements from a to the upper elements of
+ dst.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-maskload_pd.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-maskload_pd.html">maskload_pd</a></td><td class="desc">
+ Load packed double-precision (64-bit) floating-point elements
+ from memory into dst using mask (elements are zeroed out when
+ the high bit of the corresponding element is not set).
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-maskload_ps.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-maskload_ps.html">maskload_ps</a></td><td class="desc">
+ Load packed single-precision (32-bit) floating-point elements
+ from memory into dst using mask (elements are zeroed out when
+ the high bit of the corresponding element is not set).
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-maskstore_pd.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-maskstore_pd.html">maskstore_pd</a></td><td class="desc">
+ Store packed double-precision (64-bit) floating-point elements from a into memory using mask.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-maskstore_ps.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-maskstore_ps.html">maskstore_ps</a></td><td class="desc">
+ Store packed single-precision (32-bit) floating-point elements from a into memory using mask.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_add_pd.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_add_pd.html">mm256_add_pd</a></td><td class="desc">
+ Add packed double-precision (64-bit) floating-point elements in a and b, and store the results in dst.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_add_ps.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_add_ps.html">mm256_add_ps</a></td><td class="desc">
+ Add packed single-precision (32-bit) floating-point elements in a and b, and store the results in dst.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_addsub_pd.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_addsub_pd.html">mm256_addsub_pd</a></td><td class="desc">
+ Alternatively add and subtract packed double-precision (64-bit) floating-point elements in a to/from packed elements in b, and store the results in dst.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_addsub_ps.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_addsub_ps.html">mm256_addsub_ps</a></td><td class="desc">
+ Alternatively add and subtract packed single-precision (32-bit) floating-point elements in a to/from packed elements in b, and store the results in dst.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_and_pd.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_and_pd.html">mm256_and_pd</a></td><td class="desc">
+ Compute the bitwise AND of packed double-precision (64-bit) floating-point elements in a and b, and store the results in dst.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_and_ps.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_and_ps.html">mm256_and_ps</a></td><td class="desc">
+ Compute the bitwise AND of packed single-precision (32-bit) floating-point elements in a and b, and store the results in dst.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_andnot_pd.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_andnot_pd.html">mm256_andnot_pd</a></td><td class="desc">
+ Compute the bitwise NOT of packed double-precision (64-bit) floating-point elements in a and then AND with b, and store the results in dst.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_andnot_ps.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_andnot_ps.html">mm256_andnot_ps</a></td><td class="desc">
+ Compute the bitwise NOT of packed single-precision (32-bit) floating-point elements in a and then AND with b, and store the results in dst.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_blend_pd.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_blend_pd.html">mm256_blend_pd</a></td><td class="desc">
+ Blend packed double-precision (64-bit) floating-point elements from a and b using control mask imm8, and store the results in dst.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_blend_ps.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_blend_ps.html">mm256_blend_ps</a></td><td class="desc">
+ Blend packed single-precision (32-bit) floating-point elements from a and b using control mask imm8, and store the results in dst.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_blendv_pd.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_blendv_pd.html">mm256_blendv_pd</a></td><td class="desc">
+ Blend packed double-precision (64-bit) floating-point elements from a and b using mask, and store the results in dst.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_blendv_ps.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_blendv_ps.html">mm256_blendv_ps</a></td><td class="desc">
+ Blend packed single-precision (32-bit) floating-point elements from a and b using mask, and store the results in dst.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_broadcast_pd.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_broadcast_pd.html">mm256_broadcast_pd</a></td><td class="desc">
+ Broadcast 128 bits from memory (composed of 2 packed double-precision (64-bit) floating-point elements) to all elements of dst.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_broadcast_ps.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_broadcast_ps.html">mm256_broadcast_ps</a></td><td class="desc">
+ Broadcast 128 bits from memory (composed of 4 packed single-precision (32-bit) floating-point elements) to all elements of dst.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_broadcast_sd.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_broadcast_sd.html">mm256_broadcast_sd</a></td><td class="desc">
+ Broadcast a double-precision (64-bit) floating-point element from memory to all elements of dst.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_broadcast_ss.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_broadcast_ss.html">mm256_broadcast_ss</a></td><td class="desc">
+ Broadcast a single-precision (32-bit) floating-point element from memory to all elements of dst.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_castpd_ps.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_castpd_ps.html">mm256_castpd_ps</a></td><td class="desc">For compatibility with C++ code only. This is a no-op in Burst.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_castpd_si256.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_castpd_si256.html">mm256_castpd_si256</a></td><td class="desc">For compatibility with C++ code only. This is a no-op in Burst.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_castpd128_pd256.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_castpd128_pd256.html">mm256_castpd128_pd256</a></td><td class="desc">For compatibility with C++ code only. This is a no-op in Burst.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_castpd256_pd128.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_castpd256_pd128.html">mm256_castpd256_pd128</a></td><td class="desc">For compatibility with C++ code only. This is a no-op in Burst.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_castps_pd.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_castps_pd.html">mm256_castps_pd</a></td><td class="desc">For compatibility with C++ code only. This is a no-op in Burst.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_castps_si256.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_castps_si256.html">mm256_castps_si256</a></td><td class="desc">For compatibility with C++ code only. This is a no-op in Burst.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_castps128_ps256.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_castps128_ps256.html">mm256_castps128_ps256</a></td><td class="desc">For compatibility with C++ code only. This is a no-op in Burst.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_castps256_ps128.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_castps256_ps128.html">mm256_castps256_ps128</a></td><td class="desc">For compatibility with C++ code only. This is a no-op in Burst.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_castsi128_si256.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_castsi128_si256.html">mm256_castsi128_si256</a></td><td class="desc">For compatibility with C++ code only. This is a no-op in Burst.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_castsi256_pd.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_castsi256_pd.html">mm256_castsi256_pd</a></td><td class="desc">For compatibility with C++ code only. This is a no-op in Burst.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_castsi256_ps.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_castsi256_ps.html">mm256_castsi256_ps</a></td><td class="desc">For compatibility with C++ code only. This is a no-op in Burst.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_castsi256_si128.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_castsi256_si128.html">mm256_castsi256_si128</a></td><td class="desc">For compatibility with C++ code only. This is a no-op in Burst.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_ceil_pd.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_ceil_pd.html">mm256_ceil_pd</a></td><td class="desc">
+ Round the packed double-precision (64-bit) floating-point
+ elements in a up to an integer value, and store the results as
+ packed double-precision floating-point elements in dst.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_ceil_ps.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_ceil_ps.html">mm256_ceil_ps</a></td><td class="desc">
+ Round the packed single-precision (32-bit) floating-point
+ elements in a up to an integer value, and store the results as
+ packed single-precision floating-point elements in dst.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_cmp_pd.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_cmp_pd.html">mm256_cmp_pd</a></td><td class="desc">
+ Compare packed double-precision (64-bit) floating-point elements in a and b based on the comparison operand specified by imm8, and store the results in dst.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_cmp_ps.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_cmp_ps.html">mm256_cmp_ps</a></td><td class="desc">
+ Compare packed single-precision (32-bit) floating-point elements in a and b based on the comparison operand specified by imm8, and store the results in dst.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_cvtepi32_pd.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_cvtepi32_pd.html">mm256_cvtepi32_pd</a></td><td class="desc">
+ Convert packed 32-bit integers in a to packed double-precision (64-bit) floating-point elements, and store the results in dst.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_cvtepi32_ps.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_cvtepi32_ps.html">mm256_cvtepi32_ps</a></td><td class="desc">
+ Convert packed 32-bit integers in a to packed single-precision (32-bit) floating-point elements, and store the results in dst.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_cvtpd_epi32.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_cvtpd_epi32.html">mm256_cvtpd_epi32</a></td><td class="desc">
+ Convert packed double-precision(64-bit) floating-point elements
+ in a to packed 32-bit integers, and store the results in dst.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_cvtpd_ps.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_cvtpd_ps.html">mm256_cvtpd_ps</a></td><td class="desc">
+ Convert packed double-precision (64-bit) floating-point
+ elements in a to packed single-precision (32-bit)
+ floating-point elements, and store the results in dst.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_cvtps_epi32.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_cvtps_epi32.html">mm256_cvtps_epi32</a></td><td class="desc">
+ Convert packed single-precision (32-bit) floating-point
+ elements in a to packed 32-bit integers, and store the results
+ in dst.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_cvtps_pd.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_cvtps_pd.html">mm256_cvtps_pd</a></td><td class="desc">
+ Convert packed single-precision (32-bit) floating-point
+ elements in a to packed double-precision (64-bit)
+ floating-point elements, and store the results in dst.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_cvtss_f32.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_cvtss_f32.html">mm256_cvtss_f32</a></td><td class="desc">
+ Copy the lower single-precision (32-bit) floating-point element of a to dst.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_cvttpd_epi32.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_cvttpd_epi32.html">mm256_cvttpd_epi32</a></td><td class="desc">
+ Convert packed double-precision (64-bit) floating-point
+ elements in a to packed 32-bit integers with truncation, and
+ store the results in dst.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_cvttps_epi32.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_cvttps_epi32.html">mm256_cvttps_epi32</a></td><td class="desc">
+ Convert packed single-precision (32-bit) floating-point
+ elements in a to packed 32-bit integers with truncation, and
+ store the results in dst.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_div_pd.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_div_pd.html">mm256_div_pd</a></td><td class="desc">
+ Divide packed double-precision (64-bit) floating-point elements in a by packed elements in b, and store the results in dst.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_div_ps.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_div_ps.html">mm256_div_ps</a></td><td class="desc">
+ Divide packed single-precision (32-bit) floating-point elements in a by packed elements in b, and store the results in dst.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_dp_ps.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_dp_ps.html">mm256_dp_ps</a></td><td class="desc">
+ Conditionally multiply the packed single-precision (32-bit)
+ floating-point elements in a and b using the high 4 bits in
+ imm8, sum the four products, and conditionally store the sum in
+ dst using the low 4 bits of imm8.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_extract_epi32.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_extract_epi32.html">mm256_extract_epi32</a></td><td class="desc">
+ Extract a 32-bit integer from a, selected with index (which must be a constant), and store the result in dst.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_extract_epi64.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_extract_epi64.html">mm256_extract_epi64</a></td><td class="desc">
+ Extract a 64-bit integer from a, selected with index (which must be a constant), and store the result in dst.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_extractf128_pd.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_extractf128_pd.html">mm256_extractf128_pd</a></td><td class="desc">
+ Extract 128 bits (composed of 2 packed double-precision (64-bit) floating-point elements) from a, selected with imm8, and store the result in dst.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_extractf128_ps.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_extractf128_ps.html">mm256_extractf128_ps</a></td><td class="desc">
+ Extract 128 bits (composed of 4 packed single-precision (32-bit) floating-point elements) from a, selected with imm8, and store the result in dst.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_extractf128_si256.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_extractf128_si256.html">mm256_extractf128_si256</a></td><td class="desc">
+ Extract 128 bits (composed of integer data) from a, selected with imm8, and store the result in dst.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_floor_pd.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_floor_pd.html">mm256_floor_pd</a></td><td class="desc">
+ Round the packed double-precision (64-bit) floating-point
+ elements in a down to an integer value, and store the results
+ as packed double-precision floating-point elements in dst.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_floor_ps.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_floor_ps.html">mm256_floor_ps</a></td><td class="desc">
+ Round the packed single-precision (32-bit) floating-point
+ elements in a down to an integer value, and store the results
+ as packed single-precision floating-point elements in dst.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_hadd_pd.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_hadd_pd.html">mm256_hadd_pd</a></td><td class="desc">
+ Horizontally add adjacent pairs of double-precision (64-bit) floating-point elements in a and b, and pack the results in dst.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_hadd_ps.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_hadd_ps.html">mm256_hadd_ps</a></td><td class="desc">
+ Horizontally add adjacent pairs of single-precision (32-bit) floating-point elements in a and b, and pack the results in dst.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_hsub_pd.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_hsub_pd.html">mm256_hsub_pd</a></td><td class="desc">
+ Horizontally subtract adjacent pairs of double-precision (64-bit) floating-point elements in a and b, and pack the results in dst.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_hsub_ps.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_hsub_ps.html">mm256_hsub_ps</a></td><td class="desc">
+ Horizontally add adjacent pairs of single-precision (32-bit) floating-point elements in a and b, and pack the results in dst.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_insert_epi16.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_insert_epi16.html">mm256_insert_epi16</a></td><td class="desc">
+ Copy a to dst, and insert the 16-bit integer i into dst at the location specified by index (which must be a constant).
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_insert_epi32.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_insert_epi32.html">mm256_insert_epi32</a></td><td class="desc">
+ Copy a to dst, and insert the 32-bit integer i into dst at the location specified by index (which must be a constant).
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_insert_epi64.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_insert_epi64.html">mm256_insert_epi64</a></td><td class="desc">
+ Copy a to dst, and insert the 64-bit integer i into dst at the location specified by index (which must be a constant).
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_insert_epi8.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_insert_epi8.html">mm256_insert_epi8</a></td><td class="desc">
+ Copy a to dst, and insert the 8-bit integer i into dst at the location specified by index (which must be a constant).
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_insertf128_pd.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_insertf128_pd.html">mm256_insertf128_pd</a></td><td class="desc">
+ Copy a to dst, then insert 128 bits (composed of 2 packed double-precision (64-bit) floating-point elements) from b into dst at the location specified by imm8.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_insertf128_ps.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_insertf128_ps.html">mm256_insertf128_ps</a></td><td class="desc">
+ Copy a to dst, then insert 128 bits (composed of 4 packed single-precision (32-bit) floating-point elements) from b into dst at the location specified by imm8.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_insertf128_si256.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_insertf128_si256.html">mm256_insertf128_si256</a></td><td class="desc">
+ Copy a to dst, then insert 128 bits of integer data from b into dst at the location specified by imm8.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_lddqu_si256.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_lddqu_si256.html">mm256_lddqu_si256</a></td><td class="desc">
+ Load 256-bits of integer data from unaligned memory into dst.
+ This intrinsic may perform better than mm256_loadu_si256 when
+ the data crosses a cache line boundary.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_load_pd.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_load_pd.html">mm256_load_pd</a></td><td class="desc">
+ Load 256-bits (composed of 8 packed single-precision (32-bit) floating-point elements) from memory
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_load_ps.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_load_ps.html">mm256_load_ps</a></td><td class="desc">
+ Load 256-bits (composed of 8 packed single-precision (32-bit) floating-point elements) from memory
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_load_si256.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_load_si256.html">mm256_load_si256</a></td><td class="desc">
+ Load 256-bits (composed of 8 packed 32-bit integers elements) from memory
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_loadu_pd.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_loadu_pd.html">mm256_loadu_pd</a></td><td class="desc">
+ Load 256-bits (composed of 4 packed double-precision (64-bit) floating-point elements) from memory
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_loadu_ps.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_loadu_ps.html">mm256_loadu_ps</a></td><td class="desc">
+ Load 256-bits (composed of 8 packed single-precision (32-bit) floating-point elements) from memory
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_loadu_si256.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_loadu_si256.html">mm256_loadu_si256</a></td><td class="desc">
+ Load 256-bits (composed of 8 packed 32-bit integers elements) from memory
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_loadu2_m128.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_loadu2_m128.html">mm256_loadu2_m128</a></td><td class="desc">
+ Load two 128-bit values (composed of 4 packed single-precision
+ (32-bit) floating-point elements) from memory, and combine them
+ into a 256-bit value in dst. hiaddr and loaddr do not need to
+ be aligned on any particular boundary.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_loadu2_m128d.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_loadu2_m128d.html">mm256_loadu2_m128d</a></td><td class="desc">
+ Load two 128-bit values (composed of 2 packed double-precision
+ (64-bit) floating-point elements) from memory, and combine them
+ into a 256-bit value in dst. hiaddr and loaddr do not need to
+ be aligned on any particular boundary.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_loadu2_m128i.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_loadu2_m128i.html">mm256_loadu2_m128i</a></td><td class="desc">
+ Load two 128-bit values (composed of integer data) from memory,
+ and combine them into a 256-bit value in dst. hiaddr and loaddr
+ do not need to be aligned on any particular boundary.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_maskload_pd.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_maskload_pd.html">mm256_maskload_pd</a></td><td class="desc">
+ Load packed double-precision (64-bit) floating-point elements
+ from memory into dst using mask (elements are zeroed out when
+ the high bit of the corresponding element is not set).
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_maskload_ps.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_maskload_ps.html">mm256_maskload_ps</a></td><td class="desc">
+ Load packed single-precision (32-bit) floating-point elements
+ from memory into dst using mask (elements are zeroed out when
+ the high bit of the corresponding element is not set).
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_maskstore_pd.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_maskstore_pd.html">mm256_maskstore_pd</a></td><td class="desc">
+ Store packed double-precision (64-bit) floating-point elements from a into memory using mask.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_maskstore_ps.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_maskstore_ps.html">mm256_maskstore_ps</a></td><td class="desc">
+ Store packed single-precision (32-bit) floating-point elements from a into memory using mask.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_max_pd.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_max_pd.html">mm256_max_pd</a></td><td class="desc">
+ Compare packed double-precision (64-bit) floating-point elements in a and b, and store packed maximum values in dst.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_max_ps.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_max_ps.html">mm256_max_ps</a></td><td class="desc">
+ Compare packed single-precision (32-bit) floating-point elements in a and b, and store packed maximum values in dst.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_min_pd.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_min_pd.html">mm256_min_pd</a></td><td class="desc">
+ Compare packed double-precision (64-bit) floating-point elements in a and b, and store packed minimum values in dst. 
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_min_ps.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_min_ps.html">mm256_min_ps</a></td><td class="desc">
+ Compare packed single-precision (32-bit) floating-point elements in a and b, and store packed minimum values in dst.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_movedup_pd.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_movedup_pd.html">mm256_movedup_pd</a></td><td class="desc">
+ Duplicate even-indexed double-precision (64-bit) floating-point elements from a, and store the results in dst.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_movehdup_ps.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_movehdup_ps.html">mm256_movehdup_ps</a></td><td class="desc">
+ Duplicate odd-indexed single-precision (32-bit) floating-point elements from a, and store the results in dst. 
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_moveldup_ps.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_moveldup_ps.html">mm256_moveldup_ps</a></td><td class="desc">
+ Duplicate even-indexed single-precision (32-bit) floating-point elements from a, and store the results in dst.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_movemask_pd.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_movemask_pd.html">mm256_movemask_pd</a></td><td class="desc">
+ Set each bit of mask dst based on the most significant bit of the corresponding packed double-precision (64-bit) floating-point element in a.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_movemask_ps.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_movemask_ps.html">mm256_movemask_ps</a></td><td class="desc">
+ Set each bit of mask dst based on the most significant bit of the corresponding packed single-precision (32-bit) floating-point element in a.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_mul_pd.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_mul_pd.html">mm256_mul_pd</a></td><td class="desc">
+ Multiply packed double-precision (64-bit) floating-point elements in a and b, and store the results in dst.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_mul_ps.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_mul_ps.html">mm256_mul_ps</a></td><td class="desc">
+ Multiply packed single-precision (32-bit) floating-point elements in a and b, and store the results in dst.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_or_pd.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_or_pd.html">mm256_or_pd</a></td><td class="desc">
+ Compute the bitwise OR of packed double-precision (64-bit) floating-point elements in a and b, and store the results in dst.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_or_ps.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_or_ps.html">mm256_or_ps</a></td><td class="desc">
+ Compute the bitwise OR of packed single-precision (32-bit) floating-point elements in a and b, and store the results in dst.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_permute_pd.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_permute_pd.html">mm256_permute_pd</a></td><td class="desc">
+ Shuffle double-precision (64-bit) floating-point elements in a within 128-bit lanes using the control in imm8, and store the results in dst.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_permute_ps.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_permute_ps.html">mm256_permute_ps</a></td><td class="desc">
+ Shuffle single-precision (32-bit) floating-point elements in a
+ within 128-bit lanes using the control in imm8, and store the
+ results in dst.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_permute2f128_pd.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_permute2f128_pd.html">mm256_permute2f128_pd</a></td><td class="desc">
+ Shuffle 128-bits (composed of 2 packed double-precision (64-bit) floating-point elements) selected by imm8 from a and b, and store the results in dst. 
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_permute2f128_ps.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_permute2f128_ps.html">mm256_permute2f128_ps</a></td><td class="desc">
+ Shuffle 128-bits (composed of 4 packed single-precision (32-bit) floating-point elements) selected by imm8 from a and b, and store the results in dst.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_permute2f128_si256.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_permute2f128_si256.html">mm256_permute2f128_si256</a></td><td class="desc">
+ Shuffle 128-bits (composed of integer data) selected by imm8 from a and b, and store the results in dst.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_permutevar_pd.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_permutevar_pd.html">mm256_permutevar_pd</a></td><td class="desc">
+ Shuffle double-precision (64-bit) floating-point elements in a within 128-bit lanes using the control in b, and store the results in dst.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_permutevar_ps.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_permutevar_ps.html">mm256_permutevar_ps</a></td><td class="desc">
+ Shuffle single-precision (32-bit) floating-point elements in a within 128-bit lanes using the control in b, and store the results in dst.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_rcp_ps.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_rcp_ps.html">mm256_rcp_ps</a></td><td class="desc">
+ Compute the approximate reciprocal of packed single-precision
+ (32-bit) floating-point elements in a, and store the results in
+ dst. The maximum relative error for this approximation is less
+ than 1.5*2^-12.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_round_pd.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_round_pd.html">mm256_round_pd</a></td><td class="desc">
+ Round the packed double-precision (64-bit) floating-point
+ elements in a using the rounding parameter, and store the
+ results as packed double-precision floating-point elements in
+ dst.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_round_ps.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_round_ps.html">mm256_round_ps</a></td><td class="desc">
+ Round the packed single-precision (32-bit) floating-point
+ elements in a using the rounding parameter, and store the
+ results as packed single-precision floating-point elements in
+ dst.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_rsqrt_ps.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_rsqrt_ps.html">mm256_rsqrt_ps</a></td><td class="desc">
+ Compute the approximate reciprocal square root of packed
+ single-precision (32-bit) floating-point elements in a, and
+ store the results in dst. The maximum relative error for this
+ approximation is less than 1.5*2^-12.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_set_epi16.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_set_epi16.html">mm256_set_epi16</a></td><td class="desc">
+ Set packed short elements in dst with the supplied values.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_set_epi32.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_set_epi32.html">mm256_set_epi32</a></td><td class="desc">
+ Set packed int elements in dst with the supplied values.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_set_epi64x.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_set_epi64x.html">mm256_set_epi64x</a></td><td class="desc">
+ Set packed 64-bit integers in dst with the supplied values.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_set_epi8.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_set_epi8.html">mm256_set_epi8</a></td><td class="desc">
+ Set packed byte elements in dst with the supplied values.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_set_m128.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_set_m128.html">mm256_set_m128</a></td><td class="desc">
+ Set packed __m256 vector dst with the supplied values.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_set_m128d.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_set_m128d.html">mm256_set_m128d</a></td><td class="desc">
+ Set packed v256 vector with the supplied values.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_set_m128i.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_set_m128i.html">mm256_set_m128i</a></td><td class="desc">
+ Set packed v256 vector with the supplied values.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_set_pd.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_set_pd.html">mm256_set_pd</a></td><td class="desc">
+ Set packed double-precision (64-bit) floating-point elements in dst with the supplied values.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_set_ps.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_set_ps.html">mm256_set_ps</a></td><td class="desc">
+ Set packed single-precision (32-bit) floating-point elements in dst with the supplied values.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_set1_epi16.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_set1_epi16.html">mm256_set1_epi16</a></td><td class="desc">
+ Broadcast 16-bit integer a to all all elements of dst. This intrinsic may generate the vpbroadcastw instruction.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_set1_epi32.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_set1_epi32.html">mm256_set1_epi32</a></td><td class="desc">
+ Broadcast 32-bit integer a to all elements of dst. This intrinsic may generate the vpbroadcastd instruction.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_set1_epi64x.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_set1_epi64x.html">mm256_set1_epi64x</a></td><td class="desc">
+ Broadcast 64-bit integer a to all elements of dst. This intrinsic may generate the vpbroadcastq instruction.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_set1_epi8.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_set1_epi8.html">mm256_set1_epi8</a></td><td class="desc">
+ Broadcast 8-bit integer a to all elements of dst. This intrinsic may generate the vpbroadcastb instruction.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_set1_pd.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_set1_pd.html">mm256_set1_pd</a></td><td class="desc">
+ Broadcast double-precision (64-bit) floating-point value a to all elements of dst.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_set1_ps.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_set1_ps.html">mm256_set1_ps</a></td><td class="desc">
+ Broadcast single-precision (32-bit) floating-point value a to all elements of dst.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_setr_epi16.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_setr_epi16.html">mm256_setr_epi16</a></td><td class="desc">
+ Set packed short elements in dst with the supplied values in reverse order.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_setr_epi32.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_setr_epi32.html">mm256_setr_epi32</a></td><td class="desc">
+ Set packed int elements in dst with the supplied values in reverse order.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_setr_epi64x.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_setr_epi64x.html">mm256_setr_epi64x</a></td><td class="desc">
+ Set packed 64-bit integers in dst with the supplied values in reverse order.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_setr_epi8.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_setr_epi8.html">mm256_setr_epi8</a></td><td class="desc">
+ Set packed byte elements in dst with the supplied values in reverse order.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_setr_m128.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_setr_m128.html">mm256_setr_m128</a></td><td class="desc">
+ Set packed v256 vector with the supplied values in reverse order.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_setr_m128d.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_setr_m128d.html">mm256_setr_m128d</a></td><td class="desc">
+ Set packed v256 vector with the supplied values in reverse order.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_setr_m128i.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_setr_m128i.html">mm256_setr_m128i</a></td><td class="desc">
+ Set packed v256 vector with the supplied values in reverse order.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_setr_pd.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_setr_pd.html">mm256_setr_pd</a></td><td class="desc">
+ Set packed double-precision (64-bit) floating-point elements in dst with the supplied values in reverse order.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_setr_ps.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_setr_ps.html">mm256_setr_ps</a></td><td class="desc">
+ Set packed single-precision (32-bit) floating-point elements in dst with the supplied values in reverse order.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_setzero_pd.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_setzero_pd.html">mm256_setzero_pd</a></td><td class="desc">
+ Return Vector with all elements set to zero.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_setzero_ps.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_setzero_ps.html">mm256_setzero_ps</a></td><td class="desc">
+ Return Vector with all elements set to zero.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_setzero_si256.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_setzero_si256.html">mm256_setzero_si256</a></td><td class="desc">
+ Return Vector with all elements set to zero.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_shuffle_pd.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_shuffle_pd.html">mm256_shuffle_pd</a></td><td class="desc">
+ Shuffle double-precision (64-bit) floating-point elements within 128-bit lanes using the control in imm8, and store the results in dst.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_shuffle_ps.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_shuffle_ps.html">mm256_shuffle_ps</a></td><td class="desc">
+ Shuffle single-precision (32-bit) floating-point elements in a within 128-bit lanes using the control in imm8, and store the results in dst.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_sqrt_pd.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_sqrt_pd.html">mm256_sqrt_pd</a></td><td class="desc">
+ Compute the square root of packed double-precision (64-bit)
+ floating-point elements in a, and store the results in dst.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_sqrt_ps.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_sqrt_ps.html">mm256_sqrt_ps</a></td><td class="desc">
+ Compute the square root of packed single-precision (32-bit)
+ floating-point elements in a, and store the results in dst.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_store_pd.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_store_pd.html">mm256_store_pd</a></td><td class="desc">
+ Store 256-bits (composed of 4 packed double-precision (64-bit) floating-point elements) from a into memory
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_store_ps.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_store_ps.html">mm256_store_ps</a></td><td class="desc">
+ Store 256-bits (composed of 8 packed single-precision (32-bit) floating-point elements) from a into memory
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_store_si256.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_store_si256.html">mm256_store_si256</a></td><td class="desc">
+ Store 256-bits (composed of 8 packed 32-bit integer elements) from a into memory
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_storeu_pd.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_storeu_pd.html">mm256_storeu_pd</a></td><td class="desc">
+ Store 256-bits (composed of 4 packed double-precision (64-bit) floating-point elements) from a into memory
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_storeu_ps.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_storeu_ps.html">mm256_storeu_ps</a></td><td class="desc">
+ Store 256-bits (composed of 8 packed single-precision (32-bit) floating-point elements) from a into memory
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_storeu_si256.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_storeu_si256.html">mm256_storeu_si256</a></td><td class="desc">
+ Store 256-bits (composed of 8 packed 32-bit integer elements) from a into memory
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_storeu2_m128.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_storeu2_m128.html">mm256_storeu2_m128</a></td><td class="desc">
+ Store the high and low 128-bit halves (each composed of 4
+ packed single-precision (32-bit) floating-point elements) from
+ a into memory two different 128-bit locations. hiaddr and
+ loaddr do not need to be aligned on any particular boundary.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_storeu2_m128d.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_storeu2_m128d.html">mm256_storeu2_m128d</a></td><td class="desc">
+ Store the high and low 128-bit halves (each composed of 2
+ packed double-precision (64-bit) floating-point elements) from
+ a into memory two different 128-bit locations. hiaddr and
+ loaddr do not need to be aligned on any particular boundary.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_storeu2_m128i.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_storeu2_m128i.html">mm256_storeu2_m128i</a></td><td class="desc">
+ Store the high and low 128-bit halves (each composed of integer
+ data) from a into memory two different 128-bit locations. hiaddr
+ and loaddr do not need to be aligned on any particular boundary.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_stream_pd.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_stream_pd.html">mm256_stream_pd</a></td><td class="desc">
+ Store 256-bits (composed of 4 packed double-precision (64-bit)
+ floating-point elements) from a into memory using a
+ non-temporal memory hint. mem_addr must be aligned on a 32-byte
+ boundary or a general-protection exception may be generated.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_stream_ps.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_stream_ps.html">mm256_stream_ps</a></td><td class="desc">
+ Store 256-bits (composed of 8 packed single-precision (32-bit)
+ floating-point elements) from a into memory using a
+ non-temporal memory hint. mem_addr must be aligned on a 32-byte
+ boundary or a general-protection exception may be generated.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_stream_si256.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_stream_si256.html">mm256_stream_si256</a></td><td class="desc">
+ Store 256-bits of integer data from a into memory using a
+ non-temporal memory hint. mem_addr must be aligned on a 32-byte
+ boundary or a general-protection exception may be generated.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_sub_pd.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_sub_pd.html">mm256_sub_pd</a></td><td class="desc">
+ Subtract packed double-precision (64-bit) floating-point elements in b from packed double-precision (64-bit) floating-point elements in a, and store the results in dst.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_sub_ps.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_sub_ps.html">mm256_sub_ps</a></td><td class="desc">
+ Subtract packed single-precision (32-bit) floating-point elements in b from packed single-precision (32-bit) floating-point elements in a, and store the results in dst.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_testc_pd.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_testc_pd.html">mm256_testc_pd</a></td><td class="desc">
+ Compute the bitwise AND of 256 bits (representing
+ double-precision (64-bit) floating-point elements) in a and b,
+ producing an intermediate 256-bit value, and set ZF to 1 if the
+ sign bit of each 64-bit element in the intermediate value is
+ zero, otherwise set ZF to 0. Compute the bitwise NOT of a and
+ then AND with b, producing an intermediate value, and set CF to
+ 1 if the sign bit of each 64-bit element in the intermediate
+ value is zero, otherwise set CF to 0. Return the CF value.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_testc_ps.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_testc_ps.html">mm256_testc_ps</a></td><td class="desc">
+ Compute the bitwise AND of 256 bits (representing
+ single-precision (32-bit) floating-point elements) in a and b,
+ producing an intermediate 256-bit value, and set ZF to 1 if the
+ sign bit of each 32-bit element in the intermediate value is
+ zero, otherwise set ZF to 0. Compute the bitwise NOT of a and
+ then AND with b, producing an intermediate value, and set CF to
+ 1 if the sign bit of each 32-bit element in the intermediate
+ value is zero, otherwise set CF to 0. Return the CF value.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_testc_si256.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_testc_si256.html">mm256_testc_si256</a></td><td class="desc">
+ Compute the bitwise AND of 256 bits (representing integer data)
+ in a and b, and set ZF to 1 if the result is zero, otherwise
+ set ZF to 0. Compute the bitwise NOT of a and then AND with b,
+ and set CF to 1 if the result is zero, otherwise set CF to 0.
+ Return the CF value.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_testnzc_pd.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_testnzc_pd.html">mm256_testnzc_pd</a></td><td class="desc">
+ Compute the bitwise AND of 256 bits (representing
+ double-precision (64-bit) floating-point elements) in a and b,
+ producing an intermediate 256-bit value, and set ZF to 1 if the
+ sign bit of each 64-bit element in the intermediate value is
+ zero, otherwise set ZF to 0. Compute the bitwise NOT of a and
+ then AND with b, producing an intermediate value, and set CF to
+ 1 if the sign bit of each 64-bit element in the intermediate
+ value is zero, otherwise set CF to 0. Return 1 if both the ZF
+ and CF values are zero, otherwise return 0.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_testnzc_ps.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_testnzc_ps.html">mm256_testnzc_ps</a></td><td class="desc">
+ Compute the bitwise AND of 256 bits (representing
+ single-precision (32-bit) floating-point elements) in a and b,
+ producing an intermediate 256-bit value, and set ZF to 1 if the
+ sign bit of each 32-bit element in the intermediate value is
+ zero, otherwise set ZF to 0. Compute the bitwise NOT of a and
+ then AND with b, producing an intermediate value, and set CF to
+ 1 if the sign bit of each 32-bit element in the intermediate
+ value is zero, otherwise set CF to 0. Return 1 if both the ZF
+ and CF values are zero, otherwise return 0.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_testnzc_si256.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_testnzc_si256.html">mm256_testnzc_si256</a></td><td class="desc">
+ Compute the bitwise AND of 256 bits (representing integer data)
+ in a and b, and set ZF to 1 if the result is zero, otherwise
+ set ZF to 0. Compute the bitwise NOT of a and then AND with b,
+ and set CF to 1 if the result is zero, otherwise set CF to 0.
+ Return 1 if both the ZF and CF values are zero, otherwise
+ return 0.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_testz_pd.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_testz_pd.html">mm256_testz_pd</a></td><td class="desc">
+ Compute the bitwise AND of 256 bits (representing
+ double-precision (64-bit) floating-point elements) in a and b,
+ producing an intermediate 256-bit value, and set ZF to 1 if the
+ sign bit of each 64-bit element in the intermediate value is
+ zero, otherwise set ZF to 0. Compute the bitwise NOT of a and
+ then AND with b, producing an intermediate value, and set CF to
+ 1 if the sign bit of each 64-bit element in the intermediate
+ value is zero, otherwise set CF to 0. Return the ZF value.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_testz_ps.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_testz_ps.html">mm256_testz_ps</a></td><td class="desc">
+ Compute the bitwise AND of 256 bits (representing
+ single-precision (32-bit) floating-point elements) in a and b,
+ producing an intermediate 256-bit value, and set ZF to 1 if the
+ sign bit of each 32-bit element in the intermediate value is
+ zero, otherwise set ZF to 0. Compute the bitwise NOT of a and
+ then AND with b, producing an intermediate value, and set CF to
+ 1 if the sign bit of each 32-bit element in the intermediate
+ value is zero, otherwise set CF to 0. Return the ZF value.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_testz_si256.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_testz_si256.html">mm256_testz_si256</a></td><td class="desc">
+ Compute the bitwise AND of 256 bits (representing integer data)
+ in a and b, and set ZF to 1 if the result is zero, otherwise
+ set ZF to 0. Compute the bitwise NOT of a and then AND with b,
+ and set CF to 1 if the result is zero, otherwise set CF to 0.
+ Return the ZF value.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_undefined_pd.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_undefined_pd.html">mm256_undefined_pd</a></td><td class="desc">Return a 256-bit vector with undefined contents.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_undefined_ps.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_undefined_ps.html">mm256_undefined_ps</a></td><td class="desc">Return a 256-bit vector with undefined contents.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_undefined_si256.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_undefined_si256.html">mm256_undefined_si256</a></td><td class="desc">Return a 256-bit vector with undefined contents.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_unpackhi_pd.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_unpackhi_pd.html">mm256_unpackhi_pd</a></td><td class="desc">
+ Unpack and interleave double-precision (64-bit) floating-point
+ elements from the high half of each 128-bit lane in a and b,
+ and store the results in dst.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_unpackhi_ps.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_unpackhi_ps.html">mm256_unpackhi_ps</a></td><td class="desc">
+ Unpack and interleave single-precision(32-bit) floating-point
+ elements from the high half of each 128-bit lane in a and b,
+ and store the results in dst.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_unpacklo_pd.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_unpacklo_pd.html">mm256_unpacklo_pd</a></td><td class="desc">
+ Unpack and interleave double-precision (64-bit) floating-point
+ elements from the low half of each 128-bit lane in a and b, and
+ store the results in dst.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_unpacklo_ps.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_unpacklo_ps.html">mm256_unpacklo_ps</a></td><td class="desc">
+ Unpack and interleave single-precision (32-bit) floating-point
+ elements from the low half of each 128-bit lane in a and b, and
+ store the results in dst.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_xor_pd.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_xor_pd.html">mm256_xor_pd</a></td><td class="desc">
+ Compute the bitwise XOR of packed double-precision (64-bit) floating-point elements in a and b, and store the results in dst.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_xor_ps.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_xor_ps.html">mm256_xor_ps</a></td><td class="desc">
+ Compute the bitwise XOR of packed single-precision (32-bit) floating-point elements in a and b, and store the results in dst.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_zeroall.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_zeroall.html">mm256_zeroall</a></td><td class="desc">
+ Zeros the contents of all YMM registers
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_zeroupper.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_zeroupper.html">mm256_zeroupper</a></td><td class="desc">
+ Zero the upper 128 bits of all YMM registers; the lower 128-bits of the registers are unmodified.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_zextpd128_pd256.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_zextpd128_pd256.html">mm256_zextpd128_pd256</a></td><td class="desc">
+ Casts vector of type v128 to type v256; the upper 128 bits of the result
+ are zeroed. This intrinsic is only used for compilation and does not
+ generate any instructions, thus it has zero latency.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_zextps128_ps256.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_zextps128_ps256.html">mm256_zextps128_ps256</a></td><td class="desc">
+ Casts vector of type v128 to type v256; the upper 128 bits of the result
+ are zeroed. This intrinsic is only used for compilation and does not
+ generate any instructions, thus it has zero latency.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-mm256_zextsi128_si256.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-mm256_zextsi128_si256.html">mm256_zextsi128_si256</a></td><td class="desc">
+ Casts vector of type v128 to type v256; the upper 128 bits of the result
+ are zeroed. This intrinsic is only used for compilation and does not
+ generate any instructions, thus it has zero latency.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-permute_pd.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-permute_pd.html">permute_pd</a></td><td class="desc">
+ Shuffle double-precision (64-bit) floating-point elements in a using the control in imm8, and store the results in dst.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-permute_ps.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-permute_ps.html">permute_ps</a></td><td class="desc">
+ Shuffle single-precision (32-bit) floating-point elements in a using the control in imm8, and store the results in dst.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-permutevar_pd.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-permutevar_pd.html">permutevar_pd</a></td><td class="desc">
+ Shuffle double-precision (64-bit) floating-point elements in a using the control in b, and store the results in dst.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-permutevar_ps.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-permutevar_ps.html">permutevar_ps</a></td><td class="desc">
+ Shuffle single-precision (32-bit) floating-point elements in a using the control in b, and store the results in dst.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-testc_pd.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-testc_pd.html">testc_pd</a></td><td class="desc">
+ Compute the bitwise AND of 128 bits (representing
+ double-precision (64-bit) floating-point elements) in a and b,
+ producing an intermediate 128-bit value, and set ZF to 1 if the
+ sign bit of each 64-bit element in the intermediate value is
+ zero, otherwise set ZF to 0. Compute the bitwise NOT of a and
+ then AND with b, producing an intermediate value, and set CF to
+ 1 if the sign bit of each 64-bit element in the intermediate
+ value is zero, otherwise set CF to 0. Return the CF value.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-testc_ps.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-testc_ps.html">testc_ps</a></td><td class="desc">
+ Compute the bitwise AND of 128 bits (representing
+ single-precision (32-bit) floating-point elements) in a and b,
+ producing an intermediate 128-bit value, and set ZF to 1 if the
+ sign bit of each 32-bit element in the intermediate value is
+ zero, otherwise set ZF to 0. Compute the bitwise NOT of a and
+ then AND with b, producing an intermediate value, and set CF to
+ 1 if the sign bit of each 32-bit element in the intermediate
+ value is zero, otherwise set CF to 0. Return the CF value.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-testnzc_pd.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-testnzc_pd.html">testnzc_pd</a></td><td class="desc">
+ Compute the bitwise AND of 128 bits (representing
+ double-precision (64-bit) floating-point elements) in a and b,
+ producing an intermediate 128-bit value, and set ZF to 1 if the
+ sign bit of each 64-bit element in the intermediate value is
+ zero, otherwise set ZF to 0. Compute the bitwise NOT of a and
+ then AND with b, producing an intermediate value, and set CF to
+ 1 if the sign bit of each 64-bit element in the intermediate
+ value is zero, otherwise set CF to 0. Return 1 if both the ZF
+ and CF values are zero, otherwise return 0.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-testnzc_ps.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-testnzc_ps.html">testnzc_ps</a></td><td class="desc">
+ Compute the bitwise AND of 128 bits (representing
+ single-precision (32-bit) floating-point elements) in a and b,
+ producing an intermediate 128-bit value, and set ZF to 1 if the
+ sign bit of each 32-bit element in the intermediate value is
+ zero, otherwise set ZF to 0. Compute the bitwise NOT of a and
+ then AND with b, producing an intermediate value, and set CF to
+ 1 if the sign bit of each 32-bit element in the intermediate
+ value is zero, otherwise set CF to 0. Return 1 if both the ZF
+ and CF values are zero, otherwise return 0.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-testz_pd.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-testz_pd.html">testz_pd</a></td><td class="desc">
+ Compute the bitwise AND of 128 bits (representing
+ double-precision (64-bit) floating-point elements) in a and b,
+ producing an intermediate 128-bit value, and set ZF to 1 if the
+ sign bit of each 64-bit element in the intermediate value is
+ zero, otherwise set ZF to 0. Compute the bitwise NOT of a and
+ then AND with b, producing an intermediate value, and set CF to
+ 1 if the sign bit of each 64-bit element in the intermediate
+ value is zero, otherwise set CF to 0. Return the ZF value.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-testz_ps.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-testz_ps.html">testz_ps</a></td><td class="desc">
+ Compute the bitwise AND of 128 bits (representing
+ single-precision (32-bit) floating-point elements) in a and b,
+ producing an intermediate 128-bit value, and set ZF to 1 if the
+ sign bit of each 32-bit element in the intermediate value is
+ zero, otherwise set ZF to 0. Compute the bitwise NOT of a and
+ then AND with b, producing an intermediate value, and set CF to
+ 1 if the sign bit of each 32-bit element in the intermediate
+ value is zero, otherwise set CF to 0. Return the ZF value.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-undefined_pd.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-undefined_pd.html">undefined_pd</a></td><td class="desc">Return a 128-bit vector with undefined contents.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-undefined_ps.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-undefined_ps.html">undefined_ps</a></td><td class="desc">Return a 128-bit vector with undefined contents.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Burst.Intrinsics.X86.Avx-undefined_si128.html" aria-label="Go to Unity.Burst.Intrinsics.X86.Avx-undefined_si128.html">undefined_si128</a></td><td class="desc">Return a 128-bit vector with undefined contents.</td></tr>
+    </table>
+              </div>
+            </div>
+            <div class="section">
+              <div id="_content">
+              </div>
+            </div>
+            <div class="footer-wrapper">
+              <div class="footer clear">
+                <div class="copy">
+                  <p>
+                    <known_issues>Is something described here not working as you expect it to? It might be a <b>Known Issue</b>. Please check with the Issue Tracker at </known_issues>
+                    <a href="https://issuetracker.unity3d.com">issuetracker.unity3d.com</a>.</p>Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.
+                                        </div>
+                <div class="menu">
+                  <a href="https://unity3d.com/learn">Tutorials</a>
+                  <a href="https://answers.unity3d.com">Community Answers</a>
+                  <a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a>
+                  <a href="https://forum.unity3d.com">Forums</a>
+                  <a href="https://unity3d.com/asset-store">Asset Store</a>
+                  <a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a>
+                  <a href="https://unity.com/legal">Legal</a>
+                  <a href="https://unity.com/legal/privacy-policy">Privacy Policy</a>
+                  <a href="https://unity.com/legal/cookie-policy">Cookies</a>
+                  <a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a>
+                  <div id="ot-sdk-btn-container">
+                    <a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

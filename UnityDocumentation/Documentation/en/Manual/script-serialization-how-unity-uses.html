@@ -1,0 +1,312 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: How Unity uses serialization</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<meta property="relative-path-to-manual" content="">
+<meta property="version-switcher-versions-with-this-page" content="Versions with this page:">
+<meta property="version-switcher-versions-without-this-page" content="Versions without this page:">
+<meta property="version-switcher-supported" content="Supported">
+<meta property="version-switcher-legacy" content="Legacy">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/Manual/script-serialization-how-unity-uses.html">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20260626"></script><script type="text/javascript" src="docdata/toc.js?ts=20260626"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20260626"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20260626">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20260626">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/script-serialization-how-unity-uses.html">English</a></li>
+<li><a href="/cn/current/Manual/script-serialization-how-unity-uses.html">中文</a></li>
+<li><a href="/ja/current/Manual/script-serialization-how-unity-uses.html">日本語</a></li>
+<li><a href="/kr/current/Manual/script-serialization-how-unity-uses.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: Unity 6.7 Beta</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/script-serialization-how-unity-uses.html">English</a></li>
+<li><a href="/cn/current/Manual/script-serialization-how-unity-uses.html">中文</a></li>
+<li><a href="/ja/current/Manual/script-serialization-how-unity-uses.html">日本語</a></li>
+<li><a href="/kr/current/Manual/script-serialization-how-unity-uses.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="scripting.html">Programming in Unity</a></li>
+<li><a href="compilation-and-code-reload.html">Compilation and code reload </a></li>
+<li><a href="script-serialization.html">Script serialization</a></li>
+<li>How Unity uses serialization</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="script-serialization-dictionaries.html"></a></span><div class="tip">Dictionary serialization</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="json-serialization.html"></a></span><div class="tip">JSON Serialization</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>How Unity uses serialization</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<h2>Saving and loading</h2>
+
+<p>Unity uses serialization to load and save <span class="tooltip" tabindex="0" ><a href="CreatingScenes.html">scenes</a><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html" href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span>, <span class="tooltip" tabindex="0" ><a href="AssetWorkflow.html">Assets</a><span class="tooltiptext">Any media or data that can be used in your game or project. An asset may come from a file created outside of Unity, such as a 3D Model, an audio file or an image. You can also create some asset types in Unity, such as an Animator Controller, an Audio Mixer or a Render Texture. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about AssetWorkflow.html" href="AssetWorkflow.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#asset" aria-label="Go to glossary anchor for asset">Glossary</a></span></span></span>, and <a href="AssetBundlesIntro.html">AssetBundles</a> to and from your device’s memory. This includes data saved in your own scripting API objects such as <a href="../ScriptReference/MonoBehaviour.html">MonoBehaviour</a> components and <a href="class-ScriptableObject.html">ScriptableObjects</a>.</p>
+
+<p>Many of the features in the Unity Editor are built on top of the core serialization system. Two things to be particularly aware of with serialization are the <a href="UsingTheInspector.html">Inspector window</a>, and hot reloading.</p>
+
+<h3>The Inspector window</h3>
+
+<p>The <span class="tooltip" tabindex="0" ><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheInspector.html" href="UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span> window shows the value of the serialized fields of the inspected objects. When you change a value in the Inspector, the Inspector updates the serialized data and triggers a deserialization that updates the inspected object.</p>
+
+<p>The same applies for both built-in Unity objects, and scripting objects such as MonoBehaviour-derived classes.</p>
+
+<p>Unity doesn’t call any C# property getters and setters when you view or change values in the Inspector window. Instead, Unity accesses the serialized backing field directly.</p>
+
+<p><a name="hot-reload" aria-hidden="true"></a></p>
+
+<h3>Hot reloading</h3>
+
+<p>Hot reloading of script code is performed as part of an asset database refresh. It refers to the process of reloading and applying code changes directly while the Editor is running, without having to restart it. For more information, refer to <a href="AssetDatabaseRefreshing.html">Refreshing the Asset Database</a> and <a href="AssetDatabaseRefreshing.html#hotreloading">Hot reloading</a>.</p>
+
+<p>
+<strong>Note</strong>: Hot reloading is a special serialization case. Unlike in other serialization cases, Unity serializes private fields by default when reloading, even if they don’t have the <a href="../ScriptReference/SerializeField.html"><code>[SerializeField]</code></a> attribute.</p>
+
+<p>When Unity reloads <span class="tooltip" tabindex="0" ><strong>scripts</strong><span class="tooltiptext">A piece of code that allows you to create your own Components, trigger game events, modify Component properties over time and respond to user input in any way you like. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about creating-scripts.html" href="creating-scripts.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scripts" aria-label="Go to glossary anchor for Scripts">Glossary</a></span></span></span>:</p>
+
+<ol>
+<li>Unity serializes and stores all variables in all loaded scripts.</li>
+<li>Unity restores them to their original, pre-serialization values:
+
+<ul>
+<li>Unity restores all variables - <strong>including private variables</strong> - that fulfill the requirements for serialization, even if a variable has no <code>[SerializeField]</code> attribute.</li>
+<li>Unity never restores static variables, so don’t use static variables for states that you need to keep after Unity reloads a script because the reloading process will discard them.</li>
+</ul>
+</li>
+</ol>
+
+<h3>Preventing serialization and restoration</h3>
+
+<p>Sometimes, you need to prevent Unity from restoring private variables, for example, if you want a reference to be null after reloading from scripts. In this case, use the <a href="https://learn.microsoft.com/en-us/dotnet/api/system.nonserializedattribute?view=net-9.0"><code>[NonSerialized]</code></a> attribute.</p>
+
+<p>Unity’s restore behavior also applies to the private backing fields that store the value of <a href="https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/auto-implemented-properties">automatically implemented properties</a> in C#. For example, consider the following automatically implemented property:</p>
+
+<pre><code class="lang-cs">public string MyProperty { get; set; }
+</code></pre>
+
+<p>In this case, C# adds an invisible private field to the class to store the actual value of <code>MyProperty</code>. Unity would serialize and restore this value during a hot reload. To prevent this, use <code>[field: NonSerialized]</code> on the property.</p>
+
+<p>The following example demonstrates using both the <code>[NonSerialized]</code> attribute and <code>[field: NonSerialized]</code> to prevent serialization and restoration of regular fields and an auto-property backing field respectively:</p>
+
+<pre><code class="lang-cs">class Test
+{
+    // p will not be shown in the Inspector or serialized
+    [System.NonSerialized]
+    public int p = 5;
+
+    // neverSerializeMe will never be serialized, even during an hot reload.
+    [System.NonSerialized]
+    private int neverSerializeMe;
+
+    // The backing field for NeverSerializedProperty property will never be serialized,
+    // even during a hot reload
+    [field: System.NonSerialized]
+    public int NeverSerializedProperty { get; set; }
+}
+</code></pre>
+
+<h2>Prefabs</h2>
+
+<p>A <span class="tooltip" tabindex="0" ><a href="Prefabs.html">prefab</a><span class="tooltiptext">An asset type that allows you to store a GameObject complete with components and properties. The prefab acts as a template from which you can create new object instances in the scene. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Prefabs.html" href="Prefabs.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#prefab" aria-label="Go to glossary anchor for prefab">Glossary</a></span></span></span> is the serialized data of one or more <span class="tooltip" tabindex="0" ><a href="GameObjects.html">GameObjects</a><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-GameObject.html" href="class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span> or <span class="tooltip" tabindex="0" ><a href="Components.html">components</a><span class="tooltiptext">A functional part of a GameObject. A GameObject can contain any number of components. Unity has many built-in components, and you can create your own by writing scripts that inherit from MonoBehaviour. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingComponents.html" href="UsingComponents.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#component" aria-label="Go to glossary anchor for component">Glossary</a></span></span></span>. A prefab instance contains a reference to both the prefab source and a list of modifications to it. The modifications are what Unity needs to do to the prefab source to create that particular prefab instance.</p>
+
+<p>The prefab instance only exists while you edit your project in the Unity Editor. The Unity Editor instantiates a GameObject from its two sets of serialization data: the prefab source and the prefab instance’s modifications.</p>
+
+<h2>Instantiation</h2>
+
+<p>When you call <a href="../ScriptReference/Object.Instantiate.html"><code>Instantiate</code></a> on anything that exists in a scene, such as a prefab or a GameObject:</p>
+
+<ol>
+<li>Unity serializes it. This happens both at runtime and in the Editor. Unity can serialize everything that derives from <code>UnityEngine.Object</code>.</li>
+<li>Unity creates a new GameObject and deserializes the data onto the new GameObject.</li>
+<li>Unity runs the same serialization code in a different variant to report which other <code>UnityEngine.Objects</code> it references. It checks all referenced <code>UnityEngine.Objects</code> to determine if they’re part of the data Unity instantiates. If the reference points to something external, such as a Texture, Unity keeps that reference as it is. If the reference points to something internal, such as a child GameObject, Unity patches the reference to the corresponding copy.</li>
+</ol>
+
+<h2>Unloading unused assets</h2>
+
+<p>
+<code>EditorUtility.UnloadUnusedAssetsImmediate</code> is the native Unity garbage collector and has a different purpose to the standard C# garbage collector. It runs after you load a scene and checks for objects (like Textures) that it no longer references and unloads them safely. The native Unity garbage collector runs the serializer in a variation in which objects report all references to external <code>UnityEngine.Objects</code>. This is how Textures that one scene uses, the garbage collector unloads in the next.</p>
+
+<h2>Differences between Editor and runtime serialization</h2>
+
+<p>Most serialization happens in the Editor, whereas deserialization is the focus at runtime. Unity serializes some features only in the Editor, while it can serialize other features in both the Editor and at runtime:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Feature</strong></th>
+	<th style="text-align:left;"><strong>Editor</strong></th>
+	<th style="text-align:left;"><strong>Runtime</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Assets in Binary Format</strong></td>
+	<td style="text-align:left;">Read/write supported</td>
+	<td style="text-align:left;">Read supported</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Assets in YAML format</strong></td>
+	<td style="text-align:left;">Read/write supported</td>
+	<td style="text-align:left;">Not supported</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Saving scenes, prefabs and other assets</strong></td>
+	<td style="text-align:left;">Supported, unless in Play mode</td>
+	<td style="text-align:left;">Not supported</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Serialization of individual objects with <a href="json-serialization.html">JsonUtility</a></strong></td>
+	<td style="text-align:left;">Read/write support with JsonUtility.<br><br>Support for additional types of objects with EditorJsonUtility</td>
+	<td style="text-align:left;">Read/write support with JsonUtility</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><a href="../ScriptReference/SerializeReference.html">SerializeReference</a></strong></td>
+	<td style="text-align:left;">Supported</td>
+	<td style="text-align:left;">Supported</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><a href="../ScriptReference/ISerializationCallbackReceiver.html">ISerializationCallbackReceiver</a></strong></td>
+	<td style="text-align:left;">Supported</td>
+	<td style="text-align:left;">Supported</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><a href="../ScriptReference/Serialization.FormerlySerializedAsAttribute.html">FormerlySerializedAs</a></strong></td>
+	<td style="text-align:left;">Supported</td>
+	<td style="text-align:left;">Not supported</td>
+</tr>
+</tbody>
+</table>
+
+<p>Objects can have additional fields that only the Editor serializes, such as when you declare fields within the UNITY_EDITOR <a href="platform-dependent-compilation.html">scripting symbol</a>:</p>
+
+<pre><code class="lang-cs">public class SerializeRules : MonoBehaviour
+{
+#if UNITY_EDITOR
+public int m_intEditorOnly;
+#endif
+}
+</code></pre>
+
+<p>In the previous example, the <code>m_intEditorOnly</code> field is only serialized in the editor and isn’t included in the build. This allows you to save memory by omitting data that’s only required in the Editor from your build. Any code that uses that field would also need to be conditionally compiled, for example within <code>#if UNITY_EDITOR</code> blocks, so that the class can compile at build time.</p>
+
+<p>The Editor doesn’t support objects with fields that Unity only serializes at runtime, (for example, when you declare fields within the UNITY_STANDALONE directive).</p>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="script-serialization-rules.html">Serialization rules</a></li>
+<li><a href="json-serialization.html">JSONSerialization</a></li>
+<li><a href="script-serialization-best-practices.html">Serialization best practices</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="script-serialization-dictionaries.html"></a></span><div class="tip">Dictionary serialization</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="json-serialization.html"></a></span><div class="tip">JSON Serialization</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

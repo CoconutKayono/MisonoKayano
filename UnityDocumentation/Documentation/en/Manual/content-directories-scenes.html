@@ -1,0 +1,349 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Include scenes in a content build</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<meta property="relative-path-to-manual" content="">
+<meta property="version-switcher-versions-with-this-page" content="Versions with this page:">
+<meta property="version-switcher-versions-without-this-page" content="Versions without this page:">
+<meta property="version-switcher-supported" content="Supported">
+<meta property="version-switcher-legacy" content="Legacy">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/Manual/content-directories-scenes.html">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20260626"></script><script type="text/javascript" src="docdata/toc.js?ts=20260626"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20260626"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20260626">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20260626">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/content-directories-scenes.html">English</a></li>
+<li><a href="/cn/current/Manual/content-directories-scenes.html">中文</a></li>
+<li><a href="/ja/current/Manual/content-directories-scenes.html">日本語</a></li>
+<li><a href="/kr/current/Manual/content-directories-scenes.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: Unity 6.7 Beta</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/content-directories-scenes.html">English</a></li>
+<li><a href="/cn/current/Manual/content-directories-scenes.html">中文</a></li>
+<li><a href="/ja/current/Manual/content-directories-scenes.html">日本語</a></li>
+<li><a href="/kr/current/Manual/content-directories-scenes.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="assets-and-media.html">Assets and media</a></li>
+<li><a href="assets-managing-runtime.html">Managing assets at runtime</a></li>
+<li><a href="content-directories.html">Use content directories to load assets at runtime</a></li>
+<li>Include scenes in a content build</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="content-directories-references.html"></a></span><div class="tip">Reference content in a content directory</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="content-directories-load.html"></a></span><div class="tip">Load content directories</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Include scenes in a content build</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Unity builds the <span class="tooltip" tabindex="0" ><strong>scenes</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html" href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span> in the <a href="build-profile-scene-list.html"><strong>Scene List</strong></a> of the <strong><span class="tooltip" tabindex="0" ><strong>Build Profile</strong><span class="tooltiptext">A set of customizable configuration settings to use when creating a build for your target platform. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about build-profiles.html" href="build-profiles.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#buildprofile" aria-label="Go to glossary anchor for buildprofile">Glossary</a></span></span></span></strong> window directly into a Player build rather than including them in a content build. When the Player starts up, Unity automatically loads the first scene in the list. </p>
+
+<p>To keep builds efficient, create one startup scene in the <strong>Scene List</strong> which serves as access to the content in a content directory build. This approach avoids asset duplication and keeps all content within the content directory build.</p>
+
+<p>This single startup scene typically contains one or more MonoBehaviour components that register the content directory at runtime, then load one or more scenes and other initial content from it.</p>
+
+<h2>Include scenes in a content directory</h2>
+
+<p>To include scenes in a content directory, use <a href="xref:Unity.Loading.LoadableSceneId"><code>LoadableSceneId</code></a>. You can also use this struct to reference those scenes from <span class="tooltip" tabindex="0" ><strong>scripts</strong><span class="tooltiptext">A piece of code that allows you to create your own Components, trigger game events, modify Component properties over time and respond to user input in any way you like. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about creating-scripts.html" href="creating-scripts.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scripts" aria-label="Go to glossary anchor for Scripts">Glossary</a></span></span></span> and from the Unity Editor.</p>
+
+<p>You can use <code>LoadableSceneId</code> as a field type in <code>MonoBehaviour</code> and <code>ScriptableObject</code>-derived classes. You can assign a scene to a field of type <code>LoadableSceneId</code> while authoring content in the Editor, either through the <span class="tooltip" tabindex="0" ><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheInspector.html" href="UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span> or from scripts.</p>
+
+<pre><code class="lang-cs">// Example of assigning a LoadableSceneId field from scripting
+myMonoBehaviour.m_Scene = LoadableSceneIdEditorUtility.CreateLoadableSceneId(scenePath);
+</code></pre>
+
+<p>Internally <code>LoadableSceneId</code> uses the <a href="asset-database-contents.html">Asset Database GUID</a> as a unique identifier for the scene. This means that the reference continues to work even if you rename the scene asset or move it within the project.</p>
+
+<p>When you build a content directory, Unity recursively walks the root assets and all their dependencies to find every scene referenced by a <code>LoadableSceneId</code>. Unity automatically includes every referenced scene in the build output, and also walks into each scene to pull in any other dependencies the scene requires. Therefore, <code>LoadableSceneId</code> references aren’t limited to root assets, and the build includes any scene referenced by a <code>LoadableSceneId</code> field on any object reachable from the root assets.</p>
+
+<p>At runtime and in Play mode, you can use <code>LoadableSceneId</code> fields with the <a href="../ScriptReference/SceneManagement.SceneManager.html"><code>SceneManager</code> API</a> to load and unload scenes. You must register the content directory containing the scene before loading the scene. For more information on registering content directories, refer to <a href="content-directories-load.html">Load content directories</a>.</p>
+
+<p>
+<strong>Note:</strong> <a href="content-directories-references.html"><code>Loadable&lt;T&gt;</code></a> isn’t compatible with scenes, because your application might need to load scenes multiple times. <code>LoadableSceneId</code> is the scene-oriented counterpart to <code>LoadableObjectId</code>, which is used for assets. </p>
+
+<h2>Runtime loading of scenes</h2>
+
+<p>To load scenes in the Player or Play mode, call the following:</p>
+
+<pre><code class="lang-cs">AsyncOperation SceneManager.LoadSceneAsync(Unity.Loading.LoadableSceneId, LoadSceneParameters);
+</code></pre>
+
+<p>The call returns an <code>AsyncOperation</code> instance that you can use to track the asynchronous load. A common pattern is to subscribe to <code>AsyncOperation.completed</code> and then call <a href="../ScriptReference/SceneManagement.SceneManager.GetSceneByLoadableSceneId.html"><code>SceneManager.GetSceneByLoadableSceneId(loadableSceneId)</code></a> from the callback to retrieve the loaded <code>Scene</code>.</p>
+
+<p>You can load scenes one by one, or additively through the <a href="../ScriptReference/SceneManagement.LoadSceneParameters.html"><code>LoadSceneParameters</code> argument</a>. In <code>Single</code> mode all other open scenes are closed. In <code>Additive</code> mode, scenes that are already loaded remain open. Refer to <a href="../ScriptReference/SceneManagement.LoadSceneMode.html"><code>SceneManagement.LoadSceneMode</code></a> for more information.</p>
+
+<p>If two <code>LoadableSceneId</code> values reference the same scene and you call <code>LoadSceneAsync</code> on each in <code>Additive</code> mode, Unity loads the scene twice as two distinct scene instances. </p>
+
+<p>To unload scenes, call <a href="../ScriptReference/SceneManagement.SceneManager.UnloadSceneAsync.html"><code>UnloadSceneAsync</code></a>.</p>
+
+<p>For example, a startup scene can contain a MonoBehaviour with <code>LoadableSceneId</code> fields that reference other scenes. You can assign the scenes in the Inspector while authoring, and at runtime scripts can load and unload scenes in response to events such as character movement or button presses.</p>
+
+<p>The following example loads two scenes additively at startup and unloads one in response to an event:</p>
+
+<pre><code class="lang-cs">using System.Collections;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+using Unity.Loading;
+
+public class SceneLoader : MonoBehaviour
+{
+    // Use the Inspector to assign scenes to these fields.
+    [SerializeField]
+    LoadableSceneId m_CubeSceneReference;
+
+    [SerializeField]
+    LoadableSceneId m_SphereSceneReference;
+
+    // Store references to the loaded scenes so you can unload them later.
+    Scene m_CubeScene;
+    Scene m_SphereScene;
+
+    void Start()
+    {
+        // LoadSceneMode.Additive loads the new scene alongside the current scene.
+        // Use LoadSceneMode.Single instead if you want to replace the current scene.
+        AsyncOperation cubeLoad = SceneManager.LoadSceneAsync(m_CubeSceneReference, new LoadSceneParameters(LoadSceneMode.Additive));
+
+        // completed fires when the load finishes. Retrieve the Scene object at that
+        // point so you can unload it later. The _ parameter is the completed AsyncOperation, which isn't needed here.
+        cubeLoad.completed += _ =&gt; { m_CubeScene = SceneManager.GetSceneByLoadableSceneId(m_CubeSceneReference); };
+
+        StartCoroutine(WaitAndLoadAnotherScene(1.0f));
+    }
+
+    // Loads a second scene additively after a delay.
+    private IEnumerator WaitAndLoadAnotherScene(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        AsyncOperation sphereLoad = SceneManager.LoadSceneAsync(m_SphereSceneReference, new LoadSceneParameters(LoadSceneMode.Additive));
+        sphereLoad.completed += _ =&gt; { m_SphereScene = SceneManager.GetSceneByLoadableSceneId(m_SphereSceneReference); };
+    }
+
+    // Call in response to a game event, such as a button press.
+    public void WhenSomeEventHappens()
+    {
+        // Check isLoaded before unloading: the scene might still be loading
+        // when this method is called.
+        if (m_CubeScene.isLoaded)
+            SceneManager.UnloadSceneAsync(m_CubeScene);
+    }
+
+    // Unload both scenes when this MonoBehaviour is destroyed to free memory.
+    void OnDestroy()
+    {
+        if (m_CubeScene.isLoaded)
+            SceneManager.UnloadSceneAsync(m_CubeScene);
+
+        if (m_SphereScene.isLoaded)
+            SceneManager.UnloadSceneAsync(m_SphereScene);
+    }
+}
+</code></pre>
+
+<h2>LoadableSceneId usage examples</h2>
+
+<p>The following are examples of how to use <code>LoadableSceneId</code> in your project. You can use more than one of these patterns in the same build.</p>
+
+<h3>Transition between scenes</h3>
+
+<p>A scene can contain a MonoBehaviour that unloads the current scene and loads a different one when a condition is met. This pattern suits projects where only a single scene is active at a time, such as games that transition between levels or regions of a large 3D world.</p>
+
+<p>The following example transitions to a target scene when a character enters a 2D trigger:</p>
+
+<pre><code class="lang-cs">using UnityEngine;
+using UnityEngine.SceneManagement;
+
+[RequireComponent(typeof(Collider2D))]
+public class SceneTransition : MonoBehaviour
+{
+    public Unity.Loading.LoadableSceneId TargetScene;
+
+    private void OnTriggerEnter2D(Collider2D col)
+    {
+        if (TargetScene.IsValid)
+            SceneManager.LoadSceneAsync(TargetScene, new LoadSceneParameters(LoadSceneMode.Single));
+    }
+}
+</code></pre>
+
+<p>With this pattern you don’t need to maintain a separate list of scenes to build, unlike AssetBundles or Addressables, where you assign each scene to an AssetBundle or group. However, scene references are spread across your project instead of in a central root asset, which means it’s difficult to understand how many scenes a build includes. An alternative is to centralize scenes in a root asset, as described in the following section.</p>
+
+<h3>Centralize scenes in a root asset</h3>
+
+<p>For projects with many scenes, a <code>ScriptableObject</code>-derived class that holds a list of <code>LoadableSceneId</code> fields provides a single, visible record of all scenes in the build. This makes it easier to understand which scenes are in your project and gives a central place to manage scene loading logic, rather than spreading references across many MonoBehaviour objects inside scenes.</p>
+
+<p>Use <a href="../ScriptReference/Unity.Loading.ContentLoadManager.GetRootAssets.html"><code>ContentLoadManager.GetRootAssets&lt;T&gt;</code></a> at runtime to retrieve the root asset from a registered content directory.</p>
+
+<p>The following example defines a scene list with named fields for a main menu, a UI scene, and an array of levels:</p>
+
+<pre><code class="lang-cs">using UnityEngine;
+using Unity.Loading;
+
+public class CustomSceneList : ScriptableObject
+{
+    public LoadableSceneId MainMenu;
+    public LoadableSceneId UI;
+    public LoadableSceneId[] Levels;
+
+    // Include a single asset of this type in the root asset list.
+    // Use this method to retrieve it in the Player or during Editor Play mode.
+    static public CustomSceneList Get()
+    {
+        return ContentLoadManager.GetRootAssets&lt;CustomSceneList&gt;()[0];
+    }
+}
+</code></pre>
+
+<h3>Find scenes from a content directory</h3>
+
+<p>You can build scenes into a separate content directory and allow code in the Player build to discover them at runtime. Register the content directory with <a href="../ScriptReference/Unity.Loading.ContentLoadManager.RegisterContentDirectory.html"><code>ContentLoadManager.RegisterContentDirectory</code></a>, retrieve the root asset with <a href="../ScriptReference/Unity.Loading.ContentLoadManager.GetRootAssets.html"><code>ContentLoadManager.GetRootAssets&lt;T&gt;</code></a>, then load the scene with <a href="../ScriptReference/SceneManagement.SceneManager.LoadSceneAsync.html"><code>SceneManager.LoadSceneAsync</code></a>.</p>
+
+<p>The following example registers a content directory that contains a <code>DLCSceneList</code> root asset and loads a bonus scene from it:</p>
+
+<pre><code class="lang-cs">using System;
+using System.Collections;
+using UnityEngine;
+using Unity.Loading;
+using UnityEngine.SceneManagement;
+
+public class DLCSceneList : ScriptableObject
+{
+    public LoadableSceneId m_bonusScene;
+}
+
+public class LoadSceneFromRootAsset
+{
+    public static IEnumerator LoadBonusScene(string contentDirectoryPath, Action&lt;Scene&gt; onSceneLoaded)
+    {
+        ContentLoadManager.RegisterContentDirectory(contentDirectoryPath);
+        DLCSceneList root = ContentLoadManager.GetRootAssets&lt;DLCSceneList&gt;()[0];
+        LoadableSceneId sceneReference = root.m_bonusScene;
+        AsyncOperation op = SceneManager.LoadSceneAsync(sceneReference, new LoadSceneParameters(LoadSceneMode.Additive));
+
+        yield return op;
+
+        Scene loadedScene = SceneManager.GetSceneByLoadableSceneId(sceneReference);
+        onSceneLoaded?.Invoke(loadedScene);
+    }
+}
+</code></pre>
+
+<p>
+<strong>Important:</strong> Avoid building the same scene into both the Player build and a content directory. This duplicates the scene and its dependencies in the build output, increasing build size. There’s no public API for selecting which copy loads at runtime, so the result is unpredictable.</p>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="xref:Unity.Loading.LoadableSceneId"><code>LoadableSceneId</code> API reference</a></li>
+<li><a href="../ScriptReference/SceneManagement.SceneManager.html"><code>SceneManager</code> API reference</a></li>
+<li><a href="content-directories-references.html">Reference content in a content directory</a></li>
+<li><a href="scenes-working-with.html">Creating, loading, and saving scenes</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="content-directories-references.html"></a></span><div class="tip">Reference content in a content directory</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="content-directories-load.html"></a></span><div class="tip">Load content directories</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

@@ -1,0 +1,765 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Create a drag-and-drop list and tree views between windows</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<meta property="relative-path-to-manual" content="">
+<meta property="version-switcher-versions-with-this-page" content="Versions with this page:">
+<meta property="version-switcher-versions-without-this-page" content="Versions without this page:">
+<meta property="version-switcher-supported" content="Supported">
+<meta property="version-switcher-legacy" content="Legacy">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/Manual/UIE-create-drag-and-drop-list-treeview-between-windows.html">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20260626"></script><script type="text/javascript" src="docdata/toc.js?ts=20260626"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20260626"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20260626">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20260626">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/UIE-create-drag-and-drop-list-treeview-between-windows.html">English</a></li>
+<li><a href="/cn/current/Manual/UIE-create-drag-and-drop-list-treeview-between-windows.html">中文</a></li>
+<li><a href="/ja/current/Manual/UIE-create-drag-and-drop-list-treeview-between-windows.html">日本語</a></li>
+<li><a href="/kr/current/Manual/UIE-create-drag-and-drop-list-treeview-between-windows.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: Unity 6.7 Beta</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/UIE-create-drag-and-drop-list-treeview-between-windows.html">English</a></li>
+<li><a href="/cn/current/Manual/UIE-create-drag-and-drop-list-treeview-between-windows.html">中文</a></li>
+<li><a href="/ja/current/Manual/UIE-create-drag-and-drop-list-treeview-between-windows.html">日本語</a></li>
+<li><a href="/kr/current/Manual/UIE-create-drag-and-drop-list-treeview-between-windows.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="UIToolkits.html">UI systems</a></li>
+<li><a href="UIElements.html">UI Toolkit</a></li>
+<li><a href="UIE-structure-ui.html">Structure UI</a></li>
+<li><a href="UIE-uxml-examples.html">Structure UI examples</a></li>
+<li>Create a drag-and-drop list and tree views between windows</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="UIE-create-custom-style-custom-control.html"></a></span><div class="tip">Create a custom style for a custom control</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="UIE-create-aspect-ratios-custom-control.html"></a></span><div class="tip">Create an aspect ratio custom control</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Create a drag-and-drop list and tree views between windows</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>
+<strong>Version</strong>: 2023.2+</p>
+
+<p>Drag-and-drop is a common feature in UI design. You can use UI Toolkit to create a drag-and-drop UI inside a custom Editor window or inside an application built by Unity. This example demonstrates how to create a drag-and-drop UI with ListView and TreeView inside a custom Editor window.</p>
+
+<h2>Example overview</h2>
+
+<p>The example creates a split window that includes a lobby and two teams within a custom Editor window. The lobby is created with ListView. For demonstration purposes, one team is created with MultiColumnListView and another team is created with TreeView. The example uses a Toggle to enable and disable the drag-and-drop operation. Once enabled, you can drag the players to reorder them and drag them from the lobby list to the team lists, as shown below:</p>
+
+<figure>
+<img src="../uploads/Main/uitk/drag-and-drop-list-treeview.gif" alt="A preview of a drag-and-drop UI">
+<figcaption>A preview of a drag-and-drop UI</figcaption>
+</figure>
+
+<p>You can find the completed files that this example creates in this <a href="https://github.com/Unity-Technologies/ui-toolkit-manual-code-examples/tree/2023.2/create-drag-and-drop-list-treeview">GitHub repository</a>.</p>
+
+<h2>Prerequisites</h2>
+
+<p>This guide is for developers familiar with the Unity Editor, UI Toolkit, and C# scripting. Before you start, get familiar with the following:</p>
+
+<ul>
+<li><a href="UIBuilder.html">UI Builder</a></li>
+<li><span class="tooltip" tabindex="0" ><a href="UIE-VisualTree.html">Visual Tree</a><span class="tooltiptext">An object graph, made of lightweight nodes, that holds all the elements in a window or panel. It defines every UI you build with the UI Toolkit.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#visualtree" aria-label="Go to glossary anchor for visualtree">Glossary</a></span></span></span></li>
+<li><a href="UIE-UXML.html">UXML</a></li>
+<li><a href="UIE-USS.html">USS</a></li>
+<li><a href="UIE-uxml-element-ListView.html">ListView</a></li>
+<li><a href="UIE-uxml-element-MultiColumnListView.html">MultiColumnListView</a></li>
+<li><a href="UIE-uxml-element-TreeView.html">TreeView</a></li>
+</ul>
+
+<h2>Create the player data</h2>
+
+<p>To begin, create an asset to manage a list of players in the lobby. Create a script to define the struct of PlayerData that represents data for a player. The struct has three fields: a string name, an integer number, and a Texture2D object icon. Mark the fields with the <code>[SerializeField]</code> attribute, so that their values can be serialized and stored in Unity’s data format. Create a Collection Database asset to manage the player data for the drag-and-drop UI. The Collection Database asset contains a serialized list of PlayerData objects that you can set in the Unity Editor. </p>
+
+<ol>
+<li><p>Create a project in Unity with any template.</p></li>
+<li><p>In the <strong>Assets</strong> folder of your <span class="tooltip" tabindex="0" ><strong>Project window</strong><span class="tooltiptext">A window that shows the contents of your <code>Assets</code> folder (Project tab) <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ProjectView.html" href="ProjectView.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Projectwindow" aria-label="Go to glossary anchor for Projectwindow">Glossary</a></span></span></span>, create a folder named <code>Scripts</code> to store your script files.</p></li>
+<li><p>In the <strong><span class="tooltip" tabindex="0" ><strong>Scripts</strong><span class="tooltiptext">A piece of code that allows you to create your own Components, trigger game events, modify Component properties over time and respond to user input in any way you like. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about creating-scripts.html" href="creating-scripts.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scripts" aria-label="Go to glossary anchor for Scripts">Glossary</a></span></span></span></strong> folder, create a folder named <code>Data</code>.</p></li>
+<li>
+<p>In the <strong>Data</strong> folder, create a C# script named <code>PlayerData.cs</code> with the following content: </p>
+
+<pre><code class="lang-cs">using System;
+using UnityEngine;
+    
+namespace CollectionTests
+{
+    // Make the struct serializable, so its values can be stored in Unity's data format
+    [Serializable]
+    public struct PlayerData
+    {
+        // Declare private fields for the player's name, number, and icon, with the SerializeField attribute
+        [SerializeField]
+        string name;
+        [SerializeField]
+        int number;
+        [SerializeField]
+        Texture2D icon;
+    
+        // Calculate a unique identifier for the player based on their name and number
+        public int id =&gt; name.GetHashCode() + 27 * number;
+    
+        // Define read-only properties for accessing the private fields
+        public string Name =&gt; name;
+        public int Number =&gt; number;
+        public Texture2D Icon =&gt; icon;
+    
+        // Override the ToString() method to return a formatted string representation of the player data
+        public override string ToString()
+        {
+            return $&quot;{Name} #{Number.ToString()}&quot;;
+        }
+    }
+}
+    
+</code></pre>
+</li>
+<li>
+<p>In the <strong>Data</strong> folder, create a C# script named <code>CollectionDatabase.cs</code> with the following content:</p>
+
+<pre><code class="lang-cs">using System.Collections.Generic;
+using UnityEngine;
+    
+namespace CollectionTests
+{
+    // Create a CollectionDatabase object that you can create as an asset via the Asset menu.
+    [CreateAssetMenu]
+    public class CollectionDatabase : ScriptableObject
+    {
+        // Declare a private list of PlayerData that can set in the Unity Editor.
+        [SerializeField]
+        List&lt;PlayerData&gt; m_InitialLobbyList;
+    
+        public IEnumerable&lt;PlayerData&gt; initialLobbyList =&gt; m_InitialLobbyList;
+    }
+}
+    
+</code></pre>
+</li>
+<li><p>In the <strong>Assets</strong> folder, create a folder named <code>Resources</code>. </p></li>
+<li><p>Right-click in the <strong>Resources</strong> folder, and select <strong>Create</strong> &gt; <strong>Collection Database</strong>. This creates a new Collection Database asset. </p></li>
+<li><p>In the <strong><span class="tooltip" tabindex="0" ><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheInspector.html" href="UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span></strong> window of the Collection Database asset, add a few players to the <strong>Lobby</strong> list. You can add as many players as you want.</p></li>
+</ol>
+
+<h2>Create custom controls to display the data</h2>
+
+<p>Create custom controls named PlayerDataElement and PlayerItemView to display the data of a player. The PlayerItemView control binds to a PlayerData object as its data context.</p>
+
+<ol>
+<li><p>In the <strong>Scripts</strong> folder, create a folder named <code>UI</code>.</p></li>
+<li>
+<p>In the <strong>UI</strong> folder, create a C# script named <code>PlayerDataElement.cs</code> with the following content:</p>
+
+<pre><code class="lang-cs">using System;
+using UnityEngine.UIElements;
+    
+namespace CollectionTests
+{
+    [UxmlElement]
+    public partial class PlayerDataElement : VisualElement
+    {
+        public PlayerData data { get; private set; }
+        public int id { get; set; }
+    
+        public virtual void Bind(PlayerData player)
+        {
+            data = player;
+        }
+    
+        public virtual void Reset()
+        {
+            data = default;
+            id = -1;
+        }
+    }
+}
+</code></pre>
+</li>
+<li>
+<p>In the <strong>UI</strong> folder, create a C# script named <code>PlayerItemView.cs</code> with the following content:</p>
+
+<pre><code class="lang-cs">using System;
+using UnityEngine.UIElements;
+    
+namespace CollectionTests
+{
+    [UxmlElement]
+    public partial class PlayerItemView : PlayerDataElement
+    {
+        VisualElement m_Icon;
+        Label m_Name;
+    
+        // Bind the player data to the UI.
+        public override void Bind(PlayerData player)
+        {
+            base.Bind(player);
+                    
+            m_Icon ??= this.Q(&quot;Icon&quot;);
+            m_Name ??= this.Q&lt;Label&gt;();
+    
+            m_Icon.style.backgroundImage = player.Icon;
+            m_Name.text = player.Name;
+        }
+    }
+}
+</code></pre>
+</li>
+</ol>
+
+<h2>Define the layout and the style of the UI</h2>
+
+<p>Create a USS file to define the style for the UI. Create two UXML Documents to define the UI layout for the player item view and the main view. In the main view, to enable the reordering of list items by dragging, set the <code>reorderable</code> attribute to <code>true</code> for the ListView, MultiColumnListView, and TreeView. </p>
+
+<ol>
+<li><p>In the <strong>Assets</strong> folder, create a folder named <code>UI</code> to store your UXML and USS files.</p></li>
+<li>
+<p>In the <strong>UI</strong> folder, create a USS file named <code>main.uss</code> with the following content:</p>
+
+<pre><code class="lang-css">    .team-list {
+        border-color: rgb(164, 164, 164);
+        border-width: 2px;
+        border-top-left-radius: 5px;
+        border-bottom-left-radius: 5px;
+        border-top-right-radius: 5px;
+        border-bottom-right-radius: 5px;
+        flex-grow: 1;
+    }
+    
+    .section-container {
+        padding: 5px;
+        flex-grow: 1; 
+        background-color: rgba(0, 0, 0, 0);
+    }
+    
+    .unity-list-view__empty-label {
+        display: none;
+    }
+    
+    #Container {
+        flex-direction: row; 
+        align-items: center; 
+        padding-left: 6px;
+    }
+    
+    #Icon {
+         width: 24px; 
+         height: 24px;
+    }
+    
+    #PlayerName {
+        flex-grow: 1; 
+        -unity-text-align: middle-left; 
+        font-size: 14px; 
+        padding-left: 6px;
+    }
+    
+    .split-window{
+        min-width: 250px;
+    }
+    
+    .main-view{
+        flex-grow: 1; 
+        background-color: rgba(0, 0, 0, 0); 
+        flex-direction: column;
+    }
+        
+</code></pre>
+</li>
+<li>
+<p>In the <strong>UI</strong> folder, create a UXML file named <code>PlayerItemView.uxml</code> with the following content:</p>
+
+<pre><code class="lang-xml">&lt;ui:UXML xmlns:ui=&quot;UnityEngine.UIElements&quot; xmlns:uie=&quot;UnityEditor.UIElements&quot; editor-extension-mode=&quot;False&quot;&gt;
+    &lt;Style src=&quot;main.uss&quot; /&gt;
+    &lt;CollectionTests.PlayerItemView name=&quot;container&quot;&gt;
+        &lt;ui:VisualElement name=&quot;Icon&quot; /&gt;
+        &lt;ui:Label name=&quot;PlayerName&quot;/&gt;
+    &lt;/CollectionTests.PlayerItemView&gt;
+&lt;/ui:UXML&gt;
+    
+    
+</code></pre>
+</li>
+<li>
+<p>In the <strong>UI</strong> folder, create a UXML file named <code>ListDragAndDropTestWindow.uxml</code> with the following content:</p>
+
+<pre><code class="lang-xml">&lt;ui:UXML xmlns:ui=&quot;UnityEngine.UIElements&quot; xmlns:uie=&quot;UnityEditor.UIElements&quot; xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; engine=&quot;UnityEngine.UIElements&quot; editor=&quot;UnityEditor.UIElements&quot; noNamespaceSchemaLocation=&quot;../../../UIElementsSchema/UIElements.xsd&quot; editor-extension-mode=&quot;False&quot;&gt;
+    &lt;Style src=&quot;main.uss&quot; /&gt;
+    &lt;ui:VisualElement class=&quot;main-view&quot;&gt;
+        &lt;ui:Toggle name=&quot;Toggle-LobbyOwner&quot; text=&quot;Lobby Owner&quot; /&gt;
+        &lt;ui:VisualElement class=&quot;section-container&quot; &gt;
+            &lt;ui:TwoPaneSplitView fixed-pane-initial-dimension=&quot;300&quot;&gt;
+                &lt;ui:VisualElement class=&quot;split-window&quot; &gt;
+                    &lt;ui:VisualElement name=&quot;LobbyContainer&quot; class=&quot;section-container&quot; &gt;
+                        &lt;ui:Label tabindex=&quot;-1&quot; text=&quot;Lobby&quot; display-tooltip-when-elided=&quot;true&quot; name=&quot;Name-Lobby&quot; /&gt;
+                        &lt;ui:ListView name=&quot;ListView-Lobby&quot; reorderable=&quot;true&quot; selection-type=&quot;Multiple&quot; class=&quot;team-list&quot; /&gt;
+                    &lt;/ui:VisualElement&gt;
+                &lt;/ui:VisualElement&gt;
+                &lt;ui:VisualElement class=&quot;split-window&quot; &gt;
+                    &lt;ui:VisualElement name=&quot;TeamContainer&quot; class=&quot;section-container&quot; &gt;
+                        &lt;ui:VisualElement name=&quot;BlueTeam&quot; class=&quot;section-container&quot; &gt;
+                            &lt;ui:Label tabindex=&quot;-1&quot; text=&quot;Blue Team&quot; display-tooltip-when-elided=&quot;true&quot; name=&quot;Name-BlueTeam&quot; /&gt;
+                            &lt;ui:MultiColumnListView name=&quot;ListView-BlueTeam&quot; reorderable=&quot;true&quot; selection-type=&quot;Multiple&quot; class=&quot;team-list&quot; &gt;
+                                &lt;ui:Columns&gt;
+                                    &lt;ui:Column name=&quot;icon&quot; title=&quot;Icon&quot; width=&quot;50&quot; resizable=&quot;false&quot; /&gt;
+                                    &lt;ui:Column name=&quot;number&quot; title=&quot;#&quot; width=&quot;40&quot; resizable=&quot;false&quot; /&gt;
+                                    &lt;ui:Column name=&quot;name&quot; stretchable=&quot;true&quot; title=&quot;Name&quot; /&gt;
+                                &lt;/ui:Columns&gt;
+                            &lt;/ui:MultiColumnListView&gt;
+                        &lt;/ui:VisualElement&gt;
+                        &lt;ui:VisualElement name=&quot;RedTeam&quot; class=&quot;section-container&quot; &gt;
+                            &lt;ui:Label tabindex=&quot;-1&quot; text=&quot;Red Team&quot; display-tooltip-when-elided=&quot;true&quot; name=&quot;Name-RedTeam&quot; /&gt;
+                            &lt;ui:TreeView name=&quot;TreeView-RedTeam&quot; reorderable=&quot;true&quot; selection-type=&quot;Multiple&quot; class=&quot;team-list&quot; /&gt;
+                        &lt;/ui:VisualElement&gt;
+                    &lt;/ui:VisualElement&gt;
+                &lt;/ui:VisualElement&gt;
+            &lt;/ui:TwoPaneSplitView&gt;
+        &lt;/ui:VisualElement&gt;
+    &lt;/ui:VisualElement&gt;
+&lt;/ui:UXML&gt;
+</code></pre>
+</li>
+</ol>
+
+<h2>Implement the drag-and-drop operations</h2>
+
+<p>Create a script to set up the lobby and the teams’ lists and bind them to the player data you created earlier. The script also implements drag-and-drop operations between the lobby and the teams’ lists.</p>
+
+<ol>
+<li><p>In the <strong>Scripts</strong> folder, create a folder named <code>Controllers</code>.</p></li>
+<li>
+<p>In the <strong>Controllers</strong> folder, create a C# script named <code>LobbyController.cs</code> with the following content:</p>
+
+<pre><code class="lang-cs">using System;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UIElements;
+    
+namespace CollectionTests
+{
+    public class LobbyController
+    {
+        const string k_DraggedItemsKey = &quot;DraggedIndices&quot;;
+        const string k_SourceKey = &quot;SourceCollection&quot;;
+    
+        ListView m_LobbyListView;
+        MultiColumnListView m_BlueTeamListView;
+        TreeView m_RedTeamTreeView;
+        Toggle m_IsOwnerToggle;
+    
+        List&lt;PlayerData&gt; m_LobbyItemsSource;
+        List&lt;PlayerData&gt; m_BlueTeamItemsSource = new();
+        List&lt;TreeViewItemData&lt;PlayerData&gt;&gt; m_RedTeamItemsSource = new();
+    
+        public LobbyController(VisualElement rootVisualElement, VisualTreeAsset playerItemAsset, CollectionDatabase collectionDatabase)
+        {
+            // Grab references
+            m_IsOwnerToggle = rootVisualElement.Q&lt;Toggle&gt;(&quot;Toggle-LobbyOwner&quot;);
+            m_LobbyListView = rootVisualElement.Q&lt;ListView&gt;(&quot;ListView-Lobby&quot;);
+            m_BlueTeamListView = rootVisualElement.Q&lt;MultiColumnListView&gt;(&quot;ListView-BlueTeam&quot;);
+            m_RedTeamTreeView = rootVisualElement.Q&lt;TreeView&gt;(&quot;TreeView-RedTeam&quot;);
+    
+            m_LobbyItemsSource = new List&lt;PlayerData&gt;();
+    
+            foreach (var item in collectionDatabase.initialLobbyList)
+            {
+                m_LobbyItemsSource.Add(item);
+            }
+    
+            m_LobbyListView.makeItem = MakeItem;
+            m_LobbyListView.bindItem = (e, i) =&gt; BindItem(e, i, m_LobbyItemsSource[i]);
+            m_LobbyListView.destroyItem = DestroyItem;
+            m_LobbyListView.fixedItemHeight = 38;
+            m_LobbyListView.itemsSource = m_LobbyItemsSource;
+            m_LobbyListView.canStartDrag += OnCanStartDrag;
+            m_LobbyListView.setupDragAndDrop += args =&gt; OnSetupDragAndDrop(args, m_LobbyListView);
+            m_LobbyListView.dragAndDropUpdate += args =&gt; OnDragAndDropUpdate(args, m_LobbyListView, true);
+            m_LobbyListView.handleDrop += args =&gt; OnHandleDrop(args, m_LobbyListView, true);
+    
+            var scrollView = m_LobbyListView.Q&lt;ScrollView&gt;();
+            scrollView.touchScrollBehavior = ScrollView.TouchScrollBehavior.Elastic;
+            scrollView.verticalScrollerVisibility = ScrollerVisibility.AlwaysVisible;
+    
+            m_BlueTeamListView.columns[&quot;icon&quot;].makeCell = () =&gt; new PlayerDataElement { style = { width = 24, height = 24, alignSelf = Align.Center } };
+            m_BlueTeamListView.columns[&quot;icon&quot;].bindCell = (element, i) =&gt;
+            {
+                BindItem(element, i, m_BlueTeamItemsSource[i]);
+                element.style.backgroundImage = m_BlueTeamItemsSource[i].Icon;
+            };
+            m_BlueTeamListView.columns[&quot;number&quot;].makeCell = () =&gt; new Label { style = { alignSelf = Align.Center } };
+            m_BlueTeamListView.columns[&quot;number&quot;].bindCell = (element, i) =&gt; ((Label)element).text = $&quot;#{m_BlueTeamItemsSource[i].Number}&quot;;
+            m_BlueTeamListView.columns[&quot;name&quot;].makeCell = () =&gt; new Label { style = { paddingLeft = 10 } };
+            m_BlueTeamListView.columns[&quot;name&quot;].bindCell = (element, i) =&gt; ((Label)element).text = m_BlueTeamItemsSource[i].Name;
+            m_BlueTeamListView.fixedItemHeight = 38;
+            m_BlueTeamListView.reorderable = false;
+            m_BlueTeamListView.itemsSource = m_BlueTeamItemsSource;
+            m_BlueTeamListView.canStartDrag += OnCanStartDrag;
+            m_BlueTeamListView.setupDragAndDrop += args =&gt; OnSetupDragAndDrop(args, m_BlueTeamListView);
+            m_BlueTeamListView.dragAndDropUpdate += args =&gt; OnDragAndDropUpdate(args, m_BlueTeamListView);
+            m_BlueTeamListView.handleDrop += args =&gt; OnHandleDrop(args, m_BlueTeamListView);
+    
+            m_RedTeamTreeView.makeItem = MakeItem;
+            m_RedTeamTreeView.bindItem = (e, i) =&gt; BindItem(e, m_RedTeamTreeView.GetIdForIndex(i), (PlayerData)m_RedTeamTreeView.viewController.GetItemForIndex(i));
+            m_RedTeamTreeView.destroyItem = DestroyItem;
+            m_RedTeamTreeView.fixedItemHeight = 38;
+            m_RedTeamTreeView.SetRootItems(m_RedTeamItemsSource);
+            m_RedTeamTreeView.canStartDrag += OnCanStartDrag;
+            m_RedTeamTreeView.setupDragAndDrop += args =&gt; OnSetupDragAndDrop(args, m_RedTeamTreeView);
+            m_RedTeamTreeView.dragAndDropUpdate += args =&gt; OnDragAndDropUpdate(args, m_RedTeamTreeView);
+            m_RedTeamTreeView.handleDrop += args =&gt; OnHandleDrop(args, m_RedTeamTreeView);
+    
+            VisualElement MakeItem()
+            {
+                return playerItemAsset.Instantiate();
+            }
+    
+            static void BindItem(VisualElement element, int index, PlayerData data)
+            {
+                var playerView = element.Q&lt;PlayerDataElement&gt;();
+                playerView.Bind(data);
+                playerView.id = index;
+            }
+    
+            static void DestroyItem(VisualElement element)
+            {
+                var playerView = element.Q&lt;PlayerDataElement&gt;();
+                playerView.Reset();
+            }
+    
+            bool OnCanStartDrag(CanStartDragArgs _) =&gt; m_IsOwnerToggle.value;
+    
+            StartDragArgs OnSetupDragAndDrop(SetupDragAndDropArgs args, BaseVerticalCollectionView source)
+            {
+                var playerView = args.draggedElement.Q&lt;PlayerDataElement&gt;();
+                if (playerView == null)
+                    return args.startDragArgs;
+    
+                var startDragArgs = new StartDragArgs(args.startDragArgs.title, DragVisualMode.Move);
+                startDragArgs.SetGenericData(k_SourceKey, source);
+                var hasSelection = false;
+                foreach (var id in args.selectedIds)
+                {
+                    hasSelection = true;
+                    break;
+                }
+    
+                startDragArgs.SetGenericData(k_DraggedItemsKey, hasSelection ? args.selectedIds : new List&lt;int&gt; { playerView.id });
+                return startDragArgs;
+            }
+    
+            DragVisualMode OnDragAndDropUpdate(HandleDragAndDropArgs args, BaseVerticalCollectionView destination, bool isLobby = false)
+            {
+                var source = args.dragAndDropData.GetGenericData(k_SourceKey);
+                if (source == destination)
+                    return DragVisualMode.None;
+    
+                return !isLobby &amp;&amp; destination.itemsSource.Count &gt;= 3 ? DragVisualMode.Rejected : DragVisualMode.Move;
+            }
+    
+            DragVisualMode OnHandleDrop(HandleDragAndDropArgs args, BaseVerticalCollectionView destination, bool isLobby = false)
+            {
+                if (args.dragAndDropData.entityIds != null)
+                {
+                    var objectsToString = string.Empty;
+                    foreach (var id in args.dragAndDropData.entityIds)
+                    {
+                        var obj = UnityEditor.EditorUtility.EntityIdToObject(id);
+                        var name = obj ? obj.name : &quot;&quot;;
+                        objectsToString += $&quot;{name}, &quot;;
+                    }
+    
+                    if (!string.IsNullOrEmpty(objectsToString))
+                    {
+                        Debug.Log($&quot;That was {objectsToString}&quot;);
+                        return DragVisualMode.Move;
+                    }
+                }
+    
+                if (args.dragAndDropData.GetGenericData(k_DraggedItemsKey) is not List&lt;int&gt; draggedIds)
+                    throw new ArgumentNullException($&quot;Indices are null.&quot;);
+                if (args.dragAndDropData.GetGenericData(k_SourceKey) is not BaseVerticalCollectionView source)
+                    throw new ArgumentNullException($&quot;Source is null.&quot;);
+    
+                // Let default reordering happen.
+                if (source == destination)
+                    return DragVisualMode.None;
+    
+                // Be coherent with the dragAndDropUpdate condition.
+                if (!isLobby &amp;&amp; destination.itemsSource.Count &gt;= 3)
+                    return DragVisualMode.Rejected;
+    
+                var treeViewSource = source as BaseTreeView;
+    
+                // ********************************************************
+                // Add items first, from item indices in the source.
+                // ********************************************************
+    
+                // Gather ids from dragged indices
+                var ids = new List&lt;int&gt;();
+    
+                foreach (var id in draggedIds)
+                {
+                    ids.Add(id);
+                }
+    
+                // Special TreeView case, we need to gather children or selected indices.
+                if (treeViewSource != null)
+                {
+                    GatherChildrenIds(ids, treeViewSource);
+                }
+    
+                if (destination is BaseTreeView treeView)
+                {
+                    foreach (var id in ids)
+                    {
+                        var data = (PlayerData)source.viewController.GetItemForId(id);
+                        treeView.AddItem(new TreeViewItemData&lt;PlayerData&gt;(data.id, data), args.parentId, args.childIndex, false);
+                    }
+    
+                    treeView.viewController.RebuildTree();
+                }
+                else if (destination.viewController is BaseListViewController destinationListViewController)
+                {
+                    for (var i = ids.Count - 1; i &gt;= 0; i--)
+                    {
+                        var id = ids[i];
+                        var data = (PlayerData)source.viewController.GetItemForId(id);
+                        destinationListViewController.itemsSource.Insert(args.insertAtIndex, data);
+                    }
+                }
+                else
+                {
+                    throw new ArgumentException(&quot;Unhandled destination.&quot;);
+                }
+    
+                // Then remove from the source.
+                if (source is BaseTreeView sourceTreeView)
+                {
+                    foreach (var id in draggedIds)
+                    {
+                        var data = (PlayerData)source.viewController.GetItemForId(id);
+                        sourceTreeView.viewController.TryRemoveItem(data.id, false);
+                    }
+    
+                    sourceTreeView.viewController.RebuildTree();
+                    sourceTreeView.RefreshItems();
+                }
+                else if (source.viewController is BaseListViewController sourceListViewController)
+                {
+                    sourceListViewController.RemoveItems(draggedIds);
+                }
+                else
+                {
+                    throw new ArgumentException(&quot;Unhandled source.&quot;);
+                }
+    
+                foreach (var id in ids)
+                {
+                    var index = destination.viewController.GetIndexForId(id);
+                    destination.AddToSelection(index);
+                }
+                source.ClearSelection();
+                destination.RefreshItems();
+                LogTeamSizes();
+                return DragVisualMode.Move;
+            }
+        }
+    
+        void LogTeamSizes()
+        {
+            Debug.Log($&quot;Blue: {m_BlueTeamListView.itemsSource.Count} / 3\tRed: {m_RedTeamTreeView.viewController.GetItemsCount()} / 3&quot;);
+        }
+    
+        static void GatherChildrenIds(List&lt;int&gt; ids, BaseTreeView treeView)
+        {
+            for (var i = 0; i &lt; ids.Count; i++)
+            {
+                var id = ids[i];
+                var childrenIds = treeView.viewController.GetChildrenIds(id);
+                foreach (var childId in childrenIds)
+                {
+                    ids.Insert(i + 1, childId);
+                    i++;
+                }
+            }
+        }
+    }
+}
+</code></pre>
+</li>
+</ol>
+
+<h2>Create a custom Editor window</h2>
+
+<p>Create a custom Editor window to display the drag-and-drop UI. </p>
+
+<ol>
+<li><p>In the <strong>Assets</strong> folder, create a folder named <code>Editor</code>.</p></li>
+<li>
+<p>In the <strong>Editor</strong> folder, create a C# script named <code>ListDragAndDropTestWindow.cs</code> with the following content:</p>
+
+<pre><code class="lang-cs">using System;
+using UnityEditor;
+using UnityEngine;
+using UnityEngine.UIElements;
+    
+namespace CollectionTests
+{
+    public class ListDragAndDropTestWindow : EditorWindow
+    {
+        [MenuItem(&quot;Collection Tests/List DragAndDrop Window&quot;)]
+        public static void ShowExample()
+        {
+            var wnd = GetWindow&lt;ListDragAndDropTestWindow&gt;();
+            wnd.titleContent = new GUIContent(&quot;List DragAndDrop Test&quot;);
+        }
+    
+        public void CreateGUI()
+        {
+            // Each editor window contains a root VisualElement object
+            var root = rootVisualElement;
+    
+            // Import UXML
+            var visualTreeAsset = EditorGUIUtility.Load(&quot;Assets/create-drag-and-drop-list-treeview/UI/ListDragAndDropTestWindow.uxml&quot;) as VisualTreeAsset;
+            visualTreeAsset.CloneTree(root);
+    
+            // Load the PlayerItemView.uxml file
+            var playerItemAsset = EditorGUIUtility.Load(&quot;Assets/create-drag-and-drop-list-treeview/UI/PlayerItemView.uxml&quot;) as VisualTreeAsset;
+    
+            //Load the CollectionDatabase from the Resources folder
+            var collectionDatabase = Resources.Load&lt;CollectionDatabase&gt;(&quot;CollectionDatabaseAsset&quot;);
+    
+            // Create the LobbyController
+            var lobbyController = new LobbyController(root, playerItemAsset, collectionDatabase);
+        }
+    }
+}
+</code></pre>
+</li>
+</ol>
+
+<h2>Test the UI</h2>
+
+<p>To test, change the order of the players in the <strong>Lobby</strong> list and move players from the <strong>Lobby</strong> list to the team lists when the <strong>Lobby Owner</strong> checkbox is selected. You can also change the hierarchy of players in the Red team list. Based on the conditions set in the <code>LobbyController.cs</code> script, you can add a maximum of three players to each team. </p>
+
+<ol>
+<li>From the main menu, select <strong>Collection Tests</strong> &gt; <strong>List DragAndDrop Window</strong>.</li>
+<li>In the <strong>List DragAndDrop Test</strong> window, select the <strong>Lobby Owner</strong> checkbox.</li>
+<li>Drag the players in the <strong>Lobby</strong> list to change their orders.</li>
+<li>Drag the players from the <strong>Lobby</strong> list to the team lists.</li>
+<li>Drag the players in the Red team list to change their hierarchies.</li>
+</ol>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="UIE-ListView-TreeView.html">Create list and tree views</a></li>
+<li><a href="UIE-create-list-view-complex.html">Create a complex list view</a></li>
+<li><a href="UIE-HowTo-CreateRuntimeUI.html">Create a ListView runtime UI</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="UIE-create-custom-style-custom-control.html"></a></span><div class="tip">Create a custom style for a custom control</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="UIE-create-aspect-ratios-custom-control.html"></a></span><div class="tip">Create an aspect ratio custom control</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

@@ -1,0 +1,399 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Managing importers with scripts</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<meta property="relative-path-to-manual" content="">
+<meta property="version-switcher-versions-with-this-page" content="Versions with this page:">
+<meta property="version-switcher-versions-without-this-page" content="Versions without this page:">
+<meta property="version-switcher-supported" content="Supported">
+<meta property="version-switcher-legacy" content="Legacy">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/Manual/ScriptedImporters.html">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20260626"></script><script type="text/javascript" src="docdata/toc.js?ts=20260626"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20260626"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20260626">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20260626">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/ScriptedImporters.html">English</a></li>
+<li><a href="/cn/current/Manual/ScriptedImporters.html">中文</a></li>
+<li><a href="/ja/current/Manual/ScriptedImporters.html">日本語</a></li>
+<li><a href="/kr/current/Manual/ScriptedImporters.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: Unity 6.7 Beta</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/ScriptedImporters.html">English</a></li>
+<li><a href="/cn/current/Manual/ScriptedImporters.html">中文</a></li>
+<li><a href="/ja/current/Manual/ScriptedImporters.html">日本語</a></li>
+<li><a href="/kr/current/Manual/ScriptedImporters.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="assets-and-media.html">Assets and media</a></li>
+<li><a href="import-assets.html">Importing assets</a></li>
+<li>Managing importers with scripts</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="ParallelImport.html"></a></span><div class="tip">Import assets simultaneously</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="build-deterministic-assets.html"></a></span><div class="tip">Asset import determinism</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Managing importers with scripts</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>You can use C# <span class="tooltip" tabindex="0" ><strong>scripts</strong><span class="tooltiptext">A piece of code that allows you to create your own Components, trigger game events, modify Component properties over time and respond to user input in any way you like. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about creating-scripts.html" href="creating-scripts.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scripts" aria-label="Go to glossary anchor for Scripts">Glossary</a></span></span></span> to interact with <a href="#scripting-with-built-in-importers">Unity’s built-in importers</a>, or <a href="#create-custom-importers">create a scripted importer</a> to add support for files that aren’t natively supported by Unity.</p>
+
+<p><a id="scripting-with-built-in-importers" aria-hidden="true"></a></p>
+
+<h2>Scripting with built-in importers</h2>
+
+<p>Use the callbacks in the <a href="../ScriptReference/AssetPostprocessor.html"><code>AssetPostprocessor</code></a> class to add custom behavior before or after Unity starts the import process for its built-in importers. You can manipulate import settings, analyze imported assets, or generate new assets dynamically during import. Refer to <a href="assets-supported-types.html#asset-importers">Supported asset type reference</a> for a full list of built in importers available.</p>
+
+<p>The following is an example of an <code>AssetPostprocessor</code> script that modifies the import settings of a texture before importing it, and then applies a red color tint to the texture after importing:</p>
+
+<pre><code class="lang-csharp">using UnityEngine;
+using UnityEditor;
+
+public class CustomTextureImporter : AssetPostprocessor
+{
+    // Increment the version number, when the AssetPostprocessors code/behavior is changed
+    static readonly uint k_Version = 0;
+    public override uint GetVersion() { return k_Version; }
+    
+    void OnPreprocessTexture()
+    {
+        // Get a reference to the TextureImporter
+        TextureImporter importer = assetImporter as TextureImporter;
+
+        // Customize settings
+        importer.mipmapEnabled = false;
+        importer.textureType = TextureImporterType.Default;
+        importer.maxTextureSize = 512; 
+        importer.wrapMode = TextureWrapMode.Repeat;
+
+        Debug.Log($&quot;Texture '{assetPath}' has had its import settings changed in OnPreProcessTexture.&quot;);
+    }
+
+    void OnPostprocessTexture(Texture2D texture)
+    {
+        // Set a red color tint to the texture
+        Color tintColor = new(1.0f, 0.5f, 0.5f, 1.0f);
+
+        // Get the texture's pixels
+        Color[] pixels = texture.GetPixels();
+        for (int i = 0; i &lt; pixels.Length; i++)
+        {
+            // Apply the tint color
+            pixels[i] *= tintColor;
+        }
+        // Set the modified pixels back to the texture
+        texture.SetPixels(pixels);
+        // Apply the changes to the texture
+        texture.Apply();
+        
+        // Log the change
+        Debug.Log($&quot;Texture '{texture.name}' has been tinted with a red color in OnPostProcessTexture.&quot;);
+    }
+}
+</code></pre>
+
+<p>To use this example, place it in a new script file in somewhere your project’s <code>Assets</code> folder, and then add a new texture to the <code>Assets</code> folder. Unity then applies the settings to the texture, as shown in the following image:</p>
+
+<figure>
+<img src="../uploads/Main/scripted-importer-texture-example.png" alt="A texture with a red tint applied and some custom settings applied.">
+<figcaption>A texture with a red tint applied and some custom settings applied.</figcaption>
+</figure>
+
+<p><a id="create-custom-importers" aria-hidden="true"></a></p>
+
+<h2>Create custom importers</h2>
+
+<p>To add your own support for file formats that aren’t natively supported by Unity, you can use a <a href="../ScriptReference/AssetImporters.ScriptedImporter.html"><code>ScriptedImporter</code></a> to write custom asset importers in C#.</p>
+
+<p>A scripted importer is a class that inherits from the abstract class <a href="../ScriptReference/AssetImporters.ScriptedImporter.html"><code>ScriptedImporter</code></a> and has the <a href="../ScriptReference/AssetImporters.ScriptedImporterAttribute.html"><code>[ScriptedImporter]</code></a> attribute. This registers your custom importer to handle one or more file extensions. When Unity detects a file that matches the registered file extensions as being new or changed, it invokes the method <code>OnImportAsset</code> of your custom importer.</p>
+
+<p>
+<strong>Important:</strong> Scripted importers can’t handle a file extension that Unity already natively handles. You can use the <a href="../ScriptReference/AssetImporters.ScriptedImporterAttribute-ctor.html"><code>overrideExts</code></a> parameter to override this behavior and add the file extension for the existing importer. For a list of files Unity natively supports, refer to <a href="assets-supported-types.html">Supported asset type reference</a>.</p>
+
+<p>Once you have added a <code>ScriptedImporter</code> script to a project, you can use it the same way as any other file type supported by Unity. For more information, refer to <a href="ImportingAssets.html">Introduction to importing assets</a>.</p>
+
+<h3>Create a scripted importer</h3>
+
+<p>The following code example imports asset files with the extension <code>cube</code> into a <span class="tooltip" tabindex="0" ><strong>prefab</strong><span class="tooltiptext">An asset type that allows you to store a GameObject complete with components and properties. The prefab acts as a template from which you can create new object instances in the scene. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Prefabs.html" href="Prefabs.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#prefab" aria-label="Go to glossary anchor for prefab">Glossary</a></span></span></span> with a cube primitive as the main asset and a default material and color. It then assigns its position from a value read from the asset file:</p>
+
+<pre><code class="lang-cs">using UnityEngine;
+using UnityEditor.AssetImporters;
+using System.IO;
+
+// The importer is registered with Unity's asset pipeline by placing the ScriptedImporter attribute on the
+// CubeImporter class. The CubeImporter class implements the abstract ScriptedImporter base class.
+
+[ScriptedImporter(1, &quot;cube&quot;)]
+public class CubeImporter : ScriptedImporter
+{
+    public float m_Scale = 1;
+
+    // The ctx argument contains both input and output data for the import event
+
+    public override void OnImportAsset(AssetImportContext ctx)
+    {
+        var cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
+        var position = JsonUtility.FromJson&lt;Vector3&gt;(File.ReadAllText(ctx.assetPath));
+
+        cube.transform.position = position;
+        cube.transform.localScale = new Vector3(m_Scale, m_Scale, m_Scale);
+
+        // 'cube' is a GameObject and is automatically converted into a prefab.
+        // Only the 'Main Asset' is eligible to become a prefab.
+        ctx.AddObjectToAsset(&quot;main obj&quot;, cube);
+        ctx.SetMainObject(cube);
+
+        var material = new Material(Shader.Find(&quot;Standard&quot;));
+        material.color = Color.red;
+
+        // Assets must be assigned a unique identifier string consistent across imports.
+        ctx.AddObjectToAsset(&quot;my Material&quot;, material);
+
+        // Assets that are not passed into the context as import outputs must be destroyed.
+        var tempMesh = new Mesh();
+        DestroyImmediate(tempMesh);
+    }
+}
+</code></pre>
+
+<p>For more information, refer to the <a href="../ScriptReference/AssetImporters.ScriptedImporter.html"><code>AssetImporters.ScriptedImporter</code> API documentation</a>.</p>
+
+<h3>Create a custom import settings window</h3>
+
+<p>To create a custom import settings window for your scripted importer, create a class that inherits from <a href="../ScriptReference/AssetImporters.ScriptedImporterEditor.html"><code>ScriptedImporterEditor</code></a> and decorate it with the <code>[CustomEditor]</code> attribute. For example:</p>
+
+<pre><code class="lang-cs">using UnityEditor;
+using UnityEditor.AssetImporters;
+using UnityEditor.SceneManagement;
+using UnityEngine;
+
+[CustomEditor(typeof(CubeImporter))]
+public class CubeImporterEditor: ScriptedImporterEditor
+{
+    public override void OnInspectorGUI()
+    {
+        var colorShift = new GUIContent(&quot;Color Shift&quot;);
+        var prop = serializedObject.FindProperty(&quot;m_ColorShift&quot;);
+        EditorGUILayout.PropertyField(prop, colorShift);
+        base.ApplyRevertGUI();
+    }
+}
+</code></pre>
+
+<p><a id="import-dependencies-and-determinism" aria-hidden="true"></a></p>
+
+<h2>Import dependencies and determinism</h2>
+
+<p>When creating custom <code>AssetPostprocessor</code> or <code>ScriptedImporter</code> scripts, ensure that your import code is deterministic. A deterministic importer always produces the same output from the same input and dependencies. Unregistered dependencies or non-deterministic code can cause the Asset Pipeline to cache incorrect results, leading to inconsistent builds across machines or when the active build target changes.</p>
+
+<h3>Register import dependencies</h3>
+
+<p>If your import code reads from external files or depends on other environment states that aren’t covered by Unity’s automatic import dependencies, you must register those dependencies. Otherwise, Unity will not reimport the asset if those dependencies change. For the active build target used for the import, read <a href="../ScriptReference/AssetImporters.AssetImportContext-selectedBuildTarget.html"><code>selectedBuildTarget</code></a> on the import <a href="../ScriptReference/AssetPostprocessor-context.html"><code>context</code></a> instead of tracking the platform manually.</p>
+
+<p>For file dependencies, use <code>context.DependsOnArtifact</code> to register them. If the configuration file changes, Unity automatically reimports the dependent asset.</p>
+
+<pre><code class="lang-csharp">public class ConfigDependentPostprocessor : AssetPostprocessor
+{
+    void OnPreprocessTexture()
+    {
+        // Register the dependency before reading the asset 
+        context.DependsOnArtifact(&quot;Assets/Config/TextureImportConfig.asset&quot;);
+        // Read config and apply settings...
+    }
+}
+</code></pre>
+
+<p>For import logic that depends on the active build target (for example, platform-specific compression or paths), avoid compile-time constants such as <code>#if UNITY_EDITOR_WIN</code>. Use runtime checks against the build target Unity is importing for. The approach depends on if you’re using a <a href="../ScriptReference/AssetImporters.ScriptedImporter.html"><code>ScriptedImporter</code></a> or an <a href="../ScriptReference/AssetPostprocessor.html"><code>AssetPostprocessor</code></a>:</p>
+
+<ul>
+<li>
+<strong>Scripted importer</strong>: Read <a href="../ScriptReference/AssetImporters.AssetImportContext-selectedBuildTarget.html"><code>selectedBuildTarget</code></a> from the <a href="../ScriptReference/AssetImporters.AssetImportContext.html"><code>AssetImportContext</code></a> passed into <a href="../ScriptReference/AssetImporters.ScriptedImporter.OnImportAsset.html"><code>OnImportAsset</code></a>.</li>
+<li>
+<strong>Asset postprocessor</strong>: Use the same property on the <a href="../ScriptReference/AssetPostprocessor-context.html"><code>context</code></a> instance.</li>
+</ul>
+
+<p>Accessing <code>selectedBuildTarget</code> registers an import dependency on that build target, so Unity reimports when the target relevant to the import changes. </p>
+
+<pre><code class="lang-csharp">using UnityEditor;
+using UnityEngine;
+
+public class PlatformAwarePostprocessor : AssetPostprocessor
+{
+    void OnPreprocessTexture()
+    {
+        switch (context.selectedBuildTarget)
+        {
+            case BuildTarget.StandaloneWindows64:
+                // Apply settings for Windows standalone imports
+                break;
+            case BuildTarget.StandaloneOSX:
+                // Apply settings for macOS standalone imports
+                break;
+            default:
+                break;
+        }
+    }
+}
+</code></pre>
+
+<h3>Bump importer and postprocessor versions</h3>
+
+<p>When you change the behavior of a <a href="../ScriptReference/AssetImporters.ScriptedImporter.html"><code>ScriptedImporter</code></a> or an <a href="../ScriptReference/AssetPostprocessor.html"><code>AssetPostprocessor</code></a>, bump its version to invalidate the previously cached import results. If you don’t bump the version, next time the importer runs, it might reuse invalid import results. </p>
+
+<ul>
+<li>
+<strong>Scripted importers:</strong> Increment the version argument on the <a href="../ScriptReference/AssetImporters.ScriptedImporterAttribute.html"><code>[ScriptedImporter]</code></a> attribute whenever importer code changes.</li>
+<li>
+<strong>Asset postprocessors:</strong> Override <a href="../ScriptReference/AssetPostprocessor.GetVersion.html"><code>GetVersion</code></a> and return a new value when the <code>AssetPostprocessor</code> code changes.</li>
+</ul>
+
+<p>The <a href="#scripting-with-built-in-importers"><code>CustomTextureImporter</code> example</a> under <strong>Scripting with built-in importers</strong> shows a <code>GetVersion</code> implementation you can follow for postprocessors.</p>
+
+<h3>Avoid non-deterministic code</h3>
+
+<p>Custom import code that relies on time, random numbers, unordered collections, or asynchronous timing produces different results on each run. </p>
+
+<ul>
+<li>
+<strong>Time-based operations</strong>: Don’t use properties like <code>DateTime.UtcNow</code> to stamp assets during import. If you need to log import times, write to a log file outside the asset pipeline.</li>
+<li>
+<strong>Unordered collections</strong>: Iterating over <code>Dictionary</code> or <code>HashSet</code> collections produces elements in an undefined order. Use explicitly sorted collections, such as <code>List</code> or arrays, to guarantee a consistent processing order.</li>
+<li>
+<strong>Timing-dependent operations</strong>: Avoid relying on asynchronous completion order, thread scheduling, network availability, or file I/O performance. For example, if an importer spawns multiple <code>async</code> tasks to process subassets, sort or synchronize the tasks before combining their results instead of relying on the order in which they finish.</li>
+</ul>
+
+<pre><code class="lang-cs">class OrderedCollectionProcessor : AssetPostprocessor
+{
+    void OnPostprocessModel(GameObject model)
+    {
+        var materialList = new List&lt;Material&gt;();
+        // Populate list...
+
+        // Sort explicitly by a deterministic property
+        materialList.Sort((a, b) =&gt; string.Compare(a.name, b.name, System.StringComparison.Ordinal));
+
+        foreach (var material in materialList)
+        {
+            // Modification order is now deterministic
+        }
+    }
+}
+</code></pre>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="../ScriptReference/AssetPostprocessor.html"><code>AssetPostprocessor</code> API reference</a></li>
+<li><a href="../ScriptReference/AssetImporters.AssetImportContext-selectedBuildTarget.html"><code>AssetImportContext.selectedBuildTarget</code></a></li>
+<li><a href="../ScriptReference/AssetImporters.ScriptedImporter.html"><code>ScriptedImporter</code> API reference</a></li>
+<li><a href="../ScriptReference/AssetImporters.ScriptedImporterAttribute.html"><code>ScriptedImporterAttribute</code></a></li>
+<li><a href="assets-supported-types.html">Supported asset type reference</a></li>
+<li><a href="ImportingAssets.html">Introduction to importing assets</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="ParallelImport.html"></a></span><div class="tip">Import assets simultaneously</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="build-deterministic-assets.html"></a></span><div class="tip">Asset import determinism</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

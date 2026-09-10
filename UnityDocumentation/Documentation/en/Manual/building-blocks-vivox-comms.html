@@ -1,0 +1,339 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Vivox Building Block</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<meta property="relative-path-to-manual" content="">
+<meta property="version-switcher-versions-with-this-page" content="Versions with this page:">
+<meta property="version-switcher-versions-without-this-page" content="Versions without this page:">
+<meta property="version-switcher-supported" content="Supported">
+<meta property="version-switcher-legacy" content="Legacy">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/Manual/building-blocks-vivox-comms.html">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20260626"></script><script type="text/javascript" src="docdata/toc.js?ts=20260626"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20260626"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20260626">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20260626">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/building-blocks-vivox-comms.html">English</a></li>
+<li><a href="/cn/current/Manual/building-blocks-vivox-comms.html">中文</a></li>
+<li><a href="/ja/current/Manual/building-blocks-vivox-comms.html">日本語</a></li>
+<li><a href="/kr/current/Manual/building-blocks-vivox-comms.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: Unity 6.7 Beta</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/building-blocks-vivox-comms.html">English</a></li>
+<li><a href="/cn/current/Manual/building-blocks-vivox-comms.html">中文</a></li>
+<li><a href="/ja/current/Manual/building-blocks-vivox-comms.html">日本語</a></li>
+<li><a href="/kr/current/Manual/building-blocks-vivox-comms.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="building-blocks.html">Unity Building Blocks</a></li>
+<li><a href="building-blocks-vivox.html">Vivox voice and text chat Building Block</a></li>
+<li>Vivox Building Block</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="building-blocks-vivox-prerequisites.html"></a></span><div class="tip">Vivox Building Block prerequisites</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="unity-editor.html"></a></span><div class="tip">Unity Editor interface</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Vivox Building Block</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Integrate voice and text chat into your project with this Building Block’s pre-made UI elements. Learn what Vivox channels are, how to connect players to them, and how to build chat and roster interfaces from the included components.</p>
+
+<h2>Introduction</h2>
+
+<p>This Building Block helps you integrate Vivox into your project to connect players with voice and text chat. It can serve as a starting point for communication features in your multiplayer project, or dropped into an existing project to quickly add voice and chat throughout development.</p>
+
+<p>This Building Block demonstrates how to do the following:</p>
+
+<ul>
+<li>Join a Vivox voice and/or text channel.</li>
+<li>Select and configure audio input and output devices.</li>
+<li>Display a live channel roster with speaking indicators and mute controls.</li>
+<li>Send and receive text chat messages in a channel.</li>
+</ul>
+
+<p>The Building Block includes example <span class="tooltip" tabindex="0" ><strong>scenes</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html" href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span>, UI Toolkit assets, and runtime components ready to connect players through voice and text.</p>
+
+<h2>Prerequisites</h2>
+
+<p>Before you start, make sure you meet the following prerequisites:</p>
+
+<ul>
+<li>Install the Vivox Building Block <a href="https://assetstore.unity.com/packages/slug/369502">from the Unity Asset Store</a>.</li>
+<li>
+<a href="https://docs.unity.com/en-us/cloud/projects/configure-project-for-unity-cloud">Link your Unity Editor project to a cloud project</a>.</li>
+<li>Enable the Vivox service in the Unity Dashboard for your project.
+
+<ul>
+<li>On the Unity Dashboard, project credentials are available under <strong>Products</strong> &gt; <strong>Vivox Voice and Text</strong> &gt; <strong>Credentials</strong>.</li>
+</ul>
+</li>
+<li>In the Unity Editor, open the Vivox configuration menu at <strong>Services</strong> &gt; <strong>Vivox</strong> &gt; <strong>Configure</strong> and have your project’s credentials populate the <strong>Environment Configuration</strong> fields.
+
+<ul>
+<li>If a Unity project with Vivox credentials is correctly linked to the Editor but the Environment Configuration fields are not populating, entering and exiting Play mode is a secondary way to force credentials to update.</li>
+</ul>
+</li>
+</ul>
+
+<h2>Initial setup</h2>
+
+<p>Validate the Building Block is installed correctly by opening the <a href="#included-resources">included</a> <code>RosterWithVoiceAndText</code> scene under <strong>Assets</strong> &gt; <strong>Blocks</strong> &gt; <strong>Vivox</strong> &gt; <strong>Scenes</strong>.</p>
+
+<ol>
+<li>Click <strong>Play</strong> to enter Play mode.</li>
+<li>Enter a display name and channel name, then select <strong>Join Channel</strong> to connect.</li>
+<li>The channel roster now populates, and is able to send and receive text chat messages.</li>
+</ol>
+
+<h2>Vivox channels</h2>
+
+<p>A Vivox channel is a shared voice and text communication space that players connect to by name. Players who join the same channel name using the same Unity project credentials can hear and chat with each other. Channels are scoped to your project, the same channel name used in a different project creates an entirely separate space with no connection between them.</p>
+
+<p>Channels are lightweight, they don’t require a host, dedicated server, or session, making them easy to use in any multiplayer setup.</p>
+
+<p>Channels are independent of gameplay synchronization. They work alongside Netcode for <span class="tooltip" tabindex="0" ><strong>GameObjects</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-GameObject.html" href="class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span>, Netcode for Entities, or any other <span class="tooltip" tabindex="0" ><strong>networking</strong><span class="tooltiptext">The Unity system that enables multiplayer gaming across a computer network. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about multiplayer.html" href="multiplayer.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#networking" aria-label="Go to glossary anchor for networking">Glossary</a></span></span></span> solution. A typical connection flow looks like the following:</p>
+
+<ol>
+<li>Initialize Unity Services.</li>
+<li>Authenticate the player.</li>
+<li>Connect to the game network (for example, using <a href="https://docs.unity.com/en-us/mps-sdk/sessions">Multiplayer Sessions</a>).</li>
+<li>Join a Vivox channel.</li>
+<li>Load the gameplay scene.</li>
+</ol>
+
+<h2>Included resources</h2>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Scene</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><code>RosterWithVoiceAndText</code></td>
+	<td style="text-align:left;">A combined view showing the channel join form, a live roster of connected players with speaking indicators and mute controls, and a text chat panel. Configured by default with <code>ChatSettings_Group</code> for a standard group voice and text channel.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>AudioDeviceSelector</code></td>
+	<td style="text-align:left;">A standalone audio configuration panel for selecting input and output devices and adjusting their volumes.</td>
+</tr>
+</tbody>
+</table>
+
+<h3><code>RosterWithVoiceAndText</code></h3>
+
+<p>This scene demonstrates the core Vivox features, a live channel roster with speaking indicators and mute controls, and a text chat panel. A basic join form is included to get players into a channel during prototyping or testing. In a shipped game, replace the connection flow with your own.</p>
+
+<p>
+<code>ChannelRoster</code> UXML:</p>
+
+<ul>
+<li>
+<code>ChannelName</code>: Displays the name of the currently joined channel.</li>
+<li>
+<code>PlayerCountLabel</code>: Displays the number of participants in the channel.</li>
+<li>
+<code>RosterList</code>: Scrollable list of participants. Each entry shows the player’s display name, a speaking indicator that animates when the player is transmitting audio, and a mute toggle. The mute toggle is visible only when the local user is connected to audio.</li>
+<li>
+<code>CopyChannelName</code>: Displays and copies the current channel name so other players can join.</li>
+</ul>
+
+<p>
+<code>TextChat</code> UXML:</p>
+
+<ul>
+<li>
+<code>MessageLog</code>: Scrollable history of text messages sent in the channel.</li>
+<li>
+<code>MessageInput</code>: Text field for composing a message.</li>
+<li>
+<code>SendButton</code>: Sends the composed message to the channel.</li>
+</ul>
+
+<p>
+<code>JoinChannelMenu</code> UXML (Used for prototyping and testing only):</p>
+
+<ul>
+<li>
+<code>PlayerName</code>: Text field for the player’s display name.</li>
+<li>
+<code>ChannelName</code>: Text field for the channel name to join.</li>
+<li>
+<code>JoinRoom</code>: Joins the specified channel, handling Vivox login automatically.</li>
+</ul>
+
+<p>
+<strong>Note</strong>: The roster and text chat components aren’t dependent on <code>JoinChannelMenu</code>. These components listen for the first active Vivox channel and populate automatically, whether that channel was already joined when the components loaded or joined afterward. You can replace or remove <code>JoinChannelMenu</code> entirely, and the roster and text chat continue to work with any channel your game joins through the Vivox SDK.</p>
+
+<h3><code>AudioDeviceSelector</code></h3>
+
+<p>
+<code>AudioDeviceSelector</code> has multiple settings available to manage input and output devices.</p>
+
+<ul>
+<li>
+<code>InputDeviceDropdown</code>: Lists available microphone input devices. Selecting one sets it as the active input device.</li>
+<li>
+<code>InputVolumeSlider</code>: Adjusts microphone input volume. Uses an audio taper curve for natural-feeling control.</li>
+<li>
+<code>OutputDeviceDropdown</code>: Lists available audio output devices. Selecting one sets it as the active output device.</li>
+<li>
+<code>OutputVolumeSlider</code>: Adjusts speaker output volume. Uses an audio taper curve for natural-feeling control.</li>
+</ul>
+
+<h2>Joining with multiple clients locally</h2>
+
+<p>Use <a href="https://docs.unity3d.com/Packages/com.unity.multiplayer.playmode@latest">Multiplayer Play Mode</a> to test with multiple players directly from the Unity Editor.</p>
+
+<h2>Troubleshooting</h2>
+
+<h3>Multiplayer Services not available</h3>
+
+<p>Unity Services Core must be initialized before Vivox can function. Add the <code>VivoxServiceInitializer</code> <span class="tooltip" tabindex="0" ><strong>prefab</strong><span class="tooltiptext">An asset type that allows you to store a GameObject complete with components and properties. The prefab acts as a template from which you can create new object instances in the scene. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Prefabs.html" href="Prefabs.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#prefab" aria-label="Go to glossary anchor for prefab">Glossary</a></span></span></span> to your scene for a zero-configuration setup. The prefab includes <code>ServicesInitialization</code>, <code>PlayerAuthentication</code>, and Vivox initialization in a single GameObject. Alternatively, add <code>ServicesInitialization</code> and <code>PlayerAuthentication</code> components individually to your own initialization GameObject.</p>
+
+<h3>Authentication failure</h3>
+
+<p>Ensure the Editor is signed in and the correct Project ID is set in <strong>Project Settings</strong> &gt; <strong>Services</strong>. Confirm service enablement in the Unity Dashboard under Authentication and Vivox.</p>
+
+<h3>Can’t join a channel</h3>
+
+<p>Verify network connectivity. Confirm Vivox is enabled and your project is linked. Check that the player display name and channel name fields are not empty.</p>
+
+<h3>Players can’t hear or see each other despite joining the same channel name</h3>
+
+<p>Confirm that all clients are linked to the same Unity cloud project. Vivox channels are scoped to project credentials, the same channel name in two different projects creates two separate channels with no connection between them.</p>
+
+<h3>No audio after joining</h3>
+
+<p>Check that the expected input and output devices are selected using the audio device selector. Ensure the application has microphone permission on the target platform.</p>
+
+<h3>Mute button not visible for a participant</h3>
+
+<p>The mute button is only shown when both the target participant and the local user are connected to audio. If the local user is connected as text-only, mute controls are hidden.</p>
+
+<h3>UI not showing channel data</h3>
+
+<p>Confirm your root UXML element has the correct ChannelSettings asset set as its Data Source in the UI Builder. Refer to the <a href="building-blocks-vivox-prerequisites.html#channelsettings-scriptableobject-and-uxml-binding">Configuration</a> section for details.</p>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="https://docs.unity.com/ugs/en-us/manual/vivox-unity/manual/Unity/Unity">Unity Services: Vivox Unity SDK</a></li>
+<li><a href="https://docs.unity3d.com/Manual/UIElements.html">UI Toolkit</a></li>
+<li><a href="https://docs.unity.com/ugs/en-us/manual/authentication/manual/get-started">Unity Authentication</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="building-blocks-vivox-prerequisites.html"></a></span><div class="tip">Vivox Building Block prerequisites</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="unity-editor.html"></a></span><div class="tip">Unity Editor interface</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

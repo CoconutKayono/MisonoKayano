@@ -1,0 +1,258 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Burst AOT Settings reference</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<meta property="relative-path-to-manual" content="../">
+<meta property="version-switcher-versions-with-this-page" content="Versions with this page:">
+<meta property="version-switcher-versions-without-this-page" content="Versions without this page:">
+<meta property="version-switcher-supported" content="Supported">
+<meta property="version-switcher-legacy" content="Legacy">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/Manual/burst/building-aot-settings.html">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../../StaticFilesManual/js/jquery.js?ts=20260626"></script><script type="text/javascript" src="../../StaticFilesManual/js/core.js?ts=20260626"></script><script type="text/javascript" src="../../StaticFilesManual/js/image-comp.js?ts=20260626"></script><script type="text/javascript" src="../docdata/toc.js?ts=20260626"></script><script type="text/javascript" src="../docdata/global_toc.js?ts=20260626"></script><link rel="stylesheet" type="text/css" href="../../StaticFilesManual/css/core.css?ts=20260626">
+<link rel="stylesheet" type="text/css" href="../../StaticFilesManual/css/icons.css?ts=20260626">
+<link rel="stylesheet" href="../../StaticFilesManual/css/prism.css">
+<script src="../../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="../30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../index.html" class="selected">Manual</a></li>
+<li><a href="../../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/burst/building-aot-settings.html">English</a></li>
+<li><a href="/cn/current/Manual/burst/building-aot-settings.html">中文</a></li>
+<li><a href="/ja/current/Manual/burst/building-aot-settings.html">日本語</a></li>
+<li><a href="/kr/current/Manual/burst/building-aot-settings.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: Unity 6.7 Beta</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/burst/building-aot-settings.html">English</a></li>
+<li><a href="/cn/current/Manual/burst/building-aot-settings.html">中文</a></li>
+<li><a href="/ja/current/Manual/burst/building-aot-settings.html">日本語</a></li>
+<li><a href="/kr/current/Manual/burst/building-aot-settings.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="../scripting.html">Programming in Unity</a></li>
+<li><a href="../compilation-and-code-reload.html">Compilation and code reload </a></li>
+<li><a href="../script-compilation.html">Script compilation</a></li>
+<li><a href="../burst/script-compilation-burst.html">Burst compilation</a></li>
+<li>Burst AOT Settings reference</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="../burst/building-projects.html"></a></span><div class="tip">Platform build support reference</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="../burst/optimization-overview.html"></a></span><div class="tip">Burst optimization</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Burst AOT Settings reference</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>To control Burst’s AOT compilation, use the <strong>Burst AOT Settings</strong> section of the <a href="../comp-ManagerGroup.html">Project Settings window</a> (<strong>Edit &gt; Project Settings &gt; Burst AOT Settings</strong>). These settings control Burst compilation in Player builds only. To configure Burst compilation in the Unity Editor, refer to <a href="editor-burst-menu.html">Burst menu reference</a>.</p>
+
+<figure>
+<img src="../../uploads/Main/burst/burst_aot_settings.png" alt="Burst AOT Settings">
+<figcaption>Burst AOT Settings</figcaption>
+</figure>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Setting</strong></th>
+	<th style="text-align:left;"><strong>Function</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Target Platform</strong></td>
+	<td style="text-align:left;">Displays the current platform. To change the platform, go to <strong>File &gt; Build Profiles</strong>. You can define different Burst AOT settings for each platform.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Enable Burst Compilation</strong></td>
+	<td style="text-align:left;">Enable this setting to turn Burst compilation on. Disable this setting to deactivate Burst compilation for the selected platform.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Enable Optimizations</strong></td>
+	<td style="text-align:left;">Enable this setting to activate Burst optimizations.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Force Debug Information</strong></td>
+	<td style="text-align:left;">Enable this setting to make Burst generate debug information. This adds debug symbols to your project, even in release builds of your project, so that when you load it in a debugger you can see file and line information.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<strong>Target 32Bit CPU Architectures</strong><br>(Displayed if the architecture is supported)</td>
+	<td style="text-align:left;">Select the CPU architectures that you want to use for 32 bit builds. By default, SSE2 and SSE4 are selected.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<strong>Target 64Bit CPU Architectures</strong><br>(Displayed if the architecture is supported)</td>
+	<td style="text-align:left;">Select the CPU architectures that you want to use for 64-bit builds. By default, SSE2 and SSE4 are selected.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<strong>Target Arm 64Bit CPU Architectures</strong><br>(Displayed if the architecture is supported)</td>
+	<td style="text-align:left;">Select the CPU architectures that you want to use for Arm 64-bit builds. By default, ARMV8A is selected.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Optimize For</strong></td>
+	<td style="text-align:left;">Select which optimization settings to compile Burst code for. The options are as follows: <ul>
+<li>
+<strong>Performance</strong> - optimizes the job to run as fast as possible.</li>
+<li>
+<strong>Size</strong> - optimizes to make the code generation as small as possible.</li>
+<li>
+<strong>Fast Compilation</strong> - compiles code as fast as possible, with minimal optimization. Burst doesn’t perform any vectorization, inlining, or loop optimizations.</li>
+<li>
+<strong>Balanced</strong> (Default) - optimizes for code that runs fast but keeps compile time as low as possible.</li>
+</ul>
+<strong>Note</strong>: Any <a href="../../ScriptReference/Unity.Burst.OptimizeFor.html"><code>OptimizeFor</code></a> setting is the global default optimization setting for any Burst job or function-pointer. If any assembly level <code>BurstCompile</code>, or a specific Burst job or function-pointer has an <code>OptimizeFor</code> setting, it overrides the global optimization setting for those jobs. For more information, refer to <a href="../../ScriptReference/Unity.Burst.OptimizeFor.html"><code>OptimizeFor</code></a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Floating Point Mode</strong></td>
+	<td style="text-align:left;">Select the default floating point mode to use for Burst compiled code. This may be overridden by specifying the <code>FloatMode</code> field for <code>BurstCompile</code> attribute or a job. For more information, refer to <a href="../../ScriptReference/Unity.Burst.FloatMode.html"><code>FloatMode</code></a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Disabled Warnings</strong></td>
+	<td style="text-align:left;">Specify a semi-colon separated list of Burst warning numbers to disable the warnings for a player build. Unity shares this setting across all platforms. This can be useful if you want to ignore specific <a href="compilation-warnings.html">compilation warnings</a> while testing your application.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<strong>Stack Protector</strong><br>(Displayed if the architecture is supported)</td>
+	<td style="text-align:left;">Specifies the stack protector level. Functions with stack protectors have an extra value added to the stack frame, which is verified on the function’s return to help detect potential buffer overflow and prevent exploitation. The options are as follows:<ul>
+<li>
+<strong>Off</strong> - No stack protectors are emitted.</li>
+<li>
+<strong>Basic</strong> - Stack protection level corresponding to the <a href="https://clang.llvm.org/docs/ClangCommandLineReference.html">clang option</a> <code>--fstack-protector</code>
+</li>
+<li>
+<strong>Strong</strong> - Stack protection level corresponding to the <a href="https://clang.llvm.org/docs/ClangCommandLineReference.html">clang option</a> <code>--fstack-protector-strong</code>
+</li>
+<li>
+<strong>All</strong> - Stack protection level corresponding to the <a href="https://clang.llvm.org/docs/ClangCommandLineReference.html">clang option</a> <code>--fstack-protector-all</code>
+</li>
+</ul>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<strong>Stack Protector Buffer Size</strong><br>(Displayed if the architecture is supported)</td>
+	<td style="text-align:left;">Specifies the threshold value used by the different <strong>Stack Protector</strong> options to determine if a function is considered vulnerable and to guide layout of the arrays and structures on the stack.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>CPU Architecture</strong></td>
+	<td style="text-align:left;">This setting is only supported for Windows, macOS, Linux and Android. Unity builds a Player that supports the CPU architectures you’ve selected. Burst generates a special dispatch into the module, so that the code generated detects the CPU the target platform uses and selects the appropriate CPU architecture at runtime.</td>
+</tr>
+</tbody>
+</table>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="building-projects.html">Building your project</a></li>
+<li><a href="editor-reference-overview.html">Editor reference</a></li>
+<li><span class="tooltip" tabindex="0" ><a href="../comp-ManagerGroup.html">Project Settings</a><span class="tooltiptext">A broad collection of settings which allow you to configure how Physics, Audio, Networking, Graphics, Input and many other areas of your project behave. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about comp-ManagerGroup.html" href="../comp-ManagerGroup.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#ProjectSettings" aria-label="Go to glossary anchor for ProjectSettings">Glossary</a></span></span></span></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="../burst/building-projects.html"></a></span><div class="tip">Platform build support reference</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="../burst/optimization-overview.html"></a></span><div class="tip">Burst optimization</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

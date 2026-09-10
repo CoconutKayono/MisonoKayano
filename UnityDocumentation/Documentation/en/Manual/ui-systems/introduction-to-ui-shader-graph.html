@@ -1,0 +1,342 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Introduction to UI Shader Graph</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<meta property="relative-path-to-manual" content="../">
+<meta property="version-switcher-versions-with-this-page" content="Versions with this page:">
+<meta property="version-switcher-versions-without-this-page" content="Versions without this page:">
+<meta property="version-switcher-supported" content="Supported">
+<meta property="version-switcher-legacy" content="Legacy">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/Manual/ui-systems/introduction-to-ui-shader-graph.html">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../../StaticFilesManual/js/jquery.js?ts=20260626"></script><script type="text/javascript" src="../../StaticFilesManual/js/core.js?ts=20260626"></script><script type="text/javascript" src="../../StaticFilesManual/js/image-comp.js?ts=20260626"></script><script type="text/javascript" src="../docdata/toc.js?ts=20260626"></script><script type="text/javascript" src="../docdata/global_toc.js?ts=20260626"></script><link rel="stylesheet" type="text/css" href="../../StaticFilesManual/css/core.css?ts=20260626">
+<link rel="stylesheet" type="text/css" href="../../StaticFilesManual/css/icons.css?ts=20260626">
+<link rel="stylesheet" href="../../StaticFilesManual/css/prism.css">
+<script src="../../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="../30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../index.html" class="selected">Manual</a></li>
+<li><a href="../../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/ui-systems/introduction-to-ui-shader-graph.html">English</a></li>
+<li><a href="/cn/current/Manual/ui-systems/introduction-to-ui-shader-graph.html">中文</a></li>
+<li><a href="/ja/current/Manual/ui-systems/introduction-to-ui-shader-graph.html">日本語</a></li>
+<li><a href="/kr/current/Manual/ui-systems/introduction-to-ui-shader-graph.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: Unity 6.7 Beta</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/ui-systems/introduction-to-ui-shader-graph.html">English</a></li>
+<li><a href="/cn/current/Manual/ui-systems/introduction-to-ui-shader-graph.html">中文</a></li>
+<li><a href="/ja/current/Manual/ui-systems/introduction-to-ui-shader-graph.html">日本語</a></li>
+<li><a href="/kr/current/Manual/ui-systems/introduction-to-ui-shader-graph.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="../UIToolkits.html">UI systems</a></li>
+<li><a href="../UIElements.html">UI Toolkit</a></li>
+<li><a href="../UIE-USS.html">Style UI</a></li>
+<li><a href="../ui-systems/ui-shader-graph.html">UI Shader Graph</a></li>
+<li>Introduction to UI Shader Graph</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="../ui-systems/get-started-with-ui-shader-graph.html"></a></span><div class="tip">Get started with UI Shader Graph</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="../ui-systems/custom-vertex-data.html"></a></span><div class="tip">Custom vertex data</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Introduction to UI Shader Graph</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>You can create <span class="tooltip" tabindex="0" ><strong>shaders</strong><span class="tooltiptext">A program that runs on the GPU. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Shaders.html" href="../Shaders.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#shader" aria-label="Go to glossary anchor for shader">Glossary</a></span></span></span> with <a href="https://docs.unity3d.com/Packages/com.unity.shadergraph@17.4/manual/index.html">Shader Graph</a> to do the following:</p>
+
+<ul>
+<li>Custom button effects: add glow, blur, or interactive color changes to buttons.</li>
+<li>Text rendering: create crisp, scalable text with outlines.</li>
+<li>Animated UI elements: use shaders to animate gradients or textures.</li>
+<li>Color processing: apply effects like grayscale, sepia, or color correction to images in the UI.</li>
+</ul>
+
+<p>
+<strong>Important</strong>: UI Shader Graph is designed to create shaders that render UI <span class="tooltip" tabindex="0" ><strong>mesh</strong><span class="tooltiptext">The main graphics primitive of Unity. Meshes make up a large part of your 3D worlds. Unity supports triangulated or Quadrangulated polygon meshes. Nurbs, Nurms, Subdiv surfaces must be converted to polygons. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about mesh.html" href="../mesh.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#Mesh" aria-label="Go to glossary anchor for Mesh">Glossary</a></span></span></span> elements directly. You can’t use it to create <a href="custom-filters.html">custom filters</a>, which are <span class="tooltip" tabindex="0" ><strong>post-processing</strong><span class="tooltiptext">A process that improves product visuals by applying filters and effects before the image appears on screen. You can use post-processing effects to simulate physical camera and film properties, for example Bloom and Depth of Field. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about PostProcessingOverview.html" href="../PostProcessingOverview.html">More info</a> <span class="search-words">post processing, postprocessing, postprocess</span><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#post-processing" aria-label="Go to glossary anchor for post-processing">Glossary</a></span></span></span> shaders that apply effects to render targets containing subtrees of <span class="tooltip" tabindex="0" ><strong>visual elements</strong><span class="tooltiptext">A node of a visual tree that instantiates or derives from the C# <a href="../../ScriptReference/UIElements.VisualElement.html"><code>VisualElement</code></a> class. You can style the look, define the behaviour, and display it on screen as part of the UI. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UIE-VisualTree.html" href="../UIE-VisualTree.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#visualelement" aria-label="Go to glossary anchor for visualelement">Glossary</a></span></span></span>. These are fundamentally different rendering approaches and you can’t interchange them.</p>
+
+<h2>UI-specific rendering</h2>
+
+<p>When you <a href="get-started-with-ui-shader-graph.html">create a shader for UI elements</a> and open it in the <strong>Shader Graph</strong> editor, it typically includes a <strong>Fragment</strong> node and a <strong>Vertex</strong> node.</p>
+
+<figure>
+<img src="../../uploads/Main/uitk/shader-graph-editor.png" alt="Default Shader Graph editor view for UI rendering">
+<figcaption>Default Shader Graph editor view for UI rendering</figcaption>
+</figure>
+
+<p>The <strong>Fragment</strong> node has inputs for <strong>Base Color</strong> and <strong>Alpha</strong>, which define the color and transparency of the shader.</p>
+
+<p>The <strong>Main Preview</strong> window shows the result of the shader. It provides immediate visual feedback on how your custom shaders affect UI elements, and allows you to compare the <em>before</em> and <em>after</em> states.</p>
+
+<p>The <strong>No Shader</strong> section shows example graphs without any shader applied. This serves as a baseline to compare against the shader effects. It includes:</p>
+
+<ul>
+<li>An example texture graph</li>
+<li>An example gradient graph</li>
+<li>A graph with solid color background and border with SDF text in it. Signed Distance Fields (SDF) fonts are commonly used for crisp, scalable text that looks good at various sizes and they are rendered without high-resolution texture atlases.</li>
+<li>A graph with solid color background and border with Bitmap text in it. Bitmap fonts are pixel-based fonts that are rendered using a texture atlas.</li>
+</ul>
+
+<p>The <strong>With Shader</strong> section shows the same example graphs as the <strong>No Shader</strong> section, but with the shader applied. This lets you compare the original appearance to the result after your shader modifications. As you adjust your shader, the preview updates in real time, so you can immediately check how your changes affect each UI element.</p>
+
+<h2>Single shader for multiple render types</h2>
+
+<p>A UI Toolkit mesh can contain triangles that correspond to various render types (text, solid colors, textures, gradients). Unlike conventional systems that use separate shaders for each render type, UI Toolkit manages all render types within a single shader for optimal CPU performance.</p>
+
+<p>To accommodate multiple render types, UI Shader Graph provides specialized nodes that lets you branch your shader logic based on the current render type.</p>
+
+<p><a name="render-type-branch-node" aria-hidden="true"></a></p>
+
+<h3>Render Type Branch node</h3>
+
+<p>The key tool is the <a href="https://docs.unity3d.com/Packages/com.unity.shadergraph@17.4/manual/render-type-branch-node.html">Render Type Branch</a> node, which allows you to define different behaviors for solid colors, textures, SDF and Bitmap text, and gradients within one shader.</p>
+
+<p>When you add a <strong>Render Type Branch</strong> node, it includes all input ports for each render type with default values. Each input port of the <strong>Render Type Branch</strong> node corresponds to a specific render type. You can connect different nodes to each port to define how each render type is processed, and then connect the outputs of the <strong>Render Type Branch</strong> node to the inputs of the <strong>Fragment</strong> node to define the final appearance of the shader.</p>
+
+<p>The following graph shows a simple example of assigning a different color to each render type using the <strong>Render Type Branch</strong> node:</p>
+
+<figure>
+<img src="../../uploads/Main/uitk/shader-color-nodes.png" alt="Render Type Branch example">
+<figcaption>Render Type Branch example</figcaption>
+</figure>
+
+<p>In this example, each render type gets a solid color: red for solid color, so the background and the border of the buttons appear red. Likewise, the SDF text appears blue while the Bitmap text appears purple; texture appears green while the vector image appears lake blue.</p>
+
+<p>The following table summarizes each render type, what it applies to, and how it appears in the <strong>Main Preview</strong> window.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Render type</strong></th>
+	<th style="text-align:left;"><strong>Applies to</strong></th>
+	<th style="text-align:left;"><strong>Appearance in Main Preview</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">Solid</td>
+	<td style="text-align:left;">Solid color backgrounds and borders of UI elements</td>
+	<td style="text-align:left;">Background and border of the SDF and Bitmap graphs</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Texture</td>
+	<td style="text-align:left;">Texture graphics</td>
+	<td style="text-align:left;">Texture graph</td>
+</tr>
+<tr>
+	<td style="text-align:left;">SDF Text</td>
+	<td style="text-align:left;">Text rendering using Signed Distance Fields (SDF) fonts</td>
+	<td style="text-align:left;">SDF text in SDF graphs</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Bitmap Text</td>
+	<td style="text-align:left;">Text rendering using Bitmap fonts</td>
+	<td style="text-align:left;">Bitmap text in Bitmap graphs</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Gradient</td>
+	<td style="text-align:left;">Vector graphics</td>
+	<td style="text-align:left;">Gradient graph</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+<strong>Tips</strong>: If you want the <strong>Render Type Branch</strong> node to be added automatically when you create a new shader, you can use one of the UI Shader Graph templates from <strong>Create</strong> &gt; <strong>Shader Graph</strong> &gt; <strong>From Template</strong> &gt; <strong>UI</strong>.</p>
+
+<h3>Render Type node</h3>
+
+<p>The <strong>Render Type</strong> node outputs the current render type being processed by the shader. This allows you to implement conditional logic based on the render type. For example, you can use the output of the <strong>Render Type</strong> node with comparison or branch nodes to apply specific effects only to certain render types.</p>
+
+<h2>Default nodes for each render type</h2>
+
+<p>Although you can use any node in your custom shaders, UI Shader Graph provides default nodes for each render type. Each default node represents the default implementation for its branch type. You can use them as starting points and combine them with other nodes to create desired visual effects. </p>
+
+<ul>
+<li><a href="https://docs.unity3d.com/Packages/com.unity.shadergraph@17.4/manual/default-solid-node.html">Default Solid</a></li>
+<li><a href="https://docs.unity3d.com/Packages/com.unity.shadergraph@17.4/manual/default-texture-node.html">Default Texture</a></li>
+<li><a href="https://docs.unity3d.com/Packages/com.unity.shadergraph@17.4/manual/default-gradient-node.html">Default Gradient</a></li>
+<li><a href="https://docs.unity3d.com/Packages/com.unity.shadergraph@17.4/manual/default-bitmap-text-node.html">Default Bitmap Text</a></li>
+<li><a href="https://docs.unity3d.com/Packages/com.unity.shadergraph@17.4/manual/default-sdf-text-node.html">Default SDF Text</a></li>
+</ul>
+
+<p>The following graph connects the default nodes to each port of the <strong>Render Type Branch</strong> node:</p>
+
+<figure>
+<img src="../../uploads/Main/uitk/shader-default-nodes.png" alt="Default nodes example">
+<figcaption>Default nodes example</figcaption>
+</figure>
+
+<p>
+<strong>Note</strong>: If an input of the <strong>Render Type Branch</strong> node isn’t connected, the node automatically uses the default value for that input.</p>
+
+<p>For best performance, leave an input disconnected if you want it to use its default value, rather than connecting it to outputs of nodes such as the <strong>Default Solid</strong> node or <strong>Default Texture</strong> node. The node handles branching more efficiently when you disconnect inputs, which optimizes for all render types.</p>
+
+<h2>Customize render types</h2>
+
+<p>To customize the appearance of each render type, modify the output from the default nodes before connecting them to the <strong>Render Type Branch</strong> node. For example, you can add a color multiplication node between the <strong>Default Solid</strong> node and the <strong>Render Type Branch</strong> node to tint all solid color elements. You can also chain additional nodes to blend colors, apply effects, or animate properties.</p>
+
+<p>The following graph uses a <strong>UV Distortion</strong> node to create a subtle animated warp effect, applies a purple tint to textures, while leaving SDF Text, Bitmap Text, and Gradients to display their default appearance:</p>
+
+<figure>
+<img src="../../uploads/Main/uitk/shader-custom-effect.png" alt="Custom effect example">
+<figcaption>Custom effect example</figcaption>
+</figure>
+
+<h2>UI-specific input nodes</h2>
+
+<p>UI Shader Graph includes several nodes specifically for UI elements, providing information about the current UI element they render:</p>
+
+<ul>
+<li>
+<a href="https://docs.unity3d.com/Packages/com.unity.shadergraph@17.4/manual/element-texture-uv-node.html">Element Texture UV</a>: Texture coordinates for sampling the assigned texture.</li>
+<li>
+<a href="https://docs.unity3d.com/Packages/com.unity.shadergraph@17.4/manual/element-layout-uv-node.html">Element Layout UV</a>: UV coordinates within the element’s layout rectangle.</li>
+<li>
+<a href="https://docs.unity3d.com/Packages/com.unity.shadergraph@17.4/manual/element-texture-size-node.html">Element Texture Size</a>: Size of the assigned texture.</li>
+</ul>
+
+<p>The following graph uses the <strong>Element Texture UV</strong> node to ensure UV distortion applies specifically to the UI element’s texture.</p>
+
+<figure>
+<img src="../../uploads/Main/uitk/shader-custom-effect-input-node.png" alt="Element Texture UV example">
+<figcaption>Element Texture UV example</figcaption>
+</figure>
+
+<h2>Sample Element Texture node</h2>
+
+<p>The <a href="https://docs.unity3d.com/Packages/com.unity.shadergraph@17.4/manual/sample-element-texture-node.html">Sample Element Texture</a> node allows you to sample a texture at specific UV coordinates. You can use this node to do multiple samples of the texture assigned to the element, such as for creating complex visual effects or manipulating the texture in various ways.</p>
+
+<p>
+<strong>Note:</strong> The texture assigned to the element is the texture that the UI element currently uses. It might be the font texture, an element background image, the source image assigned to an <a href="../UIE-uxml-element-Image.html">Image</a> element, or a texture provided through <a href="../../ScriptReference/UIElements.MeshGenerationContext.DrawMesh.html"><code>MeshGenerationContext.DrawMesh</code></a> in custom rendering code.</p>
+
+<p>The following graph uses the <strong>Sample Element Texture</strong> node to create a texture-based effect:</p>
+
+<figure>
+<img src="../../uploads/Main/uitk/shader-sample-element-texture.png" alt="Sample Element Texture example">
+<figcaption>Sample Element Texture example</figcaption>
+</figure>
+
+<p>This shader graph samples an element’s texture twice: once normally and once with its UVs offset by (<code>0.1, 0.1</code>). The two sampled colors are then combined together to create a ghosting and doubling effect of the texture:</p>
+
+<figure>
+<img src="../../uploads/Main/uitk/shader-final-sample-example.png" alt="Sample Element Texture effect">
+<figcaption>Sample Element Texture effect</figcaption>
+</figure>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="get-started-with-ui-shader-graph.html">Get started with UI Shader Graph</a></li>
+<li><a href="../UIE-font-asset.html">Introduction to font assets</a></li>
+<li><a href="work-with-vector-graphics.html">Work with vector graphics</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="../ui-systems/get-started-with-ui-shader-graph.html"></a></span><div class="tip">Get started with UI Shader Graph</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="../ui-systems/custom-vertex-data.html"></a></span><div class="tip">Custom vertex data</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

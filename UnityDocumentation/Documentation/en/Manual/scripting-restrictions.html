@@ -1,0 +1,272 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: IL2CPP limitations</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<meta property="relative-path-to-manual" content="">
+<meta property="version-switcher-versions-with-this-page" content="Versions with this page:">
+<meta property="version-switcher-versions-without-this-page" content="Versions without this page:">
+<meta property="version-switcher-supported" content="Supported">
+<meta property="version-switcher-legacy" content="Legacy">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/Manual/scripting-restrictions.html">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20260626"></script><script type="text/javascript" src="docdata/toc.js?ts=20260626"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20260626"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20260626">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20260626">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/scripting-restrictions.html">English</a></li>
+<li><a href="/cn/current/Manual/scripting-restrictions.html">中文</a></li>
+<li><a href="/ja/current/Manual/scripting-restrictions.html">日本語</a></li>
+<li><a href="/kr/current/Manual/scripting-restrictions.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: Unity 6.7 Beta</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/scripting-restrictions.html">English</a></li>
+<li><a href="/cn/current/Manual/scripting-restrictions.html">中文</a></li>
+<li><a href="/ja/current/Manual/scripting-restrictions.html">日本語</a></li>
+<li><a href="/kr/current/Manual/scripting-restrictions.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="scripting.html">Programming in Unity</a></li>
+<li><a href="compilation-and-code-reload.html">Compilation and code reload </a></li>
+<li><a href="script-compilation.html">Script compilation</a></li>
+<li><a href="scripting-backends.html">Scripting back ends</a></li>
+<li><a href="scripting-backends-il2cpp.html">IL2CPP scripting back end</a></li>
+<li>IL2CPP limitations</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="linux-il2cpp-crosscompiler.html"></a></span><div class="tip">Linux IL2CPP cross-compiler</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="burst/script-compilation-burst.html"></a></span><div class="tip">Burst compilation</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>IL2CPP limitations</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>The <span class="tooltip" tabindex="0" ><strong>IL2CPP</strong><span class="tooltiptext">A Unity-developed scripting back-end which you can use as an alternative to Mono when building projects for some platforms. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ./scripting-backends-il2cpp.html" href="./scripting-backends-il2cpp.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#IL2CPP" aria-label="Go to glossary anchor for IL2CPP">Glossary</a></span></span></span> back end has some notable limitations, due partly to the inherent characteristics of ahead-of-time (AOT) compilation and partly to platform-specific restrictions.</p>
+
+<h2>Threads</h2>
+
+<p>Threads aren’t supported on the Web platform, so any managed code that uses the <a href="https://learn.microsoft.com/en-us/dotnet/api/system.threading?view=net-9.0"><code>System.Threading</code></a> namespace fails at runtime. Some parts of the .NET class libraries also implicitly depend on threads. A common example is the <a href="https://learn.microsoft.com/en-us/dotnet/api/system.timers.timer?view=net-9.0"><code>System.Timers.Timer</code></a> class, which depends on support for threads.</p>
+
+<h2>Reflection</h2>
+
+<p>Unity supports reflection on AOT platforms. However, if the compiler can’t infer that the code is used via reflection, the code might not exist at runtime. For more information, refer to <a href="managed-code-stripping.html">Managed code stripping</a>.</p>
+
+<p>An AOT platform can’t implement any of the methods in the <a href="https://learn.microsoft.com/en-us/dotnet/api/system.reflection.emit?view=net-9.0"><code>System.Reflection.Emit</code></a> namespace.</p>
+
+<h2>Exception filters</h2>
+
+<p>IL2CPP supports exception filters. However, the execution order of filter statements and <code>catch</code> blocks is different because IL2CPP uses C++ exceptions to implement managed exceptions. This isn’t noticeable unless a filter block writes to a field.</p>
+
+<p>On Mono the field write occurs at filter evaluation time, before entering the <code>catch</code> block, and in a defined order relative to other filters. On IL2CPP the field write might occur at a different time because the filter is simulated. This can lead to observable differences, such as:</p>
+
+<ul>
+<li>A field being updated earlier or later than expected relative to the <code>catch</code> or <code>finally</code> blocks.</li>
+<li>Different interleavings when multiple filters exist, potentially changing which updates are visible first.</li>
+<li>Rare cases where code relying on the filter’s side effects to gate behavior in the <code>catch</code> or <code>finally</code> sees stale or differently ordered values.</li>
+</ul>
+
+<p>Best practice is to avoid side effects in filters by moving any state changes into the <code>catch</code> block (or a helper function called from <code>catch</code>) to ensure consistent behavior across IL2CPP and Mono.</p>
+
+<h2>Serialization</h2>
+
+<p>AOT platforms might encounter issues with serialization and deserialization because of the use of reflection. If a type or method is only used via reflection as part of serialization or deserialization, the AOT compiler can’t detect that it needs to generate the code required for the type or method.</p>
+
+<p><a id="Generics" aria-hidden="true"></a></p>
+
+<h2>Generic types and methods</h2>
+
+<p>For generic types and methods, the compiler must determine which generic instances are used because different generic instances might require different code. For example, the code for <code>List&lt;int&gt;</code> is different than the code for <code>List&lt;double&gt;</code>. However, IL2CPP shares code for usages of reference types, so the same code is used for <code>List&lt;object&gt;</code> and <code>List&lt;string&gt;</code>.</p>
+
+<p>It’s possible to reference generic types and methods that IL2CPP did not find at compile time in the following cases:</p>
+
+<ol>
+<li>Creating a new generic instance at runtime: <code>Activator.CreateInstance(typeof(SomeGenericType&lt;&gt;).MakeGenericType(someType));</code>
+</li>
+<li>Invoking a static method on a generic instance: <code>typeof(SomeGenericType&lt;&gt;).MakeGenericType(someType).GetMethod(&quot;AMethod&quot;).Invoke(null, null);</code>
+</li>
+<li>Invoking a static generic method: <code>typeof(SomeType).GetMethod(&quot;GenericMethod&quot;).MakeGenericMethod(someType).Invoke(null, null);</code>
+</li>
+<li>Some calls to generic virtual functions that can’t be inferred at compile time.</li>
+<li>Calls with deeply nested generic value types, such as <code>Struct&lt;Struct&lt;Struct&lt;...&lt;Struct&lt;int&gt;&gt;&gt;&gt;</code>.</li>
+</ol>
+
+<p>To support those cases, IL2CPP generates generic code that works with any type parameter. However, this code is slower because it can’t determine a type’s size, or whether it’s a reference or value type. If you need to ensure that faster generic methods are generated, do the following:</p>
+
+<ul>
+<li>If the generic argument will always be a reference type, add the <code>where: class</code> constraint. IL2CPP then generates the fallback method using reference type sharing, which causes no performance degradation.</li>
+<li>If the generic argument will always be a value type, add the <code>where: struct</code> constraint. This enables some optimizations, but the code will still be slower because the value types can be different sizes.</li>
+<li>Create a method named <code>UsedOnlyForAOTCodeGeneration</code> and add references to the generic types and methods you want IL2CPP to generate. This method never needs to be called. The following example ensures that a specialization for <code>GenericType&lt;MyStruct&gt;</code> is generated:</li>
+</ul>
+
+<pre><code class="lang-cs">public void UsedOnlyForAOTCodeGeneration()
+{
+    // Ensure that IL2CPP will create code for MyGenericStruct
+    // using MyStruct as an argument.
+    new GenericType&lt;MyStruct&gt;();
+
+    // Ensure that IL2CPP will create code for SomeType.GenericMethod
+    // using MyStruct as an argument.
+    new SomeType().GenericMethod&lt;MyStruct&gt;();
+
+    public void OnMessage&lt;T&gt;(T value) 
+    {
+        Debug.LogFormat(&quot;Message value: {0}&quot;, value);
+    }
+
+    // Include an exception so we can be sure to know if this
+    // method is ever called.
+    throw new InvalidOperationException(
+        &quot;This method is used for AOT code generation only. &quot; +
+        &quot;Do not call it at runtime.&quot;);
+}
+</code></pre>
+
+<p>
+<strong>Note</strong>: To compile only the single, fully-sharable version of generic code, set the <strong>IL2CPP Code Generation</strong> <a href="class-PlayerSettings.html">Player setting</a> to <strong>Optimize for code size and build time</strong>. This reduces the number of methods generated, reducing compile time and build size, but comes at the expense of runtime performance.</p>
+
+<p><a id="Interop" aria-hidden="true"></a></p>
+
+<h2>Calling managed methods from native code</h2>
+
+<p>Managed methods that need to be marshaled to a C function pointer so that they can be called from native code have a few restrictions on AOT platforms:</p>
+
+<ul>
+<li>The managed method must be a static method.</li>
+<li>The managed method must have the <code>[MonoPInvokeCallback]</code> attribute.</li>
+<li>If the managed method is generic, you might need to use the <code>[MonoPInvokeCallback(Type)]</code> overload to specify the generic specializations that must be supported. If so, the type must be a generic instance with the correct number of generic arguments. It’s possible to have multiple <code>[MonoPInvokeCallback]</code> attributes on a method as follows:</li>
+</ul>
+
+<pre><code class="lang-cs">// Generates reverse P/Invoke wrappers for NameOf&lt;long&gt; and NameOf&lt;int&gt;
+// Note that the types are only used to indicate the generic arguments.
+[MonoPInvokeCallback(typeof(Action&lt;long&gt;))]
+[MonoPInvokeCallback(typeof(Action&lt;int&gt;))]
+private static string NameOfT&lt;T&gt;(T item) 
+{
+    return typeof(T).Name;
+}
+</code></pre>
+
+<h2>Unsupported .NET APIs</h2>
+
+<p>IL2CPP doesn’t support the following .NET APIs and features:</p>
+
+<ul>
+<li>Reflection of the <a href="https://learn.microsoft.com/en-us/dotnet/api/system.runtime.interopservices.marshalasattribute?view=net-9.0"><code>MarshalAs</code></a> and <a href="https://learn.microsoft.com/en-us/dotnet/api/system.runtime.interopservices.fieldoffsetattribute?view=net-9.0"><code>FieldOffset</code></a> attributes. It does support these attributes at compile time. You should use these for proper <a href="https://docs.microsoft.com/en-us/dotnet/framework/interop/marshaling-data-with-platform-invoke">platform invoke marshaling</a>.</li>
+<li>The C# <a href="https://learn.microsoft.com/en-us/dotnet/csharp/advanced-topics/interop/using-type-dynamic"><code>dynamic</code></a> keyword. This keyword requires JIT compilation, which is not possible with IL2CPP.</li>
+<li>The <a href="https://learn.microsoft.com/en-us/dotnet/api/system.runtime.interopservices.marshal.prelink?view=net-9.0"><code>Marshal.Prelink</code></a> or <a href="https://learn.microsoft.com/en-us/dotnet/api/system.runtime.interopservices.marshal.prelinkall?view=net-10.0"><code>Marshal.PrelinkAll</code></a> API methods.</li>
+<li>
+<a href="https://learn.microsoft.com/en-us/dotnet/api/system.diagnostics.process?view=net-9.0"><code>System.Diagnostics.Process</code></a> API methods.</li>
+</ul>
+
+<p>For cases where these are required on desktop platforms, use the <a href="scripting-backends-mono.html">Mono scripting back end</a>.</p>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="overview-of-dot-net-in-unity.html">Unity .NET features</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="linux-il2cpp-crosscompiler.html"></a></span><div class="tip">Linux IL2CPP cross-compiler</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="burst/script-compilation-burst.html"></a></span><div class="tip">Burst compilation</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

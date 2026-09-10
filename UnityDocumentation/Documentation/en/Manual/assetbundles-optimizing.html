@@ -1,0 +1,363 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Optimizing AssetBundle memory usage</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<meta property="relative-path-to-manual" content="">
+<meta property="version-switcher-versions-with-this-page" content="Versions with this page:">
+<meta property="version-switcher-versions-without-this-page" content="Versions without this page:">
+<meta property="version-switcher-supported" content="Supported">
+<meta property="version-switcher-legacy" content="Legacy">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/Manual/assetbundles-optimizing.html">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20260626"></script><script type="text/javascript" src="docdata/toc.js?ts=20260626"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20260626"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20260626">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20260626">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/assetbundles-optimizing.html">English</a></li>
+<li><a href="/cn/current/Manual/assetbundles-optimizing.html">中文</a></li>
+<li><a href="/ja/current/Manual/assetbundles-optimizing.html">日本語</a></li>
+<li><a href="/kr/current/Manual/assetbundles-optimizing.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: Unity 6.7 Beta</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/assetbundles-optimizing.html">English</a></li>
+<li><a href="/cn/current/Manual/assetbundles-optimizing.html">中文</a></li>
+<li><a href="/ja/current/Manual/assetbundles-optimizing.html">日本語</a></li>
+<li><a href="/kr/current/Manual/assetbundles-optimizing.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="assets-and-media.html">Assets and media</a></li>
+<li><a href="assets-managing-runtime.html">Managing assets at runtime</a></li>
+<li><a href="assetbundles-section.html">Use AssetBundles to load assets at runtime</a></li>
+<li>Optimizing AssetBundle memory usage</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="assetbundles-caching.html"></a></span><div class="tip">AssetBundle caching</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="assetbundles-analyze.html"></a></span><div class="tip">Analyzing AssetBundles</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Optimizing AssetBundle memory usage</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Loading AssetBundles can consume memory depending on <span class="tooltip" tabindex="0" ><strong>compression</strong><span class="tooltiptext">A method of storing data that reduces the amount of storage space it requires. See <a href="texture-choose-format-by-platform.html">Texture Compression</a>, <a href="class-AnimationClip.html#AssetProperties">Animation Compression</a>, <a href="class-AudioClip.html">Audio Compression</a>, <a href="ReducingFilesize.html">Build Compression</a>.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#compression" aria-label="Go to glossary anchor for compression">Glossary</a></span></span></span> formats and access patterns.</p>
+
+<p>When you load an AssetBundle, Unity allocates memory to both the assets contained in the AssetBundle and to its internal data. The main types of internal data for a loaded AssetBundle include:</p>
+
+<ul>
+<li>
+<strong>Loading cache</strong>: Stores recently accessed pages of an AssetBundle file. Use <a href="../ScriptReference/AssetBundle-memoryBudgetKB.html"><code>AssetBundle.memoryBudgetKB</code></a> to control its size.</li>
+<li>
+<strong><a href="#typetrees">TypeTrees</a></strong>: Defines the serialized layout of objects.</li>
+<li>
+<strong><a href="#table-of-contents">Table of contents</a></strong>: Lists the assets in an AssetBundle.</li>
+<li>
+<strong><a href="#preload-table">Preload table</a></strong>: Lists the dependencies of each asset.</li>
+</ul>
+
+<p><a id="typetrees" aria-hidden="true"></a></p>
+
+<h2>TypeTrees</h2>
+
+<p>A TypeTree is an internal Unity data structure that describes the structure of data within a serialized binary object. It acts as a schema for Unity objects from the serialization system’s perspective.</p>
+
+<p>Each serialized file in an AssetBundle contains a TypeTree for each object type in that file. You can use TypeTree information to deserialize files whose type definitions might have changed since serialization (for example, when fields are added, removed, or modified). </p>
+
+<p>When Unity loads an AssetBundle, it loads all TypeTrees and keeps them in memory for the AssetBundle’s lifetime. TypeTree memory overhead depends on the number of unique object types loaded from AssetBundles and their complexity. Each AssetBundle contains a complete set of TypeTrees for its objects. Unity shares identical TypeTrees between AssetBundles to reduce memory usage when multiple AssetBundles are loaded.</p>
+
+<h3>Reduce TypeTree memory</h3>
+
+<p>You can reduce the memory requirements of AssetBundle TypeTrees in the following ways:</p>
+
+<ul>
+<li>Disable TypeTrees. This excludes TypeTree information from an AssetBundle, and makes the AssetBundles smaller. However, without TypeTree information, when you load older AssetBundles with a newer version of Unity or make script changes in your project, you might get serialization errors or undefined behavior.</li>
+<li>Use simple data types to reduce TypeTree complexity.</li>
+</ul>
+
+<p>To test the impact that TypeTrees have on the size of AssetBundles, build them with and without TypeTrees disabled and compare their sizes. Use <a href="../ScriptReference/BuildAssetBundleOptions.DisableWriteTypeTree.html"><code>BuildAssetBundleOptions.DisableWriteTypeTree</code></a> to disable TypeTrees in an AssetBundle.</p>
+
+<p>
+<strong>Note:</strong> Some platforms require TypeTrees and ignore the <code>DisableWriteTypeTree</code> setting. Additionally, not all platforms support TypeTrees.</p>
+
+<p>If you disable or strip TypeTrees then consider the following:</p>
+
+<ul>
+<li>
+<strong>Compatibility</strong>: It is only safe to strip TypeTrees when you always rebuild AssetBundles along with a Player build to ensure type compatibility. This is common for AssetBundles distributed in the <code>StreamingAssets</code> folder.</li>
+<li>
+<strong>Editor Loading</strong>: An error is logged if you attempt to load AssetBundles without TypeTrees in Play mode. This is because Editor and Player types differ. For example, MonoBehaviours have extra fields in the Editor.</li>
+<li>
+<strong>Debugging</strong>: Unity provides limited tools to analyze compatibility without TypeTrees. The <code>TypeTreeHash</code> in the AssetBundle manifest can help, and the <code>binary2text</code> tool (with <code>-typeinfo</code> flag) exposes raw TypeTree details for comparison.</li>
+</ul>
+
+<p><a id="table-of-contents" aria-hidden="true"></a></p>
+
+<h2>Table of contents</h2>
+
+<p>The table of contents is a map in the AssetBundle that you can use to look up each explicitly included asset by name. The size of the table of contents data increases with the number of assets explicitly included in the AssetBundle, and the length of the string names used to map them. The <a href="../ScriptReference/AssetBundleBuild-addressableNames.html"><code>addressableNames</code></a> property represents the string name, and if not defined the asset path is used instead.</p>
+
+<p>To minimize the amount of memory dedicated to holding table of contents data, minimize the number of AssetBundles loaded at a given time.</p>
+
+<p>The methods <a href="../ScriptReference/AssetBundle.GetAllAssetNames.html"><code>GetAllAssetNames</code></a> and <a href="../ScriptReference/AssetBundle.GetAllScenePaths.html"><code>GetAllScenePaths</code></a> expose the table of contents map.</p>
+
+<p><a id="preload-table" aria-hidden="true"></a></p>
+
+<h2>Preload table</h2>
+
+<p>The preload table lists all objects that an asset depends on. When you load an asset from an AssetBundle, Unity uses this table to automatically load all required dependencies.</p>
+
+<p>Each asset has its own preload table. For example, a <span class="tooltip" tabindex="0" ><strong>prefab</strong><span class="tooltiptext">An asset type that allows you to store a GameObject complete with components and properties. The prefab acts as a template from which you can create new object instances in the scene. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Prefabs.html" href="Prefabs.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#prefab" aria-label="Go to glossary anchor for prefab">Glossary</a></span></span></span>’s preload table includes entries for all components attached to the prefab, referenced materials and textures, and any other assets the prefab uses.</p>
+
+<p>Each preload entry uses 64 bits of memory and can reference objects in other AssetBundles.</p>
+
+<p>When an asset references another asset that in turn references other assets, the preload table can become large because it contains duplicate entries where the assets share dependencies. If two assets both reference a third asset, then the preload tables of both assets contain entries to load the third asset.</p>
+
+<p>Preload tables can contain duplicate entries where assets share dependencies. When an asset references another asset that in turn references other assets, Unity stores this information in each asset’s preload table. This can impact on memory usage. </p>
+
+<p>You can reduce the impact of large preload tables in the following ways:</p>
+
+<ul>
+<li>
+<strong>Projects that only use AssetBundles</strong>: Explicitly add any frequently-referenced asset that has many objects to an AssetBundle, so the preload information of that asset is shared.</li>
+<li>
+<strong>Projects that use Addressables, or the Scriptable Build Pipeline</strong>: Avoid direct or indirect references from explicitly included assets to large hierarchies of objects.</li>
+</ul>
+
+<h2>Temporary in-memory AssetBundles</h2>
+
+<p>Unity manages memory efficiently, but temporary in-memory AssetBundles are created in the following scenarios:</p>
+
+<ul>
+<li>LZMA-compressed AssetBundles loaded via <code>AssetBundle.LoadFromFile</code>, <code>LoadFromMemory</code>, or <code>LoadFromStream</code> APIs.</li>
+<li>AssetBundles that don’t use caching and are downloaded without a version or hash argument.</li>
+<li>AssetBundles downloaded via <code>UnityWebRequestAssetBundle</code> on platforms without AssetBundle caching such as Web.</li>
+</ul>
+
+<p>Temporary files exist until reads complete and <code>AssetBundle.Unload</code> is called. These in-memory copies can significantly increase RAM usage and load times.</p>
+
+<h3>Caching considerations</h3>
+
+<ul>
+<li>
+<strong>LZ4 Default</strong>: When <code>Caching.compressionEnabled</code> is <code>true</code> (the default), downloaded AssetBundles are recompressed to LZ4 and stored in the cache. This conversion generally improves loading performance.</li>
+<li>
+<strong>Uncompressed</strong>: When <code>Caching.compressionEnabled</code> is <code>false</code>, temporary AssetBundles are stored uncompressed, potentially increasing RAM usage if the original AssetBundle was compressed.</li>
+</ul>
+
+<h2>CRC checks and performance</h2>
+
+<p>
+<a href="AssetBundles-Integrity.html">CRC checks</a> for LZ4 files can affect load times because the entire file needs to be decompressed. This uses minimal memory because Unity decompresses each chunk individually instead of the entire file at once.</p>
+
+<p>CRC checks for LZMA files incur no additional overhead, because full decompression is inherent. For more information, refer to <a href="AssetBundles-Integrity.html">Downloading AssetBundles</a>. </p>
+
+<p>It’s recommended to perform CRC checks only once, at download time, rather than at every AssetBundle load, especially on platforms with weak CPUs.</p>
+
+<h2>Detailed memory usage</h2>
+
+<p>Beyond temporary in-memory AssetBundles, other structures consume memory:</p>
+
+<ul>
+<li>
+<strong>LZ4 and uncompressed AssetBundles</strong>: When an LZ4-based AssetBundle is open, chunks are decompressed on demand. A small cache (<code>ArchiveStorageReader.m_CachedBlocks</code>) helps manage sequential reads. For uncompressed AssetBundles, this cache might still be used.</li>
+<li>
+<strong>Persistent manager <code>SerializedFile</code> cache</strong>: The <code>PersistentManager</code> uses a shared cache (<code>PooledFileCacherManager</code>) for pages of data read from <code>SerializedFiles</code> within AssetBundles. Its default size is 1MB.</li>
+<li>
+<strong>Archive and AssetBundle metadata</strong>: Additional data structures for mounted Unity archives and AssetBundles that consume small amounts of memory such the <code>AssetBundle</code> object that contains the table of contents, and the <code>PreloadData</code> object.</li>
+<li>
+<strong><code>PersistentManager.Remapper</code></strong>: Tracks relationships between instance IDs and source files. Can use noticeable memory for AssetBundles containing very large Prefabs (object hierarchies) as it never reduces in size once allocated. Objects in <span class="tooltip" tabindex="0" ><strong>scenes</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html" href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span> are not tracked here.</li>
+<li>
+<strong>Instantiated objects</strong>: Once assets and scenes are loaded from AssetBundles, the instantiated Unity objects themselves will consume memory.</li>
+</ul>
+
+<p><a id="when-unity-loads-entire-assetbundles-into-memory" aria-hidden="true"></a></p>
+
+<h2>When Unity loads the entire AssetBundle into memory</h2>
+
+<p>The following information summarizes the use of in-memory files and format conversions when loading AssetBundles of different formats using available APIs. This directly impacts runtime memory consumption.</p>
+
+<h3>File-based Loading APIs</h3>
+
+<ul>
+<li>
+<strong>AssetBundle.LoadFromFile, LoadFromFileAsync</strong>
+
+<ul>
+<li>LZMA compression: Convert to LZ4 and open in-memory file.</li>
+<li>LZ4 compression, and uncompressed: Read content directly from file.</li>
+</ul>
+</li>
+<li>
+<strong>AssetBundle.LoadFromMemory, LoadFromMemoryAsync</strong>
+
+<ul>
+<li>LZMA compression, and uncompressed: Convert to LZ4 and open in-memory file.</li>
+<li>LZ4 compression: Read content directly from memory.</li>
+</ul>
+</li>
+<li>
+<strong>AssetBundle.LoadFromStream, LoadFromStreamAsync</strong>
+
+<ul>
+<li>LZMA compression: Convert to LZ4 and open in-memory file</li>
+<li>LZ4 compression, and uncompressed: Read content directly from file stream.</li>
+</ul>
+</li>
+</ul>
+
+<h3>Web-based Loading APIs</h3>
+
+<ul>
+<li>
+<strong>UnityWebRequestAssetBundle.GetAssetBundle (Empty Cache, <code>Caching.compressionEnabled = true</code>)</strong>
+
+<ul>
+<li>LZMA compression: Download and stream to cache file (converting LZMA to LZ4), then load from cache</li>
+<li>LZ4 compression: Download and stream to cache file (no conversion), then load from cache</li>
+<li>Uncompressed: Download and stream to cache file (converting to LZ4), then load from cache</li>
+</ul>
+</li>
+<li>
+<strong>UnityWebRequestAssetBundle.GetAssetBundle (Cached, <code>Caching.compressionEnabled = true</code>)</strong>
+
+<ul>
+<li>All compression formats: Read content directly from cached LZ4 file</li>
+</ul>
+</li>
+<li>
+<strong>UnityWebRequestAssetBundle.GetAssetBundle (No Caching)</strong>
+
+<ul>
+<li>LZMA compression: Download, convert to LZ4, and open in-memory file</li>
+<li>LZ4 compression and uncompressed: Download and stream to memory-based temp file (no conversion)</li>
+</ul>
+</li>
+</ul>
+
+<p>
+<strong>Note</strong>: Converting and opening in-memory files involves opening the source, checking its format, converting it to LZ4 (or uncompressed if <code>Caching.compressionEnabled</code> is <code>false</code>) as an in-memory archive file, opening this in-memory file, and finally deleting it when unloaded and no more readers exist. This process can be an inefficient use of memory and loading time.</p>
+
+<h2>Reducing runtime memory usage in AssetBundles with many assets</h2>
+
+<p>When loading assets, Unity supports loading by full project-relative path, file name, or file name without extension. The latter two options are implemented by building extra string tables. In AssetBundles with many loadable assets, these extra string tables can consume noticeable memory.</p>
+
+<p>To reduce this overhead, it’s best practice to always load assets using their exact key (project-relative path or Addressables name) and disable the extra matching capabilities at build time:</p>
+
+<ul>
+<li><a href="../ScriptReference/BuildAssetBundleOptions.DisableLoadAssetByFileName.html"><code>BuildAssetBundleOptions.DisableLoadAssetByFileName</code></a></li>
+<li><a href="../ScriptReference/BuildAssetBundleOptions.DisableLoadAssetByFileNameWithExtension.html"><code>BuildAssetBundleOptions.DisableLoadAssetByFileNameWithExtension</code></a></li>
+</ul>
+
+<p>Refer to the documentation for the <code>name</code> parameter in <a href="../ScriptReference/AssetBundle.LoadAssetAsync.html"><code>AssetBundle.LoadAssetAsync</code></a> for more information.</p>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="AssetBundles-Dependencies.html">Handling dependencies between AssetBundles</a></li>
+<li><a href="AssetBundles-Native.html">Loading assets from AssetBundles</a></li>
+<li><a href="assetbundles-analyze.html">Analyzing AssetBundles</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="assetbundles-caching.html"></a></span><div class="tip">AssetBundle caching</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="assetbundles-analyze.html"></a></span><div class="tip">Analyzing AssetBundles</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

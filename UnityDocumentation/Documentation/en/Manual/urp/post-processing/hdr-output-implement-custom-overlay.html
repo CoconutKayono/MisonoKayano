@@ -1,0 +1,946 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Implement an HDR Output compatible custom overlay in URP</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<meta property="relative-path-to-manual" content="../../">
+<meta property="version-switcher-versions-with-this-page" content="Versions with this page:">
+<meta property="version-switcher-versions-without-this-page" content="Versions without this page:">
+<meta property="version-switcher-supported" content="Supported">
+<meta property="version-switcher-legacy" content="Legacy">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../../../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../../../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../../../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../../../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../../../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../../../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../../../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/Manual/urp/post-processing/hdr-output-implement-custom-overlay.html">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../../../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../../../StaticFilesManual/js/jquery.js?ts=20260626"></script><script type="text/javascript" src="../../../StaticFilesManual/js/core.js?ts=20260626"></script><script type="text/javascript" src="../../../StaticFilesManual/js/image-comp.js?ts=20260626"></script><script type="text/javascript" src="../../docdata/toc.js?ts=20260626"></script><script type="text/javascript" src="../../docdata/global_toc.js?ts=20260626"></script><link rel="stylesheet" type="text/css" href="../../../StaticFilesManual/css/core.css?ts=20260626">
+<link rel="stylesheet" type="text/css" href="../../../StaticFilesManual/css/icons.css?ts=20260626">
+<link rel="stylesheet" href="../../../StaticFilesManual/css/prism.css">
+<script src="../../../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../../../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../../../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../../../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="../../30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../../index.html" class="selected">Manual</a></li>
+<li><a href="../../../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/urp/post-processing/hdr-output-implement-custom-overlay.html">English</a></li>
+<li><a href="/cn/current/Manual/urp/post-processing/hdr-output-implement-custom-overlay.html">中文</a></li>
+<li><a href="/ja/current/Manual/urp/post-processing/hdr-output-implement-custom-overlay.html">日本語</a></li>
+<li><a href="/kr/current/Manual/urp/post-processing/hdr-output-implement-custom-overlay.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: Unity 6.7 Beta</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/urp/post-processing/hdr-output-implement-custom-overlay.html">English</a></li>
+<li><a href="/cn/current/Manual/urp/post-processing/hdr-output-implement-custom-overlay.html">中文</a></li>
+<li><a href="/ja/current/Manual/urp/post-processing/hdr-output-implement-custom-overlay.html">日本語</a></li>
+<li><a href="/kr/current/Manual/urp/post-processing/hdr-output-implement-custom-overlay.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="../../materials-and-shaders.html">Materials and shaders</a></li>
+<li><a href="../../graphics-color.html">Color and High Dynamic Range (HDR)</a></li>
+<li><a href="../../hdr-landing.html">High dynamic range (HDR)</a></li>
+<li><a href="../../urp/post-processing/hdr-in-urp.html">HDR</a></li>
+<li>Implement an HDR Output compatible custom overlay in URP</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="../../urp/post-processing/enable-hdr-output-urp.html"></a></span><div class="tip">Enable HDR Output in URP</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="../../urp/post-processing/troubleshoot-hdr-custom-pass.html"></a></span><div class="tip">Troubleshooting Scriptable Render Passes with HDR Output in URP</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Implement an HDR Output compatible custom overlay in URP</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>This page demonstrates how to create a Scriptable Renderer Feature that does the following:</p>
+
+<ul>
+<li>Composites the output of one <span class="tooltip" tabindex="0" ><strong>camera</strong><span class="tooltiptext">A component which creates an image of a particular viewpoint in your scene. The output is either drawn to the screen or captured as a texture. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CamerasOverview.html" href="../../CamerasOverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../../Glossary.html#Camera" aria-label="Go to glossary anchor for Camera">Glossary</a></span></span></span> onto another camera.</li>
+<li>Applies <span class="tooltip" tabindex="0" ><strong>tonemapping</strong><span class="tooltiptext">The process of remapping HDR values of an image into a range suitable to be displayed on screen. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about PostProcessingOverview.html" href="../../PostProcessingOverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../../Glossary.html#tonemapping" aria-label="Go to glossary anchor for tonemapping">Glossary</a></span></span></span> to make the custom overlay consistent with the effects of <span class="tooltip" tabindex="0" ><strong>HDR</strong><span class="tooltiptext">high dynamic range<br/><span class="tooltipGlossaryLink">See in <a href="../../Glossary.html#HDR" aria-label="Go to glossary anchor for HDR">Glossary</a></span></span></span> output.</li>
+</ul>
+
+<p>This includes the <span class="tooltip" tabindex="0" ><strong>shader</strong><span class="tooltiptext">A program that runs on the GPU. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Shaders.html" href="../../Shaders.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../../Glossary.html#shader" aria-label="Go to glossary anchor for shader">Glossary</a></span></span></span> that applies tonemapping to the overlay, depending on frame order.</p>
+
+<p>Refer to <a href="../renderer-features/scriptable-renderer-features/intro-to-scriptable-renderer-features">Introduction to Scriptable Renderer Features</a> and <a href="../renderer-features/intro-to-scriptable-render-passes.html">Introduction to Scriptable Render Passes</a> for more information.</p>
+
+<p>This example is split into the following sections:</p>
+
+<ul>
+<li><a href="#prerequisites">Prerequisites</a></li>
+<li><a href="#set-up-the-scene">Set up the scene</a></li>
+<li><a href="#create-the-custom-overlay-render-pass">Create the custom overlay Render Pass</a></li>
+<li><a href="#implement-the-recordrendergraph-method">Implement the RecordRenderGraph method</a></li>
+<li><a href="#create-the-custom-overlay-scriptable-renderer-feature">Create the custom overlay Renderer Feature</a></li>
+<li><a href="#create-the-custom-overlay-shader">Create the custom overlay shader</a></li>
+<li><a href="#finish-the-custom-overlay">Finish the custom overlay</a></li>
+<li><a href="#complete-code-samples">Complete code samples</a></li>
+<li><a href="#custom-overlay-render-pass-code">Custom overlay Render Pass code</a></li>
+<li><a href="#custom-overlay-scriptable-renderer-feature-code">Custom overlay Renderer Feature code</a></li>
+<li><a href="#custom-overlay-shader-code">Custom overlay shader code</a></li>
+</ul>
+
+<p><a name="prerequisites" aria-hidden="true"></a></p>
+
+<h2>Prerequisites</h2>
+
+<p>This example assumes the following:</p>
+
+<ul>
+<li>The Unity project uses URP as the active <span class="tooltip" tabindex="0" ><strong>render pipeline</strong><span class="tooltiptext">A series of operations that take the contents of a Scene, and displays them on a screen. Unity lets you choose from pre-built render pipelines, or write your own. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about render-pipelines.html" href="../../render-pipelines.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../../Glossary.html#renderpipeline" aria-label="Go to glossary anchor for renderpipeline">Glossary</a></span></span></span>.</li>
+<li>The project is set up for HDR rendering with the following settings:</li>
+<li>The active URP Asset has <strong>Grading Mode</strong> set to <strong>High Dynamic Range</strong>.</li>
+<li>The active URP Asset has <strong>HDR</strong> enabled.</li>
+<li>The <span class="tooltip" tabindex="0" ><strong>Project Settings</strong><span class="tooltiptext">A broad collection of settings which allow you to configure how Physics, Audio, Networking, Graphics, Input and many other areas of your project behave. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about comp-ManagerGroup.html" href="../../comp-ManagerGroup.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../../Glossary.html#ProjectSettings" aria-label="Go to glossary anchor for ProjectSettings">Glossary</a></span></span></span> have <strong>HDR Output</strong> enabled.</li>
+</ul>
+
+<p><a name="set-up-the-scene" aria-hidden="true"></a></p>
+
+<h2>Set up the scene</h2>
+
+<p>For the example to work correctly, you must first set up a sample <span class="tooltip" tabindex="0" ><strong>scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html" href="../../CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../../Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span> as shown in the following instructions.</p>
+
+<ol>
+<li><p>Create a Cube <span class="tooltip" tabindex="0" ><strong>GameObject</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-GameObject.html" href="../../class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../../Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span> and set its position to the origin point in the scene (X: 0, Y: 0, Z: 0).</p></li>
+<li><p>Align the <code>Main Camera</code> so that the cube is clearly visible.</p></li>
+<li><p>Create a new camera and call it <strong>Overlay Camera</strong>.</p></li>
+<li><p>Position the overlay camera to the right of the <code>Main Camera</code> and align it so the cube is clearly visible.</p></li>
+<li><p>Set the overlay camera <strong>Background Type</strong> property to <strong>Solid Color</strong> in the <span class="tooltip" tabindex="0" ><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheInspector.html" href="../../UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../../Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span> window.</p></li>
+<li><p>Set the color of the overlay camera background to a clear black with the RGBA values of <code>0, 0, 0, 0</code>.</p></li>
+<li>
+<p>Create a render texture and call it <strong>OverlayRenderTexture</strong>. To create a render texture, go to <strong>Assets</strong> &gt; <strong>Create</strong> &gt; <strong>Rendering</strong> &gt; <strong>Render Texture</strong>.</p>
+
+<blockquote>
+<p>
+<strong>Note</strong>: For better HDR precision, use a signed float format for the render texture format. To do this, select the render texture, then in the Inspector window change <strong>Color Format</strong> to a format with the <code>_SFLOAT</code> suffix.</p>
+</blockquote>
+</li>
+<li><p>Assign the overlay render texture to the overlay camera’s <strong>Output Texture</strong> property. To do this, open the <code>Overlay Camera</code> in the Inspector and go to <strong>Output</strong> &gt; <strong>Output Texture</strong> and select <strong>OverlayRenderTexture</strong> from the asset list.</p></li>
+<li><p>Create a new Universal Renderer asset for the overlay camera and call it <strong>OverlayRenderer</strong>. To do this, go to <strong>Assets</strong> &gt; <strong>Create</strong> &gt; <strong>Rendering</strong> &gt; <strong>URP Universal Renderer</strong>.</p></li>
+<li><p>Select the active URP Asset, then in the Inspector window go to <strong>Rendering</strong> &gt; <strong>Renderer List</strong> &gt; <strong>+</strong>. Select <strong>OverlayRenderer</strong>. This adds the overlay renderer to the renderer list.</p></li>
+<li><p>Select the overlay camera, then in the Inspector window go to <strong>Rendering</strong> &gt; <strong>Renderer</strong>. Select <strong>OverlayRenderer</strong>. This sets the overlay camera to use the overlay renderer.</p></li>
+</ol>
+
+<p>The scene is now ready for you to create a custom overlay with Scriptable Renderer Features.</p>
+
+<p><a name="create-the-custom-overlay-render-pass" aria-hidden="true"></a></p>
+
+<h2>Create the custom overlay Render Pass</h2>
+
+<p>To create a custom overlay that’s compatible with HDR Output, you must use a Scriptable Render Pass to create the overlay. HDR Output applies tonemapping to the output of the main camera during <span class="tooltip" tabindex="0" ><strong>post-processing</strong><span class="tooltiptext">A process that improves product visuals by applying filters and effects before the image appears on screen. You can use post-processing effects to simulate physical camera and film properties, for example Bloom and Depth of Field. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about PostProcessingOverview.html" href="../../PostProcessingOverview.html">More info</a> <span class="search-words">post processing, postprocessing, postprocess</span><br/><span class="tooltipGlossaryLink">See in <a href="../../Glossary.html#post-processing" aria-label="Go to glossary anchor for post-processing">Glossary</a></span></span></span>. As a result of this, the output of the main camera and the overlay camera have different tonemapping. This render pass then occurs after post-processing to apply tonemapping to the output of the overlay camera.</p>
+
+<p>To create the render pass for this example, use the following steps:</p>
+
+<ol>
+<li><p>Create a C# script and call it <code>CustomOverlayRenderPass</code>.</p></li>
+<li><p>In the script, remove the code that Unity inserted in the <code>CustomOverlayRenderPass</code> class.</p></li>
+<li>
+<p>Add the following <code>using</code> directives.</p>
+
+<pre><code class="lang-cs">using UnityEngine;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
+using UnityEngine.Rendering.RenderGraphModule;
+</code></pre>
+</li>
+<li>
+<p>Create a new <code>CustomOverlayRenderPass</code> class that inherits from the <code>ScriptableRenderPass</code> class and has the attribute <code>[SupportedOnRenderer(typeof(UniversalRendererData) --&gt;</code>.</p>
+
+<pre><code class="lang-cs">[SupportedOnRenderer(typeof(UniversalRendererData))] --&gt;
+public class CustomOverlayRenderPass : ScriptableRenderPass
+{
+  
+}
+</code></pre>
+</li>
+<li>
+<p>Add the properties <code>Material passMaterial</code> and <code>RTHandle passOverlayTexture</code> to the render pass, as shown below.</p>
+
+<pre><code class="lang-cs">[SupportedOnRenderer(typeof(UniversalRendererData))] --&gt;
+public class CustomOverlayRenderPass : ScriptableRenderPass
+{
+    Material passMaterial;
+    RTHandle overlayTextureHandle;
+}
+</code></pre>
+</li>
+<li>
+<p>Create a constructor method that takes a material as a parameter and assigns it to <code>passMaterial</code>. This method also creates the profiling sampler for the render pass and sets it to run at the <code>AfterRenderingPostProcessing</code> event.</p>
+
+<pre><code class="lang-cs">public CustomOverlayRenderPass(Material material)
+{
+    passMaterial = material;
+    profilingSampler = new ProfilingSampler(nameof(CustomOverlayRenderPass));
+
+    renderPassEvent = RenderPassEvent.AfterRenderingPostProcessing;
+}
+</code></pre>
+</li>
+<li>
+<p>Add a <code>Setup</code> method for the render pass. Use this method and parameter to create an <code>RTHandle</code> from the overlay texture as shown below. The use of an <code>RTHandle</code> allows the <code>RenderPass</code> API to interact with the overlay <span class="tooltip" tabindex="0" ><strong>render texture</strong><span class="tooltiptext">A special type of Texture that is created and updated at runtime. To use them, first create a new Render Texture and designate one of your Cameras to render into it. Then you can use the Render Texture in a Material just like a regular Texture. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-RenderTexture.html" href="../../class-RenderTexture.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../../Glossary.html#RenderTexture" aria-label="Go to glossary anchor for RenderTexture">Glossary</a></span></span></span>.</p>
+
+<pre><code class="lang-cs">public void Setup(Texture overlayTex)
+{
+    if (overlayTextureHandle != overlayTex)
+    {
+        overlayTextureHandle?.Release();
+        overlayTextureHandle = RTHandles.Alloc(overlayTex);
+    }
+}
+</code></pre>
+</li>
+<li>
+<p>Implement the <code>Dispose</code> method to release the overlay texture when the render pass is destroyed.</p>
+
+<pre><code class="lang-cs">public void Dispose()
+{
+    overlayTextureHandle?.Release();
+}
+</code></pre>
+</li>
+<li>
+<p>Create two structs, one named <code>CopyData</code>, and another named <code>PassData</code>, which contain the properties shown below. These structs hold key properties URP needs to implement the render pass.</p>
+
+<pre><code class="lang-cs">struct CopyData
+{
+    public TextureHandle source;
+}
+
+struct PassData
+{
+    public TextureHandle source;
+    public TextureHandle overlayTexture;
+    public TextureHandle internalLut;
+    public Vector4 lutParams;
+    public Material material;
+}
+</code></pre>
+</li>
+<li>
+<p>Add the <code>RecordRenderGraph</code> method as shown below.</p>
+
+<pre><code class="lang-cs">public override void RecordRenderGraph(RenderGraph renderGraph, ContextContainer frameData)
+{
+
+}
+</code></pre>
+</li>
+</ol>
+
+<p><a name="implement-the-recordrendergraph-method" aria-hidden="true"></a></p>
+
+<h3>Implement the RecordRenderGraph method</h3>
+
+<p>Add the code from the following steps within the <code>RecordRenderGraph</code> method of the <code>CustomOverlayRenderPass</code> class.</p>
+
+<ol>
+<li>
+<p>Get the post-processing, resource, and camera data from the frame data.</p>
+
+<pre><code class="lang-cs">UniversalPostProcessingData postProcessingData = frameData.Get&lt;UniversalPostProcessingData&gt;();
+UniversalResourceData resourceData = frameData.Get&lt;UniversalResourceData&gt;();
+UniversalCameraData cameraData = frameData.Get&lt;UniversalCameraData&gt;();
+</code></pre>
+</li>
+<li>
+<p>Get the active color texture from the resource data.</p>
+
+<pre><code class="lang-cs">TextureHandle activeCameraColor = resourceData.activeColorTexture;
+</code></pre>
+</li>
+<li>
+<p>Create a texture to store the active camera color target.</p>
+
+<pre><code class="lang-cs">RenderTextureDescriptor colorCopyDescriptor = cameraData.cameraTargetDescriptor;
+colorCopyDescriptor.depthBufferBits = (int) DepthBits.None;
+TextureHandle copiedColor = UniversalRenderer.CreateRenderGraphTexture(renderGraph, colorCopyDescriptor, &quot;_CustomCameraColorCopy&quot;, false);
+</code></pre>
+</li>
+<li>
+<p>Create a <code>RasterRenderPass</code> to copy the active camera color target into the texture. The copy will be used to handle blending.</p>
+
+<pre><code class="lang-cs">using (var builder = renderGraph.AddRasterRenderPass&lt;CopyData&gt;(&quot;Custom Overlay Render Pass - Copy Camera&quot;, out var passData))
+{
+    passData.source = activeCameraColor;
+    builder.UseTexture(passData.source, AccessFlags.Read);
+    builder.SetRenderAttachment(copiedColor, 0, AccessFlags.WriteAll);
+
+    builder.SetRenderFunc((CopyData data, RasterGraphContext context) =&gt;
+    {
+        Blitter.BlitTexture(context.cmd, data.source, new Vector4(1, 1, 0, 0), 0.0f, false);
+    });
+}
+</code></pre>
+</li>
+<li>
+<p>Create another <code>RasterRenderPass</code> to copy the overlay texture to the active camera color target with a custom material. This is the container for the rest of the code you add in this section of the guide.</p>
+
+<pre><code class="lang-cs">using (var builder = renderGraph.AddRasterRenderPass&lt;PassData&gt;(&quot;Custom Overlay Render Pass - Blit Overlay&quot;, out var passData))
+{
+    
+}
+</code></pre>
+</li>
+<li>
+<p>Set up the properties the render pass needs to <span class="tooltip" tabindex="0" ><strong>blit</strong><span class="tooltiptext">A shorthand term for “bit block transfer”. A blit operation is the process of transferring blocks of data from one place in memory to another.<br/><span class="tooltipGlossaryLink">See in <a href="../../Glossary.html#blit" aria-label="Go to glossary anchor for blit">Glossary</a></span></span></span> the overlay texture, as shown below.</p>
+
+<pre><code class="lang-cs">using (var builder = renderGraph.AddRasterRenderPass&lt;PassData&gt;(&quot;Custom Overlay Render Pass - Blit Overlay&quot;, out var passData))
+{
+    passData.material = passMaterial;
+
+    builder.SetRenderAttachment(activeCameraColor, 0, AccessFlags.Write);
+
+    passData.source = copiedColor;
+    builder.UseTexture(passData.source, AccessFlags.Read);
+}
+</code></pre>
+</li>
+<li>
+<p>Import the texture into the render graph system, then set the texture as an input.</p>
+
+<pre><code class="lang-cs">passData.overlayTexture = renderGraph.ImportTexture(passOverlayTexture);
+builder.UseTexture(passData.overlayTexture, AccessFlags.Read);
+</code></pre>
+</li>
+<li>
+<p>Check for post-processing and HDR color grading. If the configuration is correct for HDR Output, set the internal color LUT texture HDR uses as an input, and pass its parameters to the shader.</p>
+
+<pre><code class="lang-cs">if (postProcessingData.gradingMode == ColorGradingMode.HighDynamicRange &amp;&amp; cameraData.postProcessEnabled)
+{
+    passData.internalLut = resourceData.internalColorLut;
+    builder.UseTexture(passData.internalLut, AccessFlags.Read);
+
+    int lutHeight = postProcessingData.lutSize;
+    int lutWidth = lutHeight * lutHeight;
+
+    float postExposure = 1.0f;
+    ColorAdjustments colorAdjustments = VolumeManager.instance.stack.GetComponent&lt;ColorAdjustments&gt;();
+    if (colorAdjustments != null)
+    {
+        postExposure = Mathf.Pow(2.0f, colorAdjustments.postExposure.value);
+    }
+
+    passData.lutParams = new Vector4(1f / lutWidth, 1f / lutHeight, lutHeight - 1f, postExposure);
+}
+</code></pre>
+
+<blockquote>
+<p>
+<strong>Note</strong>: If post processing is disabled, the HDR color conversion will be applied after this render pass and the expected colorspace for the cameras output is the default Rec709. The code in this example uses an <code>if</code> statement here to prevent this render pass from altering the output of the overlay camera before HDR is applied.</p>
+</blockquote>
+</li>
+<li>
+<p>Set a keyword on the shader to enable tonemapping, and add a command to blit the overlay texture to the active camera color target.</p>
+
+<pre><code class="lang-cs">builder.SetRenderFunc(static (PassData data, RasterGraphContext context) =&gt;
+{
+    data.material.SetTexture(&quot;_OverlayTexture&quot;, data.overlayTexture);
+
+    bool tonemappingActive = data.internalLut.IsValid();
+    CoreUtils.SetKeyword(data.material, &quot;TONEMAPPING&quot;, tonemappingActive);
+    if (tonemappingActive)
+    {
+        data.material.SetTexture(&quot;_InternalLut&quot;, data.internalLut);
+        data.material.SetVector(&quot;_InternalLut_Params&quot;, data.lutParams);
+    }
+        
+    Blitter.BlitTexture(context.cmd, data.source, new Vector4(1, 1, 0, 0), data.material, 0);
+});
+</code></pre>
+</li>
+</ol>
+
+<p>This completes the <code>CustomOverlayRenderPass</code> script, ready for a Scriptable Renderer Feature to add it to a renderer.</p>
+
+<p>For the complete code for this section, refer to <a href="#custom-overlay-render-pass-code">Custom overlay Render Pass code</a>.</p>
+
+<p><a name="create-the-custom-overlay-scriptable-renderer-feature" aria-hidden="true"></a></p>
+
+<h2>Create the custom overlay Scriptable Renderer Feature</h2>
+
+<p>To add the <code>CustomOverlayRenderPass</code> to a renderer, you must create a Scriptable Renderer Feature with the following steps.</p>
+
+<ol>
+<li><p>Create a C# script and call it <code>CustomOverlayRendererFeature</code>.</p></li>
+<li><p>In the script, remove the code that Unity inserted in the <code>CustomOverlayRendererFeature</code> class.</p></li>
+<li>
+<p>Add the following <code>using</code> directives.</p>
+
+<pre><code class="lang-cs">using UnityEngine;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
+</code></pre>
+</li>
+<li>
+<p>Set up a new <code>CustomOverlayRendererFeature</code> class that inherits from the <code>ScriptableRendererFeature</code> class.</p>
+
+<pre><code class="lang-cs">public class CustomOverlayRendererFeature : ScriptableRendererFeature
+{
+  
+}
+</code></pre>
+</li>
+<li>
+<p>Add the following properties to contain the assets and data the render pass needs.</p>
+
+<pre><code class="lang-cs">public class CustomOverlayRendererFeature : ScriptableRendererFeature
+{
+    public Shader hdrShader;
+    public RenderTexture passOverlayTexture;
+
+    Material passMaterial;
+
+    CustomOverlayRenderPass overlayRenderPass = null;
+}
+</code></pre>
+</li>
+<li>
+<p>Create the <code>AddRenderPasses</code> method, and use it to apply the overlay only in Game view and to the last camera in the camera stack.</p>
+
+<pre><code class="lang-cs">public override void AddRenderPasses(ScriptableRenderer renderer, ref RenderingData renderingData)
+{
+    if (renderingData.cameraData.cameraType != CameraType.Game || !renderingData.cameraData.resolveFinalTarget)
+        return;
+}
+</code></pre>
+</li>
+<li>
+<p>After the <code>if</code> statement, pass the overlay texture to the overlay render pass and enqueue the render pass.</p>
+
+<pre><code class="lang-cs">public override void AddRenderPasses(ScriptableRenderer renderer, ref RenderingData renderingData)
+{
+    if (renderingData.cameraData.cameraType != CameraType.Game || !renderingData.cameraData.resolveFinalTarget)
+        return;
+
+    overlayRenderPass.Setup(passOverlayTexture);
+
+    renderer.EnqueuePass(overlayRenderPass);
+}
+</code></pre>
+</li>
+<li>
+<p>Add the <code>Create</code> method and create an instance of the <code>CustomOverlayRenderPass</code> with a new material that uses <code>hdrShader</code>.</p>
+
+<pre><code class="lang-cs">public override void Create()
+{
+    passMaterial = CoreUtils.CreateEngineMaterial(hdrShader);
+
+    overlayRenderPass = new CustomOverlayRenderPass(passMaterial);
+}
+</code></pre>
+</li>
+<li>
+<p>Implement the <code>Dispose</code> method to release the resources the renderer feature creates once it has applied the render pass.</p>
+
+<pre><code class="lang-cs">protected override void Dispose(bool disposing)
+{
+    CoreUtils.Destroy(passMaterial);
+    overlayRenderPass.Dispose();
+}
+</code></pre>
+</li>
+</ol>
+
+<p>For the complete code for this section, refer to <a href="#custom-overlay-scriptable-renderer-feature-code">Custom overlay Scriptable Renderer Feature code</a>.</p>
+
+<p><a name="create-the-custom-overlay-shader" aria-hidden="true"></a></p>
+
+<h2>Create the custom overlay shader</h2>
+
+<p>The material the <code>CustomOverlayRendererFeature</code> creates requires a custom shader to handle the overlay and HDR Output changes. The following steps demonstrate how to create a shader capable of this.</p>
+
+<ol>
+<li><p>Create a new shader and name it <code>CustomOverlayBlit</code>.</p></li>
+<li>
+<p>Delete the shader code Unity generates automatically and set up the outline of the shader as shown below.</p>
+
+<pre><code class="lang-cpp">Shader &quot;Custom/CustomOverlayBlit&quot;
+{
+    SubShader
+    {
+        Tags{ &quot;RenderPipeline&quot; = &quot;UniversalPipeline&quot; }
+
+        Pass
+        {
+            ZWrite Off ZTest Always Blend Off Cull Off
+
+            HLSLPROGRAM
+                #pragma target 2.0
+                #pragma editor_sync_compilation
+                #pragma vertex Vert
+                #pragma fragment Frag
+                #pragma multi_compile_local_fragment _ TONEMAPPING
+
+                #include &quot;Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl&quot;
+                #include &quot;Packages/com.unity.render-pipelines.core/Runtime/Utilities/Blit.hlsl&quot;
+                #include &quot;Packages/com.unity.render-pipelines.core/ShaderLibrary/Color.hlsl&quot;
+                
+                TEXTURE2D(_InternalLut);
+                TEXTURE2D_X(_OverlayTexture);
+
+                float4 _InternalLut_Params;
+
+                #define LutParams _InternalLut_Params.xyz
+                #define PostExposure _InternalLut_Params.w
+
+            ENDHLSL
+        }
+    }
+}
+</code></pre>
+</li>
+<li><p>Create a method with the name <code>ApplyTonemapping</code> and the return type <code>half3</code>. This method should have the following parameters: <code>half3 input</code>, <code>TEXTURE2D_PARAM(lutTex, lutSampler)</code>, <code>float3 lutParams</code>, <code>float exposure</code>.</p></li>
+<li>
+<p>In the <code>ApplyTonemapping</code> method, multiply <code>input</code> by the <code>exposure</code> value, then <code>saturate</code> the modified <code>input</code>.</p>
+
+<pre><code class="lang-cpp">half3 ApplyTonemapping(half3 input, TEXTURE2D_PARAM(lutTex, lutSampler), float3 lutParams, float exposure)
+{
+    input *= exposure;
+    float3 inputLutSpace = saturate(LinearToLogC(input));
+}
+</code></pre>
+</li>
+<li>
+<p>Apply the tonemapping changes with <code>ApplyLut2D</code> and return the result.</p>
+
+<pre><code class="lang-cpp">half3 ApplyTonemapping(half3 input, TEXTURE2D_PARAM(lutTex, lutSampler), float3 lutParams, float exposure)
+{
+    input *= exposure;
+    float3 inputLutSpace = saturate(LinearToLogC(input));
+    return ApplyLut2D(TEXTURE2D_ARGS(lutTex, lutSampler), inputLutSpace, lutParams);
+}
+</code></pre>
+</li>
+<li>
+<p>Create a standard <code>Frag</code> method as shown below. Place this method inside the <code>HLSLPROGRAM</code> but after the <code>ApplyTonemapping</code> method.</p>
+
+<pre><code class="lang-cpp">half4 Frag(Varyings input) : SV_Target
+{
+
+}
+</code></pre>
+</li>
+<li>
+<p>In the <code>Frag</code> method, retrieve the original camera color and the overlay color.</p>
+
+<pre><code class="lang-cpp">half4 Frag(Varyings input) : SV_Target
+{
+    half4 color = FragBlit(input, sampler_LinearClamp);
+
+    half4 overlay = SAMPLE_TEXTURE2D_X(_OverlayTexture, sampler_LinearClamp, input.texcoord);
+}
+</code></pre>
+</li>
+<li>
+<p>Create an <code>if</code> statement to check if the shader should apply tonemapping. If the shader should apply tonemapping. use the <code>ApplyTonemapping</code> method to apply it to the overlay.</p>
+
+<pre><code class="lang-cpp">half4 Frag(Varyings input) : SV_Target
+{
+    half4 color = FragBlit(input, sampler_LinearClamp);
+
+    half4 overlay = SAMPLE_TEXTURE2D_X(_OverlayTexture, sampler_LinearClamp, input.texcoord);
+
+    #if TONEMAPPING
+    overlay.rgb = ApplyTonemapping(overlay.rgb, TEXTURE2D_ARGS(_InternalLut, sampler_LinearClamp), LutParams, PostExposure);
+    #endif
+}
+</code></pre>
+</li>
+<li>
+<p>Blend the overlay with the original camera color and return the outcome.</p>
+
+<pre><code class="lang-cpp">half4 Frag(Varyings input) : SV_Target
+{
+    half4 color = FragBlit(input, sampler_LinearClamp);
+
+    half4 overlay = SAMPLE_TEXTURE2D_X(_OverlayTexture, sampler_LinearClamp, input.texcoord);
+
+    #if TONEMAPPING
+    overlay.rgb = ApplyTonemapping(overlay.rgb, TEXTURE2D_ARGS(_InternalLut, sampler_LinearClamp), LutParams, PostExposure);
+    #endif
+
+    color.rgb = color.rgb * (1.0 - overlay.a) + overlay.rgb * overlay.a;
+    return color;
+}
+</code></pre>
+</li>
+</ol>
+
+<p>The shader is now complete and ready for use in the <code>CustomOverlayRenderPass</code> and <code>CustomOverlayRendererFeature</code> <span class="tooltip" tabindex="0" ><strong>scripts</strong><span class="tooltiptext">A piece of code that allows you to create your own Components, trigger game events, modify Component properties over time and respond to user input in any way you like. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about creating-scripts.html" href="../../creating-scripts.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../../Glossary.html#Scripts" aria-label="Go to glossary anchor for Scripts">Glossary</a></span></span></span>.</p>
+
+<p>To see the complete code for this section, refer to <a href="#custom-overlay-shader-code">Custom overlay shader code</a>.</p>
+
+<p><a name="finish-the-custom-overlay" aria-hidden="true"></a></p>
+
+<h2>Finish the custom overlay</h2>
+
+<p>To finish the custom overlay, you must set up the scripts you’ve created, to apply their effects to the renderers in the scene. The following steps demonstrate how to do this.</p>
+
+<ol>
+<li>Find and select the main renderer the active URP Asset uses.</li>
+<li>In the Inspector window, select <strong>Add Renderer Feature</strong> &gt; <strong>Custom Overlay Renderer Feature</strong> to add the <code>CustomOverlayRendererFeature</code> script.</li>
+<li>Assign the <code>CustomOverlayBlit</code> shader to the <strong>Shader</strong> property of the custom overlay Scriptable Renderer Feature.</li>
+<li>Assign the <code>OverlayRenderTexture</code> to the <strong>Overlay Texture</strong> property of the custom overlay Scriptable Renderer Feature.</li>
+</ol>
+
+<p>The custom overlay is now complete and should appear on top of the main camera output in Play Mode. The overlay should be tonemapped in the same way as the main camera output, with no visible difference. This should be similar to the screenshot below.</p>
+
+<p>
+<img src="../../../uploads/urp/post-proc/hdr/HDR-Custom-Overlay-Example.png" alt="Cube in the middle of the Game view with the cube from another angle as an overlay, tonemapped to match HDR Output"><br><em>Cube in the middle of the Game view with the cube from another angle as an overlay, tonemapped to match HDR Output.</em>
+</p>
+
+<blockquote>
+<p>
+<strong>Note</strong>: The end result might vary depending on the placement of the overlay camera.</p>
+</blockquote>
+
+<p><a name="complete-code-samples" aria-hidden="true"></a></p>
+
+<h2>Complete code samples</h2>
+
+<p><a name="custom-overlay-render-pass-code" aria-hidden="true"></a></p>
+
+<h3>Custom overlay render pass code</h3>
+
+<p>The following is the complete code sample for the Scriptable Render Pass from the example.</p>
+
+<pre><code class="lang-cs">using UnityEngine;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
+using UnityEngine.Rendering.RenderGraphModule;
+
+[SupportedOnRenderer(typeof(UniversalRendererData))] --&gt;
+public class CustomOverlayRenderPass : ScriptableRenderPass
+{
+    Material passMaterial;
+    RTHandle overlayTextureHandle;
+
+    public CustomOverlayRenderPass(Material material)
+    {
+        passMaterial = material;
+        profilingSampler = new ProfilingSampler(nameof(CustomOverlayRenderPass));
+
+        // The render pass is executed after post processing, so the main camera target has been tonemapped but not the overlay texture
+        renderPassEvent = RenderPassEvent.AfterRenderingPostProcessing;
+    }
+
+    public void Setup(Texture overlayTex)
+    {
+        //Create an RTHandle from the overlay texture, to import it into the render graph system
+        if (overlayTextureHandle != overlayTex)
+        {
+            overlayTextureHandle?.Release();
+            overlayTextureHandle = RTHandles.Alloc(overlayTex);
+        }
+    }
+
+    public void Dispose()
+    {
+        overlayTextureHandle?.Release();
+    }
+
+    class CopyData
+    {
+        public TextureHandle source;
+    }
+
+    class PassData
+    {
+        public TextureHandle source;
+        public TextureHandle overlayTexture;
+        public TextureHandle internalLut;
+        public Vector4 lutParams;
+        public Material material;
+    }
+    
+    public override void RecordRenderGraph(RenderGraph renderGraph, ContextContainer frameData)
+    {
+        UniversalPostProcessingData postProcessingData = frameData.Get&lt;UniversalPostProcessingData&gt;();
+        UniversalResourceData resourceData = frameData.Get&lt;UniversalResourceData&gt;();
+        UniversalCameraData cameraData = frameData.Get&lt;UniversalCameraData&gt;();
+
+        TextureHandle activeCameraColor = resourceData.activeColorTexture;
+
+        // Create a texture to copy the active camera color target into
+        RenderTextureDescriptor colorCopyDescriptor = cameraData.cameraTargetDescriptor;
+        colorCopyDescriptor.depthBufferBits = (int) DepthBits.None;
+        TextureHandle copiedColor = UniversalRenderer.CreateRenderGraphTexture(renderGraph, colorCopyDescriptor, &quot;_CustomCameraColorCopy&quot;, false);
+
+        // Copy the active camera color target into the texture
+        using (var builder = renderGraph.AddRasterRenderPass&lt;CopyData&gt;(&quot;Custom Overlay Render Pass - Copy Camera&quot;, out var passData))
+        {
+            passData.source = activeCameraColor;
+            builder.UseTexture(passData.source, AccessFlags.Read);
+            builder.SetRenderAttachment(copiedColor, 0, AccessFlags.WriteAll);
+
+            builder.SetRenderFunc((CopyData data, RasterGraphContext context) =&gt;
+            {
+                Blitter.BlitTexture(context.cmd, data.source, new Vector4(1, 1, 0, 0), 0.0f, false);
+            });
+        }
+
+        using (var builder = renderGraph.AddRasterRenderPass&lt;PassData&gt;(&quot;Custom Overlay Render Pass - Blit Overlay&quot;, out var passData))
+        {
+            passData.material = passMaterial;
+
+            builder.SetRenderAttachment(activeCameraColor, 0, AccessFlags.Write);
+
+            passData.source = copiedColor;
+            builder.UseTexture(passData.source, AccessFlags.Read);
+
+            // Import the overlay texture that will be copied onto the camera color, and set it as an input
+            passData.overlayTexture = renderGraph.ImportTexture(overlayTextureHandle);
+            builder.UseTexture(passData.overlayTexture, AccessFlags.Read);
+
+            // If post-processing is enabled on the main camera, apply the tonemapping to the overlay texture as well
+            // If post processing is disabled, the HDR color conversion will be applied after this render pass and the expected colorspace for the cameras output is the default Rec709
+            if (postProcessingData.gradingMode == ColorGradingMode.HighDynamicRange &amp;&amp; cameraData.postProcessEnabled)
+            {
+                // Import the internal color LUT texture used for HDR color grading and tonemapping
+                // This includes any HDR color conversion URP needs for the display, so the output of the camera is in the display's color gamut
+                passData.internalLut = resourceData.internalColorLut;
+                builder.UseTexture(passData.internalLut, AccessFlags.Read);
+
+                // Pass LUT parameters to the shader
+                int lutHeight = postProcessingData.lutSize;
+                int lutWidth = lutHeight * lutHeight;
+
+                float postExposure = 1.0f;
+                ColorAdjustments colorAdjustments = VolumeManager.instance.stack.GetComponent&lt;ColorAdjustments&gt;();
+                if (colorAdjustments != null)
+                {
+                    postExposure = Mathf.Pow(2.0f, colorAdjustments.postExposure.value);
+                }
+
+                passData.lutParams = new Vector4(1f / lutWidth, 1f / lutHeight, lutHeight - 1f, postExposure);
+            }
+
+            builder.SetRenderFunc(static (PassData data, RasterGraphContext context) =&gt;
+            {
+                // Pass parameters to the shader
+                data.material.SetTexture(&quot;_OverlayTexture&quot;, data.overlayTexture);
+
+                // Set a keyword on the shader to enable tonemapping
+                bool tonemappingActive = data.internalLut.IsValid();
+                CoreUtils.SetKeyword(data.material, &quot;TONEMAPPING&quot;, tonemappingActive);
+                if (tonemappingActive)
+                {
+                    data.material.SetTexture(&quot;_InternalLut&quot;, data.internalLut);
+                    data.material.SetVector(&quot;_InternalLut_Params&quot;, data.lutParams);
+                }
+                
+                // Blit the overlay texture onto the camera color
+                Blitter.BlitTexture(context.cmd, data.source, new Vector4(1, 1, 0, 0), data.material, 0);
+            });
+        }
+    }
+}
+</code></pre>
+
+<p><a name="custom-overlay-scriptable-renderer-feature-code" aria-hidden="true"></a></p>
+
+<h3>Custom overlay Scriptable Renderer Feature code</h3>
+
+<p>The following is the complete code sample for the Scriptable Renderer Feature from the example.</p>
+
+<pre><code class="lang-cs">using UnityEngine;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
+
+public class CustomOverlayRendererFeature : ScriptableRendererFeature
+{
+    public Shader hdrShader;
+    public RenderTexture passOverlayTexture;
+
+    Material passMaterial;
+
+    CustomOverlayRenderPass overlayRenderPass = null;
+
+    public override void AddRenderPasses(ScriptableRenderer renderer, ref RenderingData renderingData)
+    {
+        // Render the overlay onto the main camera during Game view rendering only, for the last camera in the camera stack
+        if (renderingData.cameraData.cameraType != CameraType.Game || !renderingData.cameraData.resolveFinalTarget)
+            return;
+
+        // Pass the overlay texture at runtime in case it changes
+        overlayRenderPass.Setup(passOverlayTexture);
+
+        // Enqueue the render pass to be executed
+        renderer.EnqueuePass(overlayRenderPass);
+    }
+
+    public override void Create()
+    {
+        // Create a blit material from the given shader
+        passMaterial = CoreUtils.CreateEngineMaterial(hdrShader);
+
+        // Create the render pass
+        overlayRenderPass = new CustomOverlayRenderPass(passMaterial);
+    }
+
+    protected override void Dispose(bool disposing)
+    {
+        // Destroy the render pass resources
+        CoreUtils.Destroy(passMaterial);
+        overlayRenderPass.Dispose();
+    }
+}
+</code></pre>
+
+<p><a name="custom-overlay-shader-code" aria-hidden="true"></a></p>
+
+<h3>Custom overlay shader code</h3>
+
+<p>The following is the complete code sample for the shader from the example.</p>
+
+<pre><code class="lang-cpp">Shader &quot;Custom/CustomOverlayBlit&quot;
+{
+    SubShader
+    {
+        Tags{ &quot;RenderPipeline&quot; = &quot;UniversalPipeline&quot; }
+
+        Pass
+        {
+            ZWrite Off ZTest Always Blend Off Cull Off
+
+            HLSLPROGRAM
+                #pragma target 2.0
+                #pragma editor_sync_compilation
+                #pragma vertex Vert
+                #pragma fragment Frag
+                #pragma multi_compile_local_fragment _ TONEMAPPING
+
+                #include &quot;Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl&quot;
+                #include &quot;Packages/com.unity.render-pipelines.core/Runtime/Utilities/Blit.hlsl&quot;
+                #include &quot;Packages/com.unity.render-pipelines.core/ShaderLibrary/Color.hlsl&quot;
+                
+                TEXTURE2D(_InternalLut);
+                TEXTURE2D_X(_OverlayTexture);
+
+                float4 _InternalLut_Params;
+
+                #define LutParams _InternalLut_Params.xyz
+                #define PostExposure _InternalLut_Params.w
+
+                half3 ApplyTonemapping(half3 input, TEXTURE2D_PARAM(lutTex, lutSampler), float3 lutParams, float exposure)
+                {
+                    input *= exposure;
+                    float3 inputLutSpace = saturate(LinearToLogC(input)); // LUT space is in LogC
+                    return ApplyLut2D(TEXTURE2D_ARGS(lutTex, lutSampler), inputLutSpace, lutParams);
+                }
+
+                half4 Frag(Varyings input) : SV_Target
+                {
+                    // Get the original camera color
+                    half4 color = FragBlit(input, sampler_LinearClamp);
+
+                    // Get the overlay color
+                    half4 overlay = SAMPLE_TEXTURE2D_X(_OverlayTexture, sampler_LinearClamp, input.texcoord);
+
+                    // Tonemap the overlay
+                    #if TONEMAPPING
+                    overlay.rgb = ApplyTonemapping(overlay.rgb, TEXTURE2D_ARGS(_InternalLut, sampler_LinearClamp), LutParams, PostExposure);
+                    #endif
+
+                    // Blend overlay and color
+                    color.rgb = color.rgb * (1.0 - overlay.a) + overlay.rgb * overlay.a;
+                    return color;
+                }
+
+            ENDHLSL
+        }
+    }
+}
+</code></pre>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="../../urp/post-processing/enable-hdr-output-urp.html"></a></span><div class="tip">Enable HDR Output in URP</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="../../urp/post-processing/troubleshoot-hdr-custom-pass.html"></a></span><div class="tip">Troubleshooting Scriptable Render Passes with HDR Output in URP</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

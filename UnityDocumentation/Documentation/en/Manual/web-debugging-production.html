@@ -1,0 +1,216 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Debug production Web builds</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<meta property="relative-path-to-manual" content="">
+<meta property="version-switcher-versions-with-this-page" content="Versions with this page:">
+<meta property="version-switcher-versions-without-this-page" content="Versions without this page:">
+<meta property="version-switcher-supported" content="Supported">
+<meta property="version-switcher-legacy" content="Legacy">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/Manual/web-debugging-production.html">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20260626"></script><script type="text/javascript" src="docdata/toc.js?ts=20260626"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20260626"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20260626">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20260626">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/web-debugging-production.html">English</a></li>
+<li><a href="/cn/current/Manual/web-debugging-production.html">中文</a></li>
+<li><a href="/ja/current/Manual/web-debugging-production.html">日本語</a></li>
+<li><a href="/kr/current/Manual/web-debugging-production.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: Unity 6.7 Beta</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/web-debugging-production.html">English</a></li>
+<li><a href="/cn/current/Manual/web-debugging-production.html">中文</a></li>
+<li><a href="/ja/current/Manual/web-debugging-production.html">日本語</a></li>
+<li><a href="/kr/current/Manual/web-debugging-production.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="PlatformSpecific.html">Platform development  </a></li>
+<li><a href="webgl.html">Web</a></li>
+<li><a href="webgl-develop.html">Web development</a></li>
+<li><a href="webgl-debugging.html">Debug and troubleshoot Web builds</a></li>
+<li>Debug production Web builds</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="web-debugging-development.html"></a></span><div class="tip">Debug Web builds in development</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="web-debugging-troubleshooting.html"></a></span><div class="tip">Troubleshoot common Web build errors</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Debug production Web builds</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Use external symbols, JavaScript error handlers, and stack trace mapping to debug deployed Web builds.</p>
+
+<p>Unity Web builds don’t support full source-level debugging. However, you can preserve some debugging information and use browser error reporting to investigate runtime failures in deployed builds.</p>
+
+<h2>Use external symbols</h2>
+
+<p>Enable external symbols in your Web build (menu: <strong>Player Settings</strong> &gt; <strong>Publishing Settings</strong> &gt; <strong>Debug Settings</strong> &gt; <strong>External</strong>) to include function names in production stack traces. When you build with external symbols, Unity generates symbol files separately from the main build output.</p>
+
+<p>When an uncaught JavaScript exception occurs, Unity can use the external symbol data to map WebAssembly stack frames back to IL2CPP-generated C/C++ function names. These names are often readable enough to identify the original C# class and method.</p>
+
+<p>For example, a C# method such as <code>PlayerController.Jump()</code> might appear in a stack trace as <code>PlayerController_Jump_m&lt;hash&gt;</code>.</p>
+
+<p>Use external symbols to identify the function where a failure occurred, rather than the exact source line.</p>
+
+<h3>Map stack traces more precisely to C# names</h3>
+
+<p>If you need more precise mapping, Unity also generates a <code>MethodMap.tsv</code> file during the build process. This file can help map IL2CPP-generated method names back to the original C# method names, which is especially useful for overloaded methods.</p>
+
+<p>Unity doesn’t automatically copy <code>MethodMap.tsv</code> to the build output directory. You can find it in:</p>
+
+<p><code>Library/Bee/artifacts/WebGL/il2cppOutput/cpp/Symbols</code></p>
+
+<h3>Limitations</h3>
+
+<p>External symbols don’t include:</p>
+
+<ul>
+<li>Exact C# source file names</li>
+<li>Exact C# line numbers</li>
+<li>The ability to step through C# code line by line in a production Web build</li>
+</ul>
+
+<h3>Build size and runtime impact</h3>
+
+<p>Unity stores external symbol files separately from the main build because they’re only needed for error investigation. This means external symbol files don’t affect the initial application download for users.</p>
+
+<p>The symbol files are typically around 1–2 MB and you can store them with your deployed build artifacts.</p>
+
+<p>Because Unity stores external symbol files separately from the main build output, this approach has minimal impact on the initial download size and runtime performance of a production build.</p>
+
+<h2>Report browser errors</h2>
+
+<p>To collect error reports from a deployed Web build, add JavaScript error handlers in the page that hosts your Unity content and send the results to your <span class="tooltip" tabindex="0" ><strong>analytics</strong><span class="tooltiptext">Abbreviation of <strong>Unity Analytics</strong><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Analytics" aria-label="Go to glossary anchor for Analytics">Glossary</a></span></span></span> or crash reporting service.</p>
+
+<p>Useful browser hooks include:</p>
+
+<ul>
+<li><code>window.onerror</code></li>
+<li><code>window.addEventListener('error', ...)</code></li>
+<li><code>console.error</code></li>
+</ul>
+
+<p>These hooks can capture:</p>
+
+<ul>
+<li>Uncaught JavaScript exceptions</li>
+<li>Some WebAssembly runtime errors</li>
+<li>Some engine errors that appear through browser error reporting</li>
+</ul>
+
+<p>You can combine these reports with external symbols to make production stack traces easier to read.</p>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="webgl-debugging.html">Debug and troubleshoot Web builds</a></li>
+<li><a href="web-debugging-development.html">Debug Web builds in development</a></li>
+<li><a href="web-debugging-troubleshooting.html">Troubleshoot common Web build errors</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="web-debugging-development.html"></a></span><div class="tip">Debug Web builds in development</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="web-debugging-troubleshooting.html"></a></span><div class="tip">Troubleshoot common Web build errors</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

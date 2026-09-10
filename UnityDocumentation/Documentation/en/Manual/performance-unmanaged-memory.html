@@ -1,0 +1,215 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Unmanaged C# memory</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<meta property="relative-path-to-manual" content="">
+<meta property="version-switcher-versions-with-this-page" content="Versions with this page:">
+<meta property="version-switcher-versions-without-this-page" content="Versions without this page:">
+<meta property="version-switcher-supported" content="Supported">
+<meta property="version-switcher-legacy" content="Legacy">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/Manual/performance-unmanaged-memory.html">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20260626"></script><script type="text/javascript" src="docdata/toc.js?ts=20260626"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20260626"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20260626">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20260626">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/performance-unmanaged-memory.html">English</a></li>
+<li><a href="/cn/current/Manual/performance-unmanaged-memory.html">中文</a></li>
+<li><a href="/ja/current/Manual/performance-unmanaged-memory.html">日本語</a></li>
+<li><a href="/kr/current/Manual/performance-unmanaged-memory.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: Unity 6.7 Beta</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/performance-unmanaged-memory.html">English</a></li>
+<li><a href="/cn/current/Manual/performance-unmanaged-memory.html">中文</a></li>
+<li><a href="/ja/current/Manual/performance-unmanaged-memory.html">日本語</a></li>
+<li><a href="/kr/current/Manual/performance-unmanaged-memory.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="analysis.html">Optimization</a></li>
+<li><a href="performance-memory.html">Memory in Unity</a></li>
+<li>Unmanaged C# memory</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="performance-threadsafe-linear-allocator.html"></a></span><div class="tip">Thread-safe linear allocator example</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="Profiler.html"></a></span><div class="tip">Unity Profiler</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Unmanaged C# memory</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>The C# unmanaged memory layer allows you to access the native memory layer to fine-tune memory allocations, with the convenience of writing C# code.</p>
+
+<p>You can use the <code>Unity.Collections</code> namespace (including <a href="../ScriptReference/Unity.Collections.NativeArray_1.html"><code>NativeArray</code></a>) in the Unity core API, and the data structures in the <a href="https://docs.unity3d.com/Packages/com.unity.collections@latest">Unity Collections package</a> to access C# unmanaged memory. If you use Unity’s <a href="job-system.html">job system</a>, or <a href="burst/script-compilation-burst.html">Burst</a>, you must use C# unmanaged memory.</p>
+
+<h2>Native container memory allocators overview</h2>
+
+<p>Unity’s native code libraries track native memory usage through a system of memory labels, areas, and roots that are managed by Unity’s native memory manager. The <span class="tooltip" tabindex="0" ><a href="Profiler.html">Profiler</a><span class="tooltiptext">A window that helps you to optimize your game. It shows how much time is spent in the various areas of your game. For example, it can report the percentage of time spent rendering, animating, or in your game logic. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Profiler.html" href="Profiler.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Profiler" aria-label="Go to glossary anchor for Profiler">Glossary</a></span></span></span> uses the native memory manager to monitor native memory usage. The asset garbage collector also tracks types that inherit from <code>UnityEngine.Object</code> so that on calls to <code>Resources.UnloadUnusedAssets</code> it can clean up memory assigned to assets that are no longer referenced.</p>
+
+<p>Unity’s native memory manager uses memory labels to categorize memory usage and to choose which <a href="../ScriptReference/Unity.Collections.Allocator.html"><code>Allocator</code></a> allocates the memory. Which allocator the memory manager uses for each memory label varies between platforms. You can also create your own named memory labels with the <a href="../ScriptReference/Unity.Collections.MemoryLabel.html"><code>MemoryLabel</code> API</a>. <strong>Important:</strong> The <code>MemoryLabel</code> API isn’t compatible with the Collections package.</p>
+
+<p>The memory manager uses areas to categorize memory usage for profiling purposes. It uses roots to track related memory allocations under one root. For example, the native memory for each type that inherits from <code>UnityEngine.Object</code> has a root in the area called <code>Object</code>. When the object is deleted, for example via <a href="../ScriptReference/Resources.UnloadUnusedAssets.html"><code>Resources.UnloadUnusedAssets</code></a>, all allocations associated with that object’s root are also freed.</p>
+
+<p>You can use the <a href="https://docs.unity3d.com/Packages/com.unity.memoryprofiler@latest/">Memory Profiler package</a> to check memory usage ordered by memory labels, areas, and roots. This includes any custom labels you’ve defined using MemoryLabel. You can also discover the underlying allocator that allocated the memory through region names.</p>
+
+<h2>Allocator types</h2>
+
+<p>You can use certain native <a href="../ScriptReference/Unity.Collections.Allocator.html">Allocator types</a> with native container types in the <code>Unity.Collections</code> namespace. The allocator types available in this way are:</p>
+
+<ul>
+<li>
+<a href="../ScriptReference/Unity.Collections.Allocator.Temp.html"><code>Temp</code></a>: A temporary allocator type for short-lived allocations.</li>
+<li>
+<a href="../ScriptReference/Unity.Collections.Allocator.TempJob.html"><code>TempJob</code></a>: A temporary allocator type for longer-lived allocations passed from job to job.</li>
+<li>
+<a href="../ScriptReference/Unity.Collections.Allocator.Persistent.html"><code>Persistent</code></a>: An allocator without any temporal restrictions.</li>
+<li>
+<a href="../ScriptReference/Unity.Collections.Allocator.AudioKernel.html"><code>AudioKernel</code></a>: An allocator for DSP audio kernel allocations.</li>
+<li>
+<a href="../ScriptReference/Unity.Collections.Allocator.Domain.html"><code>Domain</code></a>: An allocator that lasts the lifetime of the domain.</li>
+</ul>
+
+<p>To use these types, pass an <a href="../ScriptReference/Unity.Collections.Allocator.html"><code>Allocator</code></a> enum value to select the native allocator type’s memory label to use. Alternatively, for low-level allocations where you need custom categorization, you can create and pass a <a href="../ScriptReference/Unity.Collections.MemoryLabel.html"><code>MemoryLabel</code></a> instance directly to allocation functions. If a chosen <code>Temp</code> allocator is full, Unity chooses a fallback allocator instead (usually <code>TempJob</code>, or Temp Overflow). </p>
+
+<h3>Temp</h3>
+
+<p>
+<code>Temp</code> is Unity’s temporary allocator type. It’s designed for small short lived allocations that can’t cross a frame boundary, such as temporary allocations made within a single job. The <code>Temp</code> type is a stack type allocator for small amounts of memory which Unity allocates from the main memory pool. </p>
+
+<p>There are multiple <code>Temp</code> allocators, and each thread that needs an allocator has one. Unity recycles <code>Temp</code> allocators each frame ensuring a clean memory usage pattern. However, if memory spills over into the fallback allocators, their memory might get fragmented. </p>
+
+<p>You can use <a href="../ScriptReference/Profiling.Profiler.GetTempAllocatorSize.html"><code>Profiler.GetTempAllocatorSize</code></a> and <a href="../ScriptReference/Profiling.Profiler.SetTempAllocatorRequestedSize.html"><code>Profiler.SetTempAllocatorRequestedSize</code></a> to get and set the size for <code>Temp</code> allocators. </p>
+
+<p>The sizes for the <code>Temp</code> allocator default to:</p>
+
+<ul>
+<li>Editor: 16 MB main thread, 256 KB worker threads.</li>
+<li>Players: 4 MB main thread, 256 KB worker threads.</li>
+</ul>
+
+<p>If these sizes are exceeded, allocations on the main thread fall back to the <code>TempJob</code> allocator, and on other threads they fall back to the Temp Overflow allocator. For more information on temporary native allocations, refer to the <a href="performance-native-allocators.html#tls">Thread storage local (TLS) allocator</a> documentation.</p>
+
+<h3>TempJob</h3>
+
+<p>This type uses a linear style allocator which Unity stores in a <code>TempJob</code> area that it allocates from main memory. It’s designed for larger temporary allocations that are passed from job to job, and those that might carry data between frames. If the allocations aren’t disposed of within 4 frames of their creation, a warning is displayed in the Unity Editor.</p>
+
+<p>
+<strong>Note</strong>: If the memory available is exhausted, Unity makes the overspill allocations in main memory (malloc). Most platforms can have up to 64 MB of <code>TempJob</code> memory, but on smaller memory systems this limit can be as low as 16 MB.</p>
+
+<p>If this allocator is full, allocations fall back to the Temp Job Overflow Allocator. For more information on temporary job allocations, refer to the <a href="performance-native-allocators.html#thread-safe-linear">Thread safe linear allocator</a> documentation.</p>
+
+<h3>Persistent</h3>
+
+<p>This allocator allocates memory with no time restrictions, is only limited by the amount of free memory on a device, and therefore has no fallback. It can exist for as long as you need it, but this also means that only the <a href="../ScriptReference/Unity.Collections.LowLevel.Unsafe.DisposeSentinel.html"><code>DisposeSentinel</code></a> class warns you if you don’t free the allocated memory again, and then only if your handle to the memory was garbage collected. Allocating persistent memory is slower than allocating temporary memory.</p>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="https://docs.unity3d.com/Packages/com.unity.collections@latest">Collections package</a></li>
+<li><a href="performance-memory-overview.html">Memory in Unity introduction</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="performance-threadsafe-linear-allocator.html"></a></span><div class="tip">Thread-safe linear allocator example</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="Profiler.html"></a></span><div class="tip">Unity Profiler</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

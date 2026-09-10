@@ -1,0 +1,672 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Custom serialization</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<meta property="relative-path-to-manual" content="">
+<meta property="version-switcher-versions-with-this-page" content="Versions with this page:">
+<meta property="version-switcher-versions-without-this-page" content="Versions without this page:">
+<meta property="version-switcher-supported" content="Supported">
+<meta property="version-switcher-legacy" content="Legacy">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/Manual/script-serialization-custom-serialization.html">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20260626"></script><script type="text/javascript" src="docdata/toc.js?ts=20260626"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20260626"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20260626">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20260626">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/script-serialization-custom-serialization.html">English</a></li>
+<li><a href="/cn/current/Manual/script-serialization-custom-serialization.html">中文</a></li>
+<li><a href="/ja/current/Manual/script-serialization-custom-serialization.html">日本語</a></li>
+<li><a href="/kr/current/Manual/script-serialization-custom-serialization.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: Unity 6.7 Beta</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/script-serialization-custom-serialization.html">English</a></li>
+<li><a href="/cn/current/Manual/script-serialization-custom-serialization.html">中文</a></li>
+<li><a href="/ja/current/Manual/script-serialization-custom-serialization.html">日本語</a></li>
+<li><a href="/kr/current/Manual/script-serialization-custom-serialization.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="scripting.html">Programming in Unity</a></li>
+<li><a href="compilation-and-code-reload.html">Compilation and code reload </a></li>
+<li><a href="script-serialization.html">Script serialization</a></li>
+<li>Custom serialization</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="script-serialization-analyzer.html"></a></span><div class="tip">Serialization rules analyzer reference</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="script-serialization-dictionaries.html"></a></span><div class="tip">Dictionary serialization</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Custom serialization</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>When you want to serialize something that Unity’s serializer doesn’t support (for example, a C# Dictionary) you can implement the <a href="../ScriptReference/ISerializationCallbackReceiver.html">ISerializationCallbackReceiver</a> interface in your class. This allows you to implement callbacks that Unity invokes at key points during serialization and deserialization.</p>
+
+<p>You can use serialization callbacks to give your hard-to-serialize data a different representation at runtime than at serialization time. You can transform your data into something Unity understands just before Unity serializes it. After Unity has written the data to your fields, you can transform the serialized data back into the form you want it to have at runtime.</p>
+
+<ol>
+<li>When an object is about to be serialized, Unity invokes the <code>OnBeforeSerialize()</code> callback. In this callback you can transform your data into something Unity understands. For example, to serialize a C# Dictionary, copy the data from the Dictionary into an array of keys and an array of values.</li>
+<li>After the <code>OnBeforeSerialize()</code> callback is complete, Unity serializes the arrays.</li>
+<li>Later, when the object is deserialized, Unity invokes the <code>OnAfterDeserialize()</code> callback. In this callback you can transform the data back into a form that’s convenient for the object in memory. For example, use the key and value arrays to repopulate the C# Dictionary.</li>
+</ol>
+
+<h2>Performance issues with Unity’s default serialization</h2>
+
+<p>If you want to have a tree data structure and you let Unity serialize the data structure directly, the missing support for null limitation causes your data stream to become large. This leads to performance degradations in many systems:</p>
+
+<pre><code class="lang-cs">using UnityEngine;
+using System.Collections.Generic;
+using System;
+
+// This example demonstrates why directly serializing a tree
+// can lead to performance issues due to Unity's serializer limitations (e.g., no null support, deep copying).
+// It's provided to illustrate a problematic pattern, not a recommended one.
+public class ProblematicTreeSerialization : MonoBehaviour
+{
+    [Serializable]
+    public class Node
+    {
+        public string interestingValue = &quot;value&quot;;
+        // This field creates a class cycle (Node -&gt; List&lt;Node&gt; -&gt; Node),
+        // which can make serialization data very large and inefficient for Unity's default serializer.
+        public List&lt;Node&gt; children = new List&lt;Node&gt;();
+    }
+
+    // This root node will be serialized by Unity.
+    public Node root = new Node();
+
+}
+</code></pre>
+
+<p>To resolve this issue, you can tell Unity not to serialize the tree directly and create a separate serializable representation of the tree that Unity understands. You can then use the <code>ISerializationCallbackReceiver</code> interface to convert between your runtime tree and this serializable format.</p>
+
+<pre><code class="lang-csharp">using UnityEngine;
+using System.Collections.Generic;
+using System;
+
+// This example demonstrates how to use ISerializationCallbackReceiver to custom serialize
+// a tree structure, avoiding the performance issues of direct serialization shown in ProblematicTreeSerialization.
+public class CustomTreeSerialization : MonoBehaviour, ISerializationCallbackReceiver
+{
+    // Node class used at runtime. This is not directly serialized by Unity.
+    public class Node
+    {
+        public string interestingValue = &quot;value&quot;;
+        public List&lt;Node&gt; children = new List&lt;Node&gt;();
+    }
+
+    // Serializable struct that represents a node for Unity's serializer.
+    [Serializable]
+    public struct SerializableNode
+    {
+        public string interestingValue;
+        public int childCount;
+        public int indexOfFirstChild;
+    }
+
+    // The root node used for runtime tree representation. Not directly serialized by Unity.
+    private Node root = new Node();
+
+    // This list is the only data Unity will serialize for the tree.
+    // It's marked [SerializeField] so Unity's serializer can access it.
+    [SerializeField] private List&lt;SerializableNode&gt; serializedNodes = new List&lt;SerializableNode&gt;();
+
+    // Called just before Unity serializes the object.
+    public void OnBeforeSerialize()
+    {
+        // Ensure root exists for serialization.
+        if (root == null)
+        {
+            root = new Node();
+        }
+
+        serializedNodes.Clear(); 
+        AddNodeToSerializedNodes(root); 
+    }
+
+    // Recursively adds nodes to the 'serializedNodes' list in depth-first order.
+    private void AddNodeToSerializedNodes(Node n)
+    {
+        var serializedNode = new SerializableNode
+        {
+            interestingValue = n.interestingValue,
+            childCount = n.children.Count,
+            // The index of the first child will be the current size of 'serializedNodes' + 1
+            // (since the current node is added next, and then its children).
+            indexOfFirstChild = serializedNodes.Count + 1
+        };
+
+        serializedNodes.Add(serializedNode);
+
+        foreach (var child in n.children)
+        {
+            AddNodeToSerializedNodes(child);
+        }
+    }
+
+    // Called just after Unity deserializes the object.
+    public void OnAfterDeserialize()
+    {
+        // If there's serialized data, reconstruct the runtime tree.
+        if (serializedNodes != null &amp;&amp; serializedNodes.Count &gt; 0)
+        {
+            // Start reconstruction from the first serialized node (index 0).
+            ReadNodeFromSerializedNodes(0, out root);
+        }
+        else
+        {
+            root = new Node();
+        }
+    }
+
+    // Recursively reads nodes from 'serializedNodes' and reconstructs the runtime tree.
+    // Returns the next index to read from.
+    private int ReadNodeFromSerializedNodes(int index, out Node node)
+    {
+        var serializedNode = serializedNodes[index];
+
+        // Create a new runtime node and transfer data.
+        Node newNode = new Node()
+        {
+            interestingValue = serializedNode.interestingValue,
+            children = new List&lt;Node&gt;()
+        };
+
+        // The children were serialized immediately after their parent (depth-first).
+        // Increment the index and recursively read children.
+        int currentIndex = index + 1; 
+        for (int i = 0; i &lt; serializedNode.childCount; i++)
+        {
+            Node childNode;
+            currentIndex = ReadNodeFromSerializedNodes(currentIndex, out childNode);
+            newNode.children.Add(childNode);
+        }
+
+        node = newNode;
+        return currentIndex;
+    }
+
+}
+</code></pre>
+
+<h2>Directly serializing a Dictionary</h2>
+
+<p>
+<strong>Note</strong>: For most projects, prefer the built-in dictionary serialization. Apply <a href="../ScriptReference/SerializeField.html"><code>[SerializeField]</code></a> to a <code>Dictionary&lt;TKey, TValue&gt;</code> field and edit it directly in the Inspector. Refer to <a href="script-serialization-dictionaries.html">Dictionary serialization</a>. Use the callback-based pattern below only when you need a sorted dictionary (<code>SortedDictionary&lt;TKey, TValue&gt;</code>), a dictionary subclass, a key or value type that the analyzer rejects, or another collection type that Unity doesn’t serialize directly, such as <code>HashSet&lt;T&gt;</code>.</p>
+
+<p>By implementing <a href="../ScriptReference/ISerializationCallbackReceiver.html"><code>ISerializationCallbackReceiver</code></a>, you can convert the dictionary into two <code>List</code> instances (one for keys, one for values) before serialization, and then reconstruct the dictionary from these lists after deserialization.</p>
+
+<pre><code class="lang-csharp">using UnityEngine;
+using System;
+using System.Collections.Generic;
+
+public class SerializationCallbackScript : MonoBehaviour, ISerializationCallbackReceiver
+{
+    public List&lt;int&gt; keys = new List&lt;int&gt; { 3, 4, 5 };
+    public List&lt;string&gt; values = new List&lt;string&gt; { &quot;I&quot;, &quot;Love&quot;, &quot;Unity&quot; };
+
+    // The dictionary is rebuilt from the keys and values lists in OnAfterDeserialize.
+    public Dictionary&lt;int, string&gt;  myDictionary = new Dictionary&lt;int, string&gt;();
+
+    public void OnBeforeSerialize()
+    {
+        keys.Clear();
+        values.Clear();
+        // For each key/value pair in the dictionary, add the key to the keys list and the value to the values list
+        foreach (var kvp in myDictionary)
+        {
+            keys.Add(kvp.Key);
+            values.Add(kvp.Value);
+        }
+    }
+
+    public void OnAfterDeserialize()
+    {
+        myDictionary = new Dictionary&lt;int, string&gt;();
+        // Loop through the list of keys and values and add each key/value pair to the dictionary
+        for (int i = 0; i != Math.Min(keys.Count, values.Count); i++)
+            myDictionary.Add(keys[i], values[i]);
+    }
+
+    void OnGUI()
+    {
+        // This callback displays the following output on three separate labels in the GameView:
+        // &quot;Key: 3 value: I&quot;
+        // &quot;Key: 4 value: Love&quot;
+        // &quot;Key: 5 value: Unity&quot;
+        foreach (var kvp in myDictionary)
+            GUILayout.Label(&quot;Key: &quot; + kvp.Key + &quot; value: &quot; + kvp.Value);
+    }
+}
+</code></pre>
+
+<h2 id="reusable-serializable-collections">Reusable serializable collections</h2>
+
+<p>For types you use frequently, such as <code>HashSet&lt;T&gt;</code> or <code>Dictionary&lt;TKey, TValue&gt;</code>, it’s more practical to create self-contained, reusable wrapper classes. These wrappers encapsulate the serialization logic so you can insert them into any script.</p>
+
+<p>
+<strong>Note</strong>: The <a href="script-serialization-analyzer.html">serialization rules analyzer</a> rule <a href="script-serialization-analyzer.html#uac1009">UAC1009</a> flags fields that use unsupported collection types. Using these wrappers is one way to resolve that warning.</p>
+
+<h3>Reusable serializable HashSet wrapper</h3>
+
+<pre><code class="lang-csharp">using UnityEngine;
+using System.Collections.Generic;
+
+[System.Serializable]
+public class SerializableHashSet&lt;T&gt; : ISerializationCallbackReceiver
+{
+    [SerializeField] private List&lt;T&gt; items = new List&lt;T&gt;();
+
+    private HashSet&lt;T&gt; hashSet;
+
+    public void OnBeforeSerialize()
+    {
+        EnsureInitialized();
+        items.Clear();
+        items.AddRange(hashSet);
+    }
+
+    public void OnAfterDeserialize()
+    {
+        hashSet = new HashSet&lt;T&gt;(items);
+    }
+
+    private void EnsureInitialized()
+    {
+        if (hashSet == null)
+            hashSet = new HashSet&lt;T&gt;(items);
+    }
+
+    public bool Add(T item)
+    {
+        EnsureInitialized();
+        return hashSet.Add(item);
+    }
+
+    public bool Contains(T item)
+    {
+        EnsureInitialized();
+        return hashSet.Contains(item);
+    }
+
+    public bool Remove(T item)
+    {
+        EnsureInitialized();
+        return hashSet.Remove(item);
+    }
+
+    public int Count
+    {
+        get
+        {
+            EnsureInitialized();
+            return hashSet.Count;
+        }
+    }
+}
+</code></pre>
+
+<p>Usage:</p>
+
+<pre><code class="lang-csharp">public class AchievementManager : MonoBehaviour
+{
+    public SerializableHashSet&lt;string&gt; unlockedAchievements; // Serializes as a List&lt;string&gt;
+}
+</code></pre>
+
+<h3>Reusable serializable Dictionary wrapper</h3>
+
+<pre><code class="lang-csharp">using UnityEngine;
+using System.Collections.Generic;
+
+[System.Serializable]
+public class SerializableDictionary&lt;TKey, TValue&gt; : ISerializationCallbackReceiver
+{
+    [SerializeField] private List&lt;TKey&gt; keys = new List&lt;TKey&gt;();
+    [SerializeField] private List&lt;TValue&gt; values = new List&lt;TValue&gt;();
+
+    private Dictionary&lt;TKey, TValue&gt; dictionary;
+
+    public void OnBeforeSerialize()
+    {
+        EnsureInitialized();
+        keys.Clear();
+        values.Clear();
+
+        foreach (var kvp in dictionary)
+        {
+            keys.Add(kvp.Key);
+            values.Add(kvp.Value);
+        }
+    }
+
+    public void OnAfterDeserialize()
+    {
+        dictionary = new Dictionary&lt;TKey, TValue&gt;();
+
+        for (int i = 0; i &lt; keys.Count &amp;&amp; i &lt; values.Count; i++)
+        {
+            dictionary[keys[i]] = values[i];
+        }
+    }
+
+    private void EnsureInitialized()
+    {
+        if (dictionary == null)
+            dictionary = new Dictionary&lt;TKey, TValue&gt;();
+    }
+
+    public TValue this[TKey key]
+    {
+        get
+        {
+            EnsureInitialized();
+            return dictionary[key];
+        }
+        set
+        {
+            EnsureInitialized();
+            dictionary[key] = value;
+        }
+    }
+
+    public bool TryGetValue(TKey key, out TValue value)
+    {
+        EnsureInitialized();
+        return dictionary.TryGetValue(key, out value);
+    }
+
+    public bool ContainsKey(TKey key)
+    {
+        EnsureInitialized();
+        return dictionary.ContainsKey(key);
+    }
+
+    public void Add(TKey key, TValue value)
+    {
+        EnsureInitialized();
+        dictionary.Add(key, value);
+    }
+
+    public bool Remove(TKey key)
+    {
+        EnsureInitialized();
+        return dictionary.Remove(key);
+    }
+
+    public int Count
+    {
+        get
+        {
+            EnsureInitialized();
+            return dictionary.Count;
+        }
+    }
+}
+</code></pre>
+
+<p>Usage:</p>
+
+<pre><code class="lang-csharp">public class ItemDatabase : MonoBehaviour
+{
+    public SerializableDictionary&lt;string, int&gt; itemPrices; // Serializes as parallel key/value lists
+}
+</code></pre>
+
+<h2>Polymorphic deserialization</h2>
+
+<p>Unity’s default serializer has limited support for polymorphism with plain C# classes. To serialize a list of objects that inherit from a common base class, you often need to manually store type information and the specific data for each derived type. This example shows how to achieve this using <code>ISerializationCallbackReceiver</code>.</p>
+
+<pre><code class="lang-csharp">using UnityEngine;
+using System.Collections.Generic;
+using System;
+
+// Base class for polymorphic objects. Not directly serializable by Unity.
+public abstract class Animal
+{
+    public string Name { get; set; }
+    public abstract string GetSound();
+}
+
+// Derived class
+public class Dog : Animal
+{
+    public int BarkVolume { get; set; }
+    public Dog(string name, int barkVolume)
+    {
+        Name = name;
+        BarkVolume = barkVolume;
+    }
+    public override string GetSound() =&gt; $&quot;Woof! (Volume: {BarkVolume})&quot;;
+}
+
+// Derived class
+public class Cat : Animal
+{
+    public bool IsCute { get; set; }
+    public Cat(string name, bool isCute)
+    {
+        Name = name;
+        IsCute = isCute;
+    }
+    public override string GetSound() =&gt; $&quot;Meow! (Cute: {IsCute})&quot;;
+}
+
+// Serializable wrapper struct for Dog's data.
+// Marked [Serializable] for Unity.
+[Serializable]
+public struct SerializableDog
+{
+    public string name;
+    public int barkVolume;
+}
+
+// Serializable wrapper struct for Cat's data.
+// Marked [Serializable] for Unity.
+[Serializable]
+public struct SerializableCat
+{
+    public string name;
+    public bool isCute;
+}
+
+// Enum to identify the type of animal for deserialization.
+public enum AnimalType
+{
+    Dog,
+    Cat
+}
+
+// Example demonstrating polymorphic deserialization using ISerializationCallbackReceiver.
+// This approach requires manual management of type information during serialization.
+public class PolymorphicAnimalSerialization : MonoBehaviour, ISerializationCallbackReceiver
+{
+    // The runtime list of polymorphic Animal objects. Not directly serialized by Unity.
+    public List&lt;Animal&gt; animals = new List&lt;Animal&gt;();
+
+    // These lists store the serializable data for each derived type,
+    // along with a list of types to reconstruct the original order.
+    // Marked [SerializeField] to be saved by Unity.
+    [SerializeField] private List&lt;AnimalType&gt; _animalTypes = new List&lt;AnimalType&gt;();
+    [SerializeField] private List&lt;SerializableDog&gt; _dogs = new List&lt;SerializableDog&gt;();
+    [SerializeField] private List&lt;SerializableCat&gt; _cats = new List&lt;SerializableCat&gt;();
+
+    // Called just before Unity serializes the object.
+    public void OnBeforeSerialize()
+    {
+        _animalTypes.Clear();
+        _dogs.Clear();
+        _cats.Clear();
+
+        foreach (var animal in animals)
+        {
+            if (animal is Dog dog)
+            {
+                _animalTypes.Add(AnimalType.Dog);
+                _dogs.Add(new SerializableDog { name = dog.Name, barkVolume = dog.BarkVolume });
+            }
+            else if (animal is Cat cat)
+            {
+                _animalTypes.Add(AnimalType.Cat);
+                _cats.Add(new SerializableCat { name = cat.Name, isCute = cat.IsCute });
+            }
+        }
+    }
+
+    // Called just after Unity deserializes the object.
+    public void OnAfterDeserialize()
+    {
+        animals.Clear();
+        
+        // Keep track of which serialized item to read next from each list.
+        int dogIndex = 0;
+        int catIndex = 0;
+
+        // Iterate through the type list to reconstruct the animals in the correct order.
+        foreach (var type in _animalTypes)
+        {
+            switch (type)
+            {
+                case AnimalType.Dog:
+                    if (dogIndex &lt; _dogs.Count)
+                    {
+                        var sDog = _dogs[dogIndex];
+                        animals.Add(new Dog(sDog.name, sDog.barkVolume));
+                        dogIndex++;
+                    }
+                    else
+                    {
+                        Debug.LogError(&quot;Mismatch in serialized Dog data during deserialization.&quot;);
+                    }
+                    break;
+                case AnimalType.Cat:
+                    if (catIndex &lt; _cats.Count)
+                    {
+                        var sCat = _cats[catIndex];
+                        animals.Add(new Cat(sCat.name, sCat.isCute));
+                        catIndex++;
+                    }
+                    else
+                    {
+                        Debug.LogError(&quot;Mismatch in serialized Cat data during deserialization.&quot;);
+                    }
+                    break;
+            }
+        }
+    }
+}
+</code></pre>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="script-serialization-rules.html">Serialization rules</a></li>
+<li><a href="script-serialization-analyzer.html">Serialization rules analyzer</a></li>
+<li><a href="script-serialization-how-unity-uses.html">How Unity uses serialization</a></li>
+<li><a href="json-serialization.html">JSONSerialization</a></li>
+<li><a href="script-serialization-best-practices.html">Serialization best practices</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="script-serialization-analyzer.html"></a></span><div class="tip">Serialization rules analyzer reference</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="script-serialization-dictionaries.html"></a></span><div class="tip">Dictionary serialization</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

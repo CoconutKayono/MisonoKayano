@@ -1,0 +1,234 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Paint tiles into the scene</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<meta property="relative-path-to-manual" content="../../">
+<meta property="version-switcher-versions-with-this-page" content="Versions with this page:">
+<meta property="version-switcher-versions-without-this-page" content="Versions without this page:">
+<meta property="version-switcher-supported" content="Supported">
+<meta property="version-switcher-legacy" content="Legacy">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../../../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../../../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../../../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../../../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../../../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../../../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../../../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/Manual/tilemaps/work-with-tilemaps/create-tilemap.html">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../../../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../../../StaticFilesManual/js/jquery.js?ts=20260626"></script><script type="text/javascript" src="../../../StaticFilesManual/js/core.js?ts=20260626"></script><script type="text/javascript" src="../../../StaticFilesManual/js/image-comp.js?ts=20260626"></script><script type="text/javascript" src="../../docdata/toc.js?ts=20260626"></script><script type="text/javascript" src="../../docdata/global_toc.js?ts=20260626"></script><link rel="stylesheet" type="text/css" href="../../../StaticFilesManual/css/core.css?ts=20260626">
+<link rel="stylesheet" type="text/css" href="../../../StaticFilesManual/css/icons.css?ts=20260626">
+<link rel="stylesheet" href="../../../StaticFilesManual/css/prism.css">
+<script src="../../../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../../../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../../../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../../../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="../../30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../../index.html" class="selected">Manual</a></li>
+<li><a href="../../../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/tilemaps/work-with-tilemaps/create-tilemap.html">English</a></li>
+<li><a href="/cn/current/Manual/tilemaps/work-with-tilemaps/create-tilemap.html">中文</a></li>
+<li><a href="/ja/current/Manual/tilemaps/work-with-tilemaps/create-tilemap.html">日本語</a></li>
+<li><a href="/kr/current/Manual/tilemaps/work-with-tilemaps/create-tilemap.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: Unity 6.7 Beta</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/tilemaps/work-with-tilemaps/create-tilemap.html">English</a></li>
+<li><a href="/cn/current/Manual/tilemaps/work-with-tilemaps/create-tilemap.html">中文</a></li>
+<li><a href="/ja/current/Manual/tilemaps/work-with-tilemaps/create-tilemap.html">日本語</a></li>
+<li><a href="/kr/current/Manual/tilemaps/work-with-tilemaps/create-tilemap.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="../../Unity2D.html">2D game development</a></li>
+<li><a href="../../tilemaps/tilemaps-landing.html">Tilemaps</a></li>
+<li><a href="../../tilemaps/work-with-tilemaps/create-tilemap-landing.html">Paint tiles into the scene</a></li>
+<li>Paint tiles into the scene</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="../../tilemaps/work-with-tilemaps/create-tilemap-landing.html"></a></span><div class="tip">Paint tiles into the scene</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="../../tilemaps/tile-palettes/tile-palette-clipboard-overlay.html"></a></span><div class="tip">Tile palette Scene view overlays reference</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Paint tiles into the scene</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>After you <a href="../tiles-for-tilemaps/create-tile-assets.html">create a tile palette</a>, create a <span class="tooltip" tabindex="0" ><strong>tilemap</strong><span class="tooltiptext">A GameObject that allows you to quickly create 2D levels using tiles and a grid overlay. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about tilemaps/work-with-tilemaps/tilemap-reference.html" href="../../tilemaps/work-with-tilemaps/tilemap-reference.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../../Glossary.html#Tilemap" aria-label="Go to glossary anchor for Tilemap">Glossary</a></span></span></span> in the <span class="tooltip" tabindex="0" ><strong>scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html" href="../../CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../../Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span> and paint your tiles onto it.</p>
+
+<p><a name="create-tilemap-in-scene" aria-hidden="true"></a></p>
+
+<h2>Create a tilemap in the scene</h2>
+
+<ol>
+<li>Make sure the 2D <span class="tooltip" tabindex="0" ><strong>Sprite</strong><span class="tooltiptext">A 2D graphic objects. If you are used to working in 3D, Sprites are essentially just standard textures but there are special techniques for combining and managing sprite textures for efficiency and convenience during development. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about sprite/sprite-landing.html" href="../../sprite/sprite-landing.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../../Glossary.html#Sprite" aria-label="Go to glossary anchor for Sprite">Glossary</a></span></span></span> package is installed in your project. For more information, refer to <a href="../../setup-project-2d-game.html">set up your project for 2D games</a>.</li>
+<li>In the <strong>Hierarchy</strong> window, right-click and select <strong>2D Object</strong> &gt; <strong>Tilemap</strong> to display the available tilemap types.</li>
+<li>Select the tilemap type that matches your tile palette. The default tilemap type is <strong>Rectangular</strong>.</li>
+</ol>
+
+<p>Unity creates the following:</p>
+
+<ul>
+<li>A grid <span class="tooltip" tabindex="0" ><strong>GameObject</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-GameObject.html" href="../../class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../../Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span>. This is a layout guide that extends infinitely in all directions.</li>
+<li>A child tilemap GameObject. This is the tilemap that you paint your tiles onto.</li>
+</ul>
+
+<p>Select the grid or the tilemap to display its grid in the <span class="tooltip" tabindex="0" ><strong>Scene view</strong><span class="tooltiptext">An interactive view into the world you are creating. You use the Scene View to select and position scenery, characters, cameras, lights, and all other types of Game Object. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheSceneView.html" href="../../UsingTheSceneView.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../../Glossary.html#SceneView" aria-label="Go to glossary anchor for SceneView">Glossary</a></span></span></span>.</p>
+
+<h2>Paint tiles onto the tilemap</h2>
+
+<p>Follow these steps:</p>
+
+<ol>
+<li><p>Open the <strong>Tile Palette</strong> window and select a tile palette or tileset.</p></li>
+<li><p>Set <strong>Active Target</strong> (<span class="iconClr-Tilemap-TilePalette" aria-label="Tile Palette"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span><span class="path7"></span><span class="path8"></span></span>) to the tilemap you want to paint onto.</p></li>
+<li><p>In the toolbar, select the <strong>Paint with Active Brush</strong> (<span class="iconClr-Animation-Brush" aria-label="Brush"></span>) tool.</p></li>
+<li>
+<p>Select a tile from the tile palette. This makes the tile the active brush and highlights it with a white outline. To select multiple tiles, click and drag.</p>
+
+<p>To select a tile from the tilemap in the Scene view instead of the tile palette, hold <strong>Ctrl</strong> (macOS: <strong>Cmd</strong>) and select a tile in the Scene view.</p>
+</li>
+<li><p>Paint into the Scene view.</p></li>
+</ol>
+
+<p>
+<strong>Note:</strong> If you paint with a set of multiple tiles, the brush preview can change as the cursor hovers over neighboring rows or columns. This effect is more pronounced when you paint on hexagonal tilemaps.</p>
+
+<p>To fill areas with tiles instead, or draw lines or paint random tiles, use the other tools and scriptable brushes in the <strong>Tile Palette</strong> window. For more information, refer to <a href="../tile-palettes/tools/tile-palette-tools-landing.html">Tile Palette editor tools</a>.</p>
+
+<h2>Move and edit tiles</h2>
+
+<p>To select a tile in the Scene view for editing, follow these steps:</p>
+
+<ol>
+<li>In the <strong>Tile Palette</strong> window, select the <strong>Select</strong> (<span class="icon-Animation-Selection" aria-label="Selection"></span>) tool in the toolbar.</li>
+<li>Select a tile in the Scene view, or click and drag to select a group of tiles.</li>
+</ol>
+
+<p>You can then do the following:</p>
+
+<ul>
+<li>To move a tile, select the <strong>Move</strong> (<span class="icon-Animation-Move" aria-label="Move"></span>) tool in the toolbar, then click and drag the tile to the new location.</li>
+<li>To change the size of a tile, in the <strong><span class="tooltip" tabindex="0" ><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheInspector.html" href="../../UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../../Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span></strong> window, edit the <strong>Scale</strong> properties in the <strong>Grid Selection Properties</strong> section.</li>
+</ul>
+
+<p>When you select a tile with the <strong>Select</strong> tool, the <strong>Inspector</strong> window displays more properties and settings for editing the tile. For more information, refer to <a href="../tile-palettes/tools/select-tool/grid-selection-properties-reference.html">Grid selection properties reference</a>.</p>
+
+<h2>Delete tiles</h2>
+
+<p>To delete a tile in the Scene view, use one of the following methods:</p>
+
+<ul>
+<li>Select a tile with the <strong>Select</strong> tool, then press the <strong>Delete</strong> (macOS: <strong>Backspace</strong>) key.</li>
+<li>Select the <strong>Paint with Active Brush</strong> tool, then hold the <strong>Shift</strong> key while clicking.</li>
+<li>Select the <strong>Erase with Active Brush</strong> tool (<span class="icon-Animation-Eraser" aria-label="Eraser"></span>), then click tiles. To erase multiple tiles at a time, select the <strong>Paint with Active Brush</strong> tool first, then click and drag an area on the tile palette that’s the size you need.</li>
+</ul>
+
+<h2>Add another tilemap to the grid</h2>
+
+<p>You can add multiple tilemaps to a grid.</p>
+
+<p>To add a tilemap, in the <strong>Hierarchy</strong> window, right-click a grid GameObject then select <strong>2D Object</strong> &gt; <strong>Tilemap</strong>.</p>
+
+<p>
+<strong>Important</strong>: If the new tilemap has a different type to the grid, Unity displays a warning dialog. Select <strong>Continue</strong> to change the <strong>Cell Layout</strong> property of the grid to match the type of the new tilemap. The warning dialog doesn’t appear if you use Unity in <a href="../../EditorCommandLineArguments.html">headless mode</a>.</p>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li>
+<a href="../../../ScriptReference/Tilemaps.Tilemap.html">Tilemap class</a> (Scripting API)</li>
+<li><a href="../tiles-for-tilemaps/create-tile-assets.html">Tiles for tilemaps</a></li>
+<li><a href="../tile-palettes/tile-palette-editor-reference.html">Tile palettes</a></li>
+<li><a href="../work-with-tilemaps/tilemap-collider-2d.html">Tilemap Collider 2D</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="../../tilemaps/work-with-tilemaps/create-tilemap-landing.html"></a></span><div class="tip">Paint tiles into the scene</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="../../tilemaps/tile-palettes/tile-palette-clipboard-overlay.html"></a></span><div class="tip">Tile palette Scene view overlays reference</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

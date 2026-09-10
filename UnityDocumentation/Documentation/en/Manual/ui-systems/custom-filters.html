@@ -1,0 +1,443 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Create and apply custom filters</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<meta property="relative-path-to-manual" content="../">
+<meta property="version-switcher-versions-with-this-page" content="Versions with this page:">
+<meta property="version-switcher-versions-without-this-page" content="Versions without this page:">
+<meta property="version-switcher-supported" content="Supported">
+<meta property="version-switcher-legacy" content="Legacy">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/Manual/ui-systems/custom-filters.html">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../../StaticFilesManual/js/jquery.js?ts=20260626"></script><script type="text/javascript" src="../../StaticFilesManual/js/core.js?ts=20260626"></script><script type="text/javascript" src="../../StaticFilesManual/js/image-comp.js?ts=20260626"></script><script type="text/javascript" src="../docdata/toc.js?ts=20260626"></script><script type="text/javascript" src="../docdata/global_toc.js?ts=20260626"></script><link rel="stylesheet" type="text/css" href="../../StaticFilesManual/css/core.css?ts=20260626">
+<link rel="stylesheet" type="text/css" href="../../StaticFilesManual/css/icons.css?ts=20260626">
+<link rel="stylesheet" href="../../StaticFilesManual/css/prism.css">
+<script src="../../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="../30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../index.html" class="selected">Manual</a></li>
+<li><a href="../../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/ui-systems/custom-filters.html">English</a></li>
+<li><a href="/cn/current/Manual/ui-systems/custom-filters.html">中文</a></li>
+<li><a href="/ja/current/Manual/ui-systems/custom-filters.html">日本語</a></li>
+<li><a href="/kr/current/Manual/ui-systems/custom-filters.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: Unity 6.7 Beta</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/ui-systems/custom-filters.html">English</a></li>
+<li><a href="/cn/current/Manual/ui-systems/custom-filters.html">中文</a></li>
+<li><a href="/ja/current/Manual/ui-systems/custom-filters.html">日本語</a></li>
+<li><a href="/kr/current/Manual/ui-systems/custom-filters.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="../UIToolkits.html">UI systems</a></li>
+<li><a href="../UIElements.html">UI Toolkit</a></li>
+<li><a href="../UIE-USS.html">Style UI</a></li>
+<li><a href="../ui-systems/uss-filter.html">Apply post-processing effects with USS filter</a></li>
+<li>Create and apply custom filters</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="../ui-systems/built-in-filters.html"></a></span><div class="tip">Apply common effects with built-in filters</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="../ui-systems/uss-filter-transitions.html"></a></span><div class="tip">USS filter transitions</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Create and apply custom filters</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>You can create custom filters to apply any effect you want to a <span class="tooltip" tabindex="0" ><strong>visual element</strong><span class="tooltiptext">A node of a visual tree that instantiates or derives from the C# <a href="../../ScriptReference/UIElements.VisualElement.html"><code>VisualElement</code></a> class. You can style the look, define the behaviour, and display it on screen as part of the UI. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UIE-VisualTree.html" href="../UIE-VisualTree.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#visualelement" aria-label="Go to glossary anchor for visualelement">Glossary</a></span></span></span>.</p>
+
+<p>
+<strong>Important</strong>: You can’t use UI <span class="tooltip" tabindex="0" ><strong>Shader</strong><span class="tooltiptext">A program that runs on the GPU. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Shaders.html" href="../Shaders.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#shader" aria-label="Go to glossary anchor for shader">Glossary</a></span></span></span> Graph to create custom filters. Custom filters are <span class="tooltip" tabindex="0" ><strong>post-processing</strong><span class="tooltiptext">A process that improves product visuals by applying filters and effects before the image appears on screen. You can use post-processing effects to simulate physical camera and film properties, for example Bloom and Depth of Field. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about PostProcessingOverview.html" href="../PostProcessingOverview.html">More info</a> <span class="search-words">post processing, postprocessing, postprocess</span><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#post-processing" aria-label="Go to glossary anchor for post-processing">Glossary</a></span></span></span> shaders that apply effects to render targets containing subtrees of visual elements. They are fundamentally different from shaders created with <a href="ui-shader-graph.html">UI Shader Graph</a>, which render UI <span class="tooltip" tabindex="0" ><strong>mesh</strong><span class="tooltiptext">The main graphics primitive of Unity. Meshes make up a large part of your 3D worlds. Unity supports triangulated or Quadrangulated polygon meshes. Nurbs, Nurms, Subdiv surfaces must be converted to polygons. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about mesh.html" href="../mesh.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#Mesh" aria-label="Go to glossary anchor for Mesh">Glossary</a></span></span></span> elements directly.</p>
+
+<h2>Create a custom filter</h2>
+
+<p>To create a custom filter, follow these steps:</p>
+
+<ol>
+<li><p>Create a <code>FilterFunctionDefinition</code> asset. This asset is a simple <code>ScriptableObject</code>.</p></li>
+<li><p>Define filter parameters to set input values for the filter. The supported filter parameter types are <code>float</code> and <code>color</code>. When specified in USS, filter parameters such as numeric, <span class="tooltip" tabindex="0" ><strong>pixels</strong><span class="tooltiptext">The smallest unit in a computer image. Pixel size depends on your screen resolution. Pixel lighting is calculated at every screen pixel. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ShadowPerformance.html" href="../ShadowPerformance.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#pixel" aria-label="Go to glossary anchor for pixel">Glossary</a></span></span></span>, percentages, durations, and angles are converted into float values. Parameters can be set in style or directly in the UI Builder. For example, the <code>blur(5px)</code> filter function has only one parameter: the blur radius. This <a href="create-custom-swirl-filter.html">custom swirl filter function</a> has two parameters, the <code>angle</code> and the <code>radius</code> of the swirl. </p></li>
+<li><p>Provide an <code>interpolation default value</code> (optional). This value is used for smooth transitions between filter states.</p></li>
+<li>
+<p>Add effect passes. Filters often need multiple passes to apply an effect. For example, a blur effect typically has separate horizontal and vertical passes. Each effect pass in the filter includes:</p>
+
+<ul>
+<li>The material to execute: In Unity, shaders and materials work together to define how surfaces look. A shader is a program that tells the GPU how to render graphics and determines the effects on surfaces. Materials store the settings that feed into the shader.</li>
+<li>The pass index for that material.</li>
+</ul>
+</li>
+<li><p>Use data binding to link the filter’s parameters to the material properties. For example, to apply a tint effect, bind a color parameter directly to the material’s <code>_Tint</code> property. For more complex parameter handling, <a href="#complex-parameter">use a C# callback</a>.</p></li>
+<li><p>Set margins (optional). Some effects, such as blur, require extra space around the texture for reading and writing. Define static margins if needed, or <a href="#dynamic-margin">use a C# callback to compute margins dynamically</a>.</p></li>
+</ol>
+
+<p>For an example, refer to <a href="create-custom-swirl-filter.html">Create a custom swirl filter</a>.</p>
+
+<p><a name="create-a-custom-filter-in-c" aria-hidden="true"></a></p>
+
+<h2>Create a custom filter in C# code</h2>
+
+<p>To create a custom filter in C#, define a class that inherits from <a href="../../ScriptReference/UIElements.FilterFunction.html"><code>FilterFunction</code></a> and add the filter’s parameters and effects. The following creates a custom filter in C# for the <a href="create-custom-swirl-filter.html">swirl filter example</a>:</p>
+
+<pre><code class="lang-cs">var customSwirl = ScriptableObject.CreateInstance&lt;FilterFunctionDefinition&gt;();
+
+customSwirl.parameters = new[] {
+    new FilterParameterDeclaration() {
+        interpolationDefaultValue = new FilterParameter(0.0f)
+    },
+    new FilterParameterDeclaration() {
+        interpolationDefaultValue = new FilterParameter(0.5f)
+    }
+};
+
+customSwirl.passes = new[]
+{
+    new PostProcessingPass()
+    {
+        material = SwirlMaterial,
+        passIndex = 0,
+        parameterBindings = new[] {
+            new ParameterBinding() { index = 0, name = &quot;_Angle&quot; },
+            new ParameterBinding() { index = 1, name = &quot;_Radius&quot; }
+        }
+    }
+};
+</code></pre>
+
+<h2>Apply the custom filter in stylesheets</h2>
+
+<p>To apply your custom filter to a visual element, use the filter property in a USS file. Reference the path to the custom filter asset, followed by the parameters needed for the filter. For example:</p>
+
+<pre><code class="lang-css">.custom-effect {
+    filter: filter(&quot;/Assets/Filters/CustomFilter.asset&quot; 10px);
+}
+</code></pre>
+
+<p>You can combine custom filters with built-in filters in the same filter property. This allows you to create complex visual effects by stacking filters. For example:</p>
+
+<pre><code class="lang-css">.custom-effect-blur {
+    filter: filter(&quot;/Assets/Filters/CustomFilter.asset&quot; 10px) blur(25px);
+}
+</code></pre>
+
+<h2>Apply custom filters in C# code</h2>
+
+<p>The following example shows how to apply a blur filter and a custom filter to a visual element in C#:</p>
+
+<pre><code class="lang-csharp">// Create a blur filter using the built-in blur filter function
+var blur = new FilterFunction(FilterFunctionType.BuiltinBlur);
+blur.AddParameter(new FilterParameter(20.0f));
+
+// Create a custom filter function definition
+var custom = new FilterFunction(functionDef);
+// Add parameters to the custom filter
+custom.AddParameter(new FilterParameter(Color.black));
+
+// Apply both the blur and custom filter to the visual element
+element.style.filter = new List&lt;FilterFunction&gt; { blur, custom };
+</code></pre>
+
+<p><a name="dynamic-margin" aria-hidden="true"></a></p>
+
+<h2>Dynamic margin</h2>
+
+<p>You can use a C# callback to compute margins dynamically for a filter.</p>
+
+<p>The following C# code snippet sets dynamic margins for a blur function. Since the extra margins depend on the blur radius, static margins aren’t sufficient in this case.</p>
+
+<p>Before calculating the <span class="tooltip" tabindex="0" ><strong>render texture</strong><span class="tooltiptext">A special type of Texture that is created and updated at runtime. To use them, first create a new Render Texture and designate one of your Cameras to render into it. Then you can use the Render Texture in a Material just like a regular Texture. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-RenderTexture.html" href="../class-RenderTexture.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#RenderTexture" aria-label="Go to glossary anchor for RenderTexture">Glossary</a></span></span></span> size, call this callback. This allows you to specify margins for the given <code>FilterFunction</code>. In this example, the blur radius is read as the function’s first parameter, which is then used to set the margins.</p>
+
+<pre><code class="lang-csharp">effect.computeRequiredReadMarginsCallback = ComputeMargins;
+effect.computeRequiredWriteMarginsCallback = ComputeMargins;
+
+// ...
+
+static PostProcessingMargins ComputeMargins(FilterFunction func)
+{
+    float radius = func.GetParameter(0).floatValue; // Blur radius value
+    return new PostProcessingMargins() {
+        left = radius, top = radius, right = radius, bottom = radius
+    };
+}
+</code></pre>
+
+<p><a name="complex-parameter" aria-hidden="true"></a></p>
+
+<h2>Complex parameter</h2>
+
+<p>For complex parameters, use a C# callback. The following example demonstrates how to use a callback to handle a filter parameter. It converts a single sepia amount value into a full color matrix. By implementing a callback, you can manually set material properties instead of relying on automatic parameter binding. To achieve this, provide a <code>MaterialPropertyBlock</code> to the callback, which then sets the material properties directly, bypassing the automatic binding process.</p>
+
+<pre><code class="lang-csharp">effect.prepareMaterialPropertyBlockCallback = PrepareSepiaMatrix;
+
+// ...
+
+static void PrepareSepiaMatrix(MaterialPropertyBlock mpb, FilterFunction func)
+{
+    float s = func.parameters[0].floatValue; // Sepia value
+
+    var colorMatrix = new Matrix4x4(
+        new Vector4(0.393f + 0.607f * (1 - s), 0.349f - 0.349f * (1 - s), 0.272f - 0.272f * (1 - s), 0),
+        new Vector4(0.769f - 0.769f * (1 - s), 0.686f + 0.314f * (1 - s), 0.534f - 0.534f * (1 - s), 0),
+        new Vector4(0.189f - 0.189f * (1 - s), 0.168f - 0.168f * (1 - s), 0.131f + 0.869f * (1 - s), 0),
+        new Vector4(0, 0, 0, 1));
+
+    mpb.SetMatrix(&quot;_ColorMatrix&quot;, colorMatrix);
+}
+</code></pre>
+
+<h2>Custom filter UV region</h2>
+
+<p>UI Toolkit renders filtered elements into a texture atlas before applying filter shaders. As a result, the corresponding UV coordinates cover only a subregion of the full <code>0–1</code> range. When drawing the filters, the UVs provided to the fragment shader are adjusted to fit the UV region. In simple cases, it is sufficient to sample the texture with the provided UV coordinate.</p>
+
+<p>However, if your custom filter requires UV manipulations, you need to convert the UVs to the <code>0-1</code> range and then back to the atlas UV rectangle. To do the conversion, first extract the filter UV rect index from the vertex data with the <code>GetFilterRectIndex</code> function:</p>
+
+<pre><code class="lang-hlsl">#include &quot;UnityUIEFilter.cginc&quot;
+
+v2f vert (FilterVertexInput v)
+{
+    v2f o;
+    o.vertex = UnityObjectToClipPos(v.vertex);
+    o.uv = TRANSFORM_TEX(v.uv, _MainTex);
+    o.rectIndex = GetFilterRectIndex(v); // Pass filter UV rect index to fragment shader
+    return o;
+}
+</code></pre>
+
+<p>In the vertex or fragment shader, you can extract the UV rect with the <code>GetFilterUVRect</code> function, and then remap the UVs to and from the <code>0-1</code> range:</p>
+
+<pre><code class="lang-hlsl">float2 NormalizeUVs(float2 uv, float4 uvRect)
+{
+    // Normalize UV coordinates based on the atlas rect
+    return float2(
+        (uv.x - uvRect.x) / uvRect.z,
+        (uv.y - uvRect.y) / uvRect.w
+    );
+}
+
+float2 MapToUVRect(float2 uv, float4 uvRect)
+{
+    // Map UV coordinates to the atlas rect
+    return float2(
+        uv.x * uvRect.z + uvRect.x,
+        uv.y * uvRect.w + uvRect.y
+    );
+}
+
+half4 frag (v2f i) : SV_Target
+{
+    // Get the UV rect from the index
+    float4 uvRect = GetFilterUVRect(i.rectIndex);
+
+    // Convert the atlas UVs to the 0-1 range
+    float2 uv = NormalizeUVs(i.uv, uvRect);
+
+    // Do UVs manipulations, (e.g. flip Y axis)
+    uv.y = 1.0f - uv.y;
+
+    // Convert the UVs back to the atlas region
+    uv = MapToUVRect(uv, uvRect);
+
+    return tex2D(_MainTex, uv);
+}
+</code></pre>
+
+<p>
+<strong>Note</strong>: The texture passed into <code>_MainTex</code> when you create a custom filter is pre-multiplied. This means that the RGB values have already been multiplied by the alpha channel, as the texture is the direct output from the previous pass.</p>
+
+<h2>Custom filter and force gamma considerations</h2>
+
+<p>When working in a UI Toolkit force gamma workflow in a <a href="../linear-color-space-landing.html">linear color space</a> (when you enable <strong>Force Gamma Rendering</strong> in the <a href="../UIE-Runtime-Panel-Settings.html">Panel Settings</a> asset), you need to take extra considerations with the color output of custom filters. In this workflow, the last filter applied must linearize the color before output.</p>
+
+<p>To enable the <code>UIE_OUTPUT_LINEAR</code> keyword functionality, include a multi-compile instruction in your shader:</p>
+
+<pre><code class="lang-hlsl">#pragma multi_compile _ _UIE_OUTPUT_LINEAR
+</code></pre>
+
+<p>UI Toolkit automatically enables the <code>UIE_OUTPUT_LINEAR</code> keyword on the material when the last filter is applied, allowing you to check for this keyword to determine when to linearize the color. Note that this is only necessary with the force gamma workflow. For Editor UI in linear projects, force gamma is implicitly enabled.</p>
+
+<p>The following example shows how to handle force gamma considerations in a custom filter shader:</p>
+
+<pre><code class="lang-hlsl">half4 frag(v2f IN) : SV_Target
+{
+    half4 col = tex2D(_MainTex, IN.uv);
+
+    // Apply filter effect.
+
+    // Linearize the color for the force gamma workflow.
+    #if UIE_OUTPUT_LINEAR
+    col.rgb = GammaToLinearSpace(col.rgb);
+    #endif
+
+    return col;
+}
+</code></pre>
+
+<p>The following table summarizes how custom filters behave in different project color space configurations when reading from and writing to render targets:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Project configuration</strong></th>
+	<th style="text-align:left;"><strong>Filter position</strong></th>
+	<th style="text-align:left;"><strong>Input color space</strong></th>
+	<th style="text-align:left;"><strong>Output color space</strong></th>
+	<th style="text-align:left;"><strong>Special handling required</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">Gamma project</td>
+	<td style="text-align:left;">Any</td>
+	<td style="text-align:left;">Gamma</td>
+	<td style="text-align:left;">Gamma</td>
+	<td style="text-align:left;">None. Shaders work in gamma space throughout</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Linear project without force gamma</td>
+	<td style="text-align:left;">Any</td>
+	<td style="text-align:left;">Linear</td>
+	<td style="text-align:left;">Linear</td>
+	<td style="text-align:left;">None. Shaders work in linear space throughout</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Linear project with force gamma</td>
+	<td style="text-align:left;">Non-final passes</td>
+	<td style="text-align:left;">Gamma</td>
+	<td style="text-align:left;">Gamma</td>
+	<td style="text-align:left;">None. Intermediate passes maintain gamma</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Linear project with force gamma</td>
+	<td style="text-align:left;">Final pass</td>
+	<td style="text-align:left;">Gamma</td>
+	<td style="text-align:left;">Linear</td>
+	<td style="text-align:left;">Convert output to linear using <code>GammaToLinearSpace</code>
+</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+<strong>Note</strong>: When using <code>MaterialPropertyBlock.SetColor</code> to set color parameters in custom filters within a linear project that has force gamma enabled, the colors are provided in linear space while your filter shader operates in gamma space (as shown in the previous table). To maintain color accuracy, convert these color parameters to gamma space in your shader:</p>
+
+<pre><code class="lang-hlsl">// Convert color parameter from linear to gamma space in shader.
+fixed4 colorParam = _ColorParameter;
+colorParam.rgb = LinearToGammaSpace(colorParam.rgb);
+// Use the converted colorParam in your gamma-space filter calculations.
+</code></pre>
+
+<p>This conversion ensures color parameters match the gamma color space your filter operates in, preventing color accuracy issues.</p>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="create-custom-swirl-filter.html">Create a custom swirl filter</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="../ui-systems/built-in-filters.html"></a></span><div class="tip">Apply common effects with built-in filters</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="../ui-systems/uss-filter-transitions.html"></a></span><div class="tip">USS filter transitions</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

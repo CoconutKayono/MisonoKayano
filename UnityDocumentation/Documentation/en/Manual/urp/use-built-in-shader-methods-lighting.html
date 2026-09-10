@@ -1,0 +1,401 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Use lighting in a custom URP shader</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<meta property="relative-path-to-manual" content="../">
+<meta property="version-switcher-versions-with-this-page" content="Versions with this page:">
+<meta property="version-switcher-versions-without-this-page" content="Versions without this page:">
+<meta property="version-switcher-supported" content="Supported">
+<meta property="version-switcher-legacy" content="Legacy">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/Manual/urp/use-built-in-shader-methods-lighting.html">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../../StaticFilesManual/js/jquery.js?ts=20260626"></script><script type="text/javascript" src="../../StaticFilesManual/js/core.js?ts=20260626"></script><script type="text/javascript" src="../../StaticFilesManual/js/image-comp.js?ts=20260626"></script><script type="text/javascript" src="../docdata/toc.js?ts=20260626"></script><script type="text/javascript" src="../docdata/global_toc.js?ts=20260626"></script><link rel="stylesheet" type="text/css" href="../../StaticFilesManual/css/core.css?ts=20260626">
+<link rel="stylesheet" type="text/css" href="../../StaticFilesManual/css/icons.css?ts=20260626">
+<link rel="stylesheet" href="../../StaticFilesManual/css/prism.css">
+<script src="../../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="../30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../index.html" class="selected">Manual</a></li>
+<li><a href="../../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/urp/use-built-in-shader-methods-lighting.html">English</a></li>
+<li><a href="/cn/current/Manual/urp/use-built-in-shader-methods-lighting.html">中文</a></li>
+<li><a href="/ja/current/Manual/urp/use-built-in-shader-methods-lighting.html">日本語</a></li>
+<li><a href="/kr/current/Manual/urp/use-built-in-shader-methods-lighting.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: Unity 6.7 Beta</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/urp/use-built-in-shader-methods-lighting.html">English</a></li>
+<li><a href="/cn/current/Manual/urp/use-built-in-shader-methods-lighting.html">中文</a></li>
+<li><a href="/ja/current/Manual/urp/use-built-in-shader-methods-lighting.html">日本語</a></li>
+<li><a href="/kr/current/Manual/urp/use-built-in-shader-methods-lighting.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="../materials-and-shaders.html">Materials and shaders</a></li>
+<li><a href="../Shaders.html">Custom shaders</a></li>
+<li><a href="../urp/writing-custom-shaders-urp.html">Writing custom shaders in URP</a></li>
+<li><a href="../urp/use-built-in-shader-methods.html">Shader methods in URP</a></li>
+<li>Use lighting in a custom URP shader</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="../urp/use-built-in-shader-methods-camera.html"></a></span><div class="tip">Use the camera in a custom URP shader</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="../urp/use-built-in-shader-methods-indirect-lighting.html"></a></span><div class="tip">Use indirect lighting in a custom URP shader</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Use lighting in a custom URP shader</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>To use lighting in a custom Universal <span class="tooltip" tabindex="0" ><strong>Render Pipeline</strong><span class="tooltiptext">A series of operations that take the contents of a Scene, and displays them on a screen. Unity lets you choose from pre-built render pipelines, or write your own. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about render-pipelines.html" href="../render-pipelines.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#renderpipeline" aria-label="Go to glossary anchor for renderpipeline">Glossary</a></span></span></span> (URP) <span class="tooltip" tabindex="0" ><strong>shader</strong><span class="tooltiptext">A program that runs on the GPU. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Shaders.html" href="../Shaders.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#shader" aria-label="Go to glossary anchor for shader">Glossary</a></span></span></span>, follow these steps:</p>
+
+<ol>
+<li>Add <code>#include &quot;Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl&quot;</code> inside the <code>HLSLPROGRAM</code> in your shader file.</li>
+<li>Use any of the methods from the following sections.</li>
+</ol>
+
+<h2>Get light data</h2>
+
+<p>The <code>Lighting.hlsl</code> file imports the <code>RealtimeLights.hlsl</code> file, which contains the following methods.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Method</strong></th>
+	<th style="text-align:left;"><strong>Syntax</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><code>GetMainLight</code></td>
+	<td style="text-align:left;"><code>Light GetMainLight()</code></td>
+	<td style="text-align:left;">Returns the main light in the <span class="tooltip" tabindex="0" ><strong>scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html" href="../CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>GetAdditionalLight</code></td>
+	<td style="text-align:left;"><code>Light GetAdditionalLight(uint lightIndex, float3 positionInWorldSpace)</code></td>
+	<td style="text-align:left;">Returns the <code>lightIndex</code> additional light that affects <code>positionWS</code>. For example, if <code>lightIndex</code> is <code>0</code>, this method returns the first additional light.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>GetAdditionalLightsCount</code></td>
+	<td style="text-align:left;"><code>int GetAdditionalLightsCount()</code></td>
+	<td style="text-align:left;">Returns the number of additional lights. <strong>Note</strong>: this function always returns 0 in the Forward+ <span class="tooltip" tabindex="0" ><strong>rendering path</strong><span class="tooltiptext">The technique that a render pipeline uses to render graphics. Choosing a different rendering path affects how lighting and shading are calculated. Some rendering paths are more suited to different platforms and hardware than others. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about RenderingPaths.html" href="../RenderingPaths.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#renderingpath" aria-label="Go to glossary anchor for renderingpath">Glossary</a></span></span></span>. For more information, refer to <a href="use-built-in-shader-methods-additional-lights-fplus.html">Iterate over additional lights in the Forward+ rendering path</a>.</td>
+</tr>
+</tbody>
+</table>
+
+<p>Refer to <a href="use-built-in-shader-methods-shadows.html">Use shadows in a custom URP shader</a> for information on versions of these methods you can use to calculate shadows.</p>
+
+<h3>Calculate lighting for a surface normal</h3>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Method</strong></th>
+	<th style="text-align:left;"><strong>Syntax</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><code>LightingLambert</code></td>
+	<td style="text-align:left;"><code>half3 LightingLambert(half3 lightColor, half3 lightDirection, half3 surfaceNormal)</code></td>
+	<td style="text-align:left;">Returns the diffuse lighting for the surface normal, calculated using the Lambert model.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>LightingSpecular</code></td>
+	<td style="text-align:left;"><code>half3 LightingSpecular(half3 lightColor, half3 lightDirection, half3 surfaceNormal, half3 viewDirection, half4 specularAmount, half smoothnessAmount)</code></td>
+	<td style="text-align:left;">Returns the specular lighting for the surface normal, using <a href="shading-model.html#simple-shading">simple shading</a>.</td>
+</tr>
+</tbody>
+</table>
+
+<h2>Calculate ambient occlusion</h2>
+
+<p>The <code>Lighting.hlsl</code> file imports the <code>AmbientOcclusion.hlsl</code> file, which contains the following methods.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Method</strong></th>
+	<th style="text-align:left;"><strong>Syntax</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><code>SampleAmbientOcclusion</code></td>
+	<td style="text-align:left;"><code>half SampleAmbientOcclusion(float2 normalizedScreenSpaceUV)</code></td>
+	<td style="text-align:left;">Returns the ambient occlusion value at the position in screen space, where 0 means occluded and 1 means unoccluded.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>GetScreenSpaceAmbientOcclusion</code></td>
+	<td style="text-align:left;"><code>AmbientOcclusionFactor GetScreenSpaceAmbientOcclusion(float2 normalizedScreenSpaceUV)</code></td>
+	<td style="text-align:left;">Returns the indirect and direct ambient occlusion values at the position in screen space, where 0 means occluded and 1 means unoccluded.</td>
+</tr>
+</tbody>
+</table>
+
+<p>Refer to <span class="tooltip" tabindex="0" ><a href="post-processing-ssao.html">Ambient occlusion</a><span class="tooltiptext">A method to approximate how much ambient light (light not coming from a specific direction) can hit a point on a surface.<br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#ambientocclusion" aria-label="Go to glossary anchor for ambientocclusion">Glossary</a></span></span></span> for more information.</p>
+
+<h2>Structs</h2>
+
+<h3>AmbientOcclusionFactor</h3>
+
+<p>Use the <code>GetScreenSpaceAmbientOcclusion</code> method to return this struct.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Field</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><code>half indirectAmbientOcclusion</code></td>
+	<td style="text-align:left;">The amount the object is in shadow from ambient occlusion caused by objects blocking indirect light.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>half directAmbientOcclusion</code></td>
+	<td style="text-align:left;">The amount the object is in shadow from ambient occlusion caused by objects blocking direct light.</td>
+</tr>
+</tbody>
+</table>
+
+<h3>Light</h3>
+
+<p>Use the <code>GetMainLight</code> and <code>GetAdditionalLight</code> methods to return this struct.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Field</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><code>half3 direction</code></td>
+	<td style="text-align:left;">The direction of the light.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>half3 color</code></td>
+	<td style="text-align:left;">The color of the light.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>float distanceAttenuation</code></td>
+	<td style="text-align:left;">The strength of the light, based on its distance from the object.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>half shadowAttenuation</code></td>
+	<td style="text-align:left;">The strength of the light, based on whether the object is in shadow.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>uint layerMask</code></td>
+	<td style="text-align:left;">The <span class="tooltip" tabindex="0" ><strong>layer mask</strong><span class="tooltiptext">A value defining which layers to include or exclude from an operation, such as rendering, collision or your own code. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Layers.html" href="../Layers.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#LayerMask" aria-label="Go to glossary anchor for LayerMask">Glossary</a></span></span></span> of the light.</td>
+</tr>
+</tbody>
+</table>
+
+<h2>Example</h2>
+
+<p>The following URP shader draws object surfaces with the amount of light they receive from the main directional light.</p>
+
+<pre><code class="lang-hlsl">Shader &quot;Custom/LambertLighting&quot;
+{
+    SubShader
+    {
+        Tags { &quot;RenderType&quot; = &quot;Opaque&quot; &quot;RenderPipeline&quot; = &quot;UniversalPipeline&quot; }
+
+        Pass
+        {
+            HLSLPROGRAM
+
+            #pragma vertex vert
+            #pragma fragment frag
+
+            #include &quot;Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl&quot;
+
+            struct Attributes
+            {
+                float4 positionOS : POSITION;
+                float2 uv: TEXCOORD0;
+            };
+
+            struct Varyings
+            {
+                float4 positionCS  : SV_POSITION;
+                float2 uv: TEXCOORD0;
+                half3 lightAmount : TEXCOORD2;
+            };
+
+            Varyings vert(Attributes IN)
+            {
+                Varyings OUT;
+
+                OUT.positionCS = TransformObjectToHClip(IN.positionOS.xyz);
+
+                // Get the VertexNormalInputs of the vertex, which contains the normal in world space
+                VertexNormalInputs positions = GetVertexNormalInputs(IN.positionOS);
+
+                // Get the properties of the main light
+                Light light = GetMainLight();
+
+                // Calculate the amount of light the vertex receives
+                OUT.lightAmount = LightingLambert(light.color, light.direction, positions.normalWS.xyz);
+
+                return OUT;
+            }
+
+            half4 frag(Varyings IN) : SV_Target
+            {
+                // Set the fragment color to the interpolated amount of light
+                return float4(IN.lightAmount, 1);
+            }
+            ENDHLSL
+        }
+    }
+}
+</code></pre>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="writing-custom-shaders-urp.html">Writing custom shaders</a></li>
+<li><a href="urp-shaders/birp-urp-custom-shader-upgrade-guide.html">Convert custom shaders for URP compatibility</a></li>
+<li><a href="../writing-shader-writing-shader-programs-hlsl.html">HLSL in Unity</a></li>
+<li><a href="use-built-in-shader-methods-additional-lights-fplus.html">Use additional lights in the Forward+ rendering path</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="../urp/use-built-in-shader-methods-camera.html"></a></span><div class="tip">Use the camera in a custom URP shader</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="../urp/use-built-in-shader-methods-indirect-lighting.html"></a></span><div class="tip">Use indirect lighting in a custom URP shader</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

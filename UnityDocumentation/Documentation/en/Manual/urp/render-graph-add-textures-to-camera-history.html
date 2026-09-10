@@ -1,0 +1,363 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Add textures to the camera history</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<meta property="relative-path-to-manual" content="../">
+<meta property="version-switcher-versions-with-this-page" content="Versions with this page:">
+<meta property="version-switcher-versions-without-this-page" content="Versions without this page:">
+<meta property="version-switcher-supported" content="Supported">
+<meta property="version-switcher-legacy" content="Legacy">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/Manual/urp/render-graph-add-textures-to-camera-history.html">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../../StaticFilesManual/js/jquery.js?ts=20260626"></script><script type="text/javascript" src="../../StaticFilesManual/js/core.js?ts=20260626"></script><script type="text/javascript" src="../../StaticFilesManual/js/image-comp.js?ts=20260626"></script><script type="text/javascript" src="../docdata/toc.js?ts=20260626"></script><script type="text/javascript" src="../docdata/global_toc.js?ts=20260626"></script><link rel="stylesheet" type="text/css" href="../../StaticFilesManual/css/core.css?ts=20260626">
+<link rel="stylesheet" type="text/css" href="../../StaticFilesManual/css/icons.css?ts=20260626">
+<link rel="stylesheet" href="../../StaticFilesManual/css/prism.css">
+<script src="../../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="../30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../index.html" class="selected">Manual</a></li>
+<li><a href="../../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/urp/render-graph-add-textures-to-camera-history.html">English</a></li>
+<li><a href="/cn/current/Manual/urp/render-graph-add-textures-to-camera-history.html">中文</a></li>
+<li><a href="/ja/current/Manual/urp/render-graph-add-textures-to-camera-history.html">日本語</a></li>
+<li><a href="/kr/current/Manual/urp/render-graph-add-textures-to-camera-history.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: Unity 6.7 Beta</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/urp/render-graph-add-textures-to-camera-history.html">English</a></li>
+<li><a href="/cn/current/Manual/urp/render-graph-add-textures-to-camera-history.html">中文</a></li>
+<li><a href="/ja/current/Manual/urp/render-graph-add-textures-to-camera-history.html">日本語</a></li>
+<li><a href="/kr/current/Manual/urp/render-graph-add-textures-to-camera-history.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="../render-pipelines.html">Render pipelines</a></li>
+<li><a href="../universal-render-pipeline.html">Using the Universal Render Pipeline</a></li>
+<li><a href="../urp/customizing-urp.html">Custom rendering and post-processing in URP</a></li>
+<li><a href="../urp/render-graph.html">Render graph system in URP</a></li>
+<li><a href="../urp/render-graph-frame-data.html">Frame data in the render graph system in URP</a></li>
+<li>Add textures to the camera history</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="../urp/render-graph-get-previous-frames.html"></a></span><div class="tip">Get data from previous frames in URP</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="../urp/render-graph-framebuffer-fetch.html"></a></span><div class="tip">Get the current framebuffer from GPU memory in URP</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Add textures to the camera history</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>To add your own texture to the <span class="tooltip" tabindex="0" ><strong>camera</strong><span class="tooltiptext">A component which creates an image of a particular viewpoint in your scene. The output is either drawn to the screen or captured as a texture. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CamerasOverview.html" href="../CamerasOverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#Camera" aria-label="Go to glossary anchor for Camera">Glossary</a></span></span></span> history and read the data in later frames, create a camera history type to store the texture between frames.</p>
+
+<h2>Create a camera history type</h2>
+
+<p>Follow these steps:</p>
+
+<ol>
+<li>
+<p>Create a class that inherits from <code>CameraHistoryItem</code>. For example:</p>
+
+<pre><code class="lang-cs">public class ExampleHistoryType : CameraHistoryItem {
+    ...
+}
+</code></pre>
+</li>
+<li>
+<p>In the class, add an id for the camera history system. For example:</p>
+
+<pre><code class="lang-cs">    private int uniqueId;
+</code></pre>
+
+<p>The id represents the complete history of one texture, including the current and previous frames. </p>
+
+<p>You can also add any other data you need, for example a texture descriptor you need to store between frames.</p>
+</li>
+<li>
+<p>Override the <code>OnCreate</code> method. In the method, call the <code>OnCreate</code> method of the parent class, and generate the unique id. For example:</p>
+
+<pre><code class="lang-cs">public override void OnCreate(BufferedRTHandleSystem owner, uint typeId)
+{
+    // Call the OnCreate method of the parent class
+    base.OnCreate(owner, typeId);
+
+    // Generate the unique id
+    uniqueId = MakeId(0);
+}
+</code></pre>
+</li>
+<li>
+<p>Create public properties for the current and previous textures, so that render passes can access them. For example:</p>
+
+<pre><code class="lang-cs">public RTHandle currentTexture =&gt; GetCurrentFrameRT(uniqueId);
+public RTHandle previousTexture =&gt; GetPreviousFrameRT(uniqueId);
+</code></pre>
+</li>
+<li>
+<p>Allocate memory for the texture. For example:</p>
+
+<pre><code class="lang-cs">// Allocate 2 textures using a texture descriptor, assign them to the uniqueId, and give them a name.
+AllocHistoryFrameRT(uniqueId, 2, ref textureDescriptor, &quot;ExampleHistoryTexture&quot;);
+</code></pre>
+</li>
+<li>
+<p>Implement the <code>Reset</code> method to release the history textures when the camera history system resets the type. For example:</p>
+
+<pre><code class="lang-cs">public override void Reset()
+{
+    ReleaseHistoryFrameRT(uniqueId);
+}
+</code></pre>
+</li>
+</ol>
+
+<p>You might also need to reallocate memory each frame if a render pass writes a texture with a different size or format.</p>
+
+<h2>Write to the texture</h2>
+
+<p>To write to the texture you created, follow these steps:</p>
+
+<ol>
+<li>
+<p>To request access to the texture in a <code>ScriptableRenderPass</code> class, use the <code>RequestAccess</code> API with your camera history type. For example:</p>
+
+<pre><code class="lang-cs">cameraData.historyManager.RequestAccess&lt;ExampleHistoryType&gt;();
+</code></pre>
+</li>
+<li>
+<p>Get the texture for the current frame for writing, and convert it to a handle the render graph system can use. For example:</p>
+
+<pre><code class="lang-cs">// Get the textures 
+ExampleHistoryType history = cameraData.historyManager.GetHistoryForWrite&lt;ExampleHistoryType&gt;();
+
+// Get the texture for the current frame
+RTHandle historyTexture = history?.currentTexture;
+
+// Convert the texture into a handle the render graph system can use
+historyTexture = renderGraph.ImportTexture(historyTexture);
+</code></pre>
+</li>
+</ol>
+
+<p>You can then write to the texture in your render pass. For more information, refer to <a href="working-with-textures.html">Using textures</a>.</p>
+
+<h2>Read from the texture</h2>
+
+<p>To read from the texture, use the <code>RequestAccess</code> API with the camera history type you created.</p>
+
+<p>You must write to the texture before you read from it.</p>
+
+<p>For more information, refer to <a href="render-graph-get-previous-frames.html">Get data from previous frames</a>.</p>
+
+<h2>Examples</h2>
+
+<p>The following is an example of a camera history type.</p>
+
+<pre><code class="lang-cs">using UnityEngine;
+using UnityEngine.Rendering;
+
+public class ExampleHistoryType : CameraHistoryItem
+{
+    private int m_Id;
+
+    // Add a descriptor for the size and format of the texture.
+    private RenderTextureDescriptor m_Descriptor;
+
+    // Add a hash key to track changes to the descriptor.
+    private Hash128 m_DescKey;
+
+    public override void OnCreate(BufferedRTHandleSystem owner, uint typeId)
+    {
+        base.OnCreate(owner, typeId);
+        m_Id = MakeId(0);
+    }
+
+    // Release the history GPU resources (textures) when the camera history system resets the type.
+    public override void Reset()
+    {
+        ReleaseHistoryFrameRT(m_Id);
+    }
+
+    public RTHandle currentTexture =&gt; GetCurrentFrameRT(m_Id);
+    public RTHandle previousTexture =&gt; GetPreviousFrameRT(m_Id);
+
+    // The render pass calls the Update method every frame, to initialize, update, or dispose of the textures.
+    public void Update(RenderTextureDescriptor textureDescriptor)
+    {
+        // Dispose of the textures if the memory needs to be reallocated.
+        if (m_DescKey != Hash128.Compute(ref textureDescriptor))
+            ReleaseHistoryFrameRT(m_Id);
+
+        // Allocate the memory for the textures if it's not already allocated.
+        if (currentTexture == null)
+        {
+            AllocHistoryFrameRT(m_Id, 2, ref textureDescriptor, &quot;HistoryTexture&quot;);
+
+            // Store the descriptor and hash key for future changes.
+            m_Descriptor = textureDescriptor;
+            m_DescKey = Hash128.Compute(ref textureDescriptor);
+        }
+    }
+}
+</code></pre>
+
+<p>The following is an example of a render pass that writes to the texture. You can use a URP material as the <code>material</code>, and a Scriptable Renderer Feature to inject the render pass into the <span class="tooltip" tabindex="0" ><strong>render pipeline</strong><span class="tooltiptext">A series of operations that take the contents of a Scene, and displays them on a screen. Unity lets you choose from pre-built render pipelines, or write your own. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about render-pipelines.html" href="../render-pipelines.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#renderpipeline" aria-label="Go to glossary anchor for renderpipeline">Glossary</a></span></span></span>.</p>
+
+<pre><code class="lang-cs">using UnityEngine;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
+using UnityEngine.Rendering.RenderGraphModule;
+
+class WriteToHistoryTexture : ScriptableRenderPass
+{
+    // Property for the custom material that writes to the history texture.
+    public Material m_Material;
+
+    class PassData
+    {
+        public Material material;
+    }
+
+    public override void RecordRenderGraph(RenderGraph renderGraph, ContextContainer frameData)
+    {
+        var cameraData = frameData.Get&lt;UniversalCameraData&gt;();
+
+        // Request access to the history texture.
+        cameraData.historyManager.RequestAccess&lt;ExampleHistoryType&gt;();
+        var history = cameraData.historyManager.GetHistoryForWrite&lt;ExampleHistoryType&gt;();
+
+        if (history != null)
+        {
+            // Make the history a color-only texture to match the camera target.
+            var historyDesc = cameraData.cameraTargetDescriptor;
+            historyDesc.depthBufferBits = 0;
+            historyDesc.msaaSamples = 1;
+            
+            // Call the Update method of the camera history type.
+            history.Update(historyDesc);
+
+            using (var builder = renderGraph.AddRasterRenderPass&lt;PassData&gt;(&quot;Write to history texture&quot;, out var passData))
+            {
+                UniversalResourceData resourceData = frameData.Get&lt;UniversalResourceData&gt;();
+                RTHandle historyTexture = history?.currentTexture;
+
+                // Set the render graph to render to the history texture.
+                builder.SetRenderAttachment(renderGraph.ImportTexture(historyTexture), 0, AccessFlags.Write);
+
+                passData.material = m_Material;
+
+                builder.SetRenderFunc(static (PassData data, RasterGraphContext context) =&gt;
+                {
+                    // Draw a triangle to the history texture
+                    context.cmd.DrawProcedural(Matrix4x4.identity, data.material, 0, MeshTopology.Triangles, 3, 1);
+                });
+            }
+        }
+    }
+}
+</code></pre>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="renderer-features/scriptable-renderer-features/inject-a-pass-using-a-scriptable-renderer-feature.html">Inject a render pass with a Scriptable Renderer Feature</a></li>
+<li><a href="writing-custom-shaders-urp.html">Writing custom shaders in URP</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="../urp/render-graph-get-previous-frames.html"></a></span><div class="tip">Get data from previous frames in URP</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="../urp/render-graph-framebuffer-fetch.html"></a></span><div class="tip">Get the current framebuffer from GPU memory in URP</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

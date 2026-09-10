@@ -1,0 +1,233 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Introduction to motion vectors in URP</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<meta property="relative-path-to-manual" content="../../">
+<meta property="version-switcher-versions-with-this-page" content="Versions with this page:">
+<meta property="version-switcher-versions-without-this-page" content="Versions without this page:">
+<meta property="version-switcher-supported" content="Supported">
+<meta property="version-switcher-legacy" content="Legacy">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../../../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../../../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../../../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../../../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../../../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../../../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../../../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/Manual/urp/features/motion-vectors.html">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../../../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../../../StaticFilesManual/js/jquery.js?ts=20260626"></script><script type="text/javascript" src="../../../StaticFilesManual/js/core.js?ts=20260626"></script><script type="text/javascript" src="../../../StaticFilesManual/js/image-comp.js?ts=20260626"></script><script type="text/javascript" src="../../docdata/toc.js?ts=20260626"></script><script type="text/javascript" src="../../docdata/global_toc.js?ts=20260626"></script><link rel="stylesheet" type="text/css" href="../../../StaticFilesManual/css/core.css?ts=20260626">
+<link rel="stylesheet" type="text/css" href="../../../StaticFilesManual/css/icons.css?ts=20260626">
+<link rel="stylesheet" href="../../../StaticFilesManual/css/prism.css">
+<script src="../../../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../../../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../../../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../../../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="../../30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../../index.html" class="selected">Manual</a></li>
+<li><a href="../../../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/urp/features/motion-vectors.html">English</a></li>
+<li><a href="/cn/current/Manual/urp/features/motion-vectors.html">中文</a></li>
+<li><a href="/ja/current/Manual/urp/features/motion-vectors.html">日本語</a></li>
+<li><a href="/kr/current/Manual/urp/features/motion-vectors.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: Unity 6.7 Beta</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/urp/features/motion-vectors.html">English</a></li>
+<li><a href="/cn/current/Manual/urp/features/motion-vectors.html">中文</a></li>
+<li><a href="/ja/current/Manual/urp/features/motion-vectors.html">日本語</a></li>
+<li><a href="/kr/current/Manual/urp/features/motion-vectors.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="../../Cameras.html">Cameras</a></li>
+<li><a href="../../urp/urp-cameras-landing.html">Cameras in URP</a></li>
+<li><a href="../../urp/features/motion-vectors-landing.html">Motion vectors in URP</a></li>
+<li>Introduction to motion vectors in URP</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="../../urp/features/motion-vectors-landing.html"></a></span><div class="tip">Motion vectors in URP</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="../../urp/features/motion-vectors-shader-support.html"></a></span><div class="tip">Built-in shader support for motion vectors in URP</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Introduction to motion vectors in URP</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>URP calculates the frame-to-frame screen-space movement of surface fragments using a <a href="motion-vectors-sample.html">motion vector render pass</a>. URP stores the movement data in a full-screen texture and the stored per-pixel values are called <a href="#definition">motion vectors</a>.</p>
+
+<p>Unity runs the motion vector render pass only when there are active features in the frame with render passes that request it. For example, the following URP features request the motion vector pass: <a href="../anti-aliasing.html#taa">temporal anti-aliasing</a> and <a href="../Post-Processing-Motion-Blur.html">motion blur</a>. For information on how to request the motion vector pass in a custom passes, refer to section <a href="motion-vectors-sample.html">Using the motion vector texture in your passes</a>.</p>
+
+<p>Incorrect or missing motion vectors can result in <a href="motion-vectors-troubleshooting.html">visual artifacts</a> in effects that rely on them. Follow the instructions on this page to ensure that your object renderers, Materials, and <span class="tooltip" tabindex="0" ><strong>shaders</strong><span class="tooltiptext">A program that runs on the GPU. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Shaders.html" href="../../Shaders.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../../Glossary.html#shader" aria-label="Go to glossary anchor for shader">Glossary</a></span></span></span> are set up correctly to support motion vectors.</p>
+
+<p>URP supports motion vectors only for opaque materials, including alpha-clipped materials. URP does not support motion vectors for transparent materials.</p>
+
+<h2>Implementation details</h2>
+
+<p>This section describes how URP implements motion vectors.</p>
+
+<h3>
+<a name="definition" aria-hidden="true"></a>Motion vector definition</h3>
+
+<p>A motion vector is a 2D vector representing a surface fragment’s motion relative to the <span class="tooltip" tabindex="0" ><strong>camera</strong><span class="tooltiptext">A component which creates an image of a particular viewpoint in your scene. The output is either drawn to the screen or captured as a texture. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CamerasOverview.html" href="../../CamerasOverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../../Glossary.html#Camera" aria-label="Go to glossary anchor for Camera">Glossary</a></span></span></span> since the last frame, projected onto the camera’s near <span class="tooltip" tabindex="0" ><strong>clipping plane</strong><span class="tooltiptext">A plane that limits how far or close a camera can see from its current position. A camera’s viewable range is between the far and near clipping planes. See far clipping plane and near clipping plane. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-Camera.html" href="../../class-Camera.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../../Glossary.html#clippingplane" aria-label="Go to glossary anchor for clippingplane">Glossary</a></span></span></span>. The motion vector texture uses 2 channels (R and G). Each texel stores the UV offset of each visible surface fragment. If you subtract the motion vector for a given texel from its current UV coordinate, you will get the UV coordinate of where this texel would have been on the screen last frame. The computed last frame UV coordinate can be outside the screen bounds.</p>
+
+<h3>Object motion vectors and camera-only motion vectors</h3>
+
+<p>There are two categories of motion vectors:</p>
+
+<ul>
+<li><p>
+<strong>Camera motion vectors</strong>: motion vectors caused only by the camera’s own motion.</p></li>
+<li><p>
+<strong>Object motion vectors</strong>: motion vectors caused by a combination of the camera’s motion and the world-space motion of the object the fragment belongs to.</p></li>
+</ul>
+
+<p>Given only the motion vector texture it’s impossible to infer whether a fragment’s motion on screen is due to only camera motion, object motion or a combination of both.</p>
+
+<p>A single full-screen pass is enough to calculate camera motion vectors. Such pass has a fixed per-frame computation load independent of <span class="tooltip" tabindex="0" ><strong>scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html" href="../../CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../../Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span> complexity. It’s only necessary to know the current 3D positions of all <span class="tooltip" tabindex="0" ><strong>pixels</strong><span class="tooltiptext">The smallest unit in a computer image. Pixel size depends on your screen resolution. Pixel lighting is calculated at every screen pixel. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ShadowPerformance.html" href="../../ShadowPerformance.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../../Glossary.html#pixel" aria-label="Go to glossary anchor for pixel">Glossary</a></span></span></span> on screen and how the camera moved, which can be inferred from the <span class="tooltip" tabindex="0" ><strong>depth buffer</strong><span class="tooltiptext">A memory store that holds the z-value depth of each pixel in an image, where the z-value is the depth for each rendered pixel from the projection plane. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-RenderTexture.html" href="../../class-RenderTexture.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../../Glossary.html#depthbuffer" aria-label="Go to glossary anchor for depthbuffer">Glossary</a></span></span></span> and the camera matrices for the current and the previous frames.</p>
+
+<p>Object motion vectors have computation load which depends on the number and complexity of the moving objects in the scene because a draw per-object is required to account for each object’s motion. Each draw needs to apply the camera’s motion contribution too.</p>
+
+<h3>
+<a name="cases-when-motion-vectors" aria-hidden="true"></a>Cases when Unity renders per-object motion vectors</h3>
+
+<p>Unity renders object motion vectors for a <span class="tooltip" tabindex="0" ><strong>mesh</strong><span class="tooltiptext">The main graphics primitive of Unity. Meshes make up a large part of your 3D worlds. Unity supports triangulated or Quadrangulated polygon meshes. Nurbs, Nurms, Subdiv surfaces must be converted to polygons. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about mesh.html" href="../../mesh.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../../Glossary.html#Mesh" aria-label="Go to glossary anchor for Mesh">Glossary</a></span></span></span> in a frame when the following three conditions are met:</p>
+
+<ol>
+<li><p>The shader associated with the mesh has a <a href="motion-vectors-shader-support.html">MotionVectors pass</a> in an active SubShader block.</p></li>
+<li>
+<p>The mesh is being rendered through any of the following renderers:</p>
+
+<ol>
+<li><p>
+<strong>SkinnedMeshRenderer</strong>.</p></li>
+<li><p>
+<strong>MeshRenderer</strong>, when its <strong>Motion Vectors</strong> property is not set to <code>Camera Motion Only</code>.</p></li>
+<li><p>Using the following APIs: <a href="https://docs.unity3d.com/ScriptReference/Graphics.RenderMesh.html">Graphics.RenderMesh</a>, <a href="https://docs.unity3d.com/ScriptReference/Graphics.RenderMeshInstanced.html">Graphics.RenderMeshInstanced</a> or <a href="https://docs.unity3d.com/ScriptReference/Graphics.RenderMeshIndirect.html">Graphics.RenderMeshIndirect</a>, with the <code>MotionVectorMode</code> member of the <code>RenderParams</code> struct not set to <code>Camera</code>.</p></li>
+</ol>
+</li>
+<li>
+<p>If any of the following conditions is true:</p>
+
+<ol>
+<li>
+<p>The <code>MotionVectorGenerationMode</code> property is set to <code>ForceNoMotion</code> on the <code>MeshRenderer</code> or the <code>RenderParams.MotionVectorMode</code> struct member of the <code>Grphics.Render...</code> APIs.</p>
+
+<p>
+<strong>Note:</strong> The <code>ForceNoMotion</code> option requires a per-object motion vector pass to be rendered every frame so that the camera motion vectors for such objects can be overwritten with zeros.</p>
+</li>
+<li><p>The <strong>MotionVectors</strong> pass <a href="https://docs.unity3d.com/ScriptReference/Material.SetPass.html">is enabled on the material</a> (for example, when a material has a vertex animation in Shader Graph or alembic animation).</p></li>
+<li><p>The <strong>MotionVectors</strong> pass <a href="https://docs.unity3d.com/ScriptReference/Material.SetPass.html">is disabled on the material</a> but the model matrices for the previous and the current frame don’t match, or if the object has skeletal animation. Stationary renderers without skeletal animation are not rendered with an object motion vector pass if their shader has a <code>MotionVectors</code> pass but it’s disabled on their material.</p></li>
+</ol>
+</li>
+</ol>
+
+<h3>MotionVectors pass in URP pre-built shaders</h3>
+
+<p>When the <strong>MotionVectors</strong> pass is enabled for the pre-built shaders, Unity renders object motion vectors for <span class="tooltip" tabindex="0" ><strong>mesh renderers</strong><span class="tooltiptext">A mesh component that takes the geometry from the Mesh Filter and renders it at the position defined by the object’s Transform component. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-MeshRenderer.html" href="../../class-MeshRenderer.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../../Glossary.html#MeshRenderer" aria-label="Go to glossary anchor for MeshRenderer">Glossary</a></span></span></span> even if they don’t move.</p>
+
+<p>Unity enables the <strong>MotionVectors</strong> pass in the pre-built URP shaders when the following conditions are true:</p>
+
+<ul>
+<li><p>URP <span class="tooltip" tabindex="0" ><strong>ShaderLab</strong><span class="tooltiptext">Unity’s language for defining the structure of Shader objects. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about SL-Shader.html" href="../../SL-Shader.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../../Glossary.html#ShaderLab" aria-label="Go to glossary anchor for ShaderLab">Glossary</a></span></span></span> shaders: on a Material, the <strong>Alembic Motion Vectors</strong> property is enabled in the <strong>Advanced Options</strong> section.</p></li>
+<li>
+<p>URP Lit and Unlit Shader Graph shaders: in the <strong>Graph <span class="tooltip" tabindex="0" ><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheInspector.html" href="../../UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../../Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span></strong>, any of the following properties is set:</p>
+
+<ul>
+<li>
+<strong>Alembic Motion Vectors</strong> is enabled.</li>
+<li>
+<strong>Additional Motion Vectors</strong> property is set to <strong>TimeBased</strong> or <strong>Custom</strong>.</li>
+</ul>
+</li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="../../urp/features/motion-vectors-landing.html"></a></span><div class="tip">Motion vectors in URP</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="../../urp/features/motion-vectors-shader-support.html"></a></span><div class="tip">Built-in shader support for motion vectors in URP</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

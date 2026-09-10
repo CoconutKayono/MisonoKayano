@@ -1,0 +1,377 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Leaderboards Building Block</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<meta property="relative-path-to-manual" content="">
+<meta property="version-switcher-versions-with-this-page" content="Versions with this page:">
+<meta property="version-switcher-versions-without-this-page" content="Versions without this page:">
+<meta property="version-switcher-supported" content="Supported">
+<meta property="version-switcher-legacy" content="Legacy">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/Manual/building-blocks-liveops-leaderboard.html">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20260626"></script><script type="text/javascript" src="docdata/toc.js?ts=20260626"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20260626"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20260626">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20260626">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/building-blocks-liveops-leaderboard.html">English</a></li>
+<li><a href="/cn/current/Manual/building-blocks-liveops-leaderboard.html">中文</a></li>
+<li><a href="/ja/current/Manual/building-blocks-liveops-leaderboard.html">日本語</a></li>
+<li><a href="/kr/current/Manual/building-blocks-liveops-leaderboard.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: Unity 6.7 Beta</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/building-blocks-liveops-leaderboard.html">English</a></li>
+<li><a href="/cn/current/Manual/building-blocks-liveops-leaderboard.html">中文</a></li>
+<li><a href="/ja/current/Manual/building-blocks-liveops-leaderboard.html">日本語</a></li>
+<li><a href="/kr/current/Manual/building-blocks-liveops-leaderboard.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="building-blocks.html">Unity Building Blocks</a></li>
+<li><a href="building-blocks-liveops.html">LiveOps Building Blocks</a></li>
+<li>Leaderboards Building Block</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="building-blocks-liveops-achievements.html"></a></span><div class="tip">Achievements Building Block</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="building-blocks-multiplayer.html"></a></span><div class="tip">Multiplayer Services Building Blocks</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Leaderboards Building Block</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>The Leaderboards Unity Building Block demonstrates score-keeping in a game and generates a leaderboard to display player scores. Each score is stored as player data on the cloud.</p>
+
+<p>The Leaderboards Building Block uses the following Unity Gaming Services (UGS):</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Unity Gaming Service</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><a href="https://docs.unity.com/ugs/en-us/manual/leaderboards/manual/leaderboards">Leaderboards</a></td>
+	<td style="text-align:left;">Stores, retrieves, and displays your player scores.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="https://docs.unity.com/ugs/en-us/manual/authentication/manual/get-started">Authentication</a></td>
+	<td style="text-align:left;">Provides a unique identity to the player. In the <a href="#use-the-leaderboards-building-block-test-scene">Leaderboards test scene</a>, this service allows users to sign in anonymously.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="https://docs.unity.com/ugs/en-us/manual/overview/manual/access-control">Access Control</a></td>
+	<td style="text-align:left;">Determines the authentication requirements for interacting with other services.<br>This Building Block uses Access Control to stop players from writing data to Leaderboards. To write to Cloud Save, use the Trusted client which uses Cloud Code Modules to authenticate the calls as a trusted source.<br>For more information, refer to <a href="#test-scene-client">Change the client in the Leaderboards test scene</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="https://docs.unity.com/ugs/en-us/manual/cloud-save/manual">Cloud Save</a></td>
+	<td style="text-align:left;">Stores each score as <a href="https://docs.unity.com/ugs/en-us/manual/cloud-save/manual/concepts/player-data">Player Data</a> and <a href="https://docs.unity.com/ugs/en-us/manual/cloud-save/manual/concepts/game-data">Game Data</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="https://docs.unity.com/ugs/en-us/manual/cloud-code/manual">Cloud Code</a></td>
+	<td style="text-align:left;">The Cloud Code service allows you to create code that runs in the cloud. This code can authenticate a player as a trusted server or a client depending on your needs and interact with other services. This Building Block uses Cloud Code to demonstrate server-authoritative actions to store and retrieve player scores.<br>The Leaderboards Building Block uses the following <a href="https://docs.unity.com/ugs/en-us/manual/cloud-code/manual/modules">Cloud Code C# modules</a>:<br> <code>Assets/CloudCode/BlocksAdminModule.ccmr</code><br><code>Assets/CloudCode/BlocksGameModule.ccmr</code>
+</td>
+</tr>
+</tbody>
+</table>
+
+<p><a id="prerequisites" aria-hidden="true"></a></p>
+
+<h2>Prerequisites</h2>
+
+<p>To set up a project for the Achievements Building Block:</p>
+
+<ul>
+<li>Install the <a href="https://assetstore.unity.com/packages/essentials/tutorial-projects/unity-building-block-leaderboards-341926">Unity Building Block - Leaderboards</a> from the Unity <span class="tooltip" tabindex="0" ><strong>Asset Store</strong><span class="tooltiptext">A growing library of free and commercial assets created by Unity and members of the community. Offers a wide variety of assets, from textures, models and animations to whole project examples, tutorials and Editor extensions. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about AssetStore.html" href="AssetStore.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#AssetStore" aria-label="Go to glossary anchor for AssetStore">Glossary</a></span></span></span>.</li>
+<li>Follow the instructions in the <a href="building-blocks-liveops-prerequisites.html">LiveOps Unity Building Blocks prerequisites</a>.</li>
+</ul>
+
+<p><a id="initial-setup" aria-hidden="true"></a></p>
+
+<h2>Initial setup</h2>
+
+<p>To use all features of the <a href="#use-the-leaderboards-building-block-test-scene">Leaderboards test scene</a>, perform the following actions.</p>
+
+<p><a id="deploy-the-cloud-code-modules" aria-hidden="true"></a></p>
+
+<h3>Deploy the Cloud Code modules</h3>
+
+<p>The test <span class="tooltip" tabindex="0" ><strong>scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html" href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span> uses the <code>BlocksGameModule.ccmr</code> <a href="https://docs.unity.com/ugs/en-us/manual/cloud-code/manual/modules">Cloud Code module</a> to update the global score. To use this Cloud Code module, deploy it in the scene:</p>
+
+<ol>
+<li>
+<a href="building-blocks-liveops-prerequisites.html">Set up deployment in your project</a>.</li>
+<li>Go to <strong>Services</strong> &gt; <strong>Deployment</strong>.</li>
+<li>In the <strong>Deployment</strong> window, expand the <strong>Blocks.CloudCode</strong> section.</li>
+<li>Select the <strong>BlocksGameModule.ccmr</strong> and <strong>BlocksAdminModule.ccmr</strong> checkboxes.</li>
+<li>Select <strong>Deploy Selected</strong>.</li>
+</ol>
+
+<p><a id="deploy-the-leaderboards-configuration-file" aria-hidden="true"></a></p>
+
+<h3>Deploy the Leaderboards configuration file</h3>
+
+<p>The test scene uses a configuration file to add data to a leaderboard. The Leaderboards test scene includes the <code>simple_leaderboards.lb</code> configuration file. To display a populated leaderboard in the test scene, deploy this file:</p>
+
+<ol>
+<li>Go to <strong>Services</strong> &gt; <strong>Deployment</strong>.</li>
+<li>In the <strong>Deployment</strong> window, select the <code>simple_leaderboard.lb</code> checkbox.
+ If you want to use a <strong>Trusted</strong> game client, also select <code>LeaderboardsAccessControl.ac</code>.</li>
+<li>Select <strong>Deploy Selected</strong>.</li>
+</ol>
+
+<p>To learn about Leaderboard configuration on the Unity Dashboard, refer to <a href="https://docs.unity.com/ugs/manual/leaderboards/manual/configuration/unity-dashboard#create-a-leaderboard">Create a leaderboard</a>.</p>
+
+<p><a id="use-the-leaderboards-building-block-test-scene" aria-hidden="true"></a></p>
+
+<h2>Use the Leaderboards Building Block test scene</h2>
+
+<p>The Leaderboards Building Block test scene contains a guessing game that generates a score based on how close your guess is to a randomly generated number. The result of this game appears on a leaderboard. You can also generate other random player scores.</p>
+
+<p>To open the Leaderboards test scene:</p>
+
+<ol>
+<li>In the <strong>Project</strong> window, go to <strong>Assets</strong> &gt; <strong>Blocks</strong> &gt; <strong>Leaderboards</strong> &gt; <strong>TestScenes</strong>.</li>
+<li>Select the <strong>Leaderboards (Scene Asset)</strong> asset.</li>
+<li>In the <strong><span class="tooltip" tabindex="0" ><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheInspector.html" href="UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span></strong> window, select <strong>Open</strong>.</li>
+</ol>
+
+<p>To use each element in the Leaderboards test scene:</p>
+
+<ol>
+<li>Enter Play mode.</li>
+<li>Enter a number in the <strong>Your Guess</strong> field.</li>
+<li>Select <strong>Guess</strong> to display your score and submit it to the leaderboard.</li>
+<li>Select <strong>Populate Leaderboard</strong> to add other random user scores to the leaderboard and rank them.</li>
+<li>Select <strong>Show Leaderboard</strong> to display the leaderboard.</li>
+<li>Select one of the leaderboard tabs to choose which scores to view:</li>
+<li>
+<strong>Global:</strong> Displays the top 50 scores in order.</li>
+<li>
+<strong>Self:</strong> Displays the current player score and the 10 scores above and below it.</li>
+<li>Select <strong>Hide Leaderboard</strong> to return to the game.</li>
+</ol>
+
+<p>To reset the Leaderboard scores:</p>
+
+<ol>
+<li>Open the Deployment window (<strong>Services</strong> &gt; <strong>Deployment</strong>).</li>
+<li>Right-click the <code>leaderboard.lb</code> and select <strong>Reset Leaderboard</strong>.</li>
+</ol>
+
+<p><a id="add-the-leaderboard-prefab-to-a-new-scene" aria-hidden="true"></a></p>
+
+<h2>Add the Leaderboard Prefab to a new scene</h2>
+
+<p>To use the Leaderboards Building Block in a new scene, add the following <span class="tooltip" tabindex="0" ><strong>prefabs</strong><span class="tooltiptext">An asset type that allows you to store a GameObject complete with components and properties. The prefab acts as a template from which you can create new object instances in the scene. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Prefabs.html" href="Prefabs.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#prefab" aria-label="Go to glossary anchor for prefab">Glossary</a></span></span></span> from the Leaderboards Building Block to your scene: </p>
+
+<ul>
+<li>
+<code>LeaderboardPrefab.prefab</code> adds an empty leaderboard, and displays scores that the client fetches from the Leaderboard service. Find it in the <strong>Project</strong> window: <strong>Assets</strong> &gt; <strong>Blocks</strong> &gt; <strong>Leaderboards</strong> &gt; <strong>Prefabs</strong>
+</li>
+<li>
+<code>UnityServices.prefab</code> in <strong>Assets</strong> &gt; <strong>Blocks</strong> &gt; <strong>Common</strong> &gt; <strong>Prefabs</strong> to initiate Unity Gaming Services.</li>
+</ul>
+
+<p>To use the Leaderboard prefab:</p>
+
+<ol>
+<li>
+<a href="#initial-setup">Set up your project for Leaderboards</a>.</li>
+<li>Open the Unity Services prefab.</li>
+<li>Right-click in the <strong>Project</strong> window and select <strong>Create</strong> &gt; <strong>Services</strong> &gt; <strong>Leaderboard configuration</strong>.</li>
+<li>
+<a href="#deploy-the-leaderboards-configuration-file">Deploy the configuration file</a>.</li>
+</ol>
+
+<p><a id="customize-the-leaderboards-building-block" aria-hidden="true"></a></p>
+
+<h2>Customize the Leaderboards Building Block</h2>
+
+<p>You can change the content, description, and appearance of the Achievements Building Block, and the type of client the Leaderboard uses.</p>
+
+<p><a id="modify-the-leaderboard-configuration-file" aria-hidden="true"></a></p>
+
+<h3>Modify the Leaderboard configuration file</h3>
+
+<p>You can change the rules for the leaderboard in the <code>simple_leaderboard.lb</code> configuration file:</p>
+
+<ol>
+<li>In the Project window, go to <strong>Assets</strong> &gt; <strong>Blocks</strong> &gt; <strong>Leaderboards</strong> &gt; <strong>Deployment</strong>.</li>
+<li>Select the <code>simple_leaderboard.lb</code> file to display its properties in the Inspector window.</li>
+</ol>
+
+<p>Toggle each <strong>Advanced Setting</strong> to apply the following leaderboards concepts:</p>
+
+<ul>
+<li><a href="https://docs.unity.com/ugs/en-us/manual/leaderboards/manual/concepts/buckets">Buckets</a></li>
+<li><a href="https://docs.unity.com/ugs/en-us/manual/leaderboards/manual/concepts/tiers">Tiers</a></li>
+<li><a href="https://docs.unity.com/ugs/en-us/manual/leaderboards/manual/concepts/resets">Resets</a></li>
+</ul>
+
+<p>To synchronize changes to the configuration file on the cloud, <a href="#deploy-the-leaderboards-configuration-file">deploy it</a>.</p>
+
+<p><a id="test-scene-client" aria-hidden="true"></a></p>
+
+<h3>Change the client in the Leaderboards test scene</h3>
+
+<p>A leaderboard client submits scores to the Leaderboard service. The Leaderboards Building Block includes the following leaderboard clients:</p>
+
+<ul>
+<li>
+<strong>Local</strong> (<code>LocalNumberGameClient</code>): The local client submits scores directly to the Leaderboards service and doesn’t validate each score. You can use an <a href="https://docs.unity.com/ugs/manual/overview/manual/access-control">Access Control</a> policy to stop players from cheating by submitting their own scores.</li>
+<li>
+<strong>Trusted</strong> (<code>TrustedNumberGameClient</code>): The remote client calls the <a href="https://docs.unity.com/ugs/en-us/manual/cloud-code/manual/modules">Cloud Code C# module</a> to submit the score.</li>
+</ul>
+
+<p>To change the client the leaderboard uses:</p>
+
+<ol>
+<li>Open the <a href="#use-the-leaderboards-building-block-test-scene">Leaderboard test scene</a>.</li>
+<li>In the Hierarchy window, select the <strong>NumberGame</strong> <span class="tooltip" tabindex="0" ><strong>GameObject</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-GameObject.html" href="class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span>.</li>
+<li>Expand the <strong>Game Client Type</strong> dropdown.</li>
+<li>Select <strong>Local</strong> or <strong>Trusted</strong>.</li>
+</ol>
+
+<p><a id="set-an-access-control-policy" aria-hidden="true"></a></p>
+
+<h3>Set an access control policy</h3>
+
+<p>The <code>LeaderboardsAccessControl.ac</code> file is an access control asset that prevents users from cheating by adding their own scores to a leaderboard. It uses player authentication to deny unauthorized access to the leaderboard service.
+For more information, refer to <a href="https://docs.unity.com/ugs/manual/overview/manual/access-control">Access Control for Unity Gaming Services (UGS)</a>.</p>
+
+<p>To use an access control asset, set the leaderboard client to <strong>Trusted</strong>.
+For more information about access control, refer to <a href="https://docs.unity.com/ugs/manual/overview/manual/access-control#how-to-use-access-control">How to use Access Control</a>.</p>
+
+<p><a id="troubleshooting" aria-hidden="true"></a></p>
+
+<h2>Troubleshooting</h2>
+
+<p>If the score doesn’t appear on the client and a warning message appears, this indicates that the local client isn’t working correctly. This is because the <a href="LeaderboardsAccessControl.ac">LeaderboardsAccessControl.ac</a> file denies write access to players.</p>
+
+<p>To fix this issue:</p>
+
+<ol>
+<li>Go to <strong>Services</strong> &gt; <strong>Deployment</strong>.</li>
+<li>Right-click the <code>LeaderboardsAccessControl.ac</code> file.</li>
+<li>Select <strong>Delete Remote</strong>.</li>
+</ol>
+
+<p><a id="additional-resources" aria-hidden="true"></a></p>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="https://docs.unity3d.com/Packages/com.unity.services.deployment@1.6/manual/getting_started.html">Deployment</a></li>
+<li><a href="https://docs.unity.com/ugs/manual/leaderboards/manual/configuration/unity-dashboard">UGS Leaderboards</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="building-blocks-liveops-achievements.html"></a></span><div class="tip">Achievements Building Block</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="building-blocks-multiplayer.html"></a></span><div class="tip">Multiplayer Services Building Blocks</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

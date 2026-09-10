@@ -1,0 +1,305 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Awaitable code example reference</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<meta property="relative-path-to-manual" content="">
+<meta property="version-switcher-versions-with-this-page" content="Versions with this page:">
+<meta property="version-switcher-versions-without-this-page" content="Versions without this page:">
+<meta property="version-switcher-supported" content="Supported">
+<meta property="version-switcher-legacy" content="Legacy">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/Manual/async-awaitable-examples.html">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20260626"></script><script type="text/javascript" src="docdata/toc.js?ts=20260626"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20260626"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20260626">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20260626">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/async-awaitable-examples.html">English</a></li>
+<li><a href="/cn/current/Manual/async-awaitable-examples.html">中文</a></li>
+<li><a href="/ja/current/Manual/async-awaitable-examples.html">日本語</a></li>
+<li><a href="/kr/current/Manual/async-awaitable-examples.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: Unity 6.7 Beta</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/async-awaitable-examples.html">English</a></li>
+<li><a href="/cn/current/Manual/async-awaitable-examples.html">中文</a></li>
+<li><a href="/ja/current/Manual/async-awaitable-examples.html">日本語</a></li>
+<li><a href="/kr/current/Manual/async-awaitable-examples.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="scripting.html">Programming in Unity</a></li>
+<li><a href="scripting-optimization.html">Code optimization</a></li>
+<li><a href="async-await-support.html">Asynchronous programming with the Awaitable class</a></li>
+<li>Awaitable code example reference</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="async-awaitable-continuations.html"></a></span><div class="tip">Awaitable completion and continuation</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="job-system.html"></a></span><div class="tip">Write multithreaded code with the job system</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Awaitable code example reference</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>The examples in this reference demonstrate <code>Awaitable</code> solutions to common scenarios encountered when writing asynchronous code.</p>
+
+<h2>Asynchronous tests</h2>
+
+<p>Unity’s <span class="tooltip" tabindex="0" ><a href="test-framework/test-framework-introduction.html">Test Framework</a><span class="tooltiptext">The Test Framework package (formerly called the Test Runner) is a Unity tool that tests your code in both Edit mode and Play mode, and also on target platforms such as Standalone, Android, or iOS. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about https://docs.unity3d.com/Packages/com.unity.test-framework@latest" href="https://docs.unity3d.com/Packages/com.unity.test-framework@latest">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#TestFramework" aria-label="Go to glossary anchor for TestFramework">Glossary</a></span></span></span> doesn’t recognize <code>Awaitable</code> as a valid test return type. However, the following example shows how you can use the <code>Awaitable</code> implementation of <code>IEnumerator</code> to write async tests:</p>
+
+<pre><code class="lang-cs">[UnityTest]
+public IEnumerator SomeAsyncTest(){
+    async Awaitable TestImplementation(){
+        // test something with async / await support here
+    };
+    return TestImplementation();
+}
+</code></pre>
+
+<h2>Frame coroutines</h2>
+
+<p>You can use the frame-related async methods in the <code>Awaitable</code> class to create asynchronous Unity coroutines as an alternative to iterator-based coroutines:</p>
+
+<pre><code class="lang-cs">async Awaitable SampleSchedulingJobsForNextFrame()
+{
+    // Wait until end of frame to avoid competing over resources with other Unity subsystems
+    await Awaitable.EndOfFrameAsync(); 
+    var jobHandle = ScheduleSomethingWithJobSystem();
+    // Let the job execute while the next frame starts
+    await Awaitable.NextFrameAsync();
+    jobHandle.Complete();
+    // Use results of computation
+}
+
+JobHandle ScheduleSomethingWithJobSystem()
+{
+    ...
+}
+</code></pre>
+
+<h3>Conditional wait</h3>
+
+<p>In iterator-based coroutines, <a href="../ScriptReference/WaitUntil.html">WaitUntil</a> suspends a coroutine execution until a delegate evaluates <code>true</code>. You can create equivalent behavior for an <code>Awaitable</code>-returning asynchronous method by making it wait until a condition changes using a cancellation token:</p>
+
+<pre><code class="lang-cs">public static async Awaitable AwaitableUntil(Func&lt;bool&gt; condition, CancellationToken cancellationToken)
+{
+   while(!condition()){
+     cancellationToken.ThrowIfCancellationRequested();
+     await Awaitable.NextFrameAsync();
+  }
+}
+</code></pre>
+
+<p>You can then pass in a cancellation token as follows:</p>
+
+<pre><code class="lang-cs">cancellationTokenSource = new CancellationTokenSource();
+currentTask = AwaitableUntil(myCondition, cancellationTokenSource.Token);
+</code></pre>
+
+<h2>Loading resources asynchronously</h2>
+
+<p>You can <code>await</code> an asynchronous resource loading operation so that it doesn’t block the main thread:</p>
+
+<pre><code class="lang-cs">public async Awaitable LoadResourcesAsync()
+{
+    // Load texture resource asynchronously
+    var operation = Resources.LoadAsync(&quot;my-texture&quot;);
+    // Return control to the main thread while the resource loads
+    await operation;
+    var texture = operation.asset as Texture2D;
+}
+</code></pre>
+
+<h2>Composition</h2>
+
+<p>You can <code>await</code> multiple different <code>await</code>-compatible types in the same method:</p>
+
+<pre><code class="lang-cs">public async Awaitable Bar()
+{
+    await CallSomeThirdPartyAPIReturningDotnetTask();
+    await Awaitable.NextFrameAsync();
+    await SceneManager.LoadSceneAsync(&quot;my-scene&quot;);
+    await SomeUserCodeReturningAwaitable();
+    ...
+}
+</code></pre>
+
+<p><a name="awaitable-as-task" aria-hidden="true"></a></p>
+
+<h2>Wrapping Awaitable in .NET Task</h2>
+
+<p>To work around some of the limitations of <code>Awaitable</code> you can wrap it in a .NET <code>Task</code>. This incurs the cost of an allocation but gives you access to methods such as <code>WhenAll</code> and <code>WhenAny</code> from the <code>Task</code> API. To do this you can write your own custom <code>AsTask</code> extension methods as follows:</p>
+
+<pre><code class="lang-cs">// Implement custom AsTask extension methods to wrap Awaitable in Task
+public static class AwaitableExtensions
+    {
+        public static async Task AsTask(this Awaitable a)
+        {
+            await a;
+        }
+
+        public static async Task&lt;T&gt; AsTask&lt;T&gt;(this Awaitable&lt;T&gt; a)
+        {
+            return await a;
+        }
+    }
+</code></pre>
+
+<p><a name="await-multiple-times" aria-hidden="true"></a></p>
+
+<h2>Await a result multiple times</h2>
+
+<p>A major difference between <code>Awaitable</code> and <code>Task</code> is that <code>Awaitable</code> objects are pooled to reduce allocations. You can’t safely <code>await</code> an <code>Awaitable</code>-returning method that completes with a result multiple times because once returned the original <code>Awaitable</code> object is returned to the pool.</p>
+
+<h3>Unsafe version</h3>
+
+<p>The following code is <strong>not safe</strong> and will lead to exceptions and deadlocks:</p>
+
+<pre><code class="lang-cs">async Awaitable Bar(){
+  var taskWithResult = SomeAwaitableReturningFunction();
+  var awaitOnce = await taskWithResult;
+  // Do something
+  // The following will cause errors because at this point taskWithResult has already been pooled back
+  var awaitTwice = await taskWithResult;
+ }
+</code></pre>
+
+<h3>Safe version</h3>
+
+<p>This is one of the scenarios where you can <a href="#awaitable-as-task">wrap Awaitable in a Task</a> at the cost of an allocation. The <code>Task</code> can then be safely awaited multiple times:</p>
+
+<pre><code class="lang-cs">// Implement custom AsTask extension methods to wrap Awaitable in Task
+public static class AwaitableExtensions
+    {
+        public static async Task AsTask(this Awaitable a)
+        {
+            await a;
+        }
+
+        public static async Task&lt;T&gt; AsTask&lt;T&gt;(this Awaitable&lt;T&gt; a)
+        {
+            return await a;
+        }
+    }
+
+async Awaitable Bar(){
+  var taskWithResult = SomeAwaitableReturningFunction();
+  // Wrap the returned Awaitable in a Task
+  var taskWithResultAsTask = taskWithResult.AsTask();
+  // The task can now be safely awaited multiple times, at the cost of allocating
+  var awaitOnce = await taskWithResultAsTask;
+  // Do something
+  var awaitTwice = await taskWithResultAsTask;
+ }
+</code></pre>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="async-awaitable-introduction.html">Comparing Unity Awaitable and .NET Task</a></li>
+<li><a href="async-awaitable-continuations.html">Async continuation and completion</a></li>
+<li><a href="../ScriptReference/Awaitable.html">Awaitable API reference</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="async-awaitable-continuations.html"></a></span><div class="tip">Awaitable completion and continuation</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="job-system.html"></a></span><div class="tip">Write multithreaded code with the job system</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

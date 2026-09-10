@@ -1,0 +1,244 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Introduction to level of detail</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<meta property="relative-path-to-manual" content="">
+<meta property="version-switcher-versions-with-this-page" content="Versions with this page:">
+<meta property="version-switcher-versions-without-this-page" content="Versions without this page:">
+<meta property="version-switcher-supported" content="Supported">
+<meta property="version-switcher-legacy" content="Legacy">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/Manual/LevelOfDetail.html">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20260626"></script><script type="text/javascript" src="docdata/toc.js?ts=20260626"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20260626"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20260626">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20260626">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/LevelOfDetail.html">English</a></li>
+<li><a href="/cn/current/Manual/LevelOfDetail.html">中文</a></li>
+<li><a href="/ja/current/Manual/LevelOfDetail.html">日本語</a></li>
+<li><a href="/kr/current/Manual/LevelOfDetail.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: Unity 6.7 Beta</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/LevelOfDetail.html">English</a></li>
+<li><a href="/cn/current/Manual/LevelOfDetail.html">中文</a></li>
+<li><a href="/ja/current/Manual/LevelOfDetail.html">日本語</a></li>
+<li><a href="/kr/current/Manual/LevelOfDetail.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="analysis.html">Optimization</a></li>
+<li><a href="graphics-performance-profiling.html">Graphics performance and profiling</a></li>
+<li><a href="lod-landing.html">Optimize mesh rendering using level of detail (LOD)</a></li>
+<li>Introduction to level of detail</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="lod-landing.html"></a></span><div class="tip">Optimize mesh rendering using level of detail (LOD)</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="lod/mesh-lod-landing.html"></a></span><div class="tip">Mesh LOD</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Introduction to level of detail</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Level of detail (LOD) is a technique that improves performance by reducing the rendering workload.</p>
+
+<p>Without a <span class="tooltip" tabindex="0" ><strong>LOD</strong><span class="tooltiptext">The <em>Level Of Detail</em> (LOD) technique is an optimization that reduces the number of triangles that Unity has to render for a GameObject when its distance from the Camera increases. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about LevelOfDetail.html" href="LevelOfDetail.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#LOD" aria-label="Go to glossary anchor for LOD">Glossary</a></span></span></span> solution, Unity renders an object with the same complexity no matter the size of the object on the screen. For example, in one frame, a 3D model of a building might occupy the whole game view. Then a player moves away from the building and it might be only a few <span class="tooltip" tabindex="0" ><strong>pixels</strong><span class="tooltiptext">The smallest unit in a computer image. Pixel size depends on your screen resolution. Pixel lighting is calculated at every screen pixel. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ShadowPerformance.html" href="ShadowPerformance.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#pixel" aria-label="Go to glossary anchor for pixel">Glossary</a></span></span></span> high on the screen, but Unity has to render the same <span class="tooltip" tabindex="0" ><strong>mesh</strong><span class="tooltiptext">The main graphics primitive of Unity. Meshes make up a large part of your 3D worlds. Unity supports triangulated or Quadrangulated polygon meshes. Nurbs, Nurms, Subdiv surfaces must be converted to polygons. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about mesh.html" href="mesh.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Mesh" aria-label="Go to glossary anchor for Mesh">Glossary</a></span></span></span>.</p>
+
+<p>With a LOD solution, as a <span class="tooltip" tabindex="0" ><strong>GameObject</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-GameObject.html" href="class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span> becomes smaller on the screen, Unity can reduce the rendering workload using one or a combination of the following approaches:</p>
+
+<ul>
+<li><p>Reduce the number of polygons to render.</p></li>
+<li><p>Reduce the complexity or the number of materials to render.</p></li>
+<li><p>Reduce the number of <strong><span class="tooltip" tabindex="0" ><strong>Mesh Renderer</strong><span class="tooltiptext">A mesh component that takes the geometry from the Mesh Filter and renders it at the position defined by the object’s Transform component. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-MeshRenderer.html" href="class-MeshRenderer.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#MeshRenderer" aria-label="Go to glossary anchor for MeshRenderer">Glossary</a></span></span></span></strong> components.</p></li>
+</ul>
+
+<p>Unity refers to objects representing levels of detail using indices, where a LOD with index 0 (LOD0) represents the most detailed LOD, and LODs with higher indices have progressively lower amounts of detail (LOD1, LOD2, and so on).</p>
+
+<figure>
+<img src="../uploads/Main/lod/lod-introduction-general.jpg" alt="Left: at LOD0, meshes have a large number of small triangles. Right: at LOD1, the meshes have far fewer triangles, which are much larger in size.">
+<figcaption>Left: at LOD0, meshes have a large number of small triangles. Right: at LOD1, the meshes have far fewer triangles, which are much larger in size.</figcaption>
+</figure>
+
+<h2 id="lod-feature-comparison">LOD features in Unity</h2>
+
+<p>Unity implements two different LOD features:</p>
+
+<ul>
+<li><p><a href="lod/mesh-lod-introduction.html">Mesh LOD</a></p></li>
+<li><p><span class="tooltip" tabindex="0" ><a href="lod/lod-group-landing.html">LOD Group</a><span class="tooltiptext">A component to manage level of detail (LOD) for GameObjects. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-LODGroup.html" href="class-LODGroup.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#LODGroup" aria-label="Go to glossary anchor for LODGroup">Glossary</a></span></span></span></p></li>
+</ul>
+
+<p>Each feature has its advantages and uses a different format for LOD objects. The following table provides a comparison of key characteristics of the features.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Mesh LOD</strong></th>
+	<th style="text-align:left;"><strong>LOD Group</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">The feature focuses on reducing the number of polygons to draw with minimum memory footprint and computational overhead. Does not optimize materials or number of draw calls.</td>
+	<td style="text-align:left;">A flexible solution with a larger memory footprint and computational overhead. When authoring LOD objects, you have the following optimization options for each LOD:<ul>
+<li>Create a less detailed mesh.</li>
+<li>Reduce the number of materials or submeshes, which reduces the number of draw calls.</li>
+<li>Optimize settings on materials.</li>
+<li>Optimize <strong>Mesh Renderer</strong> settings.</li>
+</ul>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Provides the option to create LODs automatically on model import.</td>
+	<td style="text-align:left;">Requires manual authoring of each LOD mesh in an external tool.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Unity stores each LOD in the index buffer of the original mesh.</td>
+	<td style="text-align:left;">Each LOD is one or a set of Mesh Renderer components. Users can access and configure each LOD using the Editor interface.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Provides a smaller memory footprint compared with LOD Group. Has a smaller rendering workload overhead compared to LOD Group because Mesh LOD does not use any extra GameObjects, components, or meshes.</td>
+	<td style="text-align:left;">Has a larger memory footprint and computational overhead compared with Mesh LOD.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Provides parameters that control LOD transitions implicitly.</td>
+	<td style="text-align:left;">Lets users explicitly specify object size on screen at which a LOD transition occurs per LOD index.</td>
+</tr>
+</tbody>
+</table>
+
+<h2>LOD transitions</h2>
+
+<p>By default, Unity displays one LOD at a time. When Unity transitions from one LOD to another, the transition is noticeable and abrupt.</p>
+
+<p>To make LOD transitions smooth, enable LOD cross-fading. Unity renders both the current and the next LOD, and blends them together.</p>
+
+<figure>
+<img src="../uploads/Main/lod/lod-crossfade.gif" alt="A sphere (LOD 1) blends smoothly into a cube (LOD 2) as the camera zooms out.">
+<figcaption>A sphere (LOD 1) blends smoothly into a cube (LOD 2) as the camera zooms out.</figcaption>
+</figure>
+
+<p>For more information, refer to:</p>
+
+<ul>
+<li><a href="lod/lod-transitions-mesh-lod.html">Make LOD transitions smooth in Mesh LOD</a></li>
+<li><a href="lod/lod-transitions-lod-group.html">Make LOD transitions smooth in LOD Group</a></li>
+</ul>
+
+<p><strong>Additional resources</strong></p>
+
+<ul>
+<li><p><a href="SL-ShaderLOD.html">LOD directive in ShaderLab reference</a></p></li>
+<li><p><a href="lod/mesh-lod-introduction.html">Introduction to Mesh LOD</a></p></li>
+<li><p><a href="lod/lod-group-landing.html">LOD Group</a></p></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="lod-landing.html"></a></span><div class="tip">Optimize mesh rendering using level of detail (LOD)</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="lod/mesh-lod-landing.html"></a></span><div class="tip">Mesh LOD</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

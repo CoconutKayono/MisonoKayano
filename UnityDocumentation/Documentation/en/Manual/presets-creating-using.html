@@ -1,0 +1,274 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Create presets to save and reuse settings</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<meta property="relative-path-to-manual" content="">
+<meta property="version-switcher-versions-with-this-page" content="Versions with this page:">
+<meta property="version-switcher-versions-without-this-page" content="Versions without this page:">
+<meta property="version-switcher-supported" content="Supported">
+<meta property="version-switcher-legacy" content="Legacy">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/Manual/presets-creating-using.html">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20260626"></script><script type="text/javascript" src="docdata/toc.js?ts=20260626"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20260626"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20260626">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20260626">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/presets-creating-using.html">English</a></li>
+<li><a href="/cn/current/Manual/presets-creating-using.html">中文</a></li>
+<li><a href="/ja/current/Manual/presets-creating-using.html">日本語</a></li>
+<li><a href="/kr/current/Manual/presets-creating-using.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: Unity 6.7 Beta</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/presets-creating-using.html">English</a></li>
+<li><a href="/cn/current/Manual/presets-creating-using.html">中文</a></li>
+<li><a href="/ja/current/Manual/presets-creating-using.html">日本語</a></li>
+<li><a href="/kr/current/Manual/presets-creating-using.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="assets-and-media.html">Assets and media</a></li>
+<li><a href="Presets.html">Reusing settings with preset assets</a></li>
+<li>Create presets to save and reuse settings</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="Presets.html"></a></span><div class="tip">Reusing settings with preset assets</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="SupportingPresets.html"></a></span><div class="tip">Supporting presets for custom types</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Create presets to save and reuse settings</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Presets are assets used to save and reuse settings configurations from Unity Editor windows. Presets help you avoid having to manually configure the same settings repeatedly. You can save the property configuration of a component, asset, or <span class="tooltip" tabindex="0" ><a href="comp-ManagerGroup.html">Project Settings</a><span class="tooltiptext">A broad collection of settings which allow you to configure how Physics, Audio, Networking, Graphics, Input and many other areas of your project behave. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about comp-ManagerGroup.html" href="comp-ManagerGroup.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#ProjectSettings" aria-label="Go to glossary anchor for ProjectSettings">Glossary</a></span></span></span> window and then apply that configuration in other instances of the same context.</p>
+
+<p>For example, you can edit the properties of a <span class="tooltip" tabindex="0" ><strong>Rigidbody</strong><span class="tooltiptext">A component that allows a GameObject to be affected by simulated gravity and other forces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-Rigidbody.html" href="class-Rigidbody.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Rigidbody" aria-label="Go to glossary anchor for Rigidbody">Glossary</a></span></span></span> component, save these settings to a preset asset, then apply that preset asset to Rigidbody components in other <span class="tooltip" tabindex="0" ><strong>GameObjects</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-GameObject.html" href="class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span>. The preset applies only to the Rigidbody component and doesn’t affect other components.</p>
+
+<p>You can store presets in the <code>Assets</code> folder of your project. Use the <a href="ProjectView.html">Project</a> window to view and select presets to edit in the <span class="tooltip" tabindex="0" ><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheInspector.html" href="UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span>.</p>
+
+<figure>
+<img src="../uploads/Main/preset-assets.png" alt="Example of Preset assets in the Project window, organized in a Presets subfolder">
+<figcaption>Example of Preset assets in the Project window, organized in a Presets subfolder</figcaption>
+</figure>
+
+<h2>Save settings to a new preset</h2>
+
+<p>To save configured settings, create a new preset asset for them as follows:</p>
+
+<ol>
+<li>Identify the asset or settings group you want to save as a preset:
+
+<ul>
+<li>
+<strong>For GameObjects</strong>: Select a GameObject in the <strong>Hierarchy</strong> window to open its properties in the <strong>Inspector</strong> window.</li>
+<li>
+<strong>For assets</strong>: Select an asset in the <strong>Project</strong> window to open its import settings in the <strong>Inspector</strong> window.</li>
+<li>
+<strong>For Project Settings</strong>: From the main menu, go to <strong>Edit &gt; Project Settings</strong> and select the settings group you want to save as a preset.</li>
+</ul>
+</li>
+<li><p>Configure the properties in the <strong>Inspector</strong> or <strong>Project Settings</strong> window.</p></li>
+<li><p>Click the preset selector (the slider icon) at the top-right corner of the window. <br><img src="../uploads/Main/preset-icon.png" alt="The Preset slider icon on a Transform component in the Inspector window.">
+</p></li>
+<li><p>In the <strong>Select Preset</strong> window, click <strong>Create New</strong>. A File Save dialog appears.</p></li>
+<li><p>Choose a location for your new preset, enter its name, and click <strong>Save</strong>.</p></li>
+</ol>
+
+<p>
+<strong>Note</strong>: Preset support and the preset selector are only available for certain <strong>Project Settings</strong> windows.</p>
+
+<h2>Edit saved settings in an existing preset</h2>
+
+<p>To edit the saved settings in an existing preset, select the preset asset from the <strong>Project</strong> window and edit its properties in the <strong>Inspector</strong> window.</p>
+
+<p>
+<strong>Note:</strong> When you change the properties in a preset, your changes don’t affect items you’ve already applied the preset to. For example, if you apply a preset for a Rigidbody component to a GameObject, and then edit the preset, the settings in the Rigidbody component don’t change.</p>
+
+<figure>
+<img src="../uploads/Main/preset-edit-preset.png" alt="Editing a preset in the Inspector window">
+<figcaption>Editing a preset in the Inspector window</figcaption>
+</figure>
+
+<p><a id="apply-preset" aria-hidden="true"></a></p>
+
+<h2>Apply settings from a preset</h2>
+
+<p>There are two ways to apply a preset:</p>
+
+<ul>
+<li>Via the <strong>Select Preset</strong> window.</li>
+<li>For component presets, you can drag a preset from the <strong>Project</strong> window onto a GameObject that contains the component type.</li>
+</ul>
+
+<p>
+<strong>Note:</strong> Applying a preset copies properties from the preset to the item. It doesn’t link the preset to the item. Changes you make to the preset don’t affect the items you have previously applied the preset to.</p>
+
+<p>To apply a preset via the <strong>Select Preset</strong> window:</p>
+
+<ol>
+<li>
+<p>Select the GameObject, Asset import settings, or <strong>Project Settings</strong> window to which you want to apply the preset.</p>
+
+<p>For GameObjects, select a GameObject in the <strong>Project</strong> window to open its properties for editing in the <strong>Inspector</strong> window.</p>
+
+<p>For assets, select an asset in the <strong>Project</strong> window to open its import settings for editing in the <strong>Inspector</strong> window.</p>
+
+<p>For project settings, from the main menu go to <strong>Edit &gt; Project Settings</strong> and select the settings group you want to save as a preset.</p>
+</li>
+<li><p>In the <strong>Inspector</strong> or <strong>Project Settings</strong> window, click the preset selector (the slider icon) at the top-right of the window.</p></li>
+<li>
+<p>In the <strong>Select Preset</strong> window, search for and select the preset to apply.</p>
+
+<p>Unity applies this preset to the component, asset, or Project Settings window.</p>
+</li>
+<li><p>Close the <strong>Select Preset</strong> window.</p></li>
+</ol>
+
+<p>If you apply a component preset via drag-and-drop, Unity’s behavior depends on the state of your GameObject:</p>
+
+<ul>
+<li>If you drop the preset on an existing GameObject in the Hierarchy window, Unity adds a new component and copies properties from the preset.</li>
+<li>If you drop the preset on an empty area in the Hierarchy window, Unity creates a new, empty GameObject and adds a component with properties copied from the preset.</li>
+<li>If you drop the preset on the <strong>Inspector</strong> window onto the title of an existing component, Unity copies properties from the preset.</li>
+<li>If you drop the preset on an empty area in the <strong>Inspector</strong> window, Unity adds a new component and copies properties from the preset.</li>
+</ul>
+
+<h3>Partially apply settings from a preset</h3>
+
+<p>You can choose to only apply some properties from a preset and exclude others. To do this:</p>
+
+<ol>
+<li><p>Select your preset in the <span class="tooltip" tabindex="0" ><strong>Project</strong><span class="tooltiptext">In Unity, you use a project to design and develop a game. A project stores all of the files that are related to a game, such as the asset and Scene files. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about 2Dor3D.html" href="2Dor3D.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#project" aria-label="Go to glossary anchor for project">Glossary</a></span></span></span> window.</p></li>
+<li><p>In the <strong>Inspector</strong>, right-click a property and choose <strong>Exclude Property</strong>. The window displays a red horizontal line next to excluded properties.<br>
+<img src="../uploads/Main/preset-exclude-property.png" alt="The Inspector window for a Preset asset displays a red line next to a property excluded from the preset.">
+</p></li>
+<li><p>
+<a href="#apply-preset">Apply the preset</a> to the target component, asset, or Project Settings.</p></li>
+</ol>
+
+<p>
+<strong>Note:</strong> To select all or clear all checkboxes in a preset, select the <strong>More items</strong> menu (<strong>⋮</strong>) or right-click the preset name, and select <strong>Include all properties</strong> or <strong>Exclude all properties</strong>. You can still adjust individual properties if you need to.</p>
+
+<p>You can also use the Exclude option for presets that you then set as the default configuration for components and asset importers. For more information, refer to <a href="class-PresetManager.html">Preset Manager</a>.</p>
+
+<h3>Applying presets based on asset location</h3>
+
+<p>You can write code to apply a preset to an asset based on the asset’s location in your project folder structure. For more information, refer to <a href="DefaultPresetsByFolder.html">Applying default presets to assets by folder</a>.</p>
+
+<h2>Export preset assets</h2>
+
+<p>To share saved settings across projects and team members, you can export presets as an <span class="tooltip" tabindex="0" ><strong>asset package</strong><span class="tooltiptext">A collection of files and data from Unity projects, or elements of projects, which are compressed and stored in one file, similar to Zip files, with the <code>.unitypackage</code> extension. Asset packages are a handy way of sharing and re-using Unity projects and collections of assets. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about AssetPackages.html" href="AssetPackages.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#assetpackage" aria-label="Go to glossary anchor for assetpackage">Glossary</a></span></span></span> that other team members can <a href="AssetPackagesImport.html">import</a>. For more information and instructions for how to export preset assets, refer to <a href="AssetPackagesCreate.html">Create and export asset packages</a>.</p>
+
+<h2>Using presets for transitions of Animation State nodes</h2>
+
+<p>You can save and apply presets for <a href="class-State.html">Animation state</a> nodes. However, the <span class="tooltip" tabindex="0" ><a href="class-Transition.html">transitions</a><span class="tooltiptext">The blend from one state to another in a state machine, such as transitioning a character from a walk to a jog animation. Transitions define how long the blend between states should take, and the conditions that activate the blend. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-Transition.html" href="class-Transition.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#transition" aria-label="Go to glossary anchor for transition">Glossary</a></span></span></span> in the preset are shared among presets and the nodes that you apply the preset to. For example, you apply a preset to two different nodes in the <span class="tooltip" tabindex="0" ><a href="AnimatorWindow.html">Animator window</a><span class="tooltiptext">The window where the Animator Controller is visualized and edited. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about AnimatorWindow.html" href="AnimatorWindow.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#AnimatorWindow" aria-label="Go to glossary anchor for AnimatorWindow">Glossary</a></span></span></span>. In the <strong>Inspector</strong> window, you edit the settings for one of the transitions in the first node. Your change also appears in the other node and in the preset.</p>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="SupportingPresets.html">Supporting presets for custom types</a></li>
+<li><a href="DefaultPresetsByFolder.html">Applying default presets to assets by folder</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="Presets.html"></a></span><div class="tip">Reusing settings with preset assets</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="SupportingPresets.html"></a></span><div class="tip">Supporting presets for custom types</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

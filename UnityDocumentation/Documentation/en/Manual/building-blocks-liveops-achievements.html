@@ -1,0 +1,439 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Achievements Building Block</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<meta property="relative-path-to-manual" content="">
+<meta property="version-switcher-versions-with-this-page" content="Versions with this page:">
+<meta property="version-switcher-versions-without-this-page" content="Versions without this page:">
+<meta property="version-switcher-supported" content="Supported">
+<meta property="version-switcher-legacy" content="Legacy">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/Manual/building-blocks-liveops-achievements.html">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20260626"></script><script type="text/javascript" src="docdata/toc.js?ts=20260626"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20260626"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20260626">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20260626">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/building-blocks-liveops-achievements.html">English</a></li>
+<li><a href="/cn/current/Manual/building-blocks-liveops-achievements.html">中文</a></li>
+<li><a href="/ja/current/Manual/building-blocks-liveops-achievements.html">日本語</a></li>
+<li><a href="/kr/current/Manual/building-blocks-liveops-achievements.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: Unity 6.7 Beta</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/building-blocks-liveops-achievements.html">English</a></li>
+<li><a href="/cn/current/Manual/building-blocks-liveops-achievements.html">中文</a></li>
+<li><a href="/ja/current/Manual/building-blocks-liveops-achievements.html">日本語</a></li>
+<li><a href="/kr/current/Manual/building-blocks-liveops-achievements.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="building-blocks.html">Unity Building Blocks</a></li>
+<li><a href="building-blocks-liveops.html">LiveOps Building Blocks</a></li>
+<li>Achievements Building Block</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="building-blocks-liveops-player-accounts.html"></a></span><div class="tip">Player Accounts Building Block</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="building-blocks-liveops-leaderboard.html"></a></span><div class="tip">Leaderboards Building Block</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Achievements Building Block</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>The Achievements Unity Building Block demonstrates an achievement system that uses Unity Gaming Services (UGS).</p>
+
+<p>The achievements are synchronized and persist in the Unity cloud, which means you can access them on any other device or platform that runs the same project.</p>
+
+<p>The Achievements Building Block uses the following Unity Gaming Services:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Unity Gaming Service</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Cloud Save</strong></td>
+	<td style="text-align:left;">Stores data about a player’s achievement status as <a href="https://docs.unity.com/ugs/en-us/manual/cloud-save/manual/concepts/player-data">Player Data</a> and <a href="https://docs.unity.com/ugs/en-us/manual/cloud-save/manual/concepts/game-data">Game Data</a>. For more information, refer to <a href="https://docs.unity.com/ugs/en-us/manual/cloud-save/manual">Cloud Save overview</a>. To learn how the Achievements Building Block uses the Cloud Save service, refer to <a href="#how-the-achievements-building-block-saves-data">How the Achievements Building Block saves data</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Cloud Code</strong></td>
+	<td style="text-align:left;">Performs actions with server authority to claim achievements. For more information about Cloud Code, refer to <a href="https://docs.unity.com/ugs/en-us/manual/cloud-code/manual">Cloud Code overview</a>. This Building Block uses <a href="https://docs.unity.com/ugs/en-us/manual/cloud-code/manual/modules">Cloud Code modules</a> to interact with the Cloud Save service. To learn more, refer to <a href="#deploy-the-cloud-code-modules">Deploy the Cloud Code modules</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Authentication</strong></td>
+	<td style="text-align:left;">Assigns each player a unique identity. This Building Block uses Authentication to sign in anonymously. To use it, <a href="https://docs.unity.com/ugs/en-us/manual/authentication/manual/get-started">set up authentication</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Remote Config</strong></td>
+	<td style="text-align:left;">Stores values as key-value pairs on the cloud as a JSON file. For more information, refer to <a href="https://docs.unity.com/ugs/en-us/manual/remote-config/manual/WhatsRemoteConfig">Remote Config overview</a>. This Building Block uses a remote config file (.rc) to define the achievements on the cloud. To learn more, refer to <a href="#customize-the-achievements-building-block">Customize the Achievements Building Block</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Access Control</strong></td>
+	<td style="text-align:left;">Sets authentication requirements for interacting with other services to prevent cheating. This Building Block uses Access Control to restrict players from writing to Cloud Save. <br>To write to Cloud Save, use the Trusted client which uses Cloud Code Modules to authenticate calls as a trusted source.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a id="prerequisites" aria-hidden="true"></a></p>
+
+<h2>Prerequisites</h2>
+
+<p>To set up a project for the Achievements Building Block:</p>
+
+<ul>
+<li>Install the <a href="https://assetstore.unity.com/packages/essentials/tutorial-projects/unity-building-block-achievements-341918">Unity Building Block - Achievements</a> from the Unity <span class="tooltip" tabindex="0" ><strong>Asset Store</strong><span class="tooltiptext">A growing library of free and commercial assets created by Unity and members of the community. Offers a wide variety of assets, from textures, models and animations to whole project examples, tutorials and Editor extensions. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about AssetStore.html" href="AssetStore.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#AssetStore" aria-label="Go to glossary anchor for AssetStore">Glossary</a></span></span></span>.</li>
+<li>Follow the instructions in the <a href="building-blocks-liveops-prerequisites.html">LiveOps Unity Building Blocks prerequisites</a>.</li>
+</ul>
+
+<p><a id="initial-setup" aria-hidden="true"></a></p>
+
+<h2>Initial setup</h2>
+
+<p>To use all features of the <a href="#use-the-achievements-building-block-test-scene">Achievements test scene</a>, perform the following actions.</p>
+
+<p><a id="deploy-the-configuration-file" aria-hidden="true"></a></p>
+
+<h3>Deploy the configuration file</h3>
+
+<p>The test <span class="tooltip" tabindex="0" ><strong>scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html" href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span> includes the <code>Achievement.ach</code> configuration file to define the achievements in the scene.</p>
+
+<ol>
+<li>
+<a href="building-blocks-liveops-prerequisites.html">Set up deployment in your project</a>.</li>
+<li>Go to <strong>Services</strong> &gt; <strong>Deployment</strong>.</li>
+<li>In the <strong>Deployment</strong> window, expand the <strong>Blocks.Achievements</strong> section.</li>
+<li>Select the <strong>Achievement.ach</strong> checkbox.</li>
+<li>Select <strong>Deploy Selected.</strong>
+</li>
+</ol>
+
+<p><a id="deploy-the-cloud-code-modules" aria-hidden="true"></a></p>
+
+<h3>Deploy the cloud code modules</h3>
+
+<p>The test scene uses the BlocksGameModule.ccmr <a href="https://docs.unity.com/ugs/en-us/manual/cloud-code/manual/modules">Cloud Code module</a> to update the global score. To use this module:</p>
+
+<ol>
+<li>
+<a href="building-blocks-liveops-prerequisites.html">Set up deployment in your project</a>.</li>
+<li>Go to <strong>Services</strong> &gt; <strong>Deployment</strong>.</li>
+<li>In the <strong>Deployment</strong> window, expand the <strong>Blocks.CloudCode</strong> section.</li>
+<li>Select the <strong>BlocksGameModule.ccmr</strong> and <strong>BlocksAdminModule.ccmr</strong> checkboxes.</li>
+<li>Select <strong>Deploy Selected</strong>.</li>
+</ol>
+
+<p><a id="use-the-achievements-building-block-test-scene" aria-hidden="true"></a></p>
+
+<h2>Use the Achievements Building Block test scene</h2>
+
+<p>The Achievements Building Block test scene demonstrates in-game achievements that you can claim, rename, and reset. Each achievement exists in one of the following states:</p>
+
+<ul>
+<li>Unlocked</li>
+<li>Locked</li>
+<li>Hidden</li>
+<li>In progress</li>
+</ul>
+
+<p>To open the test scene:</p>
+
+<ol>
+<li>In the Project window, go to <strong>Assets</strong> &gt; <strong>Blocks</strong> &gt; <strong>Achievements</strong> &gt; <strong>TestScenes.</strong>
+</li>
+<li>Right-click the <code>AchievementsTestScene.unity</code> asset and select <strong>Open</strong>.</li>
+</ol>
+
+<p>To use the test scene:</p>
+
+<ol>
+<li>Enter Play Mode. During the loading screen the scene retrieves achievements defined in the <a href="#modify-the-configuration-file">configuration file</a> from Cloud Save.</li>
+<li>The scene loads and displays the achievements.</li>
+<li>Select an achievement’s <strong>Unlock</strong> button to claim it, or use the <strong>+</strong> and <strong>-</strong> buttons to change its progress.</li>
+<li>Select <strong>Reset Achievements</strong> to restore achievements to their default state.</li>
+</ol>
+
+<p><a id="how-the-achievements-building-block-saves-data" aria-hidden="true"></a></p>
+
+<h2>How the Achievements Building Block saves data</h2>
+
+<p>The Achievements Building Block uses the <a href="https://docs.unity.com/ugs/en-us/manual/cloud-save/manual">Cloud Save</a> service to store and track achievement progress for each player. </p>
+
+<p>Each player is assigned a key and value pair saved to a protected store on the Cloud Save service. Player data is stored in the achievements key.</p>
+
+<p>The AchievementDefinition data model is defined in the following locations:</p>
+
+<ul>
+<li>To find the local <code>AchievementDefinition.cs</code> file, go to <strong>Assets</strong> &gt; <strong>Blocks</strong> &gt; <strong>Achievements</strong> &gt; <strong>Scripts</strong> &gt; <strong>Runtime</strong> &gt;</li>
+<li>To find the Cloud Code file:
+
+<ol>
+<li>In the <strong>Assets</strong> folder, right-click <strong>CloudCode.</strong>
+</li>
+<li>Select <strong>View in Explorer</strong> on Windows or <strong>View in Finder</strong> on macOS.</li>
+<li>Go to <strong>BlocksGameModule~</strong> &gt; <strong>Project</strong> &gt; <strong>Achievement</strong> &gt; <code>AchievementDefinition.cs</code>.</li>
+</ol>
+</li>
+</ul>
+
+<p>
+<strong>Note</strong>: The actual data stored is an array of objects of type <code>AchievementRecord</code>.</p>
+
+<p>The following script is an example of the player data that the Achievements Building Block stores on the Cloud Save service: </p>
+
+<pre><code>[
+{
+&quot;Id&quot;: &quot;first_achievement&quot;, // the ID of the achievement
+&quot;Unlocked&quot;: true, // the unlocked status of the achievement for the current player
+&quot;ProgressCount&quot;: // current progress relative to the ProgressTarget of the definition
+}
+]
+</code></pre>
+
+<p><a id="add-the-achievements-prefab-to-a-different-scene" aria-hidden="true"></a></p>
+
+<h2>Add the Achievements prefab to a different scene</h2>
+
+<p>To use the Achievements Building Block in a new scene:</p>
+
+<ol>
+<li>Deploy the <a href="#deploy-the-configuration-file">Achievements Configuration file</a>.</li>
+<li>Go to <strong>Assets</strong> &gt; <strong>Blocks</strong> &gt; <strong>Achievements</strong> &gt; <strong>Prefabs.</strong>
+</li>
+<li>Select the <code>AchievementsPrefab</code> to open it.</li>
+</ol>
+
+<p>Any changes made to <code>Achievements.ach</code> affect the <code>AchievementsPrefab</code> in Play Mode. To learn how to modify <code>Achievements.ach</code>, refer to <a href="#customize-the-achievements-building-block">Customize the Achievements Building Block</a>.</p>
+
+<p>
+<strong>Note:</strong> To create a new Achievements Configuration file, go to <strong>Create</strong> &gt; <strong>Blocks</strong> &gt; <strong>Achievements Configuration</strong>.</p>
+
+<p><a id="customize-the-achievements-building-block" aria-hidden="true"></a></p>
+
+<h2>Customize the Achievements Building Block</h2>
+
+<p>You can customize the achievements building block in the following ways:</p>
+
+<ul>
+<li>Modify the Achievements configuration file.</li>
+<li>Modify the Achievements <span class="tooltip" tabindex="0" ><strong>prefab</strong><span class="tooltiptext">An asset type that allows you to store a GameObject complete with components and properties. The prefab acts as a template from which you can create new object instances in the scene. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Prefabs.html" href="Prefabs.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#prefab" aria-label="Go to glossary anchor for prefab">Glossary</a></span></span></span>.</li>
+<li>Set an access control policy.</li>
+<li>Change achievement data.</li>
+</ul>
+
+<p><a id="modify-the-configuration-file" aria-hidden="true"></a></p>
+
+<h3>Modify the configuration file</h3>
+
+<p>The <code>Achievements.ach</code> file is a type of <a href="https://docs.unity.com/ugs/en-us/manual/remote-config/manual/remote-config-files">Remote Config</a> (.rc) file that exposes achievement configuration properties in the <span class="tooltip" tabindex="0" ><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheInspector.html" href="UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span> window. The <code>Achievements.ach</code> file must match the data defined in the <code>AchievementDefinition</code> file. For more information, refer to <a href="#change-achievement-data">Change achievement data</a>.</p>
+
+<p>To change descriptions or appearance of each achievement:</p>
+
+<ol>
+<li>In the Project window, go to <strong>Assets</strong> &gt; <strong>Blocks</strong> &gt; <strong>Achievements</strong> &gt; <strong>Deployment</strong> &gt; <strong>Achievements.ach</strong>.</li>
+<li>Select <strong>Achievements.ach</strong> to display its properties in the Inspector.</li>
+<li>To apply changes, <a href="#deploy-the-cloud-code-modules">deploy Achievements.ach to the current environment</a>.</li>
+</ol>
+
+<p><a id="modify-the-achievements-prefab" aria-hidden="true"></a></p>
+
+<h3>Modify the Achievements prefab</h3>
+
+<p>To make changes to the Achievements prefab:</p>
+
+<ol>
+<li>Go to the <span class="tooltip" tabindex="0" ><strong>Project window</strong><span class="tooltiptext">A window that shows the contents of your <code>Assets</code> folder (Project tab) <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ProjectView.html" href="ProjectView.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Projectwindow" aria-label="Go to glossary anchor for Projectwindow">Glossary</a></span></span></span>.</li>
+<li>Navigate to <strong>Assets</strong> &gt; <strong>Blocks</strong> &gt; <strong>Achievements</strong> &gt; <strong>Prefabs.</strong>
+</li>
+<li>Select <code>AchievementsPrefab</code> to view its properties in the Inspector.</li>
+</ol>
+
+<p>You can also enable <strong>Developer Mode</strong> to change the progress of incremental achievements in the <span class="tooltip" tabindex="0" ><strong>Scene view</strong><span class="tooltiptext">An interactive view into the world you are creating. You use the Scene View to select and position scenery, characters, cameras, lights, and all other types of Game Object. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheSceneView.html" href="UsingTheSceneView.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#SceneView" aria-label="Go to glossary anchor for SceneView">Glossary</a></span></span></span>.</p>
+
+<p>The following classes control the data displayed by <code>Achievements.ach</code>:</p>
+
+<ul>
+<li>
+<code>AchievementAsset</code>: Scriptable object in the project.</li>
+<li>
+<code>AchievementFile</code>: Defines how the contents of <code>Achievements.ach</code> are displayed.</li>
+<li>
+<code>AchievementAssetImporter</code>: Custom importer class enabling the custom inspector.</li>
+<li>
+<code>AchievementAssetInspector</code>: The custom inspector itself.</li>
+</ul>
+
+<p><a id="set-an-access-control-policy" aria-hidden="true"></a></p>
+
+<h3>Set an Access Control policy</h3>
+
+<p>An achievement client submits scores to the Achievement service. The block includes the following clients:</p>
+
+<ul>
+<li>
+<strong>Local</strong> (<code>LocalAchievementsClient</code>): Submits scores directly to Cloud Save without validation. You can use an <a href="https://docs.unity.com/ugs/manual/overview/manual/access-control">Access Control</a> policy to prevent cheating.</li>
+<li>
+<strong>Trusted</strong> (<code>TrustedAchievementsClient</code>): Calls the <a href="https://docs.unity.com/ugs/en-us/manual/cloud-code/manual/modules">Cloud Code C# module</a> to submit scores securely.</li>
+</ul>
+
+<p>To change the client in the test scene:</p>
+
+<ol>
+<li>Open the <a href="#use-the-achievements-building-block-test-scene">Achievement test scene</a>.</li>
+<li>In the Hierarchy window, select the <code>AchievementsPreview</code> <span class="tooltip" tabindex="0" ><strong>GameObject</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-GameObject.html" href="class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span>.</li>
+<li>In the Inspector, enable <strong>Use Trusted Client</strong>.</li>
+</ol>
+
+<p><a id="change-achievement-data" aria-hidden="true"></a></p>
+
+<h3>Change Achievement data</h3>
+
+<p>The <code>AchievementDefinition</code> files define achievement properties used in the Achievements.ach Inspector window. To learn more about the <code>Achievements.ach</code> file, refer to <a href="#modify-the-configuration-file">Modify the configuration file</a>.</p>
+
+<p>Locations:</p>
+
+<ul>
+<li>Local: <strong>Assets</strong> &gt; <strong>Blocks</strong> &gt; <strong>Achievements</strong> &gt; <strong>Scripts</strong> &gt; <strong>Runtime</strong> &gt; <code>AchievementDefinition.cs</code>
+</li>
+<li>Cloud Code: <strong>Assets</strong> &gt; <strong>Blocks</strong> &gt; <strong>Achievements</strong> &gt; <strong>CloudCode~</strong> &gt; <strong>Project</strong> &gt; <strong>Achievement</strong> &gt; <code>AchievementDefinition.cs</code>
+</li>
+</ul>
+
+<p>To change the data in this file:</p>
+
+<ul>
+<li>Update the <code>AchievementDefinition.cs</code> file in each location so that their content is exactly the same.</li>
+<li>Deploy both files in the <strong>Deployment</strong> window. To learn more, refer to <a href="#deploy-the-configuration-file">Deploy the configuration file</a>.</li>
+</ul>
+
+<p><a id="troubleshooting" aria-hidden="true"></a></p>
+
+<h2>Troubleshooting</h2>
+
+<p>If scores aren’t visible and a warning message appears, it might be because the <code>AchievementsAccessControl.ac</code> file denies write access for the local client’s write access. To fix this issue:</p>
+
+<ol>
+<li>Go to <strong>Services</strong> &gt; <strong>Deployment</strong>.</li>
+<li>Right-click the <code>AchievementsAccessControl.ac</code> file.</li>
+<li>Select <strong>Delete Remote</strong>.</li>
+</ol>
+
+<p><a id="additional-resources" aria-hidden="true"></a></p>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="https://docs.unity.com/ugs/en-us/manual/cloud-code/manual/server-authority">Server Authority</a></li>
+<li><a href="https://docs.unity3d.com/Packages/com.unity.services.deployment@1.6/manual/getting_started.html">Deployment</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="building-blocks-liveops-player-accounts.html"></a></span><div class="tip">Player Accounts Building Block</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="building-blocks-liveops-leaderboard.html"></a></span><div class="tip">Leaderboards Building Block</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

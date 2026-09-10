@@ -1,0 +1,388 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Burst modding support </title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<meta property="relative-path-to-manual" content="../">
+<meta property="version-switcher-versions-with-this-page" content="Versions with this page:">
+<meta property="version-switcher-versions-without-this-page" content="Versions without this page:">
+<meta property="version-switcher-supported" content="Supported">
+<meta property="version-switcher-legacy" content="Legacy">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/Manual/burst/modding-support.html">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../../StaticFilesManual/js/jquery.js?ts=20260626"></script><script type="text/javascript" src="../../StaticFilesManual/js/core.js?ts=20260626"></script><script type="text/javascript" src="../../StaticFilesManual/js/image-comp.js?ts=20260626"></script><script type="text/javascript" src="../docdata/toc.js?ts=20260626"></script><script type="text/javascript" src="../docdata/global_toc.js?ts=20260626"></script><link rel="stylesheet" type="text/css" href="../../StaticFilesManual/css/core.css?ts=20260626">
+<link rel="stylesheet" type="text/css" href="../../StaticFilesManual/css/icons.css?ts=20260626">
+<link rel="stylesheet" href="../../StaticFilesManual/css/prism.css">
+<script src="../../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="../30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../index.html" class="selected">Manual</a></li>
+<li><a href="../../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/burst/modding-support.html">English</a></li>
+<li><a href="/cn/current/Manual/burst/modding-support.html">中文</a></li>
+<li><a href="/ja/current/Manual/burst/modding-support.html">日本語</a></li>
+<li><a href="/kr/current/Manual/burst/modding-support.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: Unity 6.7 Beta</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/burst/modding-support.html">English</a></li>
+<li><a href="/cn/current/Manual/burst/modding-support.html">中文</a></li>
+<li><a href="/ja/current/Manual/burst/modding-support.html">日本語</a></li>
+<li><a href="/kr/current/Manual/burst/modding-support.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="../scripting.html">Programming in Unity</a></li>
+<li><a href="../compilation-and-code-reload.html">Compilation and code reload </a></li>
+<li><a href="../script-compilation.html">Script compilation</a></li>
+<li><a href="../burst/script-compilation-burst.html">Burst compilation</a></li>
+<li>Burst modding support </li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="../burst/optimization-skiplocalsinit.html"></a></span><div class="tip">Prevent unnecessary zero initialization</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="../conditional-compilation.html"></a></span><div class="tip">Conditional compilation</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Burst modding support</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>You can load additional Burst compiled libraries, which provide a way to create modifications that use Burst compiled code. </p>
+
+<p>Burst only provides a method to load additional libraries, and doesn’t provide any tooling to create mods. You need a copy of the Unity Editor to compile the additional libraries. </p>
+
+<p>This section gives an example approach to modding with Burst and is a proof of concept. </p>
+
+<h2>Supported uses</h2>
+
+<p>You can use this function in Play mode (or Standalone Players) only.</p>
+
+<p>Make sure you load the libraries as soon as possible, and before the first Burst-compiled use of a C# method. Unity unloads any Burst libraries that <code>BurstRuntime.LoadAdditionalLibraries</code> loads when you exit Play mode in the Editor or quit a Standalone Player.</p>
+
+<h2>Example modding system</h2>
+
+<p>
+<strong>Note</strong>: This example is limited in scope. You should have knowledge of <a href="../assembly-definition-files.html">assemblies and assembly definitions</a> to follow this example.</p>
+
+<p>This example declares an interface that the mods abide by:</p>
+
+<pre><code class="lang-cs">using UnityEngine;
+
+public interface PluginModule
+{
+    void Startup(GameObject gameObject);
+    void Update(GameObject gameObject);
+}
+</code></pre>
+
+<p>You can use this interface to create new classes which follow these specifications and ship it separate to your application. Passing a single <code>GameObject</code> along limits the state that the <span class="tooltip" tabindex="0" ><strong>plug-ins</strong><span class="tooltiptext">A set of code created outside of Unity that creates functionality in Unity. There are two kinds of plug-ins you can use in Unity: Managed plug-ins (managed .NET assemblies created with tools like Visual Studio) and Native plug-ins (platform-specific native code libraries). <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ./plug-ins.html" href=".././plug-ins.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#plug-in" aria-label="Go to glossary anchor for plug-in">Glossary</a></span></span></span> can affect. </p>
+
+<h3>Modding manager</h3>
+
+<p>The following is an example of a modding manager:</p>
+
+<pre><code class="lang-cs">using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Reflection;
+using UnityEngine;
+using Unity.Burst;
+
+public class PluginManager : MonoBehaviour
+{
+    public bool modsEnabled;
+    public GameObject objectForPlugins;
+
+    List&lt;PluginModule&gt; plugins;
+
+    void Start()
+    {
+        plugins = new List&lt;PluginModule&gt;();
+
+        // If mods are disabled, early out - this allows us to disable mods, enter Play Mode, exit Play Mode
+        //and be sure that the managed assemblies have been unloaded (assuming DomainReload occurs)
+        if (!modsEnabled)
+            return;
+
+        var folder = Path.GetFullPath(Path.Combine(Application.dataPath, &quot;..&quot;, &quot;Mods&quot;));
+        if (Directory.Exists(folder))
+        {
+            var mods = Directory.GetDirectories(folder);
+
+            foreach (var mod in mods)
+            {
+                var modName = Path.GetFileName(mod);
+                var monoAssembly = Path.Combine(mod, $&quot;{modName}_managed.dll&quot;);
+
+                if (File.Exists(monoAssembly))
+                {
+                    var managedPlugin = Assembly.LoadFile(monoAssembly);
+
+                    var pluginModule = managedPlugin.GetType(&quot;MyPluginModule&quot;);
+
+                    var plugin = Activator.CreateInstance(pluginModule) as PluginModule;
+
+                    plugins.Add(plugin);
+                }
+
+                var burstedAssembly = Path.Combine(mod, $&quot;{modName}_win_x86_64.dll&quot;);      // Burst dll (assuming windows 64bit)
+                if (File.Exists(burstedAssembly))
+                {
+                    BurstRuntime.LoadAdditionalLibrary(burstedAssembly);
+                }
+            }
+        }
+
+        foreach (var plugin in plugins)
+        {
+            plugin.Startup(objectForPlugins);
+        }
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        foreach (var plugin in plugins)
+        {
+            plugin.Update(objectForPlugins);
+        }
+    }
+}
+
+</code></pre>
+
+<p>This code scans the <code>Mods</code> folder, and for each folder it finds within, it attempts to load both a managed dll and a Burst-compiled dll. It does this by adding them to an internal list that it can then iterate on and call the respective interface functions. </p>
+
+<p>The names of the files are arbitrary: refer to <a href="#simple-create-mod-menu-button">Simple Create Mod Menu Button</a>, which is the code that generated those files.</p>
+
+<p>Because this code loads the managed assemblies into the current domain, you need a domain reload to unload those before you can overwrite them. Unity automatically unloads the Burst dll files on exiting Play mode. This is why a Boolean to disable the modding system is included, for testing in the Editor.</p>
+
+<h3>A mod that uses Burst</h3>
+
+<p>Create a separate Unity project for this to use the project to produce the mod.</p>
+
+<p>The following script attaches to a UI Canvas that contains a text component called <strong>Main UI Label</strong> and changes the text when the mod is used. The text is either <strong>Plugin Updated : Bursted</strong> or <strong>Plugin Updated : Not Bursted</strong>. You will see the <strong>Plugin Updated : Bursted</strong> by default, but if you comment out the lines that load the Burst library in the <code>PluginManager</code>, then the Burst compiled code doesn’t load and the message changes appropriately. </p>
+
+<pre><code class="lang-cs">using Unity.Burst;
+using Unity.Collections;
+using Unity.Jobs;
+using UnityEngine;
+using UnityEngine.UI;
+
+public class MyPluginModule : PluginModule
+{
+    Text textComponent;
+
+    public void Startup(GameObject gameObject)
+    {
+        var childTextComponents = gameObject.GetComponentsInChildren&lt;Text&gt;();
+        textComponent = null;
+        foreach (var child in childTextComponents)
+        {
+            if (child.name == &quot;Main UI Label&quot;)
+            {
+                textComponent = child;
+            }
+        }
+
+        if (textComponent==null)
+        {
+            Debug.LogError(&quot;something went wrong and i couldn't find the UI component i wanted to modify&quot;);
+        }
+    }
+
+    public void Update(GameObject gameObject)
+    {
+        if (textComponent != null)
+        {
+            var t = new CheckBurstedJob { flag = new NativeArray&lt;int&gt;(1, Allocator.TempJob, NativeArrayOptions.UninitializedMemory) };
+
+            t.Run();
+
+            if (t.flag[0] == 0)
+                textComponent.text = &quot;Plugin Updated : Not Bursted&quot;;
+            else
+                textComponent.text = &quot;Plugin Updated : Bursted&quot;;
+
+            t.flag.Dispose();
+        }
+    }
+
+    [BurstCompile]
+    struct CheckBurstedJob : IJob
+    {
+        public NativeArray&lt;int&gt; flag;
+
+        [BurstDiscard]
+        void CheckBurst()
+        {
+            flag[0] = 0;
+        }
+
+        public void Execute()
+        {
+            flag[0] = 1;
+            CheckBurst();
+        }
+    }
+
+}
+
+</code></pre>
+
+<p>Place the previous script in a folder along with an assembly definition file with an assembly named <code>TestMod_Managed</code> so the next script can locate the managed part. </p>
+
+<h3 id="simple-create-mod-menu-button">Simple Create Mod Menu button</h3>
+
+<p>The following script adds a menu button. When you use the menu button, it builds a Standalone Player, then copies the C# managed dll and the <code>lib_burst_generated</code>.dll into a chosen <code>Mod</code> folder. This example assumes you are using Windows.</p>
+
+<pre><code class="lang-cs">using UnityEditor;
+using System.IO;
+using UnityEngine;
+
+public class ScriptBatch
+{
+    [MenuItem(&quot;Modding/Build X64 Mod (Example)&quot;)]
+    public static void BuildGame()
+    {
+        string modName = &quot;TestMod&quot;;
+
+        string projectFolder = Path.Combine(Application.dataPath, &quot;..&quot;);
+        string buildFolder = Path.Combine(projectFolder, &quot;PluginTemp&quot;);
+
+        // Get filename.
+        string path = EditorUtility.SaveFolderPanel(&quot;Choose Final Mod Location&quot;, &quot;&quot;, &quot;&quot;);
+
+        FileUtil.DeleteFileOrDirectory(buildFolder);
+        Directory.CreateDirectory(buildFolder);
+
+        // Build player.
+        var report = BuildPipeline.BuildPlayer(new[] { &quot;Assets/Scenes/SampleScene.unity&quot; }, Path.Combine(buildFolder, $&quot;{modName}.exe&quot;), BuildTarget.StandaloneWindows64, BuildOptions.Development);
+
+        if (report.summary.result == UnityEditor.Build.Reporting.BuildResult.Succeeded)
+        {
+            // Copy Managed library
+            var managedDest = Path.Combine(path, $&quot;{modName}_Managed.dll&quot;);
+            var managedSrc = Path.Combine(buildFolder, $&quot;{modName}_Data/Managed/{modName}_Managed.dll&quot;);
+            FileUtil.DeleteFileOrDirectory(managedDest);
+            if (!File.Exists(managedDest))  // Managed side not unloaded
+                FileUtil.CopyFileOrDirectory(managedSrc, managedDest);
+            else
+                Debug.LogWarning($&quot;Couldn't update managed dll, {managedDest} is it currently in use?&quot;);
+
+            // Copy Burst library
+            var burstedDest = Path.Combine(path, $&quot;{modName}_win_x86_64.dll&quot;);
+            var burstedSrc = Path.Combine(buildFolder, $&quot;{modName}_Data/Plugins/x86_64/lib_burst_generated.dll&quot;);
+            FileUtil.DeleteFileOrDirectory(burstedDest);
+            if (!File.Exists(burstedDest))
+                FileUtil.CopyFileOrDirectory(burstedSrc, burstedDest);
+            else
+                Debug.LogWarning($&quot;Couldn't update bursted dll, {burstedDest} is it currently in use?&quot;);
+        }
+    }
+}
+</code></pre>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="../plug-in-inspector.html">Import and configure plug-ins</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="../burst/optimization-skiplocalsinit.html"></a></span><div class="tip">Prevent unnecessary zero initialization</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="../conditional-compilation.html"></a></span><div class="tip">Conditional compilation</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

@@ -1,0 +1,821 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Lens Flare (SRP) Data Asset in URP</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<meta property="relative-path-to-manual" content="../../../">
+<meta property="version-switcher-versions-with-this-page" content="Versions with this page:">
+<meta property="version-switcher-versions-without-this-page" content="Versions without this page:">
+<meta property="version-switcher-supported" content="Supported">
+<meta property="version-switcher-legacy" content="Legacy">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../../../../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../../../../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../../../../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../../../../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../../../../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../../../../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../../../../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/Manual/urp/shared/lens-flare/lens-flare-asset.html">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../../../../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../../../../StaticFilesManual/js/jquery.js?ts=20260626"></script><script type="text/javascript" src="../../../../StaticFilesManual/js/core.js?ts=20260626"></script><script type="text/javascript" src="../../../../StaticFilesManual/js/image-comp.js?ts=20260626"></script><script type="text/javascript" src="../../../docdata/toc.js?ts=20260626"></script><script type="text/javascript" src="../../../docdata/global_toc.js?ts=20260626"></script><link rel="stylesheet" type="text/css" href="../../../../StaticFilesManual/css/core.css?ts=20260626">
+<link rel="stylesheet" type="text/css" href="../../../../StaticFilesManual/css/icons.css?ts=20260626">
+<link rel="stylesheet" href="../../../../StaticFilesManual/css/prism.css">
+<script src="../../../../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../../../../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../../../../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../../../../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="../../../30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../../../index.html" class="selected">Manual</a></li>
+<li><a href="../../../../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/urp/shared/lens-flare/lens-flare-asset.html">English</a></li>
+<li><a href="/cn/current/Manual/urp/shared/lens-flare/lens-flare-asset.html">中文</a></li>
+<li><a href="/ja/current/Manual/urp/shared/lens-flare/lens-flare-asset.html">日本語</a></li>
+<li><a href="/kr/current/Manual/urp/shared/lens-flare/lens-flare-asset.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: Unity 6.7 Beta</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/urp/shared/lens-flare/lens-flare-asset.html">English</a></li>
+<li><a href="/cn/current/Manual/urp/shared/lens-flare/lens-flare-asset.html">中文</a></li>
+<li><a href="/ja/current/Manual/urp/shared/lens-flare/lens-flare-asset.html">日本語</a></li>
+<li><a href="/kr/current/Manual/urp/shared/lens-flare/lens-flare-asset.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="../../../visual-effects.html">Visual effects</a></li>
+<li><a href="../../../visual-effects-lens-flares.html">Lens flares</a></li>
+<li><a href="../../../urp/shared/lens-flare/lens-flare.html">Lens flares in URP</a></li>
+<li>Lens Flare (SRP) Data Asset in URP</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="../../../urp/shared/lens-flare/lens-flare-srp-reference.html"></a></span><div class="tip">Lens Flare (SRP) component reference for URP</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="../../../urp/shared/lens-flare/reference-screen-space-lens-flare.html"></a></span><div class="tip">Screen Space Lens Flare override reference for URP</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Lens Flare (SRP) Data Asset in URP</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Unity’s <a href="https://docs.unity3d.com/Manual/ScriptableRenderPipeline.html">Scriptable Render Pipeline (SRP)</a> includes the <strong>Lens Flare Data</strong> asset. You can use this asset to control the appearance of <span class="tooltip" tabindex="0" ><a href="lens-flare-component.html">Lens Flares</a><span class="tooltiptext">A component that simulates the effect of lights refracting inside a camera lens. Use a Lens Flare to represent very bright lights or add atmosphere to your scene. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-LensFlare.html" href="../../../class-LensFlare.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../../../Glossary.html#LensFlare" aria-label="Go to glossary anchor for LensFlare">Glossary</a></span></span></span> in your <span class="tooltip" tabindex="0" ><strong>scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html" href="../../../CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../../../Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span>. This is the SRP equivalent of the Built-in <span class="tooltip" tabindex="0" ><strong>Render Pipeline</strong><span class="tooltiptext">A series of operations that take the contents of a Scene, and displays them on a screen. Unity lets you choose from pre-built render pipelines, or write your own. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about render-pipelines.html" href="../../../render-pipelines.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../../../Glossary.html#renderpipeline" aria-label="Go to glossary anchor for renderpipeline">Glossary</a></span></span></span>’s <a href="https://docs.unity3d.com/Manual/class-Flare.html">Flare</a> asset, which is incompatible with SRPs.</p>
+
+<p>For examples of how to use Lens Flares, refer to the <a href="../../package-sample-urp-package-samples.html#lens-flares">Lens Flare samples in URP Package Samples</a>.</p>
+
+<p>To create a Lens Flare Data asset, select <strong>Assets</strong> &gt; <strong>Create</strong> &gt; <strong>Lens Flare (SRP)</strong>. To use this asset, assign it to the <strong>Lens Flare Data</strong> property of a <a href="lens-flare-component.html">Lens Flare (SRP) component</a>.</p>
+
+<h2>Properties</h2>
+
+<p>The Lens Flare Element asset has the following properties:</p>
+
+<ul>
+<li><a href="#Type">Type</a></li>
+<li><a href="#Image">Image</a></li>
+<li><a href="#Circle">Circle</a></li>
+<li><a href="#Polygon">Polygon</a></li>
+<li><a href="#Ring">Ring</a></li>
+<li><a href="#LensFlareDataSRP">Lens Flare Data SRP</a></li>
+<li><a href="#Common">Common</a></li>
+<li><a href="#Cutoff">Cutoff</a></li>
+<li><a href="#Transform">Transform</a></li>
+<li><a href="#AxisTransform">AxisTransform</a></li>
+<li><a href="#Distortion">Distortion</a></li>
+<li>
+<a href="#Multiple-Elements">Multiple Elements</a>
+
+<ul>
+<li><a href="#uniform">Uniform</a></li>
+<li><a href="#Curve">Curve</a></li>
+<li><a href="#Random">Random</a></li>
+</ul>
+</li>
+</ul>
+
+<p><a name="Type" aria-hidden="true"></a></p>
+
+<h3>Type</h3>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Property</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Type</strong></td>
+	<td style="text-align:left;">Select the type of Lens Flare Element this asset creates:<ul>
+<li><a href="#Image">Image</a></li>
+<li><a href="#Circle">Circle</a></li>
+<li><a href="#Polygon">Polygon</a></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="Image" aria-hidden="true"></a></p>
+
+<h4>Image</h4>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Property</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Flare Texture</strong></td>
+	<td style="text-align:left;">The Texture this lens flare element uses.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Preserve <span class="tooltip" tabindex="0" ><strong>Aspect Ratio</strong><span class="tooltiptext">The relationship of an image’s proportional dimensions, such as its width and height.<br/><span class="tooltipGlossaryLink">See in <a href="../../../Glossary.html#aspectratio" aria-label="Go to glossary anchor for aspectratio">Glossary</a></span></span></span></strong></td>
+	<td style="text-align:left;">Fixes the width and height (aspect ratio) of the <strong>Flare Texture</strong>. You can use <a href="#Distortion">Distortion</a> to change this property.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="Circle" aria-hidden="true"></a></p>
+
+<h4>Circle</h4>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Property</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Gradient</strong></td>
+	<td style="text-align:left;">Controls the offset of the circular flare’s gradient. This value ranges from 0 to 1.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Falloff</strong></td>
+	<td style="text-align:left;">Controls the falloff of the circular flare’s gradient. This value ranges from 0 to 1, where 0 has no falloff between the tones and 1 creates a falloff that is spread evenly across the circle.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Inverse</strong></td>
+	<td style="text-align:left;">Enable this property to reverse the direction of the gradient.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="Polygon" aria-hidden="true"></a></p>
+
+<h4>Polygon</h4>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Property</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Gradient</strong></td>
+	<td style="text-align:left;">Controls the offset of the polygon flare’s gradient. This value ranges from 0 to 1.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Falloff</strong></td>
+	<td style="text-align:left;">Controls the falloff of the polygon flare’s gradient. This value ranges from 0 to 1, where 0 has no falloff between the tones and 1 creates a falloff that is spread evenly across the polygon.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Side Count</strong></td>
+	<td style="text-align:left;">Determines how many sides the polygon flare has.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Roundness</strong></td>
+	<td style="text-align:left;">Defines how smooth the edges of the polygon flare are. This value ranges from 0 to 1, where 0 is a sharp polygon and 1 is a circle.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Inverse</strong></td>
+	<td style="text-align:left;">Enable this property to reverse the direction of the gradient</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="Ring" aria-hidden="true"></a></p>
+
+<h4>Ring</h4>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Property</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Gradient</strong></td>
+	<td style="text-align:left;">Controls the offset of the circular flare’s gradient. This value ranges from 0 to 1.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Falloff</strong></td>
+	<td style="text-align:left;">Controls the falloff of the circular flare’s gradient. This value ranges from 0 to 1, where 0 has no falloff between the tones and 1 creates a falloff that is spread evenly across the circle.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Inverse</strong></td>
+	<td style="text-align:left;">Enable this property to reverse the direction of the gradient.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Amplitude</strong></td>
+	<td style="text-align:left;">Amplitude of the sampling of the noise.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Repeat</strong></td>
+	<td style="text-align:left;">Frequency of the sampling for the noise.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Speed</strong></td>
+	<td style="text-align:left;">Scale the speed of the animation.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Ring Thickness</strong></td>
+	<td style="text-align:left;">Ring Thickness.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="LensFlareDataSRP" aria-hidden="true"></a></p>
+
+<h4>Lens Flare Data Driven SRP</h4>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Property</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Asset</strong></td>
+	<td style="text-align:left;">Lens Flare Data SRP asset as an element.</td>
+</tr>
+</tbody>
+</table>
+
+<p>Unity support an Lens Flare Data SRP recursive, but with a hard cutoff after 16 recursions call.
+For instance asset A constains asset B which constains asset A (infinite recursion).
+That will trigger a warning and execution 16 recursions:
+~~~~~~
+“LensFlareSRPAsset contains too deep recursive asset (&gt; 16). Be careful to not have recursive aggregation, A contains B, B contains A, … which will produce an infinite loop.”
+~~~~~~</p>
+
+<p><a name="Color" aria-hidden="true"></a></p>
+
+<h2>Color</h2>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Property</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Color Type</strong></td>
+	<td style="text-align:left;">Select the color type of Lens Flare Element this asset creates:<ul>
+<li><a href="#ColorConstant">Constant</a></li>
+<li><a href="#ColorRadial">Radial</a></li>
+<li><a href="#ColorAngular">Angular</a></li>
+</ul>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Tint</strong></td>
+	<td style="text-align:left;">Changes the tint of the lens flare. If this asset is attached to the light, this property is based on the light tint.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Modulate By Light Color</strong></td>
+	<td style="text-align:left;">Allows light color to affect this Lens Flare Element. This only applies when the asset is used in a <a href="lens-flare-component.html">SRP Lens Flare Override Component</a> that is attached to a point, spot, or area light.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Intensity</strong></td>
+	<td style="text-align:left;">Controls the intensity of this element.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Blend Mode</strong></td>
+	<td style="text-align:left;">Select the blend mode of the Lens Flare Element this asset creates:<ul>
+<li>Additive</li>
+<li>Screen</li>
+<li>Premultiplied</li>
+<li>Lerp</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="ColorConstant" aria-hidden="true"></a></p>
+
+<h3>Constant Color</h3>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Property</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Tint</strong></td>
+	<td style="text-align:left;">Changes the tint of the lens flare. If this asset is attached to the light, this property is based on the light tint.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="ColorRadial" aria-hidden="true"></a></p>
+
+<h3>Constant Color</h3>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Property</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Tint Radial</strong></td>
+	<td style="text-align:left;">Specifies the radial gradient tint of the element. If the element type is set to Image, the Flare Texture is multiplied by this color.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="ColorAngular" aria-hidden="true"></a></p>
+
+<h3>Constant Color</h3>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Property</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Tint Angular</strong></td>
+	<td style="text-align:left;">Specifies the angular gradient tint of the element. If the element type is set to Image, the Flare Texture is multiplied by this color.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="Common" aria-hidden="true"></a></p>
+
+<h2>Common</h2>
+
+<p><a name="Cutoff" aria-hidden="true"></a></p>
+
+<h3>Cutoff</h3>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Property</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Cutoff Speed</strong></td>
+	<td style="text-align:left;">Sets the speed at which the radius occludes the element.<br><br>A value of zero (with a large radius) does not occlude anything. The higher this value, the faster the element is occluded on the side of the screen.<br><br>The effect of this value is more noticeable with multiple elements.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Cutoff Radius</strong></td>
+	<td style="text-align:left;">Sets the normalized radius of the lens shape used to occlude the lens flare element. A radius of one is equivalent to the scale of the element.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="Transform" aria-hidden="true"></a></p>
+
+<h3>Transform</h3>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Property</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Position Offset</strong></td>
+	<td style="text-align:left;">Defines the offset of the lens flare’s position in screen space, relative to its source.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Auto Rotate</strong></td>
+	<td style="text-align:left;">Enable this property to automatically rotate the Lens Flare Texture relative to its angle on the screen. Unity uses the <strong>Auto Rotate</strong> angle to override the <strong>Rotation</strong> parameter.<br><br> To ensure the Lens Flare can rotate, assign a value greater than 0 to the <a href="#AxisTransform"><strong>Starting Position</strong></a> property.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Rotation</strong></td>
+	<td style="text-align:left;">Rotates the lens flare. This value operates in degrees of rotation.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Size</strong></td>
+	<td style="text-align:left;">Use this to adjust the scale of this lens flare element.<br><br> This property is not available when the <a href="#Type">Type</a> is set to <a href="#Image">Image</a> and <strong>Preserve Aspect Ratio</strong> is enabled.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Scale</strong></td>
+	<td style="text-align:left;">The size of this lens flare element in world space.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="AxisTransform" aria-hidden="true"></a></p>
+
+<h3>Axis Transform</h3>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Property</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Starting Position</strong></td>
+	<td style="text-align:left;">Defines the starting position of the lens flare relative to its source. This value operates in screen space.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Angular Offset</strong></td>
+	<td style="text-align:left;">Controls the angular offset of the lens flare, relative to its current position. This value operates in degrees of rotation.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Translation Scale</strong></td>
+	<td style="text-align:left;">Limits the size of the lens flare offset. For example, values of (1, 0) create a horizontal lens flare, and (0, 1) create a vertical lens flare.<br><br>You can also use this property to control how quickly the lens flare appears to move. For example, values of (0.5, 0.5) make the lens flare element appear to move at half the speed.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="Distortion" aria-hidden="true"></a></p>
+
+<h3>Distortion</h3>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Property</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Enable</strong></td>
+	<td style="text-align:left;">Set this property to True to enable distortion.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Radial Edge Size</strong></td>
+	<td style="text-align:left;">Controls the size of the <span class="tooltip" tabindex="0" ><strong>distortion effect</strong><span class="tooltiptext">An audio effect that modifies the sound by squashing and clipping the waveform to produce a rough, harsh result. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-AudioDistortionFilter.html" href="../../../class-AudioDistortionFilter.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../../../Glossary.html#distortioneffect" aria-label="Go to glossary anchor for distortioneffect">Glossary</a></span></span></span> from the edge of the screen.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Radial Edge Curve</strong></td>
+	<td style="text-align:left;">Blends the distortion effect along a curve from the center of the screen to the edges of the screen.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Relative To Center</strong></td>
+	<td style="text-align:left;">Set this value to True to make distortion relative to the center of the screen. Otherwise, distortion is relative to the screen position of the lens flare.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="Multiple-Elements" aria-hidden="true"></a></p>
+
+<h3>Multiple Elements</h3>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Property</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Enable</strong></td>
+	<td style="text-align:left;">Enable this to allow multiple lens flare elements in your scene.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Count</strong></td>
+	<td style="text-align:left;">Determines the number of identical lens flare elements Unity generates.<br>A value of <strong>1</strong> appears the same as a single lens flare element.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Distribution</strong></td>
+	<td style="text-align:left;">Select the method that Unity uses to generate multiple lens flare elements:<ul>
+<li><a href="#uniform">Uniform</a></li>
+<li><a href="#Curve">Curve</a></li>
+<li><a href="#Random">Random</a></li>
+</ul>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Length Spread</strong></td>
+	<td style="text-align:left;">Controls how spread out multiple lens flare elements appear.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Relative To Center</strong></td>
+	<td style="text-align:left;">If true the distortion is relative to center of the screen otherwise relative to lensFlare source screen position.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="uniform" aria-hidden="true"></a></p>
+
+<h4>Uniform</h4>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Property</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Colors</strong></td>
+	<td style="text-align:left;">The range of colors that this asset applies to the lens flares.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Rotation</strong></td>
+	<td style="text-align:left;">The angle of rotation (in degrees) applied to each element incrementally.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="Curve" aria-hidden="true"></a></p>
+
+<h4>Curve</h4>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Property</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Colors</strong></td>
+	<td style="text-align:left;">The range of colors that this asset applies to the lens flares. You can use the <strong>Position Spacing</strong> curve to determine how this range affects each lens flare.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Position Variation</strong></td>
+	<td style="text-align:left;">Adjust this curve to change the placement of the lens flare elements in the <strong>Lens Spread</strong>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Rotation</strong></td>
+	<td style="text-align:left;">The uniform angle of rotation (in degrees) applied to each element distributed along the curve. This value ranges from –180° to 180°.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Scale</strong></td>
+	<td style="text-align:left;">Adjust this curve to control the size range of the lens flare elements.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="Random" aria-hidden="true"></a></p>
+
+<h4>Random</h4>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Property</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Seed</strong></td>
+	<td style="text-align:left;">The base value that this asset uses to generate randomness.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Intensity Variation</strong></td>
+	<td style="text-align:left;">Controls the variation of brightness across the lens flare elements. A high value can make some elements might invisible.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Colors</strong></td>
+	<td style="text-align:left;">The range of colors that this asset applies to the lens flares. This property is based on the <strong>Seed</strong> value.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Position Variation</strong></td>
+	<td style="text-align:left;">Controls the position of the lens flares. The <strong>X</strong> value is spread along the same axis as <strong>Length Spread</strong>. A value of 0 means there is no change in the lens flare position. The <strong>Y</strong> value is spread along the vertical screen space axis based on the <strong>Seed</strong> value.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Rotation Variation</strong></td>
+	<td style="text-align:left;">Controls the rotation variation of the lens flares, based on the <strong>Seed</strong> value. The <strong>Rotation</strong> and <strong>Auto Rotate</strong> parameters inherit from this property.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Scale Variation</strong></td>
+	<td style="text-align:left;">Controls the scale of the lens flares based on the <strong>Seed</strong> value.</td>
+</tr>
+</tbody>
+</table>
+
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="../../../urp/shared/lens-flare/lens-flare-srp-reference.html"></a></span><div class="tip">Lens Flare (SRP) component reference for URP</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="../../../urp/shared/lens-flare/reference-screen-space-lens-flare.html"></a></span><div class="tip">Screen Space Lens Flare override reference for URP</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

@@ -1,0 +1,411 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Pooling and reusing objects</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<meta property="relative-path-to-manual" content="">
+<meta property="version-switcher-versions-with-this-page" content="Versions with this page:">
+<meta property="version-switcher-versions-without-this-page" content="Versions without this page:">
+<meta property="version-switcher-supported" content="Supported">
+<meta property="version-switcher-legacy" content="Legacy">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/Manual/performance-reusable-code.html">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20260626"></script><script type="text/javascript" src="docdata/toc.js?ts=20260626"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20260626"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20260626">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20260626">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/performance-reusable-code.html">English</a></li>
+<li><a href="/cn/current/Manual/performance-reusable-code.html">中文</a></li>
+<li><a href="/ja/current/Manual/performance-reusable-code.html">日本語</a></li>
+<li><a href="/kr/current/Manual/performance-reusable-code.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: Unity 6.7 Beta</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/performance-reusable-code.html">English</a></li>
+<li><a href="/cn/current/Manual/performance-reusable-code.html">中文</a></li>
+<li><a href="/ja/current/Manual/performance-reusable-code.html">日本語</a></li>
+<li><a href="/kr/current/Manual/performance-reusable-code.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="scripting.html">Programming in Unity</a></li>
+<li><a href="scripting-optimization.html">Code optimization</a></li>
+<li><a href="performance-optimizing-code-managed-memory.html">Optimizing your code for managed memory</a></li>
+<li>Pooling and reusing objects</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="performance-reference-types.html"></a></span><div class="tip">Reference type management</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="performance-optimizing-arrays.html"></a></span><div class="tip">Optimizing arrays</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Pooling and reusing objects</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Object pooling and reuse is a programming pattern that returns instances of frequently-used objects to a pool, from which they can be retrieved and used again. Object pooling reduces the overhead caused by repeatedly instantiating and destroying new object instances and limits the overall number of allocations and deallocations. This helps minimize garbage collection (GC) overhead and reduce load on the CPU.</p>
+
+<p>You can pool <span class="tooltip" tabindex="0" ><strong>GameObjects</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-GameObject.html" href="class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span>, but you can also pool other types you use frequently, including collection types such as arrays, lists, and dictionaries. You can write your own pooling logic, but for convenience Unity provides a set of APIs in the <code>UnityEngine.Pool</code> namespace with implementations for pooling GameObjects and several collection types.</p>
+
+<p>
+<strong>Note</strong>: Like many other core Unity APIs, the <code>UnityEngine.Pool</code> APIs are not thread-safe, and can only be called safely from the main thread.</p>
+
+<h2>Pooling and reusing GameObjects</h2>
+
+<p>Some types of objects in games, such as projectiles, might appear repeatedly and often, even though only a few of them are ever in a <span class="tooltip" tabindex="0" ><strong>scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html" href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span> at the same time. Instead of instantiating a new projectile object from a <span class="tooltip" tabindex="0" ><strong>prefab</strong><span class="tooltiptext">An asset type that allows you to store a GameObject complete with components and properties. The prefab acts as a template from which you can create new object instances in the scene. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Prefabs.html" href="Prefabs.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#prefab" aria-label="Go to glossary anchor for prefab">Glossary</a></span></span></span> every time one is fired, you can create a pool of projectile objects at the start of the game, and then reuse them as needed.</p>
+
+<h3>Creating an object pool</h3>
+
+<p>Unity’s <a href="../ScriptReference/Pool.ObjectPool_1.html"><code>ObjectPool&lt;T&gt;</code></a> class provides an implementation of the reusable object pool pattern, and is the simplest way to implement an object pool in your application. An instance of <code>ObjectPool&lt;T&gt;</code> manages a pool of objects of type <code>T</code>. When you create an <code>ObjectPool&lt;T&gt;</code> through the <a href="../ScriptReference/Pool.ObjectPool_1-ctor.html"><code>ObjectPool&lt;T&gt;</code> constructor</a>, you provide parameters to define the following key aspects of the pool:</p>
+
+<ul>
+<li>The starting capacity of the pool.</li>
+<li>The maximum capacity the pool can grow to.</li>
+<li>Whether collection safety checks are performed to prevent double-releasing the same object instance back to the pool.</li>
+<li>A series of C# <a href="https://learn.microsoft.com/en-us/dotnet/api/system.action-1?view=net-10.0"><code>Action&lt;T&gt;</code></a> delegates, which are callbacks Unity invokes when performing the following key actions on the pool:
+
+<ul>
+<li>A callback to invoke on retrieving an object from the pool.</li>
+<li>A callback to invoke on returning an object to the pool.</li>
+<li>A callback to invoke on creating a new object instance when one is requested and the pool is empty.</li>
+<li>A callback to invoke on destroying an object instance when one is returned to the pool but the pool is at maximum capacity.</li>
+</ul>
+</li>
+</ul>
+
+<h3>Retrieving objects from the pool</h3>
+
+<p>You call <a href="../ScriptReference/ScriptRef:Pool.ObjectPool_1.Get.html"><code>ObjectPool&lt;T&gt;.Get</code></a> to retrieve an object from the pool. This action also invokes the method you provided as the <code>actionOnGet</code> parameter to the <code>ObjectPool</code> constructor, which gives you the opportunity to prepare and activate the object for use.</p>
+
+<p>If you request an object from the pool when the pool is empty, a new object instance is created. The creation process invokes the method you provided as the <code>createFunc</code> parameter to the <code>ObjectPool</code> constructor.</p>
+
+<p>
+<code>ObjectPool&lt;T&gt;.Get</code> has an overload <code>Get(out PooledObject&lt;T&gt; pooledObject)</code>. When the <code>PooledObject</code> is disposed, it releases the instance automatically. This is useful for short-lived scopes.</p>
+
+<p>For more information and code examples, refer to the <a href="../ScriptReference/Pool.PooledObject_1.Get.html"><code>PooledObject&lt;T&gt;.Get</code> API reference</a>.</p>
+
+<h3>Returning objects to the pool</h3>
+
+<p>When you’re finished with an object, you return it to the pool by calling <a href="../ScriptReference/Pool.ObjectPool_1.Release.html"><code>ObjectPool&lt;T&gt;.Release</code></a> with the object you’re returning as the argument. This action also invokes the method you provided as the <code>actionOnRelease</code> parameter to the <code>ObjectPool</code> constructor, which gives you the opportunity to deactivate and reset state on the returned object.</p>
+
+<p>If you return an object to the pool when the pool is full, the object is destroyed. The destruction process invokes the method you provided as the <code>actionOnDestroy</code> parameter to the <code>ObjectPool</code> constructor.</p>
+
+<p>Passing <code>true</code> as the <code>collectionCheck</code> parameter to the constructor enables collection safety checking. If collection checks are enabled and you try to return an object that’s already in the pool, Unity throws an exception. Even when enabled, collection checking is only available in the Editor and not in Player builds. Enabling collection checking adds overhead but catches double-release errors and is recommended during development.</p>
+
+<h3>Resetting used objects</h3>
+
+<p>Objects you retrieve from the pool can change their state during use. For example, a pooled enemy GameObject might change its position, health, animation state, and physics state while active in the scene. It’s important to reset this state when the object is returned to the pool, so that when it’s retrieved again later, it starts in the same state as on its first use.</p>
+
+<p>Depending on the state you’re resetting, you might choose to reset the object either when you get it from the pool in the <code>actionOnGet</code> delegate, or when you release it back to the pool in the <code>actionOnRelease</code> delegate. Another option is to implement a custom deactivation method on the pooled object itself and call those methods from the pool’s get or release actions.</p>
+
+<p>The state you need to reset depends on the specific behavior and components of your pooled object. Common reset tasks on release include stopping coroutines, unsubscribing from events, resetting physics states, clearing animations, and stopping <span class="tooltip" tabindex="0" ><strong>particle</strong><span class="tooltiptext">A small, simple image or mesh that is emitted by a particle system. A particle system can display and move particles in great numbers to represent a fluid or amorphous entity. The effect of all the particles together creates the impression of the complete entity, such as smoke. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-ParticleSystem.html" href="class-ParticleSystem.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#particle" aria-label="Go to glossary anchor for particle">Glossary</a></span></span></span> systems. It’s also important to deactivate GameObjects on release to prevent them receiving <a href="../ScriptReference/MonoBehaviour.Update.html"><code>Update</code></a> calls while inactive in the pool.</p>
+
+<h3>Example: pooling projectiles</h3>
+
+<p>A typical implementation of an <code>ObjectPool&lt;T&gt;</code> for projectiles has the following key stages:</p>
+
+<ol>
+<li>Create a pool of inactive projectile objects at the start of the game. Provide the constructor with the required delegates to invoke as callbacks when creating new a pooled object, retrieving an object from the pool, releasing an object back to the pool, and destroying an object because the pool is full.</li>
+<li>When a projectile is needed (for example, when the user fires a weapon), retrieve an inactive projectile from the pool with <code>ObjectPool&lt;T&gt;.Get</code>. From the corresponding <code>actionOnGet</code> callback, activate the retrieved object, and initialize any relevant properties such as its position and direction.</li>
+<li>When the projectile is no longer needed (for example, when it hits a target or goes out of bounds), return it to the pool with <code>ObjectPool&lt;T&gt;.Release</code>. It’s common to give the projectile a reference to its own pool so it can release itself when done. From the corresponding <code>actionOnRelease</code> callback, deactivate the returned object, and reset any relevant properties such as its velocity and animation state.</li>
+</ol>
+
+<p>The following is the script component code for a projectile that’s pooled in an <code>ObjectPool&lt;T&gt;</code>. Note that the projectile has a public property to give it a reference to its own pool, which it uses to release itself back to the pool after a time delay:</p>
+
+<pre><code class="lang-cs">using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.Pool;
+public class RevisedProjectile : MonoBehaviour
+{
+    // Deactivate after delay
+    [SerializeField] private float timeoutDelay = 3f;
+
+    private IObjectPool&lt;RevisedProjectile&gt; objectPool;
+
+    // Public property to give the projectile a reference to its ObjectPool
+    public IObjectPool&lt;RevisedProjectile&gt; ObjectPool { set =&gt; objectPool = value; }
+
+    public void Deactivate()
+    {
+        StartCoroutine(DeactivateRoutine(timeoutDelay));
+    }
+
+    IEnumerator DeactivateRoutine(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        // Reset the moving Rigidbody
+        Rigidbody rBody = GetComponent&lt;Rigidbody&gt;();
+        rBody.linearVelocity = new Vector3(0f, 0f, 0f);
+        rBody.angularVelocity = new Vector3(0f, 0f, 0f);
+
+        // Release the projectile back to the pool
+        objectPool.Release(this);
+    }
+}
+</code></pre>
+
+<p>The following is the code for a component attached to the gun turret that fires the projectile and manages the pool of projectile objects. The gun calls <code>Get</code> on the object pool to retrieve a pooled projectile when the user shoots:</p>
+
+<pre><code class="lang-cs">using UnityEngine;
+using UnityEngine.Pool;
+using UnityEngine.Events;
+
+public class RevisedGun : MonoBehaviour
+{
+    [Tooltip(&quot;Prefab to shoot&quot;)]
+    [SerializeField] private RevisedProjectile projectilePrefab;
+    [Tooltip(&quot;Projectile force&quot;)]
+    [SerializeField] private float muzzleVelocity = 1500f;
+    [Tooltip(&quot;End point of gun where shots appear&quot;)]
+    [SerializeField] private Transform muzzlePosition;
+    [Tooltip(&quot;Time between shots / smaller = higher rate of fire&quot;)]
+    [SerializeField] private float cooldownWindow = 0.1f;
+
+    [SerializeField] private UnityEvent m_GunFired;
+
+    // Stack-based ObjectPool available with Unity 2021 and above
+    private IObjectPool&lt;RevisedProjectile&gt; objectPool;
+
+    // Throw an exception if we try to return an existing item, already in the pool
+    [SerializeField] private bool collectionCheck = true;
+
+    // Extra options to control the pool capacity and maximum size
+    [SerializeField] private int defaultCapacity = 20;
+    [SerializeField] private int maxSize = 100;
+
+    private float nextTimeToShoot;
+
+    private void Awake()
+    {
+        objectPool = new ObjectPool&lt;RevisedProjectile&gt;(CreateProjectile,
+            OnGetFromPool, OnReleaseToPool, OnDestroyPooledObject,
+            collectionCheck, defaultCapacity, maxSize);
+    }
+
+    // Invoked when creating an item to populate the object pool
+    private RevisedProjectile CreateProjectile()
+    {
+        RevisedProjectile projectileInstance = Instantiate(projectilePrefab);
+        projectileInstance.ObjectPool = objectPool;
+        return projectileInstance;
+    }
+
+    // Invoked when returning an item to the object pool
+    private void OnReleaseToPool(RevisedProjectile pooledObject)
+    {
+        pooledObject.gameObject.SetActive(false);
+    }
+
+    // Invoked when retrieving the next item from the object pool
+    private void OnGetFromPool(RevisedProjectile pooledObject)
+    {
+        pooledObject.gameObject.SetActive(true);
+    }
+
+    // Invoked when the maximum number of pooled items is exceeded (i.e. destroy the pooled object)
+    private void OnDestroyPooledObject(RevisedProjectile pooledObject)
+    {
+        Destroy(pooledObject.gameObject);
+    }
+
+    private void FixedUpdate()
+    {
+        // Invokes the Shoot method if the delay time is exceeded
+        if (Input.GetButton(&quot;Fire1&quot;) &amp;&amp; Time.time &gt; nextTimeToShoot &amp;&amp; objectPool != null)
+        {
+            Shoot();
+        }
+    }
+
+    private void Shoot()
+    {
+        // Get a pooled object instead of instantiating
+        RevisedProjectile bulletObject = objectPool.Get();
+
+        if (bulletObject == null)
+            return;
+
+        // Align to gun barrel/muzzle position
+        bulletObject.transform.SetPositionAndRotation(muzzlePosition.position, muzzlePosition.rotation);
+
+        // Move projectile forward
+        bulletObject.GetComponent&lt;Rigidbody&gt;().AddForce(bulletObject.transform.forward * muzzleVelocity, ForceMode.Acceleration);
+
+        // Turn off after a few seconds
+        bulletObject.Deactivate();
+
+        // Set cooldown delay
+        nextTimeToShoot = Time.time + cooldownWindow;
+
+        m_GunFired.Invoke();
+    }
+}
+</code></pre>
+
+<p>A full working example project using this code, including all necessary prefabs and a working turret that fires the pooled projectiles, is available for download as a free package from the <a href="https://assetstore.unity.com/packages/essentials/tutorial-projects/level-up-your-code-with-design-patterns-and-solid-289616">Asset Store</a>. For more information, refer to <a href="https://learn.unity.com/course/design-patterns-unity-6/tutorial/use-object-pooling-to-boost-performance-of-c-scripts-in-unity#67a0d722edbc2a14cfcb7400">Use object pooling to boost performance of C# scripts in Unity</a>.</p>
+
+<h3>Handling scene unload for pooled objects</h3>
+
+<p>By default, an object pool is tied to the scene it was created in. When that scene is unloaded, Unity destroys all GameObjects in that scene, including the pool and any pooled instances.</p>
+
+<p>You can make an object pool persist after scene reload by placing the pool manager under a root GameObject on which you call <a href="../ScriptReference/Object.DontDestroyOnLoad.html"><code>object.DontDestroyOnLoad</code></a>. You can call <a href="../ScriptReference/Transform.SetParent.html"><code>transform.SetParent</code></a> to reparent pooled items back under the pool root on release so they’re not destroyed with a scene.</p>
+
+<p>If you might have active pooled instances in the scene when unloading, ensure they release themselves in <a href="../ScriptReference/MonoBehaviour.OnDisable.html"><code>OnDisable</code></a> and <a href="../ScriptReference/MonoBehaviour.OnDestroy.html"><code>OnDestroy</code></a> or register a <a href="../ScriptReference/SceneManagement.SceneManager-activeSceneChanged.html"><code>SceneManager.activeSceneChanged</code></a> callback to recall or destroy items.</p>
+
+<p>Avoid long-lived references to pooled instances when inactive. Use <a href="../ScriptReference/Pool.ObjectPool_1.Clear.html"><code>ObjectPool&lt;T&gt;.Clear</code></a> to destroy all inactive instances, for example, between levels.</p>
+
+<h2>Pooling and reusing collection types</h2>
+
+<p>You can also pool and reuse collection objects from the <a href="https://docs.microsoft.com/en-us/dotnet/api/system.collections.generic?view=net-6.0"><code>System.Collection</code></a> namespace, such as Lists and Dictionaries.</p>
+
+<p>Collection classes expose a <code>Clear</code> method, which removes a collection’s values but doesn’t release the memory allocated to the collection. This is useful if you want to allocate temporary helper collections for complex computations.</p>
+
+<p>The following example code allocates the <code>nearestNeighbors</code> <code>List</code> once per frame to collect a set of data points, which is an inefficient bad practice:</p>
+
+<pre><code class="lang-cs">// Bad C# script example. This Update method allocates a new `List` every frame.
+void Update() {
+
+    List&lt;float&gt; nearestNeighbors = new List&lt;float&gt;();
+
+    findDistancesToNearestNeighbors(nearestNeighbors);
+
+    nearestNeighbors.Sort();
+
+    // … use the sorted list somehow …
+}
+</code></pre>
+
+<p>Instead, you can hoist this <code>List</code> out of the method and into the containing class and clear and reuse it each time, so that your code doesn’t need to allocate a new <code>List</code> each frame:</p>
+
+<pre><code class="lang-cs">// Good C# script example. This method re-uses the same List every frame.
+List&lt;float&gt; m_NearestNeighbors = new List&lt;float&gt;();
+
+void Update() {
+
+    m_NearestNeighbors.Clear();
+
+    findDistancesToNearestNeighbors(NearestNeighbors);
+
+    m_NearestNeighbors.Sort();
+
+    // … use the sorted list somehow …
+}
+</code></pre>
+
+<p>This example code retains and reuses the <code>List</code> instances memory across multiple frames. The code only allocates new memory when the <code>List</code> needs to expand.</p>
+
+<p>The <code>UnityEngine.Pool</code> namespace also provides ready-made pool implementations for several collection types, including <code>List&lt;T&gt;</code>, <code>HashSet&lt;T&gt;</code>, and <code>Dictionary&lt;TKey, TValue&gt;</code>. They operate on the same principle as <code>ObjectPool&lt;T&gt;</code>, allowing you to get and release pooled collection object instances as needed. For more information and examples, refer to the API reference documentation for <a href="../ScriptReference/Pool.CollectionPool_1.html"><code>CollectionPool&lt;T&gt;</code></a> and the other collection type-specific pool classes under the same namespace.</p>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="https://learn.unity.com/course/design-patterns-unity-6/tutorial/use-object-pooling-to-boost-performance-of-c-scripts-in-unity#67a0d722edbc2a14cfcb7400">Learn Tutorial: Use object pooling to boost performance of C# scripts in Unity</a></li>
+<li><a href="performance-managed-memory-introduction.html">Managed memory introduction</a></li>
+<li><a href="performance-reference-types.html">Reference type management</a></li>
+<li><a href="performance-optimizing-arrays.html">Optimizing arrays</a></li>
+<li>
+<a href="instantiating-prefabs-projectiles.html">Instantiate projectiles and explosions</a>.</li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="performance-reference-types.html"></a></span><div class="tip">Reference type management</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="performance-optimizing-arrays.html"></a></span><div class="tip">Optimizing arrays</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

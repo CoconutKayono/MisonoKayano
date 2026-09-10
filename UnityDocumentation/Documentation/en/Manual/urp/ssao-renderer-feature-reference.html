@@ -1,0 +1,345 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Configure screen space ambient occlusion in URP</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<meta property="relative-path-to-manual" content="../">
+<meta property="version-switcher-versions-with-this-page" content="Versions with this page:">
+<meta property="version-switcher-versions-without-this-page" content="Versions without this page:">
+<meta property="version-switcher-supported" content="Supported">
+<meta property="version-switcher-legacy" content="Legacy">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/Manual/urp/ssao-renderer-feature-reference.html">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../../StaticFilesManual/js/jquery.js?ts=20260626"></script><script type="text/javascript" src="../../StaticFilesManual/js/core.js?ts=20260626"></script><script type="text/javascript" src="../../StaticFilesManual/js/image-comp.js?ts=20260626"></script><script type="text/javascript" src="../docdata/toc.js?ts=20260626"></script><script type="text/javascript" src="../docdata/global_toc.js?ts=20260626"></script><link rel="stylesheet" type="text/css" href="../../StaticFilesManual/css/core.css?ts=20260626">
+<link rel="stylesheet" type="text/css" href="../../StaticFilesManual/css/icons.css?ts=20260626">
+<link rel="stylesheet" href="../../StaticFilesManual/css/prism.css">
+<script src="../../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="../30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../index.html" class="selected">Manual</a></li>
+<li><a href="../../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/urp/ssao-renderer-feature-reference.html">English</a></li>
+<li><a href="/cn/current/Manual/urp/ssao-renderer-feature-reference.html">中文</a></li>
+<li><a href="/ja/current/Manual/urp/ssao-renderer-feature-reference.html">日本語</a></li>
+<li><a href="/kr/current/Manual/urp/ssao-renderer-feature-reference.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: Unity 6.7 Beta</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/urp/ssao-renderer-feature-reference.html">English</a></li>
+<li><a href="/cn/current/Manual/urp/ssao-renderer-feature-reference.html">中文</a></li>
+<li><a href="/ja/current/Manual/urp/ssao-renderer-feature-reference.html">日本語</a></li>
+<li><a href="/kr/current/Manual/urp/ssao-renderer-feature-reference.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="../LightingOverview.html">Lighting</a></li>
+<li><a href="../urp/lighting-landing.html">Lighting in URP</a></li>
+<li><a href="../urp/Shadows-in-URP.html">Shadows in URP</a></li>
+<li><a href="../urp/post-processing-ssao-landing.html">Screen space ambient occlusion (SSAO) in URP</a></li>
+<li>Configure screen space ambient occlusion in URP</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="../urp/add-ssao-renderer-feature-to-renderer.html"></a></span><div class="tip">Add a Screen Space Ambient Occlusion Renderer Feature to a URP Renderer</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="../urp/shadow-cascades-visualize.html"></a></span><div class="tip">Visualize shadow cascades</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Configure screen space ambient occlusion in URP</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>The properties of URP’s Screen Space <span class="tooltip" tabindex="0" ><strong>Ambient Occlusion</strong><span class="tooltiptext">A method to approximate how much ambient light (light not coming from a specific direction) can hit a point on a surface.<br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#ambientocclusion" aria-label="Go to glossary anchor for ambientocclusion">Glossary</a></span></span></span> (SSAO) renderer feature allow you to configure it to best suit the graphical and performance needs of a project.</p>
+
+<h2>Properties</h2>
+
+<p>This section describes the properties of the SSAO Renderer Feature.</p>
+
+<h3>Method</h3>
+
+<p>This property defines the type of noise the SSAO effect uses.</p>
+
+<p>Available Options:</p>
+
+<ul>
+<li>
+<strong>Interleaved Gradient Noise</strong>: Uses interleaved gradient noise to generate static SSAO.</li>
+<li>
+<strong>Blue Noise</strong>: Uses a selection of blue noise textures to generate dynamic SSAO. This creates an animated effect as the texture changes with every frame, as a result the SSAO effect is more subtle when the <span class="tooltip" tabindex="0" ><strong>camera</strong><span class="tooltiptext">A component which creates an image of a particular viewpoint in your scene. The output is either drawn to the screen or captured as a texture. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CamerasOverview.html" href="../CamerasOverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#Camera" aria-label="Go to glossary anchor for Camera">Glossary</a></span></span></span> is in motion.</li>
+</ul>
+
+<p>
+<strong>Performance impact</strong>: Insignificant.</p>
+
+<h3>Intensity</h3>
+
+<p>This property defines the intensity of the darkening effect.</p>
+
+<p>
+<strong>Performance impact</strong>: Insignificant.</p>
+
+<h3>Radius</h3>
+
+<p>When Unity calculates the Ambient Occlusion value, the SSAO effect takes samples of the normal texture within this radius from the current <span class="tooltip" tabindex="0" ><strong>pixel</strong><span class="tooltiptext">The smallest unit in a computer image. Pixel size depends on your screen resolution. Pixel lighting is calculated at every screen pixel. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ShadowPerformance.html" href="../ShadowPerformance.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#pixel" aria-label="Go to glossary anchor for pixel">Glossary</a></span></span></span>.</p>
+
+<p>
+<strong>Performance impact</strong>: High.</p>
+
+<p>A lower <strong>Radius</strong> value improves performance, because the SSAO Renderer Feature samples pixels closer to the source pixel. This makes caching more efficient.</p>
+
+<p>Calculating the Ambient Occlusion Pass on objects closer to the Camera takes longer than on objects further from the Camera. This is because the <strong>Radius</strong> property scales with the object.</p>
+
+<h3>Falloff Distance</h3>
+
+<p>SSAO does not apply to objects farther than this distance from the Camera.</p>
+
+<p>A lower value increases performance in <span class="tooltip" tabindex="0" ><strong>scenes</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html" href="../CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span> that contain many distant objects. The performance improvement is smaller in smaller scenes with fewer objects.</p>
+
+<figure>
+<img src="../../uploads/urp/post-proc/ssao/ssao-falloff-distance.gif" alt="Scene with only Ambient Occlusion texture demonstrating a varying fall-off distance.">
+<figcaption>Scene with only Ambient Occlusion texture demonstrating a varying fall-off distance.</figcaption>
+</figure>
+
+<p>
+<strong>Performance impact</strong>: Depends on the application.</p>
+
+<h3>Direct Lighting Strength</h3>
+
+<p>This property defines how visible the effect is in areas exposed to direct lighting.</p>
+
+<p>These images show how the <strong>Direct Lighting Strength</strong> value changes the SSAO effect depending on whether they are in the shadow or not.</p>
+
+<figure>
+<img src="../../uploads/urp/post-proc/ssao/ssao-direct-lighting-strength-weak.png" alt="Direct Lighting Strength: 0.2.">
+<figcaption><strong>Direct Lighting Strength</strong>: 0.2.</figcaption>
+</figure>
+
+<figure>
+<img src="../../uploads/urp/post-proc/ssao/ssao-direct-lighting-strength-strong.png" alt="Direct Lighting Strength: 0.9.">
+<figcaption><strong>Direct Lighting Strength</strong>: 0.9.</figcaption>
+</figure>
+
+<p>
+<strong>A</strong>. Shows the effect of <strong>Direct Lighting Strength</strong> on the SSAO effect in lit areas.</p>
+
+<p>
+<strong>B</strong>. Shows the effect of <strong>Direct Lighting Strength</strong> on the SSAO effect in areas one or more shadows cover.</p>
+
+<p>
+<strong>Performance impact</strong>: Insignificant.</p>
+
+<h2>Quality</h2>
+
+<h3>Source</h3>
+
+<p>Select the source of the normal vector values. The SSAO Renderer Feature uses normal vectors for calculating how exposed each point on a surface is to ambient lighting.</p>
+
+<p>Available options:</p>
+
+<ul>
+<li>
+<strong>Depth Normals</strong>: SSAO uses the normal texture generated by the <code>DepthNormals</code> Pass. This option lets Unity make use of a more accurate normal texture.</li>
+<li>
+<strong>Depth</strong>: SSAO does not use the <code>DepthNormals</code> Pass to generate the normal texture. SSAO reconstructs the normal vectors using the depth texture instead. Use this option only if you want to avoid using the <code>DepthNormals</code> Pass block in your custom <span class="tooltip" tabindex="0" ><strong>shaders</strong><span class="tooltiptext">A program that runs on the GPU. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Shaders.html" href="../Shaders.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#shader" aria-label="Go to glossary anchor for shader">Glossary</a></span></span></span>. Selecting this option enables the <strong>Normal Quality</strong> property.</li>
+</ul>
+
+<p>
+<strong>Performance impact</strong>: Depends on the application.</p>
+
+<p>When you switch between the options <strong>Depth Normals</strong> and <strong>Depth</strong>, there might be a variation in performance, which depends on the target platform and the application. In a wide range of applications the difference in performance is small. In most cases, <strong>Depth Normals</strong> produce a better visual look.</p>
+
+<p>For more information on the Source property, refer to the <a href="post-processing-ssao.html#implementation-details">Implementation details</a>.</p>
+
+<h3>Normal Quality</h3>
+
+<p>This property becomes active when you select the option Depth in the <strong>Source</strong> property.</p>
+
+<p>Higher quality of the normal vectors produces smoother SSAO effect.</p>
+
+<p>Available options:</p>
+
+<ul>
+<li><strong>Low</strong></li>
+<li><strong>Medium</strong></li>
+<li><strong>High</strong></li>
+</ul>
+
+<p>
+<strong>Performance impact</strong>: Medium.</p>
+
+<p>In some scenarios, the <strong>Depth</strong> option produces results comparable with the <strong>Depth Normals</strong> option. But in certain cases, the <strong>Depth Normals</strong> option provides a significant increase in quality. The following images show an example of such case.</p>
+
+<figure>
+<img src="../../uploads/urp/post-proc/ssao/ssao-depth-q-low.png" alt="Source: Depth. Normal Quality: Low.">
+<figcaption><strong>Source</strong>: Depth. <strong>Normal Quality</strong>: Low.</figcaption>
+</figure>
+
+<figure>
+<img src="../../uploads/urp/post-proc/ssao/ssao-depth-q-medium.png" alt="Source: Depth. Normal Quality: Medium.">
+<figcaption><strong>Source</strong>: Depth. <strong>Normal Quality</strong>: Medium.</figcaption>
+</figure>
+
+<figure>
+<img src="../../uploads/urp/post-proc/ssao/ssao-depth-q-high.png" alt="Source: Depth. Normal Quality: High.">
+<figcaption><strong>Source</strong>: Depth. <strong>Normal Quality</strong>: High.</figcaption>
+</figure>
+
+<figure>
+<img src="../../uploads/urp/post-proc/ssao/ssao-depth-normals.png" alt="Source: Depth Normals.">
+<figcaption><strong>Source</strong>: Depth Normals.</figcaption>
+</figure>
+
+<p>For more information, refer to the <a href="post-processing-ssao.html#implementation-details">Implementation details</a>.</p>
+
+<h3>Downsample</h3>
+
+<p>Selecting this check box reduces the resolution of the Pass that calculates the Ambient Occlusion effect by a factor of two.</p>
+
+<p>The reduction in resolution of the Ambient Occlusion Pass by a factor of two reduces the pixel count to process by a factor of four. This reduces the load on the GPU significantly, but makes the effect less detailed.</p>
+
+<p>
+<strong>Performance impact</strong>: Very high.</p>
+
+<h3>After Opaque</h3>
+
+<p>When you enable <strong>After Opaque</strong>, Unity calculates and applies the SSAO effect after the opaque render pass. This can increase performance when used with <strong>Depth</strong> as the <strong>Source</strong> for normal vector values as Unity does not perform the depth prepass to calculate SSAO and instead uses the existing depth values. However this can cause over-darkening of the areas that receive baked occlusion and real-time occlusion.</p>
+
+<p>
+<strong>After Opaque</strong> can also increase performance on mobile devices that use tile-based rendering.</p>
+
+<p>
+<strong>Performance impact</strong>: Medium.</p>
+
+<h3>Blur Quality</h3>
+
+<p>This property defines the quality of blur that Unity applies to the SSAO effect. Higher quality blur creates a smoother, higher fidelity effect but requires more processing power.</p>
+
+<p>Available options:</p>
+
+<ul>
+<li>
+<strong>High</strong> (Bilateral): Bilateral blur, takes three passes to process.</li>
+<li>
+<strong>Medium</strong> (Gaussian): Gaussian blur, takes two passes to process.</li>
+<li>
+<strong>Low</strong> (Kawase): Kawase blur, takes a single pass to process.</li>
+</ul>
+
+<p>
+<strong>Performance impact</strong>: Very high.</p>
+
+<h3>Samples</h3>
+
+<p>For each pixel, the SSAO Render Feature takes the selected number of samples within the specified radius to calculate the Ambient Occlusion value. A higher value makes the effect smoother and more detailed, but also reduces performance.</p>
+
+<p>Available options:</p>
+
+<ul>
+<li>
+<strong>High</strong>: 12 Samples</li>
+<li>
+<strong>Medium</strong>: 8 Samples</li>
+<li>
+<strong>Low</strong>: 4 Samples</li>
+</ul>
+
+<p>
+<strong>Performance impact</strong>: High.</p>
+
+<p>An increase in the <strong>Sample Count</strong> value from 4 to 8 doubles the computational load on the GPU.</p>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="../urp/add-ssao-renderer-feature-to-renderer.html"></a></span><div class="tip">Add a Screen Space Ambient Occlusion Renderer Feature to a URP Renderer</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="../urp/shadow-cascades-visualize.html"></a></span><div class="tip">Visualize shadow cascades</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

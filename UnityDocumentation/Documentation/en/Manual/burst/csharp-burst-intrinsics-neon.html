@@ -1,0 +1,1129 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Burst Arm Neon intrinsics reference</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<meta property="relative-path-to-manual" content="../">
+<meta property="version-switcher-versions-with-this-page" content="Versions with this page:">
+<meta property="version-switcher-versions-without-this-page" content="Versions without this page:">
+<meta property="version-switcher-supported" content="Supported">
+<meta property="version-switcher-legacy" content="Legacy">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/Manual/burst/csharp-burst-intrinsics-neon.html">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../../StaticFilesManual/js/jquery.js?ts=20260626"></script><script type="text/javascript" src="../../StaticFilesManual/js/core.js?ts=20260626"></script><script type="text/javascript" src="../../StaticFilesManual/js/image-comp.js?ts=20260626"></script><script type="text/javascript" src="../docdata/toc.js?ts=20260626"></script><script type="text/javascript" src="../docdata/global_toc.js?ts=20260626"></script><link rel="stylesheet" type="text/css" href="../../StaticFilesManual/css/core.css?ts=20260626">
+<link rel="stylesheet" type="text/css" href="../../StaticFilesManual/css/icons.css?ts=20260626">
+<link rel="stylesheet" href="../../StaticFilesManual/css/prism.css">
+<script src="../../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="../30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../index.html" class="selected">Manual</a></li>
+<li><a href="../../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/burst/csharp-burst-intrinsics-neon.html">English</a></li>
+<li><a href="/cn/current/Manual/burst/csharp-burst-intrinsics-neon.html">中文</a></li>
+<li><a href="/ja/current/Manual/burst/csharp-burst-intrinsics-neon.html">日本語</a></li>
+<li><a href="/kr/current/Manual/burst/csharp-burst-intrinsics-neon.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: Unity 6.7 Beta</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/burst/csharp-burst-intrinsics-neon.html">English</a></li>
+<li><a href="/cn/current/Manual/burst/csharp-burst-intrinsics-neon.html">中文</a></li>
+<li><a href="/ja/current/Manual/burst/csharp-burst-intrinsics-neon.html">日本語</a></li>
+<li><a href="/kr/current/Manual/burst/csharp-burst-intrinsics-neon.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="../scripting.html">Programming in Unity</a></li>
+<li><a href="../compilation-and-code-reload.html">Compilation and code reload </a></li>
+<li><a href="../script-compilation.html">Script compilation</a></li>
+<li><a href="../burst/script-compilation-burst.html">Burst compilation</a></li>
+<li><a href="../burst/csharp-burst-intrinsics.html">Burst intrinsics</a></li>
+<li>Burst Arm Neon intrinsics reference</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="../burst/csharp-burst-intrinsics-processors.html"></a></span><div class="tip">Processor specific SIMD extensions</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="../burst/editor-reference-overview.html"></a></span><div class="tip">Burst Editor windows reference</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Burst Arm Neon intrinsics reference</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>The following tables list the major Arm Neon intrinsic operations available in Burst. The <strong>Operation</strong> column contains the primary naming prefix for intrinsics of this type. For the full list of intrinsics available for each operation, refer to the <a href="../../ScriptReference/Unity.Burst.Intrinsics.Arm.Neon.html"><code>Unity.Burst.Intrinsics.Arm.Neon</code></a> API reference.</p>
+
+<p>For information on how to use these intrinsics, refer to <a href="csharp-burst-intrinsics-processors.html">Processor specific SIMD extensions</a>. </p>
+
+<h3>Intrinsics type creation and conversion</h3>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;">Operation</th>
+	<th style="text-align:left;">Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">vcreate</td>
+	<td style="text-align:left;">Create vector</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vdup_n</td>
+	<td style="text-align:left;">Duplicate (splat) value</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vdup_lane</td>
+	<td style="text-align:left;">Duplicate (splat) vector element</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vmov_n</td>
+	<td style="text-align:left;">Duplicate (splat) value</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vcopy_lane</td>
+	<td style="text-align:left;">Insert vector element from another vector element</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vcombine</td>
+	<td style="text-align:left;">Join two vectors into a larger vector</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vget_high</td>
+	<td style="text-align:left;">Get the higher half of the vector</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vget_low</td>
+	<td style="text-align:left;">Get the lower half of the vector</td>
+</tr>
+</tbody>
+</table>
+
+<h3>Arithmetic</h3>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;">Operation</th>
+	<th style="text-align:left;">Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">vadd</td>
+	<td style="text-align:left;">Add</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vaddv</td>
+	<td style="text-align:left;">Add across vector</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vaddl</td>
+	<td style="text-align:left;">Add long</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vaddlv</td>
+	<td style="text-align:left;">Add long across Vector</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vaddw</td>
+	<td style="text-align:left;">Add wide</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vhadd</td>
+	<td style="text-align:left;">Halving add</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vrhadd</td>
+	<td style="text-align:left;">Rounding halving add</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vqadd</td>
+	<td style="text-align:left;">Saturating add</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vsqadd</td>
+	<td style="text-align:left;">Unsigned saturating Accumulate of signed value</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vuqadd</td>
+	<td style="text-align:left;">Signed saturating Accumulate of unsigned value</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vaddhn</td>
+	<td style="text-align:left;">Add returning high narrow</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vraddhn</td>
+	<td style="text-align:left;">Rounding add returning high narrow</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vpadd</td>
+	<td style="text-align:left;">Add pairwise (vector)</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vpaddl</td>
+	<td style="text-align:left;">Signed add long pairwise</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vpadal</td>
+	<td style="text-align:left;">Signed add and accumulate long pairwise</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vsubl</td>
+	<td style="text-align:left;">Subtract long</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vsubw</td>
+	<td style="text-align:left;">Subtract wide</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vhsub</td>
+	<td style="text-align:left;">Halving subtract</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vqsub</td>
+	<td style="text-align:left;">Saturating subtract</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vsubhn</td>
+	<td style="text-align:left;">Subtract returning high narrow</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vrsubhn</td>
+	<td style="text-align:left;">Rounding subtract returning high narrow</td>
+</tr>
+</tbody>
+</table>
+
+<h3>Multiply</h3>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;">Operation</th>
+	<th style="text-align:left;">Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">vmul</td>
+	<td style="text-align:left;">Multiply (vector)</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vmul_n</td>
+	<td style="text-align:left;">Vector multiply by scalar</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vmul_lane</td>
+	<td style="text-align:left;">Multiply (vector)</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vmull</td>
+	<td style="text-align:left;">Multiply long (vector)</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vmull_n</td>
+	<td style="text-align:left;">Vector long multiply by scalar</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vmull_lane</td>
+	<td style="text-align:left;">Multiply long (vector)</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vmulx</td>
+	<td style="text-align:left;">Floating-point multiply extended</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vmla</td>
+	<td style="text-align:left;">Multiply-add to accumulator (vector)</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vmla_lane</td>
+	<td style="text-align:left;">Vector multiply accumulate with scalar</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vmla_n</td>
+	<td style="text-align:left;">Vector multiply accumulate with scalar</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vmlal</td>
+	<td style="text-align:left;">Multiply-accumulate long (vector)</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vmlal_lane</td>
+	<td style="text-align:left;">Multiply-accumulate long with scalar</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vmlal_n</td>
+	<td style="text-align:left;">Multiply-accumulate long with scalar</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vmls</td>
+	<td style="text-align:left;">Multiply-subtract from accumulator (vector)</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vmls_lane</td>
+	<td style="text-align:left;">Vector multiply subtract with scalar</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vmls_n</td>
+	<td style="text-align:left;">Vector multiply subtract with scalar</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vmlsl</td>
+	<td style="text-align:left;">Multiply-subtract long (vector)</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vmlsl_lane</td>
+	<td style="text-align:left;">Vector multiply-subtract long with scalar</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vmlsl_n</td>
+	<td style="text-align:left;">Vector multiply-subtract long with scalar</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vqdmull</td>
+	<td style="text-align:left;">Signed saturating doubling multiply long</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vqdmull_lane</td>
+	<td style="text-align:left;">Vector saturating doubling multiply long with scalar</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vqdmull_n</td>
+	<td style="text-align:left;">Vector saturating doubling multiply long with scalar</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vqdmulh</td>
+	<td style="text-align:left;">Saturating doubling multiply returning high half</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vqdmulh_lane</td>
+	<td style="text-align:left;">Vector saturating doubling multiply high by scalar</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vqdmulh_n</td>
+	<td style="text-align:left;">Vector saturating doubling multiply high by scalar</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vqrdmulh</td>
+	<td style="text-align:left;">Saturating rounding doubling multiply returning high half</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vqrdmulh_lane</td>
+	<td style="text-align:left;">Vector saturating rounding doubling multiply high with scalar</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vqrdmulh_n</td>
+	<td style="text-align:left;">Vector saturating rounding doubling multiply high with scalar</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vqdmlal</td>
+	<td style="text-align:left;">Saturating doubling multiply-add long</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vqdmlal_lane</td>
+	<td style="text-align:left;">Vector saturating doubling multiply-accumulate long<br> with scalar</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vqdmlal_n</td>
+	<td style="text-align:left;">Vector saturating doubling multiply-accumulate long<br> with scalar</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vqdmlsl</td>
+	<td style="text-align:left;">Signed saturating doubling multiply-subtract long</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vqdmlsl_lane</td>
+	<td style="text-align:left;">Vector saturating doubling multiply-subtract long<br> with scalar</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vqdmlsl_n</td>
+	<td style="text-align:left;">Vector saturating doubling multiply-subtract long<br> with scalar</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vqrdmlah</td>
+	<td style="text-align:left;">Saturating rounding doubling multiply accumulate<br> returning high half (vector)</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vqrdmlah_lane</td>
+	<td style="text-align:left;">Saturating rounding doubling multiply accumulate<br> returning high half (vector)</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vqrdmlsh</td>
+	<td style="text-align:left;">Saturating rounding doubling multiply subtract<br> returning high half (vector)</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vqrdmlsh_lane</td>
+	<td style="text-align:left;">Saturating rounding doubling multiply subtract<br> returning high half (vector)</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vfma</td>
+	<td style="text-align:left;">Floating-point fused multiply-add to accumulator (vector)</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vfma_n</td>
+	<td style="text-align:left;">Floating-point fused multiply-add to accumulator (vector)</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vfma_lane</td>
+	<td style="text-align:left;">Floating-point fused multiply-add to accumulator (vector)</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vfms</td>
+	<td style="text-align:left;">Floating-point fused multiply-subtract<br> from accumulator (vector)</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vfms_n</td>
+	<td style="text-align:left;">Floating-point fused multiply-subtract<br> from accumulator (vector)</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vfms_lane</td>
+	<td style="text-align:left;">Floating-point fused multiply-subtract<br> from accumulator (vector)</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vdiv</td>
+	<td style="text-align:left;">Floating-point divide (vector)</td>
+</tr>
+</tbody>
+</table>
+
+<h3>Data processing</h3>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;">Operation</th>
+	<th style="text-align:left;">Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">vpmax</td>
+	<td style="text-align:left;">Maximum pairwise</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vpmaxnm</td>
+	<td style="text-align:left;">Floating-point maximum number pairwise (vector)</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vpmin</td>
+	<td style="text-align:left;">Minimum pairwise</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vpminnm</td>
+	<td style="text-align:left;">Floating-point minimum number pairwise (vector)</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vabd</td>
+	<td style="text-align:left;">Absolute difference</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vabdl</td>
+	<td style="text-align:left;">Absolute difference long</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vaba</td>
+	<td style="text-align:left;">Absolute difference and accumulate</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vabal</td>
+	<td style="text-align:left;">Absolute difference and accumulate long</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vmax</td>
+	<td style="text-align:left;">Maximum</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vmaxnm</td>
+	<td style="text-align:left;">Floating-point maximum number</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vmaxv</td>
+	<td style="text-align:left;">Maximum across vector</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vmin</td>
+	<td style="text-align:left;">Minimum</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vminnm</td>
+	<td style="text-align:left;">Floating-point minimum number</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vminv</td>
+	<td style="text-align:left;">Minimum across vector</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vabs</td>
+	<td style="text-align:left;">Absolute value</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vqabs</td>
+	<td style="text-align:left;">Saturating absolute value</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vneg</td>
+	<td style="text-align:left;">Negate</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vqneg</td>
+	<td style="text-align:left;">Saturating negate</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vcls</td>
+	<td style="text-align:left;">Count leading sign bits</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vclz</td>
+	<td style="text-align:left;">Count leading zero bits</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vcnt</td>
+	<td style="text-align:left;">Population count per byte</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vrecpe</td>
+	<td style="text-align:left;">Reciprocal estimate</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vrecps</td>
+	<td style="text-align:left;">Reciprocal step</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vrecpx</td>
+	<td style="text-align:left;">Floating-point reciprocal exponent</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vrsqrte</td>
+	<td style="text-align:left;">Reciprocal square root estimate</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vrsqrts</td>
+	<td style="text-align:left;">Reciprocal square root step</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vmovn</td>
+	<td style="text-align:left;">Extract narrow</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vmovl</td>
+	<td style="text-align:left;">Extract long</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vqmovn</td>
+	<td style="text-align:left;">Saturating extract narrow</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vqmovun</td>
+	<td style="text-align:left;">Signed saturating extract unsigned narrow</td>
+</tr>
+</tbody>
+</table>
+
+<h3>Comparison</h3>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;">Operation</th>
+	<th style="text-align:left;">Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">vceq</td>
+	<td style="text-align:left;">Compare bitwise equal</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vceqz</td>
+	<td style="text-align:left;">Compare bitwise equal to zero</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vcge</td>
+	<td style="text-align:left;">Compare greater than or equal</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vcgez</td>
+	<td style="text-align:left;">Compare greater than or equal to zero</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vcle</td>
+	<td style="text-align:left;">Compare less than or equal</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vclez</td>
+	<td style="text-align:left;">Compare less than or equal to zero</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vcgt</td>
+	<td style="text-align:left;">Compare greater than</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vcgtz</td>
+	<td style="text-align:left;">Compare greater than zero</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vclt</td>
+	<td style="text-align:left;">Compare less than</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vcltz</td>
+	<td style="text-align:left;">Compare less than zero</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vcage</td>
+	<td style="text-align:left;">Floating-point absolute compare greater than or equal</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vcagt</td>
+	<td style="text-align:left;">Floating-point absolute compare greater than</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vcale</td>
+	<td style="text-align:left;">Floating-point absolute compare less than or equal</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vcalt</td>
+	<td style="text-align:left;">Floating-point absolute compare less than</td>
+</tr>
+</tbody>
+</table>
+
+<h3>Bitwise</h3>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;">Operation</th>
+	<th style="text-align:left;">Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">vtst</td>
+	<td style="text-align:left;">Test bits nonzero</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vmvn</td>
+	<td style="text-align:left;">Bitwise NOT</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vand</td>
+	<td style="text-align:left;">Bitwise AND</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vorr</td>
+	<td style="text-align:left;">Bitwise OR</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vorn</td>
+	<td style="text-align:left;">Bitwise OR NOT</td>
+</tr>
+<tr>
+	<td style="text-align:left;">veor</td>
+	<td style="text-align:left;">Bitwise exclusive OR</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vbic</td>
+	<td style="text-align:left;">Bitwise bit clear</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vbsl</td>
+	<td style="text-align:left;">Bitwise select</td>
+</tr>
+</tbody>
+</table>
+
+<h3>Shift</h3>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;">Operation</th>
+	<th style="text-align:left;">Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">vshl</td>
+	<td style="text-align:left;">Shift left (register)</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vqshl</td>
+	<td style="text-align:left;">Saturating shift left (register)</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vqshl_n</td>
+	<td style="text-align:left;">Saturating shift left (immediate)</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vqshlu_n</td>
+	<td style="text-align:left;">Saturating shift left unsigned (immediate)</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vrshl</td>
+	<td style="text-align:left;">Rounding shift left (register)</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vqrshl</td>
+	<td style="text-align:left;">Saturating rounding shift left (register)</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vshl_n</td>
+	<td style="text-align:left;">Shift left (immediate)</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vshll_n</td>
+	<td style="text-align:left;">Shift left long (immediate)</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vshr_n</td>
+	<td style="text-align:left;">Shift right (immediate)</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vrshr_n</td>
+	<td style="text-align:left;">Rounding right left (register)</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vshrn_n</td>
+	<td style="text-align:left;">Shift right narrow (immediate)</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vqshrun_n</td>
+	<td style="text-align:left;">Signed saturating shift right<br> unsigned narrow (immediate)</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vqrshrun_n</td>
+	<td style="text-align:left;">Signed saturating rounded shift right<br> unsigned narrow (immediate)</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vqshrn_n</td>
+	<td style="text-align:left;">Signed saturating shift right narrow (immediate)</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vrshrn_n</td>
+	<td style="text-align:left;">Rounding shift right narrow (immediate)</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vqrshrn_n</td>
+	<td style="text-align:left;">Signed saturating rounded shift right narrow (immediate)</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vsra_n</td>
+	<td style="text-align:left;">Signed shift right and accumulate (immediate)</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vrsra_n</td>
+	<td style="text-align:left;">Signed rounding shift right and accumulate (immediate)</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vsri_n</td>
+	<td style="text-align:left;">Shift right and insert (immediate)</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vsli_n</td>
+	<td style="text-align:left;">Shift left and insert (immediate)</td>
+</tr>
+</tbody>
+</table>
+
+<h3>Floating-point</h3>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;">Operation</th>
+	<th style="text-align:left;">Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">vcvt</td>
+	<td style="text-align:left;">Convert to/from another precision or fixed point,<br>rounding towards zero</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vcvta</td>
+	<td style="text-align:left;">Convert to integer, rounding to nearest with ties to away</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vcvtm</td>
+	<td style="text-align:left;">Convert to integer, rounding towards minus infinity</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vcvtn</td>
+	<td style="text-align:left;">Convert to integer, rounding to nearest with ties to even</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vcvtp</td>
+	<td style="text-align:left;">Convert to integer, rounding towards plus infinity</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vcvtx</td>
+	<td style="text-align:left;">Convert to lower precision,<br> rounding to nearest with ties to odd</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vcvt_n</td>
+	<td style="text-align:left;">Convert to/from fixed point, rounding towards zero</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vrnd</td>
+	<td style="text-align:left;">Round to Integral, toward zero</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vrnda</td>
+	<td style="text-align:left;">Round to Integral, with ties to away</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vrndi</td>
+	<td style="text-align:left;">Round to Integral, using current rounding mode</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vrndm</td>
+	<td style="text-align:left;">Round to Integral, towards minus infinity</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vrndn</td>
+	<td style="text-align:left;">Round to Integral, with ties to even</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vrndp</td>
+	<td style="text-align:left;">Round to Integral, towards plus infinity</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vrndx</td>
+	<td style="text-align:left;">Round to Integral exact</td>
+</tr>
+</tbody>
+</table>
+
+<h3>Load and store</h3>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;">Operation</th>
+	<th style="text-align:left;">Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">vld1</td>
+	<td style="text-align:left;">Load vector from memory</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vst1</td>
+	<td style="text-align:left;">Store vector to memory</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vget_lane</td>
+	<td style="text-align:left;">Get vector element</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vset_lane</td>
+	<td style="text-align:left;">Set vector element</td>
+</tr>
+</tbody>
+</table>
+
+<h3>Permutation</h3>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;">Operation</th>
+	<th style="text-align:left;">Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">vext</td>
+	<td style="text-align:left;">Extract vector from pair of vectors</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vtbl1</td>
+	<td style="text-align:left;">Table vector Lookup</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vtbx1</td>
+	<td style="text-align:left;">Table vector lookup extension</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vqtbl1</td>
+	<td style="text-align:left;">Table vector Lookup</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vqtbx1</td>
+	<td style="text-align:left;">Table vector lookup extension</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vrbit</td>
+	<td style="text-align:left;">Reverse bit order</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vrev16</td>
+	<td style="text-align:left;">Reverse elements in 16-bit halfwords</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vrev32</td>
+	<td style="text-align:left;">Reverse elements in 32-bit words</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vrev64</td>
+	<td style="text-align:left;">Reverse elements in 64-bit doublewords</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vtrn1</td>
+	<td style="text-align:left;">Transpose vectors (primary)</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vtrn2</td>
+	<td style="text-align:left;">Transpose vectors (secondary)</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vzip1</td>
+	<td style="text-align:left;">Zip vectors (primary)</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vzip2</td>
+	<td style="text-align:left;">Zip vectors (secondary)</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vuzp1</td>
+	<td style="text-align:left;">Unzip vectors (primary)</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vuzp2</td>
+	<td style="text-align:left;">Unzip vectors (secondary)</td>
+</tr>
+</tbody>
+</table>
+
+<h3>Cryptographic</h3>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;">Operation</th>
+	<th style="text-align:left;">Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">CRC32</td>
+	<td style="text-align:left;">Cyclic redundancy check (CRC) calculations.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">SHA1</td>
+	<td style="text-align:left;">SHA1 calculations.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">SHA256</td>
+	<td style="text-align:left;">SHA256 calculations.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">AES</td>
+	<td style="text-align:left;">AES calculations.</td>
+</tr>
+</tbody>
+</table>
+
+<h3>Miscellaneous</h3>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;">Operation</th>
+	<th style="text-align:left;">Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">vsqrt</td>
+	<td style="text-align:left;">Square root</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vdot</td>
+	<td style="text-align:left;">Dot product</td>
+</tr>
+<tr>
+	<td style="text-align:left;">vdot_lane</td>
+	<td style="text-align:left;">Dot product</td>
+</tr>
+</tbody>
+</table>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="csharp-burst-intrinsics-processors.html">Processor specific SIMD extensions</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="../burst/csharp-burst-intrinsics-processors.html"></a></span><div class="tip">Processor specific SIMD extensions</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="../burst/editor-reference-overview.html"></a></span><div class="tip">Burst Editor windows reference</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

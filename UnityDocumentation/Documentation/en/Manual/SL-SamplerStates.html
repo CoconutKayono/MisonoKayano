@@ -1,0 +1,292 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Sample a texture in HLSL</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<meta property="relative-path-to-manual" content="">
+<meta property="version-switcher-versions-with-this-page" content="Versions with this page:">
+<meta property="version-switcher-versions-without-this-page" content="Versions without this page:">
+<meta property="version-switcher-supported" content="Supported">
+<meta property="version-switcher-legacy" content="Legacy">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/Manual/SL-SamplerStates.html">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20260626"></script><script type="text/javascript" src="docdata/toc.js?ts=20260626"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20260626"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20260626">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20260626">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/SL-SamplerStates.html">English</a></li>
+<li><a href="/cn/current/Manual/SL-SamplerStates.html">中文</a></li>
+<li><a href="/ja/current/Manual/SL-SamplerStates.html">日本語</a></li>
+<li><a href="/kr/current/Manual/SL-SamplerStates.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: Unity 6.7 Beta</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/SL-SamplerStates.html">English</a></li>
+<li><a href="/cn/current/Manual/SL-SamplerStates.html">中文</a></li>
+<li><a href="/ja/current/Manual/SL-SamplerStates.html">日本語</a></li>
+<li><a href="/kr/current/Manual/SL-SamplerStates.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="materials-and-shaders.html">Materials and shaders</a></li>
+<li><a href="Shaders.html">Custom shaders</a></li>
+<li><a href="writing-custom-shaders.html">Writing custom shaders</a></li>
+<li><a href="shader-writing.html">Writing shaders in code</a></li>
+<li><a href="SL-landing.html">Writing a custom shader in ShaderLab and HLSL</a></li>
+<li><a href="writing-shader-writing-shader-programs-hlsl.html">Writing HLSL shader programs</a></li>
+<li>Sample a texture in HLSL</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="SL-VertexProgramInputs.html"></a></span><div class="tip">Input data into HLSL</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="SL-PlatformDifferences.html"></a></span><div class="tip">Write HLSL for different graphics APIs</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Sample a texture in HLSL</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>To sample a texture in High-Level <span class="tooltip" tabindex="0" ><strong>Shader</strong><span class="tooltiptext">A program that runs on the GPU. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Shaders.html" href="Shaders.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#shader" aria-label="Go to glossary anchor for shader">Glossary</a></span></span></span> Language (HLSL), declare a texture and its sampler. The sampler contains the properties the GPU uses to sample the texture, for example the wrap mode and filter mode. The properties usually come from the <a href="class-TextureImporter.html">texture import settings</a>.</p>
+
+<p>
+<strong>Note:</strong> If your project uses the Universal <span class="tooltip" tabindex="0" ><strong>Render Pipeline</strong><span class="tooltiptext">A series of operations that take the contents of a Scene, and displays them on a screen. Unity lets you choose from pre-built render pipelines, or write your own. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about render-pipelines.html" href="render-pipelines.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#renderpipeline" aria-label="Go to glossary anchor for renderpipeline">Glossary</a></span></span></span> (URP), refer instead to <a href="urp/writing-shaders-urp-unlit-texture.html">Draw a texture in a shader in URP</a>.</p>
+
+<p>Follow these steps:</p>
+
+<ol>
+<li>
+<p>In the <code>HLSLPROGRAM</code> block, use the <code>UNITY_DECLARE_TEX2D</code> macro to declare the texture and its sampler. For example:</p>
+
+<pre><code class="lang-hlsl">UNITY_DECLARE_TEX2D(_MainTex);
+</code></pre>
+
+<p>Unity creates a standard HLSL <code>Texture2D</code> object for the texture, and a standard HLSL <code>SamplerState</code> object for its sampler.</p>
+</li>
+<li>
+<p>To sample the texture, use the <code>UNITY_SAMPLE_TEX2D</code> macro. For example:</p>
+
+<pre><code class="lang-hlsl">half4 color = UNITY_SAMPLE_TEX2D(_MainTex, uv);
+</code></pre>
+</li>
+</ol>
+
+<p>If the graphics API doesn’t support separate textures and samplers, Unity does the following:</p>
+
+<ul>
+<li>The <code>UNITY_DECLARE_TEX2D</code> macro falls back to creating a standard HLSL <code>sampler2D</code> object instead, which combines the texture and its sampler.</li>
+<li>The <code>UNITY_SAMPLE_TEX2D_SAMPLER</code> macro samples the texture using the combined texture and sampler.</li>
+</ul>
+
+<h2>Sample other textures with the same sampler</h2>
+
+<p>To sample a second texture with the sampler from a texture, follow these steps:</p>
+
+<ol>
+<li>
+<p>In the <code>HLSLPROGRAM</code> block, declare the second texture using the <code>UNITY_DECLARE_TEX2D_NOSAMPLER</code> macro. For example:</p>
+
+<pre><code class="lang-hlsl">UNITY_DECLARE_TEX2D_NOSAMPLER(_SecondTex);
+</code></pre>
+</li>
+<li>
+<p>To sample the texture, use the <code>UNITY_SAMPLE_TEX2D_SAMPLER</code> macro, passing in the first texture as the sampler source. For example:</p>
+
+<pre><code class="lang-hlsl">half4 color = UNITY_SAMPLE_TEX2D_SAMPLER(_SecondTex, _FirstTex, uv);
+</code></pre>
+</li>
+</ol>
+
+<h2>Create a custom sampler</h2>
+
+<p>To create and use a custom sampler directly in a shader, also known as an inline sampler, follow these steps:</p>
+
+<ol>
+<li>
+<p>Declare a <code>SamplerState</code> object and use its name to set its properties. For example, the following code creates a custom sampler that uses point filtering and the clamp wrapping mode:</p>
+
+<pre><code class="lang-hlsl">SamplerState my_point_clamp_sampler;
+</code></pre>
+</li>
+<li>
+<p>Sample the texture using the <code>Sample</code> method of a <code>Texture2D</code> object, and pass in the custom sampler. For example:</p>
+
+<pre><code class="lang-hlsl">_MainTex.Sample(my_point_clamp_sampler, uv);
+</code></pre>
+</li>
+</ol>
+
+<p>
+<strong>Note</strong>: Inline samplers don’t work if you target the OpenGL ES or OpenGL Core graphics APIs.</p>
+
+<p>For more information, refer to <a href="SL-UnityShaderVariables.html">Built-in shader variables reference</a>.</p>
+
+<h2>Example</h2>
+
+<p>The following example reuses the same sampler for three textures:</p>
+
+<pre><code class="lang-hlsl">Shader &quot;Custom/SeparateSamplerExample&quot;
+{
+    Properties
+    {
+        _MainTex (&quot;Main Texture&quot;, 2D) = &quot;white&quot; {}
+        _SecondTex (&quot;Second Texture&quot;, 2D) = &quot;white&quot; {}
+        _ThirdTex (&quot;Third Texture&quot;, 2D) = &quot;white&quot; {}
+    }
+
+    SubShader
+    {
+        Pass
+        {
+            HLSLPROGRAM
+
+            #pragma vertex vert
+            #pragma fragment frag
+            #include &quot;UnityCG.cginc&quot;
+
+            // Declare the first texture and its sampler.
+            UNITY_DECLARE_TEX2D(_MainTex);
+
+            // Declare the second and third textures without samplers.
+            UNITY_DECLARE_TEX2D_NOSAMPLER(_SecondTex);
+            UNITY_DECLARE_TEX2D_NOSAMPLER(_ThirdTex);
+
+            struct v2f {
+                float4 pos : SV_POSITION;
+                float2 uv : TEXCOORD0;
+            };
+
+            v2f vert (appdata_base v)
+            {
+                v2f o;
+                o.pos = UnityObjectToClipPos(v.vertex);
+                o.uv = v.texcoord;
+                return o;
+            }
+
+            half4 frag (v2f i) : SV_Target
+            {
+                // Sample the first texture using its own sampler.
+                half4 color1 = UNITY_SAMPLE_TEX2D(_MainTex, i.uv);
+
+                // Sample the second and third textures using the sampler from the first texture.
+                half4 color2 = UNITY_SAMPLE_TEX2D_SAMPLER(_SecondTex, _MainTex, i.uv);
+                half4 color3 = UNITY_SAMPLE_TEX2D_SAMPLER(_ThirdTex, _MainTex, i.uv);
+
+                // Return the combined color from all three textures.
+                return (color1 + color2 + color3) / 3.0;
+            }
+            ENDHLSL
+        }
+    }
+
+}
+</code></pre>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="SL-BuiltinFunctions.html">Use built-in shader functions</a></li>
+<li>
+<a href="https://learn.microsoft.com/en-us/windows/win32/direct3dhlsl/dx-graphics-hlsl-reference">HLSL documentation</a> on the Microsoft website</li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="SL-VertexProgramInputs.html"></a></span><div class="tip">Input data into HLSL</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="SL-PlatformDifferences.html"></a></span><div class="tip">Write HLSL for different graphics APIs</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

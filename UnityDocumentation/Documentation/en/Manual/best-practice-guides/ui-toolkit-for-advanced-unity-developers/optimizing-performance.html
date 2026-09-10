@@ -1,0 +1,618 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Optimizing performance</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<meta property="relative-path-to-manual" content="../../">
+<meta property="version-switcher-versions-with-this-page" content="Versions with this page:">
+<meta property="version-switcher-versions-without-this-page" content="Versions without this page:">
+<meta property="version-switcher-supported" content="Supported">
+<meta property="version-switcher-legacy" content="Legacy">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../../../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../../../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../../../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../../../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../../../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../../../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../../../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/Manual/best-practice-guides/ui-toolkit-for-advanced-unity-developers/optimizing-performance.html">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../../../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../../../StaticFilesManual/js/jquery.js?ts=20260626"></script><script type="text/javascript" src="../../../StaticFilesManual/js/core.js?ts=20260626"></script><script type="text/javascript" src="../../../StaticFilesManual/js/image-comp.js?ts=20260626"></script><script type="text/javascript" src="../../docdata/toc.js?ts=20260626"></script><script type="text/javascript" src="../../docdata/global_toc.js?ts=20260626"></script><link rel="stylesheet" type="text/css" href="../../../StaticFilesManual/css/core.css?ts=20260626">
+<link rel="stylesheet" type="text/css" href="../../../StaticFilesManual/css/icons.css?ts=20260626">
+<link rel="stylesheet" href="../../../StaticFilesManual/css/prism.css">
+<script src="../../../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../../../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../../../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../../../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="../../30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../../index.html" class="selected">Manual</a></li>
+<li><a href="../../../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/best-practice-guides/ui-toolkit-for-advanced-unity-developers/optimizing-performance.html">English</a></li>
+<li><a href="/cn/current/Manual/best-practice-guides/ui-toolkit-for-advanced-unity-developers/optimizing-performance.html">中文</a></li>
+<li><a href="/ja/current/Manual/best-practice-guides/ui-toolkit-for-advanced-unity-developers/optimizing-performance.html">日本語</a></li>
+<li><a href="/kr/current/Manual/best-practice-guides/ui-toolkit-for-advanced-unity-developers/optimizing-performance.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: Unity 6.7 Beta</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/best-practice-guides/ui-toolkit-for-advanced-unity-developers/optimizing-performance.html">English</a></li>
+<li><a href="/cn/current/Manual/best-practice-guides/ui-toolkit-for-advanced-unity-developers/optimizing-performance.html">中文</a></li>
+<li><a href="/ja/current/Manual/best-practice-guides/ui-toolkit-for-advanced-unity-developers/optimizing-performance.html">日本語</a></li>
+<li><a href="/kr/current/Manual/best-practice-guides/ui-toolkit-for-advanced-unity-developers/optimizing-performance.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="../../best-practice-guides.html">Best practice guides</a></li>
+<li><a href="../../best-practice-guides/ui-toolkit-for-advanced-unity-developers/bpg-uiad-index.html">UI Toolkit for advanced Unity developers</a></li>
+<li>Optimizing performance</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="../../best-practice-guides/ui-toolkit-for-advanced-unity-developers/custom-controls.html"></a></span><div class="tip">Custom controls</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="../../TroubleShooting.html"></a></span><div class="tip">Troubleshooting</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Optimizing performance</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Table of Contents</p>
+
+<ul>
+<li><a href="#update-mechanisms">Update mechanisms</a></li>
+<li><a href="#batching-elements">Batching elements</a></li>
+<li><a href="#vertex-buffers">Vertex buffers</a></li>
+<li><a href="#uber-shader-and-eight-texture-limit">Uber shader and eight-texture limit</a></li>
+<li><a href="#dynamic-texture-atlases">Dynamic texture atlases</a></li>
+<li><a href="#masking">Masking</a></li>
+<li><a href="#animations-and-transitions">Animations and transitions</a></li>
+<li>
+<a href="#runtime-data-binding">Runtime data binding</a>
+
+<ul>
+<li><a href="#property-bags-and-source-generation">Property bags and source generation</a></li>
+<li><a href="#change-tracking">Change Tracking</a></li>
+</ul>
+</li>
+<li><a href="#show-and-hide-elements">Show and hide elements</a></li>
+<li><a href="#overdraw">Overdraw</a></li>
+<li><a href="#memory-management">Memory management</a></li>
+<li><a href="#profiling-tools">Profiling tools</a></li>
+<li><a href="#unity-6-performance-enhancements">Unity 6 performance enhancements</a></li>
+</ul>
+
+<p>Building a sophisticated game UI often means managing a large hierarchy of onscreen elements. With hundreds of elements in play, this can cause technical challenges. Even subtle inefficiencies can build up into stutters or hitches at runtime – and those can negatively impact the player experience.</p>
+
+<p>The good news is that most of these challenges can be addressed through some optimization. While Unity 6 brings significant UI Toolkit improvements for better out-of-the-box performance, a truly efficient user interface still takes some effort on the part of the developer.</p>
+
+<p>Much of this work often comes down to eliminating unnecessary overhead and reducing draw calls. Let’s explore some tips for optimizing UI Toolkit in Unity 6 to help you get the most out of it.</p>
+
+<p><a name="update-mechanisms" aria-hidden="true"></a></p>
+
+<h2>Update mechanisms</h2>
+
+<figure>
+<img src="../../../uploads/Main/bpg/uitk/image31.png" alt="The visual tree includes several update mechanisms.">
+<figcaption>The visual tree includes several update mechanisms.</figcaption>
+</figure>
+
+<p>The <span class="tooltip" tabindex="0" ><strong>visual tree</strong><span class="tooltiptext">An object graph, made of lightweight nodes, that holds all the elements in a window or panel. It defines every UI you build with the UI Toolkit.<br/><span class="tooltipGlossaryLink">See in <a href="../../Glossary.html#visualtree" aria-label="Go to glossary anchor for visualtree">Glossary</a></span></span></span> contains several update mechanisms that respond to changes in styles, layout, or content at runtime. Any one of these update mechanisms can affect performance. The following table provides a summary of when they occur, and each one’s impact on performance.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Update mechanism</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+	<th style="text-align:left;"><strong>When it happens</strong></th>
+	<th style="text-align:left;"><strong>Performance impact</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">Style resolution</td>
+	<td style="text-align:left;">Determines the final appearance of elements by applying USS selectors and styles</td>
+	<td style="text-align:left;">Triggered when classes or styles are changed, such as adding a style class or modifying a color</td>
+	<td style="text-align:left;">Large or deeply nested hierarchies make this process expensive. Minimize frequent changes.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Layout recalculation</td>
+	<td style="text-align:left;">Adjusts the size and position of elements to fit correctly within the UI hierarchy</td>
+	<td style="text-align:left;">Triggered by changes to element size, position, or alignment, e.g., resizing a panel or moving elements</td>
+	<td style="text-align:left;">Frequent layout updates can be costly. Use transforms for animations instead of altering positions directly.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Vertex buffer updates</td>
+	<td style="text-align:left;">Updates geometric shapes used to render UI elements, like rectangles or rounded corners</td>
+	<td style="text-align:left;">Triggered when an element’s geometry changes, such as adding rounded corners or modifying borders</td>
+	<td style="text-align:left;">Updating vertex buffers is resource-intensive. Avoid frequent geometry changes.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Rendering state changes</td>
+	<td style="text-align:left;">Changes rendering states like textures and blending modes required to draw elements</td>
+	<td style="text-align:left;">Triggered by features like masking or unique textures, that disrupt batching</td>
+	<td style="text-align:left;">Excessive state changes increase CPU overhead. Optimize by batching and limiting unique textures or masks.</td>
+</tr>
+</tbody>
+</table>
+
+<p>The cost of these operations, of course, depends on how often and how extensively you modify UI elements.</p>
+
+<p><a name="batching-elements" aria-hidden="true"></a></p>
+
+<h2>Batching elements</h2>
+
+<p>When rendering a user interface, every <span class="tooltip" tabindex="0" ><strong>visual element</strong><span class="tooltiptext">A node of a visual tree that instantiates or derives from the C# <a href="../../../ScriptReference/UIElements.VisualElement.html"><code>VisualElement</code></a> class. You can style the look, define the behaviour, and display it on screen as part of the UI. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UIE-VisualTree.html" href="../../UIE-VisualTree.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../../Glossary.html#visualelement" aria-label="Go to glossary anchor for visualelement">Glossary</a></span></span></span> requires instructions to be sent to the GPU. UI Toolkit optimizes these draw calls through batching. This groups visual elements with identical GPU requirements together so they can be processed together. Batching significantly reduces the communication overhead with the GPU, much like <a href="https://docs.unity3d.com/Manual/DrawCallBatching">draw call batching</a> with <span class="tooltip" tabindex="0" ><strong>GameObjects</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-GameObject.html" href="../../class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../../Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span>.</p>
+
+<p>To batch elements efficiently they must share the same GPU state – the same <span class="tooltip" tabindex="0" ><strong>shaders</strong><span class="tooltiptext">A program that runs on the GPU. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Shaders.html" href="../../Shaders.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../../Glossary.html#shader" aria-label="Go to glossary anchor for shader">Glossary</a></span></span></span>, textures, <span class="tooltip" tabindex="0" ><strong>mesh</strong><span class="tooltiptext">The main graphics primitive of Unity. Meshes make up a large part of your 3D worlds. Unity supports triangulated or Quadrangulated polygon meshes. Nurbs, Nurms, Subdiv surfaces must be converted to polygons. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about mesh.html" href="../../mesh.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../../Glossary.html#Mesh" aria-label="Go to glossary anchor for Mesh">Glossary</a></span></span></span> data, and other GPU-specific parameters. For example, a sequence of text elements using the same font and style can be batched together. However, inserting an image between them requires different GPU settings. That forces a new batch.</p>
+
+<figure>
+<img src="../../../uploads/Main/bpg/uitk/image147.png" alt="Breaking batches reduces performance.">
+<figcaption>Breaking batches reduces performance.</figcaption>
+</figure>
+
+<p>Every batch “break” like this introduces a small inefficiency. To maintain high performance, it’s essential to structure your UI to minimize these breaks.</p>
+
+<p>Since every batch may issue one or more draw calls to the GPU, fewer batches generally mean reduced overhead and better performance.</p>
+
+<p>In the next sections, let’s explore techniques to optimize your UI’s batch count and achieve consistent performance.</p>
+
+<p><a name="vertex-buffers" aria-hidden="true"></a></p>
+
+<h2>Vertex buffers</h2>
+
+<p>In UI Toolkit, vertex buffers store the geometry (vertices) needed to render your UI. When a UIDocument creates a Panel at runtime, it pre-allocates a single vertex buffer to handle the visual elements. Think of this buffer as a “heap allocator” for visual elements, dynamically allocating memory as elements are added to the UI.</p>
+
+<p>If the UI exceeds the capacity of the vertex buffer, additional buffers are created. This can fragment batching, increase the number of draw calls, and ultimately reduce performance.</p>
+
+<p>To address this, you can adjust the <strong>Vertex Budget</strong> in the Panel Settings to configure the initial size of the vertex buffer. The default value is 0, allowing Unity to determine the size automatically. However, for complex UIs, manually increasing this value can improve performance by reducing the number of draw calls.</p>
+
+<p>Here’s an example. This UI contains a lot of elements that can’t fit within a single vertex buffer. The <a href="https://docs.unity3d.com/Manual/FrameDebugger">Frame Debugger</a> shows that this results in two draw calls instead of one.</p>
+
+<figure>
+<img src="../../../uploads/Main/bpg/uitk/image168.png" alt="This UI requires more than one draw call.">
+<figcaption>This UI requires more than one draw call.</figcaption>
+</figure>
+
+<p>Increasing the Vertex Budget to a value to 20,000 vertices, for instance, may mean that the framebuffer can fit the UI elements into a single draw call. This makes our example UI more efficient by changing one setting.</p>
+
+<figure>
+<img src="../../../uploads/Main/bpg/uitk/image152.png" alt="Increasing the Vertex Budget may reduce draw calls.">
+<figcaption>Increasing the Vertex Budget may reduce draw calls.</figcaption>
+</figure>
+
+<figure>
+<img src="../../../uploads/Main/bpg/uitk/image184.png" alt="Adjusting the Vertex Budget restores the one draw call.">
+<figcaption>Adjusting the Vertex Budget restores the one draw call.</figcaption>
+</figure>
+
+<p>For complex UIs, manually increasing this value may improve performance by reducing draw calls, but be careful of over-allocating memory. Use the Frame Debugger and <a href="https://docs.unity3d.com/Manual/Profiler">Unity Profiler</a> to find the best balance between memory usage and number of draw calls.</p>
+
+<p><a name="uber-shader-and-eight-texture-limit" aria-hidden="true"></a></p>
+
+<h2>Uber shader and eight-texture limit</h2>
+
+<p>UI Toolkit consolidates all UI rendering functionality into a single versatile “uber shader.” Rather than rely on multiple shader variants, this shader uses dynamic branching to select the appropriate <span class="tooltip" tabindex="0" ><strong>rendering path</strong><span class="tooltiptext">The technique that a render pipeline uses to render graphics. Choosing a different rendering path affects how lighting and shading are calculated. Some rendering paths are more suited to different platforms and hardware than others. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about RenderingPaths.html" href="../../RenderingPaths.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../../Glossary.html#renderingpath" aria-label="Go to glossary anchor for renderingpath">Glossary</a></span></span></span> at runtime. This reduces CPU overhead by minimizing shader switches but does add some GPU cost due to the branching logic.</p>
+
+<p>One feature that makes this shader powerful is its support for up to eight textures within the same batch. This allows elements with different textures to render in the same draw call. In the image below you can see a UI consisting of eight different textures:</p>
+
+<figure>
+<img src="../../../uploads/Main/bpg/uitk/image297.png" alt="This example UI contains eight textures.">
+<figcaption>This example UI contains eight textures.</figcaption>
+</figure>
+
+<figure>
+<img src="../../../uploads/Main/bpg/uitk/image32.png" alt="The uber shader renders as one draw call.">
+<figcaption>The “uber shader” renders as one draw call.</figcaption>
+</figure>
+
+<p>As shown in the Frame Debugger, Unity renders an example UI using one draw call for up to eight textures. However, exceeding the eight-texture limit forces the batching system to split into separate batches, increasing overhead.</p>
+
+<p>Here’s what happens if you exceed the eight-texture limit. The one draw call is now many more:</p>
+
+<figure>
+<img src="../../../uploads/Main/bpg/uitk/image293.png" alt="Too many textures break the batches.">
+<figcaption>Too many textures break the batches.</figcaption>
+</figure>
+
+<p>To mitigate this limitation, UI Toolkit provides tools to optimize texture usage. For example, consolidating textures into atlases helps keep the number of textures within the supported limit, preserving batch efficiency and reducing draw calls.</p>
+
+<p><a name="dynamic-texture-atlases" aria-hidden="true"></a></p>
+
+<h2>Dynamic texture atlases</h2>
+
+<p>Switching between multiple textures can force UI Toolkit to break batches, increasing draw calls and reducing performance. A common solution to this problem is texture <strong>atlasing</strong>, which combines smaller textures into a single larger texture.</p>
+
+<p>If you’re familiar with the 2D <span class="tooltip" tabindex="0" ><strong>Sprite</strong><span class="tooltiptext">A 2D graphic objects. If you are used to working in 3D, Sprites are essentially just standard textures but there are special techniques for combining and managing sprite textures for efficiency and convenience during development. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about sprite/sprite-landing.html" href="../../sprite/sprite-landing.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../../Glossary.html#Sprite" aria-label="Go to glossary anchor for Sprite">Glossary</a></span></span></span> Atlas, you already know an effective way to improve performance. By packing multiple sprites into a <span class="tooltip" tabindex="0" ><strong>sprite atlas</strong><span class="tooltiptext"><strong>Graphics:</strong> A utility that packs several sprite textures tightly together within a single texture known as an atlas. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about sprite/atlas/v2/v2-landing" href="../../sprite/atlas/v2/v2-landing">More info</a>. <strong>2D:</strong> A texture that is composed of several smaller textures. Also referred to as a texture atlas, image sprite, sprite sheet or packed texture. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about sprite/atlas/atlas-landing.html" href="../../sprite/atlas/atlas-landing.html">More info</a>.<br/><span class="tooltipGlossaryLink">See in <a href="../../Glossary.html#SpriteAtlas" aria-label="Go to glossary anchor for SpriteAtlas">Glossary</a></span></span></span>, Unity treats them as a single texture, reducing batch breaks and draw calls. The 2D Sprite Atlas integrates seamlessly with UI Toolkit, making it a great choice for static or pre-defined content.</p>
+
+<p>However, the 2D Sprite Atlas has limitations, such as the inability to handle runtime-generated textures. It also requires some setup and sprite layout ahead of time, which can be time-consuming.</p>
+
+<figure>
+<img src="../../../uploads/Main/bpg/uitk/image179.png" alt="The Dragon Crashers sample uses a 2D Sprite Atlas.">
+<figcaption>The Dragon Crashers sample uses a 2D Sprite Atlas.</figcaption>
+</figure>
+
+<p>UI Toolkit’s dynamic texture atlas effectively merges multiple images into one texture, reducing texture state changes. You can configure atlas settings in Panel Settings and visualize the atlas layout in the Dynamic Atlas Viewer (available in the UI Toolkit Debugger window).</p>
+
+<figure>
+<img src="../../../uploads/Main/bpg/uitk/image273.png" alt="Use the Dynamic Atlas Viewer in the Frame Debugger.">
+<figcaption>Use the Dynamic Atlas Viewer in the Frame Debugger.</figcaption>
+</figure>
+
+<p>Note that if your UI undergoes extensive changes (such as adding and removing many textures over time), the atlas may become fragmented. In such cases, the <a href="../../../ScriptReference/UIElements.RuntimePanelUtils.ResetDynamicAtlas.html">ResetDynamicAtlas API</a> can restore the atlas to its initial state.</p>
+
+<p>Remember that you can use the 2D Sprite Atlas and dynamic texture atlases side-by-side within UI Toolkit. Sprite Atlases are ideal for static, predefined content, while dynamic atlases excel in situations where runtime changes are common.</p>
+
+<p><a name="masking" aria-hidden="true"></a></p>
+
+<h2>Masking</h2>
+
+<p>UI Toolkit uses the <span class="tooltip" tabindex="0" ><strong>stencil buffer</strong><span class="tooltiptext">A memory store that holds an 8-bit per-pixel value. In Unity, you can use a stencil buffer to flag pixels, and then only render to pixels that pass the stencil operation. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-RenderTexture.html" href="../../class-RenderTexture.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../../Glossary.html#stencilbuffer" aria-label="Go to glossary anchor for stencilbuffer">Glossary</a></span></span></span> to create masks – areas that show or hide parts of UI elements. Since the stencil buffer is part of the GPU state, changing mask settings can force UI Toolkit to break batches.</p>
+
+<p>Be aware that hierarchically layering masked elements adds complexity, as each nested depth requires the stencil buffer to track additional states. That increases the GPU workload.</p>
+
+<p>UI Toolkit supports two types of masking:</p>
+
+<ul>
+<li><p>
+<strong>Rectangular-based masking:</strong> Rectangular masks use shader-based operations, preserving batch consistency without GPU state changes. This technique doesn’t use the stencil buffer, so you can nest rectangular masks without depth limits.</p></li>
+<li><p>
+<strong>Rounded Corners and Complex Masks (stencil buffer):</strong> Rounded corners and other complex shapes require stencil buffer operations, potentially breaking batches at each masking level. This technique supports up to seven nested levels of masking.</p></li>
+</ul>
+
+<figure>
+<img src="../../../uploads/Main/bpg/uitk/image57.png" alt="Rectangular versus rounded corners masks">
+<figcaption>Rectangular versus rounded corners masks</figcaption>
+</figure>
+
+<p>To optimize performance for masked elements:</p>
+
+<ul>
+<li><p>Use rectangular masks when possible to avoid stencil operations.</p></li>
+<li><p>Minimize the nesting depth of masks. Keeping masks flat in the hierarchy ensures fewer stencil recalculations.</p></li>
+<li><p>When possible, use a single mask over a parent element instead of multiple masks over child elements.</p></li>
+<li><p>When multiple masking layers are unavoidable, apply the Mask Container usage hint to optimize stencil state setup. However, use this sparingly to prevent batch breaks.</p></li>
+</ul>
+
+<figure>
+<img src="../../../uploads/Main/bpg/uitk/image41.png" alt="Use a Mask Container usage hint.">
+<figcaption>Use a Mask Container usage hint.</figcaption>
+</figure>
+
+<p>Finally, verify the impact of these optimizations using the Frame Debugger to ensure efficient rendering and batching.</p>
+
+<p><a name="animations-and-transitions" aria-hidden="true"></a></p>
+
+<h2>Animations and transitions</h2>
+
+<p>While UI Toolkit’s USS transitions offer simple property animations, changing layout properties like size or position can trigger expensive layout recalculations. To optimize animations and reduce performance overhead, you can try several strategies.</p>
+
+<p>First, prioritize transform-based animations over layout property changes. Instead of animating properties like <code>width</code>, <code>height</code>, <code>top</code>, or <code>left</code>, use <code>translate</code>, <code>scale</code>, or <code>rotate</code> transforms. These operations are processed directly on the GPU, avoiding the need for layout recalculations. That can result in smoother animations.</p>
+
+<figure>
+<img src="../../../uploads/Main/bpg/uitk/image6.png" alt="Animate transforms instead of layout properties.">
+<figcaption>Animate transforms instead of layout properties.</figcaption>
+</figure>
+
+<p>You can also enable <a href="../../../ScriptReference/UIElements.VisualElement-usageHints.html"><strong>usage hints</strong></a> for any visual element that needs to be animated.</p>
+
+<p>The <strong>DynamicTransform</strong> hint instructs UI Toolkit to handle position and transform updates on the GPU, bypassing expensive vertex data recalculations.</p>
+
+<p>For parent containers with multiple animated children, the <strong>GroupTransform</strong> hint can significantly reduce overhead. It applies a single transform to the parent, which the GPU efficiently propagates to all child elements, optimizing animations for large groups.</p>
+
+<figure>
+<img src="../../../uploads/Main/bpg/uitk/image26.png" alt="Usage hints are available for each visual element.">
+<figcaption>Usage hints are available for each visual element.</figcaption>
+</figure>
+
+<p>Also, as a general rule, avoid switching classes for style changes in large hierarchies during animations. Class changes can trigger extensive style recalculations, especially in complex UI structures. Instead, update styles directly using inline property changes to minimize computational costs.</p>
+
+<p>Finally, monitor animation performance using Unity’s Frame Debugger. This tool allows you to verify that these optimizations are working as intended.</p>
+
+<p><a name="runtime-data-binding" aria-hidden="true"></a></p>
+
+<h2>Runtime data binding</h2>
+
+<p>Runtime data binding in Unity simplifies updating UI elements by ensuring they automatically reflect changes in the underlying data. This eliminates the need for manual updates, making UI development more efficient and maintainable.</p>
+
+<p>Some techniques can optimize this process:</p>
+
+<p><a name="property-bags-and-source-generation" aria-hidden="true"></a></p>
+
+<h3>Property bags and source generation</h3>
+
+<p>A <strong>property bag</strong> is a companion object that enables efficient traversal and manipulation of a type’s data. By default, Unity generates property bags using reflection the first time a type is accessed. While this reflective approach is convenient, it introduces a small runtime overhead because it happens lazily – only when the property bag has not been registered yet.</p>
+
+<p>To improve performance, you can enable <a href="https://learn.microsoft.com/en-us/dotnet/csharp/roslyn-sdk/#source-generators">code generation</a> for property bags. Tag the type with <a href="../../../ScriptReference/Unity.Properties.GeneratePropertyBagAttribute.html"><code>Unity.Properties.GeneratePropertyBag</code></a> and ensure the assembly is also tagged for code generation. Unity will then generate and register the property bag at compile time, eliminating the need for reflection during runtime. For more details, refer to the <a href="../../property-bags.html">Property bags</a> documentation.</p>
+
+<p>While the <a href="../../property-bags.html"><code>GeneratePropertyBag</code></a> attribute optimizes an entire type, adding the <a href="../../../ScriptReference/Unity.Properties.CreatePropertyAttribute.html"><code>CreateProperty</code></a> attribute to individual properties allows Unity to generate binding code at compile time. This removes the need for runtime reflection to discover and connect properties, ensuring faster and more efficient data binding.</p>
+
+<p>In many cases, using the <code>CreateProperty</code> alone is enough to optimize runtime data binding. However, if the type requires additional optimizations, like efficient serialization or frequent traversal of all its properties, combining <code>CreateProperty</code> with <code>GeneratePropertyBag</code> provides the best overall performance.</p>
+
+<p><a name="change-tracking" aria-hidden="true"></a></p>
+
+<h3>Change Tracking</h3>
+
+<p>Runtime data binding includes two interfaces that optimize how often the data bindings can update:</p>
+
+<ul>
+<li><p>
+<a href="../../../ScriptReference/UIElements.IDataSourceViewHashProvider.html"><code>IDataSourceViewHashProvider</code></a>: This interface provides hash-based equality checks and ensures that the bindings are updated only when the data has changed meaningfully.</p></li>
+<li><p>
+<a href="../../../ScriptReference/UIElements.INotifyBindablePropertyChanged.html"><code>INotifyBindablePropertyChanged</code></a>: This interface triggers updates only when specific property values change.</p></li>
+</ul>
+
+<p>These interfaces are especially valuable for complex UIs, preventing unnecessary updates when data hasn’t meaningfully changed.</p>
+
+<p>This ScriptableObject shows a sample that implements these optimizations:</p>
+
+<pre><code class="lang-csharp">[CreateAssetMenu(fileName = &quot;CarData&quot;, menuName = &quot;Scriptable Objects/CarData&quot;), GeneratePropertyBag]
+public class CarData : ScriptableObject, INotifyBindablePropertyChanged, IDataSourceViewHashProvider
+{
+    private long _version;
+    
+    [SerializeField, DontCreateProperty] string _name;
+    
+    public event EventHandler&lt;BindablePropertyChangedEventArgs&gt; propertyChanged;
+    
+    `CreateProperty`
+    public string Name
+    {
+        get =&gt; _name;
+        set
+        {
+            _name = value;
+            _version++;
+            Notify();
+        }
+    }
+    
+    void Notify(`CallerMemberName` string property = &quot;&quot;)
+    {
+        propertyChanged?.Invoke(this, new BindablePropertyChangedEventArgs(property));
+    }
+    
+    public long GetViewHashCode() =&gt; _version;
+}
+</code></pre>
+
+<p>This example class uses <code>GeneratePropertyBag</code> to generate a property bag at compile time and <code>CreateProperty</code> to optimize runtime data binding for the <code>Name</code> property.</p>
+
+<p>For change tracking, it implements <code>INotifyBindablePropertyChanged</code>. The <code>Notify</code> method triggers the <code>propertyChanged</code> event whenever <code>Name</code> is updated. This signals changes to the UI and informs any listeners.</p>
+
+<p>The class also implements <code>IDataSourceViewHashProvider</code>. The <code>GetViewHashCode</code> method returns a versioned hash that increases each time <code>Name</code> changes, making it easy to detect updates.</p>
+
+<p><a name="show-and-hide-elements" aria-hidden="true"></a></p>
+
+<h2>Show and hide elements</h2>
+
+<p>When hiding UI elements, simply changing opacity or moving them off-screen isn’t always the best for performance. Even when hidden, these elements still participate in layout calculations, style updates, and data binding operations, potentially impacting performance.</p>
+
+<p>UI Toolkit has a few different ways to hide an element, each with its trade-offs. See this table for a summary.</p>
+
+<figure>
+<img src="../../../uploads/Main/bpg/uitk/hiding-elements-summary-table.png" alt="Toggle elements using different methods.">
+<figcaption>Toggle elements using different methods.</figcaption>
+</figure>
+
+<p>When hiding UI elements, setting the <code>opacity</code> to 0 or moving them off-screen keeps them visible to the GPU and layout system, with medium to high render costs. These methods are useful for transitions but do not reduce memory or layout overhead.</p>
+
+<p>Setting an element’s <code>visible</code> property to false prevents rendering but keeps it as part of the layout. This is a compromise that temporarily hides the element while using stencil memory.</p>
+
+<p>For more efficient performance, setting the <code>style.display</code> attribute to <code>DisplayStyle.None</code> stops rendering and layout updates entirely. However, this also involves a cost to recalculate the layout when toggling the element back on.</p>
+
+<p>For elements that appear infrequently, like dialog boxes or settings panels, simply remove them from the hierarchy with <code>RemoveFromHierarchy</code> to reduce ongoing overhead. Just be aware that this incurs a higher performance spike when the element is re-added since the layout must be fully rebuilt.</p>
+
+<p>Choose methods based on how frequently elements need to be toggled. Then, balance short-term rendering needs with long-term performance.</p>
+
+<p><a name="overdraw" aria-hidden="true"></a></p>
+
+<h2>Overdraw</h2>
+
+<p>UI Toolkit renders elements with transparency, which can result in significant overdraw when elements overlap, as each <span class="tooltip" tabindex="0" ><strong>pixel</strong><span class="tooltiptext">The smallest unit in a computer image. Pixel size depends on your screen resolution. Pixel lighting is calculated at every screen pixel. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ShadowPerformance.html" href="../../ShadowPerformance.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../../Glossary.html#pixel" aria-label="Go to glossary anchor for pixel">Glossary</a></span></span></span> may be processed multiple times. This becomes especially costly with UI Toolkit’s uber shader, which adds complexity to each layer of overlapping elements. Stacking multiple layers of transparent or semi-transparent elements can further impact performance.</p>
+
+<p>Several strategies can help mitigate the performance impact of overdraw:</p>
+
+<ul>
+<li><p>Use <code>style.display = DisplayStyle.None</code> to hide elements completely instead of <code>style.opacity = 0</code>, which still renders them as transparent.</p></li>
+<li><p>Rather than stacking multiple elements on top of each other, remove or hide any elements that are completely obscured.</p></li>
+<li><p>When working with scrollable content, implement virtualization through ListViews. ListViews can efficiently render only the visible elements on-screen.</p></li>
+<li><p>You can also set <code>style.overflow = Overflow.Hidden</code> to clip content to specific areas, reducing unnecessary rendering outside visible bounds.</p></li>
+</ul>
+
+<p><a name="memory-management" aria-hidden="true"></a></p>
+
+<h2>Memory management</h2>
+
+<p>USS and UXML files reference fonts, textures, and other assets directly. Loading these files pulls all referenced assets into memory, potentially increasing memory usage. Here you can see the assets referenced from an example USS:</p>
+
+<figure>
+<img src="../../../uploads/Main/bpg/uitk/image126.png" alt="A USS references assets.">
+<figcaption>A USS references assets.</figcaption>
+</figure>
+
+<p>When these assets are imported, they immediately consume memory – even when not in use. This can lead to inefficient memory use if assets aren’t managed properly.</p>
+
+<p>To optimize asset usage, consider these strategies:</p>
+
+<ul>
+<li>
+<strong>Use Asset Bundles or Addressables:</strong> When possible, only load the UI documents and style sheets required for a particular <span class="tooltip" tabindex="0" ><strong>scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html" href="../../CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../../Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span> or context. This can help keep memory consumption in check.</li>
+<li>
+<strong>Unload assets when not needed:</strong> If a UI element or document is no longer in use, remove it from the hierarchy using <code>RemoveFromHierarchy</code>. Then, unload it using <code>Addressables.Release</code> or <code>AssetBundle.Unload(true)</code> to free up memory for other operations.</li>
+<li>
+<strong>Selective loading for complex UIs:</strong> Break large UXML or USS files into smaller, modular templates (VisualTreeAssets) and load them dynamically as needed. Only loading resources for visible elements helps keep memory usage low.</li>
+</ul>
+
+<p>This technique provides a helpful way to monitor the performance impact of your UI changes and identify whether particular elements might be causing performance bottlenecks.</p>
+
+<p><a name="profiling-tools" aria-hidden="true"></a></p>
+
+<h2>Profiling tools</h2>
+
+<p>Unity provides several tools to identify and resolve UI performance issues in your application.</p>
+
+<p>The <a href="https://docs.unity3d.com/Manual/Profiler">Unity Profiler</a>, <a href="../../UIE-ui-debugger.html">UI Toolkit Debugger</a>, and <a href="https://docs.unity3d.com/Manual/FrameDebugger">Frame Debugger</a> are essential for diagnosing performance issues. These tools help you analyze draw calls, batches, and expensive operations like layout recalculations, style updates, and vertex buffer changes.</p>
+
+<p>For a more granular view of UI changes, use the <a href="../../../ScriptReference/UIElements.PanelSettings.SetPanelChangeReceiver.html"><code>SetPanelChangeReceiver</code></a> method from the Panel Settings. This allows you to listen for changes to your UI and track their source. While limited to the Editor and <span class="tooltip" tabindex="0" ><strong>development builds</strong><span class="tooltiptext">A development build includes debug symbols and enables the Profiler. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about building-introduction.html" href="../../building-introduction.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../../Glossary.html#developmentbuild" aria-label="Go to glossary anchor for developmentbuild">Glossary</a></span></span></span>, it is useful for isolating specific UI behaviors that might be causing slowdowns.</p>
+
+<p>Here’s an example script that logs every change to the UI:</p>
+
+<pre><code class="lang-csharp">using UnityEngine;
+using UnityEngine.UIElements;
+
+public class PanelChangeReceiver : MonoBehaviour, IDebugPanelChangeReceiver
+{
+    [SerializeField] PanelSettings m_PanelSettings;
+    
+    void Awake()
+    {
+        m_PanelSettings.SetPanelChangeReceiver(this);
+    }
+    
+    void OnDestroy()
+    {
+        m_PanelSettings.SetPanelChangeReceiver(null);
+    }
+    
+    public void OnVisualElementChange(VisualElement element, VersionChangeType changeType)
+    {
+        Debug.Log($&quot;{element.name} {changeType}&quot;);
+    }
+}
+</code></pre>
+
+<p>Simply attach this to a GameObject and set the PanelSettings in the <span class="tooltip" tabindex="0" ><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheInspector.html" href="../../UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../../Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span>. The <code>OnVisualElementChange</code> method triggers whenever a visual element undergoes a change (e.g., layout, style, transform) and logs a console message. This can help you understand what aspect of the UI is currently being modified.</p>
+
+<p><a name="unity-6-performance-enhancements" aria-hidden="true"></a></p>
+
+<h2>Unity 6 performance enhancements</h2>
+
+<p>Unity 6 introduces a wide array of performance improvements to ensure a smooth and responsive experience in both the Editor and runtime environments:</p>
+
+<ul>
+<li><p>
+<strong>Event dispatching:</strong> Event dispatching rules have been simplified, making them easier to understand and twice as fast.</p></li>
+<li><p>
+<strong>Mesh generation enhancements:</strong> Key improvements include jobified geometry generation for classic element geometry and a transition of the vector API to a native implementation. Text generation is also now parallelized.</p></li>
+<li><p>
+<strong>Custom Geometry API:</strong> A new public API enables developers to generate custom geometry with the same level of performance, allowing for highly optimized UI components.</p></li>
+<li><p>
+<strong>Deep Hierarchy Layout Performance:</strong> Improved caching of layout computations significantly boosts performance in deep hierarchies, providing a smoother user experience.</p></li>
+<li><p>
+<strong>Optimized TreeView for Large Datasets:</strong> The TreeView control, previously inefficient with large datasets, has been enhanced with a new high-performance backend specifically for Entities.</p></li>
+</ul>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li>
+<span aria-hidden="true">👥</span> <strong>Community</strong>: <a href="https://www.youtube.com/watch?v=bECmaYIvZJg&amp;t=2131s">Unite 2024: Getting the best performance with UI Toolkit</a>
+</li>
+<li>
+<span aria-hidden="true">📖</span> <strong>E-Book</strong>: <a href="https://unity.com/resources/ultimate-guide-to-profiling-unity-games">The ultimate guide to profiling Unity games</a>
+</li>
+<li>
+<span aria-hidden="true">📖</span> <strong>E-Book</strong>: <a href="https://unity.com/resources/mobile-xr-web-game-performance-optimization-unity-6">Optimize your game performance for mobile, XR, and the web in Unity</a>
+</li>
+<li>
+<span aria-hidden="true">📖</span> <strong>E-Book</strong>: <a href="https://unity.com/resources/console-pc-game-performance-optimization-unity-6">Optimize your game performance for consoles and PCs in Unity</a>
+</li>
+<li>
+<span aria-hidden="true">📖</span> <strong>E-Book</strong>: <a href="https://unity.com/resources/console-pc-game-performance-optimization-unity-6">Optimize your game performance for consoles and PCs in Unity</a>
+</li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="../../best-practice-guides/ui-toolkit-for-advanced-unity-developers/custom-controls.html"></a></span><div class="tip">Custom controls</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="../../TroubleShooting.html"></a></span><div class="tip">Troubleshooting</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

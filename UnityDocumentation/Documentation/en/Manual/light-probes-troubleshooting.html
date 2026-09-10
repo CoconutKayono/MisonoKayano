@@ -1,0 +1,308 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Troubleshooting Light Probes</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<meta property="relative-path-to-manual" content="">
+<meta property="version-switcher-versions-with-this-page" content="Versions with this page:">
+<meta property="version-switcher-versions-without-this-page" content="Versions without this page:">
+<meta property="version-switcher-supported" content="Supported">
+<meta property="version-switcher-legacy" content="Legacy">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/Manual/light-probes-troubleshooting.html">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20260626"></script><script type="text/javascript" src="docdata/toc.js?ts=20260626"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20260626"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20260626">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20260626">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/light-probes-troubleshooting.html">English</a></li>
+<li><a href="/cn/current/Manual/light-probes-troubleshooting.html">中文</a></li>
+<li><a href="/ja/current/Manual/light-probes-troubleshooting.html">日本語</a></li>
+<li><a href="/kr/current/Manual/light-probes-troubleshooting.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: Unity 6.7 Beta</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/light-probes-troubleshooting.html">English</a></li>
+<li><a href="/cn/current/Manual/light-probes-troubleshooting.html">中文</a></li>
+<li><a href="/ja/current/Manual/light-probes-troubleshooting.html">日本語</a></li>
+<li><a href="/kr/current/Manual/light-probes-troubleshooting.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="LightingOverview.html">Lighting</a></li>
+<li><a href="direct-and-indirect-lighting.html">Direct and indirect lighting</a></li>
+<li><a href="LightProbes-landing.html">Precalculating indirect light with Light Probes</a></li>
+<li>Troubleshooting Light Probes</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="LightProbes-Moving.html"></a></span><div class="tip">Move Light Probes at runtime</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="ts-objects-missing-lighting.html"></a></span><div class="tip">Troubleshooting objects appearing unlit by Light Probes</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Troubleshooting Light Probes</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p><a name="Ringing" aria-hidden="true"></a></p>
+
+<h2>Ringing</h2>
+
+<p>Under certain circumstances, Light Probes exhibit an unwanted behaviour called “ringing”. This often happens when there are significant differences in the light surrounding a <span class="tooltip" tabindex="0" ><strong>Light Probe</strong><span class="tooltiptext">Light probes store information about how light passes through space in your scene. A collection of light probes arranged within a given space can improve lighting on moving objects and static LOD scenery within that space. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about LightProbes.html" href="LightProbes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#LightProbe" aria-label="Go to glossary anchor for LightProbe">Glossary</a></span></span></span>. For example, if you have bright light on one side of a Light Probe, and no light on the other side, the light intensity can “overshoot” on the back side. This overshoot causes a light spot on the back side.</p>
+
+<figure>
+<img src="../uploads/Main/class-LightProbeGroup-Ringing.png" alt="An example of Light Probe ringing. A Point Light illuminates a sphere from one side, but the back side of the sphere appears partially lit too.">
+<figcaption>An example of Light Probe ringing. A Point Light illuminates a sphere from one side, but the back side of the sphere appears partially lit too.</figcaption>
+</figure>
+
+<p>There are several ways to deal with this:</p>
+
+<ul>
+<li>In the Light Probe Group component, enable <strong>Remove Ringing</strong>. Unity automatically removes the unintended light spots. However, this generally makes the Light Probes less accurate, and reduces light contrast, so you must check the visual results.</li>
+<li>Place in-game obstacles in such a way that players can’t get to a position where they can see the light spot.</li>
+<li>Avoid baking direct light into Light Probes. Direct light tends to have sharp discontinuities (such as shadow edges), which makes it unsuitable for Light Probes. To only bake indirect light, use <a href="https://docs.unity3d.com/Manual/LightMode-Mixed.html">Mixed lighting</a>.</li>
+</ul>
+
+<h2>Troubleshooting Light Probe placement</h2>
+
+<p>Your choice of Light Probe positions must take into account that the lighting is interpolated between sets of Light Probes. Problems can arise if your Light Probes don’t adequately cover the changes in lighting across your <span class="tooltip" tabindex="0" ><strong>Scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html" href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span>.</p>
+
+<p>The example below shows a night-time Scene with two bright street lamps on either side, and a dark area in the middle. If Light Probes are only placed near the street lamps, and none in the dark area, the lighting from the lamps “bleeds” across the dark gap, on moving objects. This is because the lighting is being interpolated from one bright point to another, with no information about the dark area in-between.</p>
+
+<figure>
+<img src="../uploads/Main/class-LightProbeGroup-12.png" alt="An example of poor Light Probe placement. A street scene has a street lamp at either end, and a set of four Light Probes next to each lamp. There are no Light Probes in the dark area between the two lamps, so the dark area isnt included in the interpolation.">
+<figcaption>An example of poor Light Probe placement. A street scene has a street lamp at either end, and a set of four Light Probes next to each lamp. There are no Light Probes in the dark area between the two lamps, so the dark area isn’t included in the interpolation.</figcaption>
+</figure>
+
+<p>If you are using Realtime or Mixed lights, this problem may be less noticeable, because only the <em>indirect</em> light bleeds across the gap. The problem is more noticable if you are using fully <span class="tooltip" tabindex="0" ><strong>baked lights</strong><span class="tooltiptext">Light components whose Mode property is set to Baked. Unity pre-calculates the illumination from Baked Lights before runtime, and does not include them in any runtime lighting calculations. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about LightModes-introduction.html#baked" href="LightModes-introduction.html#baked">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#bakedlights" aria-label="Go to glossary anchor for bakedlights">Glossary</a></span></span></span>, because in this situation the direct light on moving objects is also interpolated from the Light Probes. In this example Scene, the two lamps are baked, so moving objects get their direct light from Light Probes. Here you can see the result.</p>
+
+<figure>
+<img src="../uploads/Main/class-LightProbeGroup-13.png" alt="In the same scene, a moving ambulance remains brightly lit while passing through the dark area. A yellow wireframe tetrahedron shows that the interpolation occurs between one brightly lit end of the street to the other.">
+<figcaption>In the same scene, a moving ambulance remains brightly lit while passing through the dark area. A yellow wireframe tetrahedron shows that the interpolation occurs between one brightly lit end of the street to the other.</figcaption>
+</figure>
+
+<p>This is an undesired effect - the ambulance remains brightly lit while passing through a dark area, because no Light Probes were placed in the dark area.</p>
+
+<p>To solve this, you should place more Light Probes in the dark area, as shown below:</p>
+
+<figure>
+<img src="../uploads/Main/class-LightProbeGroup-14.png" alt="The same scene, with another set of Light Probes added halfway between the two street lamps.">
+<figcaption>The same scene, with another set of Light Probes added halfway between the two street lamps.</figcaption>
+</figure>
+
+<p>Now the Scene has Light Probes in the dark area too. As a result, the moving ambulance takes on the darker lighting as it travels from one side of the Scene to the other.</p>
+
+<figure>
+<img src="../uploads/Main/class-LightProbeGroup-15.png" alt="The same scene, now with the moving ambulance, which takes on the darker lighting in the center of the scene.">
+<figcaption>The same scene, now with the moving ambulance, which takes on the darker lighting in the center of the scene.</figcaption>
+</figure>
+
+<h2>Troubleshooting Light Probe noise</h2>
+
+<p>In the following example, both images are scenes lit by using the same lighting settings except for the <strong>Light Probe Sample Multiplier</strong> value. The scene on the left is when you set Light Probe Sample Multiplier to 1, which cause the light probes to not be homogenous and causes noise in the scene. In the right image, you can mitigate the issue by setting the <strong>Sample Multiplier</strong> to 32.</p>
+
+<figure>
+<img src="../uploads/Main/light-probe-noise-troubleshooting-examples.jpeg" alt="A childs bedroom scene, with the grid of light probes visible throughout the scene as spheres. On the left, the probes are brightly multi-colored. On the right, the probes are less brightly-colored.">
+<figcaption>A child’s bedroom scene, with the grid of light probes visible throughout the scene as spheres. On the left, the probes are brightly multi-colored. On the right, the probes are less brightly-colored.</figcaption>
+</figure>
+
+<h3>Cause</h3>
+
+<p>In scenes with a lot of indirect noise, probe-lit objects can exhibit flickering as they traverse through the environment. The cause is inadequate sample counts used by light probes. As a result, adjacent light probes will appear to have varying lighting information, when they should appear homogenous.</p>
+
+<p>This also applies to Light Probe Groups and Adaptive Probe Volumes.</p>
+
+<h3>Resolution</h3>
+
+<p>You can mitigate this issue by tweaking the Light Probe Sample Multiplier value. The Light Probe Sample Multiplier acts as a general multiplier for Direct, Indirect, and Environment sample counts. The higher the multiplier, the more samples light probes will receive. This will improve their visual quality at a slight expense of baking time.</p>
+
+<p>If the Light Probe Sample Multiplier property isn’t available in the <a href="lighting-window.html">Lighting window</a>, navigate to <strong>Project Settings &gt; Editor &gt; Graphics</strong> and disable the <strong>Use legacy Light Probe</strong> sample counts checkbox.</p>
+
+<h2>Troubleshooting redundant Light Probes</h2>
+
+<p>In the following example, the image on the left contains light probes from an unloaded scene, while the right image shows how the scene should look like after the redundant light probes are removed by calling <code>LightProbes.TetrahedralizeAsync</code> upon loading a new scene.</p>
+
+<p>
+<strong>Note</strong>: <code>LightProbes.TetrahedralizeAsync</code> only applies if you use <span class="tooltip" tabindex="0" ><a href="class-LightProbeGroup.html">Light Probe Groups</a><span class="tooltiptext">A component that enables you to add Light Probes to GameObjects in your scene. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-LightProbeGroup.html" href="class-LightProbeGroup.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#LightProbeGroup" aria-label="Go to glossary anchor for LightProbeGroup">Glossary</a></span></span></span> to place the Light Probes, and does not apply to <a href="probevolumes">Adaptive Probe Volumes</a>. </p>
+
+<figure>
+<img src="../uploads/Main/redundant-light-probetroubleshooting-example1.jpeg" alt="A market scene, viewed from above, with the grid of light probes visible throughout the scene as spheres. On the left, there are blue light probes that dont match the scene. On the right, the blue light probes are gone.">
+<figcaption>A market scene, viewed from above, with the grid of light probes visible throughout the scene as spheres. On the left, there are blue light probes that don’t match the scene. On the right, the blue light probes are gone.</figcaption>
+</figure>
+
+<h3>Cause</h3>
+
+<p>Unity uses tetrahedral space mapping to determine which light probes to use for illuminating dynamic <span class="tooltip" tabindex="0" ><strong>GameObjects</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-GameObject.html" href="class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span>. When loading and unloading scenes containing light probes, it’s important to recalculate the tetrahedral mapping. If this fails, it will result in the incorrect shading for probe-lit objects.</p>
+
+<h3>Resolution</h3>
+
+<p>You can adjust the level design of the scene or use the additive loading approach to avoid issues with redundant or overlapping probes,</p>
+
+<p>The following example is from the <strong>Additive Loading Lighting Examples</strong> project. This project setup ensures that there will be a seamless lighting transition when loading and unloading the scenes.</p>
+
+<figure>
+<img src="../uploads/Main/redundant-light-probetroubleshooting-example2.jpeg" alt="A scene with three adjacent side-by-side areas viewed from above. The areas are red, green, and blue, and each is a room containing geometric shapes, and a grid of spheres representing light probes. In the left image, the red area contains only light probes. In the right image, the green area contains only light probes.">
+<figcaption>A scene with three adjacent side-by-side areas viewed from above. The areas are red, green, and blue, and each is a room containing geometric shapes, and a grid of spheres representing light probes. In the left image, the red area contains only light probes. In the right image, the green area contains only light probes.</figcaption>
+</figure>
+
+<ul>
+<li>The <strong>Persistent Scene</strong> has the blue room, and some probe-lit objects. It has no light probes. This scene is always loaded and will act as a transitional area.</li>
+<li>
+<strong>Scene A</strong> has a green corridor, and some probe-lit objects. It has a light probe group that envelops Scene A and the Persistent Scene. This scene is additively loaded on demand.</li>
+<li>
+<strong>Scene B</strong> has a red corridor, and some probe-lit objects. It has a light probe group that envelops Scene B and the Persistent Scene. This scene is additively loaded on demand.</li>
+</ul>
+
+<p>To learn more about additive lighting, please refer to the <a href="https://assetstore.unity.com/packages/templates/tutorials/additive-loading-lighting-examples-129922">Additive Loading Lighting Examples</a> project in the Unity <span class="tooltip" tabindex="0" ><strong>Asset Store</strong><span class="tooltiptext">A growing library of free and commercial assets created by Unity and members of the community. Offers a wide variety of assets, from textures, models and animations to whole project examples, tutorials and Editor extensions. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about AssetStore.html" href="AssetStore.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#AssetStore" aria-label="Go to glossary anchor for AssetStore">Glossary</a></span></span></span>.</p>
+
+<h2>Light probe leaking</h2>
+
+<p>Light probe leaking occurs when a probe from a bright area affects an object in a dark area, or vice versa. This issue is most noticeable near walls or other occluding geometry when the probe density is insufficient.</p>
+
+<h3>Symptoms</h3>
+
+<p>Objects lit by light probes appear too bright or too dark compared to their surroundings. This issue often occurs in enclosed spaces, such as rooms or shaded areas, where light is expected to be blocked but instead leaks in.</p>
+
+<figure>
+<img src="../uploads/Main/light-probe-leaking.jpg" alt="Cornell box scene placed in a bright outdoor environment. Due to a sparse Light Probe Group, the probe-lit statue samples a light probe outside, which makes it appear bright - left. Increasing the density of the Light Probe Group fixes the issue - right.">
+<figcaption>Cornell box scene placed in a bright outdoor environment. Due to a sparse Light Probe Group, the probe-lit statue samples a light probe outside, which makes it appear bright - left. Increasing the density of the Light Probe Group fixes the issue - right.</figcaption>
+</figure>
+
+<h3>Cause</h3>
+
+<p>Light probe leaking occurs when the interpolation of light probe data incorrectly assigns lighting from one area to another due to low probe density.</p>
+
+<p>This issue commonly arises in scenes with a sparse Light Probe Group. For example, in a bright outdoor environment, a probe-lit object in a shaded area can incorrectly sample lighting from a nearby bright probe, making it appear out of place.</p>
+
+<h3>Resolution</h3>
+
+<p>To resolve light probe leaking in Light Probe Groups, do the following.</p>
+
+<h4>Increase light probe density</h4>
+
+<p>To increase light probe density, do the following:</p>
+
+<ul>
+<li>Add more light probes around the affected object to improve accuracy.</li>
+<li>If the issue is noticeable near walls, place dense probe clusters along them.</li>
+<li>To help reduce light leaking, place a buffer of two probes on each side of a wall.</li>
+</ul>
+
+<p>Refer to <a href="class-LightProbeGroup.html">Place Light Probes with the Editor</a>.</p>
+
+<h4>Adjust the Anchor Override property</h4>
+
+<p>By default, Unity determines which light probes to sample using the center of the GameObject’s bounding box, which can cause incorrect lighting in sparse probe networks.</p>
+
+<p>To adjust the <strong>Anchor Override</strong> property, do the following:</p>
+
+<ol>
+<li>Set the <strong>Anchor Override</strong> property in the <span class="tooltip" tabindex="0" ><a href="class-MeshRenderer.html">Mesh Renderer</a><span class="tooltiptext">A mesh component that takes the geometry from the Mesh Filter and renders it at the position defined by the object’s Transform component. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-MeshRenderer.html" href="class-MeshRenderer.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#MeshRenderer" aria-label="Go to glossary anchor for MeshRenderer">Glossary</a></span></span></span> component.</li>
+<li>Assign an existing GameObject or create an empty one to act as an anchor point.</li>
+</ol>
+
+<h4>Use Light Probe Proxy Volumes (LPPVs)</h4>
+
+<p>The <a href="class-LightProbeProxyVolume.html">Light Probe Proxy Volume (LPPV)</a> component places probes at a custom density within a GameObject’s bounding box.</p>
+
+<p>Use LPPVs sparingly, as they increase the computational load at runtime.</p>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="LightProbes-Moving.html"></a></span><div class="tip">Move Light Probes at runtime</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="ts-objects-missing-lighting.html"></a></span><div class="tip">Troubleshooting objects appearing unlit by Light Probes</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

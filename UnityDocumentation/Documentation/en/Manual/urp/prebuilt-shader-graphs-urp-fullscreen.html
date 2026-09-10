@@ -1,0 +1,500 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Fullscreen shader graph reference for URP</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<meta property="relative-path-to-manual" content="../">
+<meta property="version-switcher-versions-with-this-page" content="Versions with this page:">
+<meta property="version-switcher-versions-without-this-page" content="Versions without this page:">
+<meta property="version-switcher-supported" content="Supported">
+<meta property="version-switcher-legacy" content="Legacy">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/Manual/urp/prebuilt-shader-graphs-urp-fullscreen.html">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../../StaticFilesManual/js/jquery.js?ts=20260626"></script><script type="text/javascript" src="../../StaticFilesManual/js/core.js?ts=20260626"></script><script type="text/javascript" src="../../StaticFilesManual/js/image-comp.js?ts=20260626"></script><script type="text/javascript" src="../docdata/toc.js?ts=20260626"></script><script type="text/javascript" src="../docdata/global_toc.js?ts=20260626"></script><link rel="stylesheet" type="text/css" href="../../StaticFilesManual/css/core.css?ts=20260626">
+<link rel="stylesheet" type="text/css" href="../../StaticFilesManual/css/icons.css?ts=20260626">
+<link rel="stylesheet" href="../../StaticFilesManual/css/prism.css">
+<script src="../../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="../30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../index.html" class="selected">Manual</a></li>
+<li><a href="../../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/urp/prebuilt-shader-graphs-urp-fullscreen.html">English</a></li>
+<li><a href="/cn/current/Manual/urp/prebuilt-shader-graphs-urp-fullscreen.html">中文</a></li>
+<li><a href="/ja/current/Manual/urp/prebuilt-shader-graphs-urp-fullscreen.html">日本語</a></li>
+<li><a href="/kr/current/Manual/urp/prebuilt-shader-graphs-urp-fullscreen.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: Unity 6.7 Beta</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/urp/prebuilt-shader-graphs-urp-fullscreen.html">English</a></li>
+<li><a href="/cn/current/Manual/urp/prebuilt-shader-graphs-urp-fullscreen.html">中文</a></li>
+<li><a href="/ja/current/Manual/urp/prebuilt-shader-graphs-urp-fullscreen.html">日本語</a></li>
+<li><a href="/kr/current/Manual/urp/prebuilt-shader-graphs-urp-fullscreen.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="../materials-and-shaders.html">Materials and shaders</a></li>
+<li><a href="../built-in-materials-and-shaders.html">Prebuilt materials and shaders</a></li>
+<li><a href="../urp/shaders-in-universalrp.html">Prebuilt shaders in URP</a></li>
+<li><a href="../urp/prebuilt-shader-graphs-urp.html">Shader graph material Inspector window reference for URP</a></li>
+<li>Fullscreen shader graph reference for URP</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="../urp/prebuilt-shader-graphs-urp-decal.html"></a></span><div class="tip">Decal shader graph reference for URP</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="../urp/prebuilt-shader-graphs-urp-lit.html"></a></span><div class="tip">Lit shader graph reference for URP</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Fullscreen shader graph reference for URP</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Explore the properties and settings you can use to customize the default Fullscreen <span class="tooltip" tabindex="0" ><strong>shader</strong><span class="tooltiptext">A program that runs on the GPU. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Shaders.html" href="../Shaders.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#shader" aria-label="Go to glossary anchor for shader">Glossary</a></span></span></span> graph in the Universal <span class="tooltip" tabindex="0" ><strong>Render Pipeline</strong><span class="tooltiptext">A series of operations that take the contents of a Scene, and displays them on a screen. Unity lets you choose from pre-built render pipelines, or write your own. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about render-pipelines.html" href="../render-pipelines.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#renderpipeline" aria-label="Go to glossary anchor for renderpipeline">Glossary</a></span></span></span> (URP). </p>
+
+<p>Create a Fullscreen shader graph to apply a material to the entire screen at the end of the rendering process, to implement custom post-process and custom pass effects.</p>
+
+<h2>Contexts</h2>
+
+<p>The default <strong>Fragment</strong> Context contains the following Blocks. Which Blocks display might change depending on the <a href="https://docs.unity3d.com/Packages/com.unity.shadergraph@latest/index.html?subfolder=/manual/Graph-Settings-Tab.html">graph settings</a>.</p>
+
+<h3>Fragment Context</h3>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Input</strong></th>
+	<th style="text-align:left;"><strong>Type</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Base Color</strong></td>
+	<td style="text-align:left;">Vector3</td>
+	<td style="text-align:left;">Sets the base color of the material. The default is <a href="../../ScriptReference/Color-grey.html"><code>Color.grey</code></a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Alpha</strong></td>
+	<td style="text-align:left;">Float</td>
+	<td style="text-align:left;">Sets the alpha of the material. The range is 0 to 1. The default is 1.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Eye Depth</strong></td>
+	<td style="text-align:left;">Float</td>
+	<td style="text-align:left;">Scales a value to world space to represent the depth from the near plane. This value represents a point in world space, determined by the platform you use. The default is 0. For more information, refer to <a href="../SL-PlatformDifferences.html">The Depth (Z) direction in shaders</a>. This property is available only if you enable <strong>Depth Test</strong> or <strong>Depth Write</strong>, and set <strong>Depth Write Mode</strong> to <strong>Eye</strong> in the graph settings.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Linear01 Depth</strong></td>
+	<td style="text-align:left;">Float</td>
+	<td style="text-align:left;">Uses a linear depth value between 0 and 1. The default is 0. This property is available only if you enable <strong>Depth Test</strong> or <strong>Depth Write</strong>, and set <strong>Depth Write Mode</strong> to <strong>Linear 01</strong> in the graph settings.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Raw Depth</strong></td>
+	<td style="text-align:left;">Float</td>
+	<td style="text-align:left;">Samples the depth value from the <span class="tooltip" tabindex="0" ><strong>depth buffer</strong><span class="tooltiptext">A memory store that holds the z-value depth of each pixel in an image, where the z-value is the depth for each rendered pixel from the projection plane. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-RenderTexture.html" href="../class-RenderTexture.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#depthbuffer" aria-label="Go to glossary anchor for depthbuffer">Glossary</a></span></span></span>. You can also use this setting with a nonlinear depth value. The default is 0. This property is available only if you enable <strong>Depth Test</strong> or <strong>Depth Write</strong>, and set <strong>Depth Write Mode</strong> to <strong>Raw</strong> in the graph settings.</td>
+</tr>
+</tbody>
+</table>
+
+<h2>Graph Settings</h2>
+
+<p>Explore the shader graph settings you can use to customize the Vertex and Fragment Contexts.</p>
+
+<p>For more details about graph settings that are common to all shader graph shaders, refer to the <a href="https://docs.unity3d.com/Packages/com.unity.shadergraph@latest/index.html?subfolder=/manual/Graph-Settings-Tab.html">Graph Settings tab</a>.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Setting</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Allow Material Override</strong></td>
+	<td style="text-align:left;">Enables material instances to override properties exposed in the shader graph. When disabled, materials using this shader will always use the values defined in the shader asset.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Blend Mode</strong></td>
+	<td style="text-align:left;">Specifies the blend mode Unity uses when it renders the full-screen shader. Each option has an equivalent <code>BlendMode</code> operation. The options are:<ul>
+<li>
+<strong>Disabled</strong>: Doesn’t use a blend mode. When you write to a Blit shader, use this option to avoid undesired effects.</li>
+<li>
+<strong>Alpha</strong>: Calculates transparency using the alpha value of the material.</li>
+<li>
+<strong>Premultiply</strong>: Calculates transparency using the alpha value of the material, but multiplies the RGB values by the alpha value first.</li>
+<li>
+<strong>Additive</strong>: Adds the color of the material to the background color.</li>
+<li>
+<strong>Multiply</strong>: Multiplies the color of the material with the background color.</li>
+<li>
+<strong>Custom</strong>: Sets every parameter of the blending equation manually. For more information on the options for Custom Blend Mode, refer to <a href="#custom-blend-mode">Custom Blend Mode settings</a>. </li>
+</ul>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Depth Test</strong></td>
+	<td style="text-align:left;">Specifies the comparison function used to determine whether a pixel passes the depth test. The options are:<ul>
+<li>
+<strong>Disabled</strong>: Doesn’t perform a depth test.</li>
+<li>
+<strong>Never</strong>: The pixel never passes the depth test.</li>
+<li>
+<strong>Less</strong>: Passes if the incoming depth value is less than the stored depth.</li>
+<li>
+<strong>Equal</strong>: Passes if the incoming depth value equals the stored depth.</li>
+<li>
+<strong>L Equal</strong>: Passes if the incoming depth value is less than or equal to the stored depth.</li>
+<li>
+<strong>Greater</strong>: Passes if the incoming depth value is greater than the stored depth.</li>
+<li>
+<strong>Not Equal</strong>: Passes if the incoming depth value isn’t equal to the stored depth.</li>
+<li>
+<strong>G Equal</strong>: Passes if the incoming depth value is greater than or equal to the stored depth.</li>
+<li>
+<strong>Always</strong>: The pixel always passes the depth test.</li>
+</ul>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Depth Write</strong></td>
+	<td style="text-align:left;">Determines whether the shader writes depth information to the depth buffer.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Depth Write Mode</strong></td>
+	<td style="text-align:left;">Determines the depth value’s input format before Unity passes it to the depth buffer. This property determines which Depth block you can use in the Fragment context. The options are:<ul>
+<li>
+<strong>Linear Eye</strong>: Scales a value to world space to represent the depth from the near plane.</li>
+<li>
+<strong>Linear 01</strong>: Uses a linear depth value between 0 and 1.</li>
+<li>
+<strong>Raw</strong>: Samples the depth value from the depth buffer.</li>
+</ul> This property is available only when you enable <strong>Depth Test</strong> or <strong>Depth Write</strong> in the graph settings.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Enable Stencil</strong></td>
+	<td style="text-align:left;">Controls how the shader graph uses the <span class="tooltip" tabindex="0" ><strong>stencil buffer</strong><span class="tooltiptext">A memory store that holds an 8-bit per-pixel value. In Unity, you can use a stencil buffer to flag pixels, and then only render to pixels that pass the stencil operation. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-RenderTexture.html" href="../class-RenderTexture.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#stencilbuffer" aria-label="Go to glossary anchor for stencilbuffer">Glossary</a></span></span></span>. For more information on these options, refer to <a href="#enable-stencil">Enable Stencil settings</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Custom Editor GUI</strong></td>
+	<td style="text-align:left;">Renders a custom editor GUI in the <strong><span class="tooltip" tabindex="0" ><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheInspector.html" href="../UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span></strong> window of the material. Enter the name of the GUI class in the field. For more information, refer to <a href="../writing-shader-display-types.html">Control material properties in the Inspector window</a>.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="custom-blend-mode" aria-hidden="true"></a></p>
+
+<h3>Custom Blend Mode settings</h3>
+
+<p>The Custom blend mode properties specify the blending operation to use for this fullscreen shader graph’s alpha and color channels.</p>
+
+<p>In the blend mode properties, <strong>Src</strong> (source) refers to the full-screen shader itself. <strong>Dst</strong> (destination) refers to the <span class="tooltip" tabindex="0" ><strong>Scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html" href="../CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span> <span class="tooltip" tabindex="0" ><strong>camera</strong><span class="tooltiptext">A component which creates an image of a particular viewpoint in your scene. The output is either drawn to the screen or captured as a texture. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CamerasOverview.html" href="../CamerasOverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#Camera" aria-label="Go to glossary anchor for Camera">Glossary</a></span></span></span>’s raw output, which this shader doesn’t affect. The blending operation applies the source contents to the destination contents to produce a rendering result.</p>
+
+<p>For more information on the blending equation, refer to <a href="../SL-Blend.html">ShaderLab command: Blend</a>.</p>
+
+<h4>Color Blend Mode</h4>
+
+<p>Determines the blending equation Unity uses for the red, green, and blue channels (RGB). Each setting defines one part of the equation.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Property</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Src Color</strong></td>
+	<td style="text-align:left;">Sets the blend mode of the source color.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Dst Color</strong></td>
+	<td style="text-align:left;">Sets the blend mode of the destination color.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Color Operation</strong></td>
+	<td style="text-align:left;">Determines how to combine the source and destination color during the blending process. For information on these options, refer to <a href="../SL-BlendOp.html">ShaderLab command: BlendOp</a>.</td>
+</tr>
+</tbody>
+</table>
+
+<h4>Alpha Blend Mode</h4>
+
+<p>Determines the blending equation Unity uses for the alpha channel. Each setting defines one part of the equation.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Property</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Src</strong></td>
+	<td style="text-align:left;">Sets the blend mode of the source alpha. For information on these options, refer to <a href="../SL-Blend.html#valid-parameter-values">Valid parameter values</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Dst</strong></td>
+	<td style="text-align:left;">Sets the blend mode of the destination alpha. For information on these options, refer to <a href="../SL-Blend.html">Valid parameter values</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Blend Operation Alpha</strong></td>
+	<td style="text-align:left;">Determines how to combine the source and destination alpha during the blending process. For more information on these options, refer to <a href="../SL-BlendOp.html">ShaderLab command: BlendOp</a>.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="enable-stencil" aria-hidden="true"></a></p>
+
+<h3>Enable Stencil settings</h3>
+
+<p>The Enable Stencil properties affect how this fullscreen shader graph uses the stencil buffer. For more information on the stencil buffer, refer to <a href="../SL-Stencil.html">SL-Stencil</a>.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Property</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Reference</strong></td>
+	<td style="text-align:left;">Determines the stencil reference value this shader uses for all stencil operations.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Read Mask</strong></td>
+	<td style="text-align:left;">Determines which bits this shader can read during the stencil test.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Write Mask</strong></td>
+	<td style="text-align:left;">Determines which bits this shader can write to during the stencil test.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Comparison</strong></td>
+	<td style="text-align:left;">Determines the comparison function this shader uses during the stencil test. The options are:<ul>
+<li>
+<strong>Disabled</strong>: Doesn’t perform a stencil test.</li>
+<li>
+<strong>Never</strong>: The stencil test never passes.</li>
+<li>
+<strong>Less</strong>: The stencil test passes if the pixel’s depth value is less than the value stored in the depth buffer.</li>
+<li>
+<strong>Equal</strong>: The stencil test passes if the pixel’s depth value is equal to the value stored in the depth buffer.</li>
+<li>
+<strong>Less Equal</strong>: The stencil test passes if the pixel’s depth value is less than or equal to the depth buffer value. This renders the tested pixel in front of other pixels.</li>
+<li>
+<strong>Greater</strong>: The stencil test passes if the pixel’s depth value is greater than the value stored in the depth buffer.</li>
+<li>
+<strong>Not Equal</strong>: The stencil test passes if the pixel’s depth value isn’t equal to the value stored in the depth buffer.</li>
+<li>
+<strong>Greater Equal</strong>: The stencil test passes if the pixel’s depth value is greater than or equal to the value stored in the depth buffer.</li>
+<li>
+<strong>Always</strong>: The stencil test always passes, and Unity doesn’t compare the pixel’s depth value to the value it has stored in the depth buffer.</li>
+</ul>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Pass</strong></td>
+	<td style="text-align:left;">Determines the operation this shader executes if the stencil test succeeds.<br>For more information on this property’s options, refer to <a href="#stencil-pass-fail">Stencil pass and fail options</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Fail</strong></td>
+	<td style="text-align:left;">Determines the operation this shader executes if the stencil test fails.<br>For more information on this property’s options, refer to <a href="#stencil-pass-fail">Stencil pass and fail options</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Depth Fail</strong></td>
+	<td style="text-align:left;">Determines the operation this shader executes if the depth test fails. This option has no effect if the depth test <strong>Comparison</strong> value is <strong>Never</strong> or <strong>Disabled.</strong><br>For more information on this property’s options, refer to <a href="#stencil-pass-fail">Stencil pass and fail options</a>.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="stencil-pass-fail" aria-hidden="true"></a></p>
+
+<h4>Stencil pass and fail options</h4>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Option</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Keep</strong></td>
+	<td style="text-align:left;">Doesn’t change the current contents of the stencil buffer.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Zero</strong></td>
+	<td style="text-align:left;">Writes a value of 0 into the stencil buffer.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Replace</strong></td>
+	<td style="text-align:left;">Writes the <strong>Reference</strong> value into the buffer.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>IncrementSaturate</strong></td>
+	<td style="text-align:left;">Adds a value of 1 to the current value in the buffer. A value of 255 remains 255.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>DecrementSaturate</strong></td>
+	<td style="text-align:left;">Subtracts a value of 1 from the current value in the buffer. A value of 0 remains 0.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Invert</strong></td>
+	<td style="text-align:left;">Performs a bitwise NOT operation. This means it negates all the bits of the current value in the buffer.<br>For example, a decimal value of 59 is 0011 1011 in binary. The NOT operation reverses each bit to 1100 0100, which is a decimal value of 196.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>IncrementWrap</strong></td>
+	<td style="text-align:left;">Adds a value of 1 to the current value in the buffer. A value of 255 becomes 0.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>DecrementWrap</strong></td>
+	<td style="text-align:left;">Subtracts a value of 1 from the current value in the buffer. A value of 0 becomes 255.</td>
+</tr>
+</tbody>
+</table>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="post-processing/post-processing-custom-effect-low-code.html#create-fullscreen-shader">Create a Fullscreen Shader Graph</a></li>
+<li><a href="https://docs.unity3d.com/Packages/com.unity.shadergraph@latest">Shader Graph manual</a></li>
+<li><a href="../SL-Commands.html">GPU render state commands in ShaderLab reference</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="../urp/prebuilt-shader-graphs-urp-decal.html"></a></span><div class="tip">Decal shader graph reference for URP</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="../urp/prebuilt-shader-graphs-urp-lit.html"></a></span><div class="tip">Lit shader graph reference for URP</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

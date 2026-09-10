@@ -1,0 +1,558 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Create a custom Editor window with C# script</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<meta property="relative-path-to-manual" content="">
+<meta property="version-switcher-versions-with-this-page" content="Versions with this page:">
+<meta property="version-switcher-versions-without-this-page" content="Versions without this page:">
+<meta property="version-switcher-supported" content="Supported">
+<meta property="version-switcher-legacy" content="Legacy">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/Manual/UIE-HowTo-CreateEditorWindow.html">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20260626"></script><script type="text/javascript" src="docdata/toc.js?ts=20260626"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20260626"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20260626">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20260626">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/UIE-HowTo-CreateEditorWindow.html">English</a></li>
+<li><a href="/cn/current/Manual/UIE-HowTo-CreateEditorWindow.html">中文</a></li>
+<li><a href="/ja/current/Manual/UIE-HowTo-CreateEditorWindow.html">日本語</a></li>
+<li><a href="/kr/current/Manual/UIE-HowTo-CreateEditorWindow.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: Unity 6.7 Beta</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/UIE-HowTo-CreateEditorWindow.html">English</a></li>
+<li><a href="/cn/current/Manual/UIE-HowTo-CreateEditorWindow.html">中文</a></li>
+<li><a href="/ja/current/Manual/UIE-HowTo-CreateEditorWindow.html">日本語</a></li>
+<li><a href="/kr/current/Manual/UIE-HowTo-CreateEditorWindow.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="UIToolkits.html">UI systems</a></li>
+<li><a href="UIElements.html">UI Toolkit</a></li>
+<li><a href="UIE-support-for-editor-ui.html">Support for Editor UI</a></li>
+<li>Create a custom Editor window with C# script</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="UIE-support-for-editor-ui.html"></a></span><div class="tip">Support for Editor UI</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="UIE-HowTo-CreateCustomInspector.html"></a></span><div class="tip">Create a custom Inspector</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Create a custom Editor window with C# script</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>
+<strong>Version</strong>: 2022.3+</p>
+
+<p>This example demonstrates how to create a custom Editor window with C# script to react to user input, make the UI resizable, and handle hot-reloading.</p>
+
+<p>A custom Editor window is a class that derives from the <a href="../ScriptReference/EditorWindow.html"><code>EditorWindow</code></a> class. UI Toolkit uses the <a href="../ScriptReference/EditorWindow.CreateGUI.html">CreateGUI</a> method to add controls to Editor UI, and Unity calls the <code>CreateGUI</code> method automatically when the window needs to be displayed. This method works the same way as methods such as <a href="../ScriptReference/EditorWindow.Awake.html"><code>Awake</code></a> or <a href="../ScriptReference/EditorWindow.Update.html"><code>Update</code></a>.</p>
+
+<p>When creating a custom Editor window, follow these guidelines:</p>
+
+<ul>
+<li>Place code dependent on UXML/USS loading in the <code>CreateGUI</code> method to ensure all necessary assets are available.</li>
+<li>Keep the event registration code inside <code>CreateGUI</code> or after <code>CreateGUI</code> is called.</li>
+</ul>
+
+<p>The following diagram shows the order of execution of an Editor window:</p>
+
+<figure>
+<img src="../uploads/Main/uitk/UIE-order-of-editor-window.png" alt="Editor window execution order">
+<figcaption>Editor window execution order</figcaption>
+</figure>
+
+<p>For more information, refer to the <a href="../ScriptReference/EditorWindow.html">EditorWindow</a> class documentation.</p>
+
+<h2>Example overview</h2>
+
+<p>This example creates a <span class="tooltip" tabindex="0" ><strong>sprite</strong><span class="tooltiptext">A 2D graphic objects. If you are used to working in 3D, Sprites are essentially just standard textures but there are special techniques for combining and managing sprite textures for efficiency and convenience during development. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about sprite/sprite-landing.html" href="sprite/sprite-landing.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Sprite" aria-label="Go to glossary anchor for Sprite">Glossary</a></span></span></span> browser, which finds and displays all sprites inside the project, and displays them in a list. If you select a sprite in the list, the image of the sprite displays on the right side of the window.</p>
+
+<figure>
+<img src="../uploads/Main/uie-howto-customeditor-window-final.png" alt="Custom sprite browser">
+<figcaption>Custom sprite browser</figcaption>
+</figure>
+
+<p>You can find the completed files that this example creates in this <a href="https://github.com/Unity-Technologies/ui-toolkit-manual-code-examples/tree/master/create-a-custom-editor-window-with-CSharp">GitHub repository</a>.</p>
+
+<h2>Prerequisites</h2>
+
+<p>This guide is for developers familiar with the Unity Editor, UI Toolkit, and C# scripting. Before you start, get familiar with the following:</p>
+
+<ul>
+<li><span class="tooltip" tabindex="0" ><a href="UIE-VisualTree.html">Visual Tree</a><span class="tooltiptext">An object graph, made of lightweight nodes, that holds all the elements in a window or panel. It defines every UI you build with the UI Toolkit.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#visualtree" aria-label="Go to glossary anchor for visualtree">Glossary</a></span></span></span></li>
+<li><a href="UIE-uxml-element-ListView.html">ListView</a></li>
+<li><span class="tooltip" tabindex="0" ><a href="UIE-uxml-element-ScrollView.html">ScrollView</a><span class="tooltiptext">A UI Control which displays a large set of Controls in a viewable area that you can see by using a scrollbar. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UIE-uxml-element-ScrollView.html" href="UIE-uxml-element-ScrollView.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#ScrollView" aria-label="Go to glossary anchor for ScrollView">Glossary</a></span></span></span></li>
+<li><a href="UIE-uxml-element-TwoPaneSplitView.html">TwoPaneSplitView</a></li>
+<li><a href="UIE-uxml-element-Image.html">Image</a></li>
+</ul>
+
+<h2>Create the Editor window script</h2>
+
+<p>To add UI controls to the UI, add <span class="tooltip" tabindex="0" ><strong>visual elements</strong><span class="tooltiptext">A node of a visual tree that instantiates or derives from the C# <a href="../ScriptReference/UIElements.VisualElement.html"><code>VisualElement</code></a> class. You can style the look, define the behaviour, and display it on screen as part of the UI. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UIE-VisualTree.html" href="UIE-VisualTree.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#visualelement" aria-label="Go to glossary anchor for visualelement">Glossary</a></span></span></span> to the visual tree. UI Toolkit uses the <a href="../ScriptReference/UIElements.VisualElement.Add.html"><code>VisualElement.Add()</code></a> method to add children to an existing visual element, and accesses the <a href="UIE-VisualTree.html">visual tree</a> of an Editor window via the <code>rootvisualElement</code> property.</p>
+
+<p>Place <span class="tooltip" tabindex="0" ><strong>scripts</strong><span class="tooltiptext">A piece of code that allows you to create your own Components, trigger game events, modify Component properties over time and respond to user input in any way you like. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about creating-scripts.html" href="creating-scripts.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scripts" aria-label="Go to glossary anchor for Scripts">Glossary</a></span></span></span> for custom editor windows in an Editor folder because Unity requires this for proper compilation and assembly management. For more information, refer to <a href="SpecialFolders.html">Reserved folder name reference</a>.</p>
+
+<ol>
+<li>Create a project in Unity with any template.</li>
+<li>If you don’t have a folder named <code>Editor</code>, create one in the <strong>Project</strong> window.</li>
+<li>Right-click inside the <code>Editor</code> folder, and select <strong>Create</strong> &gt; <strong>UI Toolkit</strong> &gt; <strong>Editor Window</strong>.</li>
+<li>In the <strong>C#</strong> box, enter <code>MyCustomEditor</code>.</li>
+<li>Clear the <strong>UXML</strong> and <strong>USS</strong> checkboxes.</li>
+<li>Select <strong>Confirm</strong>.</li>
+<li>From the menu, select <strong>Window</strong> &gt; <strong>UI Toolkit</strong> &gt; <strong>MyCustomEditor</strong> to open the window. The window displays a label with the text “Hello World! From C#”.</li>
+</ol>
+
+<h2>Create a list of sprites</h2>
+
+<p>To present a list of sprites, the example uses <a href="../ScriptReference/AssetDatabase.html"><code>AssetDatabase</code></a> to find all sprites in a project. For the sprite browser, add a <code>TwoPaneSplitView</code> to split the available window space into two panes: one that is fixed-size and one that is flexibly sized. When you resize the window, the flexible pane resizes while the fixed-size pane remains the same size.</p>
+
+<ol>
+<li>
+<p>At the top of the file, add the following directive required by the List:</p>
+
+<pre><code class="lang-cs">using System.Collections.Generic;
+</code></pre>
+</li>
+<li>
+<p>Replace the code inside <code>CreateGUI()</code> with the following code. This enumerates all sprites inside the project.</p>
+
+<pre><code class="lang-cs">public void CreateGUI()
+{
+    // Get a list of all sprites in the project
+    var allObjectGuids = AssetDatabase.FindAssets(&quot;t:Sprite&quot;);
+    var allObjects = new List&lt;Sprite&gt;();
+    foreach (var guid in allObjectGuids)
+    {
+      allObjects.Add(AssetDatabase.LoadAssetAtPath&lt;Sprite&gt;(AssetDatabase.GUIDToAssetPath(guid)));
+    }
+}
+</code></pre>
+</li>
+<li>
+<p>Inside <code>CreateGUI()</code>, add the following code. This creates a TwoPaneSplitview and adds two child elements as placeholders for different controls.</p>
+
+<pre><code class="lang-cs">// Create a two-pane view with the left pane being fixed.
+var splitView = new TwoPaneSplitView(0, 250, TwoPaneSplitViewOrientation.Horizontal);
+
+// Add the view to the visual tree by adding it as a child to the root element.
+rootVisualElement.Add(splitView);
+
+// A TwoPaneSplitView needs exactly two child elements.
+var leftPane = new VisualElement();
+splitView.Add(leftPane);
+var rightPane = new VisualElement();
+splitView.Add(rightPane);
+</code></pre>
+</li>
+<li>
+<p>From the menu, select <strong>Window</strong> &gt; <strong>UI Toolkit</strong> &gt; <strong>MyCustomEditor</strong> to open the window. The window displays a split view with two empty panels. Move the divider bar to see it in action.</p>
+
+<figure>
+<img src="../uploads/Main/uie-howto-customeditor-window-splitPane.png" alt="Window with two split panes">
+<figcaption>Window with two split panes</figcaption>
+</figure>
+</li>
+</ol>
+
+<h2>Add a list view</h2>
+
+<p>For the sprite browser, the left pane will be a list containing the names of all sprites in the project. The <a href="../ScriptReference/UIElements.ListView.html">ListView</a> control derives from <code>VisualElement</code>, so it’s easy to modify the code to use a ListView instead of a <code>VisualElement</code>. </p>
+
+<p>The <a href="../ScriptReference/UIElements.ListView.html">ListView</a> control displays a list of selectable items. It’s optimized to create enough elements to cover the visible area, and pool and recycle the visual elements as you scroll the list. This optimizes performance and reduces the memory footprint, even in lists that have many items.</p>
+
+<p>To take advantage of this, initialize the ListView with the following:</p>
+
+<ul>
+<li>An array of data items</li>
+<li>A callback function to create an individual visual list entry in the list</li>
+<li>A bind function that initializes a visual list entry with an item from the data array</li>
+</ul>
+
+<p>You can create complex UI structures for each element in the list. For demo purposes, this example uses a simple text label to display the sprite name.</p>
+
+<ol>
+<li>
+<p>Inside <code>CreateGUI()</code>, change the left pane to a ListView instead of a <code>VisualElement</code>:</p>
+
+<pre><code class="lang-cs">public void CreateGUI()
+{
+    ...
+    var leftPane = new ListView();
+    splitView.Add(leftPane);
+    ...
+}
+</code></pre>
+</li>
+<li>
+<p>At the bottom of <code>CreateGUI()</code>, add the following code to initialize the ListView:</p>
+
+<pre><code class="lang-cs">public void CreateGUI()
+{
+    ...
+    // Initialize the list view with all sprites' names
+    leftPane.makeItem = () =&gt; new Label();
+    leftPane.bindItem = (item, index) =&gt; { (item as Label).text = allObjects[index].name; };
+    leftPane.itemsSource = allObjects;
+}
+</code></pre>
+</li>
+<li>
+<p>From the menu, select <strong>Window</strong> &gt; <strong>UI Toolkit</strong> &gt; <strong>MyCustomEditor</strong> to open the custom Editor window. The window displays a scrollable list view and selectable items similar to the image below.</p>
+
+<figure>
+<img src="../uploads/Main/uie-howto-customeditor-listView.png" alt="ListView with sprite names">
+<figcaption>ListView with sprite names</figcaption>
+</figure>
+</li>
+</ol>
+
+<h2>Add callbacks</h2>
+
+<p>To display the image of a sprite on the right panel when you select it from the list, use the <a href="../ScriptReference/UIElements.BaseVerticalCollectionView-selectionChanged.html"><code>selectionChanged</code></a> property of the left pane and add a callback function. </p>
+
+<p>To display the image, create a new Image control for the selected sprite, and use <a href="../ScriptReference/UIElements.VisualElement.Clear.html"><code>VisualElement.Clear()</code></a> to remove all the previous content before adding the control.</p>
+
+<p>
+<strong>Tip:</strong> If you lose your window and the menu doesn’t reopen, close all floating panels through the menu under <strong>Window</strong> &gt; <strong>Panels</strong> &gt; <strong>Close all floating panels</strong>, or reset your window layout.</p>
+
+<ol>
+<li>
+<p>Add a callback function when the selection changes from the list in the left pane.</p>
+
+<pre><code class="lang-cs">public void CreateGUI()
+{
+    ...
+    // React to the user's selection
+    leftPane.selectionChanged += OnSpriteSelectionChange;
+}
+
+private void OnSpriteSelectionChange(IEnumerable&lt;object&gt; selectedItems)
+{
+}
+</code></pre>
+</li>
+<li>
+<p>The callback function needs to access the right pane of the TwoPaneSplitview. To do so, change the right pane created inside <code>CreateGUI()</code> into a member variable:</p>
+
+<pre><code class="lang-cs">private VisualElement m_RightPane;
+
+public void CreateGUI()
+{
+    ...
+    m_RightPane = new VisualElement();
+    splitView.Add(m_RightPane);
+    ...
+}
+</code></pre>
+</li>
+<li>
+<p>Add the following code to the <code>OnSpriteSelectionChange</code> function. This clears all previous content from the pane, gets the selected sprite, and adds a new Image control to display the sprite.</p>
+
+<pre><code class="lang-cs">private void OnSpriteSelectionChange(IEnumerable&lt;object&gt; selectedItems)
+{
+    // Clear all previous content from the pane.
+    m_RightPane.Clear();
+
+    // Get the selected sprite and display it.
+    var enumerator = selectedItems.GetEnumerator();
+    if (enumerator.MoveNext())
+    {
+        var selectedSprite = enumerator.Current as Sprite;
+        if (selectedSprite != null)
+        {
+            // Add a new Image control and display the sprite.
+            var spriteImage = new Image();
+            spriteImage.scaleMode = ScaleMode.ScaleToFit;
+            spriteImage.sprite = selectedSprite;
+
+            // Add the Image control to the right-hand pane.
+            m_RightPane.Add(spriteImage);
+        }
+    }
+}
+</code></pre>
+</li>
+<li>
+<p>From the menu, select <strong>Window</strong> &gt; <strong>UI Toolkit</strong> &gt; <strong>MyCustomEditor</strong> to open the custom Editor window. When you select a sprite from the list on the left side, the image of the sprite displays on the right side of the window similar to the image below.</p>
+
+<figure>
+<img src="../uploads/Main/uie-howto-customeditor-window-final.png" alt="Sprite browser in action">
+<figcaption>Sprite browser in action</figcaption>
+</figure>
+</li>
+</ol>
+
+<h2>Make the UI resizable</h2>
+
+<p>Editor windows are resizable within their minimum and maximum allowed dimensions. To set these dimensions, write to the <a href="../ScriptReference/EditorWindow-minSize.html">EditorWindow.minSize</a> and <a href="../ScriptReference/EditorWindow-maxSize.html">EditorWindow.maxSize</a> properties. To prevent a window from resizing, assign the same dimension to both properties.</p>
+
+<p>If the window dimensions are too small to display the entire UI, you can use a <code>ScrollView</code> element to provide scrolling for the window. The ListView on the left pane uses a <code>ScrollView</code> internally, but the right pane is a regular <code>VisualElement</code>. To make the right pane resizable, change it to a <code>ScrollView</code> with bidirectional scrolling.</p>
+
+<ol>
+<li>
+<p>Add the following code at the bottom of the <code>ShowMyEditor()</code> function to limit the size of the window:</p>
+
+<pre><code class="lang-cs">public static void ShowMyEditor()
+{
+    ...
+    // Limit size of the window.
+    wnd.minSize = new Vector2(450, 200);
+    wnd.maxSize = new Vector2(1920, 720);
+}
+</code></pre>
+</li>
+<li>
+<p>Inside <code>CreateGUI()</code>, change the right pane <code>VisualElement</code> to a <code>ScrollView</code> with bidirectional scrolling:</p>
+
+<pre><code class="lang-cs">public void CreateGUI()
+{
+    ...
+    m_RightPane = new ScrollView(ScrollViewMode.VerticalAndHorizontal);
+    splitView.Add(m_RightPane);
+    ...
+}
+</code></pre>
+</li>
+<li>
+<p>From the menu, select <strong>Window</strong> &gt; <strong>UI Toolkit</strong> &gt; <strong>MyCustomEditor</strong> to open the custom Editor window. The sprite browser window now has scrollbars. Resize the window to see the scrollbars in action.</p>
+
+<figure>
+<img src="../uploads/Main/uie-howto-customeditor-window-scrollbars.png" alt="Editor window with scrollbars">
+<figcaption>Editor window with scrollbars</figcaption>
+</figure>
+</li>
+</ol>
+
+<h2>Support hot-reloading in the Editor window</h2>
+
+<p>A C# <a href="domain-reloading.html">domain reload</a> occurs when scripts recompile, and it can also occur when the Editor enters Play mode if <a href="configurable-enter-play-mode.html">you have turned on domain reload on entering Play mode</a>. The following example uses script recompilation to demonstrate the effect of a domain reload.</p>
+
+<p>In the Editor window you just created, open the sprite browser and select a sprite. Then make a small change to one of your project scripts and save it so Unity recompiles the scripts. After the recompilation finishes, the window resets and the selection disappears.</p>
+
+<p>An Editor window needs to be compatible with <a href="AssetDatabaseRefreshing.html#hotreloading">hot-reloading</a> so that user selections aren’t lost unnecessarily during reload. Since <code>VisualElement</code> objects aren’t serializable, you must recreate the UI every time a reload happens. This means that the <code>CreateGUI</code> method is invoked after the reload has completed. This lets you restore the UI state before the reload by storing the necessary data in your <code>EditorWindow</code> class.</p>
+
+<ol>
+<li>
+<p>Add a member variable to the <code>MyCustomEditor</code> class to save the selected index in the sprite list. When you make a selection, this member variable stores the new selection index of the <code>ListView</code>.</p>
+
+<pre><code class="lang-cs">public class MyCustomEditor : EditorWindow
+{
+    [SerializeField] private int m_SelectedIndex = -1;
+    ....
+}
+</code></pre>
+</li>
+<li>
+<p>Add the following code at the bottom of <code>CreateGUI()</code> to store and restore the selected list index.</p>
+
+<pre><code class="lang-cs">public void CreateGUI()
+{
+  ...
+
+  // Restore the selection index from before the hot reload.
+  leftPane.selectedIndex = m_SelectedIndex;
+
+  // Store the selection index when the selection changes.
+  leftPane.selectionChanged += (items) =&gt; { m_SelectedIndex = leftPane.selectedIndex; };
+}
+</code></pre>
+</li>
+<li><p>From the menu, select <strong>Window</strong> &gt; <strong>UI Toolkit</strong> &gt; <strong>MyCustomEditor</strong> to open the custom Editor window. Select a sprite from the list, then edit and save a script to trigger recompilation and test hot-reloading.</p></li>
+</ol>
+
+<p>As a reference, here is the finished script:</p>
+
+<pre><code class="lang-cs">using System.Collections.Generic;
+using UnityEditor;
+using UnityEngine;
+using UnityEngine.UIElements;
+
+public class MyCustomEditor : EditorWindow
+{
+    [SerializeField] private int m_SelectedIndex = -1;
+    private VisualElement m_RightPane;
+
+    [MenuItem(&quot;Window/UI Toolkit/MyCustomEditor&quot;)]
+    public static void ShowMyEditor()
+    {
+        // This method is called when the user selects the menu item in the Editor.
+        EditorWindow wnd = GetWindow&lt;MyCustomEditor&gt;();
+        wnd.titleContent = new GUIContent(&quot;My Custom Editor&quot;);
+
+        // Limit size of the window.
+        wnd.minSize = new Vector2(450, 200);
+        wnd.maxSize = new Vector2(1920, 720);
+  }
+
+  public void CreateGUI()
+  {
+      // Get a list of all sprites in the project.
+      var allObjectGuids = AssetDatabase.FindAssets(&quot;t:Sprite&quot;);
+      var allObjects = new List&lt;Sprite&gt;();
+      foreach (var guid in allObjectGuids)
+      {
+        allObjects.Add(AssetDatabase.LoadAssetAtPath&lt;Sprite&gt;(AssetDatabase.GUIDToAssetPath(guid)));
+      }
+
+      // Create a two-pane view with the left pane being fixed.
+      var splitView = new TwoPaneSplitView(0, 250, TwoPaneSplitViewOrientation.Horizontal);
+
+      // Add the panel to the visual tree by adding it as a child to the root element.
+      rootVisualElement.Add(splitView);
+
+      // A TwoPaneSplitView always needs two child elements.
+      var leftPane = new ListView();
+      splitView.Add(leftPane);
+      m_RightPane = new ScrollView(ScrollViewMode.VerticalAndHorizontal);
+      splitView.Add(m_RightPane);
+
+      // Initialize the list view with all sprites' names.
+      leftPane.makeItem = () =&gt; new Label();
+      leftPane.bindItem = (item, index) =&gt; { (item as Label).text = allObjects[index].name; };
+      leftPane.itemsSource = allObjects;
+
+      // React to the user's selection.
+      leftPane.selectionChanged += OnSpriteSelectionChange;
+
+      // Restore the selection index from before the hot reload.
+      leftPane.selectedIndex = m_SelectedIndex;
+
+      // Store the selection index when the selection changes.
+      leftPane.selectionChanged += (items) =&gt; { m_SelectedIndex = leftPane.selectedIndex; };
+  }
+
+  private void OnSpriteSelectionChange(IEnumerable&lt;object&gt; selectedItems)
+  {
+      // Clear all previous content from the pane.
+      m_RightPane.Clear();
+
+      var enumerator = selectedItems.GetEnumerator();
+      if (enumerator.MoveNext())
+      {
+          var selectedSprite = enumerator.Current as Sprite;
+          if (selectedSprite != null)
+          {
+              // Add a new Image control and display the sprite.
+              var spriteImage = new Image();
+              spriteImage.scaleMode = ScaleMode.ScaleToFit;
+              spriteImage.sprite = selectedSprite;
+
+              // Add the Image control to the right-hand pane.
+              m_RightPane.Add(spriteImage);
+          }
+      }
+  }
+}
+</code></pre>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="script-serialization.html">Script Serialization</a></li>
+<li><a href="../ScriptReference/EditorWindow.html">EditorWindow</a></li>
+<li><a href="../ScriptReference/UIElements.VisualElement.html">VisualElement</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="UIE-support-for-editor-ui.html"></a></span><div class="tip">Support for Editor UI</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="UIE-HowTo-CreateCustomInspector.html"></a></span><div class="tip">Create a custom Inspector</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

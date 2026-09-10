@@ -1,0 +1,329 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Profiling tools reference</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<meta property="relative-path-to-manual" content="">
+<meta property="version-switcher-versions-with-this-page" content="Versions with this page:">
+<meta property="version-switcher-versions-without-this-page" content="Versions without this page:">
+<meta property="version-switcher-supported" content="Supported">
+<meta property="version-switcher-legacy" content="Legacy">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/Manual/performance-profiling-tools.html">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20260626"></script><script type="text/javascript" src="docdata/toc.js?ts=20260626"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20260626"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20260626">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20260626">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/performance-profiling-tools.html">English</a></li>
+<li><a href="/cn/current/Manual/performance-profiling-tools.html">中文</a></li>
+<li><a href="/ja/current/Manual/performance-profiling-tools.html">日本語</a></li>
+<li><a href="/kr/current/Manual/performance-profiling-tools.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: Unity 6.7 Beta</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/performance-profiling-tools.html">English</a></li>
+<li><a href="/cn/current/Manual/performance-profiling-tools.html">中文</a></li>
+<li><a href="/ja/current/Manual/performance-profiling-tools.html">日本語</a></li>
+<li><a href="/kr/current/Manual/performance-profiling-tools.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="analysis.html">Optimization</a></li>
+<li>Profiling tools reference</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="project-auditor/project-auditor-settings-reference.html"></a></span><div class="tip">Project Auditor settings reference</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="building-and-publishing.html"></a></span><div class="tip">Building and publishing</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Profiling tools reference</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Profiling your application is the best way to measure its performance. You can use different profiling tools to understand where there might be any issues with elements of your application including memory usage, CPU performance, GPU performance, and your custom <span class="tooltip" tabindex="0" ><strong>scripts</strong><span class="tooltiptext">A piece of code that allows you to create your own Components, trigger game events, modify Component properties over time and respond to user input in any way you like. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about creating-scripts.html" href="creating-scripts.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scripts" aria-label="Go to glossary anchor for Scripts">Glossary</a></span></span></span>.</p>
+
+<h2>Unity’s analysis tools</h2>
+
+<p>Unity has several profiling and analysis tools to measure the performance of your application:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Tool</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong><span class="tooltip" tabindex="0" ><a href="Profiler.html">Profiler</a><span class="tooltiptext">A window that helps you to optimize your game. It shows how much time is spent in the various areas of your game. For example, it can report the percentage of time spent rendering, animating, or in your game logic. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Profiler.html" href="Profiler.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Profiler" aria-label="Go to glossary anchor for Profiler">Glossary</a></span></span></span></strong></td>
+	<td style="text-align:left;">Measures the performance of the Unity Editor, your application in Play mode, or connects to a device running your application in development mode.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><a href="https://docs.unity3d.com/Packages/com.unity.memoryprofiler@latest">Memory Profiler</a></strong></td>
+	<td style="text-align:left;">Provides in-depth memory performance analysis.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><a href="https://docs.unity3d.com/Packages/com.unity.profiling.core@latest">Profiling Core package</a></strong></td>
+	<td style="text-align:left;">Provides APIs you can use to add contextual information to Unity Profiler captures. For more information, refer to <a href="profiler-adding-information-code.html">Adding profiling information to your code</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><a href="https://docs.unity3d.com/Packages/com.unity.performance.profile-analyzer@latest">Profile Analyzer</a></strong></td>
+	<td style="text-align:left;">Compares two profiling datasets together to analyze how your changes affect your application’s performance.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><a href="FrameDebugger.html">Frame Debugger</a></strong></td>
+	<td style="text-align:left;">Provides a way to measure the graphical performance of your application.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><a href="project-auditor/project-auditor.html">Project Auditor</a></strong></td>
+	<td style="text-align:left;">Creates a report that describes issues about the scripts, assets, and code in your project.</td>
+</tr>
+</tbody>
+</table>
+
+<h2>Third party profiling tools</h2>
+
+<p>Alongside the Unity Profiler, use platform-specific profiling tools to ensure your application runs as expected. These tools have the most utility on platforms that can use <span class="tooltip" tabindex="0" ><a href="scripting-backends-il2cpp.html">IL2CPP</a><span class="tooltiptext">A Unity-developed scripting back-end which you can use as an alternative to Mono when building projects for some platforms. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ./scripting-backends-il2cpp.html" href="./scripting-backends-il2cpp.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#IL2CPP" aria-label="Go to glossary anchor for IL2CPP">Glossary</a></span></span></span> to produce a C++ version of the project. These native code versions provide transparent call stacks and high-resolution method timings that are unavailable when running under Mono.</p>
+
+<p>The following list provides some examples of available profiling tools. You can also use Unity’s <a href="LowLevelNativePluginProfiler.html">low level native plug-in Profiler API</a> to export profiling data to third-party profiling tools.</p>
+
+<h3>Android</h3>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Tool</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong><a href="https://developer.android.com/agi">Android GPU Inspector</a></strong></td>
+	<td style="text-align:left;">A tool by Google for general Android GPU profiling.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><a href="https://developer.arm.com/tools-and-software/embedded/arm-development-studio/components/streamline-performance-analyzer">Streamline Performance Analyzer</a></strong></td>
+	<td style="text-align:left;">A tool by ARM to analyze devices with ARM CPUs.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><a href="https://developer.arm.com/Tools%20and%20Software/Arm%20Performance%20Studio">Arm Performance Studio</a></strong></td>
+	<td style="text-align:left;">A selection of tools by ARM to analyze Mali GPU devices.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><a href="https://developer.imaginationtech.com/pvrtune/">PVRTune</a></strong></td>
+	<td style="text-align:left;">A tool by Imagination Technologies for Imagination PowerVR GPU devices.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><a href="https://developer.qualcomm.com/software/snapdragon-profiler">Snapdragon Profiler</a></strong></td>
+	<td style="text-align:left;">A tool by Qualcomm for GPU and system profiling of Qualcomm chip devices.</td>
+</tr>
+</tbody>
+</table>
+
+<h3>macOS and iOS</h3>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Tool</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong><a href="https://developer.apple.com/tutorials/instruments">Profiling apps using Instruments</a></strong></td>
+	<td style="text-align:left;">Use <a href="https://developer.apple.com/xcode/">Xcode’s</a> inbuilt profiling tool to analyze your application.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><a href="https://developer.apple.com/documentation/xcode/metal-debugger">Metal Debugger</a></strong></td>
+	<td style="text-align:left;">Analyzes projects that use the Metal API.</td>
+</tr>
+</tbody>
+</table>
+
+<h3>Windows</h3>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Tool</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong><a href="https://developer.amd.com/amd-uprof/">AMD uProf</a></strong></td>
+	<td style="text-align:left;">A profiling tool by AMD for performance analysis.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><a href="https://www.intel.com/content/www/us/en/developer/tools/graphics-performance-analyzers/overview.html">Intel Performance Analyzers</a></strong></td>
+	<td style="text-align:left;">Tools by Intel for graphics performance analysis.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><a href="https://developer.nvidia.com/nsight-graphics">NVIDIA Nsight Graphics</a></strong></td>
+	<td style="text-align:left;">A tool by NVIDIA for graphics debugging and profiling.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><a href="https://devblogs.microsoft.com/pix/">PIX on Windows</a></strong></td>
+	<td style="text-align:left;">A tool by Microsoft for GPU performance tuning and debugging.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><a href="https://superluminal.eu/">Superluminal</a></strong></td>
+	<td style="text-align:left;">A profiler by Superluminal for C++ applications.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><a href="https://www.intel.com/content/www/us/en/developer/tools/oneapi/vtune-profiler.html">VTune</a></strong></td>
+	<td style="text-align:left;">A tool by Intel for CPU and GPU performance profiling.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><a href="https://docs.microsoft.com/en-us/windows-hardware/test/wpt/">Windows Performance Toolkit</a></strong></td>
+	<td style="text-align:left;">Microsoft’s collection of performance monitoring tools.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><a href="http://msdn.microsoft.com/en-us/library/hh315751.aspx">Visual Studio Graphics Diagnostics</a></strong></td>
+	<td style="text-align:left;">Graphics debugging and profiling tools in Visual Studio.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><a href="https://renderdoc.org/docs/index.html">RenderDoc</a></strong></td>
+	<td style="text-align:left;">A graphics debugging tool by RenderDoc for analyzing rendering.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><a href="https://gpuopen.com/introducing-radeon-developer-tool-suite/">Radeon Developer Tool Suite</a></strong></td>
+	<td style="text-align:left;">Tools by AMD for GPU profiling and debugging.</td>
+</tr>
+</tbody>
+</table>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="graphics-performance-profiling.html">Graphics performance and profiling</a></li>
+<li><a href="android-optimization.html">Optimization for Android</a></li>
+<li><a href="iphone-performance.html">Optimize performance for iOS</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="project-auditor/project-auditor-settings-reference.html"></a></span><div class="tip">Project Auditor settings reference</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="building-and-publishing.html"></a></span><div class="tip">Building and publishing</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

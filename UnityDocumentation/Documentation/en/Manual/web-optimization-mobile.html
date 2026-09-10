@@ -1,0 +1,338 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Optimize Web platform for mobile</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<meta property="relative-path-to-manual" content="">
+<meta property="version-switcher-versions-with-this-page" content="Versions with this page:">
+<meta property="version-switcher-versions-without-this-page" content="Versions without this page:">
+<meta property="version-switcher-supported" content="Supported">
+<meta property="version-switcher-legacy" content="Legacy">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/Manual/web-optimization-mobile.html">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20260626"></script><script type="text/javascript" src="docdata/toc.js?ts=20260626"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20260626"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20260626">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20260626">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/web-optimization-mobile.html">English</a></li>
+<li><a href="/cn/current/Manual/web-optimization-mobile.html">中文</a></li>
+<li><a href="/ja/current/Manual/web-optimization-mobile.html">日本語</a></li>
+<li><a href="/kr/current/Manual/web-optimization-mobile.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: Unity 6.7 Beta</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/web-optimization-mobile.html">English</a></li>
+<li><a href="/cn/current/Manual/web-optimization-mobile.html">中文</a></li>
+<li><a href="/ja/current/Manual/web-optimization-mobile.html">日本語</a></li>
+<li><a href="/kr/current/Manual/web-optimization-mobile.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="PlatformSpecific.html">Platform development  </a></li>
+<li><a href="webgl.html">Web</a></li>
+<li><a href="webgl-building-distribution.html">Build and distribute a Web application</a></li>
+<li>Optimize Web platform for mobile</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="web-optimization-remove-resources.html"></a></span><div class="tip">Remove unused resources from your Web build</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="web-profile.html"></a></span><div class="tip">Profile a Web build</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Optimize Web platform for mobile</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Fast load times are crucial for Web-based applications, especially on mobile devices which might need to download application resources on a slow mobile network. Slow load times can result in a poor user experience and high bounce rate. Therefore, it’s important to optimize your Web build for mobile. </p>
+
+<p>Web-based mobile applications work best when you have a small build and performant code because there’s less data to download, less data to store on a user’s device, and less data to load during initialization, which speeds up load times.</p>
+
+<p>For Web optimizations not specific to mobile, refer to <a href="web-optimization.html">Optimize your Web build</a>.</p>
+
+<h2>Optimization quick reference</h2>
+
+<p>Use these recommended settings to make optimizations specific to Unity Web platform for mobile:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Recommendation</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><a href="#optimize-for-size">Optimize for size</a></td>
+	<td style="text-align:left;">Disable <span class="tooltip" tabindex="0" ><strong>development build</strong><span class="tooltiptext">A development build includes debug symbols and enables the Profiler. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about building-introduction.html" href="building-introduction.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#developmentbuild" aria-label="Go to glossary anchor for developmentbuild">Glossary</a></span></span></span> settings and optimize your build for disk size (Disk Size with LTO).</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="#use-brotli-compression">Use Brotli compression</a></td>
+	<td style="text-align:left;">Use the Brotli <span class="tooltip" tabindex="0" ><strong>compression</strong><span class="tooltiptext">A method of storing data that reduces the amount of storage space it requires. See <a href="texture-choose-format-by-platform.html">Texture Compression</a>, <a href="class-AnimationClip.html#AssetProperties">Animation Compression</a>, <a href="class-AudioClip.html">Audio Compression</a>, <a href="ReducingFilesize.html">Build Compression</a>.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#compression" aria-label="Go to glossary anchor for compression">Glossary</a></span></span></span> method to compress your Player build.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="#use-the-unity-addressables-system">Use the Unity Addressables system</a></td>
+	<td style="text-align:left;">Use the Unity Addressables system for assets.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="#optimize-your-audio-files">Optimize your audio files</a></td>
+	<td style="text-align:left;">Reduce the amount of disk space your audio takes up.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="#optimize-the-graphics-in-your-project">Optimize the graphics in your project</a></td>
+	<td style="text-align:left;">Reduce the amount of disk space your graphics take up.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="#lower-graphical-quality-level">Change the graphical quality level</a></td>
+	<td style="text-align:left;">Lower the quality level to make a faster build.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="optimize-for-size" aria-hidden="true"></a></p>
+
+<h2>Optimize for size</h2>
+
+<p>A smaller build size is better for mobile because there’s less data to download, which usually makes load times shorter and uses less storage on the user’s device. </p>
+
+<p>To make your build as small as possible, disable development build settings and optimize your build for disk size:</p>
+
+<ol>
+<li><p>Go to <strong>File</strong> &gt; <strong>Build Profiles</strong>.</p></li>
+<li><p>Select <strong>Web</strong>.</p></li>
+<li><p>Disable <strong>Development Build</strong> if enabled.</p></li>
+<li><p>Set <strong>Code Optimization</strong> to <strong>Disk Size with LTO</strong>. </p></li>
+</ol>
+
+<p>
+<strong>Note</strong>: Optimized builds with LTO can take a long time. Only use this optimization for final release or if you need to test performance. Use a faster build option during development. </p>
+
+<p>For other settings that impact build size, refer to <a href="web-optimization-player.html">Recommended Player settings to optimize your Web build</a> and <a href="web-optimization-remove-resources.html">Remove unused resources from your Web build</a>.</p>
+
+<h3>Use C# to enable the optimize for size setting</h3>
+
+<p>If you have a script that edits settings and you want to enable the <strong>Disk Size with LTO</strong> setting with C#, add the following code to your script:</p>
+
+<pre><code class="lang-cs">// Set Platform Settings to optimize for disk size (LTO)
+UnityEditor.WebGL.UserBuildSettings.codeOptimization = UnityEditor.WebGL.WasmCodeOptimization.DiskSizeLTO;
+</code></pre>
+
+<p><a name="use-brotli-compression" aria-hidden="true"></a></p>
+
+<h2>Use Brotli compression</h2>
+
+<p>Brotli compression is a setting where Unity pre-compresses for you while it builds. Brotli-compressed files are smaller than gzip-compressed files, which can reduce your build size. </p>
+
+<p>However, Brotli takes a longer time to compress. Also, Chrome and Firefox only natively support Brotli compression over HTTPS. If that’s not suitable for your application, consider Gzip compression instead. </p>
+
+<p>To use the Brotli compression setting: </p>
+
+<ol>
+<li><p>Make sure your web server is configured to serve Brotli files with the correct encoding. For more details, refer to <a href="webgl-deploying.html">Deploy Web application</a>.</p></li>
+<li><p>Access the <strong>Player</strong> settings (Menu: <strong>Edit</strong> &gt; <strong>Project Settings</strong> &gt; <strong>Player</strong>).</p></li>
+<li><p>Click on the <strong>Web settings</strong> tab. </p></li>
+<li><p>Expand the <strong>Publishing Settings</strong> section. </p></li>
+<li><p>Set <strong>Compression Format</strong> to <strong>Brotli</strong>. </p></li>
+</ol>
+
+<h3>Use C# to change the compression format</h3>
+
+<p>If you have a <span class="tooltip" tabindex="0" ><strong>project settings</strong><span class="tooltiptext">A broad collection of settings which allow you to configure how Physics, Audio, Networking, Graphics, Input and many other areas of your project behave. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about comp-ManagerGroup.html" href="comp-ManagerGroup.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#ProjectSettings" aria-label="Go to glossary anchor for ProjectSettings">Glossary</a></span></span></span> script and want to change the compression format with C#, add the following code to your script: </p>
+
+<pre><code class="lang-cs">// Set the compression format to Brotli
+PlayerSettings.WebGL.compressionFormat = WebGLCompressionFormat.Brotli;
+</code></pre>
+
+<p><a name="use-the-unity-addressables-system" aria-hidden="true"></a></p>
+
+<h2>Use the Unity addressables system</h2>
+
+<p>Mobile browser applications need short load times to decrease user bounce rates. To keep initialization times short, instead of loading all assets at startup, use addressables to load assets only when your application needs them. Defer the loading of certain assets until after your game loads. </p>
+
+<p>For these changes, make sure to update <code>StreamingAssets/aa/catalog.json</code> with any new addressable files you make. </p>
+
+<p>For more information about addressables and how to set them up, refer to <a href="https://docs.unity3d.com/Packages/com.unity.addressables@latest">Addressables</a>. </p>
+
+<p>To optimize your addressables further, try the following: </p>
+
+<h3>Sort addressables into groups</h3>
+
+<p>Sort your addressables into groups so that you reduce the number of asset bundles. The smaller the amount of asset bundles, the smaller the build size. For more information about addressable groups and how to create them, refer to <a href="https://docs.unity3d.com/Packages/com.unity.addressables@2.0/manual/groups-create.html">Manage and create groups</a>. </p>
+
+<p><a name="optimize-your-audio-files" aria-hidden="true"></a></p>
+
+<h2>Optimize your audio files</h2>
+
+<p>If you have a lot of audio files in your project, it’s best to compress your files to lower the size of the audio files. However compressed audio can result in lower quality audio. For information about compression formats, refer to <span class="tooltip" tabindex="0" ><a href="class-AudioClip.html">Audio Clip</a><span class="tooltiptext">A container for audio data in Unity. Unity supports mono, stereo and multichannel audio assets (up to eight channels). Unity can import .aif, .wav, .mp3, and .ogg audio file format, and .xm, .mod, .it, and .s3m tracker module formats. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-AudioClip.html" href="class-AudioClip.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#AudioClip" aria-label="Go to glossary anchor for AudioClip">Glossary</a></span></span></span>.</p>
+
+<p><a name="optimize-the-graphics-in-your-project" aria-hidden="true"></a></p>
+
+<h2>Optimize the graphics in your project</h2>
+
+<p>Complex graphics can use up resources and make your build larger and less performant. But there are ways to optimize your graphics to reduce your build size and improve performance.
+To optimize the graphics in your build, try the following:</p>
+
+<h3>Use ASTC compressed textures where possible</h3>
+
+<p>ASTC compressed texture types give small texture sizes and save some download time. Where ASTC isn’t supported, consider ETC2. For more information, refer to <span class="tooltip" tabindex="0" ><a href="texture-compression-formats.html">texture formats</a><span class="tooltiptext">A file format for handling textures during real-time rendering by 3D graphics hardware, such as a graphics card or mobile device. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about texture-choose-format-by-platform.html" href="texture-choose-format-by-platform.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#textureformat" aria-label="Go to glossary anchor for textureformat">Glossary</a></span></span></span>. </p>
+
+<p>To use ASTC compressed textures: </p>
+
+<ol>
+<li><p>Select your texture asset in your project to open the <strong>Texture Import Settings</strong> window. </p></li>
+<li><p>Select <strong>Web settings</strong>.</p></li>
+<li><p>Enable <strong>Override For Web</strong>. </p></li>
+<li><p>Set <strong>Format</strong> to one of the ASTC block options. </p></li>
+</ol>
+
+<h3>Use larger block sizes for ASTC compressed textures</h3>
+
+<p>If you use ASTC compressed textures, try to use a larger block size for the compression. ASTC supports block sizes between 4x4 and 12x12 texels. Larger block sizes result in lower quality textures but smaller builds. For a good balance between quality and size that optimizes for download time over a mobile network, consider using 8x8. If download times are still too slow, try increasing the block size. For more information, refer to <a href="texture-choose-format-by-platform.html">Recommended, default, and supported texture formats, by platform</a>.</p>
+
+<p>To set the block size of an ASTC compressed texture:</p>
+
+<ol>
+<li><p>Select your texture asset in your project. The <strong>Texture Import Settings</strong> show. </p></li>
+<li><p>Select <strong>Web settings</strong>.</p></li>
+<li><p>Enable <strong>Override For Web</strong>. </p></li>
+<li><p>Set <strong>Format</strong> to one of the larger ASTC block options, for example, <strong>RGB(A) Compressed ASTC 8x8 block</strong>. </p></li>
+</ol>
+
+<p><a name="lower-graphical-quality-level" aria-hidden="true"></a></p>
+
+<h2>Lower the graphical quality level</h2>
+
+<p>The recommended best practice is to set the graphical quality level to the fastest option. The faster option results in a smaller build. </p>
+
+<p>To change the graphical quality level: </p>
+
+<ol>
+<li><p>Access the <strong>Quality</strong> settings (Menu: <strong>Edit</strong> &gt; <strong>Project Settings</strong> &gt; <strong>Quality</strong>).</p></li>
+<li><p>Select the <strong>Low</strong> or <strong>Very Low</strong> quality level. </p></li>
+</ol>
+
+<p>However, the fastest setting can impact the visuals of your application, so make sure that your application looks how you need it to look. </p>
+
+<h3>Use C# to change the quality level</h3>
+
+<p>If you have a project settings script and want to change the quality level of your project in the script, add the following code:</p>
+
+<pre><code class="lang-cs">// Set the quality level to Very Low (index 0)
+QualitySettings.SetQualityLevel(0, true);
+</code></pre>
+
+<p>The <code>SetQualityLevel()</code> function takes the index of the <strong>Quality Level</strong> matrix as a value. <code>SetQualityLevel(0, true)</code> in this case is the <strong>Very Low</strong> setting, or the first option in the <strong>Quality Level</strong> matrix. To change it to <strong>Low</strong> or the second option, use <code>SetQualityLevel(1, true)</code> instead. </p>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><p><a href="webgl.html">Web</a></p></li>
+<li><p><a href="web-optimization.html">Optimize your Web build</a></p></li>
+<li><p><a href="webgl-browsercompatibility.html">Web browser compatibility</a></p></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="web-optimization-remove-resources.html"></a></span><div class="tip">Remove unused resources from your Web build</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="web-profile.html"></a></span><div class="tip">Profile a Web build</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

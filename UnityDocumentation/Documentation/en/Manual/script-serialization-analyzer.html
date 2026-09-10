@@ -1,0 +1,1500 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Serialization rules analyzer reference</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<meta property="relative-path-to-manual" content="">
+<meta property="version-switcher-versions-with-this-page" content="Versions with this page:">
+<meta property="version-switcher-versions-without-this-page" content="Versions without this page:">
+<meta property="version-switcher-supported" content="Supported">
+<meta property="version-switcher-legacy" content="Legacy">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/Manual/script-serialization-analyzer.html">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20260626"></script><script type="text/javascript" src="docdata/toc.js?ts=20260626"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20260626"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20260626">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20260626">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/script-serialization-analyzer.html">English</a></li>
+<li><a href="/cn/current/Manual/script-serialization-analyzer.html">中文</a></li>
+<li><a href="/ja/current/Manual/script-serialization-analyzer.html">日本語</a></li>
+<li><a href="/kr/current/Manual/script-serialization-analyzer.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: Unity 6.7 Beta</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/script-serialization-analyzer.html">English</a></li>
+<li><a href="/cn/current/Manual/script-serialization-analyzer.html">中文</a></li>
+<li><a href="/ja/current/Manual/script-serialization-analyzer.html">日本語</a></li>
+<li><a href="/kr/current/Manual/script-serialization-analyzer.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="scripting.html">Programming in Unity</a></li>
+<li><a href="compilation-and-code-reload.html">Compilation and code reload </a></li>
+<li><a href="script-serialization.html">Script serialization</a></li>
+<li>Serialization rules analyzer reference</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="script-serialization-rules.html"></a></span><div class="tip">Serialization rules</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="script-serialization-custom-serialization.html"></a></span><div class="tip">Custom serialization</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Serialization rules analyzer reference</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Unity has a serialization Roslyn diagnostic analyzer that helps you write correct serialization code by detecting common mistakes in using Unity’s serialization system at compile time. It provides real-time feedback in your IDE to prevent serialization issues before they cause runtime problems.</p>
+
+<p>For detailed information about Unity’s serialization rules, refer to <a href="script-serialization-rules.html">Serialization rules</a>. For a summary of common serialization issues and how to avoid them, refer to <a href="script-serialization-rules.html#common-issues">Avoid common serialization issues</a>.</p>
+
+<h2>Analyzer rules</h2>
+
+<p>The serialization analyzer implements the following diagnostic rules:</p>
+
+<ul>
+<li><a href="#uac1000">UAC1000: SerializeReference field type missing the Serializable attribute</a></li>
+<li><a href="#uac1001">UAC1001: Public field skipped by serialization due to missing the Serializable attribute</a></li>
+<li><a href="#uac1002">UAC1002: Inheritance hierarchy incomplete serialization</a></li>
+<li><a href="#uac1003">UAC1003: [SerializeReference] used on struct</a></li>
+<li><a href="#uac1004">UAC1004: [SerializeReference] used on primitive or enum type</a></li>
+<li><a href="#uac1005">UAC1005: Direct self-reference cycle in serialized class</a></li>
+<li><a href="#uac1006">UAC1006: Field uses type with direct self-reference cycle</a></li>
+<li><a href="#uac1007">UAC1007: Deep self-reference cycle in serialized class</a></li>
+<li><a href="#uac1008">UAC1008: Field uses type with deep self-reference cycle</a></li>
+<li><a href="#uac1009">UAC1009: Unsupported collection type for serialization</a></li>
+<li><a href="#uac1010">UAC1010: [SerializeField] used on non-serializable type</a></li>
+<li><a href="#uac1011">UAC1011: Enum type exceeds 32-bit size limit</a></li>
+<li><a href="#uac1012">UAC1012: Serializable dictionary with interface or abstract key or value type</a></li>
+<li><a href="#uac1013">UAC1013: Serializable dictionary with IEnumerable key type</a></li>
+<li><a href="#uac1014">UAC1014: [SerializeReference] used on dictionary</a></li>
+<li><a href="#uac1015">UAC1015: Dictionary field missing [SerializeField]</a></li>
+<li><a href="#uac1016">UAC1016: Dictionary key or value type is not serializable</a></li>
+<li><a href="#uac1017">UAC1017: Tuple type not supported by serialization</a></li>
+<li><a href="#uac1018">UAC1018: Field name conflicts with FormerlySerializedAs argument</a></li>
+</ul>
+
+<p>For information about how analyzer rules apply to generic type arguments, refer to the <a href="#generics">Generics</a> section. For information about suppressing rule warnings, refer to <a href="#suppress">Suppressing warnings</a>.</p>
+
+<h3 id="uac1000">UAC1000: SerializeReference field type missing the Serializable attribute</h3>
+
+<p>
+<strong>Severity</strong>: Warning.</p>
+
+<p>When a field is serialized by <code>[SerializeReference]</code>, its type should have the <code>[Serializable]</code> attribute. If the type is missing <code>[Serializable]</code>, Unity issues a warning. The field is serialized via <code>[SerializeReference]</code> even though the type isn’t considered serializable in other serialization contexts, which can lead to inconsistent behavior. To avoid the issue, add <code>[Serializable]</code> to the class or use the <a href="../ScriptReference/MakeSerializableAttribute.html"><code>[MakeSerializable]</code></a> attribute.</p>
+
+<p>Marking the type with <code>[Serializable]</code> (or <code>[MakeSerializable]</code> when you can’t modify the type) makes the intent explicit and keeps behavior consistent across Unity’s serialization paths. Without it, a field with <code>[SerializeReference]</code> still persists the data, while other forms of serialization that rely on the type being serializable can skip it, leading to inconsistent results.</p>
+
+<p>
+<strong>Incorrect example: Missing [Serializable] on a class used with [SerializeReference]</strong>:</p>
+
+<pre><code class="lang-csharp">// INCORRECT: Missing [Serializable] on CustomData
+public class CustomData
+{
+    public int value;
+}
+
+public class MyBehaviour : MonoBehaviour
+{
+    [SerializeReference] public CustomData data; // UAC1000: CustomData lacks [Serializable]
+}
+</code></pre>
+
+<p>
+<strong>Correct example: Add [Serializable] to the class</strong>:</p>
+
+<pre><code class="lang-csharp">// CORRECT: Add [Serializable] to the class
+[System.Serializable]
+public class CustomData
+{
+    public int value;
+}
+
+public class MyBehaviour : MonoBehaviour
+{
+    [SerializeReference] public CustomData data; // OK
+}
+</code></pre>
+
+<h3 id="uac1001">UAC1001: Public field skipped by serialization due to missing the Serializable attribute</h3>
+
+<p>
+<strong>Severity</strong>: Warning.</p>
+
+<p>Unity considers public fields of custom classes as candidates for serialization. Without the <code>[Serializable]</code> attribute on a type, Unity does not serialize fields of this type, and you can lose data when entering Play mode or when the <span class="tooltip" tabindex="0" ><strong>scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html" href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span> is saved.</p>
+
+<p>To fix this issue, you have multiple options depending on your intent:</p>
+
+<ul>
+<li>Add <code>[Serializable]</code> to the field’s type (if serialization is needed).</li>
+<li>Make the field private (if serialization isn’t needed).</li>
+<li>Add <code>[System.NonSerialized]</code> to the field (to explicitly mark it as non-serialized).</li>
+<li>Convert the field into a property (Unity doesn’t serialize properties), if you only need a public API surface.</li>
+</ul>
+
+<p>Without the <code>[Serializable]</code> attribute, Unity skips the field during serialization, causing data loss. This is problematic because the field compiles successfully but loses its value during serialization and deserialization cycles.</p>
+
+<p>
+<strong>Incorrect example: Missing [Serializable] on a class used as a serialized field</strong>:</p>
+
+<pre><code class="lang-csharp">// INCORRECT: Missing [Serializable] on PlayerStats
+public class PlayerStats
+{
+    public int health;
+    public int mana;
+}
+
+public class Player : MonoBehaviour
+{
+    public PlayerStats stats; // UAC1001: PlayerStats lacks [Serializable]
+}
+</code></pre>
+
+<p>
+<strong>Correct example: Add [Serializable] to the class</strong>:</p>
+
+<pre><code class="lang-csharp">// CORRECT: Add [Serializable] to the class
+[System.Serializable]
+public class PlayerStats
+{
+    public int health;
+    public int mana;
+}
+
+public class Player : MonoBehaviour
+{
+    public PlayerStats stats; // OK - will be serialized inline
+}
+</code></pre>
+
+<h3 id="uac1002">UAC1002: Inheritance hierarchy incomplete serialization</h3>
+
+<p>
+<strong>Severity</strong>: Warning.</p>
+
+<p>Every class in a serialization hierarchy must be explicitly marked with <code>[Serializable]</code>, because the attribute isn’t inherited from a base class to its derived classes. If any class in the hierarchy is missing <code>[Serializable]</code>, Unity might not serialize the fields declared on that class, which can result in unexpected data loss when entering Play mode, saving scenes, or performing domain reloads.</p>
+
+<p>If you can’t modify a base class (for example, it comes from a third-party library or a precompiled assembly), use the <a href="../ScriptReference/MakeSerializableAttribute.html"><code>[MakeSerializable]</code></a> assembly-level attribute to mark it as serializable without changing its source code. Fixing this warning also enables the analyzer to check the base class’s own fields. Refer to <a href="#limitations">Limitation: base class field analysis</a> for more details.</p>
+
+<p>
+<strong>Incorrect example: Inheritance hierarchy missing [Serializable] on a base class</strong>:</p>
+
+<pre><code class="lang-csharp">// INCORRECT: Missing [Serializable] on base class
+public class BaseEntity
+{
+    public string name;
+}
+
+[System.Serializable]
+public class Enemy : BaseEntity  // UAC1002: Enemy's hierarchy incomplete (BaseEntity lacks [Serializable])
+{
+    public int damage;
+}
+</code></pre>
+
+<p>
+<strong>Correct example: Mark each class in the hierarchy with [Serializable]</strong>:</p>
+
+<pre><code class="lang-csharp">// CORRECT: Mark each class in the hierarchy with [Serializable]
+[System.Serializable]
+public class BaseEntity
+{
+    public string name;
+}
+
+[System.Serializable]
+public class Enemy : BaseEntity
+{
+    public int damage;
+}
+
+public class GameManager : MonoBehaviour
+{
+    public Enemy enemy; // OK - entire hierarchy is serializable
+}
+</code></pre>
+
+<p>
+<strong>Alternative correct example: Use [MakeSerializable] for inaccessible base classes</strong>:</p>
+
+<p>If you can’t modify the base class (for example, it comes from a precompiled assembly or third-party library), you can use the <code>[MakeSerializable]</code> assembly attribute:</p>
+
+<pre><code class="lang-csharp">// CORRECT: Use [MakeSerializable] for inaccessible base classes
+[assembly: UnityEngine.Serialization.MakeSerializable(typeof(ThirdPartyLibrary.BaseEntity))]
+
+namespace ThirdPartyLibrary
+{
+    // This class is from a precompiled assembly - you can't modify it
+    public class BaseEntity
+    {
+        public string name;
+    }
+}
+
+namespace YourGame
+{
+    [System.Serializable]
+    public class Enemy : ThirdPartyLibrary.BaseEntity
+    {
+        public int damage;
+    }
+
+    public class GameManager : MonoBehaviour
+    {
+        public Enemy enemy; // OK - BaseEntity marked serializable via [MakeSerializable]
+    }
+}
+</code></pre>
+
+<h3 id="uac1003">UAC1003: [SerializeReference] used on struct</h3>
+
+<p>
+<strong>Severity</strong>: Error.</p>
+
+<p>The <code>[SerializeReference]</code> attribute can only be used on reference types (classes). It enables reference semantics such as null support, polymorphism, and shared references, which are incompatible with value types. Structs are value types and are always serialized inline, so using <code>[SerializeReference]</code> on a struct causes a runtime error.</p>
+
+<p>
+<strong>Incorrect example: Using [SerializeReference] on a struct</strong>:</p>
+
+<pre><code class="lang-csharp">// INCORRECT: Using [SerializeReference] on a struct
+[System.Serializable]
+public struct Vector3D
+{
+    public float x, y, z;
+}
+
+public class MyBehaviour : MonoBehaviour
+{
+    [SerializeReference] public Vector3D position; // UAC1003: Error - can't use [SerializeReference] on struct
+}
+</code></pre>
+
+<p>
+<strong>Correct example: Remove [SerializeReference] from the struct field</strong>:</p>
+
+<pre><code class="lang-csharp">// CORRECT: Remove [SerializeReference] from the struct field
+[System.Serializable]
+public struct Vector3D
+{
+    public float x, y, z;
+}
+
+public class MyBehaviour : MonoBehaviour
+{
+    public Vector3D position; // OK - structs are always serialized inline
+}
+</code></pre>
+
+<p>
+<strong>Alternative correct example: Use a class</strong>:</p>
+
+<pre><code class="lang-csharp">// CORRECT: Use a class instead of a struct
+[System.Serializable]
+public class Vector3D
+{
+    public float x, y, z;
+}
+
+public class MyBehaviour : MonoBehaviour
+{
+    [SerializeReference] public Vector3D position; // OK - class can use [SerializeReference]
+}
+</code></pre>
+
+<h3 id="uac1004">UAC1004: [SerializeReference] used on primitive or enum type</h3>
+
+<p>
+<strong>Severity</strong>: Warning.</p>
+
+<p>Built-in types (<code>int</code>, <code>float</code>, <code>bool</code>, etc.) and enums are value types, so they are always serialized inline. Unity silently ignores <code>[SerializeReference]</code> on these types instead of producing a runtime error. The behavior is different for structs, where Unity raises errors which are caught by <a href="#uac1003">UAC1003</a>). Removing the unnecessary <code>[SerializeReference]</code> makes the serialization intent of the field clearer.</p>
+
+<p>
+<strong>Incorrect example: Using [SerializeReference] on a primitive or enum</strong>:</p>
+
+<pre><code class="lang-csharp">// INCORRECT: Using [SerializeReference] on a primitive and an enum
+public enum GameState
+{
+    Menu,
+    Playing,
+    Paused
+}
+
+public class GameController : MonoBehaviour
+{
+    [SerializeReference] public int score; // UAC1004: int is a primitive type
+    [SerializeReference] public GameState state; // UAC1004: GameState is an enum
+}
+</code></pre>
+
+<p>
+<strong>Correct example: Remove [SerializeReference] from primitive and enum fields</strong>:</p>
+
+<pre><code class="lang-csharp">// CORRECT: Remove [SerializeReference] from primitive and enum fields
+public enum GameState
+{
+    Menu,
+    Playing,
+    Paused
+}
+
+public class GameController : MonoBehaviour
+{
+    public int score; // OK - primitives don't need [SerializeReference]
+    public GameState state; // OK - enums don't need [SerializeReference]
+}
+</code></pre>
+
+<h3 id="uac1005">UAC1005: Direct self-reference cycle in serialized class</h3>
+
+<p>
+<strong>Severity</strong>: Warning.</p>
+
+<p>When a class contains a field of its own type, it creates a direct self-reference cycle. Unity’s inline serialization copies object graphs by value, which can’t represent cycles. To avoid infinite loops, Unity ignores any field of a type that contains a direct self-reference cycle. This causes data loss that can be difficult to debug, because the field compiles without errors but is always null after deserialization. <a href="#uac1006">UAC1006</a> complements this rule by reporting the same problem at the field’s usage location rather than the type declaration.</p>
+
+<p>There are two common, valid ways to represent self-reference data:</p>
+
+<ul>
+<li>Use <code>[SerializeReference]</code> on the link field (supports cycles and reference semantics).</li>
+<li>Use a collection (for example, <code>List&lt;Node&gt;</code> or <code>Node[]</code>) to represent children or links. Collections can be empty and the object graph can remain cycle-free, but cycles (including adding <code>this</code>) still can’t be represented correctly without the <code>[SerializeReference]</code> attribute.</li>
+</ul>
+
+<p>
+<strong>Incorrect example: Direct self-reference cycle in an inline-serialized class</strong>:</p>
+
+<pre><code class="lang-csharp">// INCORRECT: Direct self-reference cycle
+[System.Serializable]
+public class Node
+{
+    public string data;
+    public Node next; // UAC1005: Direct self-reference - Unity will ignore this field
+}
+
+public class LinkedList : MonoBehaviour
+{
+    public Node head; // After serialization, head will always be null
+}
+</code></pre>
+
+<p>
+<strong>Correct example: Use [SerializeReference] for self-referential links</strong>:</p>
+
+<pre><code class="lang-csharp">// CORRECT: Use [SerializeReference] for self-referential links
+[System.Serializable]
+public class Node
+{
+    public string data;
+    [SerializeReference] public Node next; // OK - [SerializeReference] supports cycles
+}
+
+public class LinkedList : MonoBehaviour
+{
+    [SerializeReference] public Node head; // OK - preserves linked structure
+}
+</code></pre>
+
+<p>
+<strong>Alternative correct example: Redesign to avoid cycles</strong>:</p>
+
+<pre><code class="lang-csharp">// CORRECT: Redesign to avoid cycle
+[System.Serializable]
+public class NodeData
+{
+    public string data;
+    public int nextIndex; // Store index instead of direct reference
+}
+
+public class LinkedList : MonoBehaviour
+{
+    public NodeData[] nodes; // OK - no direct cycles
+}
+</code></pre>
+
+<h3 id="uac1006">UAC1006: Field uses type with direct self-reference cycle</h3>
+
+<p>
+<strong>Severity</strong>: Warning.</p>
+
+<p>When you use a type that contains a direct self-reference cycle, Unity ignores that field during serialization. This warning appears at the usage location so you can notice data loss even when the problematic type is declared elsewhere. Refer to <a href="#uac1005">UAC1005</a> for details on what causes a direct self-reference cycle and how to fix it.</p>
+
+<p>
+<strong>Incorrect example: Field uses a type with a direct self-reference cycle</strong>:</p>
+
+<pre><code class="lang-csharp">// INCORRECT: Field uses type with direct self-reference cycle
+[System.Serializable]
+public class TreeNode
+{
+    public string value;
+    public TreeNode left; // Direct self-reference
+    public TreeNode right; // Direct self-reference
+}
+
+public class Tree : MonoBehaviour
+{
+    public TreeNode root; // UAC1006: TreeNode contains self-reference cycles
+    // After serialization, the root field will be ignored and remain null
+}
+</code></pre>
+
+<p>
+<strong>Correct example: Use [SerializeReference] for cyclic references</strong>:</p>
+
+<pre><code class="lang-csharp">// CORRECT: Use [SerializeReference] for cyclic references
+[System.Serializable]
+public class TreeNode
+{
+    public string value;
+    [SerializeReference] public TreeNode left; // Fixed with [SerializeReference]
+    [SerializeReference] public TreeNode right; // Fixed with [SerializeReference]
+}
+
+public class Tree : MonoBehaviour
+{
+    [SerializeReference] public TreeNode root; // OK - preserves tree structure
+}
+</code></pre>
+
+<h3 id="uac1007">UAC1007: Deep self-reference cycle in serialized class</h3>
+
+<p>
+<strong>Severity</strong>: Warning.</p>
+
+<p>When a class contains fields that create an indirect cycle (A &gt; B &gt; A or A &gt; B &gt; C &gt; A), Unity still serializes the structure, but limits recursion to 10 levels. This is different from <a href="#uac1005">direct cycles</a>, which are ignored entirely. After 10 levels Unity logs a warning and discards the remaining data, which can cause data loss in deeply nested trees or graphs. This warning is reported on the field that participates in the cycle. <a href="#uac1008">UAC1008</a> reports the same problem at the usage location.</p>
+
+<p>
+<strong>Incorrect example: Deep self-reference cycle with inline serialization</strong>:</p>
+
+<pre><code class="lang-csharp">// INCORRECT: Deep self-reference cycle with inline serialization
+[System.Serializable]
+public class Parent
+{
+    public string name;
+    public Child child; // UAC1007: Creates deep cycle (Parent → Child → Parent)
+}
+
+[System.Serializable]
+public class Child
+{
+    public string name;
+    public Parent parent; // Creates the cycle back to Parent
+}
+
+public class Family : MonoBehaviour
+{
+    public Parent root; // Will serialize up to 10 levels: Parent→Child→Parent→Child...
+}
+</code></pre>
+
+<p>
+<strong>Correct example: Use [SerializeReference] for deep cycles</strong>:</p>
+
+<pre><code class="lang-csharp">// CORRECT: Use [SerializeReference] for deep cycles
+[System.Serializable]
+public class Parent
+{
+    public string name;
+    [SerializeReference] public Child child; // OK - [SerializeReference] handles cycles
+}
+
+[System.Serializable]
+public class Child
+{
+    public string name;
+    [SerializeReference] public Parent parent; // OK - preserves bidirectional relationship
+}
+
+public class Family : MonoBehaviour
+{
+    [SerializeReference] public Parent root; // OK - no depth limit
+}
+</code></pre>
+
+<p>
+<strong>Alternative correct example: Redesign to avoid cycles</strong>:</p>
+
+<pre><code class="lang-csharp">// CORRECT: Redesign to avoid cycles
+[System.Serializable]
+public class Parent
+{
+    public string name;
+    public List&lt;string&gt; childNames; // Store references differently
+}
+
+[System.Serializable]
+public class Child
+{
+    public string name;
+    public string parentName; // Use name lookup instead of direct reference
+}
+
+public class Family : MonoBehaviour
+{
+    public List&lt;Parent&gt; parents; // OK - no cycles
+    public List&lt;Child&gt; children; // OK - no cycles
+}
+</code></pre>
+
+<h3 id="uac1008">UAC1008: Field uses type with deep self-reference cycle</h3>
+
+<p>
+<strong>Severity</strong>: Warning.</p>
+
+<p>When you use a type that contains a deep self-reference cycle, Unity serializes it with a 10-level recursion limit, which can cause silent data loss in deeply nested instances. This warning appears at the usage location so you can catch the issue even when the problematic type is declared elsewhere. Refer to <a href="#uac1007">UAC1007</a> for details on what causes a deep cycle and how to fix it.</p>
+
+<p>
+<strong>Incorrect example: Field uses a type with a deep self-reference cycle</strong>:</p>
+
+<pre><code class="lang-csharp">// INCORRECT: Field uses type with deep self-reference cycle
+[System.Serializable]
+public class A
+{
+    public B b; // Creates deep cycle: A -&gt; B -&gt; A
+}
+
+[System.Serializable]
+public class B
+{
+    public A a; // Completes the cycle
+}
+
+public class Host : MonoBehaviour
+{
+    public A root; // UAC1008: A contains a deep self-reference cycle
+}
+</code></pre>
+
+<p>
+<strong>Correct example: Use [SerializeReference] to avoid depth limits</strong>:</p>
+
+<pre><code class="lang-csharp">// CORRECT: Use [SerializeReference] to avoid depth limits
+[System.Serializable]
+public class GraphNode
+{
+    public string id;
+    [SerializeReference] public List&lt;GraphNode&gt; connections; // OK - no depth limit
+}
+
+public class Graph : MonoBehaviour
+{
+    [SerializeReference] public List&lt;GraphNode&gt; nodes; // OK - handles arbitrary depth
+}
+</code></pre>
+
+<p>
+<strong>Alternative correct example: Use IDs</strong>:</p>
+
+<pre><code class="lang-csharp">// CORRECT: Use IDs instead of direct references
+[System.Serializable]
+public class GraphNode
+{
+    public string id;
+    public List&lt;string&gt; connectionIds; // Store IDs instead of references
+}
+
+public class Graph : MonoBehaviour
+{
+    public List&lt;GraphNode&gt; nodes; // OK - no cycles, resolve IDs at runtime
+    
+    public GraphNode FindNode(string id)
+    {
+        return nodes.Find(n =&gt; n.id == id);
+    }
+}
+</code></pre>
+
+<h3 id="uac1009">UAC1009: Unsupported collection type for serialization</h3>
+
+<p>
+<strong>Severity</strong>: Warning.</p>
+
+<p>Unity’s serialization system supports the following collection types: single-dimensional arrays (<code>T[]</code>), <code>List&lt;T&gt;</code>, and <code>Dictionary&lt;TKey, TValue&gt;</code>. Fields that use unsupported collection types aren’t serialized, which can cause data loss because the field compiles and works at runtime but loses its value after a serialization cycle (for example, when saving a scene or reloading the domain).</p>
+
+<p>Unsupported collection types include:</p>
+
+<ul>
+<li>Multidimensional arrays (for example, <code>int[,]</code>, <code>int[,,]</code>).</li>
+<li>Jagged arrays (for example, <code>int[][]</code>).</li>
+<li>Nested collections, where the element type of a <code>List&lt;T&gt;</code> or array is itself a collection (for example, <code>List&lt;List&lt;T&gt;&gt;</code>, <code>List&lt;Dictionary&lt;TKey, TValue&gt;&gt;</code>, and <code>Dictionary&lt;TKey, TValue&gt;[]</code>).</li>
+<li>
+<code>HashSet&lt;T&gt;</code>, <code>Queue&lt;T&gt;</code>, <code>Stack&lt;T&gt;</code>, and other collections from <code>System.Collections.Generic</code>.</li>
+</ul>
+
+<p>
+<strong>Incorrect example: Using unsupported collection types for serialization</strong>:</p>
+
+<pre><code class="lang-csharp">// INCORRECT: Using unsupported collection types
+public class InventorySystem : MonoBehaviour
+{
+    public int[,] grid; // UAC1009: Multidimensional array not supported
+    public int[][] jaggedArray; // UAC1009: Jagged array not supported
+    public List&lt;Dictionary&lt;string, int&gt;&gt; itemCountsHistory; // UAC1009: Collection element type is Dictionary&lt;,&gt;
+    public Dictionary&lt;string, int&gt;[] itemCountsByLevel; // UAC1009: Array element type is Dictionary&lt;,&gt;
+    public HashSet&lt;string&gt; unlockedAchievements; // UAC1009: HashSet not supported
+    public Queue&lt;string&gt; messageQueue; // UAC1009: Queue not supported
+    public Stack&lt;string&gt; undoStack; // UAC1009: Stack not supported
+}
+</code></pre>
+
+<p>
+<strong>Correct example: Mark runtime-only collections as [NonSerialized]</strong>:</p>
+
+<p>If you don’t need these fields to persist (for example, they are runtime-only data structures), you can either make them non-serialized (for example by making the field non-public) or mark them with <code>[System.NonSerialized]</code> if they must remain a public field. This acknowledges they won’t be serialized and suppresses the warning:</p>
+
+<pre><code class="lang-csharp">// CORRECT: Mark runtime-only collections as [NonSerialized]
+public class InventorySystem : MonoBehaviour
+{
+    [System.NonSerialized] public List&lt;Dictionary&lt;string, int&gt;&gt; itemCountsHistory; // OK - explicitly marked as non-serialized
+    [System.NonSerialized] public HashSet&lt;string&gt; unlockedAchievements; // OK - runtime-only data
+    [System.NonSerialized] public Queue&lt;string&gt; messageQueue; // OK - transient queue
+    [System.NonSerialized] public Stack&lt;string&gt; undoStack; // OK - runtime undo stack
+    
+    private void Awake()
+    {
+        // Initialize runtime collections
+        itemCountsHistory = new List&lt;Dictionary&lt;string, int&gt;&gt;();
+        unlockedAchievements = new HashSet&lt;string&gt;();
+        messageQueue = new Queue&lt;string&gt;();
+        undoStack = new Stack&lt;string&gt;();
+    }
+}
+</code></pre>
+
+<p>
+<strong>Alternative correct example: Use supported collection types</strong>:</p>
+
+<p>If you need the data to persist, convert to supported collection types:</p>
+
+<pre><code class="lang-csharp">// CORRECT: Use supported collection types
+[System.Serializable]
+public struct KeyValuePair
+{
+    public string key;
+    public int value;
+}
+
+public class InventorySystem : MonoBehaviour
+{
+    public List&lt;KeyValuePair&gt; itemCounts; // OK - List is supported
+    public List&lt;string&gt; unlockedAchievements; // OK - List instead of HashSet
+    public List&lt;string&gt; messageQueue; // OK - List instead of Queue
+    public List&lt;string&gt; undoStack; // OK - List instead of Stack
+    
+    // Helper methods to maintain collection semantics
+    public int GetItemCount(string itemName)
+    {
+        var pair = itemCounts.Find(p =&gt; p.key == itemName);
+        return pair.value;
+    }
+    
+    public void SetItemCount(string itemName, int count)
+    {
+        int index = itemCounts.FindIndex(p =&gt; p.key == itemName);
+        if (index &gt;= 0)
+            itemCounts[index] = new KeyValuePair { key = itemName, value = count };
+        else
+            itemCounts.Add(new KeyValuePair { key = itemName, value = count });
+    }
+}
+</code></pre>
+
+<p>
+<strong>Alternative correct example: Use a custom serializable wrapper with ISerializationCallbackReceiver</strong>:</p>
+
+<p>If you need the full semantics of a <code>HashSet</code> or <code>Dictionary</code> while also keeping the data serialized, you can create a wrapper class that implements <a href="../ScriptReference/ISerializationCallbackReceiver.html"><code>ISerializationCallbackReceiver</code></a>. This allows you to store data in a Unity-supported format (arrays or <code>List&lt;T&gt;</code>) and convert to and from the runtime collection in the serialization callbacks:</p>
+
+<pre><code class="lang-csharp">// CORRECT: Use a custom serializable wrapper
+[System.Serializable]
+public class SerializableHashSet&lt;T&gt; : ISerializationCallbackReceiver
+{
+    [SerializeField] private List&lt;T&gt; items = new List&lt;T&gt;();
+    private HashSet&lt;T&gt; hashSet;
+
+    public void OnBeforeSerialize()
+    {
+        if (hashSet == null) hashSet = new HashSet&lt;T&gt;(items);
+        items.Clear();
+        items.AddRange(hashSet);
+    }
+
+    public void OnAfterDeserialize()
+    {
+        hashSet = new HashSet&lt;T&gt;(items);
+    }
+
+    // Add collection methods (Add, Remove, Contains, Count, etc.) as needed.
+}
+
+public class AchievementManager : MonoBehaviour
+{
+    public SerializableHashSet&lt;string&gt; unlockedAchievements; // OK - custom serializable wrapper
+}
+</code></pre>
+
+<p>The same pattern works for <code>Dictionary&lt;TKey, TValue&gt;</code> using parallel key-value lists. For complete, ready-to-use implementations of <code>SerializableHashSet&lt;T&gt;</code> and <code>SerializableDictionary&lt;TKey, TValue&gt;</code>, refer to <a href="script-serialization-custom-serialization.html#reusable-serializable-collections">Custom serialization</a>.</p>
+
+<p>
+<strong>Note</strong>: UAC1009 also applies when unsupported collection types appear as elements inside a supported collection. For example, <code>List&lt;Dictionary&lt;string, int&gt;&gt;</code> and <code>Dictionary&lt;string, int&gt;[]</code> are both flagged because their elements can’t be serialized by Unity.</p>
+
+<h3 id="uac1010">UAC1010: [SerializeField] used on non-serializable type</h3>
+
+<p>
+<strong>Severity</strong>: Warning.</p>
+
+<p>Applying <code>[SerializeField]</code> to a field does not make its type serializable. The attribute instructs Unity to save the field, but if the field’s type is not serializable, Unity does not save the value and the field resets after a serialization cycle (for example, when reloading a scene, reloading the domain, or reopening the project).</p>
+
+<p>To fix this warning, choose the option that matches your intent:</p>
+
+<ul>
+<li>If serialization is needed, make the field’s type serializable. For example, add <code>[Serializable]</code>, or use <code>[MakeSerializable]</code> if you can’t modify the type.</li>
+<li>If serialization is not needed, remove <code>[SerializeField]</code>, or make the field non-serialized in another way.</li>
+<li>If the field must remain public but should not be serialized, add <code>[System.NonSerialized]</code> to make that explicit.</li>
+</ul>
+
+<p>
+<strong>Incorrect example: Using [SerializeField] on a non-serializable type</strong>:</p>
+
+<pre><code class="lang-csharp">// INCORRECT: Using [SerializeField] on a non-serializable type
+public class MyWindowState : BaseState
+{
+    public List&lt;int&gt; expandedItems;
+}
+
+public class MyWindowManager : ScriptableObject
+{
+    [SerializeField] private MyWindowState m_WindowState; // UAC1010: Unity won't persist this field
+}
+</code></pre>
+
+<p>
+<strong>Correct example: Remove [SerializeField] when persistence isn’t needed</strong>:</p>
+
+<p>If the field doesn’t need to be serialized (for example, it’s runtime-only state), remove <code>[SerializeField]</code>:</p>
+
+<pre><code class="lang-csharp">// CORRECT: Remove [SerializeField] when persistence isn't needed
+public class MyWindowState : BaseState
+{
+    public List&lt;int&gt; expandedItems;
+}
+
+public class MyWindowManager : ScriptableObject
+{
+    private MyWindowState m_WindowState; // OK - not serialized
+}
+</code></pre>
+
+<p>
+<strong>Correct example: Mark the field as [NonSerialized] when persistence isn’t needed</strong>:</p>
+
+<p>If the field must remain public but shouldn’t be serialized, add <code>[System.NonSerialized]</code>:</p>
+
+<pre><code class="lang-csharp">// CORRECT: Mark the field as [NonSerialized]
+public class MyWindowState : BaseState
+{
+    public List&lt;int&gt; expandedItems;
+}
+
+public class MyWindowManager : ScriptableObject
+{
+    [System.NonSerialized] public MyWindowState windowState; // OK - explicitly not serialized
+}
+</code></pre>
+
+<p>
+<strong>Correct example: Make the type [Serializable] when persistence is needed</strong>:</p>
+
+<p>If you need the field to be serialized, make the type <code>[Serializable]</code>:</p>
+
+<pre><code class="lang-csharp">// CORRECT: Make the type [Serializable]
+[System.Serializable]
+public class MyWindowState : BaseState
+{
+    public List&lt;int&gt; expandedItems;
+}
+
+public class MyWindowManager : ScriptableObject
+{
+    [SerializeField] private MyWindowState m_WindowState; // OK - type is now serializable
+}
+</code></pre>
+
+<h3 id="uac1011">UAC1011: Enum type exceeds 32-bit size limit</h3>
+
+<p>
+<strong>Severity</strong>: Warning.</p>
+
+<p>Unity’s serialization system only supports enum types that are 32 bits or smaller (<code>byte</code>, <code>sbyte</code>, <code>short</code>, <code>ushort</code>, <code>int</code>, and <code>uint</code>). Enums with underlying types of <code>long</code> (64-bit signed) or <code>ulong</code> (64-bit unsigned) exceed this limit and aren’t serialized correctly, which causes data loss after a serialization cycle (for example, when saving a scene or reloading the domain).</p>
+
+<p>
+<strong>Incorrect example: Using a 64-bit enum for serialization</strong>:</p>
+
+<pre><code class="lang-csharp">// INCORRECT: Using a 64-bit enum for serialization
+public enum LargeEnum : long
+{
+    Value1 = 1L,
+    Value2 = 2L,
+    Value3 = long.MaxValue
+}
+
+public class GameData : MonoBehaviour
+{
+    public LargeEnum largeEnum; // UAC1011: 64-bit enum exceeds Unity's 32-bit limit
+}
+</code></pre>
+
+<p>
+<strong>Correct example: Use a 32-bit-or-smaller enum underlying type</strong>:</p>
+
+<pre><code class="lang-csharp">// CORRECT: Use a 32-bit-or-smaller enum underlying type
+public enum SmallEnum : int
+{
+    Value1 = 1,
+    Value2 = 2,
+    Value3 = int.MaxValue
+}
+
+public class GameData : MonoBehaviour
+{
+    public SmallEnum smallEnum; // OK - 32-bit enum is supported
+}
+</code></pre>
+
+<p>
+<strong>Correct example: Mark the enum field as non-serialized</strong>:</p>
+
+<p>If you don’t need the enum field to persist (for example, it’s runtime-only state), either make it non-public or mark it with <code>[System.NonSerialized]</code> if it must remain a public field:</p>
+
+<pre><code class="lang-csharp">// CORRECT: Mark the enum field as non-serialized
+public enum LargeEnum : long
+{
+    Value1 = 1L,
+    Value2 = 2L
+}
+
+public class GameData : MonoBehaviour
+{
+    [System.NonSerialized] public LargeEnum largeEnum; // OK - explicitly marked as non-serialized
+    
+    private void Awake()
+    {
+        // Initialize runtime enum value
+        largeEnum = LargeEnum.Value1;
+    }
+}
+</code></pre>
+
+<h3 id="uac1012">UAC1012: Serializable dictionary with interface or abstract key or value type</h3>
+
+<p>
+<strong>Severity</strong>: Error.</p>
+
+<p>Unity’s serialization system supports <code>Dictionary&lt;TKey, TValue&gt;</code> fields, but only when both <code>TKey</code> and <code>TValue</code> are concrete types. During deserialization Unity must instantiate each key and value, which it can’t do for <code>interface</code> or <code>abstract</code> types because they have no concrete implementation to instantiate. Using such a type for either side of the entry causes runtime errors when the dictionary is loaded.</p>
+
+<p>
+<code>UnityEngine.Object</code> subclasses are an exception. Even abstract bases such as <code>Renderer</code> or <code>Collider</code> are valid as keys or values because Unity stores them as PPtr instance IDs and resolves the concrete instance during load. The carve-out applies whenever the key or value type derives from <code>UnityEngine.Object</code>, regardless of whether the type itself is abstract.</p>
+
+<p>UAC1012 only fires when the dictionary is actually being serialized — that is, when <code>[SerializeField]</code> is present (see <a href="#uac1015">UAC1015</a>). If the field has no <code>[SerializeField]</code> Unity skips serialization entirely, so the abstract / interface concern is moot until the user opts the field in.</p>
+
+<p>One diagnostic is emitted per offending side. When both <code>TKey</code> and <code>TValue</code> are interface or abstract types, the analyzer reports two UAC1012 diagnostics on the same field — one identifying the key type and one identifying the value type — so you can see and fix both problems in a single pass.</p>
+
+<p>
+<strong>Incorrect example: Interface key type</strong>:</p>
+
+<pre><code class="lang-csharp">// INCORRECT: IInventoryItem is an interface, so Unity can't instantiate keys
+public interface IInventoryItem { }
+
+[System.Serializable]
+public class Sword : IInventoryItem { }
+
+public class Inventory : MonoBehaviour
+{
+    [SerializeField] public Dictionary&lt;IInventoryItem, int&gt; counts; // UAC1012: interface key type
+}
+</code></pre>
+
+<p>
+<strong>Incorrect example: Abstract value type</strong>:</p>
+
+<pre><code class="lang-csharp">// INCORRECT: AbstractEnemy is abstract, so Unity can't instantiate values
+public abstract class AbstractEnemy { }
+
+public class GameState : MonoBehaviour
+{
+    [SerializeField] public Dictionary&lt;int, AbstractEnemy&gt; enemiesById; // UAC1012: abstract value type
+}
+</code></pre>
+
+<p>
+<strong>Incorrect example: Both key and value are interface or abstract types</strong>:</p>
+
+<pre><code class="lang-csharp">// INCORRECT: both sides are problematic — two UAC1012 diagnostics are reported
+public interface IFoo { }
+public abstract class AbstractBar { }
+
+public class Host : MonoBehaviour
+{
+    // UAC1012 (key type 'IFoo') and UAC1012 (value type 'AbstractBar')
+    [SerializeField] public Dictionary&lt;IFoo, AbstractBar&gt; data;
+}
+</code></pre>
+
+<p>
+<strong>Correct example: Use a concrete key and value type</strong>:</p>
+
+<pre><code class="lang-csharp">// CORRECT: Concrete, [Serializable] types on both sides
+[System.Serializable]
+public class InventoryItem
+{
+    public string id;
+}
+
+public class Inventory : MonoBehaviour
+{
+    [SerializeField] public Dictionary&lt;int, InventoryItem&gt; itemsBySlot; // OK
+}
+</code></pre>
+
+<p>
+<strong>Correct example: Abstract UnityEngine.Object subclass is allowed</strong>:</p>
+
+<pre><code class="lang-csharp">// CORRECT: Renderer is abstract but derives from UnityEngine.Object,
+// so it's stored as a PPtr instance ID
+public class MaterialOverrides : MonoBehaviour
+{
+    [SerializeField] public Dictionary&lt;Renderer, Material&gt; overrides; // OK
+}
+</code></pre>
+
+<p>
+<strong>Correct example: Mark as [NonSerialized] when persistence isn’t needed</strong>:</p>
+
+<pre><code class="lang-csharp">// CORRECT: Skip serialization entirely
+public class Inventory : MonoBehaviour
+{
+    [System.NonSerialized] public Dictionary&lt;IInventoryItem, int&gt; runtimeCounts; // OK
+}
+</code></pre>
+
+<h3 id="uac1013">UAC1013: Serializable dictionary with IEnumerable key type</h3>
+
+<p>
+<strong>Severity</strong>: Error.</p>
+
+<p>Dictionary keys must produce a stable hash for the lifetime of the entry. Most types that implement <code>IEnumerable</code> (for example, <code>List&lt;T&gt;</code> or arrays) are mutable, so their hash can change after they’re inserted, which corrupts the dictionary. Even when the contents don’t change, Unity’s serialization backend can’t round-trip these keys correctly because it serializes them by value but expects key identity to be preserved across save/load. UAC1013 reports any field whose dictionary key type implements <code>IEnumerable</code>, with two documented exceptions:</p>
+
+<ul>
+<li>
+<code>string</code>. Even though it implements <code>IEnumerable&lt;char&gt;</code>, strings are immutable and Unity treats them as primitive keys.</li>
+<li>Types that derive from <code>UnityEngine.Object</code>. These are stored as PPtr instance IDs, so the IEnumerable shape of the underlying type is irrelevant.</li>
+</ul>
+
+<p>The check is transitive on composite struct keys. If a struct key contains a field whose type implements <code>IEnumerable</code>, the struct is also rejected, because the key’s hash depends on the unstable inner collection.</p>
+
+<p>UAC1013 only fires when the dictionary is actually being serialized — that is, when <code>[SerializeField]</code> is present (see <a href="#uac1015">UAC1015</a>). If the field has no <code>[SerializeField]</code> Unity skips serialization entirely, so the IEnumerable-key concern is moot until the user opts the field in.</p>
+
+<p>
+<strong>Incorrect example: List or array key type</strong>:</p>
+
+<pre><code class="lang-csharp">// INCORRECT: List&lt;T&gt; and arrays are mutable IEnumerable types
+public class TagBuckets : MonoBehaviour
+{
+    [SerializeField] public Dictionary&lt;List&lt;int&gt;, string&gt; byTags; // UAC1013: List&lt;int&gt; key
+    [SerializeField] public Dictionary&lt;int[], int&gt; counts; // UAC1013: int[] key
+}
+</code></pre>
+
+<p>
+<strong>Incorrect example: Struct key with an IEnumerable field</strong>:</p>
+
+<pre><code class="lang-csharp">// INCORRECT: Composite struct key contains a List&lt;int&gt; field
+[System.Serializable]
+public struct CompositeKey
+{
+    public int id;
+    public List&lt;int&gt; tags; // Inner IEnumerable field invalidates the struct as a key
+}
+
+public class Buckets : MonoBehaviour
+{
+    [SerializeField] public Dictionary&lt;CompositeKey, int&gt; counts; // UAC1013: CompositeKey contains an IEnumerable field
+}
+</code></pre>
+
+<p>
+<strong>Correct example: Use a hashable wrapper struct</strong>:</p>
+
+<pre><code class="lang-csharp">// CORRECT: Wrap the key data in a struct whose fields are all hashable primitives
+[System.Serializable]
+public struct TagSetKey
+{
+    public int hash; // Pre-computed stable hash of the tag set
+
+    public override int GetHashCode() =&gt; hash;
+    public override bool Equals(object obj) =&gt; obj is TagSetKey other &amp;&amp; other.hash == hash;
+}
+
+public class TagBuckets : MonoBehaviour
+{
+    [SerializeField] public Dictionary&lt;TagSetKey, string&gt; byTags; // OK
+}
+</code></pre>
+
+<p>
+<strong>Correct example: Flatten to a primitive key</strong>:</p>
+
+<pre><code class="lang-csharp">// CORRECT: Use a string or int key derived from the original collection
+public class TagBuckets : MonoBehaviour
+{
+    [SerializeField] public Dictionary&lt;string, string&gt; byJoinedTags; // Key is a comma-joined tag string
+}
+</code></pre>
+
+<p>
+<strong>Correct example: Mark as [NonSerialized] when persistence isn’t needed</strong>:</p>
+
+<pre><code class="lang-csharp">// CORRECT: Skip serialization entirely
+public class TagBuckets : MonoBehaviour
+{
+    [System.NonSerialized] public Dictionary&lt;List&lt;int&gt;, string&gt; runtimeByTags; // OK
+}
+</code></pre>
+
+<h3 id="uac1014">UAC1014: [SerializeReference] used on dictionary</h3>
+
+<p>
+<strong>Severity</strong>: Error.</p>
+
+<p>The <code>[SerializeReference]</code> attribute enables polymorphic reference semantics for a single object reference, including null support and shared references. Unity’s dictionary backend serializes a <code>Dictionary&lt;TKey, TValue&gt;</code> as an inline array of key-value entries, not as a polymorphic single reference, so <code>[SerializeReference]</code> doesn’t apply to dictionary fields and must not be used on them. This rule mirrors <a href="#uac1003">UAC1003</a>, which reports the same misuse on struct fields.</p>
+
+<p>
+<strong>Incorrect example: Using [SerializeReference] on a dictionary field</strong>:</p>
+
+<pre><code class="lang-csharp">// INCORRECT: [SerializeReference] is invalid on Dictionary&lt;,&gt;
+public class Inventory : MonoBehaviour
+{
+    [UnityEngine.SerializeReference] public Dictionary&lt;string, int&gt; counts; // UAC1014
+}
+</code></pre>
+
+<p>
+<strong>Correct example: Replace [SerializeReference] with [SerializeField]</strong>:</p>
+
+<pre><code class="lang-csharp">// CORRECT: [SerializeField] routes the field through Unity's normal dictionary backend
+public class Inventory : MonoBehaviour
+{
+    [SerializeField] public Dictionary&lt;string, int&gt; counts; // OK - serialized inline as entries
+}
+</code></pre>
+
+<p>
+<strong>Correct example: Use [SerializeField] on a private field</strong>:</p>
+
+<pre><code class="lang-csharp">// CORRECT: [SerializeField] is the supported way to serialize a private dictionary field
+public class Inventory : MonoBehaviour
+{
+    [SerializeField] private Dictionary&lt;string, int&gt; m_Counts; // OK
+}
+</code></pre>
+
+<p>
+<strong>Correct example: Mark as [NonSerialized] when persistence isn’t needed</strong>:</p>
+
+<pre><code class="lang-csharp">// CORRECT: Skip serialization entirely
+public class Inventory : MonoBehaviour
+{
+    [System.NonSerialized] public Dictionary&lt;string, int&gt; runtimeCounts; // OK
+}
+</code></pre>
+
+<h3 id="uac1015">UAC1015: Dictionary field missing the [SerializeField] attribute</h3>
+
+<p>
+<strong>Severity</strong>: Warning.</p>
+
+<p>For most field types, Unity serializes public fields by default. Dictionary fields are an exception: Unity’s native dictionary serialization backend explicitly checks for the <code>[SerializeField]</code> attribute and skips dictionary fields without it, even when the field is public. This rule warns when a field declared as <code>Dictionary&lt;TKey, TValue&gt;</code> is in a serializable position (not <code>[NonSerialized]</code>, no <code>[SerializeReference]</code> already on it) but is missing <code>[SerializeField]</code>. Without the attribute the dictionary will silently fail to persist its contents.</p>
+
+<p>The rule does not fire if <code>[SerializeReference]</code> is present, because <a href="#uac1014">UAC1014</a> already surfaces that misuse — once you replace <code>[SerializeReference]</code> with <code>[SerializeField]</code>, both diagnostics are resolved together.</p>
+
+<p>
+<strong>Incorrect example: A public dictionary field without [SerializeField]</strong>:</p>
+
+<pre><code class="lang-csharp">// INCORRECT: Unity's dictionary backend skips this field because it has no [SerializeField]
+public class Inventory : MonoBehaviour
+{
+    public Dictionary&lt;int, string&gt; counts; // UAC1015
+}
+</code></pre>
+
+<p>
+<strong>Correct example: Add [SerializeField]</strong>:</p>
+
+<pre><code class="lang-csharp">// CORRECT: [SerializeField] tells Unity's dictionary backend to serialize the field
+public class Inventory : MonoBehaviour
+{
+    [SerializeField] public Dictionary&lt;int, string&gt; counts; // OK
+}
+</code></pre>
+
+<p>
+<strong>Correct example: Mark as [NonSerialized] when persistence isn’t needed</strong>:</p>
+
+<pre><code class="lang-csharp">// CORRECT: opt out of serialization entirely
+public class Inventory : MonoBehaviour
+{
+    [System.NonSerialized] public Dictionary&lt;int, string&gt; runtimeCounts; // OK
+}
+</code></pre>
+
+<h3 id="uac1016">UAC1016: Dictionary key or value type is not serializable</h3>
+
+<p>
+<strong>Severity</strong>: Error.</p>
+
+<p>A serializable dictionary’s key and value types must themselves be serializable. This rule reports an error when either the key type or the value type fails the same serializability check the analyzer applies to ordinary fields: it must be a primitive, an enum, an array or <code>List&lt;T&gt;</code> of a serializable type, a <code>[Serializable]</code> class or struct, a <code>UnityEngine.Object</code> subclass (stored as a PPtr instance ID), a built-in supported type from the serialization whitelist, or a type that opts in via <code>[MakeSerializable]</code>.</p>
+
+<p>Dictionaries surface this as an <strong>error</strong> rather than a warning (compare <a href="#uac1010">UAC1010</a> for <code>[SerializeField]</code> on a non-serializable type, and <a href="#uac1001">UAC1001</a> for non-serializable list elements). A non-serializable dictionary key or value means the entry round-trip is broken outright — Unity can’t reconstruct the entry on deserialization, so silent data loss is more severe than the analogous <code>List&lt;T&gt;</code> case where the empty list is at least preserved.</p>
+
+<p>UAC1016 only fires when the dictionary is actually being serialized — that is, when <code>[SerializeField]</code> is present (see <a href="#uac1015">UAC1015</a>). If the field has no <code>[SerializeField]</code> Unity skips serialization entirely, so the K/V serializability concern is moot until the user opts the field in.</p>
+
+<p>UAC1016 is suppressed when <a href="#uac1012">UAC1012</a> fires for the same field, because the interface- or abstract-type diagnostic already covers the same key or value position; layering “type is also not [Serializable]” on top of “type is an interface” would be redundant noise.</p>
+
+<p>
+<strong>Incorrect example: Dictionary value type is missing [Serializable]</strong>:</p>
+
+<pre><code class="lang-csharp">public class DictValue
+{
+    public string key;
+    public string value;
+}
+
+// INCORRECT: DictValue is a plain class without [Serializable], so the dictionary entries can't be serialized
+public class Host : MonoBehaviour
+{
+    [SerializeField] public Dictionary&lt;int, DictValue&gt; data; // UAC1016 (value type)
+}
+</code></pre>
+
+<p>
+<strong>Correct example: Mark the value type [Serializable]</strong>:</p>
+
+<pre><code class="lang-csharp">[System.Serializable]
+public class DictValue
+{
+    public string key;
+    public string value;
+}
+
+public class Host : MonoBehaviour
+{
+    [SerializeField] public Dictionary&lt;int, DictValue&gt; data; // OK
+}
+</code></pre>
+
+<p>
+<strong>Correct example: Use a UnityEngine.Object subclass (PPtr)</strong>:</p>
+
+<pre><code class="lang-csharp">// CORRECT: UnityEngine.Object subclasses serialize as PPtr instance IDs and don't need [Serializable]
+public class Host : MonoBehaviour
+{
+    [SerializeField] public Dictionary&lt;int, GameObject&gt; objects; // OK
+}
+</code></pre>
+
+<h3 id="uac1017">UAC1017: Tuple type not supported by serialization</h3>
+
+<p>
+<strong>Severity</strong>: Warning.</p>
+
+<p>Unity’s serialization system doesn’t support tuple types (for example, <code>(int x, int y)</code> or <code>ValueTuple&lt;int, string&gt;</code>). Fields of tuple type are ignored during serialization with no runtime warning, which causes data loss when entering Play mode, saving scenes, or performing domain reloads.</p>
+
+<p>To avoid the warning, choose the option that matches your intent:</p>
+
+<ul>
+<li>If you need the field to persist, replace the tuple with a <code>[Serializable]</code> struct or class that holds the same fields.</li>
+<li>If you don’t need the field to persist, make it private, or add <code>[System.NonSerialized]</code> if the field must remain public.</li>
+</ul>
+
+<p>
+<strong>Incorrect example: Public field with tuple type</strong>:</p>
+
+<pre><code class="lang-csharp">// INCORRECT: Tuple type is ignored by serialization
+public class GameData : MonoBehaviour
+{
+    public (int x, int y) position; // UAC1017: Tuple type is not supported by the serialization system
+}
+</code></pre>
+
+<p>
+<strong>Correct example: Use a serializable struct</strong>:</p>
+
+<pre><code class="lang-csharp">// CORRECT: Use a [Serializable] struct instead of a tuple
+[System.Serializable]
+public struct Point2D
+{
+    public int x;
+    public int y;
+}
+
+public class GameData : MonoBehaviour
+{
+    public Point2D position; // OK - serializable struct
+}
+</code></pre>
+
+<p>
+<strong>Correct example: Mark as non-serialized if persistence isn’t needed</strong>:</p>
+
+<pre><code class="lang-csharp">// CORRECT: Mark as non-serialized if persistence isn't needed
+public class GameData : MonoBehaviour
+{
+    [System.NonSerialized] public (int x, int y) position; // OK - explicitly not serialized
+}
+</code></pre>
+
+<h3 id="uac1018">UAC1018: Field name conflicts with FormerlySerializedAs argument</h3>
+
+<p>
+<strong>Severity</strong>: Warning.</p>
+
+<p>When you rename a serialized field, you can add <code>[FormerlySerializedAs(&quot;previousName&quot;)]</code> to the renamed field so Unity migrates the existing data from the previous name. If you later add another field whose name equals <code>previousName</code>, two fields in the same type map to the same serialized name, which causes incorrect serialization that can lose data after a serialization cycle (for example, when saving a scene or reloading the domain).</p>
+
+<p>The analyzer reports the warning on the field whose name equals the string passed to <code>[FormerlySerializedAs(&quot;...&quot;)]</code> on another field in the same type. To resolve the conflict, rename the new field, remove it, mark it <code>[NonSerialized]</code> (for example, when the conflicting field is kept only as an <code>[Obsolete]</code> source-compatibility placeholder), or remove the matching <code>[FormerlySerializedAs]</code> argument from the renamed field.</p>
+
+<p>
+<strong>Incorrect example: New field name conflicts with a FormerlySerializedAs argument</strong>:</p>
+
+<pre><code class="lang-csharp">// INCORRECT: textureAsset conflicts with [FormerlySerializedAs(&quot;textureAsset&quot;)] on icon
+public class IconLibrary : MonoBehaviour
+{
+    [FormerlySerializedAs(&quot;textureAsset&quot;)]
+    public Texture2D icon;
+    public Texture2D textureAsset; // UAC1018: name conflicts with the [FormerlySerializedAs] argument above
+}
+</code></pre>
+
+<p>
+<strong>Correct example: Rename the new field</strong>:</p>
+
+<p>Give the new field a name that doesn’t conflict with any <code>[FormerlySerializedAs]</code> argument on another field:</p>
+
+<pre><code class="lang-csharp">// CORRECT: New field name doesn't conflict with any [FormerlySerializedAs] argument.
+// Alternatively, if migration from &quot;textureAsset&quot; is no longer needed, remove
+// the [FormerlySerializedAs] attribute and reuse &quot;textureAsset&quot; on the new field.
+public class IconLibrary : MonoBehaviour
+{
+    [FormerlySerializedAs(&quot;textureAsset&quot;)]
+    public Texture2D icon;
+    public Texture2D fallbackTexture; // OK - distinct from the [FormerlySerializedAs] argument
+}
+</code></pre>
+
+<h2 id="generics">Generics</h2>
+
+<p>When a field’s type is a constructed generic (for example, <code>Holder&lt;CustomData&gt;</code> or <code>Holder&lt;int&gt;</code>), the analyzer inspects each type parameter in the generic type definition to decide whether the corresponding type argument needs to be serializable.</p>
+
+<p>The analyzer validates a type parameter only if it appears in a serialized field of the generic type definition. For each validated type parameter, the analyzer checks the corresponding type argument with the same rules it applies to direct fields. If the type argument violates a rule, the analyzer reports that rule.</p>
+
+<p>
+<code>List&lt;T&gt;</code> is an exception. The analyzer checks the element type of <code>List&lt;T&gt;</code> as part of <a href="#uac1009">UAC1009</a> instead of the generic type argument rules described in this section.</p>
+
+<h3 id="generic-rule-mapping">Which rule the analyzer reports for an invalid type argument</h3>
+
+<p>The analyzer reports a different rule depending on why the type argument is invalid. The following example illustrates several rules. All of the analyzer rules apply to generic type arguments in the same way as for direct fields.</p>
+
+<pre><code class="lang-csharp">public class CustomData { public int value; }
+
+public struct Vector3D { public float x, y, z; }
+
+[System.Serializable]
+public class Holder&lt;T&gt; { public T value; }
+
+[System.Serializable]
+public class RefHolder&lt;T&gt; { [SerializeReference] public T value; }
+
+public class Player : MonoBehaviour
+{
+    public Holder&lt;CustomData&gt; data;           // UAC1001: CustomData lacks [Serializable]
+    public RefHolder&lt;Vector3D&gt; pos;           // UAC1003: Vector3D is a struct, but RefHolder uses [SerializeReference] on T
+    public Holder&lt;int[][]&gt; jaggedGrid;        // UAC1009: jagged array not supported
+    public Holder&lt;(int x, int y)&gt; point;      // UAC1017: tuple not supported
+    public Holder&lt;PlayerStats&gt; stats;         // OK - PlayerStats is serializable
+}
+</code></pre>
+
+<h3 id="generic-non-validated">When type arguments aren’t validated</h3>
+
+<p>If a type parameter doesn’t appear in any serialized field of the generic type definition (for example, the only field that uses <code>T</code> has <code>[NonSerialized]</code>), the corresponding type argument isn’t validated and the analyzer doesn’t report a warning.</p>
+
+<pre><code class="lang-csharp">[System.Serializable]
+public class Holder&lt;T&gt; { [System.NonSerialized] public T value; }
+
+public class Player : MonoBehaviour
+{
+    public Holder&lt;Dictionary&lt;string, int&gt;&gt; cache; // OK - T only used in [NonSerialized] field
+}
+</code></pre>
+
+<h3 id="generic-valid">Valid type arguments</h3>
+
+<p>When all type arguments satisfy the serialization rules, the analyzer reports no warning. For example, a generic wrapper around a <code>[Serializable]</code> type, a built-in primitive, or a supported collection produces no warning:</p>
+
+<h2 id="suppress">Suppressing warnings</h2>
+
+<p>If you have a valid reason to suppress a specific analyzer warning, you can use the <code>#pragma warning disable</code> directive:</p>
+
+<pre><code class="lang-csharp">#pragma warning disable UAC1001
+public class IntentionallyUnserializedClass
+{
+    public int value;
+}
+#pragma warning restore UAC1001
+</code></pre>
+
+<p>Suppressing these warnings is not recommended, because they indicate important serialization issues that can cause problems at runtime.</p>
+
+<h2 id="limitations">Limitation: base class field analysis</h2>
+
+<p>The analyzer only analyzes fields on types that are serialization roots (types marked with <code>[Serializable]</code>, types inheriting from <code>UnityEngine.Object</code>, etc.). The analyzer doesn’t analyze the fields of base classes that aren’t serialization roots, even if they are part of an inheritance hierarchy with a serialization root. In the following example, <code>DerivedClass</code> triggers the UAC1002 warning because its base class <code>BaseClass</code> lacks the <code>[Serializable]</code> attribute, but the fields on <code>BaseClass</code> itself (<code>settings</code> and <code>data</code>) don’t trigger any warnings because <code>BaseClass</code> isn’t a serialization root.</p>
+
+<pre><code class="lang-csharp">public class BaseClass
+{
+    public Dictionary&lt;string, int&gt; settings; // No UAC1015 — BaseClass isn't a serialization root
+    public CustomData data; // No UAC1001 — BaseClass isn't a serialization root
+}
+
+public class CustomData { }
+
+[System.Serializable]
+public class DerivedClass : BaseClass // UAC1002: BaseClass lacks [Serializable]
+{
+    public int value; // This field is analyzed
+}
+</code></pre>
+
+<p>To get warnings for the base class fields, mark the base class with the <code>[Serializable]</code> attribute so it becomes a serialization root:</p>
+
+<pre><code class="lang-csharp">[System.Serializable]
+public class BaseClass
+{
+    public Dictionary&lt;string, int&gt; settings; // UAC1015: reported
+    public CustomData data; // UAC1001: reported
+}
+
+public class CustomData { }
+
+[System.Serializable]
+public class DerivedClass : BaseClass
+{
+    public int value;
+}
+</code></pre>
+
+<p>Mark base classes with the <code>[Serializable]</code> attribute if you need their fields to be validated. This makes them serialization roots and enables the analyzer to check their fields.</p>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="script-serialization-rules.html">Serialization rules</a></li>
+<li><a href="script-serialization-how-unity-uses.html">How Unity uses serialization</a></li>
+<li><a href="script-serialization-custom-serialization.html">Custom serialization</a></li>
+<li><a href="../ScriptReference/SerializeReference.html"><code>SerializeReference</code> API documentation</a></li>
+<li><a href="https://learn.microsoft.com/en-us/dotnet/api/system.serializableattribute?view=net-9.0"><code>[Serializable]</code> attribute documentation</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="script-serialization-rules.html"></a></span><div class="tip">Serialization rules</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="script-serialization-custom-serialization.html"></a></span><div class="tip">Custom serialization</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

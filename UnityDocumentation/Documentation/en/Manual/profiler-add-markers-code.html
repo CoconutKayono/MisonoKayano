@@ -1,0 +1,299 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Adding profiler markers to your code</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<meta property="relative-path-to-manual" content="">
+<meta property="version-switcher-versions-with-this-page" content="Versions with this page:">
+<meta property="version-switcher-versions-without-this-page" content="Versions without this page:">
+<meta property="version-switcher-supported" content="Supported">
+<meta property="version-switcher-legacy" content="Legacy">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/Manual/profiler-add-markers-code.html">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20260626"></script><script type="text/javascript" src="docdata/toc.js?ts=20260626"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20260626"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20260626">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20260626">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/profiler-add-markers-code.html">English</a></li>
+<li><a href="/cn/current/Manual/profiler-add-markers-code.html">中文</a></li>
+<li><a href="/ja/current/Manual/profiler-add-markers-code.html">日本語</a></li>
+<li><a href="/kr/current/Manual/profiler-add-markers-code.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: Unity 6.7 Beta</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/profiler-add-markers-code.html">English</a></li>
+<li><a href="/cn/current/Manual/profiler-add-markers-code.html">中文</a></li>
+<li><a href="/ja/current/Manual/profiler-add-markers-code.html">日本語</a></li>
+<li><a href="/kr/current/Manual/profiler-add-markers-code.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="analysis.html">Optimization</a></li>
+<li><a href="Profiler.html">Unity Profiler</a></li>
+<li><a href="profiler-customizing.html">Customizing the Profiler</a></li>
+<li><a href="profiler-adding-information-code.html">Adding profiling information to your code</a></li>
+<li>Adding profiler markers to your code</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="profiler-adding-information-code-intro.html"></a></span><div class="tip">Adding profiling information to your code introduction</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="profiler-add-counters-code.html"></a></span><div class="tip">Adding profiler counters to your code</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Adding profiler markers to your code</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Add <span class="tooltip" tabindex="0" ><a href="profiler-adding-information-code-intro.html">profiler markers</a><span class="tooltiptext">Placed in code to describe a CPU or GPU event that is then displayed in the Unity Profiler window. Added to Unity code by default, or you can use <a href="https://docs.unity3d.com/Packages/com.unity.profiling.core@latest/index.html?subfolder=/manual/profilermarker-guide.html">ProfilerMarker API</a> to add your own custom markers. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about profiler-markers.html" href="profiler-markers.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#profilermarker" aria-label="Go to glossary anchor for profilermarker">Glossary</a></span></span></span> to your code to view the samples that <code>ProfilerMarker.Begin</code>, <code>ProfilerMarker.End</code>, or <code>ProfilerMarker.Auto</code> generates in the <strong>Timeline View</strong> and <strong>Hierarchy View</strong> of the <a href="profiler-cpu-introduction.html">CPU Usage module</a> in the <a href="ProfilerWindow.html">Profiler window</a>:</p>
+
+<figure>
+<img src="../uploads/Main/profiler-marker-metadata-timeline.png" alt="Profiler sample with metadata in Timeline View.">
+<figcaption>Profiler sample with metadata in Timeline View.</figcaption>
+</figure>
+
+<figure>
+<img src="../uploads/Main/profiler-marker-metadata-hierarchy.png" alt="Profiler sample with metadata in Hierarchy View.">
+<figcaption>Profiler sample with metadata in Hierarchy View.</figcaption>
+</figure>
+
+<h2>Prerequisites</h2>
+
+<p>Some examples use <a href="https://docs.unity3d.com/Packages/com.unity.profiling.core@latest">the Profiling Core package</a>, which you must install before you start. The Unity Profiling Core package isn’t discoverable in the Package Manager UI because it’s a core package. To install the package, <a href="upm-ui-quick.html">add it by its name</a>, which is <code>com.unity.profiling.core</code>. </p>
+
+<h2>Marking up your code</h2>
+
+<p>To use the <a href="../ScriptReference/Unity.Profiling.ProfilerMarker.html"><code>ProfilerMarker</code> API</a>, place the code you want to profile between calls to <code>ProfilerMarker.Begin</code> and <code>ProfilerMarker.End</code>. For example:</p>
+
+<pre><code class="lang-cs">using UnityEngine;
+using Unity.Profiling;
+
+public class ProfilerMarkerExample
+{
+    static readonly ProfilerMarker k_MyCodeMarker = new ProfilerMarker(&quot;My Code&quot;);
+
+    void Update() {
+        k_MyCodeMarker.Begin();
+        Debug.Log(&quot;This code is being profiled&quot;);
+        k_MyCodeMarker.End();
+    }
+}
+</code></pre>
+
+<p>
+<strong>Note:</strong> Avoid using the <code>/</code> character in a profiler marker’s name as this makes the Profiler window unable to highlight the marker in the CPU Profiler module’s charts view.</p>
+
+<p>Make sure that the code in between the <code>Begin</code> and <code>End</code> calls doesn’t exit the scope before <code>End</code> is called. If the code exits the scope before <code>End</code> is called, an error message is logged to the Console. To avoid having to call <code>End</code> before every return, use <code>Auto</code> so that the sample is ended automatically on leaving the scope. For more information, refer to the section in this documentation on <a href="#automatically-close">Automatically close profiler marker code blocks</a>.</p>
+
+<p>Unity records and reports the profiled code block’s execution time to the Profiler, and displays it in the <a href="profiler-cpu-introduction.html">CPU Profiler module</a> without the need to use <a href="profiler-deep-profiling.html">Deep Profiling</a>. It displays it as a new entry in the <strong>Hierarchy View</strong> of the CPU Profiler module, as follows:</p>
+
+<figure>
+<img src="../uploads/Main/profiler-marker-full-sample.png" alt="Profiler sample in the Profiler Window.">
+<figcaption>Profiler sample in the Profiler Window.</figcaption>
+</figure>
+
+<p><a name="automatically-close" aria-hidden="true"></a></p>
+
+<h3>Automatically close profiler marker code blocks</h3>
+
+<p>Use <code>ProfilerMarker.Auto</code> to ensure that <code>ProfilerMarker.End</code> is automatically called at the end of the code block. The following calls are equivalent:</p>
+
+<pre><code class="lang-cs">using Unity.Profiling;
+
+public class MySystemClass
+{
+    static readonly ProfilerMarker k_UpdatePerfMarker = new ProfilerMarker(&quot;MySystem.Update&quot;);
+
+    public void Update()
+    {
+        k_UpdatePerfMarker.Begin();
+        // ...
+        k_UpdatePerfMarker.End();
+
+        using (k_UpdatePerfMarker.Auto())
+        {
+            // ...
+        }
+    }
+}
+</code></pre>
+
+<p>Unlike the <code>Begin()</code> and <code>End()</code> calls, Unity can’t compile out the <code>ProfilerMarker.Auto</code> call in non-development (Release) builds. It will however instead return null, which only adds minimal overhead.</p>
+
+<p>You can also use <code>ProfilerMarker.Auto</code> with a <code>using var</code> and the <code>End</code> call happens automatically once the current scope ends. This approach minimizes the amount of code you need to change when you add a <code>ProfilerMarker</code> instance to your code:</p>
+
+<pre><code class="lang-cs">using Unity.Profiling;
+
+public class MySystemClass
+{
+    static readonly ProfilerMarker k_UpdatePerfMarker = new ProfilerMarker(&quot;MySystem.Update&quot;);
+
+    public void Update()
+    {
+        using var _ = k_UpdatePerfMarker.Auto();
+        // ...
+    }
+}
+</code></pre>
+
+<p>
+<strong>Note:</strong> Any async <code>await</code> and any <code>yield</code> calls within an area marked up with <code>ProfilerMarker</code>’s aren’t supported and log an error message in the Console, even if you use <code>Auto</code>.</p>
+
+<h2>Adding integer or floating point parameters to samples</h2>
+
+<p>Sometimes you might want to add context to your code samples to identify specific conditions in which the code runs for a long time. </p>
+
+<p>For example, if your system carries out simulations of objects, you can pass the number of objects with a <span class="tooltip" tabindex="0" ><strong>Profiler sample</strong><span class="tooltiptext">A set of data associated with a Profiler marker, that the Profiler has recorded and collected.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#profilersample" aria-label="Go to glossary anchor for profilersample">Glossary</a></span></span></span>. If the Profiler returns an abnormal number along with a long sample duration, that might mean you have to use another thread for simulation, split the CPU work across multiple frames (timeslicing), or adjust your application’s design to prevent frame drops.</p>
+
+<p>
+<code>ProfilerMarker</code> supports up to three numeric parameters: <a href="https://docs.unity3d.com/Packages/com.unity.profiling.core@1.0/api/Unity.Profiling.ProfilerMarker-1.html"><code>ProfilerMarker&lt;TP1&gt;</code></a>, <a href="https://docs.unity3d.com/Packages/com.unity.profiling.core@1.0/api/Unity.Profiling.ProfilerMarker-2.html"><code>ProfilerMarker&lt;TP1, TP2&gt;</code></a> and <a href="https://docs.unity3d.com/Packages/com.unity.profiling.core@1.0/api/Unity.Profiling.ProfilerMarker-3.html"><code>ProfilerMarker&lt;TP1, TP2, TP3&gt;</code></a>:</p>
+
+<pre><code class="lang-cs">using Unity.Profiling;
+
+public class MySystemClass
+{
+  static readonly ProfilerMarker&lt;int&gt; k_PreparePerfMarker = new ProfilerMarker&lt;int&gt;(&quot;MySystem.Prepare&quot;, &quot;Objects Count&quot;);
+  static readonly ProfilerMarker&lt;float&gt; k_SimulatePerfMarker = new ProfilerMarker&lt;float&gt;(ProfilerCategory.Scripts, &quot;MySystem.Simulate&quot;, &quot;Objects Density&quot;);
+
+  public void Update(int objectsCount)
+  {
+    k_PreparePerfMarker.Begin(objectsCount);
+    // ...
+    k_PreparePerfMarker.End();
+
+    using (k_SimulatePerfMarker.Auto(objectsCount * 1.0f))
+    {
+      // ...
+    }
+  }
+}
+</code></pre>
+
+<h2>Adding string parameters to samples</h2>
+
+<p>The <code>ProfilerMarker</code> API supports adding string parameters to your profiler markers. A string parameter can be useful if you want to display the name of the level or file when your application loads level or data files. Use <a href="https://docs.unity3d.com/Packages/com.unity.profiling.core@1.0/api/Unity.Profiling.ProfilerMarkerExtension.html"><code>ProfilerMarkerExtension</code></a> methods to pass a string parameter along with a Profiler sample:</p>
+
+<pre><code class="lang-cs">using Unity.Profiling;
+
+public class MySystemClass
+{
+  static readonly ProfilerMarker k_PreparePerfMarker = new ProfilerMarker(&quot;MySystem.Prepare&quot;);
+
+  public void Prepare(string path)
+  {
+    k_PreparePerfMarker.Begin(path);
+    // ...
+    k_PreparePerfMarker.End();
+  }
+}
+</code></pre>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="profiler-adding-information-code-intro.html">Adding profiling information to your code introduction</a></li>
+<li><a href="profiler-add-counters-code.html">Adding profiler counters to your code</a></li>
+<li><a href="profiler-cpu-introduction.html">CPU Usage Profiler module introduction</a></li>
+<li><a href="../ScriptReference/Unity.Profiling.ProfilerMarker.html"><code>ProfilerMarker</code> API</a></li>
+<li><a href="https://docs.unity3d.com/Packages/com.unity.profiling.core@latest">Profiling Core package</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="profiler-adding-information-code-intro.html"></a></span><div class="tip">Adding profiling information to your code introduction</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="profiler-add-counters-code.html"></a></span><div class="tip">Adding profiler counters to your code</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

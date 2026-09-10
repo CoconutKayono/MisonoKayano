@@ -1,0 +1,461 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Upgrade to URP 17.1 (Unity 6.1)</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<meta property="relative-path-to-manual" content="../">
+<meta property="version-switcher-versions-with-this-page" content="Versions with this page:">
+<meta property="version-switcher-versions-without-this-page" content="Versions without this page:">
+<meta property="version-switcher-supported" content="Supported">
+<meta property="version-switcher-legacy" content="Legacy">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/Manual/urp/upgrade-guide-unity-6-1.html">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../../StaticFilesManual/js/jquery.js?ts=20260626"></script><script type="text/javascript" src="../../StaticFilesManual/js/core.js?ts=20260626"></script><script type="text/javascript" src="../../StaticFilesManual/js/image-comp.js?ts=20260626"></script><script type="text/javascript" src="../docdata/toc.js?ts=20260626"></script><script type="text/javascript" src="../docdata/global_toc.js?ts=20260626"></script><link rel="stylesheet" type="text/css" href="../../StaticFilesManual/css/core.css?ts=20260626">
+<link rel="stylesheet" type="text/css" href="../../StaticFilesManual/css/icons.css?ts=20260626">
+<link rel="stylesheet" href="../../StaticFilesManual/css/prism.css">
+<script src="../../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="../30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../index.html" class="selected">Manual</a></li>
+<li><a href="../../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/urp/upgrade-guide-unity-6-1.html">English</a></li>
+<li><a href="/cn/current/Manual/urp/upgrade-guide-unity-6-1.html">中文</a></li>
+<li><a href="/ja/current/Manual/urp/upgrade-guide-unity-6-1.html">日本語</a></li>
+<li><a href="/kr/current/Manual/urp/upgrade-guide-unity-6-1.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: Unity 6.7 Beta</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/urp/upgrade-guide-unity-6-1.html">English</a></li>
+<li><a href="/cn/current/Manual/urp/upgrade-guide-unity-6-1.html">中文</a></li>
+<li><a href="/ja/current/Manual/urp/upgrade-guide-unity-6-1.html">日本語</a></li>
+<li><a href="/kr/current/Manual/urp/upgrade-guide-unity-6-1.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="../render-pipelines.html">Render pipelines</a></li>
+<li><a href="../universal-render-pipeline.html">Using the Universal Render Pipeline</a></li>
+<li><a href="../urp/introduction-landing.html">Get started with URP</a></li>
+<li><a href="../urp/InstallingAndConfiguringURP.html">Installing and upgrading URP</a></li>
+<li><a href="../urp/upgrade-guides.html">Upgrade URP</a></li>
+<li>Upgrade to URP 17.1 (Unity 6.1)</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="../urp/upgrade-guides.html"></a></span><div class="tip">Upgrade URP</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="../urp/upgrade-guide-unity-6.html"></a></span><div class="tip">Upgrade to URP 17 (Unity 6.0)</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Upgrade to URP 17.1 (Unity 6.1)</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>This page describes how to upgrade from an older version of the Universal <span class="tooltip" tabindex="0" ><strong>Render Pipeline</strong><span class="tooltiptext">A series of operations that take the contents of a Scene, and displays them on a screen. Unity lets you choose from pre-built render pipelines, or write your own. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about render-pipelines.html" href="../render-pipelines.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#renderpipeline" aria-label="Go to glossary anchor for renderpipeline">Glossary</a></span></span></span> (URP) to URP 17.1 (Unity 6.1).</p>
+
+<p>
+<strong>Note:</strong> To upgrade to URP 17.2 (Unity 6.2) and later, refer to the main <a href="../UpgradeGuides.html">Upgrade Unity</a> section.</p>
+
+<p>For information on converting assets made for a Built-in Render Pipeline project to assets compatible with URP, refer to the page <a href="features/rp-converter.html">Render Pipeline Converter</a>.</p>
+
+<h2>Upgrading from URP 17.0 (Unity 6.0)</h2>
+
+<h3>The _FORWARD_PLUS shader keyword is deprecated</h3>
+
+<p>In Unity 6.1 the <em>FORWARD_PLUS <span class="tooltip" tabindex="0" ><strong>shader</strong><span class="tooltiptext">A program that runs on the GPU. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Shaders.html" href="../Shaders.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#shader" aria-label="Go to glossary anchor for shader">Glossary</a></span></span></span> keyword is deprecated. Use the </em>CLUSTER_LIGHT_LOOP keyword in custom shaders instead.</p>
+
+<p>For more information about using the keywords, refer to <a href="urp-shaders/shader-keywords-macros.html">Shader keywords and macros reference in URP</a>.</p>
+
+<h2>Upgrading from URP 15 or URP 16 (Unity 2023.1, Unity 2023.2)</h2>
+
+<h3>Render graph system</h3>
+
+<p>URP 17 introduces the <a href="render-graph-introduction.html">render graph</a> system, which includes significant changes to the way you write custom render passes.</p>
+
+<p>If your project contains custom render passes, rewrite your passes using the render graph API. For more information on render graph, refer to the section <a href="render-graph.html">Render graph system</a>.</p>
+
+<p>For complete examples of Scriptable Renderer Features with render passes that use the render graph API, follow these steps:</p>
+
+<ol>
+<li>Import the URP render graph samples. For more information, refer to <a href="package-sample-urp-package-samples.html">Importing a package sample in URP</a>.</li>
+<li>In the <strong>Project</strong> window, go to <strong>Samples</strong> &gt; <strong>Universal Render Pipeline</strong> &gt; <strong>17.2.0</strong> &gt; <strong>URP RenderGraph Samples</strong>.</li>
+</ol>
+
+<p>
+<strong>Note:</strong> Unity no longer develops or improves the <span class="tooltip" tabindex="0" ><strong>rendering path</strong><span class="tooltiptext">The technique that a render pipeline uses to render graphics. Choosing a different rendering path affects how lighting and shading are calculated. Some rendering paths are more suited to different platforms and hardware than others. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about RenderingPaths.html" href="../RenderingPaths.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#renderingpath" aria-label="Go to glossary anchor for renderingpath">Glossary</a></span></span></span> that doesn’t use the <a href="render-graph.html">render graph API</a>.</p>
+
+<p>Render graph is enabled by default in new URP projects.</p>
+
+<p>For compatibility purpose, Unity 6 includes the option to disable the render graph system and use the rendering API from previous URP versions. To disable render graph, enable the following checkbox:</p>
+
+<ul>
+<li>
+<strong>Project Settings</strong> &gt; <strong>Graphics</strong> &gt; <strong>Render Graph</strong> &gt; <strong>Compatibility Mode (Render Graph Disabled)</strong>
+</li>
+</ul>
+
+<p>If you open an existing project created with a URP version without render graph, Unity automatically enables the compatibility mode after opening the project with Unity 6.</p>
+
+<p>To understand a render graph implementation better, use the <a href="render-graph-view.html#use-the-render-graph-viewer">Render Graph Viewer</a>
+</p>
+
+<h3>Volume Framework</h3>
+
+<p>When you create a custom Volume component class that overrides the <code>VolumeComponent.Override(VolumeComponent state, float interpFactor)</code> method, your implementation must set the <code>VolumeParameter.overrideState</code> property to <code>true</code> whenever the <code>VolumeParameter</code> value is changed. This ensures that the Volume framework resets the parameters to their correct default values. This lets the framework to use fewer resources every frame which improves performance.</p>
+
+<h2>Upgrading from URP 13 (Unity 2022.1)</h2>
+
+<h3>Two shader defines were removed</h3>
+
+<p>
+<code>SHADER_QUALITY_LOW/MEDIUM/HIGH</code> and <code>SHADER_HINT_NICE_QUALITY</code> shader defines were removed. If you used those defines in custom shaders, consider using <code>SHADER_API_MOBILE</code> or <code>SHADER_API_GLES</code> defines to replace <code>SHADER_QUALITY_LOW/MEDIUM/HIGH</code>.</p>
+
+<h2>Upgrading from URP 12 (Unity 2021.2)</h2>
+
+<h3>Changes to ScriptableRenderer API behavior</h3>
+
+<p>Unity now issues an error when instances of <code>ScriptableRendererFeature</code> attempt to access render targets before they are allocated by the <code>ScriptableRenderer</code> class.</p>
+
+<p>The <code>ScriptableRendererFeature</code> class has a new virtual function <code>SetupRenderPasses</code> which is called when render targets are allocated and ready to be used.</p>
+
+<p>If your code uses the <code>ScriptableRenderer.cameraColorTarget</code> or the <code>ScriptableRenderer.cameraDepthTarget</code> property inside of the <code>AddRenderPasses</code> method override, you should move that implementation to the <code>ScriptableRendererFeature.SetupRenderPasses</code> method.</p>
+
+<p>The calls to the <code>ScriptableRenderer.EnqueuePass</code> method should still happen in the <code>AddRenderPasses</code> method.</p>
+
+<p>The following example shows how to change the code to use the new API.</p>
+
+<p>Code with the old API:</p>
+
+<pre><code class="lang-cs">public override void AddRenderPasses(ScriptableRenderer renderer,
+                                    ref RenderingData renderingData)
+{
+    // The target is used before allocation
+    m_CustomPass.Setup(renderer.cameraColorTarget);
+     // Letting the renderer know which passes are used before allocation
+    renderer.EnqueuePass(m_ScriptablePass);
+}
+</code></pre>
+
+<p>Code with the new API:</p>
+
+<pre><code class="lang-cs">public override void AddRenderPasses(ScriptableRenderer renderer,
+                                        ref RenderingData renderingData)
+{
+    // Letting the renderer know which passes are used before allocation
+    renderer.EnqueuePass(m_ScriptablePass);
+}
+
+public override void SetupRenderPasses(ScriptableRenderer renderer,
+                                          in RenderingData renderingData)
+{
+    // The target is used after allocation
+    m_CustomPass.Setup(renderer.cameraColorTarget);
+}
+</code></pre>
+
+<h3>The Universal Renderer is now using the RTHandle system</h3>
+
+<p>The Universal Renderer is now using <a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.core@14.0/manual/rthandle-system.html">the RTHandle system</a> for its internal targets and in its internal passes.</p>
+
+<p>All usages of the <code>RenderTargetHandle</code> struct are set as obsolete and the struct will be removed in the future.</p>
+
+<p>The public interfaces <code>ScriptableRenderer.cameraColorTarget</code> and <code>ScriptableRenderer.cameraDepthTarget</code> are marked as obsolete. Replace them with <code>ScriptableRenderer.cameraColorTargetHandle</code> and <code>ScriptableRenderer.cameraDepthTargetHandle</code> respectively.</p>
+
+<p>
+<code>RTHandle</code> targets do not use the <code>CommandBuffer.GetTemporaryRT</code> method and persist for more frames than the <code>RenderTargetIdentifier</code> structs. You cannot allocate <code>RTHandle</code> targets with the properties <code>GraphicsFormat</code> and <code>DepthBufferBits</code> set to any value except for 0. The <code>cameraDepthTarget</code> properties must be separate from the <code>cameraColorTarget</code> properties.</p>
+
+<p>The following helper functions let you create and use temporary render target with the <code>RTHandle</code> system in a similar way as with the <code>GetTemporaryRT</code> method previously:</p>
+
+<ul>
+<li><p><code>RenderingUtils.ReAllocateIfNeeded</code></p></li>
+<li><p><code>ShadowUtils.ShadowRTReAllocateIfNeeded</code></p></li>
+</ul>
+
+<p>If the render target does not change within the lifetime of the application, use the <code>RTHandles.Alloc</code> method to allocate an <code>RTHandle</code> target. This method is efficient since the code does not have to check if a render target should be allocated on each frame.</p>
+
+<p>If the render target is a full screen texture, which means that its resolution matches or is a fraction of the resolution of the screen, use a scaling factor such as <code>Vector2D.one</code> to support dynamic scaling.</p>
+
+<p>The following example shows how to change the code using the <code>RenderTargetHandle</code> API to use the new API.</p>
+
+<p>Code with the old API:</p>
+
+<pre><code class="lang-cs">public class CustomPass : ScriptableRenderPass
+{
+    RenderTargetHandle m_Handle;
+    // With the old API, RenderTargetIdentifier might combine color and depth
+    RenderTargetIdentifier m_Destination;
+
+    public CustomPass()
+    {
+        m_Handle.Init(&quot;_CustomPassHandle&quot;);
+    }
+
+    public override void OnCameraSetup(CommandBuffer cmd, ref RenderingData renderingData)
+    {
+        var desc = renderingData.cameraData.cameraTargetDescriptor;
+        cmd.GetTemporaryRT(m_Handle.id, desc, FilterMode.Point);
+    }
+
+    public override void OnCameraCleanup(CommandBuffer cmd)
+    {
+        cmd.ReleaseTemporaryRT(m_Handle.id);
+    }
+
+    public void Setup(RenderTargetIdentifier destination)
+    {
+        m_Destination = destination;
+    }
+
+    public override void Execute(ScriptableRenderContext context,
+                                    ref RenderingData renderingData)
+    {
+        CommandBuffer cmd = CommandBufferPool.Get();
+        // Set the same target for color and depth
+        ScriptableRenderer.SetRenderTarget(cmd, m_Destination, m_Destination, clearFlag,
+                                              clearColor);
+        context.ExecuteCommandBuffer(cmd);
+        CommandBufferPool.Release(cmd);
+    }
+}
+</code></pre>
+
+<p>Code with the new API:</p>
+
+<pre><code class="lang-cs">public class CustomPass : ScriptableRenderPass
+{
+    RTHandle m_Handle;
+    // Then using RTHandles, the color and the depth properties must be separate
+    RTHandle m_DestinationColor;
+    RTHandle m_DestinationDepth;
+
+    void Dispose()
+    {
+        m_Handle?.Release();
+    }
+
+    public override void OnCameraSetup(CommandBuffer cmd, ref RenderingData renderingData)
+    {
+        var desc = renderingData.cameraData.cameraTargetDescriptor;
+        // Then using RTHandles, the color and the depth properties must be separate
+        desc.depthBufferBits = 0;
+        RenderingUtils.ReAllocateIfNeeded(ref m_Handle, desc, FilterMode.Point,
+                                         TextureWrapMode.Clamp, name: &quot;_CustomPassHandle&quot;);
+    }
+
+    public override void OnCameraCleanup(CommandBuffer cmd)
+    {
+        m_DestinationColor = null;
+        m_DestinationDepth = null;
+    }
+
+    public void Setup(RTHandle destinationColor, RTHandle destinationDepth)
+    {
+        m_DestinationColor = destinationColor;
+        m_DestinationDepth = destinationDepth;
+    }
+
+    public override void Execute(ScriptableRenderContext context,
+                                    ref RenderingData renderingData)
+    {
+        CommandBuffer cmd = CommandBufferPool.Get();
+        ScriptableRenderer.SetRenderTarget(cmd, m_DestinationColor, m_DestinationDepth,
+                                              clearFlag, clearColor);
+        context.ExecuteCommandBuffer(cmd);
+        CommandBufferPool.Release(cmd);
+    }
+}
+</code></pre>
+
+<h2>Upgrading from URP 11.x.x</h2>
+
+<ul>
+<li><p>The Forward Renderer asset is renamed to the Universal Renderer asset. When you open an existing project in the Unity Editor containing URP 12, Unity updates the existing Forward Renderer assets to Universal Renderer assets.</p></li>
+<li><p>The Universal Renderer asset contains the property <strong>Rendering Path</strong> that lets you select the Forward or the Deferred Rendering Path.</p></li>
+<li><p>The method <code>ClearFlag.Depth</code> does not implicitly clear the <span class="tooltip" tabindex="0" ><strong>Stencil buffer</strong><span class="tooltiptext">A memory store that holds an 8-bit per-pixel value. In Unity, you can use a stencil buffer to flag pixels, and then only render to pixels that pass the stencil operation. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-RenderTexture.html" href="../class-RenderTexture.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#stencilbuffer" aria-label="Go to glossary anchor for stencilbuffer">Glossary</a></span></span></span> anymore. Use the new method <code>ClearFlag.Stencil</code>.</p></li>
+<li><p>URP 12 and later implements the <a href="features/rp-converter.html">Render Pipeline Converter</a> feature. This feature replaces the asset upgrade functions that were previously available at <strong>Edit &gt; Render Pipeline &gt; Universal Render Pipeline &gt; Upgrade…</strong>
+</p></li>
+</ul>
+
+<h2>Upgrading from URP 10.0.x–10.2.x</h2>
+
+<ol>
+<li>
+<p>The file names of the following Shader Graph shaders were renamed. The new file names do not have spaces:<br><code>Autodesk Interactive</code><br><code>Autodesk Interactive Masked</code><br><code>Autodesk Interactive Transparent</code>
+</p>
+
+<p>If your code uses the <code>Shader.Find()</code> method to search for the shaders, remove spaces from the shader names, for example, <code>Shader.Find(&quot;AutodeskInteractive)</code>.</p>
+</li>
+</ol>
+
+<h2>Upgrading from URP 7.2.x and later releases</h2>
+
+<ol>
+<li>URP 12.x.x does not support the package <span class="tooltip" tabindex="0" ><strong>Post-Processing</strong><span class="tooltiptext">A process that improves product visuals by applying filters and effects before the image appears on screen. You can use post-processing effects to simulate physical camera and film properties, for example Bloom and Depth of Field. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about PostProcessingOverview.html" href="../PostProcessingOverview.html">More info</a> <span class="search-words">post processing, postprocessing, postprocess</span><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#post-processing" aria-label="Go to glossary anchor for post-processing">Glossary</a></span></span></span> Stack v2. If your Project uses the package Post-Processing Stack v2, migrate the effects that use that package first.</li>
+</ol>
+
+<h3>DepthNormals Pass</h3>
+
+<p>Starting from version 10.0.x, URP can generate a normal texture called <code>_CameraNormalsTexture</code>. To render to this texture in your custom shader, add a Pass with the name <code>DepthNormals</code>. For an example, check the implementation in <code>Lit.shader</code>.</p>
+
+<h3>Screen Space Ambient Occlusion (SSAO)</h3>
+
+<p>URP 10.0.x implements the Screen Space <span class="tooltip" tabindex="0" ><strong>Ambient Occlusion</strong><span class="tooltiptext">A method to approximate how much ambient light (light not coming from a specific direction) can hit a point on a surface.<br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#ambientocclusion" aria-label="Go to glossary anchor for ambientocclusion">Glossary</a></span></span></span> (SSAO) effect.</p>
+
+<p>If you intend to use the SSAO effect with your custom shaders, consider the following entities related to SSAO:</p>
+
+<ul>
+<li><p>The <code>_SCREEN_SPACE_OCCLUSION</code> keyword.</p></li>
+<li><p>
+<code>Input.hlsl</code> contains the new declaration <code>float2  normalizedScreenSpaceUV</code> in the <code>InputData</code> struct.</p></li>
+<li>
+<p>
+<code>Lighting.hlsl</code> contains the <code>AmbientOcclusionFactor</code> struct with the variables for calculating indirect and direct occlusion:</p>
+
+<pre><code class="lang-cpp">struct AmbientOcclusionFactor
+{
+    half indirectAmbientOcclusion;
+    half directAmbientOcclusion;
+};
+</code></pre>
+</li>
+<li>
+<p>
+<code>Lighting.hlsl</code> contains the following function for sampling the SSAO texture:</p>
+
+<pre><code class="lang-cpp">half SampleAmbientOcclusion(float2 normalizedScreenSpaceUV)
+</code></pre>
+</li>
+<li>
+<p>
+<code>Lighting.hlsl</code> contains the following function:</p>
+
+<pre><code class="lang-cpp">AmbientOcclusionFactor GetScreenSpaceAmbientOcclusion(float2
+normalizedScreenSpaceUV)
+</code></pre>
+</li>
+</ul>
+
+<p>To support SSAO in custom shader, add the <code>DepthNormals</code> Pass and the <code>_SCREEN_SPACE_OCCLUSION</code> keyword the the shader. For an example, check <code>Lit.shader</code>.</p>
+
+<p>If your custom shader implements custom lighting functions, use the function <code>GetScreenSpaceAmbientOcclusion(float2 normalizedScreenSpaceUV)</code> to get the <code>AmbientOcclusionFactor</code> value for your lighting calculations.</p>
+
+<h3>Shadow Normal Bias</h3>
+
+<p>In 11.0.x the formula used to apply Shadow Normal Bias has been slightly fix in order to work better with punctual lights.
+As a result, to match exactly shadow outlines from earlier revisions, the parameter might to be adjusted in some <span class="tooltip" tabindex="0" ><strong>scenes</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html" href="../CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span>. Typically, using 1.4 instead of 1.0 for a Directional light is usually enough.</p>
+
+<h3>Intermediate Texture</h3>
+
+<p>In previous URP versions, URP performed the rendering via an intermediate Renderer if the Renderer had any active Renderer Features. On some platforms, this had significant performance implications. In this release, URP mitigates the issue in the following way: URP expects Renderer Features to declare their inputs using the <code>ScriptableRenderPass.ConfigureInput</code> method. The method provides the information that URP uses to determine automatically whether rendering via an intermediate texture is necessary.</p>
+
+<p>For compatibility purpose, there is a new property <strong>Intermediate Texture</strong> in the Universal Renderer. If you select <strong>Always</strong> in the property, URP uses an intermediate texture. Selecting <strong>Auto</strong> enables the new behavior. Use the <strong>Always</strong> option only if a Renderer Feature does not declare its inputs using the <code>ScriptableRenderPass.ConfigureInput</code> method.</p>
+
+<p>To ensure that existing projects work correctly, all existing Universal Renderer assets that were using any Renderer Features (excluding those included with URP) have the option <strong>Always</strong> selected in the <strong>Intermediate Texture</strong> property. Any newly created Universal Renderer assets have the option <strong>Auto</strong> selected.</p>
+
+<h2>Upgrading from URP 7.0.x–7.1.x</h2>
+
+<ol>
+<li><p>Upgrade to URP 7.2.0 first. Refer to <a href="upgrade-guide-7-2-0.html">Upgrading to version 7.2.0 of the Universal Render Pipeline</a>.</p></li>
+<li><p>URP 8.x.x does not support the package Post-Processing Stack v2. If your Project uses the package Post-Processing Stack v2, migrate the effects that use that package first.</p></li>
+</ol>
+
+<h2>Upgrading from LWRP to 12.x.x</h2>
+
+<ul>
+<li>There is no direct upgrade path from LWRP to URP 12.x.x. Follow the steps to upgrade LWRP to URP 11.x.x first, and then upgrade from URP 11.x.x to URP 12.x.x.</li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="../urp/upgrade-guides.html"></a></span><div class="tip">Upgrade URP</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="../urp/upgrade-guide-unity-6.html"></a></span><div class="tip">Upgrade to URP 17 (Unity 6.0)</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

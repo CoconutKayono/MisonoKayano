@@ -1,0 +1,740 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Create a custom overlay</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<meta property="relative-path-to-manual" content="">
+<meta property="version-switcher-versions-with-this-page" content="Versions with this page:">
+<meta property="version-switcher-versions-without-this-page" content="Versions without this page:">
+<meta property="version-switcher-supported" content="Supported">
+<meta property="version-switcher-legacy" content="Legacy">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/Manual/overlays-custom.html">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20260626"></script><script type="text/javascript" src="docdata/toc.js?ts=20260626"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20260626"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20260626">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20260626">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/overlays-custom.html">English</a></li>
+<li><a href="/cn/current/Manual/overlays-custom.html">中文</a></li>
+<li><a href="/ja/current/Manual/overlays-custom.html">日本語</a></li>
+<li><a href="/kr/current/Manual/overlays-custom.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: Unity 6.7 Beta</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/overlays-custom.html">English</a></li>
+<li><a href="/cn/current/Manual/overlays-custom.html">中文</a></li>
+<li><a href="/ja/current/Manual/overlays-custom.html">日本語</a></li>
+<li><a href="/kr/current/Manual/overlays-custom.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="extending-the-editor.html">Extending the Unity Editor</a></li>
+<li>Create a custom overlay</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="UsingCustomEditorTools.html"></a></span><div class="tip">Custom Unity Editor tools</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="gizmos-handles-programming.html"></a></span><div class="tip">Programming with gizmos and handles</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Create a custom overlay</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>You can create custom panel overlays and <span class="tooltip" tabindex="0" ><strong>toolbar</strong><span class="tooltiptext">A row of buttons and basic controls at the top of the Unity Editor that allows you to interact with the Editor in various ways (e.g. scaling, translation). <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Toolbar.html" href="Toolbar.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#toolbar" aria-label="Go to glossary anchor for toolbar">Glossary</a></span></span></span> overlays for the <strong><span class="tooltip" tabindex="0" ><strong>Scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html" href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span> view</strong> window.</p>
+
+<ul>
+<li><a href="#panel-overlays">Panel Overlays</a></li>
+<li><a href="#toolbar-overlays">Toolbar Overlays</a></li>
+</ul>
+
+<p>
+<strong>Tip</strong>: For information about creating UIElements, refer to the <a href="https://docs.unity3d.com/Manual/UIElements.html">UI Elements Developer Guide</a>.</p>
+
+<h2>Understand EditorToolbarElement</h2>
+
+<p>A toolbar element can contain text, an icon, or a combination of both.</p>
+
+<p>Use <code>EditorToolbarElement(Identifier, EditorWindowType)</code> to register toolbar elements to use in <code>ToolbarOverlay</code> implementations.</p>
+
+<p>You can inherit from any <code>VisualElement</code> type and create styling yourself, but toolbar elements require specific styling. It is preferable to inherit from one of these predefined <code>EditorToolbar</code> types:</p>
+
+<ul>
+<li>
+<code>EditorToolbarButton</code>: Based on <code>UnityEditor.UIElements.ToolbarButton</code>
+</li>
+<li>
+<code>EditorToolbarToggle</code>: Based on <code>UnityEditor.UIElements.ToolbarToggle</code>
+</li>
+<li>
+<code>EditorToolbarDropdown</code>: Based on <code>EditorToolbarButton</code>
+</li>
+<li>
+<code>EditorToolbarDropdownToggle</code>: Based on <code>UnityEngine.UIElements.BaseField</code>
+</li>
+</ul>
+
+<p>
+<strong>Tip:</strong> If a toolbar is docked horizontally or vertically, its text might not be visible or clipped. You can specify an icon for each toolbar to avoid text clipping.</p>
+
+<p><a name="panel-overlays" aria-hidden="true"></a></p>
+
+<h2>Create a panel overlay</h2>
+
+<p>All overlays must inherit from the <a href="../ScriptReference/Overlays.Overlay.html">Overlay</a> base class and implement the <a href="../ScriptReference/Overlays.Overlay.CreatePanelContent.html">CreatePanelContent</a> method. This creates a basic panel that you can use and that you can add toolbar elements to.</p>
+
+<p>To create a panel overlay:</p>
+
+<ol>
+<li><p>Create a new <a href="creating-scripts.html">C# script</a> in the <a href="SpecialFolders.html">Editor folder</a> and name it.</p></li>
+<li><p>Open the script you created.</p></li>
+<li><p>Remove the default content from the script.</p></li>
+<li><p>Implement the <code>Overlay</code> class from the <code>UnityEditor.Overlays</code> namespace.</p></li>
+<li><p>Override the <a href="../ScriptReference/Overlays.Overlay.CreatePanelContent.html">CreatePanelContent</a> function and add your content to the <span class="tooltip" tabindex="0" ><strong>visual element</strong><span class="tooltiptext">A node of a visual tree that instantiates or derives from the C# <a href="../ScriptReference/UIElements.VisualElement.html"><code>VisualElement</code></a> class. You can style the look, define the behaviour, and display it on screen as part of the UI. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UIE-VisualTree.html" href="UIE-VisualTree.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#visualelement" aria-label="Go to glossary anchor for visualelement">Glossary</a></span></span></span>.</p></li>
+<li><p>Add the <a href="../ScriptReference/Overlays.OverlayAttribute.html">OverlayAttribute</a> attribute to the class.</p></li>
+<li>
+<p>In the <code>OverlayAttribute</code>, specify which type of window you want this overlay to be in:</p>
+
+<ul>
+<li>If you want the overlay to be available in all Editor windows, specify <code>EditorWindow</code> as the type. Only windows inheriting from <code>ISupportOverlays</code> can use overlays.</li>
+<li>To make the overlay available in a window type that inherits from <code>ISupportOverlays</code>, specify the window as the type. For example, to make the overlay available only in the <span class="tooltip" tabindex="0" ><strong>Scene view</strong><span class="tooltiptext">An interactive view into the world you are creating. You use the Scene View to select and position scenery, characters, cameras, lights, and all other types of Game Object. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheSceneView.html" href="UsingTheSceneView.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#SceneView" aria-label="Go to glossary anchor for SceneView">Glossary</a></span></span></span>, specify <code>SceneView</code> as the type.</li>
+</ul>
+</li>
+<li><p>In the <code>OverlayAttribute</code>, add a display name. Refer to <a href="../ScriptReference/Overlays.OverlayAttribute.html">OverlayAttribute</a> for information on the other properties that you can add in the <code>OverlayAttribute</code>.</p></li>
+<li><p>To add an icon that displays when your overlay is collapsed, add the <code>Icon</code> attribute to the <code>Overlay</code> class and specify an icon. If the overlay has no icon, then by default the system uses the first two letters of the overlay name or the first two initial letters of the first two words. </p></li>
+</ol>
+
+<h3>Example</h3>
+
+<pre><code class="lang-cs">using UnityEditor;
+using UnityEditor.Overlays;
+using UnityEngine.UIElements;
+[Overlay(typeof(SceneView), &quot;Panel Overlay Example&quot;, true)]
+public class MyToolButtonOverlay : Overlay
+{
+    public override VisualElement CreatePanelContent()
+    {
+        var root = new VisualElement() { name = &quot;My Toolbar Root&quot; };
+        root.Add(new Label() { text = &quot;Hello&quot; });
+        return root;
+
+    }
+}
+</code></pre>
+
+<p><a name="toolbar-overlays" aria-hidden="true"></a></p>
+
+<h2>Create a toolbar overlay</h2>
+
+<p>Toolbar overlays are containers that hold toolbar items and are composed of collections of <code>EditorToolbarElement</code>.</p>
+
+<p>Toolbar overlays have built-in horizontal, vertical, and panel layouts. <code>ToolbarOverlay</code> implements a parameterless constructor that passes the <code>EditorToolbarElementAttribute</code> ID. Unlike panel overlays, the contents are defined as standalone pieces that are collected to form a strip of elements.</p>
+
+<p>When you create toolbar overlays:</p>
+
+<ul>
+<li>Use <code>EditorToolbarElement(Identifier, EditorWindowType)</code> to register toolbar elements to use in the <code>ToolbarOverlay</code> implementation.</li>
+<li>Tag all overlays with <a href="../ScriptReference/Overlays.OverlayAttribute.html">OverlayAttribute</a>.</li>
+<li>Make sure that toolbar overlays inherit <code>ToolbarOverlay</code> and implement a parameterless constructor.</li>
+<li>Make sure that the contents of a toolbar are populated with string IDs, which are passed to the base constructor.</li>
+<li>Make sure that IDs are defined by <code>EditorToolbarElementAttribute</code>.</li>
+<li>Use the <code>Icon</code> attribute to add icon an icon to your overlay. The icon is visible when an overlay is collapsed. If the overlay does not have an icon, the first two letters of the overlay name (or the first two initial letters of the first two words) are shown when the overlay is collapsed.</li>
+</ul>
+
+<p>When you implement elements specific to <code>ToolbarOverlay</code> in an overlay:</p>
+
+<ul>
+<li>Use the <code>IAccessContainerWindow</code> interface for toolbars only. The element is not aware of its context. In the <code>DropdownToggleExample</code>, if you toggle the element it won’t do anything.</li>
+<li>Use <code>UIElement</code> styling for visuals. The toolbar element won’t have its styling in an overlay.</li>
+</ul>
+
+<p>To create a toolbar overlay:</p>
+
+<ol>
+<li>Create a new <a href="creating-scripts.html">C# script</a> in the <a href="SpecialFolders.html">Editor folder</a> and name it.</li>
+<li>Open the script you created.</li>
+<li>Remove the default content from the script.</li>
+<li>Add toolbar elements to the script.</li>
+<li>Add toolbar elements to the overlay constructor.</li>
+<li>Add the panel overlay and implement the toolbar elements.</li>
+</ol>
+
+<h3>Example</h3>
+
+<p>This example is of an overlay named <strong>Element Toolbars Example</strong> that demonstrates these toolbar elements:</p>
+
+<ul>
+<li><code>EditorToolbarButton</code></li>
+<li><code>EditorToolbarToggle</code></li>
+<li><code>EditorToolbarDropdown</code></li>
+<li><code>EditorToolbarDropdownToggle</code></li>
+</ul>
+
+<p>Each toolbar element is created as a standalone class and then added to the overlay panel.</p>
+
+<p>This overlay:</p>
+
+<ul>
+<li>Can be arranged as a panel, horizontally, and vertically.</li>
+<li>Has buttons that include text and tooltips.</li>
+<li>Has toolbar icons defined by the <code>Icon</code> attribute. This icon displays when the overlay is collapsed.</li>
+</ul>
+
+<pre><code class="lang-cs">    using System.Collections;
+    using System.Collections.Generic;
+    using System.Text;
+    using UnityEngine;
+    using UnityEditor.EditorTools;
+    using UnityEditor.Toolbars;
+    using UnityEditor.Overlays;
+    using UnityEngine.UIElements;
+    using UnityEditor;
+
+    // Use [EditorToolbarElement(Identifier, EditorWindowType)] to register toolbar elements for use in ToolbarOverlay implementation.
+
+    [EditorToolbarElement(id, typeof(SceneView))]
+    class DropdownExample : EditorToolbarDropdown
+    {
+        public const string id = &quot;ExampleToolbar/Dropdown&quot;;
+
+        static string dropChoice = null;
+
+        public DropdownExample()
+        {
+            text = &quot;Axis&quot;;
+            clicked += ShowDropdown;
+        }
+
+        void ShowDropdown()
+        {
+            var menu = new GenericMenu();
+            menu.AddItem(new GUIContent(&quot;X&quot;), dropChoice == &quot;X&quot;, () =&gt; { text = &quot;X&quot;; dropChoice = &quot;X&quot;; });
+            menu.AddItem(new GUIContent(&quot;Y&quot;), dropChoice == &quot;Y&quot;, () =&gt; { text = &quot;Y&quot;; dropChoice = &quot;Y&quot;; });
+            menu.AddItem(new GUIContent(&quot;Z&quot;), dropChoice == &quot;Z&quot;, () =&gt; { text = &quot;Z&quot;; dropChoice = &quot;Z&quot;; });
+            menu.ShowAsContext();
+        }
+    }
+    [EditorToolbarElement(id, typeof(SceneView))]
+    class ToggleExample : EditorToolbarToggle
+    {
+        public const string id = &quot;ExampleToolbar/Toggle&quot;;
+        public ToggleExample()
+        {
+            text = &quot;Toggle OFF&quot;;
+            this.RegisterValueChangedCallback(Test);
+        }
+
+        void Test(ChangeEvent&lt;bool&gt; evt)
+        {
+            if (evt.newValue)
+            {
+                Debug.Log(&quot;ON&quot;);
+                text = &quot;Toggle ON&quot;;
+            }
+            else
+            {
+                Debug.Log(&quot;OFF&quot;);
+                text = &quot;Toggle OFF&quot;;
+            }
+        }
+    }
+
+    [EditorToolbarElement(id, typeof(SceneView))]
+    class DropdownToggleExample : EditorToolbarDropdownToggle, IAccessContainerWindow
+    {
+        public const string id = &quot;ExampleToolbar/DropdownToggle&quot;;
+
+        // This property is specified by IAccessContainerWindow and is used to access the Overlay's EditorWindow.
+
+        public EditorWindow containerWindow { get; set; }
+        static int colorIndex = 0;
+        static readonly Color[] colors = new Color[] { Color.red, Color.green, Color.cyan };
+        public DropdownToggleExample()
+        {
+            text = &quot;Color Bar&quot;;
+            tooltip = &quot;Display a color rectangle in the top left of the Scene view. Toggle on or off, and open the dropdown&quot; +
+                      &quot;to change the color.&quot;;
+
+        // When the dropdown is opened, ShowColorMenu is invoked and we can create a popup menu.
+
+            dropdownClicked += ShowColorMenu;
+
+        // Subscribe to the Scene view OnGUI callback so that we can draw our color swatch.
+
+            SceneView.duringSceneGui += DrawColorSwatch;
+        }
+
+        void DrawColorSwatch(SceneView view)
+        {
+
+         // Test that this callback is for the Scene View that we're interested in, and also check if the toggle is on
+        // or off (value).
+
+            if (view != containerWindow || !value)
+            {
+                return;
+            }
+
+            Handles.BeginGUI();
+            GUI.color = colors[colorIndex];
+            GUI.DrawTexture(new Rect(8, 8, 120, 24), Texture2D.whiteTexture);
+            GUI.color = Color.white;
+            Handles.EndGUI();
+        }
+
+        // When the dropdown button is clicked, this method will create a popup menu at the mouse cursor position.
+
+        void ShowColorMenu()
+        {
+            var menu = new GenericMenu();
+            menu.AddItem(new GUIContent(&quot;Red&quot;), colorIndex == 0, () =&gt; colorIndex = 0);
+            menu.AddItem(new GUIContent(&quot;Green&quot;), colorIndex == 1, () =&gt; colorIndex = 1);
+            menu.AddItem(new GUIContent(&quot;Blue&quot;), colorIndex == 2, () =&gt; colorIndex = 2);
+            menu.ShowAsContext();
+        }
+    }
+
+    [EditorToolbarElement(id, typeof(SceneView))]
+    class CreateCube : EditorToolbarButton//, IAccessContainerWindow
+    {
+        // This ID is used to populate toolbar elements.
+
+        public const string id = &quot;ExampleToolbar/Button&quot;;
+
+        // IAccessContainerWindow provides a way for toolbar elements to access the `EditorWindow` in which they exist.
+        // Here we use `containerWindow` to focus the camera on our newly instantiated objects after creation.
+        //public EditorWindow containerWindow { get; set; }
+
+        // Because this is a VisualElement, it is appropriate to place initialization logic in the constructor.
+        // In this method you can also register to any additional events as required. In this example there is a tooltip, an icon, and an action.
+
+        public CreateCube()
+        {
+
+    // A toolbar element can be either text, icon, or a combination of the two. Keep in mind that if a toolbar is
+        // docked horizontally the text will be clipped, so usually it's a good idea to specify an icon.
+
+            text = &quot;Create Cube&quot;;
+            icon = AssetDatabase.LoadAssetAtPath&lt;Texture2D&gt;(&quot;Assets/CreateCubeIcon.png&quot;);
+            tooltip = &quot;Instantiate a cube in the scene.&quot;;
+            clicked += OnClick;
+        }
+
+        // This method will be invoked when the `Create Cube` button is clicked.
+
+        void OnClick()
+        {
+            var newObj = GameObject.CreatePrimitive(PrimitiveType.Cube).transform;
+
+        // When writing editor tools don't forget to be a good citizen and implement Undo!
+
+            Undo.RegisterCreatedObjectUndo(newObj.gameObject, &quot;Create Cube&quot;);
+
+        //if (containerWindow is SceneView view)
+        //    view.FrameSelected();
+
+        }
+
+    }
+
+    // All Overlays must be tagged with the OverlayAttribute
+
+    [Overlay(typeof(SceneView), &quot;ElementToolbars Example&quot;)]
+
+        // IconAttribute provides a way to define an icon for when an Overlay is in collapsed form. If not provided, the name initials are used.
+
+    [Icon(&quot;Assets/unity.png&quot;)]
+
+    // Toolbar Overlays must inherit `ToolbarOverlay` and implement a parameter-less constructor. The contents of a toolbar are populated with string IDs, which are passed to the base constructor. IDs are defined by EditorToolbarElementAttribute.
+
+    public class EditorToolbarExample : ToolbarOverlay
+    {
+
+     // ToolbarOverlay implements a parameterless constructor, passing the EditorToolbarElementAttribute ID.
+    // This is the only code required to implement a toolbar Overlay. Unlike panel Overlays, the contents are defined
+    // as standalone pieces that will be collected to form a strip of elements.
+
+        EditorToolbarExample() : base(
+            CreateCube.id,
+            ToggleExample.id,
+            DropdownExample.id,
+            DropdownToggleExample.id
+            )
+        { }
+    }
+
+
+</code></pre>
+
+<h2>Toolbar elements implementations</h2>
+
+<p>The controls for toolbar elements are the same as their equivalent in UIToolkit, but they inherit some toolbar functionalities and specific styling.</p>
+
+<p>This section has examples of the following toolbar elements:</p>
+
+<ul>
+<li><a href="#create-a-custom-overlay">Create a custom overlay</a></li>
+<li><a href="#understand-editortoolbarelement">Understand EditorToolbarElement</a></li>
+<li>
+<a href="#create-a-panel-overlay">Create a panel overlay</a>
+
+<ul>
+<li><a href="#example">Example</a></li>
+</ul>
+</li>
+<li>
+<a href="#create-a-toolbar-overlay">Create a toolbar overlay</a>
+
+<ul>
+<li><a href="#example-1">Example</a></li>
+</ul>
+</li>
+<li>
+<a href="#toolbar-elements-implementations">Toolbar elements implementations</a>
+
+<ul>
+<li><a href="#editortoolbarbutton">EditorToolbarButton</a></li>
+<li><a href="#editortoolbartoggle">EditorToolbarToggle</a></li>
+<li><a href="#editortoolbardropdown">EditorToolbarDropdown</a></li>
+<li><a href="#editortoolbardropdowntoggle">EditorToolbarDropdownToggle</a></li>
+</ul>
+</li>
+</ul>
+
+<p><a name="editortoolbarbutton" aria-hidden="true"></a></p>
+
+<h3>EditorToolbarButton</h3>
+
+<p>
+<code>EditorToolbarButton</code> is a standalone class that contains the logic of the element. This example creates a button that generates a cube when you click it:</p>
+
+<pre><code class="lang-cs">[EditorToolbarElement(id, typeof(SceneView))]
+class CreateCube : EditorToolbarButton
+{
+// This ID is used to populate toolbar elements.
+
+public const string id = &quot;ExampleToolbar/Button&quot;;
+
+// Because this is a VisualElement, it is appropriate to place initialization logic in the constructor.
+
+// In this method you can also register to any additional events as required. In this example there is a tooltip, an icon, and an action.
+
+    public CreateCube()
+       {
+
+// A toolbar element can be either text, icon, or a combination of the two. Keep in mind that if a toolbar is docked horizontally the text will be clipped, so it's a good idea to specify an icon.
+
+            text = &quot;Create Cube&quot;;
+            icon = AssetDatabase.LoadAssetAtPath&lt;Texture2D&gt;(&quot;Assets/CreateCubeIcon.png&quot;);
+            tooltip = &quot;Instantiate a cube in the scene.&quot;;
+            clicked += OnClick;
+}
+
+void OnClick()
+{
+    var newObj = GameObject.CreatePrimitive(PrimitiveType.Cube).transform;
+
+    // When writing editor tools, don't forget to be a good citizen and implement Undo.
+
+    Undo.RegisterCreatedObjectUndo(newObj.gameObject, &quot;Create Cube&quot;);
+
+// Note: Using ObjectFactory class instead of GameObject(like in this example) will register the undo entry automatically removing the need to register manually.
+
+}
+}
+</code></pre>
+
+<p>Add the element’s ID to the Overlay constructor:</p>
+
+<pre><code class="lang-cs">[Overlay(typeof(SceneView), &quot;ElementToolbar Example&quot;)]
+[Icon(&quot;Assets/unity.png&quot;)]
+public class EditorToolbarExample : ToolbarOverlay
+{
+    EditorToolbarExample() : base(CreateCube.id) { }
+
+}
+</code></pre>
+
+<p><a name="editortoolbartoggle" aria-hidden="true"></a></p>
+
+<h3>EditorToolbarToggle</h3>
+
+<p>Create a standalone class that contains all the logic of the element. This example creates a toggle that prints its state in the console and updates its text in the element:</p>
+
+<pre><code class="lang-cs">[EditorToolbarElement(id, typeof(SceneView))]
+class ToggleExample : EditorToolbarToggle
+{
+    public const string id = &quot;ExampleToolbar/Toggle&quot;;
+    public ToggleExample()
+    {
+        text = &quot;Toggle OFF&quot;;
+
+    // Register the class to a callback for when the toggle’s state changes
+
+        this.RegisterValueChangedCallback(OnStateChange);
+    }
+
+    void OnStateChange(ChangeEvent&lt;bool&gt; evt)
+    {
+        if (evt.newValue)
+        {
+
+    // Put logic for when the state is ON here
+
+                Debug.Log(&quot;Toggle State -&gt; ON&quot;);
+        text = &quot;Toggle ON&quot;;
+        }
+        else
+        {
+
+    // Put logic for when the state is OFF here
+
+                Debug.Log(&quot;Toggle State -&gt; OFF&quot;);
+        text = &quot;Toggle OFF&quot;;
+        }
+    }
+}
+</code></pre>
+
+<p>Add the element’s ID to the Overlay constructor:</p>
+
+<pre><code class="lang-cs">[Overlay(typeof(SceneView), &quot;ElementToolbar Example&quot;)]
+[Icon(&quot;Assets/unity.png&quot;)]
+public class EditorToolbarExample : ToolbarOverlay
+{
+    EditorToolbarExample() : base(
+ToggleExample.id
+) { }
+
+}
+
+</code></pre>
+
+<p><a name="editortoolbardropdown" aria-hidden="true"></a></p>
+
+<h3>EditorToolbarDropdown</h3>
+
+<p>Create a standalone class that contains all the logic of the element. Here is a simple example of a dropdown that adjusts its text with the drop-down selection.</p>
+
+<pre><code class="lang-cs">[EditorToolbarElement(id, typeof(SceneView))]
+class DropdownExample : EditorToolbarDropdown
+{
+    public const string id = &quot;ExampleToolbar/Dropdown&quot;;
+
+    static string dropChoice = null;
+
+    public DropdownExample()
+    {
+        text = &quot;Axis&quot;;
+        clicked += ShowDropdown;
+    }
+
+    void ShowDropdown()
+    {
+
+// A simple GenericMenu to populate the dropdown content
+
+        var menu = new GenericMenu();
+        menu.AddItem(new GUIContent(&quot;X&quot;), dropChoice == &quot;X&quot;, () =&gt; { text = &quot;X&quot;; dropChoice = &quot;X&quot;; });
+        menu.AddItem(new GUIContent(&quot;Y&quot;), dropChoice == &quot;Y&quot;, () =&gt; { text = &quot;Y&quot;; dropChoice = &quot;Y&quot;; });
+        menu.AddItem(new GUIContent(&quot;Z&quot;), dropChoice == &quot;Z&quot;, () =&gt; { text = &quot;Z&quot;; dropChoice = &quot;Z&quot;; });
+        menu.ShowAsContext();
+    }
+}
+</code></pre>
+
+<p>Add the element’s ID to the Overlay constructor:</p>
+
+<pre><code class="lang-cs">[Overlay(typeof(SceneView), &quot;ElementToolbar Example&quot;)]
+[Icon(&quot;Assets/unity.png&quot;)]
+public class EditorToolbarExample : ToolbarOverlay
+{
+    EditorToolbarExample() : base(
+DropdownExample.id
+) { }
+
+}
+</code></pre>
+
+<p><a name="editortoolbardropdowntoggle" aria-hidden="true"></a></p>
+
+<h3>EditorToolbarDropdownToggle</h3>
+
+<p>Create a standalone class that contains all the logic of the element. A dropdown toggle is a dropdown that you can toggle like the <span class="tooltip" tabindex="0" ><strong>Gizmo</strong><span class="tooltiptext">A graphic overlay associated with a GameObject in a Scene, and displayed in the Scene View. Built-in scene tools such as the move tool are Gizmos, and you can create custom Gizmos using textures or scripting. Some Gizmos are only drawn when the GameObject is selected, while other Gizmos are drawn by the Editor regardless of which GameObjects are selected. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about GizmosMenu.html#GizmosIcons" href="GizmosMenu.html#GizmosIcons">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Gizmo" aria-label="Go to glossary anchor for Gizmo">Glossary</a></span></span></span> menu in the Scene view. This example creates a rectangle in the corner of the Scene view whose color you can choose from a dropdown in the overlay. </p>
+
+<pre><code class="lang-cs">[EditorToolbarElement(id, typeof(SceneView))]
+class DropdownToggleExample : EditorToolbarDropdownToggle, IAccessContainerWindow
+{
+    public const string id = &quot;ExampleToolbar/DropdownToggle&quot;;
+
+
+    // This property is specified by IAccessContainerWindow and is used to access the Overlay's EditorWindow.
+
+    public EditorWindow containerWindow { get; set; }
+    static int colorIndex = 0;
+    static readonly Color[] colors = new Color[] { Color.red, Color.green, Color.cyan };
+    public DropdownToggleExample()
+    {
+        text = &quot;Color Bar&quot;;
+        tooltip = &quot;Display a color rectangle in the top left of the Scene view. Toggle on or off, and open the dropdown&quot; +
+                &quot;to change the color.&quot;;
+
+
+   // When the dropdown is opened, ShowColorMenu is invoked and you can create a pop-up menu.
+
+        dropdownClicked += ShowColorMenu;
+
+
+    // Subscribe to the Scene view OnGUI callback to draw a color swatch.
+
+        SceneView.duringSceneGui += DrawColorSwatch;
+    }
+
+
+    void DrawColorSwatch(SceneView view)
+    {
+
+        // Test that this callback is for the correct Scene view, and check if the toggle is on
+     // or off (value).
+
+        if (view != containerWindow || !value)
+        {
+            return;
+        }
+
+
+        Handles.BeginGUI();
+            GUI.color = colors[colorIndex];
+        GUI.DrawTexture(new Rect(8, 8, 120, 24), Texture2D.whiteTexture);
+        GUI.color = Color.white;
+        Handles.EndGUI();
+    }
+
+
+    // When the drop-down button is clicked, this method creates a pop-up menu at the mouse cursor position.
+
+    void ShowColorMenu()
+    {
+        var menu = new GenericMenu();
+        menu.AddItem(new GUIContent(&quot;Red&quot;), colorIndex == 0, () =&gt; colorIndex = 0);
+        menu.AddItem(new GUIContent(&quot;Green&quot;), colorIndex == 1, () =&gt; colorIndex = 1);
+        menu.AddItem(new GUIContent(&quot;Blue&quot;), colorIndex == 2, () =&gt; colorIndex = 2);
+        menu.ShowAsContext();
+    }
+}
+</code></pre>
+
+<p>Add the element’s ID to the Overlay constructor:</p>
+
+<pre><code class="lang-cs">[Overlay(typeof(SceneView), &quot;ElementToolbar Example&quot;)]
+[Icon(&quot;Assets/unity.png&quot;)]
+public class EditorToolbarExample : ToolbarOverlay
+{
+    EditorToolbarExample() : base(
+DropdownToggleExample.id
+) { }
+
+
+}
+</code></pre>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="UsingCustomEditorTools.html"></a></span><div class="tip">Custom Unity Editor tools</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="gizmos-handles-programming.html"></a></span><div class="tip">Programming with gizmos and handles</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

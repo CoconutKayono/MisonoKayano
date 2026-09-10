@@ -1,0 +1,538 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Create a custom Inspector</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<meta property="relative-path-to-manual" content="">
+<meta property="version-switcher-versions-with-this-page" content="Versions with this page:">
+<meta property="version-switcher-versions-without-this-page" content="Versions without this page:">
+<meta property="version-switcher-supported" content="Supported">
+<meta property="version-switcher-legacy" content="Legacy">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/Manual/UIE-HowTo-CreateCustomInspector.html">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20260626"></script><script type="text/javascript" src="docdata/toc.js?ts=20260626"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20260626"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20260626">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20260626">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/UIE-HowTo-CreateCustomInspector.html">English</a></li>
+<li><a href="/cn/current/Manual/UIE-HowTo-CreateCustomInspector.html">中文</a></li>
+<li><a href="/ja/current/Manual/UIE-HowTo-CreateCustomInspector.html">日本語</a></li>
+<li><a href="/kr/current/Manual/UIE-HowTo-CreateCustomInspector.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: Unity 6.7 Beta</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/UIE-HowTo-CreateCustomInspector.html">English</a></li>
+<li><a href="/cn/current/Manual/UIE-HowTo-CreateCustomInspector.html">中文</a></li>
+<li><a href="/ja/current/Manual/UIE-HowTo-CreateCustomInspector.html">日本語</a></li>
+<li><a href="/kr/current/Manual/UIE-HowTo-CreateCustomInspector.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="UIToolkits.html">UI systems</a></li>
+<li><a href="UIElements.html">UI Toolkit</a></li>
+<li><a href="UIE-support-for-editor-ui.html">Support for Editor UI</a></li>
+<li>Create a custom Inspector</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="UIE-HowTo-CreateEditorWindow.html"></a></span><div class="tip">Create a custom Editor window with C# script</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="ui-systems/create-default-inspector.html"></a></span><div class="tip">Create a default Inspector</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Create a custom Inspector</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>
+<strong>Version</strong>: 2022.3+</p>
+
+<p>Although there is a default <span class="tooltip" tabindex="0" ><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheInspector.html" href="UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span> for your MonoBehaviours and ScriptableObjects, you might want to write a custom Inspector for your classes. A custom Inspector can help you do the following:</p>
+
+<ul>
+<li>Create a more user-friendly representation of script properties.</li>
+<li>Organize and group properties together.</li>
+<li>Display or hide sections of the UI depending on the user’s choices.</li>
+<li>Provide additional information about the meaning of individual settings and properties.</li>
+</ul>
+
+<h2>Example overview</h2>
+
+<p>This example creates a custom Inspector for a MonoBehaviour class. It uses both C# <span class="tooltip" tabindex="0" ><strong>scripts</strong><span class="tooltiptext">A piece of code that allows you to create your own Components, trigger game events, modify Component properties over time and respond to user input in any way you like. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about creating-scripts.html" href="creating-scripts.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scripts" aria-label="Go to glossary anchor for Scripts">Glossary</a></span></span></span> and UI Builder to create the UI. The custom Inspector also features a custom <span class="tooltip" tabindex="0" ><strong>property drawer</strong><span class="tooltiptext">A Unity feature that allows you to customize the look of certain controls in the Inspector window by using attributes on your scripts, or by controlling how a specific Serializable class should look <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about editor-PropertyDrawers.html" href="editor-PropertyDrawers.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#PropertyDrawer" aria-label="Go to glossary anchor for PropertyDrawer">Glossary</a></span></span></span>.</p>
+
+<p>The custom Inspector displays the properties of a <code>Car</code> class, including the make, year built, color, and a list of tires. The Inspector uses a PropertyField control to display the properties of the <code>Car</code> class, and a custom property drawer to display the properties of the <code>Tire</code> class.</p>
+
+<p>You can find the completed files that this example creates in this <a href="https://github.com/Unity-Technologies/ui-toolkit-manual-code-examples/tree/master/create-a-custom-inspector">GitHub repository</a>.</p>
+
+<h2>Prerequisites</h2>
+
+<p>This guide is for developers familiar with the Unity Editor, UI Toolkit, and C# scripting. Before you start, get familiar with the following:</p>
+
+<ul>
+<li><span class="tooltip" tabindex="0" ><a href="UIE-VisualTree.html">Visual Tree</a><span class="tooltiptext">An object graph, made of lightweight nodes, that holds all the elements in a window or panel. It defines every UI you build with the UI Toolkit.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#visualtree" aria-label="Go to glossary anchor for visualtree">Glossary</a></span></span></span></li>
+<li><a href="UIE-Binding.html">SerializedObject data binding</a></li>
+<li><a href="UIBuilder.html">UI Builder</a></li>
+<li><a href="UIE-uxml-element-Foldout.html">Foldout</a></li>
+<li><a href="UIE-uxml-element-PropertyField.html">PropertyField</a></li>
+<li><a href="../ScriptReference/PropertyDrawer.html">PropertyDrawer</a></li>
+</ul>
+
+<h2>Create a new MonoBehaviour</h2>
+
+<p>To create a custom Inspector, first define a custom class that inherits from a <code>MonoBehaviour</code>. The custom class represents a simple <code>car</code> with several properties.</p>
+
+<ol>
+<li><p>Create a project in Unity with any template.</p></li>
+<li><p>In your <span class="tooltip" tabindex="0" ><strong>Project window</strong><span class="tooltiptext">A window that shows the contents of your <code>Assets</code> folder (Project tab) <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ProjectView.html" href="ProjectView.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Projectwindow" aria-label="Go to glossary anchor for Projectwindow">Glossary</a></span></span></span>, create a folder named <code>create-a-custom-inspector</code> to store all your files.</p></li>
+<li>
+<p>Create a C# script named <code>Car.cs</code> with the following content:</p>
+
+<pre><code class="lang-cs">using UnityEngine;
+
+public class Car : MonoBehaviour
+{
+     public string make = &quot;Toyota&quot;;
+     public int yearBuilt = 1980;
+     public Color color = Color.black;
+}
+</code></pre>
+</li>
+<li>
+<p>Create a new <span class="tooltip" tabindex="0" ><strong>GameObject</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-GameObject.html" href="class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span> in the <span class="tooltip" tabindex="0" ><strong>scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html" href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span> and attach the <code>Car</code> script component to it.</p>
+
+<figure>
+<img src="../uploads/Main/uie-howto-customInspector-defaultInspector.png" alt="Default Inspector for the Car object">
+<figcaption>Default Inspector for the Car object</figcaption>
+</figure>
+</li>
+</ol>
+
+<h2>Create a custom Inspector script</h2>
+
+<p>To create a custom Inspector for any serialized object, you need to create a class deriving from the <a href="../ScriptReference/Editor.html">Editor</a> base class and add the <a href="../ScriptReference/CustomEditor.html">CustomEditor</a> attribute to it. This attribute lets Unity know which class this custom Inspector represents.</p>
+
+<p>
+<strong>Note</strong>: The custom Inspector script must be in an <code>Editor</code> folder or an Editor-only assembly definition. This is because the <code>UnityEditor</code> namespace, which is essential for creating custom Inspectors, isn’t accessible outside these areas. If you try to create standalone builds without adhering to this, the build process fails.</p>
+
+<ol>
+<li><p>Create a folder named <code>Editor</code> inside the <code>create-a-custom-inspector</code> folder.</p></li>
+<li>
+<p>Create a C# script named <code>Car_Inspector.cs</code> inside the <code>Editor</code> folder with the following content:</p>
+
+<pre><code class="lang-cs">using UnityEditor;
+using UnityEditor.UIElements;
+using UnityEngine.UIElements;
+
+[CustomEditor(typeof(Car))]
+public class Car_Inspector : Editor
+{
+}
+</code></pre>
+</li>
+<li><p>Select the GameObject that has the <code>Car</code> component attached to it. The default Inspector displays. </p></li>
+<li>
+<p>To replace the default Inspector, inside the <code>Car_Inspector</code> class, add the following code to override <a href="../ScriptReference/Editor.CreateInspectorGUI.html">CreateInspectorGUI()</a> and return a new <span class="tooltip" tabindex="0" ><strong>visual element</strong><span class="tooltiptext">A node of a visual tree that instantiates or derives from the C# <a href="../ScriptReference/UIElements.VisualElement.html"><code>VisualElement</code></a> class. You can style the look, define the behaviour, and display it on screen as part of the UI. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UIE-VisualTree.html" href="UIE-VisualTree.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#visualelement" aria-label="Go to glossary anchor for visualelement">Glossary</a></span></span></span> containing the UI:</p>
+
+<pre><code class="lang-cs">public override VisualElement CreateInspectorGUI()
+{
+     // Create a new VisualElement to be the root of our Inspector UI.
+     VisualElement myInspector = new VisualElement();
+
+     // Add a simple label.
+     myInspector.Add(new Label(&quot;This is a custom Inspector&quot;));
+
+     // Return the finished Inspector UI.
+     return myInspector;
+}
+</code></pre>
+</li>
+<li>
+<p>Select the GameObject that has the <code>Car</code> component attached to it. The Inspector now displays the label <code>This is a custom Inspector</code> instead of the default Inspector.</p>
+
+<figure>
+<img src="../uploads/Main/uie-howto-customInspector-label.png" alt="Custom Inspector with a label">
+<figcaption>Custom Inspector with a label</figcaption>
+</figure>
+</li>
+</ol>
+
+<h2>Create a custom Inspector UI with UI Builder</h2>
+
+<p>You can create a custom Inspector UI with UI Builder, and use C# script to load and instantiate the UI from the UXML file.</p>
+
+<ol>
+<li><p>To open the UI Builder, select <strong>Window</strong> &gt; <strong>UI Toolkit</strong> &gt; <strong>UI Builder</strong>.</p></li>
+<li>
+<p>Select <strong>File</strong> &gt; <strong>New</strong> to create a new Visual Tree Asset.</p>
+
+<figure>
+<img src="../uploads/Main/uie-howto-customInspector-uibuilder-new.png" alt="Custom Inspector with a label">
+<figcaption>Custom Inspector with a label</figcaption>
+</figure>
+</li>
+<li>
+<p>To enable Editor-only controls in UI Builder, select the <code>&lt;unsaved file&gt;*.uxml</code> in the <strong>Hierarchy</strong> view and then select the <strong>Editor Extension Authoring</strong> checkbox.</p>
+
+<figure>
+<img src="../uploads/Main/uie-howto-customInspector-uibuilder-extensionauthoring.png" alt="Custom Inspector with a label">
+<figcaption>Custom Inspector with a label</figcaption>
+</figure>
+</li>
+<li>
+<p>Drag a label control from the <strong>Library</strong> to the <strong>Hierarchy</strong>. This adds a label control to the visual tree.</p>
+
+<figure>
+<img src="../uploads/Main/uie-howto-customInspector-uibuilder-label.png" alt="Custom Inspector with a label">
+<figcaption>Custom Inspector with a label</figcaption>
+</figure>
+</li>
+<li>
+<p>In the label control’s Inspector panel, update the label text.</p>
+
+<figure>
+<img src="../uploads/Main/uie-howto-customInspector-uibuilder-text.png" alt="Custom Inspector with a label">
+<figcaption>Custom Inspector with a label</figcaption>
+</figure>
+</li>
+<li><p>Select <strong>File</strong> &gt; <strong>Save</strong> and save the visual tree as <code>Car_Inspector_UXML.uxml</code> to the <code>Assets/create-a-custom-inspector</code> folder.</p></li>
+</ol>
+
+<h2>Use UXML inside a custom Inspector</h2>
+
+<p>To use the UXML file you created inside your custom Inspector, assign the file to the custom Inspector, and load and clone it inside the <code>CreateInspectorGUI()</code> function and add it to the visual tree. To do this, you can use the <a href="../ScriptReference/UIElements.VisualTreeAsset.CloneTree.html">CloneTree</a> method. You can pass any <code>VisualElement</code> as a parameter to act as a parent for the created elements.</p>
+
+<ol>
+<li>
+<p>In <code>Car_Inspector.cs</code>, create a public variable for a <code>VisualTreeAsset</code> in your script and assign <code>Car_Inspector_UXML.uxml</code> to it.</p>
+
+<pre><code class="lang-cs">public VisualTreeAsset inspectorUXML;
+</code></pre>
+</li>
+<li>
+<p>Update the <code>CreateInspectorGUI()</code> method to load the UXML file and clone it into the visual tree. The finished <code>Car_Inspector.cs</code> file looks like the following:</p>
+
+<pre><code class="lang-cs"> using UnityEditor;
+ using UnityEditor.UIElements;
+ using UnityEngine.UIElements;
+     
+ [CustomEditor(typeof(Car))]
+ public class Car_Inspector : Editor
+ {
+     public VisualTreeAsset inspectorUXML;
+     public override VisualElement CreateInspectorGUI()
+     {
+          // Create a new VisualElement to be the root of our Inspector UI.
+         VisualElement myInspector = new VisualElement();
+     
+         // Add a simple label.
+         myInspector.Add(new Label(&quot;This is a custom Inspector&quot;));
+     
+         // Load the UXML file and clone its tree into the inspector.
+         if (inspectorUXML != null)
+         {
+             VisualElement uxmlContent = inspectorUXML.CloneTree();
+             myInspector.Add(uxmlContent);
+         }
+     
+         // Return the finished Inspector UI.
+         return myInspector;
+     }
+ }
+     
+</code></pre>
+</li>
+<li><p>In the Inspector window of <code>Car_Inspector.cs</code>, assign the <code>Car_Inspector_UXML.uxml</code> file to the <strong>Inspector UXML</strong> field.</p></li>
+<li>
+<p>Select the GameObject that has the <code>Car</code> component attached to it. The Inspector for the <code>Car</code> component now displays two labels: one through script, and one through UI Builder/UXML.</p>
+
+<figure>
+<img src="../uploads/Main/uie-howto-customInspector-labels.png" alt="Custom Inspector with two labels label">
+<figcaption>Custom Inspector with two labels label</figcaption>
+</figure>
+</li>
+</ol>
+
+<h2>Bind a text field</h2>
+
+<p>This custom Inspector displays all properties of the <code>Car</code> class. When you update the UI controls, the values inside the instance of the <code>Car</code> class change. To do so, add UI controls to the visual tree and bind them to the individual properties of the class.</p>
+
+<p>To bind a control to a serialized property, assign the property to the <code>binding-path</code> field of the control. When you create a custom inspector, binding is automatic. <a href="../ScriptReference/Editor.CreateInspectorGUI.html"><code>CreateInspectorGUI()</code></a> does an implicit bind after you return your visual tree. For more information, refer to <a href="UIE-editor-binding.html">SerializedObject data binding</a>.</p>
+
+<ol>
+<li><p>Double-click <code>Car_Inspector_UXML.uxml</code> to open it in UI Builder.</p></li>
+<li>
+<p>Add a <span class="tooltip" tabindex="0" ><strong>TextField control</strong><span class="tooltiptext">A TextField control displays a non-interactive piece of text to the user, such as a caption, label for other GUI controls, or instruction. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about gui-Controls.html" href="gui-Controls.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#TextFieldcontrol" aria-label="Go to glossary anchor for TextFieldcontrol">Glossary</a></span></span></span>.</p>
+
+<figure>
+<img src="../uploads/Main/uie-howto-customInspector-textfield.png" alt="Add a text field to the UI">
+<figcaption>Add a text field to the UI</figcaption>
+</figure>
+</li>
+<li><p>In the Inspector panel of the TextField, set the label text to <code>Make of the car</code>.</p></li>
+<li>
+<p>Set the binding path to <code>make</code>.</p>
+
+<figure>
+<img src="../uploads/Main/uie-howto-customInspector-binding.png" alt="Bind a property to a control in UI Builder">
+<figcaption>Bind a property to a control in UI Builder</figcaption>
+</figure>
+</li>
+<li>
+<p>Add a style class <code>unity-base-field__aligned</code> to the <strong>Style Class List</strong> so that the text field aligns with other fields in the Inspector window. For more information, refer to <a href="../ScriptReference/UIElements.BaseField_1.html">BaseField</a>.</p>
+
+<figure>
+<img src="../uploads/Main/uie-custominspector-align-fields.png" alt="Add a style class to the text field">
+<figcaption>Add a style class to the text field</figcaption>
+</figure>
+</li>
+<li><p>In UI Builder, select <strong>File</strong> &gt; <strong>Save</strong>.</p></li>
+<li>
+<p>Select the GameObject that has the <code>Car</code> component attached to it. The Inspector for the <code>car</code> component now displays the <code>Make of the car</code> text field. The text field is bound to the <code>make</code> property of the <code>Car</code> class.</p>
+
+<figure>
+<img src="../uploads/Main/uie-howto-customInspector-firstproperty.png" alt="Custom Inspector showing a text field">
+<figcaption>Custom Inspector showing a text field</figcaption>
+</figure>
+</li>
+</ol>
+
+<h2>Bind a property field</h2>
+
+<p>To display the properties of the <code>Car</code> class, add a control for each field. The control must match the property type. For example, you must bind an <code>int</code> to an Integer field or an Integer Slider.</p>
+
+<p>Instead of adding a specific control based on the property type, you can use the generic <a href="../ScriptReference/UIElements.PropertyField.html">PropertyField</a> control. This control works for most types of serialized properties and generates the default Inspector UI for this property type.</p>
+
+<p>The advantage of a <code>PropertyField</code> is the Inspector UI automatically adjusts when you change the variable type inside your script. However, you can’t get a preview of the control inside the UI Builder because the control type is unknown until the visual tree is bound to a serialized object.</p>
+
+<ol>
+<li><p>Double-click <code>Car_Inspector_UXML.uxml</code> to open it in UI Builder.</p></li>
+<li>
+<p>Add a PropertyField control for the <code>yearBuilt</code> properties of the <code>Car</code> class, and set the binding path and the label text.</p>
+
+<figure>
+<img src="../uploads/Main/uie-howto-customInspector-uibuilder-propertyfield.png" alt="Add a property field in UI Builder">
+<figcaption>Add a property field in UI Builder</figcaption>
+</figure>
+</li>
+<li><p>Add a style class <code>unity-base-field__aligned</code> to the <strong>Style Class List</strong>.</p></li>
+<li><p>Add a PropertyField control for the <code>color</code> properties of the <code>Car</code> class, and set the binding path and the label text.</p></li>
+<li><p>Add a style class <code>unity-base-field__aligned</code> to the <strong>Style Class List</strong>.</p></li>
+<li><p>In UI Builder, select <strong>File</strong> &gt; <strong>Save</strong>.</p></li>
+<li>
+<p>Select the GameObject that has the <code>Car</code> component to it. The Inspector for the <code>car</code> component now displays the <code>Year Built</code> and <code>Paint Color</code> property fields.</p>
+
+<figure>
+<img src="../uploads/Main/uie-howto-customInspector-customInspector.png" alt="Custom Inspector with property fields">
+<figcaption>Custom Inspector with property fields</figcaption>
+</figure>
+</li>
+</ol>
+
+<h2>Create a custom property drawer</h2>
+
+<p>A custom property drawer is a custom Inspector UI for a custom serializable class. If that serializable class is part of another serialized object, the custom UI displays that property in the Inspector. In UI Toolkit, the <code>PropertyField</code> control displays the custom property drawer for a field if one exists.</p>
+
+<ol>
+<li>
+<p>In the <code>create-a-custom-inspector</code> folder, create a new script named <code>Tire.cs</code> with the following content:</p>
+
+<pre><code class="lang-cs">using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+    
+[System.Serializable]
+public class Tire
+{
+    public float airPressure = 21.5f;
+    public int profileDepth = 4;
+}
+    
+</code></pre>
+</li>
+<li>
+<p>In <code>Car.cs</code>, add a list <code>Tire</code> to the <code>Car</code> class. The finished <code>Car.cs</code> file looks like the following:</p>
+
+<pre><code class="lang-cs">using UnityEngine;
+    
+public class Car : MonoBehaviour
+{
+    public string make = &quot;Toyota&quot;;
+    public int yearBuilt = 1980;
+    public Color color = Color.black;
+    
+    // This car has four tires.
+    public Tire[] tires = new Tire[4];
+}
+</code></pre>
+</li>
+<li>
+<p>The PropertyField control works with all standard property types and also supports custom serializable classes and arrays. To display the properties of the car’s tires, add another <code>PropertyField</code> in <code>Car_Inspector_UXML.uxml</code> and bind it to <code>tires</code>. The finished <code>Car_Inspector_UXML.uxml</code> file looks like the following:</p>
+
+<pre><code class="lang-cs">&lt;ui:UXML xmlns:ui=&quot;UnityEngine.UIElements&quot; xmlns:uie=&quot;UnityEditor.UIElements&quot; editor-extension-mode=&quot;True&quot;&gt;
+    &lt;ui:TextField picking-mode=&quot;Ignore&quot; label=&quot;Make of the car&quot; value=&quot;filler text&quot; binding-path=&quot;make&quot; class=&quot;unity-base-field__aligned&quot; /&gt;
+    &lt;uie:PropertyField binding-path=&quot;yearBuilt&quot; label=&quot;Year Built&quot; class=&quot;unity-base-field__aligned&quot; /&gt;
+    &lt;uie:PropertyField binding-path=&quot;color&quot; label=&quot;Paint Color&quot; class=&quot;unity-base-field__aligned&quot; /&gt;
+    &lt;uie:PropertyField label=&quot;Tires&quot; binding-path=&quot;tires&quot; class=&quot;unity-base-field__aligned&quot; /&gt;
+&lt;/ui:UXML&gt;
+    
+</code></pre>
+</li>
+<li>
+<p>Select the GameObject with the <code>Car</code> component. The Inspector for the <code>car</code> component now displays the <code>Tires</code> property field.</p>
+
+<figure>
+<img src="../uploads/Main/uie-howto-customInspector-serializable.png" alt="Use a PropertyField control to display an array">
+<figcaption>Use a PropertyField control to display an array</figcaption>
+</figure>
+</li>
+</ol>
+
+<h2>Create UI for the custom property drawer</h2>
+
+<p>You can create a custom property drawer to customize the look of the individual <code>Tire</code> elements in the list. Instead of deriving from the <code>Editor</code> base class, custom property drawers derive from the <a href="../ScriptReference/PropertyDrawer.html"><code>PropertyDrawer</code></a> class. </p>
+
+<p>You can use C# script or UXML to create the UI for the property. This example uses C# script to create the custom UI. To create UI for the custom property, override the <a href="../ScriptReference/PropertyDrawer.CreatePropertyGUI.html">CreatePropertyGUI</a> method.</p>
+
+<ol>
+<li>
+<p>In the <code>Editor</code> folder, Create a new script named <code>Tire_PropertyDrawer.cs</code> with the following content:</p>
+
+<pre><code class="lang-cs">using UnityEditor;
+using UnityEditor.UIElements;
+using UnityEngine.UIElements;
+    
+[CustomPropertyDrawer(typeof(Tire))]
+public class Tire_PropertyDrawer : PropertyDrawer
+{
+    public override VisualElement CreatePropertyGUI(SerializedProperty property)
+    {
+        // Create drawer UI using C#.
+        var popup = new UnityEngine.UIElements.PopupWindow();
+        popup.text = &quot;Tire Details&quot;;
+        popup.Add(new PropertyField(property.FindPropertyRelative(&quot;airPressure&quot;), &quot;Air Pressure (psi)&quot;));
+        popup.Add(new PropertyField(property.FindPropertyRelative(&quot;profileDepth&quot;), &quot;Profile Depth (mm)&quot;));
+    
+        // Return the finished UI.
+        return popup;
+    }
+}
+</code></pre>
+</li>
+<li>
+<p>Select the GameObject that has the <code>Car</code> component to it. The Inspector for the <code>car</code> component now displays the <code>Tires</code> property field with a custom property drawer.</p>
+
+<figure>
+<img src="../uploads/Main/uie-howto-customInspector-custompropertydrawer.png" alt="Inspector using a custom property drawer">
+<figcaption>Inspector using a custom property drawer</figcaption>
+</figure>
+</li>
+</ol>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="ui-systems/create-default-inspector.html">Create a default Inspector</a></li>
+<li><a href="UIE-simple-ui-toolkit-workflow.html">Get started with UI Toolkit</a></li>
+<li><a href="../ScriptReference/PropertyDrawer.html">PropertyDrawer</a></li>
+<li><a href="../ScriptReference/UIElements.InspectorElement.FillDefaultInspector.html">FillDefaultInspector</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="UIE-HowTo-CreateEditorWindow.html"></a></span><div class="tip">Create a custom Editor window with C# script</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="ui-systems/create-default-inspector.html"></a></span><div class="tip">Create a default Inspector</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

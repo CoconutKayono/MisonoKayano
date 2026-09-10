@@ -1,0 +1,286 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: 15. Test cases</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<meta property="relative-path-to-manual" content="../../">
+<meta property="version-switcher-versions-with-this-page" content="Versions with this page:">
+<meta property="version-switcher-versions-without-this-page" content="Versions without this page:">
+<meta property="version-switcher-supported" content="Supported">
+<meta property="version-switcher-legacy" content="Legacy">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../../../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../../../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../../../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../../../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../../../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../../../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../../../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/Manual/test-framework/course/test-cases.html">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../../../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../../../StaticFilesManual/js/jquery.js?ts=20260626"></script><script type="text/javascript" src="../../../StaticFilesManual/js/core.js?ts=20260626"></script><script type="text/javascript" src="../../../StaticFilesManual/js/image-comp.js?ts=20260626"></script><script type="text/javascript" src="../../docdata/toc.js?ts=20260626"></script><script type="text/javascript" src="../../docdata/global_toc.js?ts=20260626"></script><link rel="stylesheet" type="text/css" href="../../../StaticFilesManual/css/core.css?ts=20260626">
+<link rel="stylesheet" type="text/css" href="../../../StaticFilesManual/css/icons.css?ts=20260626">
+<link rel="stylesheet" href="../../../StaticFilesManual/css/prism.css">
+<script src="../../../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../../../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../../../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../../../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="../../30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../../index.html" class="selected">Manual</a></li>
+<li><a href="../../../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/test-framework/course/test-cases.html">English</a></li>
+<li><a href="/cn/current/Manual/test-framework/course/test-cases.html">中文</a></li>
+<li><a href="/ja/current/Manual/test-framework/course/test-cases.html">日本語</a></li>
+<li><a href="/kr/current/Manual/test-framework/course/test-cases.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: Unity 6.7 Beta</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/test-framework/course/test-cases.html">English</a></li>
+<li><a href="/cn/current/Manual/test-framework/course/test-cases.html">中文</a></li>
+<li><a href="/ja/current/Manual/test-framework/course/test-cases.html">日本語</a></li>
+<li><a href="/kr/current/Manual/test-framework/course/test-cases.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="../../scripting.html">Programming in Unity</a></li>
+<li><a href="../../test-framework/test-framework-introduction.html">Testing your code</a></li>
+<li><a href="../../test-framework/course/overview.html">Unity Test Framework learning materials</a></li>
+<li><a href="../../test-framework/course/test-framework-general-introduction.html">General introduction to Unity Test Framework</a></li>
+<li>15. Test cases</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="../../test-framework/course/preserve-test-state.html"></a></span><div class="tip">14. Preserve test state</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="../../test-framework/course/custom-attributes.html"></a></span><div class="tip">16. Custom attributes</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>15. Test cases</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<h2>Learning objectives</h2>
+
+<p>This section will cover <code>[TestCase]</code> and similar NUnit attributes and how to work with them in UnityTests.</p>
+
+<h2>Intro and motivation</h2>
+
+<p>NUnit has a few tools for parameterized tests, which can be used to specify test cases with variating parameters. This can drastically reduce the amount of repeated code and make the test cleaner to use. </p>
+
+<p>An example of a parameterized test using the <code>[TestCase]</code> attribute: </p>
+
+<pre><code class="lang-cs">[Test]
+[TestCase(49, &quot;a string&quot;, true)]
+[TestCase(9, &quot;something&quot;, false)]
+public void MyTest(int firstValue, string secondValue, bool expectedOutcome)
+{
+ ...
+}  
+</code></pre>
+
+<p>This will generate two tests, each with a different input to the method body. </p>
+
+<p>In addition to the <code>[TestCase]</code> attribute, NUnit also has a <code>[Values]</code> attribute, which specifies a set of values on each individual input. An example of such is: </p>
+
+<pre><code class="lang-cs">[Test]
+public void MyTest([Values(49, 9)]int firstValue, [Values(&quot;a string&quot;, &quot;something&quot;)]string secondValue)
+{
+ ...
+}  
+</code></pre>
+
+<p>When specifying multiple input parameters, they are treated as combinatorial. That means that each combination of them will be tested. For the above example, that will result in a total of 4 cases: </p>
+
+<pre><code class="lang-cs">MyTest(49, &quot;a string&quot;)
+MyTest(49, &quot;something&quot;)
+MyTest(9, &quot;a string&quot;)
+MyTest(9, &quot;something&quot;) 
+</code></pre>
+
+<p>This can easily explode into many combinations. The combinations might not all be valuable and would just waste time, so use this with care. </p>
+
+<p>For both the <code>[TestCase]</code> and <code>[Values]</code> attributes, there is a more dynamic version called <code>[TestCaseSource]</code> and <code>[ValueSource]</code> accordingly. These each take in a static method or array, returning a collection of objects. </p>
+
+<p>Of these 4 methods, the <code>[ValueSource]</code> attribute is currently the only one supported by <code>[UnityTest]</code>. Since this would produce combinational tests, if multiple arguments with <code>[ValueSource]</code> are provided, then it is recommended to make a test case struct, if multiple arguments are needed for the test. An example of such could look like this: </p>
+
+<pre><code class="lang-cs">[UnityTest]
+public IEnumerator AddAsyncCalculatesCorrectValue([ValueSource(nameof(TestCases))] TestCase testCase)
+{
+ ...
+}
+
+private static IEnumerable TestCases()
+{
+ yield return new TestCase {value1 = 4, value2 = &quot;a string&quot;};
+ yield return new TestCase {value1 = 8, value2 = &quot;another string&quot;};
+}
+
+public struct TestCase
+{
+ public int value1;
+ public string value2;
+
+ public override string ToString()
+ {
+  return $&quot;{value1}, {value2}&quot;;
+ }
+}
+</code></pre>
+
+<h2>Exercise</h2>
+
+<p>In the <a href="test-framework-general-introduction.html#import-samples">sample</a> <code>15_TestCases</code> a class is set up with some basic math. It has two methods: </p>
+
+<ul>
+<li><p>
+<code>Add</code> which takes two integers and adds them together.</p></li>
+<li><p>
+<code>AddAsync</code> also adds two integers together, but does so asynchronously, yielding back an <code>IEnumerator</code>
+</p></li>
+</ul>
+
+<p>The task is to add tests for the two methods. The <code>AddAsync</code> method first returns the result after a few frames, so that will be best suited for a <code>[UnityTest]</code>. Note that it is not enough to yield back the <code>IEnumerator</code>, as the test framework does not curently support nested yields. Instead, create a loop to move over each element until it’s done. At each step of the while loop, let the test yield back null. </p>
+
+<h2>Hints</h2>
+
+<ul>
+<li>The <code>ToString()</code> implementation in the struct is there to provide readable info in the <span class="tooltip" tabindex="0" ><strong>test runner</strong><span class="tooltiptext">The Test Framework package (formerly called the Test Runner) is a Unity tool that tests your code in both Edit mode and Play mode, and also on target platforms such as Standalone, Android, or iOS. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about https://docs.unity3d.com/Packages/com.unity.test-framework@latest" href="../../https://docs.unity3d.com/Packages/com.unity.test-framework@latest">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../../Glossary.html#TestRunner" aria-label="Go to glossary anchor for TestRunner">Glossary</a></span></span></span> treeview. Without it, it would just show the struct name as the test argument for every case.</li>
+</ul>
+
+<h2>Solution</h2>
+
+<p>A solution for the exercise is available in the sample <code>15_TestCases_Solution</code>. Tests for both methods can be implemented as follows: </p>
+
+<pre><code class="lang-cs">[Test]
+[TestCase(24, 80, 104)]
+[TestCase(10, -15, -5)]
+[TestCase(int.MaxValue, 10, int.MinValue + 9)]
+public void AddCalculatesCorrectValue(int valueA, int valueB, int expectedResult)
+{
+ var myClass = new MyClass();
+
+ var result = myClass.Add(valueA, valueB);
+ 
+ Assert.That(result, Is.EqualTo(expectedResult));
+}
+
+[UnityTest]
+public IEnumerator AddAsyncCalculatesCorrectValue([ValueSource(nameof(AdditionCases))] AddCase addCase)
+{
+ var myClass = new MyClass();
+
+ var enumerator = myClass.AddAsync(addCase.valueA, addCase.valueB);
+ while (enumerator.MoveNext())
+ {
+  yield return null;
+ }
+ var result = enumerator.Current;
+ 
+ Assert.That(result, Is.EqualTo(addCase.expectedResult));
+}
+
+private static IEnumerable AdditionCases()
+{
+ yield return new AddCase {valueA = 24, valueB = 80, expectedResult = 104};
+ yield return new AddCase {valueA = 10, valueB = -15, expectedResult = -5};
+ yield return new AddCase {valueA = int.MaxValue, valueB = 10, expectedResult = int.MinValue + 9};
+}
+
+public struct AddCase
+{
+ public int valueA;
+ public int valueB;
+ public int expectedResult;
+
+ public override string ToString()
+ {
+  return $&quot;{valueA} + {valueB} = {expectedResult}&quot;;
+ }
+}
+</code></pre>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="../../test-framework/course/preserve-test-state.html"></a></span><div class="tip">14. Preserve test state</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="../../test-framework/course/custom-attributes.html"></a></span><div class="tip">16. Custom attributes</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

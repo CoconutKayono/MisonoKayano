@@ -1,0 +1,344 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Write an unlit basic shader in URP</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<meta property="relative-path-to-manual" content="../">
+<meta property="version-switcher-versions-with-this-page" content="Versions with this page:">
+<meta property="version-switcher-versions-without-this-page" content="Versions without this page:">
+<meta property="version-switcher-supported" content="Supported">
+<meta property="version-switcher-legacy" content="Legacy">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/Manual/urp/writing-shaders-urp-basic-unlit-structure.html">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../../StaticFilesManual/js/jquery.js?ts=20260626"></script><script type="text/javascript" src="../../StaticFilesManual/js/core.js?ts=20260626"></script><script type="text/javascript" src="../../StaticFilesManual/js/image-comp.js?ts=20260626"></script><script type="text/javascript" src="../docdata/toc.js?ts=20260626"></script><script type="text/javascript" src="../docdata/global_toc.js?ts=20260626"></script><link rel="stylesheet" type="text/css" href="../../StaticFilesManual/css/core.css?ts=20260626">
+<link rel="stylesheet" type="text/css" href="../../StaticFilesManual/css/icons.css?ts=20260626">
+<link rel="stylesheet" href="../../StaticFilesManual/css/prism.css">
+<script src="../../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="../30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../index.html" class="selected">Manual</a></li>
+<li><a href="../../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/urp/writing-shaders-urp-basic-unlit-structure.html">English</a></li>
+<li><a href="/cn/current/Manual/urp/writing-shaders-urp-basic-unlit-structure.html">中文</a></li>
+<li><a href="/ja/current/Manual/urp/writing-shaders-urp-basic-unlit-structure.html">日本語</a></li>
+<li><a href="/kr/current/Manual/urp/writing-shaders-urp-basic-unlit-structure.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: Unity 6.7 Beta</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/urp/writing-shaders-urp-basic-unlit-structure.html">English</a></li>
+<li><a href="/cn/current/Manual/urp/writing-shaders-urp-basic-unlit-structure.html">中文</a></li>
+<li><a href="/ja/current/Manual/urp/writing-shaders-urp-basic-unlit-structure.html">日本語</a></li>
+<li><a href="/kr/current/Manual/urp/writing-shaders-urp-basic-unlit-structure.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="../materials-and-shaders.html">Materials and shaders</a></li>
+<li><a href="../Shaders.html">Custom shaders</a></li>
+<li><a href="../urp/writing-custom-shaders-urp.html">Writing custom shaders in URP</a></li>
+<li><a href="../urp/writing-shaders-urp-landing.html">Examples of writing a custom shader in URP</a></li>
+<li>Write an unlit basic shader in URP</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="../urp/writing-shaders-urp-basic-prerequisites.html"></a></span><div class="tip">Create a sample scene in URP</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="../urp/writing-shaders-urp-unlit-color.html"></a></span><div class="tip">Write an unlit shader with color input in URP</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Write an unlit basic shader in URP</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+<div class="res-examples" style="background-color: #f2dede; font-size: 14px;">
+<p style="margin: 0; font-size: 14px;">
+<strong style="font-size: 14px;">Important</strong>: The Built-In Render Pipeline is deprecated and will be made obsolete in a future release.<br>It remains supported, including bug fixes and maintenance, through the full Unity 6.7 LTS lifecycle.<br>For more information on migration, refer to <a href="urp/upgrading-from-birp.html">Migrating from the Built-In Render Pipeline to the Universal Render Pipeline</a> and <a href="render-pipelines-feature-comparison.html">Render pipeline feature comparison</a>.</p>
+</div>
+<div class="clear"></div>
+
+<p>This example shows a basic URP-compatible shader. This shader fills the <span class="tooltip" tabindex="0" ><strong>mesh</strong><span class="tooltiptext">The main graphics primitive of Unity. Meshes make up a large part of your 3D worlds. Unity supports triangulated or Quadrangulated polygon meshes. Nurbs, Nurms, Subdiv surfaces must be converted to polygons. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about mesh.html" href="../mesh.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#Mesh" aria-label="Go to glossary anchor for Mesh">Glossary</a></span></span></span> shape with a color predefined in the shader code.</p>
+
+<p>To try the shader for yourself, copy and paste the following ShaderLab code into the Shader asset.</p>
+
+<p>
+<strong>Note</strong>: If you enable <strong>Depth Priming Mode</strong> in the <a href="universalrp-asset.html">URP asset</a>, this shader renders opaque objects as invisible. For more information, refer to <a href="writing-shaders-urp-depth-only.html">Write depth only in a shader</a>.</p>
+
+<pre><code class="lang-cpp">// This shader fills the mesh shape with a color predefined in the code.
+Shader &quot;Example/URPUnlitShaderBasic&quot;
+{
+    // The properties block of the Unity shader. In this example this block is empty
+    // because the output color is predefined in the fragment shader code.
+    Properties
+    { }
+
+    // The SubShader block containing the Shader code.
+    SubShader
+    {
+        // SubShader Tags define when and under which conditions a SubShader block or
+        // a pass is executed.
+        Tags { &quot;RenderType&quot; = &quot;Opaque&quot; &quot;RenderPipeline&quot; = &quot;UniversalPipeline&quot; }
+
+        Pass
+        {
+            // The HLSL code block. Unity SRP uses the HLSL language.
+            HLSLPROGRAM
+            // This line defines the name of the vertex shader.
+            #pragma vertex vert
+            // This line defines the name of the fragment shader.
+            #pragma fragment frag
+
+            // The Core.hlsl file contains definitions of frequently used HLSL
+            // macros and functions, and also contains #include references to other
+            // HLSL files (for example, Common.hlsl, SpaceTransforms.hlsl, etc.).
+            #include &quot;Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl&quot;
+
+            // The structure definition defines which variables it contains.
+            // This example uses the Attributes structure as an input structure in
+            // the vertex shader.
+            struct Attributes
+            {
+                // The positionOS variable contains the vertex positions in object
+                // space.
+                float4 positionOS   : POSITION;
+            };
+
+            struct Varyings
+            {
+                // The positions in this struct must have the SV_POSITION semantic.
+                float4 positionHCS  : SV_POSITION;
+            };
+
+            // The vertex shader definition with properties defined in the Varyings
+            // structure. The type of the vert function must match the type (struct)
+            // that it returns.
+            Varyings vert(Attributes IN)
+            {
+                // Declaring the output object (OUT) with the Varyings struct.
+                Varyings OUT;
+                // The TransformObjectToHClip function transforms vertex positions
+                // from object space to homogenous clip space.
+                OUT.positionHCS = TransformObjectToHClip(IN.positionOS.xyz);
+                // Returning the output.
+                return OUT;
+            }
+
+            // The fragment shader definition.
+            half4 frag() : SV_Target
+            {
+                // Defining the color variable and returning it.
+                half4 customColor = half4(0.5, 0, 0, 1);
+                return customColor;
+            }
+            ENDHLSL
+        }
+    }
+}
+</code></pre>
+
+<p>The fragment shader colors the <span class="tooltip" tabindex="0" ><strong>GameObject</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-GameObject.html" href="../class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span> dark red (RGB value (0.5, 0, 0)).</p>
+
+<figure>
+<img src="../../uploads/urp/shader-examples/unlit-shader-tutorial-basic-hardcoded-color.png" alt="The shader paints the GameObject dark red">
+<figcaption>The shader paints the GameObject dark red</figcaption>
+</figure>
+
+<p>The following section introduces you to the structure of this basic Unity shader.</p>
+
+<p><a name="basic-shaderlab-structure" aria-hidden="true"></a></p>
+
+<h2>Basic ShaderLab structure</h2>
+
+<p>Unity shaders are written in a Unity-specific language called <span class="tooltip" tabindex="0" ><a href="https://docs.unity3d.com/Manual/SL-Shader.html">ShaderLab</a><span class="tooltiptext">Unity’s language for defining the structure of Shader objects. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about SL-Shader.html" href="../SL-Shader.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#ShaderLab" aria-label="Go to glossary anchor for ShaderLab">Glossary</a></span></span></span>.</p>
+
+<p>The Unity shader in this example has the following blocks:</p>
+
+<ul>
+<li><span class="tooltip" tabindex="0" ><a href="#shader">Shader</a><span class="tooltiptext">A program that runs on the GPU. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Shaders.html" href="../Shaders.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#shader" aria-label="Go to glossary anchor for shader">Glossary</a></span></span></span></li>
+<li><a href="#properties">Properties</a></li>
+<li><a href="#subshader">SubShader</a></li>
+<li><a href="#pass">Pass</a></li>
+<li><a href="#hlsl">HLSLPROGRAM</a></li>
+</ul>
+
+<h3>
+<a name="shader" aria-hidden="true"></a>Shader block</h3>
+
+<p>ShaderLab code starts with the <code>Shader</code> declaration.</p>
+
+<pre><code class="lang-cpp">Shader &quot;Example/URPUnlitShaderBasic&quot;
+</code></pre>
+
+<p>The path in this declaration determines the display name and location of the Unity shader in the Shader menu on a Material. The method <a href="https://docs.unity3d.com/ScriptReference/Shader.Find.html">Shader.Find</a> also uses this path.</p>
+
+<figure>
+<img src="../../uploads/urp/shader-examples/urp-material-ui-shader-path.png" alt="Location of the shader in the Shader menu on a Material">
+<figcaption>Location of the shader in the Shader menu on a Material</figcaption>
+</figure>
+
+<h3>
+<a name="properties" aria-hidden="true"></a>Properties block</h3>
+
+<p>The <a href="https://docs.unity3d.com/Manual/SL-Properties.html">Properties</a> block contains the declarations of properties that users can set in the <span class="tooltip" tabindex="0" ><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheInspector.html" href="../UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span> window on a Material.</p>
+
+<p>In this example, the Properties block is empty, because this Unity shader does not expose any Material properties that a user can define.</p>
+
+<h3>
+<a name="subshader" aria-hidden="true"></a>SubShader block</h3>
+
+<p>A Unity shader source file contains one or more <a href="https://docs.unity3d.com/Manual/SL-SubShader.html">SubShader</a> blocks. When rendering a mesh, Unity selects the first SubShader that is compatible with the GPU on the target device.</p>
+
+<p>A SubShader block can optionally contain a SubShader Tags block. Use the <code>Tags</code> keyword to declare a SubShader Tags block.</p>
+
+<pre><code class="lang-hlsl">Tags { &quot;RenderType&quot; = &quot;Opaque&quot; &quot;RenderPipeline&quot; = &quot;UniversalPipeline&quot; }
+</code></pre>
+
+<p>A SubShader Tag with a name of <code>RenderPipeline</code> tells Unity which <span class="tooltip" tabindex="0" ><strong>render pipelines</strong><span class="tooltiptext">A series of operations that take the contents of a Scene, and displays them on a screen. Unity lets you choose from pre-built render pipelines, or write your own. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about render-pipelines.html" href="../render-pipelines.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#renderpipeline" aria-label="Go to glossary anchor for renderpipeline">Glossary</a></span></span></span> to use this SubShader with, and the value of <code>UniversalPipeline</code> indicates that Unity should use this SubShader with URP.</p>
+
+<p>To execute the same shader in different render pipelines, create multiple SubShader blocks with different <code>RenderPipeline</code> tag values. To execute a SubShader block in HDRP, set the <code>RenderPipeline</code> tag to <code>HDRenderPipeline</code>, to execute it in the Built-in Render Pipeline, set <code>RenderPipeline</code> to an empty value.</p>
+
+<p>For more information on SubShader Tags, refer to <a href="https://docs.unity3d.com/Manual/SL-SubShaderTags.html">ShaderLab: SubShader Tags</a>.</p>
+
+<h3>
+<a name="pass" aria-hidden="true"></a>Pass block</h3>
+
+<p>In this example, there is one Pass block that contains the HLSL program code. For more information on Pass blocks, refer to <a href="https://docs.unity3d.com/Manual/SL-Pass.html">ShaderLab: Pass</a>.</p>
+
+<p>A Pass block can optionally contain a Pass tags block. For more information, refer to <a href="urp-shaders/urp-shaderlab-pass-tags.html">URP ShaderLab Pass tags</a>.</p>
+
+<h3>
+<a name="hlsl" aria-hidden="true"></a>HLSLPROGRAM block</h3>
+
+<p>This block contains the HLSL program code.</p>
+
+<blockquote>
+<p>
+<strong>Note</strong>: HLSL language is the preferred language for URP shaders.</p>
+</blockquote>
+
+<p>This block contains the <code>#include</code> declaration with the reference to the <code>Core.hlsl</code> file.</p>
+
+<pre><code class="lang-cpp">#include &quot;Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl&quot;
+</code></pre>
+
+<p>The <code>Core.hlsl</code> file contains definitions of frequently used HLSL macros and functions, and also contains #include references to other HLSL files (for example, <code>Common.hlsl</code> and <code>SpaceTransforms.hlsl</code>).</p>
+
+<p>For example, the <span class="tooltip" tabindex="0" ><strong>vertex shader</strong><span class="tooltiptext">A program that runs on each vertex of a 3D model when the model is being rendered. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about writing-shader-writing-shader-programs-hlsl.html" href="../writing-shader-writing-shader-programs-hlsl.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#vertexshader" aria-label="Go to glossary anchor for vertexshader">Glossary</a></span></span></span> in the HLSL code uses the <code>TransformObjectToHClip</code> function from the <code>SpaceTransforms.hlsl</code> file. The function transforms vertex positions from object space to homogenous space:</p>
+
+<pre><code class="lang-cpp">Varyings vert(Attributes IN)
+{
+    Varyings OUT;
+    OUT.positionHCS = TransformObjectToHClip(IN.positionOS.xyz);
+    return OUT;
+}
+</code></pre>
+
+<blockquote>
+<p>
+<strong>Note</strong>: Don’t import shader library files from both the Scriptable Render Pipeline (SRP) and the Built-In Render Pipeline in the same shader. Some SRP shader macros and functions might conflict with the Built-in Render Pipeline shader functions. For more information, refer to <a href="use-built-in-shader-methods.html">Shader methods in URP</a> and <a href="../SL-BuiltinIncludes.html">Import a file from the shader library in the Built-In Render Pipeline</a>.</p>
+</blockquote>
+
+<p>The fragment shader in this basic HLSL code outputs the single color predefined in the code:</p>
+
+<pre><code class="lang-cpp">half4 frag() : SV_Target
+{
+    half4 customColor;
+    customColor = half4(0.5, 0, 0, 1);
+    return customColor;
+}
+</code></pre>
+
+<p>Section <a href="writing-shaders-urp-unlit-color.html">URP unlit shader with color input</a> shows how to add the editable color property in the Inspector window on the Material.</p>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="../urp/writing-shaders-urp-basic-prerequisites.html"></a></span><div class="tip">Create a sample scene in URP</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="../urp/writing-shaders-urp-unlit-color.html"></a></span><div class="tip">Write an unlit shader with color input in URP</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

@@ -1,0 +1,187 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: 1. Running a test in a Unity project</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<meta property="relative-path-to-manual" content="../../">
+<meta property="version-switcher-versions-with-this-page" content="Versions with this page:">
+<meta property="version-switcher-versions-without-this-page" content="Versions without this page:">
+<meta property="version-switcher-supported" content="Supported">
+<meta property="version-switcher-legacy" content="Legacy">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../../../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../../../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../../../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../../../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../../../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../../../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../../../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/Manual/test-framework/course/running-test.html">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../../../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../../../StaticFilesManual/js/jquery.js?ts=20260626"></script><script type="text/javascript" src="../../../StaticFilesManual/js/core.js?ts=20260626"></script><script type="text/javascript" src="../../../StaticFilesManual/js/image-comp.js?ts=20260626"></script><script type="text/javascript" src="../../docdata/toc.js?ts=20260626"></script><script type="text/javascript" src="../../docdata/global_toc.js?ts=20260626"></script><link rel="stylesheet" type="text/css" href="../../../StaticFilesManual/css/core.css?ts=20260626">
+<link rel="stylesheet" type="text/css" href="../../../StaticFilesManual/css/icons.css?ts=20260626">
+<link rel="stylesheet" href="../../../StaticFilesManual/css/prism.css">
+<script src="../../../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../../../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../../../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../../../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="../../30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../../index.html" class="selected">Manual</a></li>
+<li><a href="../../../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/test-framework/course/running-test.html">English</a></li>
+<li><a href="/cn/current/Manual/test-framework/course/running-test.html">中文</a></li>
+<li><a href="/ja/current/Manual/test-framework/course/running-test.html">日本語</a></li>
+<li><a href="/kr/current/Manual/test-framework/course/running-test.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: Unity 6.7 Beta</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/test-framework/course/running-test.html">English</a></li>
+<li><a href="/cn/current/Manual/test-framework/course/running-test.html">中文</a></li>
+<li><a href="/ja/current/Manual/test-framework/course/running-test.html">日本語</a></li>
+<li><a href="/kr/current/Manual/test-framework/course/running-test.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="../../scripting.html">Programming in Unity</a></li>
+<li><a href="../../test-framework/test-framework-introduction.html">Testing your code</a></li>
+<li><a href="../../test-framework/course/overview.html">Unity Test Framework learning materials</a></li>
+<li><a href="../../test-framework/course/test-framework-general-introduction.html">General introduction to Unity Test Framework</a></li>
+<li>1. Running a test in a Unity project</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="../../test-framework/course/test-framework-general-introduction.html"></a></span><div class="tip">General introduction to Unity Test Framework</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="../../test-framework/course/arrange-act-assert.html"></a></span><div class="tip">2. Arrange, Act, Assert</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>1. Running a test in a Unity project</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<h2>Learning objectives</h2>
+
+<p>This exercise will teach you how to set up a simple Unity project with a test assembly and tests. It will also introduce the structure of unit tests based on NUnit.</p>
+
+<h2>Intro and motivation</h2>
+
+<p>At Unity, our main way of testing content is using the Unity Test Framework, which comes as a <span class="tooltip" tabindex="0" ><strong>default package</strong><span class="tooltiptext">Unity automatically pre-installs a select number of <em>default</em> packages (for example, the Analytics Library, Unity Timeline, etc.) when you create a new project. This differs from a <strong>bundled package</strong> because you don’t need to install it and it differs from a <strong>built-in package</strong> because it extends Unity’s features rather than being able to enable or disable them.<br/><span class="tooltipGlossaryLink">See in <a href="../../Glossary.html#defaultpackage" aria-label="Go to glossary anchor for defaultpackage">Glossary</a></span></span></span> in the Unity Editor. Knowing how to set up a basic project with tests can help you get started on your journey.</p>
+
+<h2>Exercise</h2>
+
+<p>Import the <a href="test-framework-general-introduction.html#import-samples">sample</a> <code>1_RunningTest_Project</code> into your Unity Editor (version 2019.2 or newer) from the Package Manager window. </p>
+
+<p>
+<strong>Note:</strong> The project contains one <code>.cs</code> file (<code>MyMath.cs</code>), which is a simple math implementation. The exercise is to create unit tests for this class. </p>
+
+<p>Open up the Test Runner UI (<strong>Window &gt; General &gt; TestRunner</strong>) and set up a new EditMode test assembly alongside the MyExercise folder. Detailed instructions are available in the <a href="../workflow-create-test-assembly.html">Getting started section</a>. Create a new test inside the new test assembly folder (default name is <code>Tests</code>) either from the Test Runner UI or by right-clicking in the Project window and selecting <strong>Create &gt; Testing &gt; C# test script</strong>. Before we do the test, it is also necessary to link up our test assembly with the existing code assembly. Click on the test assembly you created in the Project window to see it in the <strong>Inspector</strong> (Click on the Tests folder &gt; Tests). </p>
+
+<p>In the Assembly Definition References, you will see that <code>UnityEngine.TestRunner</code> and <code>UnityEditor.TestRunner</code> are already referenced, along with an assembly reference to NUnit. Click the `+` button in the Assembly Definition Reference part to add a new reference. Click on the little circle and select <code>MyExercise</code> and click <strong>Apply</strong> in the bottom of the <span class="tooltip" tabindex="0" ><strong>inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheInspector.html" href="../../UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../../Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span> (you might need to scroll down). </p>
+
+<p>Open up the C# solution with your IDE (Visual Studio or Rider) and open up the test file you created. You can delete the method with the <code>[UnityTest]</code> attribute, as you won’t be needing that. In the method with <code>[Test]</code> attribute, you can add an assert statement, to verify that <code>MyMath.Add</code> works correctly. E.g. using <code>Assert.AreEqual</code>. Rename the method to be something more descriptive. A good practice is that the method name should describe what is being tested. For example, the class name could be <code>MyMathTests</code> and the first test could then be <code>AddsTwoPositiveIntegers</code>. If you want to, you can add additional methods that test other number combinations. It is a best practice that each test should have just one check. </p>
+
+<p>Switch back to Unity and go to the <span class="tooltip" tabindex="0" ><strong>Test Runner</strong><span class="tooltiptext">The Test Framework package (formerly called the Test Runner) is a Unity tool that tests your code in both Edit mode and Play mode, and also on target platforms such as Standalone, Android, or iOS. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about https://docs.unity3d.com/Packages/com.unity.test-framework@latest" href="../../https://docs.unity3d.com/Packages/com.unity.test-framework@latest">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../../Glossary.html#TestRunner" aria-label="Go to glossary anchor for TestRunner">Glossary</a></span></span></span> UI. Here you should now see a tree structure which includes your test assembly name, the class name and method name. This reflects the general structure of tests with NUnit, which is the framework that Unity Test Framework is built on top of. Each class can have multiple tests and there can be multiple test classes in a namespace / assembly. You can double click on your test name or any of its parents to run the test. You will see a green checkmark if your test code passes and a red cross if your test code failed. Note that if you do not see any tests, remember to check your console log. Any compile error would block all tests from being shown. </p>
+
+<p>You can now go back to your test code and add tests for the <code>Subtract</code> method. Note that you will likely see the tests fail, as there is a bug in our <code>Subtract</code> method. After you have seen your test fail with a meaningful error (e.g. <code>Expected 2, but got 6</code>), you can go to <code>MyMath.cs</code> and fix the return value to be just <code>return a - b;</code>. Then rerun the test to verify that you fixed the error.</p>
+
+<h2>Hints</h2>
+
+<ul>
+<li>Sometimes the UI for creating a test assembly and creating your first test file can be a bit hard to use. If the Test Runner UI does not register your assembly, try clicking on the folder in the <span class="tooltip" tabindex="0" ><strong>project window</strong><span class="tooltiptext">A window that shows the contents of your <code>Assets</code> folder (Project tab) <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ProjectView.html" href="../../ProjectView.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../../Glossary.html#Projectwindow" aria-label="Go to glossary anchor for Projectwindow">Glossary</a></span></span></span> or navigate to the folder with the asmdef.</li>
+</ul>
+
+<h2>Solution</h2>
+
+<p>A solution for this exercise can be found in the sample <code>1_RunningTest_Project_Solution</code>. The solution contains a <code>Tests</code> folder with an <code>asmdef</code> file and and one <code>.cs</code> file, containing the tests.</p>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="../../assembly-definition-files.html">Organizing scripts into assemblies</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="../../test-framework/course/test-framework-general-introduction.html"></a></span><div class="tip">General introduction to Unity Test Framework</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="../../test-framework/course/arrange-act-assert.html"></a></span><div class="tip">2. Arrange, Act, Assert</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

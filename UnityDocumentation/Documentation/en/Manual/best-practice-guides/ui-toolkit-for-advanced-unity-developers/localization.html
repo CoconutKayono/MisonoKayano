@@ -1,0 +1,815 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Localization</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<meta property="relative-path-to-manual" content="../../">
+<meta property="version-switcher-versions-with-this-page" content="Versions with this page:">
+<meta property="version-switcher-versions-without-this-page" content="Versions without this page:">
+<meta property="version-switcher-supported" content="Supported">
+<meta property="version-switcher-legacy" content="Legacy">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../../../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../../../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../../../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../../../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../../../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../../../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../../../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/Manual/best-practice-guides/ui-toolkit-for-advanced-unity-developers/localization.html">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../../../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../../../StaticFilesManual/js/jquery.js?ts=20260626"></script><script type="text/javascript" src="../../../StaticFilesManual/js/core.js?ts=20260626"></script><script type="text/javascript" src="../../../StaticFilesManual/js/image-comp.js?ts=20260626"></script><script type="text/javascript" src="../../docdata/toc.js?ts=20260626"></script><script type="text/javascript" src="../../docdata/global_toc.js?ts=20260626"></script><link rel="stylesheet" type="text/css" href="../../../StaticFilesManual/css/core.css?ts=20260626">
+<link rel="stylesheet" type="text/css" href="../../../StaticFilesManual/css/icons.css?ts=20260626">
+<link rel="stylesheet" href="../../../StaticFilesManual/css/prism.css">
+<script src="../../../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../../../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../../../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../../../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="../../30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../../index.html" class="selected">Manual</a></li>
+<li><a href="../../../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/best-practice-guides/ui-toolkit-for-advanced-unity-developers/localization.html">English</a></li>
+<li><a href="/cn/current/Manual/best-practice-guides/ui-toolkit-for-advanced-unity-developers/localization.html">中文</a></li>
+<li><a href="/ja/current/Manual/best-practice-guides/ui-toolkit-for-advanced-unity-developers/localization.html">日本語</a></li>
+<li><a href="/kr/current/Manual/best-practice-guides/ui-toolkit-for-advanced-unity-developers/localization.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: Unity 6.7 Beta</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/best-practice-guides/ui-toolkit-for-advanced-unity-developers/localization.html">English</a></li>
+<li><a href="/cn/current/Manual/best-practice-guides/ui-toolkit-for-advanced-unity-developers/localization.html">中文</a></li>
+<li><a href="/ja/current/Manual/best-practice-guides/ui-toolkit-for-advanced-unity-developers/localization.html">日本語</a></li>
+<li><a href="/kr/current/Manual/best-practice-guides/ui-toolkit-for-advanced-unity-developers/localization.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="../../best-practice-guides.html">Best practice guides</a></li>
+<li><a href="../../best-practice-guides/ui-toolkit-for-advanced-unity-developers/bpg-uiad-index.html">UI Toolkit for advanced Unity developers</a></li>
+<li>Localization</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="../../best-practice-guides/ui-toolkit-for-advanced-unity-developers/data-binding.html"></a></span><div class="tip">Data binding</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="../../best-practice-guides/ui-toolkit-for-advanced-unity-developers/custom-controls.html"></a></span><div class="tip">Custom controls</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Localization</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Table of Contents</p>
+
+<ul>
+<li><a href="#how-it-works">How it works</a></li>
+<li><a href="#localization-setup">Localization setup</a></li>
+<li>
+<a href="#use-the-localization-api">Use the Localization API</a>
+
+<ul>
+<li><a href="#select-a-locale">Select a Locale</a></li>
+<li><a href="#use-setbinding">Use SetBinding</a></li>
+<li><a href="#listen-for-locale-changes">Listen for Locale changes</a></li>
+</ul>
+</li>
+<li>
+<a href="#work-with-string-tables">Work with String Tables</a>
+
+<ul>
+<li><a href="#import-and-export-string-data">Import and export string data</a></li>
+<li><a href="#use-smart-strings">Use Smart Strings</a></li>
+<li><a href="#set-up-a-smart-string-in-your-script">Set up a Smart String in your script</a></li>
+<li><a href="#understand-placeholders">Understand placeholders</a></li>
+</ul>
+</li>
+<li>
+<a href="#string-pre-processing">String pre-processing</a>
+
+<ul>
+<li><a href="#getlocalizedstring">GetLocalizedString</a></li>
+<li><a href="#use-the-stringchanged-event">Use the StringChanged event</a></li>
+<li><a href="#dynamic-ui-controls">Dynamic UI controls</a></li>
+</ul>
+</li>
+<li>
+<a href="#localize-assets">Localize assets</a>
+
+<ul>
+<li><a href="#set-up-asset-localization">Set up asset localization</a></li>
+<li><a href="#asset-tables-versus-string-tables">Asset Tables versus String Tables</a></li>
+<li><a href="#common-localized-assets-in-ui-toolkit">Common localized assets in UI Toolkit</a></li>
+</ul>
+</li>
+<li><a href="#localization-in-the-dragon-crashers-sample">Localization in the Dragon Crashers sample</a></li>
+</ul>
+
+<p>Localizing your UI can help your game connect with a global audience, making your application feel intuitive and familiar in any language.</p>
+
+<p>Unity 6 simplifies this process by directly integrating the <a href="https://docs.unity3d.com/Packages/com.unity.localization@1.5/manual/Locale.html">Localization</a> package with UI Toolkit. This integration lets you provide region-specific content for your players, no matter where they might be.</p>
+
+<p>Key to Unity localization is the <a href="https://docs.unity3d.com/Packages/com.unity.localization@1.5/api/UnityEngine.Localization.Locale.html">Locale</a> class, which represents a specific language and manages region-specific details, such as currency and number formatting.</p>
+
+<p>Let’s explore a simple example of how you can set up localization in UI Toolkit. With this setup, your app can dynamically adjust its content based on a selected Locale.</p>
+
+<figure>
+<img src="../../../uploads/Main/bpg/uitk/image164.png" alt="An example of Spanish localization in UI Toolkit Sample - Dragon Crashers">
+<figcaption>An example of Spanish localization in UI Toolkit Sample - <em>Dragon Crashers</em></figcaption>
+</figure>
+
+<p><a name="how-it-works" aria-hidden="true"></a></p>
+
+<h2>How it works</h2>
+
+<p>Here are a few of its key features of the Localization package:</p>
+
+<ul>
+<li><p>
+<strong>String Localization:</strong> The <a href="https://docs.unity3d.com/Packages/com.unity.localization@1.5/api/UnityEngine.Localization.LocalizedString.html">LocalizedString</a> class lets you manage strings that automatically update when switching Locales at runtime. With <a href="https://docs.unity3d.com/Packages/com.unity.localization@1.5/manual/Smart/SmartStrings.html">Smart Strings</a>, you can add placeholders, handle plurals, and adjust for other language-specific nuances.</p></li>
+<li><p>
+<strong>Asset localization:</strong> Swap textures and other assets based on the Locale, allowing you to create region-specific content beyond simple text.</p></li>
+<li><p>
+<strong>Data Binding:</strong> The Localization package integrates with UI Toolkit’s runtime data binding, linking UI elements to <a href="https://docs.unity3d.com/Packages/com.unity.localization@1.5/manual/LocalizationTablesWindow.html">String and Asset Tables</a>. Changes in data, Locale, or load state trigger automatic updates.</p></li>
+<li><p>
+<strong>String and Asset Table management:</strong> String and Asset Tables store key-value pairs for translating text or other assets into Locale-specific equivalents. A centralized UI interface provides a high-level overview of all localized text and assets in your project.</p></li>
+<li><p>
+<strong>Locale Switching:</strong> Switch languages in real-time without restarting the application. At runtime, select a new Locale, and the UI updates immediately to reflect the change.</p></li>
+</ul>
+
+<p>Remember to take advantage of UI Toolkit’s FlexBox containers and auto-sizing elements when adapting to changes in text length and formatting. This can make your UIs more responsive when supporting different languages.</p>
+
+<p><a name="localization-setup" aria-hidden="true"></a></p>
+
+<h2>Localization setup</h2>
+
+<p>To start using Unity’s Localization package with UI Toolkit, follow these basic steps to set up localized content and bind it to UI elements in UI Builder.</p>
+
+<figure>
+<img src="../../../uploads/Main/bpg/uitk/image218.png" alt="Install the Localization package from the Package Manager.">
+<figcaption>Install the Localization package from the Package Manager.</figcaption>
+</figure>
+
+<ol>
+<li>
+<p>
+<strong>Set Up Localization Settings:</strong> Install the Localization package from the Package Manager, then go to <strong>Project Settings &gt; Localization</strong> to create and configure your Localization Settings asset, which will manage all localized assets.</p>
+
+<p><img src="../../../uploads/Main/bpg/uitk/image175.png" alt="Create and configure your Localization Settings in the Project Settings."></p>
+</li>
+<li>
+<p>
+<strong>Create Locales:</strong> Define the languages and regions your project will support using the Locale Generator. This creates assets for each Locale, identified by a unique two-letter code (e.g., “en” for English, “fr” for French, “es” for Spanish, etc.). Set a default Locale to use when the application starts.</p>
+
+<p><img src="../../../uploads/Main/bpg/uitk/image187.png" alt="Add a Locale."></p>
+</li>
+<li>
+<p>
+<strong>Create String and Asset Tables:</strong> Use String Tables to store text entries for each Locale. Add entries for UI text elements like labels, buttons, and dropdown options.</p>
+
+<p><img src="../../../uploads/Main/bpg/uitk/image34.png" alt="Create String Tables and Asset Tables."></p>
+</li>
+<li><p>In the Localization Tables window (<strong>Window &gt; Asset Management &gt; Localization Tables</strong>), add key-value pairs for each text element in the UI. Each key represents a specific text item (like a label or button), and each value is the translated text for that item in each Locale.</p></li>
+<li>
+<p>Store region-specific assets like images or <span class="tooltip" tabindex="0" ><strong>GameObjects</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-GameObject.html" href="../../class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../../Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span> in Asset Tables. For instance, you might add <span class="tooltip" tabindex="0" ><strong>sprites</strong><span class="tooltiptext">A 2D graphic objects. If you are used to working in 3D, Sprites are essentially just standard textures but there are special techniques for combining and managing sprite textures for efficiency and convenience during development. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about sprite/sprite-landing.html" href="../../sprite/sprite-landing.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../../Glossary.html#Sprite" aria-label="Go to glossary anchor for Sprite">Glossary</a></span></span></span> or textures for icons representing each Locale. For each key, link assets that are specific to each Locale to reflect regional or cultural preferences.</p>
+
+<p><img src="../../../uploads/Main/bpg/uitk/image284.png" alt="Key-value pairs represent each element to localize."></p>
+</li>
+<li>
+<p>
+<strong>Define a UXML interface:</strong> Use UI Builder to create a UXML file with elements such as Buttons, DropdownFields, and Labels. In the demo <span class="tooltip" tabindex="0" ><strong>scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html" href="../../CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../../Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span>, this UXML shows a few elements ready to be localized. For text fields, use an entry from a String Table. For non-text fields, such as textures, use an Asset Table.</p>
+
+<blockquote>
+<p><strong>Demo scene</strong></p>
+
+<p>You can find a sample implementation of Localization in the <strong>LocalizationDemo</strong> scene included in the QuizU project.</p>
+
+<p>To access it, navigate at runtime to the main menu and select <strong>Demos Localization</strong>, or load the <strong>LocalizationDemo</strong> scene directly after disabling the bootloader (<strong>Quiz &gt; Don’t Load Bootstrap Scene on Play</strong>).</p>
+</blockquote>
+
+<figure>
+<img src="../../../uploads/Main/bpg/uitk/image228.png" alt="Add data bindings in the UI Builder to localized strings and assets.">
+<figcaption>Add data bindings in the UI Builder to localized strings and assets.</figcaption>
+</figure>
+</li>
+<li>
+<p>
+<strong>Bind data to UI Elements in UI Builder:</strong> This is where the power of UI Toolkit’s runtime data binding system comes into play. In UI Builder, select the element you want to localize. Open the <span class="tooltip" tabindex="0" ><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheInspector.html" href="../../UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../../Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span> panel and select <strong>Add Binding</strong> in the content field (e.g., <code>text</code> for Labels or <code>backgroundImage</code> for images).</p>
+
+<blockquote>
+<p>Choose <strong>LocalizedString</strong> or other localized asset as the binding type, and link to the corresponding entry in your String or Asset Table. Add more entries to the tables as you need to localize more elements.</p>
+</blockquote>
+
+<figure>
+<img src="../../../uploads/Main/bpg/uitk/image121.png" alt="Use the Game View Locale drop-down to preview the localization.">
+<figcaption>Use the Game View Locale drop-down to preview the localization.</figcaption>
+</figure>
+</li>
+<li><p>To test, use the Game View Locale drop-down to preview the UI in different languages, ensuring elements display correctly in each Locale.</p></li>
+</ol>
+
+<p>And that’s the basic setup! In this example, the text properties of the buttons and labels can now switch to any other configured language. To localize the entire UI, make sure every piece of text has its own entry in the String Table.</p>
+
+<p>The Localization package is flexible in how you organize content. Use multiple String Tables to break a larger project into more manageable sections or to categorize different entries. Then, use Asset Tables to help localize your textures and other non-text assets.</p>
+
+<p>After adding localization bindings in UI Builder, your UXML file incorporates the localization directly into the UI elements. This results in a code block like this, where each localized property is tied to a specific entry in your String or Asset Table:</p>
+
+<pre><code class="lang-xml">&lt;Bindings&gt;
+
+&lt;UnityEngine.Localization.LocalizedString property=&quot;text&quot;
+table=&quot;GUID:6aaa262cde38a4024bc3fc7f5ce6d50d&quot;
+entry=&quot;Id(104135776002048)&quot; /&gt;
+
+&lt;/Bindings&gt;
+</code></pre>
+
+<p>This snippet of UXML establishes a data binding that links the UI element’s text property to an entry in the String or Asset Tables.</p>
+
+<p>Every time you update the localization tables, the linked UI elements automatically reflect the latest localized content.</p>
+
+<p>
+<strong>Note:</strong> While UI Builder simplifies the creation of data bindings, experienced users may also edit the UXML directly for greater control over the localized content.</p>
+
+<p><a name="use-the-localization-api" aria-hidden="true"></a></p>
+
+<h2>Use the Localization API</h2>
+
+<p>The Game View Locale drop-down in the Editor is helpful for testing different languages, but it won’t be available in a build of your application. To allow users to change languages in the final application, you’ll need to create your own UI for Locale switching.</p>
+
+<p>
+<a name="select-a-locale" aria-hidden="true"></a>
+<a name="select-a-locale" aria-hidden="true"></a>
+</p>
+
+<h3>Select a Locale</h3>
+
+<p>If you have the two-letter identifier of your Locale, you can set the active Locale in the <code>LocalizationSettings</code>. Then, connect this action to your buttons using the <code>clicked</code> manipulator on each button or the <code>RegisterCallback&lt;ClickEvent&gt;</code> method.</p>
+
+<p>The <code>LocalizationDemo</code> script in the sample project shows one implementation:</p>
+
+<pre><code class="lang-csharp">void SelectLocale(string localeCode)
+{
+    Locale locale =
+        LocalizationSettings.AvailableLocales.GetLocale(localeCode);
+
+    LocalizationSettings.SelectedLocale = locale;
+}
+
+void RegisterCallbacks()
+{
+    m_ButtonDanish.clicked += () =&gt; SelectLocale(&quot;da&quot;);
+
+    m_ButtonEnglish.clicked += () =&gt; SelectLocale(&quot;en&quot;);
+
+    m_ButtonSpanish.clicked += () =&gt; SelectLocale(&quot;es&quot;);
+
+    m_ButtonFrench.clicked += () =&gt; SelectLocale(&quot;fr&quot;);
+}
+</code></pre>
+
+<p>Each button can then change the locale to its indicated locale. Now when you press the button named English, French, Spanish, or Danish, the text within the UI changes at runtime.</p>
+
+<figure>
+<img src="../../../uploads/Main/bpg/uitk/image188.png" alt="The buttons can change Locales.">
+<figcaption>The buttons can change Locales.</figcaption>
+</figure>
+
+<p><a name="use-setbinding" aria-hidden="true"></a></p>
+
+<h3>Use SetBinding</h3>
+
+<p>Using the UI Builder to set up data bindings is interactive and easy. Sometimes, however, you’ll need to set up binding via a script at runtime. For example, you might create UI elements dynamically, or you might have bindings that rely on data only available during gameplay.</p>
+
+<p>To set up a data binding in C#, use the SetBinding method on the <span class="tooltip" tabindex="0" ><strong>visual element</strong><span class="tooltiptext">A node of a visual tree that instantiates or derives from the C# <a href="../../../ScriptReference/UIElements.VisualElement.html"><code>VisualElement</code></a> class. You can style the look, define the behaviour, and display it on screen as part of the UI. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UIE-VisualTree.html" href="../../UIE-VisualTree.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../../Glossary.html#visualelement" aria-label="Go to glossary anchor for visualelement">Glossary</a></span></span></span>. Here’s how to bind the <code>text</code> property of a Label to a LocalizedString entry in the StringTable:</p>
+
+<pre><code class="lang-csharp">using UnityEngine;
+using UnityEngine.Localization;
+using UnityEngine.UIElements;
+
+public class LocalizationDemo : MonoBehaviour
+{
+    // Set in Inspector
+    [SerializeField] LocalizedString m_LocalizedText;
+
+    Label m_LocalizedLabel;
+    UIDocument m_UIDocument;
+
+    void Start()
+    {
+        m_LocalizedLabel =
+            m_UIDocument.rootVisualElement.Q&lt;Label&gt;(&quot;text__label&quot;);
+
+        m_LocalizedLabel.SetBinding(&quot;text&quot;, m_LocalizedText);
+    }
+}
+</code></pre>
+
+<p>In this setup, <code>m_LocalizedText</code> is assigned in the Inspector to an entry in DemoStringTable. This code links the <code>text</code> property of <code>m_LocalizedLabel</code> to the specified LocalizedString, allowing it to update automatically when the Locale changes.</p>
+
+<p><a name="listen-for-locale-changes" aria-hidden="true"></a></p>
+
+<h3>Listen for Locale changes</h3>
+
+<p>In some cases, you might need to take additional actions when the Locale changes, beyond updating localized strings. Listen for the <a href="https://docs.unity3d.com/Packages/com.unity.localization@1.5/api/UnityEngine.Localization.Settings.LocalizationSettings.SelectedLocaleChanged.html?q=SelectedLocaleChanged">SelectedLocaleChanged</a> event in the LocalizationSettings API if you want to execute some logic every time the Locale is updated.</p>
+
+<p>Here’s an example:</p>
+
+<pre><code class="lang-csharp">using UnityEngine;
+using UnityEngine.Localization;
+using UnityEngine.Localization.Settings;
+
+public class LocalizationExample: MonoBehaviour
+{
+    void OnEnable()
+    {
+        LocalizationSettings.SelectedLocaleChanged += OnLocaleChanged;
+    }
+
+    void OnDisable()
+    {
+        LocalizationSettings.SelectedLocaleChanged -= OnLocaleChanged;
+    }
+
+    void OnLocaleChanged(Locale newLocale)
+    {
+        // Perform actions when the Locale changes, like updating UI elements
+        Debug.Log($&quot;Locale changed to: {newLocale.Identifier.Code}&quot;);
+    }
+}
+</code></pre>
+
+<p>In this case, <code>OnLocaleChanged</code> is called each time the Locale changes, allowing you to update other elements or run custom logic. Use this event handler to adjust UI properties or styles, especially if translated text doesn’t fit well within the current layout.</p>
+
+<p><a name="work-with-string-tables" aria-hidden="true"></a></p>
+
+<h2>Work with String Tables</h2>
+
+<p>Most of your localization work will involve <a href="https://docs.unity3d.com/Packages/com.unity.localization@1.5/manual/StringTables.html">String Tables</a>, which handle all text-based translations for your UI and labels.</p>
+
+<p>Open the Localization Tables window (<strong>Window &gt; Asset Management &gt; Localization Tables</strong>) and create or select a String Table Collection. From here, you can add new entries, define unique keys, and input translations for each Locale.</p>
+
+<p><a name="import-and-export-string-data" aria-hidden="true"></a></p>
+
+<h3>Import and export string data</h3>
+
+<h4>CSV files</h4>
+
+<p>You can populate a String Table by importing data from a CSV (comma-separated-value) file, allowing designers to set up text externally. To edit entries in plain text format, export the existing String Table as a CSV.</p>
+
+<figure>
+<img src="../../../uploads/Main/bpg/uitk/image113.png" alt="Import or export CSV files.">
+<figcaption>Import or export CSV files.</figcaption>
+</figure>
+
+<p>After updating the file, import it back into Unity to automatically update entries based on their keys.</p>
+
+<h4>Google Sheets synchronization</h4>
+
+<p>To connect your project to the Google Sheets service, you need to use a <a href="https://docs.unity3d.com/Packages/com.unity.localization@1.5/api/UnityEditor.Localization.Plugins.Google.GoogleSheetsExtension.SheetsServiceProvider.html#UnityEditor_Localization_Plugins_Google_GoogleSheetsExtension_SheetsServiceProvider">Sheets Service Provider</a> asset. This asset manages authentication and allows you to create new sheets directly within the Editor.</p>
+
+<p>To create it, navigate to <strong>Assets &gt; Create &gt; Localization &gt; Google Sheets Service</strong>.</p>
+
+<figure>
+<img src="../../../uploads/Main/bpg/uitk/image42.png" alt="Create a Google Sheets Service and authorize.">
+<figcaption>Create a Google Sheets Service and authorize.</figcaption>
+</figure>
+
+<p>The Google Sheets Service has two authorization options: <strong>OAuth</strong> or <strong>API</strong> <strong>Key</strong>. Use OAuth if you need to access private sheets for reading and writing. Use an API Key if you only need to read from public sheets. For full read/write access, you’ll need to request authorization from Google. For details, see the <a href="https://developers.google.com/sheets/api/guides/authorizing">Google Sheets documentation: Authorizing Requests</a>.</p>
+
+<p>To link a String Table Collection to a Google Sheet, add a <strong>Google Sheet Extension</strong> to the collection’s <strong>Extensions</strong> list. Select the String Table asset, then click the <strong>Add (+)</strong> button next to <strong>Extensions</strong> in the Inspector. You can add multiple extensions to a single String Table Collection, allowing you to assign different sheets to each Locale if needed.</p>
+
+<p>To sync a String Table to a Google Sheet, connect it to a Sheets Service Provider asset. See <a href="https://docs.unity3d.com/Packages/com.unity.localization@1.5/manual/Google-Sheets-Sheets-Service-Provider.html">Sheets Service Provider</a> for information on creating and configuring one.</p>
+
+<figure>
+<img src="../../../uploads/Main/bpg/uitk/image141.png" alt="Add the Google Sheets Service to the StringTables extensions.">
+<figcaption>Add the Google Sheets Service to the StringTable’s extensions.</figcaption>
+</figure>
+
+<p>Once set up, this synchronization allows designers or non-developers to make edits to your localization entries directly in Google Sheets.</p>
+
+<p><a name="use-smart-strings" aria-hidden="true"></a></p>
+
+<h3>Use Smart Strings</h3>
+
+<p>
+<a href="https://docs.unity3d.com/Packages/com.unity.localization@1.5/manual/Smart/SmartStrings.html">Smart Strings</a> are a powerful alternative to using <a href="https://docs.microsoft.com/en-us/dotnet/api/system.string.format">String.Format</a> when generating dynamic strings. They enable data-driven templates that support features like pluralization, conditional formatting, lists, and other language-specific rules. These features can simplify setting up localization.</p>
+
+<p>To use Smart Strings, mark a string as smart in the Localization Tables window.</p>
+
+<p>Open the Localization Tables window. Then, select <strong>Smart Format</strong> from the menu options (⋮). Confirm that the <strong>{S}</strong> icon appears next to the entry.</p>
+
+<p>Alternatively, enable Smart Strings in the <strong>Smart</strong> field within the <strong>Localized String Editor</strong> in the Inspector.</p>
+
+<figure>
+<img src="../../../uploads/Main/bpg/uitk/image7.png" alt="Enable Smart Strings in either the StringTable window or Inspector.">
+<figcaption>Enable Smart Strings in either the StringTable window or Inspector.</figcaption>
+</figure>
+
+<p><a name="set-up-a-smart-string-in-your-script" aria-hidden="true"></a></p>
+
+<h3>Set up a Smart String in your script</h3>
+
+<p>To manage a SmartString from a script:</p>
+
+<ul>
+<li><p>
+<strong>Set Up the Localized String with Placeholders:</strong> A Smart String consists of literal text with placeholders in brackets, similar to <a href="https://docs.microsoft.com/en-us/dotnet/api/system.string.format"><code>String.Format</code></a> but with added flexibility. In your String Table, create an entry with placeholders, like <code>&quot;Welcome, {0}!&quot;</code>. Here, <code>{0}</code> is a placeholder for runtime data.</p></li>
+<li><p>
+<strong>Use a LocalizedString and Arguments:</strong> In your script, create a LocalizedString for this entry and specify the runtime data using the Arguments property. For example, this snippet from the <code>SmartStringDemo</code> shows how to replace a single placeholder:</p></li>
+</ul>
+
+<pre><code class="lang-csharp">// Replaces placeholder with player name (e.g.,
+// &quot;Welcome, {0}!&quot; =&gt; &quot;Welcome, Player One!&quot;)
+
+m_PlaceholderLabel = root.Q&lt;Label&gt;(&quot;welcome__label&quot;);
+m_PlaceholderMessage.Arguments = new object[] { m_PlayerName };
+m_PlaceholderLabel.SetBinding(&quot;text&quot;, m_PlaceholderMessage);
+</code></pre>
+
+<p>This binds the LocalizedString to the label’s text property and inserts the player’s name at runtime. The original entry of [ “Welcome, {0}!” ] might appear as <code>&quot;Welcome, Player One!&quot;</code> onscreen.</p>
+
+<p><a name="understand-placeholders" aria-hidden="true"></a></p>
+
+<h3>Understand placeholders</h3>
+
+<p>Placeholders in Smart Strings are not limited to simple <code>{0}</code> substitutions. They can be more complex and are designed to handle advanced scenarios. In fact, a placeholder can consist of multiple parts, including:</p>
+
+<ul>
+<li>
+<strong>Selector</strong>: This determines which data to use (e.g., {player.name} selects the name property of a player object).</li>
+<li>
+<strong>Formatter Name</strong>: This defines the formatter to apply (e.g., <code>plural</code> for pluralization).</li>
+<li>
+<strong>Formatter Options</strong>: This customizes the formatter’s behavior (e.g., specifying singular and plural forms).</li>
+<li>
+<strong>Format:</strong> This determines how the output is presented (e.g., converting a number to a plural word, formatting a date or time, or selecting a phrase based on input).</li>
+</ul>
+
+<figure>
+<img src="../../../uploads/Main/bpg/uitk/image286.png" alt="A placeholder can consist of several parts.">
+<figcaption>A placeholder can consist of several parts.</figcaption>
+</figure>
+
+<p>
+<a href="https://docs.unity3d.com/Packages/com.unity.localization@1.5/manual/Smart/SmartStrings.html#selector"><strong>Selectors</strong></a> are flexible and can retrieve data dynamically at runtime. They can query properties or fields of objects at runtime. For example, using the selector <code>{gameObject.name}</code> can retrieve the name property of a GameObject, while a selector of <code>{slider.value}</code> retrieves the value property of a slider.</p>
+
+<p>
+<strong><a href="https://docs.unity3d.com/Packages/com.unity.localization@1.5/manual/Smart/SmartStrings.html#formatters">Formatters</a></strong> convert the retrieved data into the final string format. Formatters allow you to format dates, times, lists, plural forms, or even apply conditional logic.</p>
+
+<p>After retrieving data, <strong>formatters</strong> transform it into the final output. Each formatter defines its own options and format rules. The sample project includes a couple formatters:</p>
+
+<ul>
+<li>
+<strong>Choose Formatter</strong>: <code>{0:choose(1|2|3):morning|afternoon|evening|anytime}</code> selects “morning,” “afternoon,” or “evening” based on input.</li>
+<li>
+<strong>Plural Formatter</strong>: <code>{0:plural:one item| items}</code> adjusts text for singular or plural forms.</li>
+</ul>
+
+<p>Modify the values in the Inspector and enter Play mode to see the resulting text.</p>
+
+<figure>
+<img src="../../../uploads/Main/bpg/uitk/image53.png" alt="Smart Strings are an alternative to String.Format.">
+<figcaption>Smart Strings are an alternative to <code>String.Format</code>.</figcaption>
+</figure>
+
+<p>Smart Strings provide a number of built-in formatters that enhance localization, allowing you to adapt text based on game state or context:</p>
+
+<ul>
+<li>
+<strong><a href="https://docs.unity3d.com/Packages/com.unity.localization@1.5/manual/Smart/Choose-Formatter.html">Choose Formatter</a>:</strong> Allows you to apply conditional logic based on numeric input</li>
+<li>
+<strong><a href="https://docs.unity3d.com/Packages/com.unity.localization@1.5/manual/Smart/Plural-Formatter.html">Plural Formatter</a>:</strong> Automatically applies pluralization rules based on quantity</li>
+<li>
+<strong><a href="https://docs.unity3d.com/Packages/com.unity.localization@1.5/manual/Smart/Time-Formatter.html">Time Formatter</a>:</strong> Displays date and time</li>
+<li>
+<strong><a href="https://docs.unity3d.com/Packages/com.unity.localization@1.5/manual/Smart/Conditional-Formatter.html">Conditional Formatter</a>:</strong> For if/else-like logic</li>
+<li>
+<strong><a href="https://docs.unity3d.com/Packages/com.unity.localization@1.5/manual/Smart/List-Formatter.html">List Formatter</a>:</strong> Formats arrays or lists</li>
+<li>
+<strong><a href="https://docs.unity3d.com/Packages/com.unity.localization@1.5/manual/Smart/IsMatch-Formatter.html">Is Match Formatter</a>:</strong> For conditional text display based on regex patterns</li>
+</ul>
+
+<p>You can also use the API to create a <a href="https://docs.unity3d.com/Packages/com.unity.localization@1.5/manual/Smart/Creating-a-Custom-Formatter.html">custom formatter</a>. For additional information about formatters, refer to the <a href="https://docs.unity3d.com/Packages/com.unity.localization@1.5/manual/Smart/SmartStrings.html">Smart String documentation</a>.</p>
+
+<p><a name="string-pre-processing" aria-hidden="true"></a></p>
+
+<h2>String pre-processing</h2>
+
+<p>In some cases, directly binding UI elements to LocalizedString may not be convenient. For example, certain elements might need additional formatting or modification before displaying the localized text. If that’s the case, you can pre-process the LocalizedString before it appears in the UI.</p>
+
+<p><a name="getlocalizedstring" aria-hidden="true"></a></p>
+
+<h3>GetLocalizedString</h3>
+
+<p>The <a href="https://docs.unity3d.com/Packages/com.unity.localization@1.5/api/UnityEngine.Localization.LocalizedString.GetLocalizedString.html#UnityEngine_Localization_LocalizedString_GetLocalizedString"><code>GetLocalizedString</code></a> method can help here; it converts the LocalizedString into a standard string at runtime. This allows you to apply custom formatting, such as adding prefixes or combining strings, before exposing the processed string to the UI. Here’s an example:</p>
+
+<pre><code class="lang-csharp">[SerializeField] int m_PlayerLevel = 1;
+
+LocalizedString m_LevelMessage = new LocalizedString(&quot;My_Table&quot;, &quot;My_ Entry&quot;);
+
+// A property that retrieves the localized string and replaces the placeholder {0} with the player's level
+[CreateProperty] public string LevelMessage =&gt;
+    m_LevelMessage.GetLocalizedString(m_PlayerLevel);
+</code></pre>
+
+<p>In this example, the <code>LevelMessage</code> property replaces the <code>{0}</code> placeholder in the Localized String with the player’s current level. The <code>CreateProperty</code> attribute allows this property to be used with runtime data binding, making it easy to bind directly to UI elements.</p>
+
+<p>For simple use cases, you can define properties like the above <code>LevelMessage</code> to handle formatting logic, eliminating the need for additional event handlers.</p>
+
+<p><a name="use-the-stringchanged-event" aria-hidden="true"></a></p>
+
+<h3>Use the StringChanged event</h3>
+
+<p>A LocalizedString’s <a href="https://docs.unity3d.com/Packages/com.unity.localization@1.5/api/UnityEngine.Localization.LocalizedString.StringChanged.html">StringChanged</a> event is useful for this kind of pre-processing. It triggers every time the LocalizedString updates (i.e. when the Locale changes), allowing you to modify the text before rendering it.</p>
+
+<p>To use it, attach a handler to the StringChanged event. Here is a code snippet that creates a new LocalizedString from the <code>My_Table StringTable</code> using the <code>My_Entry entry</code>:</p>
+
+<pre><code class="lang-csharp">LocalizedString localizedString = new LocalizedString(
+&quot;My_Table&quot;, &quot;My_Entry&quot;);
+
+localizedString.StringChanged += OnLocalizedStringChanged;
+</code></pre>
+
+<p>Note how the <code>OnLocalizedStringChanged</code> event handler handles the conversion to a standard string automatically. Then, you can apply custom logic to modify the text before displaying it:</p>
+
+<pre><code class="lang-csharp">void OnLocalizedStringChanged(string value)
+{
+    // Example: Add a prefix based on certain conditions
+    string processedString = $&quot;[Prefix] {value}&quot;;
+
+    // Update the UI element with the processed string
+    m_TextLabel.text = processedString;
+}
+</code></pre>
+
+<p><a name="dynamic-ui-controls" aria-hidden="true"></a></p>
+
+<h3>Dynamic UI controls</h3>
+
+<p>Of course, pre-processing LocalizedStrings isn’t limited to basic text fields. It’s especially useful when working with complex properties or UI structures where a Smart String alone can’t handle the required logic or formatting.</p>
+
+<p>For example, a DropdownField has a <code>choices</code> property consisting of a list of strings. Pre-processing can help localize this list of options dynamically, ensuring it reflects the active Locale.</p>
+
+<p>Here, the <code>PreprocessDemo</code> script localizes the DropdownField choices, updating them whenever the player selects a new language. Again, the logic to rebuild the list runs in response to the StringChanged event.</p>
+
+<figure>
+<img src="../../../uploads/Main/bpg/uitk/image116.png" alt="Pre-process a LocalizedString using the StringChanged event.">
+<figcaption>Pre-process a LocalizedString using the StringChanged event.</figcaption>
+</figure>
+
+<p>Here’s an excerpt from the <code>PreprocessDemo</code> script that shows how this works:</p>
+
+<pre><code class="lang-csharp">[SerializeField] LocalizedString m_Choice1LocalizedString;
+[SerializeField] LocalizedString m_Choice2LocalizedString;
+[SerializeField] LocalizedString m_Choice3LocalizedString;
+[SerializeField] LocalizedString m_Choice4LocalizedString;
+
+public void Initialize(VisualElement root)
+{
+    m_DropdownField = root.Q&lt;DropdownField&gt;(&quot;dropdown__field&quot;);
+
+    m_Choice1LocalizedString.StringChanged += UpdateDropdownChoices;
+    m_Choice2LocalizedString.StringChanged += UpdateDropdownChoices;
+
+    // ... register other choices
+
+    // Initial population
+    UpdateDropdownChoices(null);
+}
+</code></pre>
+
+<p>When the StringChanged event triggers, the drop-down’s options are rebuilt, and the current selection is preserved:</p>
+
+<pre><code class="lang-csharp">void UpdateDropdownChoices(string value)
+{
+    if (m_DropdownField == null)
+        return;
+
+    // Save the current selection
+    int selection = m_DropdownField.index;
+
+    // Remove previous choices
+    m_DropdownField.choices.Clear();
+
+    // Add current localized values
+    m_DropdownField.choices.Add(m_Choice1LocalizedString.GetLocalizedString());
+    m_DropdownField.choices.Add(m_Choice2LocalizedString.GetLocalizedString());
+
+    // ... Add other choices
+
+    // Restore selected index and value
+    m_DropdownField.index = selection;
+    m_DropdownField.SetValueWithoutNotify(m_DropdownField.choices[selection]);
+}
+</code></pre>
+
+<p>Using <code>SetValueWithoutNotify</code> updates the drop-down’s display without triggering a ChangeEvent. This prevents recursive updates and preserves the user’s selection when the drop-down options change.</p>
+
+<p>In the sample project, the DropdownField dynamically updates its choices based on LocalizedString values. Each time a new Locale is selected, the updated language propagates to the dropdown options.</p>
+
+<p>Pre-processing can then be an extra technique to help you create localized, context-aware UIs. While Smart Strings handle many localization tasks like placeholders and pluralization, some extra pre-processing can offer extra flexibility and formatting that Smart Strings alone can’t handle.</p>
+
+<p><a name="localize-assets" aria-hidden="true"></a></p>
+
+<h2>Localize assets</h2>
+
+<p>Though strings weigh heavily in localization, you may need to localize assets in addition to text. For example, the sample project includes icons to stand in for the differently configured Locales.</p>
+
+<figure>
+<img src="../../../uploads/Main/bpg/uitk/image294.png" alt="The flag and Hello, world icons represent each Locale.">
+<figcaption>The flag and “Hello, world” icons represent each Locale.</figcaption>
+</figure>
+
+<p><a name="set-up-asset-localization" aria-hidden="true"></a></p>
+
+<h3>Set up asset localization</h3>
+
+<p>Asset localization works similarly to string localization. Just as you use String Tables for localized text, you use Asset Tables for localized assets. Both tables share a similar workflow, including adding entries and referencing them in your <span class="tooltip" tabindex="0" ><strong>scripts</strong><span class="tooltiptext">A piece of code that allows you to create your own Components, trigger game events, modify Component properties over time and respond to user input in any way you like. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about creating-scripts.html" href="../../creating-scripts.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../../Glossary.html#Scripts" aria-label="Go to glossary anchor for Scripts">Glossary</a></span></span></span> or UXML files.</p>
+
+<p>Localized assets can be bound to UI elements either through the UI Builder or C# scripting. For example, you can bind a visual element’s <code>style.backgroundImage</code> property to a localized sprite or texture.</p>
+
+<p>In the sample project:</p>
+
+<ul>
+<li>One element has its data binding defined in UXML via the UI Builder.</li>
+<li>Another element’s binding is set up in a C# script.</li>
+</ul>
+
+<p>Now, when selecting a Locale at runtime, the icons update along with the text labels, providing a quick visual indicator of the active Locale.</p>
+
+<figure>
+<img src="../../../uploads/Main/bpg/uitk/image69.png" alt="The LocalizedTextures update with each Locale.">
+<figcaption>The LocalizedTextures update with each Locale.</figcaption>
+</figure>
+
+<p><a name="asset-tables-versus-string-tables" aria-hidden="true"></a></p>
+
+<h3>Asset Tables versus String Tables</h3>
+
+<p>The process of working with Asset Tables mirrors that of String Tables. Both allow you to define entries by Locale and retrieve them at runtime. Note these differences:</p>
+
+<ul>
+<li><p>
+<strong>Event Handling</strong>: Asset Tables use an AssetChanged event to notify changes in localized assets instead of the StringChanged event for strings.</p></li>
+<li><p>
+<strong>Binding Methods</strong>: Both string and asset bindings work with SetBinding, but the bound properties (e.g., text for strings vs. style.backgroundImage for textures) depend on the asset type.</p></li>
+</ul>
+
+<p>This snippet shows how the demo example retrieves the LocalizedTexture from the Asset Table by name and then binds to the <code>style.backgroundImage</code> property:</p>
+
+<pre><code class="lang-csharp">m_LocalizedTexture = new LocalizedTexture()
+{
+    TableReference = &quot;DemoAssetTable&quot;,
+    TableEntryReference = &quot;HelloWorld_Icon&quot;
+};
+
+m_IconElement = root.Q&lt;VisualElement&gt;(&quot;icon__hello-world&quot;);
+m_IconElement.SetBinding(&quot;style.backgroundImage&quot;, m_LocalizedTexture);
+</code></pre>
+
+<p><a name="common-localized-assets-in-ui-toolkit" aria-hidden="true"></a></p>
+
+<h3>​​Common localized assets in UI Toolkit</h3>
+
+<p>Localized assets come in different forms. Here are a few that you might encounter when working with UI Toolkit:</p>
+
+<ul>
+<li>
+<strong>Localized textures:</strong> Ideal for icons, backgrounds, and other decorative visuals, these can be bound directly to visual element properties, such as <code>style.backgroundImage</code>.</li>
+<li>
+<strong>Localized sprites:</strong> These are less common but useful for custom components or sprite-based visuals.</li>
+<li>
+<strong>Localized fonts:</strong> These allow for switching fonts to support specific scripts or typographic styles required by different languages.</li>
+<li>
+<strong>Localized objects:</strong> These are useful for referencing complex resources, such as <span class="tooltip" tabindex="0" ><strong>prefabs</strong><span class="tooltiptext">An asset type that allows you to store a GameObject complete with components and properties. The prefab acts as a template from which you can create new object instances in the scene. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Prefabs.html" href="../../Prefabs.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../../Glossary.html#prefab" aria-label="Go to glossary anchor for prefab">Glossary</a></span></span></span> or data-driven assets, that need to vary based on the Locale.</li>
+</ul>
+
+<p>By leveraging these assets with Asset Tables, you can ensure that your UI dynamically adapts not only its text but also its visuals to align with the active Locale.</p>
+
+<p><a name="localization-in-the-dragon-crashers-sample" aria-hidden="true"></a></p>
+
+<h2>Localization in the Dragon Crashers sample</h2>
+
+<p>The UI Toolkit Sample – <em>Dragon Crashers</em> demo includes several localization techniques in action. In the Settings view, you can use the drop-down menu to select between one of the supported languages. When a new language is chosen, the LocalizationSettings system detects the change and updates the UI in real time.</p>
+
+<figure>
+<img src="../../../uploads/Main/bpg/uitk/image77.png" alt="Select a Locale from the Language drop-down menu.">
+<figcaption>Select a Locale from the Language drop-down menu.</figcaption>
+</figure>
+
+<p>Here are a few things you can check as you explore the project on your own:</p>
+
+<ul>
+<li><p>
+<strong>SettingsScreen Locale selection:</strong> The Settings screen allows users to select a Locale via a drop-down menu. This UI listens for changes in <code>LocalizationSettings</code> to detect new Locale selections, updating in real-time as the drop-down changes.</p></li>
+<li>
+<p>
+<strong>Data binding techniques:</strong> The UI features a combination of localization techniques. Static properties are bound directly in UI Builder and stored in the UXML.</p>
+
+<ul>
+<li>Meanwhile, dynamically populated fields rely on runtime scripts for data binding. The <code>SetBinding</code> method connects text properties to <code>LocalizedString</code> objects, ensuring the UI reflects the selected Locale.</li>
+</ul>
+</li>
+<li>
+<p>
+<strong>Pre-formatted LocalizedStrings in ScriptableObjects:</strong> Some ScriptableObject assets contain pre-formatted <code>LocalizedString</code> properties. For example, in the Settings screen, the Theme and Language drop-down fields dynamically rebuild lists from localized values, translating the available choices.</p>
+
+<ul>
+<li>Other elements like the RadioButtonGroup and custom SlideToggle also pre-process the LocalizedStrings by handling the <code>StringChanged</code> event.</li>
+</ul>
+</li>
+</ul>
+
+<p>Regardless of the localization technique – whether data binding through UXML or C# scripting – the UI responds in real-time to Locale changes.</p>
+
+<p>Use the techniques in this sample project as inspiration for building localized interfaces in your own Unity projects. By combining data binding and UI Toolkit, you can create a flexible, multilingual UI that’s ready to welcome players from around the world.</p>
+
+<p>Explore UI Toolkit Sample – <em>Dragon Crashers</em> for more examples of localization.</p>
+
+<figure>
+<img src="../../../uploads/Main/bpg/uitk/image270.png" alt="UI Toolkit Sample -- Dragon Crashers">
+<figcaption>UI Toolkit Sample – <em>Dragon Crashers</em></figcaption>
+</figure>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="../../best-practice-guides/ui-toolkit-for-advanced-unity-developers/data-binding.html"></a></span><div class="tip">Data binding</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="../../best-practice-guides/ui-toolkit-for-advanced-unity-developers/custom-controls.html"></a></span><div class="tip">Custom controls</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

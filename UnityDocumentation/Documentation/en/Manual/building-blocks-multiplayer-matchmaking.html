@@ -1,0 +1,372 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Matchmaker Session Building Block</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<meta property="relative-path-to-manual" content="">
+<meta property="version-switcher-versions-with-this-page" content="Versions with this page:">
+<meta property="version-switcher-versions-without-this-page" content="Versions without this page:">
+<meta property="version-switcher-supported" content="Supported">
+<meta property="version-switcher-legacy" content="Legacy">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/Manual/building-blocks-multiplayer-matchmaking.html">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20260626"></script><script type="text/javascript" src="docdata/toc.js?ts=20260626"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20260626"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20260626">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20260626">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/building-blocks-multiplayer-matchmaking.html">English</a></li>
+<li><a href="/cn/current/Manual/building-blocks-multiplayer-matchmaking.html">中文</a></li>
+<li><a href="/ja/current/Manual/building-blocks-multiplayer-matchmaking.html">日本語</a></li>
+<li><a href="/kr/current/Manual/building-blocks-multiplayer-matchmaking.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: Unity 6.7 Beta</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/building-blocks-multiplayer-matchmaking.html">English</a></li>
+<li><a href="/cn/current/Manual/building-blocks-multiplayer-matchmaking.html">中文</a></li>
+<li><a href="/ja/current/Manual/building-blocks-multiplayer-matchmaking.html">日本語</a></li>
+<li><a href="/kr/current/Manual/building-blocks-multiplayer-matchmaking.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="building-blocks.html">Unity Building Blocks</a></li>
+<li><a href="building-blocks-multiplayer.html">Multiplayer Services Building Blocks</a></li>
+<li>Matchmaker Session Building Block</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="building-blocks-multiplayer-sessions.html"></a></span><div class="tip">Multiplayer Sessions Building Block</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="building-blocks-vivox.html"></a></span><div class="tip">Vivox voice and text chat Building Block</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Matchmaker Session Building Block</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Implement Unity’s multiplayer Matchmaker in your project with this Unity Building Block’s pre-made UI elements. Learn what Matchmaker is, how to set it up, what Matchmaker queues are, and how to connect to Unity’s netcode packages.</p>
+
+<h2>Introduction</h2>
+
+<p>The Matchmaker Session Building Block helps you integrate <a href="https://docs.unity.com/ugs/manual/matchmaker/manual/matchmaker-overview">Unity’s Matchmaker</a> into your project to connect players together. This Building Block can serve as a starting point for your multiplayer projects, or as a quick integration of Matchmaker throughout development.</p>
+
+<p>This Building Block demonstrates how to do the following:</p>
+
+<ul>
+<li>Manage a Matchmaker Queue configuration from your Unity project.</li>
+<li>Deploy such Queue asset to the cloud services to use it during Play mode.</li>
+<li>Connect players together through the Matchmaker service using a list of rules.</li>
+</ul>
+
+<p>The Matchmaker Session Building Block includes an example <span class="tooltip" tabindex="0" ><strong>Scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html" href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span>, a UIToolkit UI, and a preset of Matchmaker queue configuration with basic rules to connect players together. If you need gameplay synchronization, you can optionally add Netcode using Unity <a href="https://docs.unity.com/ugs/en-us/manual/mps-sdk/manual/build-your-first-session">Netcode for GameObjects</a> or <a href="https://docs.unity.com/ugs/en-us/manual/mps-sdk/manual/build-with-netcode-for-entities">Netcode for Entities</a>.</p>
+
+<h2>Prerequisites</h2>
+
+<ul>
+<li>Install the <a href="https://assetstore.unity.com/packages/essentials/tutorial-projects/unity-building-block-matchmaker-session-341932">Unity Building Block - Matchmaker Session</a> from the Unity <span class="tooltip" tabindex="0" ><strong>Asset Store</strong><span class="tooltiptext">A growing library of free and commercial assets created by Unity and members of the community. Offers a wide variety of assets, from textures, models and animations to whole project examples, tutorials and Editor extensions. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about AssetStore.html" href="AssetStore.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#AssetStore" aria-label="Go to glossary anchor for AssetStore">Glossary</a></span></span></span>.</li>
+<li>
+<a href="https://docs.unity.com/en-us/cloud/projects/configure-project-for-unity-cloud">Link your Unity Editor project to a cloud project</a>.</li>
+</ul>
+
+<h2>Initial setup</h2>
+
+<p>
+<a href="https://docs.unity.com/ugs/en-us/manual/mps-sdk/manual/deployment/deploy-matchmaker-queue">Deploy the MatchmakerQueue</a> asset to use the functionality in this Building Block.</p>
+
+<ol>
+<li>In the Editor, under <strong>Assets</strong> &gt; <strong>Blocks</strong> &gt; <strong>MatchmakerSession</strong> &gt; <strong>Settings</strong>, select the <code>MatchmakerQueue</code> asset file.</li>
+<li>In the <strong><span class="tooltip" tabindex="0" ><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheInspector.html" href="UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span></strong> window, select <strong>View in Deployment Window</strong>.</li>
+<li>In the <strong>Deployment</strong> window, select the <code>MatchmakerQueue</code> file under <code>Blocks.MatchmakerSession</code>, then right-click and select <strong>Deploy</strong> to set up the queue.</li>
+</ol>
+
+<p>You can validate that the Building Block is installed correctly by opening the included sample scene:</p>
+
+<ol>
+<li>Open the example scene located in the folder <strong>Assets</strong> &gt; <strong>Blocks</strong> &gt; <strong>MatchmakerSession</strong> &gt; <strong>Scenes</strong>.</li>
+<li>Enter Play mode and confirm that sign-in succeeds and service endpoints are reachable.</li>
+</ol>
+
+<h2>Unity Matchmaker</h2>
+
+<p>
+<a href="https://docs.unity.com/ugs/manual/matchmaker/manual/matchmaker-overview">Matchmaking</a> in Unity automatically groups players into <a href="https://docs.unity.com/ugs/en-us/manual/mps-sdk/manual">Multiplayer sessions</a> based on rules involving skill, region, game mode, and party size.</p>
+
+<h3>Common concepts</h3>
+
+<ul>
+<li>Tickets/Queues: Players submit a request and wait to be matched.</li>
+<li>Attributes: Skill, region, input device, party size, game mode.</li>
+<li>Team balancing: Distributing players to achieve fair teams.</li>
+<li>Latency or region routing: Placing players on nearby servers.</li>
+</ul>
+
+<h3>Typical flow</h3>
+
+<ol>
+<li>Player creates a join request.</li>
+<li>The service places the request in a queue and searches by rules.</li>
+<li>On a match, a session is created.</li>
+<li>Players receive connection info and join the session.</li>
+</ol>
+
+<h2>Included scenes</h2>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;">Asset Name</th>
+	<th style="text-align:left;">Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">Matchmake</td>
+	<td style="text-align:left;">Connects users with compatible players based on set criteria. Settings can be added to optimize matches.</td>
+</tr>
+</tbody>
+</table>
+
+<h3>Matchmake</h3>
+
+<p>
+<code>JoinSessionByMatchmaking</code> UXML:</p>
+
+<ul>
+<li>
+<code>MatchmakeButton</code>: Starts a Matchmake with the given queue name.</li>
+<li>
+<code>CancelButton</code>: Cancels the current Matchmake request.</li>
+<li>
+<code>SessionConnectingTimerLabel</code>: Displays how long a Matchmake attempt has been active.</li>
+</ul>
+
+<p>
+<code>CurrentSession</code> UXML:</p>
+
+<ul>
+<li>
+<code>SessionNameLabel</code>: Displays the name of the watched session.</li>
+<li>
+<code>PlayerCountLabel</code>: Displays the number of players in the watched session.</li>
+<li>
+<code>PlayerNameLabel</code>: Displays the player’s own name.</li>
+<li>
+<code>CopySessionCodeElement</code>: Displays the join code for the session so it can be copied.</li>
+<li>
+<code>PlayerListView</code>: Displays the list of players that have joined the session.</li>
+<li>
+<code>LeaveSessionButton</code>: Select to leave the joined session.</li>
+</ul>
+
+<h2>Matchmaker queue</h2>
+
+<p>A <a href="https://docs.unity.com/ugs/manual/matchmaker/manual/advanced-topics-queues-pools">Matchmaker queue</a> is a rules-driven waiting line where player tickets are collected and evaluated to form matches. The queue enforces your configuration: required attributes, regions, modes, team sizes, roles, and priorities, for example, fairness versus speed. The queue assembles compatible tickets into matches and handles rate limiting, returning join data when a valid match is created.</p>
+
+<p>This Building Block contains a simple Matchmaker queue configuration that matches two teams from one to two players in each team and no other limitations. It also has a <a href="https://docs.unity.com/ugs/en-us/manual/matchmaker/manual/relaxations">relaxation rule</a> after 20 seconds that reduces the number of teams required to one, so that a single joining player successfully joins a session after 20 seconds.</p>
+
+<p>For more refined rules you can modify the already deployed Matchmaker queue on the Dashboard and have access to the full set of <a href="https://docs.unity.com/ugs/en-us/manual/matchmaker/manual/matchmaking-rules-rules">adjustable Matchmaking rules</a>.</p>
+
+<h2>Matchmaking and Quick Join differences</h2>
+
+<p>
+<a href="https://docs.unity.com/ugs/en-us/manual/mps-sdk/manual/matchmake-session">The Multiplayer Services Matchmake API</a> has both Quick Join and Matchmake options. Quick Join is a simple action that finds any available lobby, while Matchmake is a rules-driven process that targets the best possible match, not just the first available one.</p>
+
+<h3>Quick Join</h3>
+
+<ul>
+<li>Fastest way to enter any open, compatible lobby.</li>
+<li>Minimal rules; prioritizes speed over quality.</li>
+<li>Best for casual, low-stakes play or small lobbies.</li>
+</ul>
+
+<h3>Matchmaking</h3>
+
+<ul>
+<li>Queue-based, rule-driven placement, for example, skill, region, mode, party size.</li>
+<li>Aims for fair teams, low latency, and proper server allocation.</li>
+<li>Supports backfill, cross-play filters, and dedicated servers.</li>
+</ul>
+
+<p>Use Quick Join for immediacy. Use Matchmaking when balance, latency, role constraints, or server orchestration matter. Refer to the <a href="building-blocks-multiplayer-sessions.html">Multiplayer session Building Block</a> for a Quick Join example.</p>
+
+<h2>Testing matchmaking locally</h2>
+
+<p>To test your setup locally you can use <a href="https://docs.unity3d.com/Packages/com.unity.multiplayer.playmode@latest">Multiplayer Play Mode</a>.</p>
+
+<h2>Add Netcode to a session</h2>
+
+<p>To integrate either Netcode for <span class="tooltip" tabindex="0" ><strong>GameObjects</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-GameObject.html" href="class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span> or Netcode for Entities with your sessions, do the following:</p>
+
+<ol>
+<li>Install the Netcode package of your choice using the Package Manager (<strong>Window</strong> &gt; <strong>Package Management</strong> &gt; <strong>Package Manager</strong>).
+
+<ul>
+<li>Install either <a href="https://docs.unity.com/ugs/en-us/manual/mps-sdk/manual/build-your-first-session#build-a-session-with-netcode-for-gameobjects">Unity Netcode for GameObjects</a> or <a href="https://docs.unity.com/ugs/en-us/manual/mps-sdk/manual/build-with-netcode-for-entities#build-a-session-with-netcode-for-entities">Netcode for Entities</a>
+</li>
+</ul>
+</li>
+<li>Enable <strong>Create Network Session</strong> in <code>SessionSettings</code>.
+
+<ul>
+<li>In your <code>SessionSettings</code> ScriptableObject, locate and enable the <strong>Create Network Session</strong> option, which allows your sessions to be recognized and managed by your chosen Netcode solution.</li>
+</ul>
+</li>
+<li>Change the <strong>Network Type</strong> in <code>SessionSettings</code>.
+
+<ul>
+<li>Adjust the <strong>Network Type</strong> within your <code>SessionSettings</code> to match your intended network architecture. You can choose from the following:
+
+<ul>
+<li>Relay: For cloud-based relay services.</li>
+<li>Distributed authority: For using Netcode for GameObjects distributed authority.</li>
+<li>Direct: For direct connections using IP Address and Port.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+
+<p>To understand more about the different NetworkTypes, refer to the <a href="https://docs.unity.com/ugs/en-us/manual/mps-sdk/manual/manage-session-network-connection#types-of-network">Network connection management</a>.</p>
+
+<h2>Troubleshooting</h2>
+
+<h3>Multiplayer Services not available</h3>
+
+<ul>
+<li>Multiplayer Services have to be initialized. You can initialize your own scenes with default settings by adding a <strong>ServicesInitialization</strong> and <strong>PlayerAuthentication</strong> components.</li>
+</ul>
+
+<h3>Authentication failure</h3>
+
+<ul>
+<li>Ensure Matchmaker is enabled in Unity Dashboard for the correct Project ID.</li>
+<li>Confirm you’re signed into the Editor with the right organization and environment.</li>
+</ul>
+
+<h3>Matchmaker errors (404 or unable to match)</h3>
+
+<ul>
+<li>Check queue deployment status. In the Editor, select the <code>MatchmakerQueue</code> asset inside <strong>Assets</strong> &gt; <strong>Blocks</strong> &gt; <strong>MatchmakerSession</strong> &gt; <strong>Settings</strong> and confirm that the Inspector displays <strong>Up to Date</strong> with a green icon in the file header.</li>
+<li>Validate that the <code>MatchmakeButton</code> in your UXML references the right <code>MatchmakerQueue</code> asset.</li>
+<li>Verify the queue configuration by making sure that in the <code>MatchmakerQueue</code> asset, the minimum number of teams and players aligns with the number of clients you’re trying to connect. When making changes to the queue configuration in your project, you have to deploy it again through the Deployment Window for it to work during Play mode.</li>
+</ul>
+
+<h3>UI not showing data</h3>
+
+<ul>
+<li>Check that each <code>VisualElement</code> in your UXML has its <code>SessionType</code> set properly.</li>
+</ul>
+
+<h1>Additional resources</h1>
+
+<ul>
+<li><a href="https://docs.unity.com/ugs/en-us/manual/mps-sdk/manual">Unity Services: Multiplayer SDK</a></li>
+<li><a href="https://docs.unity3d.com/Packages/com.unity.netcode.gameobjects@latest">Unity Netcode for GameObjects</a></li>
+<li><a href="https://docs.unity3d.com/Packages/com.unity.netcode@latest">Unity Netcode for Entities</a></li>
+<li><a href="https://docs.unity.com/ugs/en-us/manual/matchmaker/manual/matchmaking-rules-rules">Matchmaker Rules</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="building-blocks-multiplayer-sessions.html"></a></span><div class="tip">Multiplayer Sessions Building Block</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="building-blocks-vivox.html"></a></span><div class="tip">Vivox voice and text chat Building Block</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

@@ -1,0 +1,284 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Optimize your Web build with WebAssembly 2023</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<meta property="relative-path-to-manual" content="">
+<meta property="version-switcher-versions-with-this-page" content="Versions with this page:">
+<meta property="version-switcher-versions-without-this-page" content="Versions without this page:">
+<meta property="version-switcher-supported" content="Supported">
+<meta property="version-switcher-legacy" content="Legacy">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/Manual/wasm-2023-features.html">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20260626"></script><script type="text/javascript" src="docdata/toc.js?ts=20260626"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20260626"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20260626">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20260626">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/wasm-2023-features.html">English</a></li>
+<li><a href="/cn/current/Manual/wasm-2023-features.html">中文</a></li>
+<li><a href="/ja/current/Manual/wasm-2023-features.html">日本語</a></li>
+<li><a href="/kr/current/Manual/wasm-2023-features.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: Unity 6.7 Beta</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/wasm-2023-features.html">English</a></li>
+<li><a href="/cn/current/Manual/wasm-2023-features.html">中文</a></li>
+<li><a href="/ja/current/Manual/wasm-2023-features.html">日本語</a></li>
+<li><a href="/kr/current/Manual/wasm-2023-features.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="PlatformSpecific.html">Platform development  </a></li>
+<li><a href="webgl.html">Web</a></li>
+<li><a href="webgl-develop.html">Web development</a></li>
+<li><a href="webassembly-2023.html">WebAssembly 2023</a></li>
+<li>Optimize your Web build with WebAssembly 2023</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="wasm-2023-prereq.html"></a></span><div class="tip">Prerequisites for WebAssembly 2023</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="wasm-2023-enable.html"></a></span><div class="tip">Enable WebAssembly 2023</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Optimize your Web build with WebAssembly 2023</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>The WebAssembly 2023 target contains features that can improve code performance, reduce generated code size, and reduce download times for your Web build on all supported browsers and platforms. </p>
+
+<p>If you enable the WebAssembly 2023 target, it automatically enables all of the following optimization features: </p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Section</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><a href="#native-exceptions">WebAssembly native exceptions</a></td>
+	<td style="text-align:left;">Exception handling with less overhead than JavaScript-based exceptions.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="#simd">Support for WebAssembly Single Instruction Multiple Data (SIMD)</a></td>
+	<td style="text-align:left;">Improves the performance of applications that perform a lot of mathematical calculations or complex vertex manipulation.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="#data-optimization">Optimized data operations</a></td>
+	<td style="text-align:left;">Useful for large amounts of data manipulation.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="#big-int">Support for BigInt</a></td>
+	<td style="text-align:left;">Improves data exchange between WebAssembly and JavaScript code.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="#wasm-table">WebAssembly.Table</a></td>
+	<td style="text-align:left;">Improves interoperability between WebAssembly and JavaScript.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="#float-to-int">Speed up data type conversions</a></td>
+	<td style="text-align:left;">Reduces code size and slightly improves performance.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="native-exceptions" aria-hidden="true"></a></p>
+
+<p>Your browser needs to support these features for them to work properly. To check supported browsers, refer to <a href="wasm-2023-prereq.html">prerequisites for WebAssembly 2023</a>.</p>
+
+<p>To learn how to enable WebAssembly 2023, refer to <a href="wasm-2023-enable.html">Enable WebAssembly 2023</a>. </p>
+
+<h2>WebAssembly native exceptions</h2>
+
+<p>In the original WebAssembly MVP <span class="tooltip" tabindex="0" ><strong>feature set</strong><span class="tooltiptext">A <span class="notooltips">feature set</span> is a collection of related packages that you can use to achieve specific results in the Unity Editor. You can manage feature sets directly in Unity’s Package Manager. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about FeatureSets.html" href="FeatureSets.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#featureset" aria-label="Go to glossary anchor for featureset">Glossary</a></span></span></span>, exception handling relied on JavaScript exception mechanisms. This form of exception handling resulted in relatively high overhead. Since then, WebAssembly has developed its own native exception handling support that reduces the overhead issue.
+<a name="simd" aria-hidden="true"></a>
+</p>
+
+<p>If you enable WebAssembly 2023, it automatically enables the WebAssembly native exceptions language feature. These native exceptions can improve runtime performance and reduce <code>.wasm</code> code size.</p>
+
+<h2>Support for WebAssembly Single Instruction Multiple Data (SIMD)</h2>
+
+<p>The WebAssembly SIMD feature enables Unity to use the SIMD instruction support the browser provides. Internally, the browser targets the SIMD instruction sets in x86 intel and ARM architectures. So, this feature works on both desktop and mobile browsers that are supported. For a list of supported browsers, refer to <a href="wasm-2023-prereq.html">Prerequisites for WebAssembly 2023</a>.</p>
+
+<p>WebAssembly SIMD support includes automatic vectorization support. If you have scalar arithmetic calculations in short loops in your code, auto-vectorization automatically converts it to WebAssembly SIMD data parallel form. In this form, code can perform faster because many calculations are processed simultaneously. </p>
+
+<p>The WebAssembly SIMD feature can make a significant difference if you have operations that perform heavy matrix mathematics, such as character <span class="tooltip" tabindex="0" ><strong>skinning</strong><span class="tooltiptext">The process of binding bone joints to the vertices of a character’s mesh or ‘skin’. Performed with an external tool, such as Blender or Autodesk Maya. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingHumanoidChars.html" href="UsingHumanoidChars.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Skinning" aria-label="Go to glossary anchor for Skinning">Glossary</a></span></span></span> or animation <span class="tooltip" tabindex="0" ><strong>keyframe</strong><span class="tooltiptext">A frame that marks the start or end point of a transition in an animation. Frames in between the keyframes are called inbetweens.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#keyframe" aria-label="Go to glossary anchor for keyframe">Glossary</a></span></span></span> and transform calculations.
+<a name="data-optimization" aria-hidden="true"></a>
+</p>
+
+<p>If your application performs a lot of mathematical calculations or complex vector manipulation, this feature could significantly improve runtime performance. </p>
+
+<h2>Optimized data operations</h2>
+
+<p><a name="big-int" aria-hidden="true"></a></p>
+
+<p>WebAssembly 2023 enables better code generation of <code>memcpy</code> and <code>memset</code> functions. This improved code generation results in better performance when your code copies or sets large amounts of data. </p>
+
+<h2>Support for BigInt</h2>
+
+<p>WebAssembly 2023 enables the <code>WebAssembly.BigInt</code> language feature. You can use <code>WebAssembly.BigInt</code> to access the JavaScript BigInt data type when you exchange data between JavaScript and WebAssembly code. You can then use the BigInt data type to send and receive 64-bit integers natively between JavaScript and WebAssembly code without the need to split 64-bit integers into high order and low order (HI/LO) pairs of 32-bit numbers.</p>
+
+<p>This improved communication results in a better marshaling boundary between the two interfaces, which improves marshaling performance and also generates smaller code.</p>
+
+<p>You can also enable <code>WebAssembly.BigInt</code> support without the other WebAssembly 2023 features. For more information about the feature and how to enable it separately, refer to <a href="https://docs.unity3d.com/Manual/class-PlayerSettingsWebGL#wasm-lang-features">WebAssembly language features</a>. </p>
+
+<p>
+<strong>Note</strong> : If you already have marshaling code between the JS and WebAssembly language boundaries that use 64-bit integers, adjust your code to the updated 64-bit marshaling mode that uses the JS BigInt feature. </p>
+
+<p>For example, if you have an integer like this:</p>
+
+<pre><code class="lang-js">const number = 12345678901234567;
+</code></pre>
+
+<p>Convert it to BigInt like this: </p>
+
+<pre><code class="lang-js">const bigInt = BigInt(number);
+</code></pre>
+
+<p><a name="wasm-table" aria-hidden="true"></a></p>
+
+<p>For more information, refer to <a href="https://emscripten.org/docs/api_reference/index.html">Emscripten documentation</a>.</p>
+
+<h2>The WebAssembly.Table language feature</h2>
+
+<p>The Unity WebAssembly 2023 feature set enables the Unity Emscripten toolchain to target the <code>WebAssembly.Table</code> language feature. This feature simplifies code generation whenever you invoke functions via pointers. Also, because the Emscripten compiler requires fewer passes during compilation, compilation times are faster. </p>
+
+<p>To invoke functions via pointers, use the <code>{{{ makeDynCall }}}</code> macro. </p>
+
+<p>For more information about the JavaScript object, refer to the Mozilla documentation on <a href="https://developer.mozilla.org/en-US/docs/WebAssembly/JavaScript_interface/Table">WebAssembly.Table</a>. </p>
+
+<p>You can also enable <code>WebAssembly.Table</code> support without the other WebAssembly 2023 features in <strong>Player</strong> settings. For more information about the feature and how to enable it separately, refer to <a href="https://docs.unity3d.com/Manual/class-PlayerSettingsWebGL#wasm-lang-features">WebAssembly language features</a>.</p>
+
+<p><a name="float-to-int" aria-hidden="true"></a></p>
+
+<p>
+<strong>Note</strong>: The Emscripten functions <code>dynCall_*()</code> and <code>Module.dynCall()</code> are deprecated. If your JavaScript plugin code uses these functions, use the Emscripten <code>{{{ makeDynCall() }}}</code> macro instead. </p>
+
+<h2>Speed up data type conversions in your code</h2>
+
+<p>If you enable WebAssembly 2023, Unity implements the following conversions with a shorter low-level instruction sequence:</p>
+
+<ul>
+<li><p>float to int</p></li>
+<li><p>double to int</p></li>
+</ul>
+
+<p>These conversions reduce code size and slightly improve runtime performance.</p>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="webassembly-2023.html">WebAssembly 2023</a></li>
+<li><a href="wasm-2023-prereq.html">Prerequisites for WebAssembly</a></li>
+<li><a href="wasm-2023-enable.html">Enable WebAssembly 2023</a></li>
+<li><a href="class-PlayerSettingsWebGL.html#wasm-language-features">WebAssembly language features</a></li>
+<li><a href="class-PlayerSettingsWebGL.html">Web Player settings</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="wasm-2023-prereq.html"></a></span><div class="tip">Prerequisites for WebAssembly 2023</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="wasm-2023-enable.html"></a></span><div class="tip">Enable WebAssembly 2023</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

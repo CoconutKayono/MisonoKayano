@@ -1,0 +1,325 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Terrain Lit shader graph reference for URP</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<meta property="relative-path-to-manual" content="../">
+<meta property="version-switcher-versions-with-this-page" content="Versions with this page:">
+<meta property="version-switcher-versions-without-this-page" content="Versions without this page:">
+<meta property="version-switcher-supported" content="Supported">
+<meta property="version-switcher-legacy" content="Legacy">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/Manual/urp/prebuilt-shader-graphs-urp-terrain-lit.html">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../../StaticFilesManual/js/jquery.js?ts=20260626"></script><script type="text/javascript" src="../../StaticFilesManual/js/core.js?ts=20260626"></script><script type="text/javascript" src="../../StaticFilesManual/js/image-comp.js?ts=20260626"></script><script type="text/javascript" src="../docdata/toc.js?ts=20260626"></script><script type="text/javascript" src="../docdata/global_toc.js?ts=20260626"></script><link rel="stylesheet" type="text/css" href="../../StaticFilesManual/css/core.css?ts=20260626">
+<link rel="stylesheet" type="text/css" href="../../StaticFilesManual/css/icons.css?ts=20260626">
+<link rel="stylesheet" href="../../StaticFilesManual/css/prism.css">
+<script src="../../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="../30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../index.html" class="selected">Manual</a></li>
+<li><a href="../../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/urp/prebuilt-shader-graphs-urp-terrain-lit.html">English</a></li>
+<li><a href="/cn/current/Manual/urp/prebuilt-shader-graphs-urp-terrain-lit.html">中文</a></li>
+<li><a href="/ja/current/Manual/urp/prebuilt-shader-graphs-urp-terrain-lit.html">日本語</a></li>
+<li><a href="/kr/current/Manual/urp/prebuilt-shader-graphs-urp-terrain-lit.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: Unity 6.7 Beta</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/urp/prebuilt-shader-graphs-urp-terrain-lit.html">English</a></li>
+<li><a href="/cn/current/Manual/urp/prebuilt-shader-graphs-urp-terrain-lit.html">中文</a></li>
+<li><a href="/ja/current/Manual/urp/prebuilt-shader-graphs-urp-terrain-lit.html">日本語</a></li>
+<li><a href="/kr/current/Manual/urp/prebuilt-shader-graphs-urp-terrain-lit.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="../materials-and-shaders.html">Materials and shaders</a></li>
+<li><a href="../built-in-materials-and-shaders.html">Prebuilt materials and shaders</a></li>
+<li><a href="../urp/shaders-in-universalrp.html">Prebuilt shaders in URP</a></li>
+<li><a href="../urp/prebuilt-shader-graphs-urp.html">Shader graph material Inspector window reference for URP</a></li>
+<li>Terrain Lit shader graph reference for URP</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="../urp/prebuilt-shader-graphs-urp-sprite-unlit.html"></a></span><div class="tip">Sprite Unlit shader graph reference for URP</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="../urp/prebuilt-shader-graphs-urp-ui.html"></a></span><div class="tip">UI shader graph reference</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Terrain Lit shader graph reference for URP</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Explore the properties and settings you can use to customize the default Terrain Lit <span class="tooltip" tabindex="0" ><strong>shader</strong><span class="tooltiptext">A program that runs on the GPU. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Shaders.html" href="../Shaders.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#shader" aria-label="Go to glossary anchor for shader">Glossary</a></span></span></span> graph in the Universal <span class="tooltip" tabindex="0" ><strong>Render Pipeline</strong><span class="tooltiptext">A series of operations that take the contents of a Scene, and displays them on a screen. Unity lets you choose from pre-built render pipelines, or write your own. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about render-pipelines.html" href="../render-pipelines.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#renderpipeline" aria-label="Go to glossary anchor for renderpipeline">Glossary</a></span></span></span> (URP).</p>
+
+<h2>Terrain shader passes</h2>
+
+<p>Some properties might not work as expected, because the terrain system adds two additional shader passes when it generates a terrain shader. The passes are the following:</p>
+
+<ul>
+<li>Basemap Gen, which renders the shader graph on a <span class="tooltip" tabindex="0" ><strong>quad</strong><span class="tooltiptext">A primitive object that resembles a plane but its edges are only one unit long, it uses only 4 vertices, and the surface is oriented in the XY plane of the local coordinate space. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about PrimitiveObjects.html" href="../PrimitiveObjects.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#Quad" aria-label="Go to glossary anchor for Quad">Glossary</a></span></span></span> to create a low-resolution baked version. As a result, the <strong>Position</strong> and <strong>Normal (Tangent Space)</strong> values are 2D during this pass.</li>
+<li>Basemap Rendering, which uses a built-in shader and the texture Basemap Gen generates. The <strong>Position</strong> Block has no affect on this pass.</li>
+</ul>
+
+<h2>Contexts</h2>
+
+<p>The default <strong>Vertex</strong> and <strong>Fragment</strong> Contexts contain the following Blocks. Which Blocks display might change depending on the <a href="https://docs.unity3d.com/Packages/com.unity.shadergraph@latest/index.html?subfolder=/manual/Graph-Settings-Tab.html">graph settings</a>.</p>
+
+<h3>Vertex Context</h3>
+
+<p>The default values are the values from the <span class="tooltip" tabindex="0" ><strong>mesh</strong><span class="tooltiptext">The main graphics primitive of Unity. Meshes make up a large part of your 3D worlds. Unity supports triangulated or Quadrangulated polygon meshes. Nurbs, Nurms, Subdiv surfaces must be converted to polygons. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about mesh.html" href="../mesh.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#Mesh" aria-label="Go to glossary anchor for Mesh">Glossary</a></span></span></span>.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Input</strong></th>
+	<th style="text-align:left;"><strong>Type</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Position</strong></td>
+	<td style="text-align:left;">Vector3</td>
+	<td style="text-align:left;">Sets the vertex position in object space.<br><br><strong>Note</strong>: The vertex position has no effect on the Basemap Rendering pass.</td>
+</tr>
+</tbody>
+</table>
+
+<h3>Fragment Context</h3>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Input</strong></th>
+	<th style="text-align:left;"><strong>Type</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Base Color</strong></td>
+	<td style="text-align:left;">Vector3</td>
+	<td style="text-align:left;">Sets the base color of the material. The default is <a href="../../ScriptReference/Color-grey.html"><code>Color.grey</code></a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Normal (Tangent Space)</strong></td>
+	<td style="text-align:left;">Vector3</td>
+	<td style="text-align:left;">Sets a custom <span class="tooltip" tabindex="0" ><strong>normal map</strong><span class="tooltiptext">A type of Bump Map texture that allows you to add surface detail such as bumps, grooves, and scratches to a model which catch the light as if they are represented by real geometry.<br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#normalmap" aria-label="Go to glossary anchor for normalmap">Glossary</a></span></span></span> to simulate bumps and grooves on the surface of the <span class="tooltip" tabindex="0" ><strong>sprite</strong><span class="tooltiptext">A 2D graphic objects. If you are used to working in 3D, Sprites are essentially just standard textures but there are special techniques for combining and managing sprite textures for efficiency and convenience during development. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about sprite/sprite-landing.html" href="../sprite/sprite-landing.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#Sprite" aria-label="Go to glossary anchor for Sprite">Glossary</a></span></span></span>. For more information, refer to <a href="SecondaryTextures.html">Add normal map and mask textures to a sprite</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Metallic</strong></td>
+	<td style="text-align:left;">float</td>
+	<td style="text-align:left;">Sets how metallic the surface of your material is. The range is between 0 and 1. A higher value means the surface reflects the environment more, and its albedo color becomes less visible. A lower value means the albedo color is clearer, and reflections from the environment are visible on top of the surface color, rather than obscuring it. A value of 1 means the the surface color is entirely driven by reflections from the environment.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Emission</strong></td>
+	<td style="text-align:left;">Vector3</td>
+	<td style="text-align:left;">Sets the color the material emits as a light source. The default is black. For more information, refer to <a href="https://docs.unity3d.com/Manual/StandardShaderMaterialParameterEmission.html">Add light emission to a material</a>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Smoothness</strong></td>
+	<td style="text-align:left;">float</td>
+	<td style="text-align:left;">Sets the smoothness of the material. Every light ray that hits a smooth surface bounces off at predictable and consistent angles. For a perfectly smooth surface that reflects light like a mirror, set this to a value of 1. Less smooth surfaces reflect light over a wider range of angles, so the reflections have less detail and spread across the surface in a more diffused pattern.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><span class="tooltip" tabindex="0" ><strong>Ambient Occlusion</strong><span class="tooltiptext">A method to approximate how much ambient light (light not coming from a specific direction) can hit a point on a surface.<br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#ambientocclusion" aria-label="Go to glossary anchor for ambientocclusion">Glossary</a></span></span></span></strong></td>
+	<td style="text-align:left;">float</td>
+	<td style="text-align:left;">Sets how much <span class="tooltip" tabindex="0" ><strong>ambient light</strong><span class="tooltiptext">Light that doesn’t come from any specific direction, and contributes equal light in all directions to the Scene. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about lighting-window.html" href="../lighting-window.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#ambientlight" aria-label="Go to glossary anchor for ambientlight">Glossary</a></span></span></span> reaches the surface, rather than being occluded. A value of 0 means the fragment is completely occluded and appears black. A value of 1 means the fragment is not occluded at all, and the ambient color does not change.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Alpha</strong></td>
+	<td style="text-align:left;">Float</td>
+	<td style="text-align:left;">Sets the alpha of the material. The range is 0 to 1. The default is 1.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Alpha Clip Threshold</strong></td>
+	<td style="text-align:left;">Float</td>
+	<td style="text-align:left;">Sets the minimum alpha value for a <span class="tooltip" tabindex="0" ><strong>pixel</strong><span class="tooltiptext">The smallest unit in a computer image. Pixel size depends on your screen resolution. Pixel lighting is calculated at every screen pixel. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ShadowPerformance.html" href="../ShadowPerformance.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#pixel" aria-label="Go to glossary anchor for pixel">Glossary</a></span></span></span> to be visible. The range is 0 to 1. The default is 0.5. This property is only available if you enable <strong>Alpha Clipping</strong> in the graph settings.</td>
+</tr>
+</tbody>
+</table>
+
+<h2>Graph Settings</h2>
+
+<p>Explore the shader graph settings you can use to customize the Fragment and Vertex contexts.</p>
+
+<p>For more details about graph settings that are common to all shader graph shaders, refer to <a href="https://docs.unity3d.com/Packages/com.unity.shadergraph@latest/index.html?subfolder=/manual/Graph-Settings-Tab.html">Graph Settings tab</a>.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Setting</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Depth Write</strong></td>
+	<td style="text-align:left;">Determines whether the shader writes depth information to the depth buffer. The options are:<ul>
+<li>
+<strong>Auto</strong>: Sets opaque objects to write to the depth buffer, and transparent objects to not write to the depth buffer.</li>
+<li>
+<strong>Force Enabled</strong>: Enables all objects from writing to the depth buffer.</li>
+<li>
+<strong>Force Disabled</strong>: Disables all objects from writing to the depth buffer.</li>
+</ul>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Depth Test</strong></td>
+	<td style="text-align:left;">Sets the conditions under which geometry passes or fails depth testing. The GPU doesn’t draw pixels that fail a depth test. For more information, refer to <a href="https://docs.unity3d.com/Packages/com.unity.shadergraph@latest/index.html?subfolder=/manual/surface-options.html">Control material properties in the Inspector window</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Alpha Clipping</strong></td>
+	<td style="text-align:left;">Discards pixels if their alpha value is lower than a threshold value. Enabling this setting adds the <strong>Alpha Clip Threshold</strong> Block to the Fragment context. To access the holes texture from the <a href="https://docs.unity3d.com/Packages/com.unity.shadergraph@latest/index.html?subfolder=/manual/Terrain-Texture-Node.html">Terrain Texture Node</a>, you must enable this property.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Cast Shadows</strong></td>
+	<td style="text-align:left;">Enables the terrain casting shadows onto itself and other <span class="tooltip" tabindex="0" ><strong>GameObjects</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-GameObject.html" href="../class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Receive Shadows</strong></td>
+	<td style="text-align:left;">Enables the terrain receiving shadows from other GameObjects.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Fragment Normal Space</strong></td>
+	<td style="text-align:left;">Specifies the normal map space that this material uses. The options are: <ul>
+<li>
+<strong>TangentSpace</strong>: Defines the normals in tangent space. Use this to tile a texture on a mesh.</li>
+<li>
+<strong>ObjectSpace</strong>: Defines the normals in object space. Use this for planar-mapping GameObjects like the terrain.</li>
+<li>
+<strong>WorldSpace</strong>: Defines the normal maps in world space.</li>
+</ul>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Custom Editor GUI</strong></td>
+	<td style="text-align:left;">Renders a custom editor GUI in the <strong><span class="tooltip" tabindex="0" ><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheInspector.html" href="../UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span></strong> window of the material. Enter the name of the GUI class in the field.</td>
+</tr>
+</tbody>
+</table>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><span class="tooltip" tabindex="0" ><a href="../script-Terrain.html">Terrain</a><span class="tooltiptext">The landscape in your scene. A Terrain GameObject adds a large flat plane to your scene and you can use the Terrain’s Inspector window to create a detailed landscape. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about terrain-UsingTerrains.html" href="../terrain-UsingTerrains.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#Terrain" aria-label="Go to glossary anchor for Terrain">Glossary</a></span></span></span></li>
+<li><a href="https://docs.unity3d.com/Packages/com.unity.shadergraph@latest">Shader Graph manual</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="../urp/prebuilt-shader-graphs-urp-sprite-unlit.html"></a></span><div class="tip">Sprite Unlit shader graph reference for URP</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="../urp/prebuilt-shader-graphs-urp-ui.html"></a></span><div class="tip">UI shader graph reference</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

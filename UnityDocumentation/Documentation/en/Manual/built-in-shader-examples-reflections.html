@@ -1,0 +1,225 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Reflections shader example in the Built-In Render Pipeline</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<meta property="relative-path-to-manual" content="">
+<meta property="version-switcher-versions-with-this-page" content="Versions with this page:">
+<meta property="version-switcher-versions-without-this-page" content="Versions without this page:">
+<meta property="version-switcher-supported" content="Supported">
+<meta property="version-switcher-legacy" content="Legacy">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/Manual/built-in-shader-examples-reflections.html">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20260626"></script><script type="text/javascript" src="docdata/toc.js?ts=20260626"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20260626"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20260626">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20260626">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/built-in-shader-examples-reflections.html">English</a></li>
+<li><a href="/cn/current/Manual/built-in-shader-examples-reflections.html">中文</a></li>
+<li><a href="/ja/current/Manual/built-in-shader-examples-reflections.html">日本語</a></li>
+<li><a href="/kr/current/Manual/built-in-shader-examples-reflections.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: Unity 6.7 Beta</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/built-in-shader-examples-reflections.html">English</a></li>
+<li><a href="/cn/current/Manual/built-in-shader-examples-reflections.html">中文</a></li>
+<li><a href="/ja/current/Manual/built-in-shader-examples-reflections.html">日本語</a></li>
+<li><a href="/kr/current/Manual/built-in-shader-examples-reflections.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="materials-and-shaders.html">Materials and shaders</a></li>
+<li><a href="Shaders.html">Custom shaders</a></li>
+<li><a href="writing-shaders-birp.html">Writing custom shaders in the Built-In Render Pipeline</a></li>
+<li><a href="built-in-shader-examples.html">HLSL shader examples in the Built-in Render Pipeline</a></li>
+<li>Reflections shader example in the Built-In Render Pipeline</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="built-in-shader-examples-mesh-normals.html"></a></span><div class="tip">Mesh normals shader example in the Built-In Render Pipeline</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="built-in-shader-examples-environment-reflections.html"></a></span><div class="tip">Normal map texturing shader example in the Built-In Render Pipeline</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Reflections shader example in the Built-In Render Pipeline</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+<div class="res-examples" style="background-color: #f2dede; font-size: 14px;">
+<p style="margin: 0; font-size: 14px;">
+<strong style="font-size: 14px;">Important</strong>: The Built-In Render Pipeline is deprecated and will be made obsolete in a future release.<br>It remains supported, including bug fixes and maintenance, through the full Unity 6.7 LTS lifecycle.<br>For more information on migration, refer to <a href="urp/upgrading-from-birp.html">Migrating from the Built-In Render Pipeline to the Universal Render Pipeline</a> and <a href="render-pipelines-feature-comparison.html">Render pipeline feature comparison</a>.</p>
+</div>
+<div class="clear"></div>
+
+<figure>
+<img src="../uploads/SL/ExampleSkyReflection.png" alt="A cat-like character with a metallic surface that reflects the scene.">
+<figcaption>A cat-like character with a metallic surface that reflects the scene.</figcaption>
+</figure>
+
+<p>When a <span class="tooltip" tabindex="0" ><a href="sky-landing.html">Skybox</a><span class="tooltiptext">A special type of Material used to represent skies. Usually six-sided. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about sky-landing.html" href="sky-landing.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Skybox" aria-label="Go to glossary anchor for Skybox">Glossary</a></span></span></span> is used in the <span class="tooltip" tabindex="0" ><strong>scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html" href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span> as a reflection source (see <a href="lighting-window.html">Lighting window</a>),
+then essentially a “default” <span class="tooltip" tabindex="0" ><a href="class-ReflectionProbe.html">Reflection Probe</a><span class="tooltiptext">A rendering component that captures a spherical view of its surroundings in all directions, rather like a camera. The captured image is then stored as a Cubemap that can be used by objects with reflective materials. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-ReflectionProbe.html" href="class-ReflectionProbe.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#ReflectionProbe" aria-label="Go to glossary anchor for ReflectionProbe">Glossary</a></span></span></span> is created, containing the skybox data.
+A reflection probe is internally a <span class="tooltip" tabindex="0" ><a href="class-Cubemap-landing.html">Cubemap</a><span class="tooltiptext">A collection of six square textures that can represent the reflections in an environment or the skybox drawn behind your geometry. The six squares form the faces of an imaginary cube that surrounds an object; each face represents the view along the directions of the world axes (up, down, left, right, forward and back). <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-Cubemap-landing.html" href="class-Cubemap-landing.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Cubemap" aria-label="Go to glossary anchor for Cubemap">Glossary</a></span></span></span> texture; we will extend the world-space normals <span class="tooltip" tabindex="0" ><strong>shader</strong><span class="tooltiptext">A program that runs on the GPU. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Shaders.html" href="Shaders.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#shader" aria-label="Go to glossary anchor for shader">Glossary</a></span></span></span> above to look into it.</p>
+
+<p>The code is starting to get a bit involved by now. Of course, if you want shaders that automatically work with lights, shadows, reflections and the rest of the lighting system, it’s way easier to use <span class="tooltip" tabindex="0" ><a href="SL-SurfaceShaders.html">surface shaders</a><span class="tooltiptext">A streamlined way of writing shaders for the Built-in Render Pipeline. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about SL-SurfaceShaders.html" href="SL-SurfaceShaders.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#SurfaceShader" aria-label="Go to glossary anchor for SurfaceShader">Glossary</a></span></span></span>. This example is intended to show you how to use parts of the lighting system in a “manual” way.</p>
+
+<pre><code class="lang-hlsl">Shader &quot;Unlit/SkyReflection&quot;
+{
+    SubShader
+    {
+        Pass
+        {
+            HLSLPROGRAM
+            #pragma vertex vert
+            #pragma fragment frag
+            #include &quot;UnityCG.cginc&quot;
+
+            struct v2f {
+                half3 worldRefl : TEXCOORD0;
+                float4 pos : SV_POSITION;
+            };
+
+            v2f vert (float4 vertex : POSITION, float3 normal : NORMAL)
+            {
+                v2f o;
+                o.pos = UnityObjectToClipPos(vertex);
+                // compute world space position of the vertex
+                float3 worldPos = mul(_Object2World, vertex).xyz;
+                // compute world space view direction
+                float3 worldViewDir = normalize(UnityWorldSpaceViewDir(worldPos));
+                // world space normal
+                float3 worldNormal = UnityObjectToWorldNormal(normal);
+                // world space reflection vector
+                o.worldRefl = reflect(-worldViewDir, worldNormal);
+                return o;
+            }
+        
+            half4 frag (v2f i) : SV_Target
+            {
+                // sample the default reflection cubemap, using the reflection vector
+                half4 skyData = UNITY_SAMPLE_TEXCUBE(unity_SpecCube0, i.worldRefl);
+                // decode cubemap data into actual color
+                half3 skyColor = DecodeHDR (skyData, unity_SpecCube0_HDR);
+                // output it!
+                half4 c = 0;
+                c.rgb = skyColor;
+                return c;
+            }
+            ENDHLSL
+        }
+    }
+}
+</code></pre>
+
+<p>The example above uses several things from the built-in <a href="SL-BuiltinIncludes.html">shader include files</a>:</p>
+
+<ul>
+<li>
+<strong>unity_SpecCube0</strong>, <strong>unity_SpecCube0_HDR</strong>, <strong>Object2World</strong>, <strong>UNITY_MATRIX_MVP</strong> from the
+ <a href="SL-UnityShaderVariables.html">built-in shader variables</a>. <strong>unity_SpecCube0</strong> contains data for the active reflection probe.</li>
+<li>
+<strong>UNITY_SAMPLE_TEXCUBE</strong> is a <a href="SL-SamplerStates.html">built-in macro</a> to sample a cubemap. Most regular cubemaps are declared and
+ used using standard HLSL syntax (<strong>samplerCUBE</strong> and <strong>texCUBE</strong>), however the reflection probe cubemaps in Unity are declared in a special way to save on sampler slots. If you don’t know what that is, don’t worry, just know that in order to use <strong>unity_SpecCube0</strong> cubemap you have to use <strong>UNITY_SAMPLE_TEXCUBE</strong> macro.</li>
+<li>
+<strong>UnityWorldSpaceViewDir</strong> function from <strong>UnityCG.cginc</strong>, and <strong>DecodeHDR</strong> function from the same file. The latter is used to get actual color from the reflection probe data – since Unity stores reflection probe cubemap in specially encoded way.</li>
+<li>
+<strong>reflect</strong> is just a built-in HLSL function to compute vector reflection around a given normal.</li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="built-in-shader-examples-mesh-normals.html"></a></span><div class="tip">Mesh normals shader example in the Built-In Render Pipeline</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="built-in-shader-examples-environment-reflections.html"></a></span><div class="tip">Normal map texturing shader example in the Built-In Render Pipeline</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

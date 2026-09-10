@@ -1,0 +1,298 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Implement variable rate shading</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<meta property="relative-path-to-manual" content="../">
+<meta property="version-switcher-versions-with-this-page" content="Versions with this page:">
+<meta property="version-switcher-versions-without-this-page" content="Versions without this page:">
+<meta property="version-switcher-supported" content="Supported">
+<meta property="version-switcher-legacy" content="Legacy">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/Manual/urp/variable-rate-shading-implementation.html">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../../StaticFilesManual/js/jquery.js?ts=20260626"></script><script type="text/javascript" src="../../StaticFilesManual/js/core.js?ts=20260626"></script><script type="text/javascript" src="../../StaticFilesManual/js/image-comp.js?ts=20260626"></script><script type="text/javascript" src="../docdata/toc.js?ts=20260626"></script><script type="text/javascript" src="../docdata/global_toc.js?ts=20260626"></script><link rel="stylesheet" type="text/css" href="../../StaticFilesManual/css/core.css?ts=20260626">
+<link rel="stylesheet" type="text/css" href="../../StaticFilesManual/css/icons.css?ts=20260626">
+<link rel="stylesheet" href="../../StaticFilesManual/css/prism.css">
+<script src="../../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="../30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../index.html" class="selected">Manual</a></li>
+<li><a href="../../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/urp/variable-rate-shading-implementation.html">English</a></li>
+<li><a href="/cn/current/Manual/urp/variable-rate-shading-implementation.html">中文</a></li>
+<li><a href="/ja/current/Manual/urp/variable-rate-shading-implementation.html">日本語</a></li>
+<li><a href="/kr/current/Manual/urp/variable-rate-shading-implementation.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: Unity 6.7 Beta</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/urp/variable-rate-shading-implementation.html">English</a></li>
+<li><a href="/cn/current/Manual/urp/variable-rate-shading-implementation.html">中文</a></li>
+<li><a href="/ja/current/Manual/urp/variable-rate-shading-implementation.html">日本語</a></li>
+<li><a href="/kr/current/Manual/urp/variable-rate-shading-implementation.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="../analysis.html">Optimization</a></li>
+<li><a href="../graphics-performance-profiling.html">Graphics performance and profiling</a></li>
+<li><a href="../graphics-performance-and-profiling-in-urp.html">Graphics performance and profiling in URP</a></li>
+<li><a href="../urp/variable-rate-shading.html">Optimize GPU performance with variable rate shading</a></li>
+<li>Implement variable rate shading</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="../urp/variable-rate-shading-introduction.html"></a></span><div class="tip">Introduction to variable rate shading</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="../urp/variable-rate-shading-profile-debug.html"></a></span><div class="tip">Profile and debug when using variable rate shading</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Implement variable rate shading</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Follow this workflow to implement image-based variable rate shading (VRS), which uses a texture to define shading rates across screen regions.</p>
+
+<ol>
+<li><a href="#hardware-compatibility">Verify hardware compatibility</a></li>
+<li><a href="#renderer-feature">Create a Scriptable Renderer Feature</a></li>
+<li><a href="#color-textures">Configure color mask textures</a></li>
+<li><a href="#shading-rate-image">Create a shading rate image (SRI)</a></li>
+<li><a href="#apply-texture">Apply the SRI texture to the render pass</a></li>
+</ol>
+
+<p><a name="hardware-compatibility" aria-hidden="true"></a></p>
+
+<h2>1. Verify hardware compatibility</h2>
+
+<p>Before you begin implementation, ensure the target device supports variable rate shading. Refer to <a href="variable-rate-shading-introduction.html#supported-platforms">Supported platforms</a> for platform compatibility requirements. To query the support, use the following code example:</p>
+
+<pre><code>if(!Vrs.IsColorMaskTextureConversionSupported()) { 
+            Debug.Log(&quot;VRS is not supported&quot;);  
+            return;  
+}
+</code></pre>
+
+<p>For more information, refer to the documentation on <a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.core@latest?subfolder=/api/UnityEngine.Rendering.Vrs.html#UnityEngine_Rendering_Vrs_IsColorMaskTextureConversionSupported">Vrs.IsColorMaskTextureConversionSupported()</a>. The <a href="../../ScriptReference/Rendering.ShadingRateInfo.html">ShadingRateInfo</a> class allows you to check additional capabilities supported by the target device for <span class="tooltip" tabindex="0" ><strong>VRS</strong><span class="tooltiptext">Virtual Reality <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about VROverview.html" href="../VROverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#VR" aria-label="Go to glossary anchor for VR">Glossary</a></span></span></span>.</p>
+
+<p><a name="renderer-feature" aria-hidden="true"></a></p>
+
+<h2>2. Create a Scriptable Renderer Feature</h2>
+
+<p>To implement variable rate shading in your project, you must create a <a href="urp-renderer-feature.html">Scriptable Renderer Feature</a> to incorporate a custom render pass into your rendering pipeline. Use the <a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.core@latest?subfolder=/api/UnityEngine.Rendering.RenderGraphModule.RenderGraph.html">RenderGraph API</a> to write a custom render pass. Unity provides <a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.core@latest?subfolder=/api/UnityEngine.Rendering.Vrs.html">VRS helper functions</a> for scriptable <span class="tooltip" tabindex="0" ><strong>render pipeline</strong><span class="tooltiptext">A series of operations that take the contents of a Scene, and displays them on a screen. Unity lets you choose from pre-built render pipelines, or write your own. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about render-pipelines.html" href="../render-pipelines.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#renderpipeline" aria-label="Go to glossary anchor for renderpipeline">Glossary</a></span></span></span> (SRP) to simplify VRS implementation in your custom render pass.</p>
+
+<p><a name="color-textures" aria-hidden="true"></a></p>
+
+<h2>3. Configure color mask textures</h2>
+
+<p>A color mask texture is a regular texture that uses color coding to represent which shading rate to use where on the screen.</p>
+
+<h3>1. Set up the color mapping system</h3>
+
+<p>A VRS look-up table (LUT) maps colors to specific shading rates. Before creating the LUT in code, configure your color mappings in <strong><span class="tooltip" tabindex="0" ><strong>Project Settings</strong><span class="tooltiptext">A broad collection of settings which allow you to configure how Physics, Audio, Networking, Graphics, Input and many other areas of your project behave. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about comp-ManagerGroup.html" href="../comp-ManagerGroup.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#ProjectSettings" aria-label="Go to glossary anchor for ProjectSettings">Glossary</a></span></span></span></strong>. Follow these steps:</p>
+
+<ol>
+<li><p>Go to <strong>Edit</strong> &gt; <strong>Project Settings</strong> &gt; <strong>Graphics</strong> &gt; <strong>URP</strong> &gt; <strong>VRS-Runtime Resources</strong>.</p></li>
+<li>
+<p>Configure the following lookup tables:</p>
+
+<ul>
+<li>
+<strong>Conversion Lookup Table</strong>: Defines which colors map to which shading rates when converting from color mask to SRI values with <code>ColorMaskTextureToShadingRateImage</code>.</li>
+<li>
+<strong>Visualization Lookup Table</strong>: Converts SRI values to colors for visualizing debug values with <code>ShadingRateImageToColorMaskTexture</code>.</li>
+</ul>
+</li>
+</ol>
+
+<p>The default color mapping is: </p>
+
+<ul>
+<li>Red: 1x1 (High quality)</li>
+<li>Green: 2x2 (Medium quality)</li>
+<li>Dark Blue: 4x4 (Low quality)</li>
+</ul>
+
+<p>After configuring the color values, create a LUT that uses those values:</p>
+
+<p>
+<code>VrsLut vrsLut = VrsLut.CreateDefault();</code> </p>
+
+<p>Use the following code to get colors for the shading rates, so you can use the colors to fill the texture.</p>
+
+<pre><code>Color vrsColor1x1 = vrsLut[ShadingRateFragmentSize.FragmentSize1x1]; 
+Color vrsColor2x2 = vrsLut[ShadingRateFragmentSize.FragmentSize2x2];  
+Color vrsColor4x4 = vrsLut[ShadingRateFragmentSize.FragmentSize4x4];
+</code></pre>
+
+<p>Use a render pass to create a color mask texture on the CPU using the corresponding VRS colors from the LUT. Alternatively, you can load an existing texture from the disk, for example, if you’re authoring the color texture by hand.</p>
+
+<p>
+<strong>Important</strong>: The following steps for texture dimension calculations and color mask generation are required only if you’re creating a color mask texture through a render pass workflow. </p>
+
+<h3>2. Calculate device-specific texture dimensions</h3>
+
+<p>VRS texture size is determined by the number of tiles that fit across the screen and can differ per platform. You must query the native tile size based on your render target’s dimensions. </p>
+
+<p>
+<code>var sizeInTiles = ShadingRateImage.GetAllocTileSize(renderTargetWidth, renderTargetHeight);</code> </p>
+
+<h3>3. Generate VRS color mask</h3>
+
+<p>Configure the texture descriptor with the required properties as follows: </p>
+
+<pre><code>RenderTextureDescriptor textureProperties = new RenderTextureDescriptor(sizeInTiles.x, sizeInTiles.y, RenderTextureFormat.Default, 0);
+        
+TextureHandle colorMask = UniversalRenderer.CreateRenderGraphTexture(renderGraph, textureProperties, &quot;_ShadingRateColor&quot;, false);
+
+</code></pre>
+
+<p><a name="shading-rate-image" aria-hidden="true"></a></p>
+
+<h2>4. Create a shading rate image (SRI)</h2>
+
+<p>Convert the color mask texture into a shading rate image (SRI) that contains shading rate instructions for the GPU. Unity provides the <a href="../../ScriptReference/Rendering.ShadingRateImage.html">ShadingRateImage</a> class to create and manage these textures across different platforms. </p>
+
+<p>Convert the rendered color mask to create a native shading rate image (SRI) as follows:</p>
+
+<pre><code>// Create texture descriptor for the shading rate image
+RenderTextureDescriptor sriProperties = new RenderTextureDescriptor(sizeInTiles.x, sizeInTiles.y, ShadingRateInfo.graphicsFormat, GraphicsFormat.None);
+sriProperties.enableRandomWrite = true;
+sriProperties.enableShadingRate = true;
+
+// Create shading rate image texture
+TextureHandle sriTextureHandle = UniversalRenderer.CreateRenderGraphTexture(renderGraph, sriProperties, &quot;_ShadingRateImage&quot;, false);
+
+// Convert the color mask texture to native SRI format
+Vrs.ColorMaskTextureToShadingRateImage(renderGraph, sriTextureHandle, colorMask, TextureDimension.Tex2D, true);
+</code></pre>
+
+<p>Use the <a href="variable-rate-shading-profile-debug.html#frame-debugger">Frame Debugger</a> to view the shading rate image in the Unity Editor.</p>
+
+<p>To visualize the SRI in your application for debugging purposes, use the following code. This code converts the SRI to a standard color texture that you can render like any other texture in any custom render pass.</p>
+
+<p><code>Vrs.ShadingRateImageToColorMaskTexture(renderGraph, sriTextureHandle, sriDebugColorTextureHandle);</code></p>
+
+<p><a name="apply-texture" aria-hidden="true"></a></p>
+
+<h2>5. Apply the SRI texture to the render pass</h2>
+
+<p>After creating the SRI, apply it to the custom render pass you created to enable variable rate shading.</p>
+
+<pre><code>// Bind the SRI texture to the render pass and apply its per-tile shading rates.
+if (sriTextureHandle.IsValid())
+{ 
+    builder.SetShadingRateImageAttachment(sriTextureHandle); 
+    builder.SetShadingRateCombiner(ShadingRateCombinerStage.Fragment, ShadingRateCombiner.Override);  
+}
+</code></pre>
+
+<p>This binds the VRS texture to the next draw which enables VRS. </p>
+
+<p>
+<strong>Note</strong>: You can set a fixed shading rate for the entire draw using the <a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.core@latest?subfolder=/api/UnityEngine.Rendering.RenderGraphModule.IRasterRenderGraphBuilder.html#UnityEngine_Rendering_RenderGraphModule_IRasterRenderGraphBuilder_SetShadingRateFragmentSize_UnityEngine_Rendering_ShadingRateFragmentSize_"><code>SetShadingRateFragmentSize</code> API</a>.</p>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li>
+<a href="https://discussions.unity.com/t/optimize-renderer-features-with-variable-rate-shading-in-unity-6-1/1605893">Optimize Renderer Features with Variable Rate Shading in Unity 6.1</a> (Unity Discussions)</li>
+<li><a href="https://github.com/Unity-Technologies/shading-rate-demo">Shading rate demo project</a></li>
+<li><a href="urp-global-settings.html">VRS - Runtime Resources</a></li>
+<li><a href="variable-rate-shading-introduction.html">Introduction to variable rate shading</a></li>
+<li><a href="variable-rate-shading-profile-debug.html">Profile and debug when using variable rate shading</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="../urp/variable-rate-shading-introduction.html"></a></span><div class="tip">Introduction to variable rate shading</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="../urp/variable-rate-shading-profile-debug.html"></a></span><div class="tip">Profile and debug when using variable rate shading</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

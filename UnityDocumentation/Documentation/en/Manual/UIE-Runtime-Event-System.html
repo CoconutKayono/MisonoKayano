@@ -1,0 +1,386 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Runtime UI event system and input handling</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<meta property="relative-path-to-manual" content="">
+<meta property="version-switcher-versions-with-this-page" content="Versions with this page:">
+<meta property="version-switcher-versions-without-this-page" content="Versions without this page:">
+<meta property="version-switcher-supported" content="Supported">
+<meta property="version-switcher-legacy" content="Legacy">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/Manual/UIE-Runtime-Event-System.html">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20260626"></script><script type="text/javascript" src="docdata/toc.js?ts=20260626"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20260626"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20260626">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20260626">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/UIE-Runtime-Event-System.html">English</a></li>
+<li><a href="/cn/current/Manual/UIE-Runtime-Event-System.html">中文</a></li>
+<li><a href="/ja/current/Manual/UIE-Runtime-Event-System.html">日本語</a></li>
+<li><a href="/kr/current/Manual/UIE-Runtime-Event-System.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: Unity 6.7 Beta</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/UIE-Runtime-Event-System.html">English</a></li>
+<li><a href="/cn/current/Manual/UIE-Runtime-Event-System.html">中文</a></li>
+<li><a href="/ja/current/Manual/UIE-Runtime-Event-System.html">日本語</a></li>
+<li><a href="/kr/current/Manual/UIE-Runtime-Event-System.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="UIToolkits.html">UI systems</a></li>
+<li><a href="UIElements.html">UI Toolkit</a></li>
+<li><a href="UIE-support-for-runtime-ui.html">Support for runtime UI</a></li>
+<li><a href="UIE-render-runtime-ui.html">Configure runtime UI</a></li>
+<li>Runtime UI event system and input handling</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="UIE-create-ui-document-component.html"></a></span><div class="tip">UI Document component</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="UIE-faq-event-and-input-system.html"></a></span><div class="tip">FAQ for input and event systems with UI Toolkit</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Runtime UI event system and input handling</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>UI Toolkit uses an <strong>event system</strong> to handle input and send events to all active panels. This system processes input events and sends them to the appropriate elements in the UI.</p>
+
+<p>When you enter Play mode, UI Toolkit creates a default event system that is not part of any <span class="tooltip" tabindex="0" ><strong>scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html" href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span>, and provides basic support for most input devices. That default event system is used if there is no other active event system to replace it.</p>
+
+<p>Refer to <a href="#ugui-input">Use UI Toolkit and uGUI with different input systems</a> for more information on how to use the <strong>EventSystem</strong> component to replace UI Toolkit’s default event system.</p>
+
+<h2>Use UI Toolkit with different input systems</h2>
+
+<p>Unity provides two input handling systems: the legacy <span class="tooltip" tabindex="0" ><a href="class-InputManager.html">Input Manager</a><span class="tooltiptext">Settings where you can define all the different input axes, buttons and controls for your project. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-InputManager.html" href="class-InputManager.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#InputManager" aria-label="Go to glossary anchor for InputManager">Glossary</a></span></span></span> and the new <a href="https://docs.unity3d.com/Packages/com.unity.inputsystem@1.8/manual/index.html">Input System package</a>. The Input Manager is part of the core Unity platform and serves as the default system unless you install the Input System package. The new Input System package provides greater flexibility and broader support for devices and platforms.</p>
+
+<p>If you use Unity 6000.0+, your project might already include the Input System package—for example, when you create the project from a template that adds it. Having the package in the project doesn’t by itself change runtime input to the new Input System. To view or change what Unity uses at runtime, set <strong>Active Input Handling</strong> in <strong>Player</strong> settings as described in <a href="#set-the-active-input-handling-system">Set the active input handling system</a>.</p>
+
+<p>UI Toolkit’s default event system can receive events from both input systems. It automatically detects the active input handling system and processes events accordingly.</p>
+
+<p><a name="set-the-active-input-handling-system" aria-hidden="true"></a></p>
+
+<h3>Set the active input handling system</h3>
+
+<p>To set the active input handling system in your project:</p>
+
+<ol>
+<li><p>Select <strong>Edit</strong> &gt; <strong>Project Settings</strong> &gt; <strong>Player</strong>.</p></li>
+<li>
+<p>In the <strong>Player</strong> window, under <strong>Other Settings</strong> &gt; <strong>Configuration</strong>, set <strong>Active Input Handling</strong> to one of the following options:</p>
+
+<ul>
+<li>
+<strong>Input Manager (Old)</strong>: Use the legacy Input Manager.</li>
+<li>
+<strong>Input System Package (New)</strong>: Use the Input System package.</li>
+<li>
+<strong>Both</strong>: Use the Input System package if available, otherwise fall back to the legacy Input Manager.</li>
+</ul>
+</li>
+</ol>
+
+<p>If the Input System package is active in your project, UI Toolkit automatically derives its events from actions defined in the input system. To <a href="https://docs.unity3d.com/Packages/com.unity.inputsystem@1.8/manual/ActionsEditor.html">configure those actions</a>, go to <strong>Edit</strong> &gt; <strong>Project Settings</strong> &gt; <strong>Input System Package</strong>.</p>
+
+<h3>Set up input handling with the Input Manager</h3>
+
+<p>To set up input handling with Input Manager, go to <strong>Edit</strong> &gt; <strong>Project Settings</strong> &gt; <strong>Input Manager</strong>.</p>
+
+<figure>
+<img src="../uploads/Main/uitk/input-manager-nav.png" alt="Input Manager settings">
+<figcaption>Input Manager settings</figcaption>
+</figure>
+
+<p>You can configure the <strong>Horizontal</strong> and <strong>Vertical</strong> axes to influence how <a href="../ScriptReference/UIElements.NavigationMoveEvent.html"><code>NavigationMoveEvents</code></a> are generated in UI Toolkit. You can also modify the <strong>Submit</strong> and <strong>Cancel</strong> actions to generate <a href="../ScriptReference/UIElements.NavigationSubmitEvent.html"><code>NavigationSubmitEvent</code></a> and <a href="../ScriptReference/UIElements.NavigationCancelEvent.html"><code>NavigationCancelEvent</code></a> in UI Toolkit.</p>
+
+<p><a id="set-up-input-handling-with-the-input-system-package" aria-hidden="true"></a></p>
+
+<h3>Set up input handling with the Input System package</h3>
+
+<p>To set up input handling with the Input System package, go to <strong>Edit</strong> &gt; <strong>Project Settings</strong> &gt; <strong>Input System Package</strong>.</p>
+
+<figure>
+<img src="../uploads/Main/uitk/input-system-nav.png" alt="Input System settings">
+<figcaption>Input System settings</figcaption>
+</figure>
+
+<p>The Input System package offers enhanced configurability compared to Input Manager. You can use the project-wide actions asset to set up how <code>NavigationMoveEvents</code>, <a href="../ScriptReference/UIElements.PointerMoveEvent.html"><code>PointerMoveEvent</code></a> (“UI / Point” action), <a href="../ScriptReference/UIElements.PointerDownEvent.html"><code>PointerDownEvent</code></a>, <a href="../ScriptReference/UIElements.PointerUpEvent.html"><code>PointerUpEvent</code></a> (“UI / Click”), <a href="../ScriptReference/UIElements.WheelEvent.html"><code>WheelEvent</code></a> (“UI / ScrollWheel”), <code>NavigationSubmitEvent</code>, and <code>NavigationCancelEvent</code> are generated for UI Toolkit.</p>
+
+<p>Refer to the Input System package’s <a href="https://docs.unity3d.com/Packages/com.unity.inputsystem@1.11/manual/UISupport.html">UI Support</a> documentation for more information about each individual action.</p>
+
+<p><a id="ugui-input" aria-hidden="true"></a></p>
+
+<h2>Use UI Toolkit and uGUI with different input systems</h2>
+
+<p>You can use UI Toolkit’s UI Documents and uGUI components at the same time.
+To do so, add an <strong>EventSystem</strong> component to the scene using one of the following:</p>
+
+<ul>
+<li>In the <strong>Hierarchy</strong> view, select <strong>UI</strong> &gt; EventSystem.</li>
+<li>Create any uGUI component.</li>
+</ul>
+
+<p>When you use UI Toolkit with an <strong>EventSystem</strong> component, you need to choose an appropriate input module
+for the input system that’s active in your project.</p>
+
+<p>The following tables outline the required components and settings when you use UI Toolkit with the legacy Input Manager, with the Input System package, or together with uGUI.</p>
+
+<h3>UI Toolkit with the legacy Input Manager</h3>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Usage</strong></th>
+	<th style="text-align:left;"><strong>Required components</strong></th>
+	<th style="text-align:left;"><strong>Active Input Handling</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">
+<strong>UI Toolkit only</strong> (no uGUI <strong>EventSystem</strong> in the scene)</td>
+	<td style="text-align:left;">Default event system (no scene component required)</td>
+	<td style="text-align:left;"><strong>Input Manager (Old)</strong></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>UI Toolkit and uGUI</strong></td>
+	<td style="text-align:left;">A <strong>Standalone Input Module</strong> and an <strong>EventSystem</strong> component</td>
+	<td style="text-align:left;">
+<strong>Input Manager (Old)</strong> or <strong>Both</strong>
+</td>
+</tr>
+</tbody>
+</table>
+
+<h3>UI Toolkit with the Input System package</h3>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Usage</strong></th>
+	<th style="text-align:left;"><strong>Required components</strong></th>
+	<th style="text-align:left;"><strong>Active Input Handling</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">
+<strong>UI Toolkit only</strong> (no uGUI <strong>EventSystem</strong> in the scene)</td>
+	<td style="text-align:left;">Default event system (no scene component required)</td>
+	<td style="text-align:left;">
+<strong>Input System Package (New)</strong> or <strong>Both</strong>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>UI Toolkit and uGUI</strong></td>
+	<td style="text-align:left;">An <strong>Input System UI Input Module</strong> and an <strong>EventSystem</strong> component</td>
+	<td style="text-align:left;">
+<strong>Input System Package (New)</strong> or <strong>Both</strong>
+</td>
+</tr>
+</tbody>
+</table>
+
+<h3>UI Toolkit with uGUI (legacy Input Manager or Input System package)</h3>
+
+<p>Use this table when you mix UI Toolkit with uGUI and need an <strong>EventSystem</strong> in the scene. Match the input module to <strong>Active Input Handling</strong> in <strong>Player</strong> settings.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Active input backend</strong></th>
+	<th style="text-align:left;"><strong>Required components</strong></th>
+	<th style="text-align:left;"><strong>Active Input Handling</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Legacy Input Manager</strong></td>
+	<td style="text-align:left;">A <strong>Standalone Input Module</strong> and an <strong>EventSystem</strong> component</td>
+	<td style="text-align:left;">
+<strong>Input Manager (Old)</strong> or <strong>Both</strong>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Input System package</strong></td>
+	<td style="text-align:left;">An <strong>Input System UI Input Module</strong> and an <strong>EventSystem</strong> component</td>
+	<td style="text-align:left;">
+<strong>Input System Package (New)</strong> or <strong>Both</strong>
+</td>
+</tr>
+</tbody>
+</table>
+
+<h3>EventSystem setup and input modules</h3>
+
+<p>When you add your first uGUI element to the scene, an <a href="https://docs.unity3d.com/Packages/com.unity.ugui@3.0/manual/script-EventSystem.html"><strong>EventSystem</strong></a> and a <a href="https://docs.unity3d.com/Packages/com.unity.ugui@3.0/manual/script-StandaloneInputModule.html"><strong>Standalone Input Module</strong></a> are automatically added to the scene.</p>
+
+<p>The <strong>EventSystem</strong> belongs to uGUI. It’s responsible for uGUI events, derived from either legacy Input Manager or the Input System package, through an interchangeable Input Module component.</p>
+
+<p>The <strong>Standalone Input Module</strong> dispatches events to UI Toolkit elements.</p>
+
+<p>If your project includes the Input System package and you set <strong>Active Input Handling</strong> to <strong>Input System Package (New)</strong> or <strong>Both</strong>, Unity adds an <a href="https://docs.unity3d.com/Packages/com.unity.inputsystem@1.8/manual/UISupport.html"><strong>Input System UI Input Module</strong></a> instead of the <strong>Standalone Input Module</strong>. The <strong>Input System UI Input Module</strong> and its accompanying <strong>EventSystem</strong> ensure that the events from both UI Toolkit and uGUI elements are properly dispatched.</p>
+
+<p>The <strong>EventSystem</strong> is responsible for reading the scene and executing events, while the <strong>Input System UI Input Module</strong> processes input and initiates event execution. You can change the <strong>Standalone Input Module</strong> or <strong>Input System UI Input Module</strong> with other input modules, which can alter the type of input consumed. Regardless of the input module used, all events are executed through the <strong>EventSystem</strong>.</p>
+
+<h3>Bridge components and built-in input</h3>
+
+<p>If you add and enable a uGUI <strong>EventSystem</strong> in the scene, UI Toolkit detects it and creates two uGUI-compatible components for each UI Toolkit panel: <a href="https://docs.unity3d.com/Packages/com.unity.ugui@3.0/api/UnityEngine.UIElements.PanelRaycaster.html"><code>PanelRaycaster</code></a> and <a href="https://docs.unity3d.com/Packages/com.unity.ugui@3.0/api/UnityEngine.UIElements.PanelEventHandler.html"><code>PanelEventHandler</code></a>. These components serve as intermediaries between uGUI events and UI Toolkit events. The presence of these components deactivates the UI Toolkit’s automated, built-in input processing. This means that the UI Toolkit relies on these components to handle input events when they are present.</p>
+
+<h3>Pointer routing, panel order, and focus</h3>
+
+<p>If the scene uses more than one Panel Settings asset, the event system dispatches pointer events to their panels based on their sorting order. UI Toolkit determines the recipient of pointer events by comparing the sorting order of its panel with that of uGUI canvases and other valid raycast targets. This process decides whether a UI Toolkit element, a uGUI object, or another object in the scene receives the event. Similarly, UI Toolkit uses <code>currentSelectedGameObject</code> of the <strong>EventSystem</strong> to manage the focus. When a UI Toolkit panel wants to get focus, it removes the focus from other uGUI objects, and when a uGUI object becomes selected, UI Toolkit panels automatically lose their focus.</p>
+
+<p>A pointer event propagates through the panels until a panel responds to it. The first panel that uses an event to affect the focused element becomes the focused panel for the event system. This panel continues to receive keyboard events until another event causes a different panel to become the focused panel.</p>
+
+<h3>Focus behavior and delayed focus requests</h3>
+
+<p>
+<strong>Note:</strong> Stopping an event’s propagation and giving an element focus are distinct actions. For example, when you click a button, it stops the propagation and allows only the button to respond to the press, but it doesn’t prevent other default click actions, such as giving focus to the button or any clicked focusable element.</p>
+
+<p>In some cases, you might need to add a one-frame delay after input is processed before requesting focus for an element, especially if that input affects focus through other code paths, as shown in the following example:</p>
+
+<pre><code class="lang-cs">public class FocusOnNextFrameExample : MonoBehaviour
+{
+    void OnEnable()
+    {
+        var root = GetComponent&lt;UIDocument&gt;().rootVisualElement;
+        root.Q&lt;Button&gt;(&quot;my-button&quot;).clicked += () =&gt;
+        {
+            root.schedule.Execute(() =&gt; root.Q&lt;TextField&gt;(&quot;my-text-field&quot;).Focus());
+        };
+    }
+}
+</code></pre>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="https://docs.unity3d.com/Packages/com.unity.inputsystem@1.8/manual/index.html">Input System package</a></li>
+<li><a href="UIE-get-started-with-runtime-ui.html">Get started with runtime UI</a></li>
+<li><a href="UIE-render-runtime-ui.html">Render UI in the Game view</a></li>
+<li><a href="UIE-Runtime-Panel-Settings.html">Panel Settings properties</a></li>
+<li><a href="UIE-faq-event-and-input-system.html">FAQ for input and event systems with UI Toolkit</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="UIE-create-ui-document-component.html"></a></span><div class="tip">UI Document component</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="UIE-faq-event-and-input-system.html"></a></span><div class="tip">FAQ for input and event systems with UI Toolkit</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

@@ -1,0 +1,234 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Add 3D height to an isometric tilemap</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<meta property="relative-path-to-manual" content="../../../../">
+<meta property="version-switcher-versions-with-this-page" content="Versions with this page:">
+<meta property="version-switcher-versions-without-this-page" content="Versions without this page:">
+<meta property="version-switcher-supported" content="Supported">
+<meta property="version-switcher-legacy" content="Legacy">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../../../../../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../../../../../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../../../../../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../../../../../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../../../../../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../../../../../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../../../../../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/Manual/tilemaps/work-with-tilemaps/isometric-tilemaps/renderer/tilemap-renderer-isometric-modes.html">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../../../../../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../../../../../StaticFilesManual/js/jquery.js?ts=20260626"></script><script type="text/javascript" src="../../../../../StaticFilesManual/js/core.js?ts=20260626"></script><script type="text/javascript" src="../../../../../StaticFilesManual/js/image-comp.js?ts=20260626"></script><script type="text/javascript" src="../../../../docdata/toc.js?ts=20260626"></script><script type="text/javascript" src="../../../../docdata/global_toc.js?ts=20260626"></script><link rel="stylesheet" type="text/css" href="../../../../../StaticFilesManual/css/core.css?ts=20260626">
+<link rel="stylesheet" type="text/css" href="../../../../../StaticFilesManual/css/icons.css?ts=20260626">
+<link rel="stylesheet" href="../../../../../StaticFilesManual/css/prism.css">
+<script src="../../../../../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../../../../../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../../../../../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../../../../../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="../../../../30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../../../../index.html" class="selected">Manual</a></li>
+<li><a href="../../../../../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/tilemaps/work-with-tilemaps/isometric-tilemaps/renderer/tilemap-renderer-isometric-modes.html">English</a></li>
+<li><a href="/cn/current/Manual/tilemaps/work-with-tilemaps/isometric-tilemaps/renderer/tilemap-renderer-isometric-modes.html">中文</a></li>
+<li><a href="/ja/current/Manual/tilemaps/work-with-tilemaps/isometric-tilemaps/renderer/tilemap-renderer-isometric-modes.html">日本語</a></li>
+<li><a href="/kr/current/Manual/tilemaps/work-with-tilemaps/isometric-tilemaps/renderer/tilemap-renderer-isometric-modes.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: Unity 6.7 Beta</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/tilemaps/work-with-tilemaps/isometric-tilemaps/renderer/tilemap-renderer-isometric-modes.html">English</a></li>
+<li><a href="/cn/current/Manual/tilemaps/work-with-tilemaps/isometric-tilemaps/renderer/tilemap-renderer-isometric-modes.html">中文</a></li>
+<li><a href="/ja/current/Manual/tilemaps/work-with-tilemaps/isometric-tilemaps/renderer/tilemap-renderer-isometric-modes.html">日本語</a></li>
+<li><a href="/kr/current/Manual/tilemaps/work-with-tilemaps/isometric-tilemaps/renderer/tilemap-renderer-isometric-modes.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="../../../../Unity2D.html">2D game development</a></li>
+<li><a href="../../../../tilemaps/tilemaps-landing.html">Tilemaps</a></li>
+<li><a href="../../../../tilemaps/work-with-tilemaps/isometric-tilemaps/isometric-tilemap-landing.html">Isometric tilemaps</a></li>
+<li>Add 3D height to an isometric tilemap</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="../../../../tilemaps/work-with-tilemaps/isometric-tilemaps/create-isometric-tilemap.html"></a></span><div class="tip">Create an isometric tilemap</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="../../../../tilemaps/custom-tiles-brushes.html"></a></span><div class="tip">Custom tiles and brushes</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Add 3D height to an isometric tilemap</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>To create 3D height on an isometric <span class="tooltip" tabindex="0" ><strong>tilemap</strong><span class="tooltiptext">A GameObject that allows you to quickly create 2D levels using tiles and a grid overlay. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about tilemaps/work-with-tilemaps/tilemap-reference.html" href="../../../../tilemaps/work-with-tilemaps/tilemap-reference.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../../../../Glossary.html#Tilemap" aria-label="Go to glossary anchor for Tilemap">Glossary</a></span></span></span>, use either of the following methods:</p>
+
+<ul>
+<li>Use an <strong>Isometric</strong> tilemap, and create a separate tilemap for each level of 3D height.</li>
+<li>Use an <strong>Isometric Z as Y</strong> tilemap, and set the 3D height of tiles as you paint.</li>
+</ul>
+
+<p>
+<strong>Note:</strong> If you set the <strong>Mode</strong> of a tilemap to <strong>Chunk</strong>, tiles from multiple textures can sort incorrectly. To avoid this, pack all your tile sprites into a single <span class="tooltip" tabindex="0" ><strong>sprite</strong><span class="tooltiptext">A 2D graphic objects. If you are used to working in 3D, Sprites are essentially just standard textures but there are special techniques for combining and managing sprite textures for efficiency and convenience during development. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about sprite/sprite-landing.html" href="../../../../sprite/sprite-landing.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../../../../Glossary.html#Sprite" aria-label="Go to glossary anchor for Sprite">Glossary</a></span></span></span> atlas. For more information, refer to <a href="../../../../sprite/atlas/atlas-landing.html">sprite atlases</a>.</p>
+
+<h2>Use an Isometric tilemap</h2>
+
+<p>To add a new tilemap at a higher level of 3D height, follow these steps:</p>
+
+<ol>
+<li>Select the grid <span class="tooltip" tabindex="0" ><strong>GameObject</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-GameObject.html" href="../../../../class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../../../../Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span> in the <strong>Hierarchy</strong> window, then in the <strong><span class="tooltip" tabindex="0" ><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheInspector.html" href="../../../../UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../../../../Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span></strong> window set <strong>Cell Layout</strong> to <strong>Isometric</strong>.</li>
+<li>In the <strong>Hierarchy</strong> window, right-click the grid GameObject and select <strong>2D Object &gt; Tilemap</strong> to create a new tilemap as a child of the grid.</li>
+<li>In the <strong>Inspector</strong> window of the new tilemap, set <strong>Order in Layer</strong> to a higher value. This makes sure Unity renders the new tilemap in front of the original tilemap.</li>
+<li>To move the tilemap up in 3D height, increase the <strong>x</strong> and <strong>y</strong> values of the <strong>Tile Anchor</strong> property. For example, add 0.5 to both the <strong>x</strong> and <strong>y</strong> values.</li>
+<li>In the <strong>Tile Palette</strong> window, set <strong>Active Target</strong> (<span class="iconClr-Tilemap-TilePalette" aria-label="Tile Palette"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span><span class="path7"></span><span class="path8"></span></span>) to the new tilemap.</li>
+<li>Paint the tiles into the <span class="tooltip" tabindex="0" ><strong>Scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html" href="../../../../CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../../../../Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span> view.</li>
+</ol>
+
+<h2>Use an Isometric Z as Y tilemap</h2>
+
+<p>In an Isometric Z as Y tilemap, each tile has a z value that represents its 3D height. Unity adds the z value to the 2D y position of the sprite, to position it higher up in the scene.</p>
+
+<p>Follow these steps:</p>
+
+<ol>
+<li><p>Select the grid GameObject in the <strong>Hierarchy</strong> window, then in the <strong>Inspector</strong> window set <strong>Cell Layout</strong> to <strong>Isometric Z as Y</strong>.</p></li>
+<li><p>In the <a href="../../../../urp/2DRendererData-overview.html">2D renderer asset</a>, set the <strong>Transparency Sort Mode</strong> to <strong>Custom Axis</strong>.</p></li>
+<li>
+<p>Set the <strong>z</strong> value of <strong>Transparency Sort Axis</strong> to the z-axis sort value. </p>
+
+<p>To calculate the z-axis sort value, take the <strong>y</strong> value of the <strong>Cell Size</strong> of the grid GameObject, multiply it by negative 0.5, then subtract 0.01. For example, if the <strong>y</strong> value of the grid is 0.5, the z-axis sort value is 0.5 × –0.5 - 0.01 = –0.26.</p>
+
+<p>If you don’t set the z-axis sort value, tiles at higher 3D heights can render in front of tiles at lower 3D heights.</p>
+
+<figure>
+<img src="../../../../../uploads/Main/Iso-axis-compare.png" alt="A tower on an isometric grid. On the left, the z value of Transparency Sort Axis is 0, and the tiles of the tower sort incorrectly. On the right, the z value is -0.26, and the tiles sort correctly.">
+<figcaption>A tower on an isometric grid. On the left, the z value of Transparency Sort Axis is 0, and the tiles of the tower sort incorrectly. On the right, the z value is –0.26, and the tiles sort correctly.</figcaption>
+</figure>
+</li>
+<li><p>In the <strong>Tile Palette</strong> window, disable <strong>Lock Z Position</strong>.</p></li>
+<li>
+<p>Set <strong><span class="tooltip" tabindex="0" ><strong>Scene View</strong><span class="tooltiptext">An interactive view into the world you are creating. You use the Scene View to select and position scenery, characters, cameras, lights, and all other types of Game Object. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheSceneView.html" href="../../../../UsingTheSceneView.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../../../../Glossary.html#SceneView" aria-label="Go to glossary anchor for SceneView">Glossary</a></span></span></span> Z Position</strong> to the 3D height you want to paint at. For example, set <strong>Scene View Z Position</strong> to 1 to paint tiles one unit above the ground.</p>
+
+<p>You can also press <strong>-</strong> and <strong>+</strong> to increase and decrease the 3D height of the tile while you paint.</p>
+</li>
+</ol>
+
+<p>The Scene view displays a white outline of the tile at ground level, and a blue outline of the tile at the 3D height.</p>
+
+<figure>
+<img src="../../../../../uploads/Main/2D_IsoTilemap_8.png" alt="The Scene view with the brush preview and the blue and white outlines.">
+<figcaption>The Scene view with the brush preview and the blue and white outlines.</figcaption>
+</figure>
+
+<p>To change whether the mouse pointer selects a tile in the blue outline or the white outline, use the <strong>Mouse Grid Position At Z</strong> property in the <a href="../../../tile-palettes/tile-palette-preferences-reference.html">Tile Palette tab reference for the Preferences window</a>.</p>
+
+<p>To remove a tile with the <strong>Erase</strong> tool, set <strong>Scene View Z Position</strong> to the same 3D height value as the tile you want to remove.</p>
+
+<p>To adjust the gap between 3D height layers, select the grid GameObject and adjust the <strong>z</strong> value of the <strong>Cell Size</strong> property.</p>
+
+<h2>Position sprites between tiles</h2>
+
+<p>By default, tilemaps render in Chunk mode, which means that Unity renders multiple tiles together in single batches. This approach increases performance and ensures tiles sort correctly, but other objects in the scenes can’t appear between tiles at different depths.</p>
+
+<p>To avoid this, follow these steps to set tilemaps to render in Individual mode:</p>
+
+<ol>
+<li>In the <strong>Hierarchy</strong> window, select the tilemap GameObject.</li>
+<li>In the <strong>Inspector</strong> window, in the <strong>Tilemap Renderer</strong> component, set <strong>Mode</strong> to <strong>Individual</strong>.</li>
+</ol>
+
+<p>Unity now sorts tiles and sprites together, so characters and other objects can appear between tiles at different depths. Individual mode can reduce performance, because Unity renders each sprite individually on the tilemap.</p>
+
+<figure>
+<img src="../../../../../uploads/Main/2D_IsoTilemap_14.png" alt="A meadow with a tower on an isometric tilemap. A character stands behind the castle so their bottom half is correctly hidden behind the castle.">
+<figcaption>A meadow with a tower on an isometric tilemap. A character stands behind the castle so their bottom half is correctly hidden behind the castle.</figcaption>
+</figure>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="../../../tilemaps.html">Introduction to tilemaps</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="../../../../tilemaps/work-with-tilemaps/isometric-tilemaps/create-isometric-tilemap.html"></a></span><div class="tip">Create an isometric tilemap</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="../../../../tilemaps/custom-tiles-brushes.html"></a></span><div class="tip">Custom tiles and brushes</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

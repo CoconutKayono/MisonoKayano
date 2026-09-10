@@ -1,0 +1,268 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Choose a method for optimizing draw calls</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<meta property="relative-path-to-manual" content="">
+<meta property="version-switcher-versions-with-this-page" content="Versions with this page:">
+<meta property="version-switcher-versions-without-this-page" content="Versions without this page:">
+<meta property="version-switcher-supported" content="Supported">
+<meta property="version-switcher-legacy" content="Legacy">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/Manual/optimizing-draw-calls-choose-method.html">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20260626"></script><script type="text/javascript" src="docdata/toc.js?ts=20260626"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20260626"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20260626">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20260626">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/optimizing-draw-calls-choose-method.html">English</a></li>
+<li><a href="/cn/current/Manual/optimizing-draw-calls-choose-method.html">中文</a></li>
+<li><a href="/ja/current/Manual/optimizing-draw-calls-choose-method.html">日本語</a></li>
+<li><a href="/kr/current/Manual/optimizing-draw-calls-choose-method.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: Unity 6.7 Beta</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/optimizing-draw-calls-choose-method.html">English</a></li>
+<li><a href="/cn/current/Manual/optimizing-draw-calls-choose-method.html">中文</a></li>
+<li><a href="/ja/current/Manual/optimizing-draw-calls-choose-method.html">日本語</a></li>
+<li><a href="/kr/current/Manual/optimizing-draw-calls-choose-method.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="analysis.html">Optimization</a></li>
+<li><a href="graphics-performance-profiling.html">Graphics performance and profiling</a></li>
+<li><a href="reduce-draw-calls-landing.html">Optimize rendering lots of objects</a></li>
+<li>Choose a method for optimizing draw calls</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="optimizing-draw-calls.html"></a></span><div class="tip">Introduction to optimizing draw calls</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="GPUInstancing-landing.html"></a></span><div class="tip">GPU instancing</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Choose a method for optimizing draw calls</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Use draw call optimization if the CPU sends too many draw calls to the GPU, which is also known as being CPU-bound. For more information about draw calls, refer to <a href="optimizing-draw-calls.html">Introduction to optimizing draw calls</a>.</p>
+
+<h2>Check the number of draw calls</h2>
+<div class="res-examples" style="background-color: #f2dede; font-size: 14px;">
+<p style="margin: 0; font-size: 14px;">
+<strong style="font-size: 14px;">Important</strong>: The Built-In Render Pipeline is deprecated and will be made obsolete in a future release.<br>It remains supported, including bug fixes and maintenance, through the full Unity 6.7 LTS lifecycle.<br>For more information on migration, refer to <a href="urp/upgrading-from-birp.html">Migrating from the Built-In Render Pipeline to the Universal Render Pipeline</a> and <a href="render-pipelines-feature-comparison.html">Render pipeline feature comparison</a>.</p>
+</div>
+<div class="clear"></div>
+
+<p>To check if your <span class="tooltip" tabindex="0" ><strong>scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html" href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span> sends too many draw calls, do any of the following:</p>
+
+<ul>
+<li>Open the <a href="RenderingStatistics.html">Rendering Statistics window</a> and check the <strong>Set Pass calls</strong> value.</li>
+<li>Open the <span class="tooltip" tabindex="0" ><a href="Profiler.html">Profiler</a><span class="tooltiptext">A window that helps you to optimize your game. It shows how much time is spent in the various areas of your game. For example, it can report the percentage of time spent rendering, animating, or in your game logic. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Profiler.html" href="Profiler.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Profiler" aria-label="Go to glossary anchor for Profiler">Glossary</a></span></span></span> and select the <strong>Rendering</strong> section to display the number of draw calls.</li>
+<li>Check the number of draw calls in the <a href="FrameDebugger-landing.html">Frame Debugger</a>.</li>
+</ul>
+
+<h2>Choose optimization methods</h2>
+
+<p>The supported and recommended methods for optimizing draw calls depend on whether you use the Universal <span class="tooltip" tabindex="0" ><strong>Render Pipeline</strong><span class="tooltiptext">A series of operations that take the contents of a Scene, and displays them on a screen. Unity lets you choose from pre-built render pipelines, or write your own. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about render-pipelines.html" href="render-pipelines.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#renderpipeline" aria-label="Go to glossary anchor for renderpipeline">Glossary</a></span></span></span> (URP), the High Definition Render Pipeline (HDRP), or the Built-In Render Pipeline.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Feature</strong></th>
+	<th style="text-align:left;"><strong>Type</strong></th>
+	<th style="text-align:left;"><strong>Multithreaded</strong></th>
+	<th style="text-align:left;"><strong>Recommendation in URP</strong></th>
+	<th style="text-align:left;"><strong>Recommendation in HDRP</strong></th>
+	<th style="text-align:left;"><strong>Recommendation in the Built-In Render Pipeline</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Scriptable Render Pipeline (SRP) Batcher</strong></td>
+	<td style="text-align:left;">Reduces render state updates</td>
+	<td style="text-align:left;">DX12, Vulkan, and compatible console APIs only, if you enable <a href="vulkanapi-graphics-jobs-configuration.html">Graphics Jobs</a>.</td>
+	<td style="text-align:left;">Enable. Refer to <a href="SRPBatcher.html">SRP Batcher in URP</a>.</td>
+	<td style="text-align:left;">Enable. Refer to <a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.high-definition@17.3/manual/SRPBatcher-landing.html">SRP Batcher in HDRP</a>
+</td>
+	<td style="text-align:left;">Not supported</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>GPU Resident Drawer</strong></td>
+	<td style="text-align:left;">Uses GPU hardware instancing</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Enable. Refer to <a href="urp/gpu-resident-drawer.html">GPU Resident Drawer in URP</a>.</td>
+	<td style="text-align:left;">Enable. Refer to <a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.high-definition@17.3/manual/gpu-resident-drawer.html">GPU Resident Drawer in HDRP</a>
+</td>
+	<td style="text-align:left;">Not supported</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><a href="batch-renderer-group.html"><strong><code>BatchRendererGroup</code> (BRG) API</strong></a></td>
+	<td style="text-align:left;">Uses GPU hardware instancing</td>
+	<td style="text-align:left;">Yes</td>
+	<td style="text-align:left;">Use the GPU Resident Drawer instead, except for advanced use cases.</td>
+	<td style="text-align:left;">Use the GPU Resident Drawer instead, except for advanced use cases.</td>
+	<td style="text-align:left;">Not supported</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>GPU Instancing checkbox in materials</strong></td>
+	<td style="text-align:left;">GPU hardware instancing</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Disable, to avoid extra <span class="tooltip" tabindex="0" ><strong>shader</strong><span class="tooltiptext">A program that runs on the GPU. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Shaders.html" href="Shaders.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#shader" aria-label="Go to glossary anchor for shader">Glossary</a></span></span></span> variants.</td>
+	<td style="text-align:left;">Disable, to avoid extra shader variants.</td>
+	<td style="text-align:left;">Enable if you have many instances or lights. Refer to <a href="GPUInstancing-landing.html">GPU Instancing</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Batching</strong></td>
+	<td style="text-align:left;">Combines meshes</td>
+	<td style="text-align:left;">No</td>
+	<td style="text-align:left;">Disable. <span class="tooltip" tabindex="0" ><strong>Static batching</strong><span class="tooltiptext">A technique Unity uses to draw GameObjects on the screen that combines static (non-moving) GameObjects into big Meshes, and renders them in a faster way. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about DrawCallBatching.html" href="DrawCallBatching.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#StaticBatching" aria-label="Go to glossary anchor for StaticBatching">Glossary</a></span></span></span> isn’t compatible with the BRG API or GPU Resident Drawer.</td>
+	<td style="text-align:left;">Disable. Static batching isn’t compatible with the BRG API or GPU Resident Drawer.</td>
+	<td style="text-align:left;">Enable static batching. <span class="tooltip" tabindex="0" ><strong>Dynamic batching</strong><span class="tooltiptext">An automatic Unity process which attempts to render multiple meshes as if they were a single mesh for optimized graphics performance. The technique transforms all of the GameObject vertices on the CPU and groups many similar vertices together. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about DrawCallBatching.html" href="DrawCallBatching.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#dynamicbatching" aria-label="Go to glossary anchor for dynamicbatching">Glossary</a></span></span></span> is no longer recommended. Refer to <a href="DrawCallBatching-landing.html">Batching</a>.</td>
+</tr>
+</tbody>
+</table>
+
+<p>If you have many instances or lights, you can also use <a href="lod-landing.html">optimize mesh rendering using level of detail (LOD)</a>. </p>
+
+<p>To get the best results from any draw call optimization method, do the following:</p>
+
+<ul>
+<li>Use the same materials for different <span class="tooltip" tabindex="0" ><strong>GameObjects</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-GameObject.html" href="class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span> as much as possible.</li>
+<li>If you want to render the same <span class="tooltip" tabindex="0" ><strong>mesh</strong><span class="tooltiptext">The main graphics primitive of Unity. Meshes make up a large part of your 3D worlds. Unity supports triangulated or Quadrangulated polygon meshes. Nurbs, Nurms, Subdiv surfaces must be converted to polygons. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about mesh.html" href="mesh.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Mesh" aria-label="Go to glossary anchor for Mesh">Glossary</a></span></span></span> with different properties, for example different colors, use <a href="materialvariant-landingpage.html">Material Variants</a> instead of multiple materials.</li>
+<li>Avoid using the <code>MaterialPropertyBlock</code> API in URP and HDRP.</li>
+</ul>
+
+<h2>Use multiple optimization methods</h2>
+
+<p>You can use multiple draw call optimization methods in the same scene, but each GameObject uses only some methods depending on its mesh and shader.</p>
+
+<p>If you enable all the features in the table, Unity does the following:</p>
+
+<ul>
+<li>Static meshes: combines the meshes with static batching.</li>
+<li>Dynamic meshes with a compatible shader: uses the SRP Batcher with the GPU Resident Drawer or the BRG API.</li>
+<li>Remaining meshes with a compatible shader: uses GPU Instancing.</li>
+<li>Remaining meshes: uses dynamic batching.</li>
+</ul>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><span class="tooltip" tabindex="0" ><a href="shader-variants.html">Shader variants</a><span class="tooltiptext">A verion of a shader program that Unity generates according to a specific combination of shader keywords and their status. A Shader object can contain multiple shader variants. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about shader-variants.html" href="shader-variants.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#shadervariant" aria-label="Go to glossary anchor for shadervariant">Glossary</a></span></span></span></li>
+<li>
+<a href="https://unity.com/demos/fantasy-kingdom">Fantasy Kingdom in Unity 6</a>, which uses the GPU Resident Drawer.</li>
+<li><a href="https://unity.com/blog/engine-platform/srp-batcher-speed-up-your-rendering">SRP Batcher: Speed up your rendering</a></li>
+<li><a href="https://unity.com/blog/engine-platform/batchrenderergroup-sample-high-frame-rate-on-budget-devices">BatchRendererGroup sample: Achieve high frame rate even on budget devices</a></li>
+<li>
+<a href="https://unity.com/demos/megacity-competitive-action-sample">Megacity Metro</a>, which uses the BatchRendererGroup API to render a large number of objects.</li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="optimizing-draw-calls.html"></a></span><div class="tip">Introduction to optimizing draw calls</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="GPUInstancing-landing.html"></a></span><div class="tip">GPU instancing</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

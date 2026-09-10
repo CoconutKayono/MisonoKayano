@@ -1,0 +1,257 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Migrate custom controls from an earlier version to Unity 6</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<meta property="relative-path-to-manual" content="../">
+<meta property="version-switcher-versions-with-this-page" content="Versions with this page:">
+<meta property="version-switcher-versions-without-this-page" content="Versions without this page:">
+<meta property="version-switcher-supported" content="Supported">
+<meta property="version-switcher-legacy" content="Legacy">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/Manual/ui-systems/migrate-custom-control.html">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../../StaticFilesManual/js/jquery.js?ts=20260626"></script><script type="text/javascript" src="../../StaticFilesManual/js/core.js?ts=20260626"></script><script type="text/javascript" src="../../StaticFilesManual/js/image-comp.js?ts=20260626"></script><script type="text/javascript" src="../docdata/toc.js?ts=20260626"></script><script type="text/javascript" src="../docdata/global_toc.js?ts=20260626"></script><link rel="stylesheet" type="text/css" href="../../StaticFilesManual/css/core.css?ts=20260626">
+<link rel="stylesheet" type="text/css" href="../../StaticFilesManual/css/icons.css?ts=20260626">
+<link rel="stylesheet" href="../../StaticFilesManual/css/prism.css">
+<script src="../../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="../30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../index.html" class="selected">Manual</a></li>
+<li><a href="../../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/ui-systems/migrate-custom-control.html">English</a></li>
+<li><a href="/cn/current/Manual/ui-systems/migrate-custom-control.html">中文</a></li>
+<li><a href="/ja/current/Manual/ui-systems/migrate-custom-control.html">日本語</a></li>
+<li><a href="/kr/current/Manual/ui-systems/migrate-custom-control.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: Unity 6.7 Beta</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/ui-systems/migrate-custom-control.html">English</a></li>
+<li><a href="/cn/current/Manual/ui-systems/migrate-custom-control.html">中文</a></li>
+<li><a href="/ja/current/Manual/ui-systems/migrate-custom-control.html">日本語</a></li>
+<li><a href="/kr/current/Manual/ui-systems/migrate-custom-control.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="../UIToolkits.html">UI systems</a></li>
+<li><a href="../UIElements.html">UI Toolkit</a></li>
+<li><a href="../UIE-migration-guides.html">Migration guides</a></li>
+<li>Migrate custom controls from an earlier version to Unity 6</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="../UIE-migration-guides.html"></a></span><div class="tip">Migration guides</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="../UIE-Transitioning-From-UGUI.html"></a></span><div class="tip">Migrate from uGUI to UI Toolkit</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Migrate custom controls from an earlier version to Unity 6</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Unity 6 introduces improvements that simplify the creation of custom controls. This guide explains how to migrate custom controls from previous versions to Unity 6’s revamped workflow.</p>
+
+<h2>Old system</h2>
+
+<p>Previously, creating a custom control required using the <code>UxmlTraits</code> class to define attributes. The following example demonstrates this approach for a <code>ProgressBar</code> control. </p>
+
+<p>The examples focus on attribute authoring and don’t include the behavior of the control. It creates a <code>UxmlTraits</code> class that defines the attributes of the <code>ProgressBar</code> control. For each attribute, the class specifies the following:</p>
+
+<ul>
+<li>Its type</li>
+<li>Default value</li>
+<li>Name</li>
+</ul>
+
+<p>Then, it gets the value for each attribute and assigns it to the element. It also adds a <code>UxmlFactory</code> class that creates instances of the element.</p>
+
+<pre><code class="lang-cs">using UnityEngine.UIElements;
+
+public class ProgressBar : VisualElement
+{
+    public new class UxmlFactory : UxmlFactory&lt;ProgressBar, UxmlTraits&gt; { }
+
+    public new class UxmlTraits : BindableElement.UxmlTraits
+    {
+        UxmlFloatAttributeDescription m_LowValue = new UxmlFloatAttributeDescription { name = &quot;low-value&quot;, defaultValue = 0 };
+        UxmlFloatAttributeDescription m_HighValue = new UxmlFloatAttributeDescription { name = &quot;high-value&quot;, defaultValue = 100 };
+        UxmlFloatAttributeDescription m_Value = new UxmlFloatAttributeDescription { name = &quot;value&quot;, defaultValue = 0 };
+        UxmlStringAttributeDescription m_Title = new UxmlStringAttributeDescription() { name = &quot;title&quot;, defaultValue = string.Empty };
+
+        public override void Init(VisualElement ve, IUxmlAttributes bag, CreationContext cc)
+        {
+            base.Init(ve, bag, cc);
+            var bar = ve as ProgressBar;
+            bar.lowValue = m_LowValue.GetValueFromBag(bag, cc);
+            bar.highValue = m_HighValue.GetValueFromBag(bag, cc);
+            bar.value = m_Value.GetValueFromBag(bag, cc);
+            bar.title = m_Title.GetValueFromBag(bag, cc);
+        }
+    }
+
+    public string title { get; set; }
+
+    public float lowValue { get; set; }
+
+    public float highValue { get; set; }
+
+    public float value { get; set; }
+}
+</code></pre>
+
+<h2>Unity 6 system</h2>
+
+<p>Unity 6 simplifies custom control creation with the <a href="../../ScriptReference/UIElements.UxmlElementAttribute.html"><code>UxmlElement</code></a> and <a href="../../ScriptReference/UIElements.UxmlAttributeAttribute.html"><code>UxmlAttribute</code></a> attributes, eliminating the need for <code>UxmlTraits</code> and <code>UxmlFactory</code>. The new system streamlines the process by automatically handling the conversion of values to and from UXML attribute strings.</p>
+
+<p>The following shows the updated the <code>ProgressBar</code> example:</p>
+
+<pre><code class="lang-cs">using UnityEngine.UIElements;
+
+[UxmlElement]
+public partial class ProgressBar : VisualElement
+{
+    [UxmlAttribute]
+    public string title { get; set; }
+
+    [UxmlAttribute]
+    public float lowValue { get; set; }
+
+    [UxmlAttribute]
+    public float highValue { get; set; } = 100;
+
+    [UxmlAttribute]
+    public float value { get; set; }
+}
+</code></pre>
+
+<h2>Key changes</h2>
+
+<p>Here’s the key changes:</p>
+
+<ul>
+<li>Use <code>UxmlElement</code> to <a href="../UIE-create-custom-controls.html">declare a custom control</a>.</li>
+<li>Mark the class as partial.</li>
+<li>Use <code>UxmlAttribute</code> to <a href="custom-control-attributes-built-in-types.html">define attributes</a>, removing the need for <code>UxmlTraits</code>.</li>
+<li>The UXML attribute name is automatically derived from the property name, but you can <a href="custom-control-customize-uxml-attributes.html">customize it</a>.</li>
+</ul>
+
+<h2>UXML usage</h2>
+
+<p>The UXML usage remains the same for both systems:</p>
+
+<pre><code class="lang-xml">&lt;ui:UXML xmlns:ui=&quot;UnityEngine.UIElements&quot;&gt;
+    &lt;ProgressBar title=&quot;My Progress bar&quot; low-value=&quot;0&quot; high-value=&quot;1&quot; value=&quot;0.5&quot; /&gt;
+&lt;/ui:UXML&gt;
+</code></pre>
+
+<h2>Important considerations</h2>
+
+<p>If an element lacks the <code>UxmlElement</code> attribute, Unity defaults to the <code>UxmlTraits</code> and <code>UxmlFactory</code> systems for serialization. Ensure consistency by using a single serialization approach per <span class="tooltip" tabindex="0" ><strong>visual element</strong><span class="tooltiptext">A node of a visual tree that instantiates or derives from the C# <a href="../../ScriptReference/UIElements.VisualElement.html"><code>VisualElement</code></a> class. You can style the look, define the behaviour, and display it on screen as part of the UI. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UIE-VisualTree.html" href="../UIE-VisualTree.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#visualelement" aria-label="Go to glossary anchor for visualelement">Glossary</a></span></span></span>. While both systems can coexist in a UXML file, don’t mix them with a single element.</p>
+
+<p>After migrating to the new system, reimport UXML assets to match the updated code. While this process happens automatically, but any previously built Asset Bundles containing UXML files need to be rebuilt to function correctly.</p>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="../UIE-troubleshooting-custom-control-library-compilation.html">Troubleshooting custom control library compilation</a></li>
+<li><a href="../UIE-create-custom-controls.html">Create a custom control</a></li>
+<li><a href="custom-control-customize-uxml-tag-names.html">Customize the custom control UXML tag name</a></li>
+<li><a href="custom-control-attributes-built-in-types.html">Define UXML attributes for built-in data types</a></li>
+<li><a href="custom-control-attributes-complex-data-types.html">Define UXML attributes for complex data types</a></li>
+<li><a href="custom-control-customize-uxml-attributes.html">Customize UXML attributes</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="../UIE-migration-guides.html"></a></span><div class="tip">Migration guides</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="../UIE-Transitioning-From-UGUI.html"></a></span><div class="tip">Migrate from uGUI to UI Toolkit</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

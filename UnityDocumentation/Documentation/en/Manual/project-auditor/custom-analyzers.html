@@ -1,0 +1,294 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Creating custom analyzers</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<meta property="relative-path-to-manual" content="../">
+<meta property="version-switcher-versions-with-this-page" content="Versions with this page:">
+<meta property="version-switcher-versions-without-this-page" content="Versions without this page:">
+<meta property="version-switcher-supported" content="Supported">
+<meta property="version-switcher-legacy" content="Legacy">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/Manual/project-auditor/custom-analyzers.html">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../../StaticFilesManual/js/jquery.js?ts=20260626"></script><script type="text/javascript" src="../../StaticFilesManual/js/core.js?ts=20260626"></script><script type="text/javascript" src="../../StaticFilesManual/js/image-comp.js?ts=20260626"></script><script type="text/javascript" src="../docdata/toc.js?ts=20260626"></script><script type="text/javascript" src="../docdata/global_toc.js?ts=20260626"></script><link rel="stylesheet" type="text/css" href="../../StaticFilesManual/css/core.css?ts=20260626">
+<link rel="stylesheet" type="text/css" href="../../StaticFilesManual/css/icons.css?ts=20260626">
+<link rel="stylesheet" href="../../StaticFilesManual/css/prism.css">
+<script src="../../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="../30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../index.html" class="selected">Manual</a></li>
+<li><a href="../../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/project-auditor/custom-analyzers.html">English</a></li>
+<li><a href="/cn/current/Manual/project-auditor/custom-analyzers.html">中文</a></li>
+<li><a href="/ja/current/Manual/project-auditor/custom-analyzers.html">日本語</a></li>
+<li><a href="/kr/current/Manual/project-auditor/custom-analyzers.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: Unity 6.7 Beta</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/project-auditor/custom-analyzers.html">English</a></li>
+<li><a href="/cn/current/Manual/project-auditor/custom-analyzers.html">中文</a></li>
+<li><a href="/ja/current/Manual/project-auditor/custom-analyzers.html">日本語</a></li>
+<li><a href="/kr/current/Manual/project-auditor/custom-analyzers.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="../analysis.html">Optimization</a></li>
+<li><a href="../project-auditor/project-auditor.html">Project Auditor</a></li>
+<li><a href="../project-auditor/project-auditor-programming.html">Programming with Project Auditor</a></li>
+<li>Creating custom analyzers</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="../project-auditor/compare-issues.html"></a></span><div class="tip">Compare issues and insights</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="../project-auditor/project-auditor-window.html"></a></span><div class="tip">Project Auditor window reference</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Creating custom analyzers</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Project Auditor provides an API for creating custom analyzers tailored to the needs of your project.</p>
+
+<p>Internally, Project Auditor creates and maintains the following modules:</p>
+
+<ul>
+<li>Animation</li>
+<li>Assets</li>
+<li>AudioClip</li>
+<li>BuildReport</li>
+<li>Code</li>
+<li>Mesh</li>
+<li>Packages</li>
+<li>Settings</li>
+<li>Shader</li>
+<li>SpriteAtlas</li>
+<li>Texture</li>
+</ul>
+
+<p>Every module has a corresponding class inheriting from <a href="../../ScriptReference/Unity.ProjectAuditor.Editor.Core.ModuleAnalyzer.html"><code>ModuleAnalyzer</code></a> which declares an <code>Analyze</code> method which takes a type inheriting from <code>AnalysisContext</code>. During analysis, the module uses reflection to detect and create instances of any Analyzer classes inheriting from its corresponding <code>ModuleAnalyzer</code>, then constructs <code>AnalysisContext</code> objects and passes them to the Analyzers.</p>
+
+<h2>Create an analyzer</h2>
+
+<p>The following is an example showing how to create a custom Analyzer. Imagine a texture-heavy 2D game with a <span class="tooltip" tabindex="0" ><strong>pixel</strong><span class="tooltiptext">The smallest unit in a computer image. Pixel size depends on your screen resolution. Pixel lighting is calculated at every screen pixel. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ShadowPerformance.html" href="../ShadowPerformance.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#pixel" aria-label="Go to glossary anchor for pixel">Glossary</a></span></span></span> art visual style. In such a project it might be desirable to enforce maximum sizes for <span class="tooltip" tabindex="0" ><strong>sprite</strong><span class="tooltiptext">A 2D graphic objects. If you are used to working in 3D, Sprites are essentially just standard textures but there are special techniques for combining and managing sprite textures for efficiency and convenience during development. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about sprite/sprite-landing.html" href="../sprite/sprite-landing.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#Sprite" aria-label="Go to glossary anchor for Sprite">Glossary</a></span></span></span> texture assets to help manage memory and to enforce a consistent visual resolution.</p>
+
+<p>The example script demonstrates how to do the following:</p>
+
+<ul>
+<li>Declare and register a <code>Descriptor</code>, including its custom <code>Fixer</code>.</li>
+<li>Use <code>DiagnosticParameterAttribute</code> to declare a diagnostic parameter for use during analysis.</li>
+<li>Access the contents of the <code>context</code> structure passed to it to decide whether to report an issue.</li>
+<li>Create an issue, including specifying the <a href="../../ScriptReference/Unity.ProjectAuditor.Editor.IssueCategory.html"><code>IssueCategory</code></a> which dictates the view in which the issue appears and the information that is displayed in the Issue table.</li>
+</ul>
+
+<pre><code class="c#">using System;
+using System.Collections.Generic;
+using Unity.ProjectAuditor.Editor;
+using Unity.ProjectAuditor.Editor.Core;
+using UnityEditor;
+
+// Inherit from TextureModuleAnalyzer to allow TextureModule to create and run an
+// instance of this analyzer.
+class CustomTextureAnalyzer : TextureModuleAnalyzer
+{
+    // Define our custom maximum sprite size
+    const int k_MaxSpriteSize = 1024;
+
+    // Data for constructing a descriptor.
+    const string k_SpriteTooBigId = &quot;PAA9000&quot;;  // Make sure this ID is unique.
+    const string k_Title = &quot;(Custom) Texture: Oversized Sprite&quot;;
+    const Areas k_ImpactedAreas = Areas.Memory | Areas.Quality;
+    const string k_Description =
+        &quot;The source texture for this Sprite is larger than the limit specified by &quot; +
+        &quot;the game's art direction. Oversized textures can take up too much memory &quot; +
+        &quot;and compromise visual style.&quot;;
+    const string k_Recommendation =
+        &quot;Resize the source texture, or set the &lt;b&gt;Max Size&lt;/b&gt; option in the &quot; +
+        &quot;Texture Import Settings to a suitable value.&quot;;
+
+    // Declare a Descriptor to describe the issue we want to report.
+    static readonly Descriptor k_CustomSpriteTooBigDescriptor = new Descriptor
+    (
+        k_SpriteTooBigId,
+        k_Title,
+        k_ImpactedAreas,
+        k_Description,
+        k_Recommendation
+    )
+    {
+        // As well as the constructor parameters above, this area can be used to set
+        // the values of other Descriptor fields.
+
+        // Project Auditor will format this message using the Name that's passed into
+        // CreateIssue.
+        MessageFormat = &quot;Sprite '{0}' is oversized&quot;,
+
+        // Optionally declare a delegate to fix the issue in a single button click.
+        Fixer = (issue, analysisParams) =&gt;
+        {
+            var textureImporter =
+                AssetImporter.GetAtPath(issue.RelativePath) as TextureImporter;
+
+            if (textureImporter != null)
+            {
+                textureImporter.maxTextureSize = k_MaxSpriteSize;
+                textureImporter.SaveAndReimport();
+            }
+        }
+    };
+
+    // Declare m_CustomSpriteSizeLimit as a DiagnosticParam. Give the parameter a
+    // unique name and a sensible default.
+    [DiagnosticParameter(&quot;CustomSpriteSizeLimit&quot;, &quot;Sprite Size Limit&quot;,
+        &quot;Warn if any sprites have a width or height greater than this value.&quot;, k_MaxSpriteSize)]
+    int m_CustomSpriteSizeLimit;
+
+    // Override the initialize method in order to pass the custom Descriptor to the
+    // registerDescriptor Action so that ProjectAuditor knows about it.
+    public override void Initialize(Action&lt;Descriptor&gt; registerDescriptor)
+    {
+        registerDescriptor(k_CustomSpriteTooBigDescriptor);
+    }
+
+    // Implementation of the custom Analyze coroutine method. In the case of a class
+    // inheriting from TextureModuleAnalyzer, the AnalysisContext passed to this
+    // method is a TextureAnalysisContext.
+    public override IEnumerable&lt;ReportItem&gt; Analyze(TextureAnalysisContext context)
+    {
+        // Check to see if a texture is treated as a sprite, and check its dimensions
+        if (context.Importer.textureType == TextureImporterType.Sprite &amp;&amp;
+           (context.Texture.width &gt; m_CustomSpriteSizeLimit ||
+            context.Texture.height &gt; m_CustomSpriteSizeLimit))
+        {
+            // Create the issue with the correct category, DescriptorId, name and path
+            yield return context.CreateIssue(IssueCategory.AssetIssue,
+                    k_CustomSpriteTooBigDescriptor.Id, context.Name)
+                .WithLocation(context.Importer.assetPath);
+        }
+    }
+}
+</code></pre>
+
+<figure>
+<img src="../../uploads/Main/project-auditor/custom-analyzer-output.png" alt="Custom analyzer output">
+<figcaption>Custom analyzer output</figcaption>
+</figure>
+
+<h2>Debugging slow analyzers</h2>
+
+<p>The analysis for some issues might take a long time to run, particularly in a large project. The <code>Descriptor</code> for such issues might declare <code>Descriptor.IsEnabledByDefault</code> to be false to stop them running when running Project Auditor interactively in the Editor.</p>
+
+<p>When running Project Auditor in a CI/CD environment you can re-enable analysis for these descriptors. Use <code>AnalysisParams.WithAdditionalDiagnosticRules</code> to add temporary <code>Rule</code> instances to increase the <code>Severity</code> of a Descriptor to anything other than <code>Severity.None</code> to re-enable analysis in this context.</p>
+
+<h2>Writing Descriptor text</h2>
+
+<p>Use the following guidelines when writing the strings that appear in Descriptors for the Issues
+the tool reports:</p>
+
+<ul>
+<li>Use bold for the name of APIs and settings options in both the description and the recommendation. Do this by adding <code>&lt;b&gt;</code> and <code>&lt;/b&gt;</code> tags before and after the name.</li>
+<li>Don’t use rich text in title or <code>messageFormat</code> strings. No <code>&lt;b&gt;</code>bold<code>&lt;/b&gt;</code> tags, for example. These fields don’t support rich text in the UI so it will look bad.</li>
+</ul>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="run-from-command-line.html">Run Project Auditor from the command line</a></li>
+<li><a href="compare-issues.html">Compare issues and insights</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="../project-auditor/compare-issues.html"></a></span><div class="tip">Compare issues and insights</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="../project-auditor/project-auditor-window.html"></a></span><div class="tip">Project Auditor window reference</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

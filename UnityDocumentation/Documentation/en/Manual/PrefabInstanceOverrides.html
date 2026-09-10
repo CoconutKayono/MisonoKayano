@@ -1,0 +1,251 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Override prefab instances</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<meta property="relative-path-to-manual" content="">
+<meta property="version-switcher-versions-with-this-page" content="Versions with this page:">
+<meta property="version-switcher-versions-without-this-page" content="Versions without this page:">
+<meta property="version-switcher-supported" content="Supported">
+<meta property="version-switcher-legacy" content="Legacy">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/Manual/PrefabInstanceOverrides.html">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20260626"></script><script type="text/javascript" src="docdata/toc.js?ts=20260626"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20260626"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20260626">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20260626">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/PrefabInstanceOverrides.html">English</a></li>
+<li><a href="/cn/current/Manual/PrefabInstanceOverrides.html">中文</a></li>
+<li><a href="/ja/current/Manual/PrefabInstanceOverrides.html">日本語</a></li>
+<li><a href="/kr/current/Manual/PrefabInstanceOverrides.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: Unity 6.7 Beta</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/PrefabInstanceOverrides.html">English</a></li>
+<li><a href="/cn/current/Manual/PrefabInstanceOverrides.html">中文</a></li>
+<li><a href="/ja/current/Manual/PrefabInstanceOverrides.html">日本語</a></li>
+<li><a href="/kr/current/Manual/PrefabInstanceOverrides.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="working-with-gameobjects.html">GameObjects</a></li>
+<li><a href="Prefabs.html">Prefabs</a></li>
+<li><a href="prefabs-override.html">Overriding prefab instance data</a></li>
+<li>Override prefab instances</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="prefabs-override.html"></a></span><div class="tip">Overriding prefab instance data</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="UnusedOverrides.html"></a></span><div class="tip">Removing unused override data</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Override prefab instances</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>You can override the properties and components of a <span class="tooltip" tabindex="0" ><strong>prefab</strong><span class="tooltiptext">An asset type that allows you to store a GameObject complete with components and properties. The prefab acts as a template from which you can create new object instances in the scene. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Prefabs.html" href="Prefabs.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#prefab" aria-label="Go to glossary anchor for prefab">Glossary</a></span></span></span> instance to create variations between instances, while still linking those instances to the same prefab asset. For example, you might create several instances of the same character, but override its speed value, and assign a different <span class="tooltip" tabindex="0" ><strong>audio clip</strong><span class="tooltiptext">A container for audio data in Unity. Unity supports mono, stereo and multichannel audio assets (up to eight channels). Unity can import .aif, .wav, .mp3, and .ogg audio file format, and .xm, .mod, .it, and .s3m tracker module formats. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-AudioClip.html" href="class-AudioClip.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#AudioClip" aria-label="Go to glossary anchor for AudioClip">Glossary</a></span></span></span> to each instance.</p>
+
+<p>When you change any of the following on a prefab instance, Unity treats it as an override:</p>
+
+<ul>
+<li>The values of a property.</li>
+<li>Adding or removing a component.</li>
+<li>Adding or removing a child <span class="tooltip" tabindex="0" ><strong>GameObject</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-GameObject.html" href="class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span>.</li>
+</ul>
+
+<p>If you modify or delete any <span class="tooltip" tabindex="0" ><strong>scripts</strong><span class="tooltiptext">A piece of code that allows you to create your own Components, trigger game events, modify Component properties over time and respond to user input in any way you like. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about creating-scripts.html" href="creating-scripts.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scripts" aria-label="Go to glossary anchor for Scripts">Glossary</a></span></span></span> that declare the value of an instance override, then the override becomes unused. For information on how to remove unused override data, refer to <a href="UnusedOverrides.html">Remove unused override data</a>.</p>
+
+<h2>Appearance of overrides in the Editor</h2>
+
+<p>Unity indicates overrides with a blue line on the left of the <span class="tooltip" tabindex="0" ><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheInspector.html" href="UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span> window. Any added or removed components have a plus or minus badge on their icon.</p>
+
+<figure>
+<img src="../uploads/Main/prefab-instance-overrides.png" alt="A prefab instance Inspector with an added Box Collider component as an override, indicated with a plus badge on its icon (highlighted). The Max Health property on the Health script also has an override, indicated in bold and with a blue line to the left of the property.">
+<figcaption>A prefab instance Inspector with an added Box Collider component as an override, indicated with a plus badge on its icon (highlighted). The Max Health property on the Health script also has an override, indicated in bold and with a blue line to the left of the property.</figcaption>
+</figure>
+
+<p>In the Hierarchy, any added objects have a plus badge on their icons.</p>
+
+<figure>
+<img src="../uploads/Main/prefab-instance-hierarchy-override.png" alt="The Hierarchy window showing a Prefab instance with a child prefab instance called Banana added as an override.">
+<figcaption>The Hierarchy window showing a Prefab instance with a child prefab instance called Banana added as an override.</figcaption>
+</figure>
+
+<h2>Behavior of overrides</h2>
+
+<p>An overridden property value on a prefab instance always takes precedence over the value from the prefab asset. This means that if you change a property on a prefab asset, it doesn’t have any effect on instances where that property is overridden.</p>
+
+<p>If you edit a prefab asset and some instances don’t update as expected, check if that property is overridden on those instances. If your project has many instance overrides, it can be hard to track which changes take effect, so consider using <a href="PrefabVariants.html">prefab variants</a> for more manageable variations.</p>
+
+<h3>Transform overrides</h3>
+
+<p>A prefab instance’s <strong>Position</strong> and <strong>Rotation</strong> properties always differ from the root prefab asset’s properties and aren’t an explicit override. This is because in most projects, different prefab instances need to be at different positions and rotations to the original prefab asset, so Unity doesn’t consider this to be an override. </p>
+
+<p>For a Rect Transform, the <strong>Width</strong>, <strong>Height</strong>, <span class="tooltip" tabindex="0" ><strong>Margins</strong><span class="tooltiptext">Minimum distance between UV charts within the same layout. Margin helps prevent texture bleeding between charts during filtering and mipmapping, and is usually specified in texels at the target resolution.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#margin" aria-label="Go to glossary anchor for margin">Glossary</a></span></span></span>, <span class="tooltip" tabindex="0" ><strong>Anchors</strong><span class="tooltiptext">A UI layout tool that fixes a UI element to a parent element. Anchors are shown as four small triangular handles in the Scene view and anchor information is also shown in the Inspector. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about https://docs.unity3d.com/Packages/com.unity.ugui@latest/index.html?subfolder=/manual/UIBasicLayout.html#anchors" href="https://docs.unity3d.com/Packages/com.unity.ugui@latest/index.html?subfolder=/manual/UIBasicLayout.html#anchors">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#anchor" aria-label="Go to glossary anchor for anchor">Glossary</a></span></span></span> and <strong>Pivot</strong> properties aren’t considered overrides.</p>
+
+<h3 id="collection-overrides">Overrides on arrays, lists, and dictionaries</h3>
+
+<p>When you override an individual entry of an array, a list, or a dictionary field on a prefab instance, Unity records the override at the entry’s position in the serialized collection.</p>
+
+<p>If you later change the structure of the collection on the prefab asset by adding or removing entries, the override stays at the same position. Depending on the change, the override might then apply to a different entry than the one you originally intended to override.</p>
+
+<p>For example, consider a prefab that has an <code>int[]</code> field named <code>scores</code> with the values <code>10</code>, <code>20</code>, <code>30</code>. The following scenario illustrates how an override can end up applied to a different entry than the one you intended to override:</p>
+
+<ol>
+<li>On a prefab instance, you override the second value to <code>99</code>. The Inspector shows the instance as <code>10</code>, <code>99</code>, <code>30</code>, with the override marker on the second row.</li>
+<li>On the prefab asset, you delete the first entry with value <code>10</code>. The asset’s array becomes <code>20</code>, <code>30</code>.</li>
+<li>On the instance, the override is still recorded at the same position. The Inspector now shows <code>20</code>, <code>99</code>, with the override marker on the second row. The override originally replaced <code>20</code>, but it now replaces <code>30</code>.</li>
+</ol>
+
+<p>For dictionary fields, the same logic applies, with an additional consideration. The Inspector displays dictionary entries in sorted order, not in the order they were added or stored, so the row position you see doesn’t correspond to the storage position. If you delete an entry on the prefab asset, you can’t predict from the Inspector which overrides will end up applying to a different entry than before. For more information, refer to <a href="script-serialization-dictionaries.html#dictionaries-in-prefabs">Dictionaries in prefabs</a>.</p>
+
+<p>After any structural change to a collection on a prefab asset, especially a deletion, review the prefab instances and confirm that overrides still apply to the entries you intended.</p>
+
+<p><a id="apply-overrides-to-the-prefab-asset" aria-hidden="true"></a></p>
+
+<h2>Apply overrides to the prefab asset</h2>
+
+<p>You can use the <a href="prefab-instance-inspector-reference.html">Override</a> dropdown to apply override data permanently to the root prefab asset of the instance, and discard the override. You can also revert the instance back to the original settings of the prefab asset. </p>
+
+<figure>
+<img src="../uploads/Main/prefab-instance-inspector.png" alt="The Inspector window of a prefab instance, with the Override menu selected.">
+<figcaption>The Inspector window of a prefab instance, with the Override menu selected.</figcaption>
+</figure>
+
+<p>To apply or revert changes to a prefab asset:</p>
+
+<ol>
+<li>Select the prefab instance in the Hierarchy.</li>
+<li>In the Inspector, select <strong>Override</strong>.</li>
+<li>You can apply or revert overrides in the following ways:
+
+<ul>
+<li>To apply or revert all overrides to the prefab asset, select <strong>Apply All</strong> or <strong>Revert All</strong>.</li>
+<li>To apply or revert a selection of overrides to the prefab asset, click the override, and then use Ctrl (macOS: Command), or Shift to select the overrides. Then select <strong>Apply Selected</strong> or <strong>Revert Selected</strong>.</li>
+<li>To apply or revert an individual override, select the individual override, and then select <strong>Revert</strong> or <strong>Apply</strong>. Depending on the context, you can choose to apply the override to the prefab asset, or the <a href="PrefabVariants.html">prefab variant</a>.</li>
+</ul>
+</li>
+</ol>
+
+<p>If there are <a href="UnusedOverrides.html">unused overrides</a> on any selected objects, the <strong>Overrides</strong> drop down displays an option that allows you to remove them.</p>
+
+<h3>Apply individual overrides with the context menu</h3>
+
+<p>You can also revert or apply individual overrides to a prefab asset with the context menu in the Inspector or Hierarchy. To do so:</p>
+
+<ul>
+<li>For added, removed, or modified components, select the More menu (three dots), and then select <strong>Added Component</strong>, <strong>Removed Component</strong>, or <strong>Modified Component</strong>. You can then select <strong>Revert</strong> or <strong>Apply</strong>.</li>
+<li>For individual properties, right-click on the property and select <strong>Apply</strong> or <strong>Revert</strong>.</li>
+<li>For added GameObjects, right-click the object in the Hierarchy and then select <strong>Added GameObject</strong> &gt; <strong>Apply</strong> or <strong>Revert</strong>.</li>
+</ul>
+
+<p>The options available in the context menus vary depending on the type of prefab. For example, if the prefab instance has a <a href="NestedPrefabs.html">nested prefab</a>, you can use the context menu to apply overrides to either the prefab asset of the nested prefab, or the prefab asset of the root prefab instance. Similarly, if you’ve created a <a href="PrefabVariants.html">prefab variant</a>, you can choose to apply the override to the prefab variant, or the original prefab asset.</p>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="UnusedOverrides.html">Remove unused override data</a></li>
+<li><a href="CreatingPrefabs.html">Create prefabs</a></li>
+<li><a href="PrefabVariants.html">Create variations of prefabs</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="prefabs-override.html"></a></span><div class="tip">Overriding prefab instance data</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="UnusedOverrides.html"></a></span><div class="tip">Removing unused override data</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

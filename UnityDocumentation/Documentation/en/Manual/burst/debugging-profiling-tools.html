@@ -1,0 +1,304 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Debugging and profiling tools</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<meta property="relative-path-to-manual" content="../">
+<meta property="version-switcher-versions-with-this-page" content="Versions with this page:">
+<meta property="version-switcher-versions-without-this-page" content="Versions without this page:">
+<meta property="version-switcher-supported" content="Supported">
+<meta property="version-switcher-legacy" content="Legacy">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/Manual/burst/debugging-profiling-tools.html">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../../StaticFilesManual/js/jquery.js?ts=20260626"></script><script type="text/javascript" src="../../StaticFilesManual/js/core.js?ts=20260626"></script><script type="text/javascript" src="../../StaticFilesManual/js/image-comp.js?ts=20260626"></script><script type="text/javascript" src="../docdata/toc.js?ts=20260626"></script><script type="text/javascript" src="../docdata/global_toc.js?ts=20260626"></script><link rel="stylesheet" type="text/css" href="../../StaticFilesManual/css/core.css?ts=20260626">
+<link rel="stylesheet" type="text/css" href="../../StaticFilesManual/css/icons.css?ts=20260626">
+<link rel="stylesheet" href="../../StaticFilesManual/css/prism.css">
+<script src="../../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="../30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../index.html" class="selected">Manual</a></li>
+<li><a href="../../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/burst/debugging-profiling-tools.html">English</a></li>
+<li><a href="/cn/current/Manual/burst/debugging-profiling-tools.html">中文</a></li>
+<li><a href="/ja/current/Manual/burst/debugging-profiling-tools.html">日本語</a></li>
+<li><a href="/kr/current/Manual/burst/debugging-profiling-tools.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: Unity 6.7 Beta</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/burst/debugging-profiling-tools.html">English</a></li>
+<li><a href="/cn/current/Manual/burst/debugging-profiling-tools.html">中文</a></li>
+<li><a href="/ja/current/Manual/burst/debugging-profiling-tools.html">日本語</a></li>
+<li><a href="/kr/current/Manual/burst/debugging-profiling-tools.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="../scripting.html">Programming in Unity</a></li>
+<li><a href="../compilation-and-code-reload.html">Compilation and code reload </a></li>
+<li><a href="../script-compilation.html">Script compilation</a></li>
+<li><a href="../burst/script-compilation-burst.html">Burst compilation</a></li>
+<li><a href="../burst/optimization-overview.html">Burst optimization</a></li>
+<li>Debugging and profiling tools</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="../burst/optimization-overview.html"></a></span><div class="tip">Burst optimization</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="../burst/optimization-loop-vectorization.html"></a></span><div class="tip">Loop vectorization</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Debugging and profiling tools</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>The following sections describe how to debug and profile your Burst-compiled code in the Editor and in Player builds.</p>
+
+<p>
+<strong>Tip</strong>: Before attempting to debug Burst-compiled code, enable script debugging for the Editor, or a Player build by following the steps in <a href="../managed-code-debugging.html">Debug C# code in Unity</a>. Although you can theoretically debug Burst-compiled code even when the script compilation mode is set to Release, in practice it doesn’t work reliably. Breakpoints might be skipped, and variables might not appear in the Locals window, for example.</p>
+
+<p><a name="debugging-in-editor" aria-hidden="true"></a></p>
+
+<h2>Debugging Burst-compiled code in the Editor</h2>
+
+<p>To debug Burst-compiled code in the Editor, you can either use a managed debugger or a native debugger. This section explains both options.</p>
+
+<h3>Attach a managed debugger</h3>
+
+<p>You can attach a managed debugger such as Visual Studio or JetBrains Rider. This is the same type of debugger you can use to debug regular managed C# code in your Unity project.</p>
+
+<p>When you place a breakpoint inside Burst-compiled code, and you have a managed debugger attached, Unity disables Burst automatically for that code path. This allows you to use a managed debugger to debug the managed version of your code. When you remove all breakpoints from that code path, Unity re-enables Burst for that code path.</p>
+
+<h3>Attach a native debugger</h3>
+
+<p>You can attach a native debugger such as Visual Studio or Xcode. Before doing so, you need to disable Burst optimizations. You can do this in the following ways:</p>
+
+<ul>
+<li><p>Use the <strong>Native Debug Mode Compilation</strong> setting in the Editor <a href="editor-burst-menu.html">Burst menu</a> (<strong>Jobs</strong> &gt; <strong>Burst</strong> &gt; <strong>Native Debug Mode Compilation</strong>). <strong>Important:</strong> This setting disables optimizations across all jobs, which impacts the performance of Burst code. If you want to disable optimizations only for a specific job, use the other option in this list.</p></li>
+<li>
+<p>Add the <code>Debug = true</code> flag to your job, which disables optimizations and enables debugging on that specific job:</p>
+
+<pre><code class="lang-cs">[BurstCompile(Debug = true)]
+public struct MyJob : IJob
+{
+    // ...
+}
+</code></pre>
+</li>
+</ul>
+
+<p>
+<strong>Tip</strong>: Player builds pick up the <code>Debug</code> flag, so you can also use this to debug a Player build. </p>
+
+<p>To attach a native debugger to the Unity Editor process, refer to <a href="#native-debugging">native debugging</a>.</p>
+
+<p><a name="debugging-in-player" aria-hidden="true"></a></p>
+
+<h2>Debugging Burst-compiled code in a Player build</h2>
+
+<p>Because of how Unity builds the code for a Player, you need to tell the debugging tool where to find the symbols. To do this, point the tool to the folder that contains the <code>lib_burst_generated</code> files, which is usually in the <code>Plugins</code> folder.</p>
+
+<p>To debug Burst-compiled code in a Player build, you need to attach a native debugger (such as Visual Studio or Xcode) to the player process. Before doing so, you need to:</p>
+
+<ul>
+<li>
+<p>Enable symbol generation. You can do this in either of two ways:</p>
+
+<ul>
+<li><p>Enable the <strong><span class="tooltip" tabindex="0" ><strong>Development Build</strong><span class="tooltiptext">A development build includes debug symbols and enables the Profiler. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about building-introduction.html" href="../building-introduction.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#developmentbuild" aria-label="Go to glossary anchor for developmentbuild">Glossary</a></span></span></span></strong> option before you build the Player, or</p></li>
+<li><p>Enable the <strong>Force Debug Information</strong> option in <a href="building-aot-settings.html">Burst AOT Player Settings</a>
+</p></li>
+</ul>
+</li>
+<li>
+<p>Disable Burst optimizations. You can do this in either of two ways:</p>
+
+<ul>
+<li><p>Disable the <strong>Enable Optimizations</strong> option in <a href="building-aot-settings.html">Burst AOT Player Settings</a>. <strong>Important:</strong> This setting disables optimizations across all jobs, which impacts the performance of Burst code. If you want to disable optimizations only for a specific job, use the other option in this list.</p></li>
+<li>
+<p>Add the <code>Debug = true</code> flag to your job, which disables optimizations and enables debugging on that specific job:</p>
+
+<pre><code class="lang-cs">[BurstCompile(Debug = true)]
+public struct MyJob : IJob
+{
+    // ...
+}
+</code></pre>
+</li>
+</ul>
+</li>
+</ul>
+
+<p>To attach a native debugger to the Player process, refer to <a href="#native-debugging">native debugging</a>.</p>
+
+<p><a name="native-debugging" aria-hidden="true"></a></p>
+
+<h2>Native debugging</h2>
+
+<p>Follow the previous instructions to set up native debugging correctly for the <a href="#debugging-in-editor">Editor</a> or a <a href="#debugging-in-player">Player build</a>. Then, attach a native debugger such as Visual Studio or Xcode.</p>
+
+<h3>Native debugging limitations</h3>
+
+<ul>
+<li>Native debuggers can’t discover lambda captures on <code>Entity.ForEach</code>, so you can’t inspect variables originating from these.</li>
+<li>Structs that use <a href="https://docs.microsoft.com/en-us/dotnet/api/system.runtime.interopservices.layoutkind?view=net-6.0"><code>[StructLayout(LayoutKind=Explicit)]</code></a> and have overlapping fields are represented by a struct that hides one of the overlaps.</li>
+</ul>
+
+<p>Nested types are namespaced in C/C++ style as shown in the following example:</p>
+
+<pre><code class="lang-cs">namespace Pillow
+{
+    public struct Spot
+    {
+        public struct SubSpot
+        {
+            public int a;
+            public int b;
+        }
+        public int a;
+        public int b;
+        public SubSpot sub;
+    }
+</code></pre>
+
+<p>You would refer to <code>SubSpot</code> as <code>Pillow::Spot::SubSpot</code> in this case, for example, if you were trying to cast a pointer in a debugger watch window).</p>
+
+<h3>Code-based breakpoints</h3>
+
+<p>Burst supports code-based breakpoints through the <a href="https://docs.microsoft.com/en-us/dotnet/api/system.diagnostics.debugger.break?view=net-6.0"><code>System.Diagnostics.Debugger.Break</code></a> method. This method generates a debug trap in your code. You must attach a debugger to your code so that it can intercept the break. Breakpoints trigger whether you’ve attached a debugger or not. </p>
+
+<p>Burst adds information to track local variables, function parameters, and breakpoints. If your debugger supports conditional breakpoints, use these over adding breakpoints in your code, because they only fire when you’ve attached a debugger.</p>
+
+<h2>Profiling Burst-compiled code</h2>
+
+<p>You can use profiling tools (such as Instruments or Superluminal) to profile Burst-compiled code in a Player build. Because of how Unity builds the code for a Player, you need to tell the profiling tool where to find the symbols. To do this, point the tool to the folder that contains the <code>lib_burst_generated</code> files, which is usually in the <code>Plugins</code> folder.</p>
+
+<p><a name="profiler-markers" aria-hidden="true"></a></p>
+
+<h3>Unity Profiler markers</h3>
+
+<p>To improve the data you get from Unity Profiler (either for Burst-compiled code running in the Editor or in an attached Player), you can create Unity <span class="tooltip" tabindex="0" ><strong>Profiler markers</strong><span class="tooltiptext">Placed in code to describe a CPU or GPU event that is then displayed in the Unity Profiler window. Added to Unity code by default, or you can use <a href="https://docs.unity3d.com/Packages/com.unity.profiling.core@latest/index.html?subfolder=/manual/profilermarker-guide.html">ProfilerMarker API</a> to add your own custom markers. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about profiler-markers.html" href="../profiler-markers.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#profilermarker" aria-label="Go to glossary anchor for profilermarker">Glossary</a></span></span></span> from Burst code by calling <code>new ProfilerMarker(&quot;MarkerName&quot;)</code>:</p>
+
+<pre><code class="lang-cs">[BurstCompile]
+private static class ProfilerMarkerWrapper
+{
+    private static readonly ProfilerMarker StaticMarker = new ProfilerMarker(&quot;TestStaticBurst&quot;);
+
+    [BurstCompile(CompileSynchronously = true)]
+    public static int CreateAndUseProfilerMarker(int start)
+    {
+        using (StaticMarker.Auto())
+        {
+            var p = new ProfilerMarker(&quot;TestBurst&quot;);
+            p.Begin();
+            var result = 0;
+            for (var i = start; i &lt; start + 100000; i++)
+            {
+                result += i;
+            }
+            p.End();
+            return result;
+        }
+    }
+}
+</code></pre>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="../managed-code-debugging.html">Debug C# code in Unity</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="../burst/optimization-overview.html"></a></span><div class="tip">Burst optimization</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="../burst/optimization-loop-vectorization.html"></a></span><div class="tip">Loop vectorization</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

@@ -1,0 +1,21 @@
+#pragma kernel Generate
+#pragma kernel Consume
+RWTexture2D<float4> _Write;
+Texture2D<float4> _Read;
+int _Step;
+
+[numthreads(8,8,1)]
+void Generate(uint3 id:SV_DispatchThreadID)
+{
+    if(id.x>=128 || id.y>=128) return;
+    float3 c=(_Step & 1)==0 ? float3(1,0,0) : float3(0,1,0);
+    _Write[id.xy]=float4(c,1);
+}
+
+[numthreads(8,8,1)]
+void Consume(uint3 id:SV_DispatchThreadID)
+{
+    if(id.x>=128 || id.y>=128) return;
+    float3 c=_Read.Load(int3(id.xy,0)).rgb;
+    _Write[id.xy]=float4(1-c,1);
+}

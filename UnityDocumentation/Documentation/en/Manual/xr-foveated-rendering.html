@@ -1,0 +1,515 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Foveated rendering</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<meta property="relative-path-to-manual" content="">
+<meta property="version-switcher-versions-with-this-page" content="Versions with this page:">
+<meta property="version-switcher-versions-without-this-page" content="Versions without this page:">
+<meta property="version-switcher-supported" content="Supported">
+<meta property="version-switcher-legacy" content="Legacy">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/Manual/xr-foveated-rendering.html">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20260626"></script><script type="text/javascript" src="docdata/toc.js?ts=20260626"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20260626"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20260626">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20260626">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/xr-foveated-rendering.html">English</a></li>
+<li><a href="/cn/current/Manual/xr-foveated-rendering.html">中文</a></li>
+<li><a href="/ja/current/Manual/xr-foveated-rendering.html">日本語</a></li>
+<li><a href="/kr/current/Manual/xr-foveated-rendering.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: Unity 6.7 Beta</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/xr-foveated-rendering.html">English</a></li>
+<li><a href="/cn/current/Manual/xr-foveated-rendering.html">中文</a></li>
+<li><a href="/ja/current/Manual/xr-foveated-rendering.html">日本語</a></li>
+<li><a href="/kr/current/Manual/xr-foveated-rendering.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="XR.html">XR</a></li>
+<li><a href="xr-graphics.html">XR graphics</a></li>
+<li>Foveated rendering</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="SinglePassInstancing.html"></a></span><div class="tip">Single-pass instanced rendering and custom shaders</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="xr-multiview-render-regions.html"></a></span><div class="tip">Multiview Render Regions</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Foveated rendering</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Foveated rendering is an optimization technique in which the areas of the display at the periphery of the user’s vision are rendered at a lower resolution. Foveated rendering can improve rendering performance with little impact on perceived visual quality.</p>
+
+<figure>
+<img src="../uploads/Main/xr-foveation-example.png" alt="Example of foveated rendering. The tinted area shows the regions of the screen that are rendered at lower resolution to use fewer GPU resources">
+<figcaption>Example of foveated rendering. The tinted area shows the regions of the screen that are rendered at lower resolution to use fewer GPU resources</figcaption>
+</figure>
+
+<p>Foveated rendering gets its name from the fovea, which is a small portion of the eye containing the densest group of photoreceptor nerves. The goal of foveated rendering is to vary the rendering resolution across the screen so that only the part that can be perceived by the fovea is rendered at the highest resolution.</p>
+
+<p>XR platforms implement foveated rendering with a variety of techniques, such as Variable Rate Shading (VRS) and Variable Rate <span class="tooltip" tabindex="0" ><strong>Rasterization</strong><span class="tooltiptext">The process of generating an image by calculating pixels for each polygon or triangle in the geometry. This is an alternative to ray tracing.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#rasterization" aria-label="Go to glossary anchor for rasterization">Glossary</a></span></span></span> (VRR). The technique used can change how shaders must sample textures when foveated rendering is active. To allow assets to work on any platform, Unity provides <span class="tooltip" tabindex="0" ><strong>shader</strong><span class="tooltiptext">A program that runs on the GPU. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Shaders.html" href="Shaders.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#shader" aria-label="Go to glossary anchor for shader">Glossary</a></span></span></span> macros, keywords, and pre-processor symbols that you can use to adapt shaders so that screen-space calculations produce correct results on all platforms. Refer to <a href="#foveated-rendering-shaders">Foveated rendering shaders</a> for information on how to use them. (Shaders provided by Unity and URP already use these macros.)</p>
+
+<p>XR devices can support foveated rendering in one of two modes:</p>
+
+<ul>
+<li>
+<strong>Fixed foveated rendering</strong> renders the central area of the display for each eye at the highest resolution and lowers the resolution of the periphery.</li>
+<li>
+<strong>Gaze-based foveated rendering</strong> uses eye tracking to determine where the highest resolution area of the screen is located. This form of foveated rendering can only be supported on devices with eye tracking.</li>
+</ul>
+
+<p>Currently, the <span class="tooltip" tabindex="0" ><strong>XR</strong><span class="tooltiptext">An umbrella term encompassing Virtual Reality (VR), Augmented Reality (AR) and Mixed Reality (MR) applications. Devices supporting these forms of interactive applications can be referred to as XR devices. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about XR.html" href="XR.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#XR" aria-label="Go to glossary anchor for XR">Glossary</a></span></span></span> platforms that use <span class="tooltip" tabindex="0" ><strong>VRS</strong><span class="tooltiptext">Virtual Reality <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about VROverview.html" href="VROverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#VR" aria-label="Go to glossary anchor for VR">Glossary</a></span></span></span> and a uniform raster for foveated rendering, include <strong>OpenXR</strong> and <strong>Meta Quest</strong>. The XR platforms that use VRR and a non-uniform raster for foveated rendering, include <strong>visionOS</strong> (when rendering with the Metal graphics API).</p>
+
+<h2>Prerequisites</h2>
+
+<p>To use foveated rendering, your project must meet the following prerequisites:</p>
+
+<ul>
+<li>Unity 6+, 2022.3, or 2023.2.</li>
+<li>Universal <span class="tooltip" tabindex="0" ><strong>Render Pipeline</strong><span class="tooltiptext">A series of operations that take the contents of a Scene, and displays them on a screen. Unity lets you choose from pre-built render pipelines, or write your own. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about render-pipelines.html" href="render-pipelines.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#renderpipeline" aria-label="Go to glossary anchor for renderpipeline">Glossary</a></span></span></span> (URP).</li>
+<li>Settings configured in the XR provider <span class="tooltip" tabindex="0" ><strong>plug-in</strong><span class="tooltiptext">A set of code created outside of Unity that creates functionality in Unity. There are two kinds of plug-ins you can use in Unity: Managed plug-ins (managed .NET assemblies created with tools like Visual Studio) and Native plug-ins (platform-specific native code libraries). <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ./plug-ins.html" href="./plug-ins.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#plug-in" aria-label="Go to glossary anchor for plug-in">Glossary</a></span></span></span>, if necessary.</li>
+<li>On PC standalone XR, the project must use the Direct3D12 or Vulkan graphics APIs.</li>
+<li>On PC standalone XR, the computer running the app must have a recent GPU (such as Nvidia RTX2000+ or AMD RX6000+).</li>
+<li>On standalone XR platforms, both the XR provider plug-in and the device must support foveated rendering. (Refer to your provider plug-in documentation for more information.)</li>
+</ul>
+
+<p><strong>Notes:</strong></p>
+
+<ul>
+<li>Some XR provider plug-ins support foveated rendering on 2022.3 and the Built-in Render Pipeline using a different API and implementation. Refer to the plug-in documentation for more information. These plug-ins include OpenXR and Oculus.</li>
+<li>Fixed foveated rendering is compatible with <span class="tooltip" tabindex="0" ><strong>dynamic resolution</strong><span class="tooltiptext">A Camera setting that allows you to dynamically scale individual render targets to reduce workload on the GPU. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about DynamicResolution-landing.html" href="DynamicResolution-landing.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#dynamicresolution" aria-label="Go to glossary anchor for dynamicresolution">Glossary</a></span></span></span> using <code>XRSettings.renderViewportScale</code>. Refer to <a href="xr-graphics-resolution-scaling.html">Resolution control in XR projects</a> for more information.</li>
+<li>Unity does not support foveated rendering in projects using the Built-In Rendering Pipeline.</li>
+</ul>
+
+<h2>Enable foveated rendering</h2>
+
+<p>To enable foveated rendering for a Unity project, go to the <strong>XR Plug-in Management</strong> section of your <strong>Project Settings</strong> (menu: <strong>Edit &gt; Project Settings</strong>). An option to enable the feature appears in the settings section for each plug-in that supports foveated rendering. Refer to the documentation of the XR provider plug-in for information about the available settings.</p>
+
+<p>In addition to enabling the option in settings, you must also set the foveated rendering level at runtime, as described in <a href="#control-foveated-rendering">Control foveated rendering</a>. </p>
+
+<p>
+<strong>Note:</strong> XR platforms can provide different levels of control for foveated rendering. For example, when you use Metal rendering on visionOS, fixed foveated rendering is always at full strength when enabled.</p>
+
+<p><a name="control-foveated-rendering" aria-hidden="true"></a></p>
+
+<h2>Control foveated rendering</h2>
+
+<p>Control foveated rendering by setting the <a href="../ScriptReference/XR.XRDisplaySubsystem-foveatedRenderingLevel.html">foveatedRenderingLevel</a> property of the <a href="../ScriptReference/XR.XRDisplaySubsystem.html">XRDisplaySubsystem</a> to a value between zero and one. You must enable foveated runtime in your project’s provider plug-in settings or the runtime setting is ignored.</p>
+
+<p>The following example method sets the foveation level:</p>
+
+<pre><code class="lang-cs">public void SetFRLevel(XRDisplaySubsystem xrDisplaySubsystem, float strength)
+{
+    xrDisplaySubsystem.foveatedRenderingLevel = strength;
+}
+</code></pre>
+
+<p>If you set the foveated rendering level to zero, foveation is turned off and does not affect rendering.</p>
+
+<p>On devices that support eye-tracked or gaze-based, foveated rendering, you can enable the feature by setting the <a href="../ScriptReference/XR.XRDisplaySubsystem-foveatedRenderingFlags.html">foveatedRenderingFlags</a> property of the <a href="../ScriptReference/XR.XRDisplaySubsystem.html">XRDisplaySubsystem</a>:</p>
+
+<pre><code class="lang-cs">// xrDisplaySubsystem is the active XRDisplaySystem instance
+xrDisplaySubsystem.foveatedRenderingFlags = XRDisplaySubsystem.FoveatedRenderingFlags.GazeAllowed;
+</code></pre>
+
+<p>You can enable gaze-based foveated rendering by setting the <a href="../ScriptReference/XR.XRDisplaySubsystem-foveatedRenderingFlags.html">foveatedRenderingFlags</a> property on devices that support it, even if you chose fixed foveated rendering at runtime.</p>
+
+<p>
+<strong>Note:</strong> Get the <a href="../ScriptReference/XR.XRDisplaySubsystem.html">XRDisplaySubsystem</a> from the <a href="../ScriptReference/SubsystemManager.html">SubsystemManager</a>. It can take up to three frames for the XRDisplaySubsystem to fully initialize. You should wait for three frames before accessing the properties and methods of the class.</p>
+
+<p>The following enables foveated rendering at 50% strength and sets the rendering flags to allow gaze-based foveation. The example uses a coroutine to wait three frames to make sure the subsystem is ready.</p>
+
+<pre><code class="lang-cs">using UnityEngine;
+using UnityEngine.Android;
+using UnityEngine.XR;
+using System.Collections.Generic;
+using System.Collections;
+public class FoveationStarter : MonoBehaviour
+{
+    [Range(0, 1)]
+    public float foveationStrength = 0.5f;
+    public bool AllowGaze = false;
+    
+    List&lt;XRDisplaySubsystem&gt; xrDisplays = new List&lt;XRDisplaySubsystem&gt;();
+
+    void Start()
+    {
+        StartCoroutine(WaitForXRDisplay());
+
+        if (AllowGaze)
+        {
+            // Request eye tracking permission for Quest devices
+            Permission.RequestUserPermission(&quot;com.oculus.permission.EYE_TRACKING&quot;);
+        }
+    }
+
+    IEnumerator WaitForXRDisplay()
+    {
+        yield return new WaitUntil(() =&gt; Time.frameCount &gt;= 3);
+
+        SubsystemManager.GetSubsystems(xrDisplays);
+        if (xrDisplays.Count == 1)
+        {
+            xrDisplays[0].foveatedRenderingLevel = foveationStrength;
+            if(AllowGaze){
+                xrDisplays[0].foveatedRenderingFlags =
+                    XRDisplaySubsystem.FoveatedRenderingFlags.GazeAllowed;
+            }
+            Debug.Log($&quot;Foveated rendering set to {xrDisplays[0].foveatedRenderingLevel}.&quot;);
+        }
+        else
+        {
+            Debug.LogWarning($&quot;Couldn't find an XRDisplaySubsystem for foveated rendering.&quot;);
+        }
+    }
+}
+</code></pre>
+
+<p>Some devices require that you ask for the user’s permission before you can access eye tracking data. The example demonstrates how to request this permission for the Android-based Quest Pro device. Other XR devices and platforms use different permission strings, APIs, or other mechanisms for requesting permissions.</p>
+
+<h2>Get foveated rendering capabilities</h2>
+
+<p>You can get the foveated rendering capabilities of the current device from the <a href="../ScriptReference/SystemInfo-foveatedRenderingCaps.html">foveatedRenderingCaps</a> property of the <a href="../ScriptReference/SystemInfo.html">SystemInfo</a> object.</p>
+
+<pre><code class="lang-cs">FoveatedRenderingCaps caps = SystemInfo.foveatedRenderingCaps;
+</code></pre>
+
+<p>If the property reports the <a href="../ScriptReference/Rendering.FoveatedRenderingCaps.None.html">FoveatedRenderingCaps.None</a>, then the device does not support foveated rendering. Lack of support could be caused by various reasons, including software, device runtime, or drivers, so even if a platform supports foveated rendering, it might not be available on a particular device.</p>
+
+<p>The other values of <a href="../ScriptReference/Rendering.FoveatedRenderingCaps.html">FoveatedRenderingCaps</a>, <a href="../ScriptReference/Rendering.FoveatedRenderingCaps.FoveationImage.html">FoveationImage</a> and <a href="../ScriptReference/Rendering.FoveatedRenderingCaps.NonUniformRaster.html">NonUniformRaster</a>, provide information about the way a device implements foveated rendering and might be useful if you are implementing a custom render pipeline. <code>FoveationImage</code> indicates that the foveated rendering implementation uses VRS, while <code>NonUniformRaster</code> indicates that it uses VRR.</p>
+
+<p><a id="foveated-rendering-shaders" aria-hidden="true"></a></p>
+
+<h2>Foveated rendering shaders</h2>
+
+<p>Shaders included with the Unity Engine already support both uniform and non-uniform rasterization for foveated rendering. If you have custom shaders that perform screen-space calculations, you might need to update them to support foveated rendering on platforms that use a non-uniform raster technique.</p>
+
+<p>The <span class="tooltip" tabindex="0" ><strong>pixels</strong><span class="tooltiptext">The smallest unit in a computer image. Pixel size depends on your screen resolution. Pixel lighting is calculated at every screen pixel. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ShadowPerformance.html" href="ShadowPerformance.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#pixel" aria-label="Go to glossary anchor for pixel">Glossary</a></span></span></span> rendered with a non-uniform raster no longer represent a regular grid, so you must change any screen space calculations that assume a regular grid in order for them to work correctly with VRR. Unity provides shader macros, keywords, and pre-processor symbols that you can use to adapt shaders so that screen-space calculations produce correct results on all platforms. (Shaders provided by Unity and URP already use these macros.)</p>
+
+<p>For example, the left side of the following image, shows a view of a <span class="tooltip" tabindex="0" ><strong>scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html" href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span> rendered with VRR without correcting for the non-uniform rasterization. The right side of the image shows the same view when rendered correctly:</p>
+<canvas class="image-comparison" role="img" aria-label="The left side shows a scene rendered with VRR without correcting for the non-uniform rasterization. The right side shows the same view when rendered correctly.">
+ <img src="../uploads/Main/xr-foveation-non-uniform-wrong.webp" title="Uncorrected VRR">
+ <img src="../uploads/Main/xr-foveation-non-uniform-right.webp" title="Corrected VRR">
+</canvas>
+
+<p>
+<br><em>Uncorrected non-uniform rasterization (left) compared to linear rasterization (right).</em>
+</p>
+
+<p>Notice how areas near the edges of the image on the left are squished. This visual <span class="tooltip" tabindex="0" ><strong>compression</strong><span class="tooltiptext">A method of storing data that reduces the amount of storage space it requires. See <a href="texture-choose-format-by-platform.html">Texture Compression</a>, <a href="class-AnimationClip.html#AssetProperties">Animation Compression</a>, <a href="class-AudioClip.html">Audio Compression</a>, <a href="ReducingFilesize.html">Build Compression</a>.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#compression" aria-label="Go to glossary anchor for compression">Glossary</a></span></span></span> occurs because the peripheral areas of the texture were rasterized with a lower pixel density. When sampling this texture, you would need to use non-uniform UV coordinates (or convert linear UV coordinates to non-uniform using one of the provided foveated rendering shader functions).</p>
+
+<p>
+<strong>Note:</strong> Unity uses the term, “non-uniform raster,” to describe the space the pixels have been rasterized into when using a VRR technique and uses the term, “linear raster,” to refer to the more usual rasterization space with a regular grid.</p>
+
+<p>To update your screen-space shaders for URP to produce correct results under foveated rendering, add the following include files (from the <a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.core@17.0/manual/index.html">Core RP Library</a> package):</p>
+
+<pre><code class="lang-hlsl">#include_with_pragmas &quot;Packages/com.unity.render-pipelines.core/ShaderLibrary/FoveatedRenderingKeywords.hlsl&quot;
+#include &quot;Packages/com.unity.render-pipelines.core/ShaderLibrary/FoveatedRendering.hlsl&quot;
+</code></pre>
+
+<p>These files contain keywords and macros for foveated rendering, as well as functions to map screen-space coordinates from non-uniform to linear and vice versa.</p>
+
+<h3>How foveated rendering affects shader compatibility</h3>
+
+<p>The variable rate shading (VRS) techniques change the number of screen pixels shaded by each call to a fragment shader based on where a region is within the user’s field of view. Variable rate shading is compatible with existing shaders. You should not need to alter custom shaders to work under foveated rendering on XR platforms that use VRS.</p>
+
+<p>The variable rate rasterization (VRR) technique adjusts rasterization such that the effective distance between neighboring pixels is no longer uniform. For example, a peripheral region of the field of view might be rendered to a lower resolution texture that is then stretched when composited to the final display. Because rasterization is non-uniform, shaders performing calculations in screen space can produce incorrect results under VRR if they
+assume that the rasterization uses a uniform grid. You might need to alter custom shaders to work under foveated rendering on XR platforms that use VRR.</p>
+
+<h3>When to use foveated rendering functions</h3>
+
+<p>When you sample a linear texture, you should use linear coordinates. Conversely, when you sample a non-uniform texture, you should use non-uniform coordinates.</p>
+
+<p>All vertex attributes passed from the <span class="tooltip" tabindex="0" ><strong>vertex shader</strong><span class="tooltiptext">A program that runs on each vertex of a 3D model when the model is being rendered. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about writing-shader-writing-shader-programs-hlsl.html" href="writing-shader-writing-shader-programs-hlsl.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#vertexshader" aria-label="Go to glossary anchor for vertexshader">Glossary</a></span></span></span> to the fragment (pixel) shader are always in linear space with the exception of <code>SV_POSITION</code>. You can sample a non-uniform texture with the <code>SV_POSITION</code> coordinates directly, but if you use other vertex attributes for sampling, you must use the appropriate linear-to-non-uniform remapping function. Similarly, if you use <code>SV_POSITION</code> to sample a linear texture, you must use the <code>FoveatedRemapNonUniformToLinear</code> function.</p>
+
+<p>The coordinate space of textures varies according to how they are created. Most textures created by the Unity Engine, such as the <span class="tooltip" tabindex="0" ><strong>depth buffer</strong><span class="tooltiptext">A memory store that holds the z-value depth of each pixel in an image, where the z-value is the depth for each rendered pixel from the projection plane. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-RenderTexture.html" href="class-RenderTexture.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#depthbuffer" aria-label="Go to glossary anchor for depthbuffer">Glossary</a></span></span></span> and G buffers, are in the non-uniform space when rendering with VRR. (However, there are exceptions, which aren’t currently documented.) Manually created screen-space textures, such as a UI overlay drawn by an artist are normally linear and you should sample them with linear UV coordinates.</p>
+
+<p>In compute shaders, you must consider whether source and destination textures are in linear or non-uniform space and remap coordinates as needed before sampling or writing to them. Likewise, consider the source of UV coordinates, how they might be calculated within the compute shader, and whether any functions they are passed to expect linear or non-uniform coordinates. Refer to the <a href="https://docs.unity3d.com/Manual/class-ComputeShader.html">Compute Shaders</a> topic and the <a href="https://docs.unity3d.com/ScriptReference/ComputeShader.html">ComputeShader</a> API for general information about compute shaders in Unity. </p>
+
+<p><a id="shader-functions-for-foveated-rendering" aria-hidden="true"></a></p>
+
+<h3>Shader functions for foveated rendering</h3>
+
+<p>
+<a href="https://github.com/Unity-Technologies/Graphics/blob/master/Packages/com.unity.render-pipelines.core/ShaderLibrary/FoveatedRendering.hlsl">FoveatedRendering.hlsl</a> defines a set of functions that you can use to support foveated rendering in your custom shaders. These functions return the correct results whether the current foveated rendering type is linear or non-uniform, and when foveated rendering is not being used. The functions also handle inverting the y axis according to whether the platform places the screen space origin at the top or bottom of the screen.</p>
+
+<p>
+<strong>Note:</strong> These functions have no performance impact on platforms that don’t employ non-uniform foveated rendering (VRR). You do not need to use conditional <code>#ifdef</code> statements to exclude them. However, on platforms that do use VRR, there is a dynamic branch to check the shader constant that adds a small amount of overhead, even when foveated rendering is disabled.</p>
+
+<h4>FoveatedRemapLinearToNonUniform</h4>
+
+<p>Declaration: <code>float2 FoveatedRemapLinearToNonUniform(float2 uv)</code>
+</p>
+
+<p>Converts linear, screen-space UV coordinates to non-uniform, including any necessary y-axis inversion. If foveated rendering is not active or the platform doesn’t use non-uniform rasterization, the function returns the UV coordinates unchanged. </p>
+
+<h4>FoveatedRemapNonUniformToLinear</h4>
+
+<p>Declaration: <code>float2 FoveatedRemapNonUniformToLinear(float2 uv)</code>
+</p>
+
+<p>Converts non-uniform screen-space UV coordinates to linear, including any necessary y-axis inversion. If foveated rendering is not active or the platform doesn’t use non-uniform rasterization, the function returns the UV coordinates unchanged.</p>
+
+<h4>FoveatedRemapPrevFrameLinearToNonUniform</h4>
+
+<p>Declaration: <code>float2 FoveatedRemapPrevFrameLinearToNonUniform(float2 uv)</code>
+</p>
+
+<p>Remaps linear screen-space UV coordinates based on the previously rendered frame. (Not implemented on Metal.)</p>
+
+<h4>FoveatedRemapPrevFrameNonUniformToLinear</h4>
+
+<p>Declaration: <code>float2 FoveatedRemapPrevFrameNonUniformToLinear(float2 uv)</code>
+</p>
+
+<p>Remaps non-uniform screen-space UV coordinates based on the previously rendered frame. (Not implemented on Metal.)</p>
+
+<h4>FoveatedRemapDensity</h4>
+
+<p>Declaration: <code>float2 FoveatedRemapDensity(float2 uv)</code>
+</p>
+
+<p>The ratio between the screen resolution and the raster resolution at the specified screen UV coordinate. If foveated rendering is not active or the platform doesn’t use non-uniform rasterization, the function returns (1.0, 1.0). (Not implemented on Metal.)</p>
+
+<h4>FoveatedRemapPrevFrameDensity</h4>
+
+<p>Declaration: <code>float2 FoveatedRemapPrevFrameDensity(float2 uv)</code>
+</p>
+
+<p>The density ratio at the time of the previous frame. (Not implemented on Metal.)</p>
+
+<h4>FoveatedRemapLinearToNonUniformCS</h4>
+
+<p>Declaration: <code>float2 FoveatedRemapLinearToNonUniformCS(float2 positionCS)</code>
+</p>
+
+<p>Converts linear-space screen coordinates to non-uniform-space screen coordinates. If foveated rendering is not active or the platform doesn’t use non-uniform rasterization, the function returns the coordinates unchanged. </p>
+
+<h4>FoveatedRemapNonUniformToLinearCS</h4>
+
+<p>Declaration: <code>float2 FoveatedRemapNonUniformToLinearCS(float2 positionCS)</code>
+</p>
+
+<p>Converts non-uniform-space screen coordinates to linear-space screen coordinates. If foveated rendering is not active or the platform doesn’t use non-uniform rasterization, the function returns the coordinates unchanged.</p>
+
+<h3>Convert UV</h3>
+
+<p>To convert a UV coordinate in linear screen space to non-uniform raster screen space, use the following:</p>
+
+<pre><code class="lang-hlsl">uvNonUniform = FoveatedRemapLinearToNonUniform(uvLinear);
+</code></pre>
+
+<p>To convert a UV coordinate in non-uniform raster screen space to linear screen space, use the following:</p>
+
+<pre><code class="lang-hlsl">uvLinear = FoveatedRemapNonUniformToLinear(uvNonUniform);
+</code></pre>
+
+<h3>Update effects</h3>
+
+<p>To update effects, such as Gaussian blur, use the following:</p>
+
+<pre><code class="lang-hlsl">uvNonUniform = FoveatedRemapDensity(uvLinear);
+</code></pre>
+
+<h2>Update Shader Graph effects</h2>
+
+<p>The Screen Position node in Shader Graph provides coordinates that are often used to sample textures affected by foveated rendering. The <strong>Mode</strong> setting of this Shader Graph node determines the form in which the coordinates are provided. In most modes, the coordinate space is non-uniform when rendering with VRR. The <strong>Raw</strong> mode, in contrast, is linear in all cases. </p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:center;">
+<col style="text-align:center;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;">-</th>
+	<th style="text-align:center;"><strong>UV coordinate space</strong></th>
+	<th style="text-align:center;"><strong>UV coordinate space</strong></th>
+</tr>
+<tr>
+	<th style="text-align:left;"><strong>Screen Position Mode</strong></th>
+	<th style="text-align:center;">Variable Rate Shading (VRS) and non-foveated rendering</th>
+	<th style="text-align:center;">Variable Rate Rasterization (VRR)</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Default</strong></td>
+	<td style="text-align:center;">linear</td>
+	<td style="text-align:center;">non-uniform</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Raw</strong></td>
+	<td style="text-align:center;">linear</td>
+	<td style="text-align:center;"><strong>linear</strong></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Center</strong></td>
+	<td style="text-align:center;">linear</td>
+	<td style="text-align:center;">non-uniform</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Tiled</strong></td>
+	<td style="text-align:center;">linear</td>
+	<td style="text-align:center;">non-uniform</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Pixel</strong></td>
+	<td style="text-align:center;">linear</td>
+	<td style="text-align:center;">non-uniform</td>
+</tr>
+</tbody>
+</table>
+
+<p>If you use the Screen Position node’s <strong>Raw</strong> mode to sample a non-uniform texture, then the results will be incorrect. </p>
+
+<p>To illustrate the situation, consider a Shader Graph with a Screen Position node connected to a Scene Depth node which, in turn, is connected to the base color of a fragment shader. </p>
+
+<figure>
+<img src="../uploads/Main/xr-sg-depth-to-color.png" alt="Shader Graph with a Screen Position node connected to a Scene Depth node">
+<figcaption>Shader Graph with a Screen Position node connected to a Scene Depth node</figcaption>
+</figure>
+
+<p>This shader renders colors according to the depth values in the scene depth buffer. This shader works correctly under foveated rendering because it uses the <strong>Default</strong> mode Screen Position node, which returns its results in the same space as the depth buffer (and most other Engine-created textures). If you changed the mode to <strong>Raw</strong>, however, the results would no longer be correct when foveated rendering is active on a platform that uses variable rate rasterization. </p>
+
+<p>In the following example, the left image shows the shader on a <span class="tooltip" tabindex="0" ><strong>quad</strong><span class="tooltiptext">A primitive object that resembles a plane but its edges are only one unit long, it uses only 4 vertices, and the surface is oriented in the XY plane of the local coordinate space. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about PrimitiveObjects.html" href="PrimitiveObjects.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Quad" aria-label="Go to glossary anchor for Quad">Glossary</a></span></span></span> and using the correct coordinate space to sample the scene depth buffer. The right image shows foveated rendering using the wrong coordinate space for the sampled texture – notice how the sampled texture no longer lines up with the scene geometry:</p>
+<canvas class="image-comparison" role="img" aria-label="The left side shows a scene rendered with VRR without correcting for the non-uniform rasterization. The right side shows the same view when rendered correctly.">
+ <img src="../uploads/Main/xr-foveated-render-depth-view-fixed.webp" title="Correct coordinate space">
+ <img src="../uploads/Main/xr-foveated-render-depth-view-broken.webp" title="Mismatched coordinate space">
+</canvas>
+
+<p>
+<br><em>Correct (left) versus mismatched (right) sampling.</em>
+</p>
+
+<p>If your Shader Graph depends on the Raw screen position and can’t use any of the other modes, you can use the <a href="#shader-functions-for-foveated-rendering">Shader functions for foveated rendering</a> inside a Custom Function node to remap the raw coordinates (which must be normalized):</p>
+
+<pre><code class="lang-hlsl">#include_with_pragmas &quot;Packages/com.unity.render-pipelines.core/ShaderLibrary/FoveatedRenderingKeywords.hlsl&quot;
+#include &quot;Packages/com.unity.render-pipelines.core/ShaderLibrary/FoveatedRendering.hlsl&quot;
+
+// The Raw mode screenPosition must first be normalized: position.xy/position.ww
+void CorrectedScreenPosition_float(float4 screenPosition, out float2 correctedScreenPosition)
+{
+    correctedScreenPosition = FoveatedRemapLinearToNonUniform(screenPosition);
+}
+</code></pre>
+
+<p>
+<strong>Note:</strong> You must create the Custom Function node to reference a file in this case, because if you use the String Type the <code>#include</code> statements would be inside the function body and result in syntax errors.</p>
+
+<p>For example, the following Shader Graph routes the Raw coordinates through two Custom Function nodes: </p>
+
+<figure>
+<img src="../uploads/Main/xr-sg-raw-depth-to-color.png" alt="Shader Graph that converts the Raw UV coordinates with Custom Function nodes">
+<figcaption>Shader Graph that converts the Raw UV coordinates with Custom Function nodes</figcaption>
+</figure>
+
+<p>The first custom function normalizes the raw coordinates by dividing the x and y elements by the w element (<code>B = A.xy/A.ww</code>). The second custom function uses <code>FoveatedRemapLinearToNonUniform</code> to map the linear coordinates to the non-uniform space when required. Recall that when foveated rendering is off or the current platform does not use VRR for foveated rendering, then <code>FoveatedRemapLinearToNonUniform</code> returns the linear coordinates unchanged. Thus the shader samples the scene depth correctly in all situations.</p>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="SinglePassInstancing.html"></a></span><div class="tip">Single-pass instanced rendering and custom shaders</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="xr-multiview-render-regions.html"></a></span><div class="tip">Multiview Render Regions</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

@@ -1,0 +1,254 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Configure for better performance in URP</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<meta property="relative-path-to-manual" content="../">
+<meta property="version-switcher-versions-with-this-page" content="Versions with this page:">
+<meta property="version-switcher-versions-without-this-page" content="Versions without this page:">
+<meta property="version-switcher-supported" content="Supported">
+<meta property="version-switcher-legacy" content="Legacy">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/Manual/urp/configure-for-better-performance.html">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../../StaticFilesManual/js/jquery.js?ts=20260626"></script><script type="text/javascript" src="../../StaticFilesManual/js/core.js?ts=20260626"></script><script type="text/javascript" src="../../StaticFilesManual/js/image-comp.js?ts=20260626"></script><script type="text/javascript" src="../docdata/toc.js?ts=20260626"></script><script type="text/javascript" src="../docdata/global_toc.js?ts=20260626"></script><link rel="stylesheet" type="text/css" href="../../StaticFilesManual/css/core.css?ts=20260626">
+<link rel="stylesheet" type="text/css" href="../../StaticFilesManual/css/icons.css?ts=20260626">
+<link rel="stylesheet" href="../../StaticFilesManual/css/prism.css">
+<script src="../../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="../30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../index.html" class="selected">Manual</a></li>
+<li><a href="../../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/urp/configure-for-better-performance.html">English</a></li>
+<li><a href="/cn/current/Manual/urp/configure-for-better-performance.html">中文</a></li>
+<li><a href="/ja/current/Manual/urp/configure-for-better-performance.html">日本語</a></li>
+<li><a href="/kr/current/Manual/urp/configure-for-better-performance.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: Unity 6.7 Beta</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/urp/configure-for-better-performance.html">English</a></li>
+<li><a href="/cn/current/Manual/urp/configure-for-better-performance.html">中文</a></li>
+<li><a href="/ja/current/Manual/urp/configure-for-better-performance.html">日本語</a></li>
+<li><a href="/kr/current/Manual/urp/configure-for-better-performance.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="../render-pipelines.html">Render pipelines</a></li>
+<li><a href="../universal-render-pipeline.html">Using the Universal Render Pipeline</a></li>
+<li><a href="../urp/introduction-landing.html">Get started with URP</a></li>
+<li>Configure for better performance in URP</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="../urp/known-issues.html"></a></span><div class="tip">Known issues in URP</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="../urp/urp-quality-settings-landing.html"></a></span><div class="tip">Graphics quality settings in URP</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Configure for better performance in URP</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>You can disable or change Universal <span class="tooltip" tabindex="0" ><strong>Render Pipeline</strong><span class="tooltiptext">A series of operations that take the contents of a Scene, and displays them on a screen. Unity lets you choose from pre-built render pipelines, or write your own. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about render-pipelines.html" href="../render-pipelines.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#renderpipeline" aria-label="Go to glossary anchor for renderpipeline">Glossary</a></span></span></span> (URP) settings and features that have a large performance impact. This helps you get better performance for your project, especially on lower-end platforms.</p>
+
+<p>Depending on your project or the platforms you target, one or all of the following might have the biggest effect:</p>
+
+<ul>
+<li>Which <span class="tooltip" tabindex="0" ><strong>rendering path</strong><span class="tooltiptext">The technique that a render pipeline uses to render graphics. Choosing a different rendering path affects how lighting and shading are calculated. Some rendering paths are more suited to different platforms and hardware than others. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about RenderingPaths.html" href="../RenderingPaths.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#renderingpath" aria-label="Go to glossary anchor for renderingpath">Glossary</a></span></span></span> you choose</li>
+<li>How much memory URP uses</li>
+<li>Processing time on the CPU</li>
+<li>Processing time on the GPU</li>
+</ul>
+
+<p>You can use the <a href="https://docs.unity3d.com/Manual/Profiler.html">Unity Profiler</a> or a GPU profiler such as <a href="https://docs.unity3d.com/Manual/RenderDocIntegration.html">RenderDoc</a> or <a href="https://docs.unity3d.com/Manual/XcodeFrameDebuggerIntegration.html">Xcode</a> to measure the effect of each setting on the performance of your project.</p>
+
+<p>You might not be able to disable some features if your project needs them.</p>
+
+<h2>Choose a rendering path</h2>
+
+<p>Refer to <a href="urp-universal-renderer.html">Universal Renderer</a> for more information about the three rendering paths in URP, and the performance effects and limitations of each one.</p>
+
+<h2>Reduce how much memory URP uses</h2>
+
+<p>You can do the following in the <a href="universalrp-asset.html">URP Asset</a>:</p>
+
+<ul>
+<li>Disable <strong>Depth Texture</strong> unless you need it (for example, if you use a shader that samples scene depth), so that URP doesn’t store a depth texture unless it’s needed.</li>
+<li>Disable <strong>Opaque Texture</strong>, so that URP doesn’t store a snapshot of the opaques in a <span class="tooltip" tabindex="0" ><strong>scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html" href="../CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span> unless it needs to.</li>
+<li>If you use the Deferred rendering path, disable <strong>Use Rendering Layers</strong> so that URP doesn’t create an extra render target. </li>
+<li>Disable <strong>High Dynamic Range (HDR)</strong> if you don’t need it, so that URP doesn’t do <span class="tooltip" tabindex="0" ><strong>HDR</strong><span class="tooltiptext">high dynamic range<br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#HDR" aria-label="Go to glossary anchor for HDR">Glossary</a></span></span></span> calculations. If you need HDR, set <strong>HDR Precision</strong> to <strong>32 Bit</strong>.</li>
+<li>Reduce <strong>Main Light &gt; Shadow Resolution</strong>, to lower the resolution of the shadow map for the main light.</li>
+<li>If you use additional lights, reduce <strong>Additional Lights &gt; Shadow Atlas Resolution</strong>, to lower the resolution of the shadow map for additional lights.</li>
+<li>Disable <strong>Light Cookies</strong> if you don’t need them, or reduce <strong>Cookie Atlas Resolution</strong> and <strong>Cookie Atlas Format</strong>.</li>
+<li>On lower-end mobile platforms, set <strong>Store Actions</strong> to <strong>Auto</strong> or <strong>Discard</strong>, so that URP doesn’t use memory bandwidth to copy the render targets from each pass into and out of memory.</li>
+</ul>
+
+<p>In the <a href="urp-universal-renderer.html">Universal Renderer asset</a>, you can set <strong>Intermediate Texture</strong> to <strong>Auto</strong>, so that Unity only renders using an intermediate texture when necessary. This might also reduce how much GPU memory bandwidth URP uses. Use the <a href="https://docs.unity3d.com/Manual/frame-debugger-window.html">Frame Debugger</a> to check if URP removes the intermediate texture when you change this setting.</p>
+
+<p>You can also do the following:</p>
+
+<ul>
+<li>Minimize the use of the Decal Renderer Feature, because URP creates an additional render pass to render decals. This also reduces processing time on the CPU and GPU. Refer to <a href="renderer-feature-decal.html">Decal Renderer Feature</a> for more information.</li>
+<li>
+<a href="urp/shader-stripping-landing.html">Strip shader variants in URP</a> for features you don’t use.</li>
+</ul>
+
+<h2>Reduce processing time on the CPU</h2>
+
+<p>You can do the following in the URP Asset:</p>
+
+<ul>
+<li>Set <strong>Volume Update Mode</strong> to <strong>Via Scripting</strong>, so that URP doesn’t update volumes every frame. You need to update volumes manually using an API such as <a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.universal@latest/index.html?subfolder=/api/UnityEngine.Rendering.Universal.CameraExtensions.html#UnityEngine_Rendering_Universal_CameraExtensions_UpdateVolumeStack_UnityEngine_Camera_">UpdateVolumeStack</a>.</li>
+<li>On lower-end mobile platforms, if you use <span class="tooltip" tabindex="0" ><a href="lighting/reflection-probes.html">Reflection Probes</a><span class="tooltiptext">A rendering component that captures a spherical view of its surroundings in all directions, rather like a camera. The captured image is then stored as a Cubemap that can be used by objects with reflective materials. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-ReflectionProbe.html" href="../class-ReflectionProbe.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#ReflectionProbe" aria-label="Go to glossary anchor for ReflectionProbe">Glossary</a></span></span></span>, disable <strong>Probe Blending</strong> and <strong>Box Projection</strong>.</li>
+<li>In the <strong>Shadows</strong> section, reduce <strong>Max Distance</strong> so that URP processes fewer objects in the shadow pass. This also reduces processing time on the GPU.</li>
+<li>In the <strong>Shadows</strong> section, reduce <strong>Cascade Count</strong> to reduce the number of render passes. This also reduces processing time on the GPU.</li>
+<li>In the <strong>Additional Lights</strong> section, disable <strong>Cast Shadows</strong>. This also reduces processing time on the GPU and how much memory URP uses.</li>
+</ul>
+
+<p>Each <span class="tooltip" tabindex="0" ><strong>camera</strong><span class="tooltiptext">A component which creates an image of a particular viewpoint in your scene. The output is either drawn to the screen or captured as a texture. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CamerasOverview.html" href="../CamerasOverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#Camera" aria-label="Go to glossary anchor for Camera">Glossary</a></span></span></span> in the Scene requires resources for URP culling and rendering. To optimize URP for better performance, minimize the number of cameras you use. This also reduces processing time on the GPU.</p>
+
+<h2>Reduce processing time on the GPU</h2>
+
+<p>You can do the following in the URP Asset:</p>
+
+<ul>
+<li>Reduce or disable <strong>Anti-aliasing (MSAA)</strong>, so that URP doesn’t use memory bandwidth to copy frame buffer attachments into and out of memory. This also reduces how much memory URP uses.</li>
+<li>Disable <strong><span class="tooltip" tabindex="0" ><strong>Terrain</strong><span class="tooltiptext">The landscape in your scene. A Terrain GameObject adds a large flat plane to your scene and you can use the Terrain’s Inspector window to create a detailed landscape. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about terrain-UsingTerrains.html" href="../terrain-UsingTerrains.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#Terrain" aria-label="Go to glossary anchor for Terrain">Glossary</a></span></span></span> Holes</strong>.</li>
+<li>Enable <strong>SRP Batcher</strong>, so that URP reduces the GPU setup between draw calls and makes material data persistent in GPU memory. Check your <span class="tooltip" tabindex="0" ><strong>shaders</strong><span class="tooltiptext">A program that runs on the GPU. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Shaders.html" href="../Shaders.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#shader" aria-label="Go to glossary anchor for shader">Glossary</a></span></span></span> are compatible with the <a href="https://docs.unity3d.com/Manual/SRPBatcher.html">SRP Batcher</a> first. This also reduces processing time on the CPU.</li>
+<li>On lower-end mobile platforms, disable <strong><span class="tooltip" tabindex="0" ><strong>LOD</strong><span class="tooltiptext">The <em>Level Of Detail</em> (LOD) technique is an optimization that reduces the number of triangles that Unity has to render for a GameObject when its distance from the Camera increases. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about LevelOfDetail.html" href="../LevelOfDetail.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#LOD" aria-label="Go to glossary anchor for LOD">Glossary</a></span></span></span> Cross Fade</strong>, so that URP doesn’t use alpha testing to fade level of detail (LOD) meshes in and out.</li>
+<li>Set <strong>Additional Lights</strong> to <strong>Disabled</strong>, or <strong>Per Vertex</strong> if you use the <span class="tooltip" tabindex="0" ><strong>Forward rendering</strong><span class="tooltiptext">A rendering path that renders each object in one or more passes, depending on lights that affect the object. Lights themselves are also treated differently by Forward Rendering, depending on their settings and intensity. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about RenderTech-ForwardRendering.html" href="../RenderTech-ForwardRendering.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#ForwardRendering" aria-label="Go to glossary anchor for ForwardRendering">Glossary</a></span></span></span> path. This reduces the work URP does to calculate lighting. This also reduces processing time on the CPU if you set to <strong>Disabled</strong>.</li>
+<li>Disable <strong>Soft Shadows</strong>, or enable <strong>Soft Shadows</strong> but reduce <strong>Quality</strong>.</li>
+</ul>
+
+<p>You can do the following in the Universal Renderer asset:</p>
+
+<ul>
+<li>Enable <strong>Native RenderPass</strong> if you use Vulkan, Metal or DirectX 12 graphics APIs, so that URP automatically reduces how often it copies <span class="tooltip" tabindex="0" ><strong>render textures</strong><span class="tooltiptext">A special type of Texture that is created and updated at runtime. To use them, first create a new Render Texture and designate one of your Cameras to render into it. Then you can use the Render Texture in a Material just like a regular Texture. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-RenderTexture.html" href="../class-RenderTexture.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#RenderTexture" aria-label="Go to glossary anchor for RenderTexture">Glossary</a></span></span></span> into and out of memory. This also reduces how much memory URP uses.</li>
+<li>If you use the Forward or Forward+ rendering path, set <strong>Depth Priming Mode</strong> to <strong>Auto</strong> or <strong>Forced</strong> for PC and console platforms, or <strong>Disabled</strong> for mobile platforms. On PC and console platforms, this makes URP create and use depth textures to avoid running <span class="tooltip" tabindex="0" ><strong>pixel</strong><span class="tooltiptext">The smallest unit in a computer image. Pixel size depends on your screen resolution. Pixel lighting is calculated at every screen pixel. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ShadowPerformance.html" href="../ShadowPerformance.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#pixel" aria-label="Go to glossary anchor for pixel">Glossary</a></span></span></span> shaders on obscured pixels.</li>
+<li>Set <strong>Depth Texture Mode</strong> to <strong>After Transparents</strong>, so that URP avoids switching render targets between the opaque pass and the transparent pass.</li>
+</ul>
+
+<p>You can also do the following:</p>
+
+<ul>
+<li>Avoid use of the <a href="shader-complex-lit.html">Complex Lit shader</a>, which has complex lighting calculations. If you use the Complex Lit shader, disable <strong>Clear Coat</strong>.</li>
+<li>On lower-end mobile platforms, use the <a href="baked-lit-shader.html">Baked Lit shader</a> for static objects and the <a href="simple-lit-shader.html">Simple Lit shader</a> for dynamic objects.</li>
+<li>If you use Screen Space Ambient Occlusion (SSAO), refer to <span class="tooltip" tabindex="0" ><a href="post-processing-ssao.html">Ambient Occlusion</a><span class="tooltiptext">A method to approximate how much ambient light (light not coming from a specific direction) can hit a point on a surface.<br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#ambientocclusion" aria-label="Go to glossary anchor for ambientocclusion">Glossary</a></span></span></span> for more information about settings that have a large performance impact.</li>
+</ul>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="understand-performance.html">Understand performance in URP</a></li>
+<li><a href="optimize-for-better-performance.html">Optimize for better performance</a></li>
+<li><a href="https://resources.unity.com/games/introduction-universal-render-pipeline-for-advanced-unity-creators">Introduction to the Universal Render Pipeline for advanced Unity creators</a></li>
+<li><a href="https://unity.com/how-to/performance-optimization-high-end-graphics">Performance optimization for high-end graphics on PC and console</a></li>
+<li><a href="https://www.youtube.com/watch?v=YOtDVv5-0A4">Making Alba: How to build a performant open-world game</a></li>
+<li>
+<a href="integration-with-post-processing.html">Post-processing in URP for mobile devices</a>.</li>
+<li><a href="https://unity.com/how-to/advanced/optimize-lighting-mobile-games">Optimizing lighting for a healthy frame rate</a></li>
+</ul>
+
+<p>Refer to the following for more information on the settings:</p>
+
+<ul>
+<li><a href="rendering/deferred-rendering-path-landing.html">Deferred Rendering Path in URP</a></li>
+<li><a href="rendering/forward-rendering-paths.html">Forward rendering paths in URP</a></li>
+<li><a href="universalrp-asset.html">Universal Render Pipeline Asset</a></li>
+<li><a href="urp-universal-renderer.html">Universal Renderer</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="../urp/known-issues.html"></a></span><div class="tip">Known issues in URP</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="../urp/urp-quality-settings-landing.html"></a></span><div class="tip">Graphics quality settings in URP</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

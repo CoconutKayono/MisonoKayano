@@ -1,0 +1,467 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: WebGPU Device Filter features and limits</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<meta property="relative-path-to-manual" content="">
+<meta property="version-switcher-versions-with-this-page" content="Versions with this page:">
+<meta property="version-switcher-versions-without-this-page" content="Versions without this page:">
+<meta property="version-switcher-supported" content="Supported">
+<meta property="version-switcher-legacy" content="Legacy">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/Manual/webgpu-device-filter-limits-features.html">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20260626"></script><script type="text/javascript" src="docdata/toc.js?ts=20260626"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20260626"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20260626">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20260626">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/webgpu-device-filter-limits-features.html">English</a></li>
+<li><a href="/cn/current/Manual/webgpu-device-filter-limits-features.html">中文</a></li>
+<li><a href="/ja/current/Manual/webgpu-device-filter-limits-features.html">日本語</a></li>
+<li><a href="/kr/current/Manual/webgpu-device-filter-limits-features.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: Unity 6.7 Beta</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/webgpu-device-filter-limits-features.html">English</a></li>
+<li><a href="/cn/current/Manual/webgpu-device-filter-limits-features.html">中文</a></li>
+<li><a href="/ja/current/Manual/webgpu-device-filter-limits-features.html">日本語</a></li>
+<li><a href="/kr/current/Manual/webgpu-device-filter-limits-features.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="PlatformSpecific.html">Platform development  </a></li>
+<li><a href="webgl.html">Web</a></li>
+<li><a href="webgl-develop.html">Web development</a></li>
+<li><a href="webgl-graphics.html">Web graphics APIs</a></li>
+<li><a href="WebGPU.html">WebGPU</a></li>
+<li><a href="webgpu-device-filter-asset.html">WebGPU Device Filter asset</a></li>
+<li>WebGPU Device Filter features and limits</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="webgpu-device-filter-list-asset-reference.html"></a></span><div class="tip">WebGPU Device Filter asset reference</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="web-graphics-apis-intro.html"></a></span><div class="tip">Compare WebGPU and WebGL2</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>WebGPU Device Filter features and limits</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>When you configure your WebGPU device, you can define specific hardware features and resource limits required by your project. You can add these parameters to your <strong>Allow Filters</strong> or <strong>Deny Filters</strong> lists to control which devices to support or exclude based on their capabilities.</p>
+
+<h2>Prerequisites</h2>
+
+<p>Before you can filter devices by required features or limits, you need to:</p>
+
+<ol>
+<li>
+<a href="webgpu-create-device0filter-asset">Create a WebGPU Device Filter asset</a>.</li>
+<li>In the created WedGPU Device Filter asset, select <strong>+</strong> under the <strong>Allow Filters</strong> or <strong>Deny Filters</strong> list.</li>
+<li>Expand <strong>Capabilities</strong>. The <strong>Required Features</strong> and <strong>Limits</strong> lists show.</li>
+</ol>
+
+<h2>Required features</h2>
+
+<p>Filter your device depending on what features your device supports. </p>
+
+<p>To filter devices by required features:</p>
+
+<ol>
+<li>In the device filter asset, select <strong>Add Feature</strong>. This adds a feature to the list.</li>
+<li>Set <strong>Feature</strong> to your preffered feature from the dropdown.</li>
+</ol>
+
+<p>The filtering asset contains the following feature options:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Feature Name</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>None</strong></td>
+	<td style="text-align:left;">No specific feature requirements.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>BGRA8UnormStorage</strong></td>
+	<td style="text-align:left;">Supports using the <code>bgra8unorm</code> <span class="tooltip" tabindex="0" ><strong>texture format</strong><span class="tooltiptext">A file format for handling textures during real-time rendering by 3D graphics hardware, such as a graphics card or mobile device. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about texture-choose-format-by-platform.html" href="texture-choose-format-by-platform.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#textureformat" aria-label="Go to glossary anchor for textureformat">Glossary</a></span></span></span> for storage usage (<code>bgra8-unorm-storage</code>).</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>ClipDistances</strong></td>
+	<td style="text-align:left;">Allows vertex <span class="tooltip" tabindex="0" ><strong>shaders</strong><span class="tooltiptext">A program that runs on the GPU. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Shaders.html" href="Shaders.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#shader" aria-label="Go to glossary anchor for shader">Glossary</a></span></span></span> to write to user-defined clip distances (<code>clip-distances</code>).</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>CoreFeaturesAndLimits</strong></td>
+	<td style="text-align:left;">Guarantees support for WebGPU core features and minimum required limits (<code>core-features-and-limits</code>).</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Depth32FloatStencil8</strong></td>
+	<td style="text-align:left;">Supports the <code>depth32float-stencil8</code> combined depth and stencil texture format.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>DepthClipControl</strong></td>
+	<td style="text-align:left;">Allows disabling depth clipping, which enables the use of depth clamping (<code>depth-clip-control</code>).</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>DualSourceBlending</strong></td>
+	<td style="text-align:left;">Enables dual-source blending, which allows shaders to output two colors to the same color attachment (<code>dual-source-blending</code>).</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Float32Blendable</strong></td>
+	<td style="text-align:left;">Allows blending operations on 32-bit floating-point color attachments (<code>float32-blendable</code>).</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Float32Filterable</strong></td>
+	<td style="text-align:left;">Allows linear filtering when sampling 32-bit floating-point textures (<code>float32-filterable</code>).</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>IndirectFirstInstance</strong></td>
+	<td style="text-align:left;">Enables the <code>firstInstance</code> parameter in indirect draw calls (<code>indirect-first-instance</code>).</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>PrimitiveIndex</strong></td>
+	<td style="text-align:left;">Allows shaders to read the primitive index (<code>primitive-index</code>).</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>RG11B10UfloatRenderable</strong></td>
+	<td style="text-align:left;">Allows rendering directly to textures using the <code>rg11b10ufloat</code> format (<code>rg11b10ufloat-renderable</code>).</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>ShaderF16</strong></td>
+	<td style="text-align:left;">Enables the use of 16-bit floating-point types (<code>f16</code>) for performance optimizations in shaders (<code>shader-f16</code>).</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Subgroups</strong></td>
+	<td style="text-align:left;">Enables subgroup operations in compute and fragment shaders (<code>subgroups</code>).</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>TextureComponentSwizzle</strong></td>
+	<td style="text-align:left;">Allows customizing how texture channels (R, G, B, A) are swizzled when reading (<code>texture-component-swizzle</code>).</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>TextureCompressionASTC</strong></td>
+	<td style="text-align:left;">Supports Adaptive Scalable Texture <span class="tooltip" tabindex="0" ><strong>Compression</strong><span class="tooltiptext">A method of storing data that reduces the amount of storage space it requires. See <a href="texture-choose-format-by-platform.html">Texture Compression</a>, <a href="class-AnimationClip.html#AssetProperties">Animation Compression</a>, <a href="class-AudioClip.html">Audio Compression</a>, <a href="ReducingFilesize.html">Build Compression</a>.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#compression" aria-label="Go to glossary anchor for compression">Glossary</a></span></span></span> (ASTC) formats (<code>texture-compression-astc</code>).</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>TextureCompressionASTCSliced3D</strong></td>
+	<td style="text-align:left;">Supports 3D sliced textures using ASTC compression (<code>texture-compression-astc-sliced-3d</code>).</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>TextureCompressionBC</strong></td>
+	<td style="text-align:left;">Supports Block Compression (BC) formats, commonly used on desktop hardware (<code>texture-compression-bc</code>).</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>TextureCompressionBCSliced3D</strong></td>
+	<td style="text-align:left;">Supports 3D sliced textures using BC compression (<code>texture-compression-bc-sliced-3d</code>).</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>TextureCompressionETC2</strong></td>
+	<td style="text-align:left;">Supports Ericsson <span class="tooltip" tabindex="0" ><strong>Texture Compression</strong><span class="tooltiptext">3D Graphics hardware requires Textures to be compressed in specialized formats which are optimized for fast Texture sampling. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about texture-choose-format-by-platform.html" href="texture-choose-format-by-platform.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#texturecompression" aria-label="Go to glossary anchor for texturecompression">Glossary</a></span></span></span> (ETC2) formats, standard on mobile devices (<code>texture-compression-etc2</code>).</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>TextureFormatsTier1</strong></td>
+	<td style="text-align:left;">Provides Tier 1 level extended support for texture formats (<code>texture-formats-tier-1</code>).</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>TextureFormatsTier2</strong></td>
+	<td style="text-align:left;">Provides Tier 2 level extended support for texture formats (<code>texture-formats-tier-2</code>).</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>TimestampQuery</strong></td>
+	<td style="text-align:left;">Allows querying GPU timestamp execution times for accurate performance profiling (<code>timestamp-query</code>).</td>
+</tr>
+</tbody>
+</table>
+
+<hr>
+
+<h2>Limits</h2>
+
+<p>Filter devices depending on required resource counts, dimensions, and memory allocations. These limits ensure the device can handle the specific load and architecture of your application.</p>
+
+<p>To filter devices by limits:</p>
+
+<ol>
+<li>From the filtering asset, select <strong>Add Limit</strong>.</li>
+<li>Set <strong>Limit</strong> to your preferred limit.</li>
+</ol>
+
+<p>The filtering asset has the following limit options:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Limit Name</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>None</strong></td>
+	<td style="text-align:left;">No specific limit requirement.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>MaxBindGroups</strong></td>
+	<td style="text-align:left;">The maximum number of bind groups that can be bound simultaneously in a pipeline.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>MaxBindGroupsPlusVertexBuffers</strong></td>
+	<td style="text-align:left;">The combined maximum limit for the sum of bound bind groups and bound vertex buffers.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>MaxBindingsPerBindGroup</strong></td>
+	<td style="text-align:left;">The maximum number of individual resources (textures, buffers, samplers) allowed within a single bind group.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>MaxBufferSize</strong></td>
+	<td style="text-align:left;">The maximum allowed size (in bytes) for a single buffer.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>MaxColorAttachmentBytesPerSample</strong></td>
+	<td style="text-align:left;">The maximum total bytes per sample across all color attachments in a single render pass.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>MaxColorAttachments</strong></td>
+	<td style="text-align:left;">The maximum number of color attachments that can be output to simultaneously.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>MaxComputeInvocationsPerWorkgroup</strong></td>
+	<td style="text-align:left;">The maximum total number of shader invocations (threads) allowed in a single compute work group (X × Y × Z).</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>MaxComputeWorkgroupSizeX</strong></td>
+	<td style="text-align:left;">The maximum size of a compute work group in the X dimension.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>MaxComputeWorkgroupSizeY</strong></td>
+	<td style="text-align:left;">The maximum size of a compute work group in the Y dimension.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>MaxComputeWorkgroupSizeZ</strong></td>
+	<td style="text-align:left;">The maximum size of a compute work group in the Z dimension.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>MaxComputeWorkgroupsPerDimension</strong></td>
+	<td style="text-align:left;">The maximum number of compute work groups that can be dispatched in any single dimension (X, Y, or Z).</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>MaxComputeWorkgroupStorageSize</strong></td>
+	<td style="text-align:left;">The maximum amount of shared memory (in bytes) available per compute work group.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>MaxDynamicStorageBuffersPerPipelineLayout</strong></td>
+	<td style="text-align:left;">The maximum number of dynamic storage buffers allowed in a pipeline layout.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>MaxDynamicUniformBuffersPerPipelineLayout</strong></td>
+	<td style="text-align:left;">The maximum number of dynamic uniform buffers allowed in a pipeline layout.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>MaxInterStageShaderVariables</strong></td>
+	<td style="text-align:left;">The maximum number of variables that can be passed between shader stages (for example, from vertex to fragment).</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>MaxSampledTexturesPerShaderStage</strong></td>
+	<td style="text-align:left;">The maximum number of sampled textures accessible within a single shader stage.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>MaxSamplersPerShaderStage</strong></td>
+	<td style="text-align:left;">The maximum number of texture samplers allowed within a single shader stage.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>MaxStorageBufferBindingSize</strong></td>
+	<td style="text-align:left;">The maximum binding size (in bytes) allowed for a single storage buffer.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>MaxStorageBuffersInFragmentStage</strong></td>
+	<td style="text-align:left;">The maximum number of storage buffers accessible specifically in the fragment shader stage.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>MaxStorageBuffersInVertexStage</strong></td>
+	<td style="text-align:left;">The maximum number of storage buffers accessible specifically in the <span class="tooltip" tabindex="0" ><strong>vertex shader</strong><span class="tooltiptext">A program that runs on each vertex of a 3D model when the model is being rendered. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about writing-shader-writing-shader-programs-hlsl.html" href="writing-shader-writing-shader-programs-hlsl.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#vertexshader" aria-label="Go to glossary anchor for vertexshader">Glossary</a></span></span></span> stage.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>MaxStorageBuffersPerShaderStage</strong></td>
+	<td style="text-align:left;">The maximum number of storage buffers accessible across any single shader stage.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>MaxStorageTexturesInFragmentStage</strong></td>
+	<td style="text-align:left;">The maximum number of storage textures accessible specifically in the fragment shader stage.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>MaxStorageTexturesInVertexStage</strong></td>
+	<td style="text-align:left;">The maximum number of storage textures accessible specifically in the vertex shader stage.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>MaxStorageTexturesPerShaderStage</strong></td>
+	<td style="text-align:left;">The maximum number of storage textures accessible across any single shader stage.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>MaxTextureArrayLayers</strong></td>
+	<td style="text-align:left;">The maximum number of 2D array layers allowed in a texture array.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>MaxTextureDimension1D</strong></td>
+	<td style="text-align:left;">The maximum length of a 1D texture.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>MaxTextureDimension2D</strong></td>
+	<td style="text-align:left;">The maximum width or height of a 2D texture.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>MaxTextureDimension3D</strong></td>
+	<td style="text-align:left;">The maximum width, height, or depth of a 3D texture.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>MaxUniformBufferBindingSize</strong></td>
+	<td style="text-align:left;">The maximum binding size (in bytes) allowed for a single uniform buffer.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>MaxUniformBuffersPerShaderStage</strong></td>
+	<td style="text-align:left;">The maximum number of uniform buffers accessible within a single shader stage.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>MaxVertexAttributes</strong></td>
+	<td style="text-align:left;">The maximum number of vertex attributes supported in a single vertex layout.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>MaxVertexBuffers</strong></td>
+	<td style="text-align:left;">The maximum number of vertex buffers that can be bound simultaneously.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>MaxVertexBufferArrayStride</strong></td>
+	<td style="text-align:left;">The maximum allowed stride (in bytes) between elements in a vertex buffer array.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>MinStorageBufferOffsetAlignment</strong></td>
+	<td style="text-align:left;">The required minimum alignment (in bytes) for storage buffer binding offsets.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>MinUniformBufferOffsetAlignment</strong></td>
+	<td style="text-align:left;">The required minimum alignment (in bytes) for uniform buffer binding offsets.</td>
+</tr>
+</tbody>
+</table>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="webgpu-intro-device-filter-asset.html">Introduction to WebGPU Device Filter asset</a></li>
+<li><a href="webgpu-create-device-filter-asset.html">Create a WebGPU Device Filter asset</a></li>
+<li><a href="webgpu-device-filter-allow-deny.html">Configure WebGPU API usage</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="webgpu-device-filter-list-asset-reference.html"></a></span><div class="tip">WebGPU Device Filter asset reference</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="web-graphics-apis-intro.html"></a></span><div class="tip">Compare WebGPU and WebGL2</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

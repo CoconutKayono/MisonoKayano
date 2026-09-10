@@ -1,0 +1,404 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Introduction to UI Toolkit</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<meta property="relative-path-to-manual" content="../">
+<meta property="version-switcher-versions-with-this-page" content="Versions with this page:">
+<meta property="version-switcher-versions-without-this-page" content="Versions without this page:">
+<meta property="version-switcher-supported" content="Supported">
+<meta property="version-switcher-legacy" content="Legacy">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/Manual/best-practice-guides/introduction-to-ui-toolkit.html">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../../StaticFilesManual/js/jquery.js?ts=20260626"></script><script type="text/javascript" src="../../StaticFilesManual/js/core.js?ts=20260626"></script><script type="text/javascript" src="../../StaticFilesManual/js/image-comp.js?ts=20260626"></script><script type="text/javascript" src="../docdata/toc.js?ts=20260626"></script><script type="text/javascript" src="../docdata/global_toc.js?ts=20260626"></script><link rel="stylesheet" type="text/css" href="../../StaticFilesManual/css/core.css?ts=20260626">
+<link rel="stylesheet" type="text/css" href="../../StaticFilesManual/css/icons.css?ts=20260626">
+<link rel="stylesheet" href="../../StaticFilesManual/css/prism.css">
+<script src="../../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="../30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../index.html" class="selected">Manual</a></li>
+<li><a href="../../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/best-practice-guides/introduction-to-ui-toolkit.html">English</a></li>
+<li><a href="/cn/current/Manual/best-practice-guides/introduction-to-ui-toolkit.html">中文</a></li>
+<li><a href="/ja/current/Manual/best-practice-guides/introduction-to-ui-toolkit.html">日本語</a></li>
+<li><a href="/kr/current/Manual/best-practice-guides/introduction-to-ui-toolkit.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: Unity 6.7 Beta</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/best-practice-guides/introduction-to-ui-toolkit.html">English</a></li>
+<li><a href="/cn/current/Manual/best-practice-guides/introduction-to-ui-toolkit.html">中文</a></li>
+<li><a href="/ja/current/Manual/best-practice-guides/introduction-to-ui-toolkit.html">日本語</a></li>
+<li><a href="/kr/current/Manual/best-practice-guides/introduction-to-ui-toolkit.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="../best-practice-guides.html">Best practice guides</a></li>
+<li><a href="../best-practice-guides/ui-toolkit-for-advanced-unity-developers/bpg-uiad-index.html">UI Toolkit for advanced Unity developers</a></li>
+<li>Introduction to UI Toolkit</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="../best-practice-guides/ui-toolkit-for-advanced-unity-developers/install-ui-toolkit-and-sample-projects.html"></a></span><div class="tip">Install UI Toolkit and sample projects</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="../best-practice-guides/ui-toolkit-for-advanced-unity-developers/graphic-and-font-assets-preparation.html"></a></span><div class="tip">Graphic and font assets preparation</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Introduction to UI Toolkit</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Table of Contents</p>
+
+<ul>
+<li>
+<p><a href="#web-inspired-design">Web-inspired design</a></p>
+
+<ul>
+<li><a href="#uxml">UXML</a></li>
+<li><a href="#uss">USS</a></li>
+</ul>
+</li>
+<li>
+<p><a href="#retained-mode-architecture">Retained mode architecture</a></p>
+
+<ul>
+<li><a href="#declarative-structure">Declarative structure</a></li>
+<li><a href="#state-persistence">State persistence</a></li>
+<li><a href="#event-handling">Event handling</a></li>
+</ul>
+</li>
+<li><p><a href="#data-binding">Data binding</a></p></li>
+<li><p><a href="#layout-engine">Layout engine</a></p></li>
+<li><p><a href="#library-of-ui-controls">Library of UI controls</a></p></li>
+<li><p><a href="#text-and-fonts">Text and fonts</a></p></li>
+<li><p><a href="#support-for-editor-and-runtime-ui">Support for Editor and runtime UI</a></p></li>
+<li>
+<p><a href="#ui-tools-and-resources">UI tools and resources</a></p>
+
+<ul>
+<li><a href="#ui-debugger">UI Debugger</a></li>
+<li><a href="#ui-builder">UI Builder</a></li>
+<li><a href="#ui-samples">UI samples</a></li>
+</ul>
+</li>
+<li>
+<p><a href="#roles-and-responsibilities">Roles and responsibilities</a></p>
+
+<ul>
+<li><a href="#ux-ui-designers">UX/UI Designers</a></li>
+<li><a href="#developers">Developers</a></li>
+<li><a href="#technical-artists">Technical Artists</a></li>
+<li><a href="#qa-testing">QA/Testing</a></li>
+</ul>
+</li>
+</ul>
+
+<p>
+<a href="../../UIElements">UI Toolkit</a> offers significant advantages over the traditional uGUI (Unity UI) and legacy IMGUI (for Editor tools) systems. It provides a more modern, flexible, and performance-oriented alternative that scales better for most projects. It can also support your whole production pipeline, handling both Editor tooling and runtime games or applications.</p>
+
+<p>Some of its benefits compared to the legacy UI systems include:</p>
+
+<ul>
+<li><p>
+<strong>Faster iteration:</strong> Work and iterate more quickly with global style management and live authoring capabilities.</p></li>
+<li><p>
+<strong>Rendering performance:</strong> Gain greater control over the performance of your game using Render Hints and dynamic texture atlases.</p></li>
+<li><p>
+<strong>Better collaboration:</strong> Separate logic (C# code), UI structure (Unity XML, or UXML, documents), and styling (via a Unity Style Sheet or USS) to reduce conflicts and improve teamwork.</p></li>
+<li><p>
+<strong>Reusability:</strong> Share and reuse styles and widgets within or across projects, as well as between the Editor and runtime.</p></li>
+</ul>
+
+<p><a name="web-inspired-design" aria-hidden="true"></a></p>
+
+<h2>Web-inspired design</h2>
+
+<p>UI Toolkit is designed for optimal performance and adaptability across platforms and it is inspired by standard web technologies. If you have experience developing web pages or applications, the core concepts of UI Toolkit might be familiar to you. UI Toolkit provides powerful tools and workflows that leverage your existing knowledge of markup languages and style sheets.</p>
+
+<figure>
+<img src="../../uploads/Main/bpg/uitk/image87.png" alt="In essence, UI Toolkit interfaces consist of UXML and USS files to create layouts and styling by the UI Toolkit systems.">
+<figcaption>In essence, UI Toolkit interfaces consist of UXML and USS files to create layouts and styling by the UI Toolkit systems.</figcaption>
+</figure>
+
+<p>With UI Toolkit, you can separate the structure, style, and behavior of your UI, similar to how you might with HTML, CSS, and JavaScript:</p>
+
+<figure>
+<img src="../../uploads/Main/bpg/uitk/image216.png" alt="Similarities between UI Toolkit and web technologies">
+<figcaption>Similarities between UI Toolkit and web technologies</figcaption>
+</figure>
+
+<p><a name="uxml" aria-hidden="true"></a></p>
+
+<h3>UXML</h3>
+
+<p>
+<a href="../UIE-UXML.html">UXML</a> is a markup language inspired by HTML and XML that defines UI structure and reusable templates. While you can build UI in C#, using UXML is recommended.</p>
+
+<p><a name="uss" aria-hidden="true"></a></p>
+
+<h3>USS</h3>
+
+<p>
+<a href="../UIE-USS.html">USS</a> are style sheets that apply visual styles and layout rules to UI. Similar to CSS, USS supports a subset of standard CSS properties. While you can define styles in C#, using USS is recommended.</p>
+
+<p><a name="retained-mode-architecture" aria-hidden="true"></a></p>
+
+<h2>Retained mode architecture</h2>
+
+<p>UI Toolkit operates in a retained mode architecture, which means the UI builds a hierarchical structure and maintains it in memory. The framework handles rendering and updates to the UI based on the state of that tree. Here’s what retained mode means in detail:</p>
+
+<p><a name="declarative-structure" aria-hidden="true"></a></p>
+
+<h3>Declarative structure</h3>
+
+<p>UI components are defined and managed as objects or nodes within a <span class="tooltip" tabindex="0" ><a href="../UIE-VisualTree.html">visual tree</a><span class="tooltiptext">An object graph, made of lightweight nodes, that holds all the elements in a window or panel. It defines every UI you build with the UI Toolkit.<br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#visualtree" aria-label="Go to glossary anchor for visualtree">Glossary</a></span></span></span>. Visual tree is an object graph made of lightweight nodes that holds all the elements in a window or panel. It defines every UI built with UI Toolkit. You declare the UI structure once, UI Toolkit takes care of rendering and updates based on the changes to the tree.</p>
+
+<figure>
+<img src="../../uploads/Main/VisualTreeExample.png" alt="Visual tree example">
+<figcaption>Visual tree example</figcaption>
+</figure>
+
+<p><a name="state-persistence" aria-hidden="true"></a></p>
+
+<h3>State persistence</h3>
+
+<p>The UI elements in retained mode persist in memory after creation. You can modify their properties, and UI Toolkit reflects changes in the next rendering cycle. For example, if you have a button, you don’t need to redraw it manually. Updating its properties, such as position or appearance, is enough. The system handles the rest.</p>
+
+<p><a name="event-handling" aria-hidden="true"></a></p>
+
+<h3>Event handling</h3>
+
+<p>
+<a href="../UIE-Events.html">Events</a> such as clicks, drags, or key presses are routed automatically to the appropriate <span class="tooltip" tabindex="0" ><strong>visual elements</strong><span class="tooltiptext">A node of a visual tree that instantiates or derives from the C# <a href="../../ScriptReference/UIElements.VisualElement.html"><code>VisualElement</code></a> class. You can style the look, define the behaviour, and display it on screen as part of the UI. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UIE-VisualTree.html" href="../UIE-VisualTree.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#visualelement" aria-label="Go to glossary anchor for visualelement">Glossary</a></span></span></span> in the tree. You attach handlers to UI elements, UI Toolkit propagates events appropriately.</p>
+
+<p><a name="data-binding" aria-hidden="true"></a></p>
+
+<h2>Data binding</h2>
+
+<p>UI Toolkit supports a <a href="../UIE-data-binding.html">data binding system</a> that allows you to link properties of UI elements to data sources. This means that when the data changes, the UI updates automatically, and vice versa. This is similar to how frameworks like React or Angular handle data binding in web development.</p>
+
+<figure>
+<img src="../../uploads/Main/uitk/data-binding.gif" alt="Data binding example">
+<figcaption>Data binding example</figcaption>
+</figure>
+
+<p><a name="layout-engine" aria-hidden="true"></a></p>
+
+<h2>Layout engine</h2>
+
+<p>UI Toolkit uses a <a href="../UIE-LayoutEngine.html">layout engine</a> based on the CSS <a href="https://css-tricks.com/snippets/css/a-guide-to-flexbox/">Flexbox</a> model. This lets you to define how UI elements are positioned and sized within their parent containers. The layout engine automatically calculates the size and position of elements based on their properties, making it easier to create responsive designs.</p>
+
+<p>Use flex properties for efficient space distribution, easy reordering, and absolute positioning of elements. The layout engine also supports alignment, justification, wrapping, and much more. </p>
+
+<figure>
+<img src="../../uploads/Main/uitk/layout-engine.png" alt="Flexbox layout examples">
+<figcaption>Flexbox layout examples</figcaption>
+</figure>
+
+<p><a name="library-of-ui-controls" aria-hidden="true"></a></p>
+
+<h2>Library of UI controls</h2>
+
+<p>UI Toolkit provides a rich library of <a href="../UIE-ElementRef.html">standard UI controls</a> that you can use to build your interfaces, such as buttons, toggles, and list and tree views. You can use them as is, customize them, or <a href="../UIE-custom-controls.html">create your own controls</a>.</p>
+
+<figure>
+<img src="../../uploads/Main/uitk/uitk-controls.png" alt="Standard UI controls">
+<figcaption>Standard UI controls</figcaption>
+</figure>
+
+<p><a name="text-and-fonts" aria-hidden="true"></a></p>
+
+<h2>Text and fonts</h2>
+
+<p>UI Toolkit supports a <a href="../UIE-work-with-text.html">text system</a> that allows you to work with fonts, styles, and text elements. You can use system fonts or import custom fonts, and apply styles such as bold, italic, or underline. The text system is designed to work seamlessly with the layout engine, ensuring that text flows correctly within your UI.</p>
+
+<figure>
+<img src="../../uploads/Main/uitk/text-fonts.gif" alt="Text and fonts example">
+<figcaption>Text and fonts example</figcaption>
+</figure>
+
+<p><a name="support-for-editor-and-runtime-ui" aria-hidden="true"></a></p>
+
+<h2>Support for Editor and runtime UI</h2>
+
+<p>UI Toolkit lets you create a UI that works seamlessly in both <a href="../UIE-support-for-editor-ui.html">Editor</a> and <a href="../UIE-support-for-runtime-ui.html">runtime</a> UI. The same UI elements, styling, and layout system apply across both scenarios, reducing duplication and ensuring consistency. Whether you’re building in-game menus, heads-up displays (HUDs), or custom Editor tools, UI Toolkit provides the capability to adapt your UI for different contexts.</p>
+
+<figure>
+<img src="../../uploads/Main/uitk/pie-chart.png" alt="A pie chart appears in both the scene and an Editor window.">
+<figcaption>A pie chart appears in both the scene and an Editor window.</figcaption>
+</figure>
+
+<p><a name="ui-tools-and-resources" aria-hidden="true"></a></p>
+
+<h2>UI tools and resources</h2>
+
+<p>UI Toolkit provides a set of tools and resources to help you design, develop, and debug your UI.</p>
+
+<p><a name="ui-debugger" aria-hidden="true"></a></p>
+
+<h3>UI Debugger</h3>
+
+<p>
+<a href="../UIE-ui-debugger.html">UI Debugger</a> is a diagnostic tool that resembles a web browser’s debugging view. Use it to explore a hierarchy of elements and get information about their underlying UXML structure and USS styles.</p>
+
+<figure>
+<img src="../../uploads/Main/uitk/ui-debugger-example.png" alt="UI Debugger example">
+<figcaption>UI Debugger example</figcaption>
+</figure>
+
+<p><a name="ui-builder" aria-hidden="true"></a></p>
+
+<h3>UI Builder</h3>
+
+<p>
+<a href="../UIBuilder.html">UI Builder</a> is a visual authoring tool that lets you create and edit UXML and USS files. You can design your UI visually, drag and drop elements, and customize styles without writing code. The UI Builder interface allows artists and designers to edit and visualize the UI as it’s being built.</p>
+
+<figure>
+<img src="../../uploads/Main/uitk/ui-builder.png" alt="UI Builder example">
+<figcaption>UI Builder example</figcaption>
+</figure>
+
+<p><a name="ui-samples" aria-hidden="true"></a></p>
+
+<h3>UI samples</h3>
+
+<p>A library of code samples for UI controls that you can view in the Editor under <strong>Window</strong> &gt; <strong>UI Toolkit</strong> &gt; <strong>Samples</strong>.</p>
+
+<figure>
+<img src="../../uploads/Main/uitk/ui-samples.png" alt="UI Toolkit samples">
+<figcaption>UI Toolkit samples</figcaption>
+</figure>
+
+<p><a name="roles-and-responsibilities" aria-hidden="true"></a></p>
+
+<h2>Roles and responsibilities</h2>
+
+<p>In a studio, UI Toolkit can be used across different disciplines, with each role contributing to specific parts of the process.</p>
+
+<p><a name="ux-ui-designers" aria-hidden="true"></a></p>
+
+<h3>UX/UI Designers</h3>
+
+<p>UX/UI designers are responsible for the overall look and feel of the UI. They create wireframes, mockups, and prototypes to define the user experience. </p>
+
+<p>Designers use UI Builder to visually design the UI and create UXML and USS files for structure and styling.</p>
+
+<p><a name="developers" aria-hidden="true"></a></p>
+
+<h3>Developers</h3>
+
+<p>Developers implement the behavior of the UI and integrate it with game or editor logic. They work closely with designers to ensure that the UI meets the design specifications and functions correctly.</p>
+
+<p>Developers use C# to create custom functionality, handle user interactions, and bind data. They also use UI Toolkit’s API to interact with the UI controls created by designers and to develop custom UI controls that designers can use and customize in their designs.</p>
+
+<p><a name="technical-artists" aria-hidden="true"></a></p>
+
+<h3>Technical Artists</h3>
+
+<p>Technical artists often act as a bridge between designers and developers. They ensure that the visual assets are optimized for performance and integrate well with the UI.</p>
+
+<p>Technical artists assist in creating USS styles and troubleshooting issues that arise during development.</p>
+
+<p><a name="qa-testing" aria-hidden="true"></a></p>
+
+<h3>QA/Testing</h3>
+
+<p>QA/testers test the UI to ensure it functions correctly and meets design specifications.</p>
+
+<p>Testers use the UI Debugger to inspect the UI hierarchy and verify interactions.</p>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="../best-practice-guides/ui-toolkit-for-advanced-unity-developers/install-ui-toolkit-and-sample-projects.html"></a></span><div class="tip">Install UI Toolkit and sample projects</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="../best-practice-guides/ui-toolkit-for-advanced-unity-developers/graphic-and-font-assets-preparation.html"></a></span><div class="tip">Graphic and font assets preparation</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

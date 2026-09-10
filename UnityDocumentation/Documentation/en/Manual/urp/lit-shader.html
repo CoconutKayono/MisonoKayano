@@ -1,0 +1,443 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Lit shader material Inspector window reference for URP</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<meta property="relative-path-to-manual" content="../">
+<meta property="version-switcher-versions-with-this-page" content="Versions with this page:">
+<meta property="version-switcher-versions-without-this-page" content="Versions without this page:">
+<meta property="version-switcher-supported" content="Supported">
+<meta property="version-switcher-legacy" content="Legacy">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/Manual/urp/lit-shader.html">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../../StaticFilesManual/js/jquery.js?ts=20260626"></script><script type="text/javascript" src="../../StaticFilesManual/js/core.js?ts=20260626"></script><script type="text/javascript" src="../../StaticFilesManual/js/image-comp.js?ts=20260626"></script><script type="text/javascript" src="../docdata/toc.js?ts=20260626"></script><script type="text/javascript" src="../docdata/global_toc.js?ts=20260626"></script><link rel="stylesheet" type="text/css" href="../../StaticFilesManual/css/core.css?ts=20260626">
+<link rel="stylesheet" type="text/css" href="../../StaticFilesManual/css/icons.css?ts=20260626">
+<link rel="stylesheet" href="../../StaticFilesManual/css/prism.css">
+<script src="../../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="../30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../index.html" class="selected">Manual</a></li>
+<li><a href="../../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/urp/lit-shader.html">English</a></li>
+<li><a href="/cn/current/Manual/urp/lit-shader.html">中文</a></li>
+<li><a href="/ja/current/Manual/urp/lit-shader.html">日本語</a></li>
+<li><a href="/kr/current/Manual/urp/lit-shader.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: Unity 6.7 Beta</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/urp/lit-shader.html">English</a></li>
+<li><a href="/cn/current/Manual/urp/lit-shader.html">中文</a></li>
+<li><a href="/ja/current/Manual/urp/lit-shader.html">日本語</a></li>
+<li><a href="/kr/current/Manual/urp/lit-shader.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="../materials-and-shaders.html">Materials and shaders</a></li>
+<li><a href="../built-in-materials-and-shaders.html">Prebuilt materials and shaders</a></li>
+<li><a href="../urp/shaders-in-universalrp.html">Prebuilt shaders in URP</a></li>
+<li><a href="../urp/shaders-in-universalrp-reference.html">Shader Material Inspector window reference for URP</a></li>
+<li>Lit shader material Inspector window reference for URP</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="../urp/blending-modes.html"></a></span><div class="tip">Blending Modes in URP</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="../urp/simple-lit-shader.html"></a></span><div class="tip">Simple Lit shader material Inspector window reference for URP</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Lit shader material Inspector window reference for URP</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Explore the properties and settings you can use to customize the default Lit <span class="tooltip" tabindex="0" ><strong>shader</strong><span class="tooltiptext">A program that runs on the GPU. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Shaders.html" href="../Shaders.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#shader" aria-label="Go to glossary anchor for shader">Glossary</a></span></span></span> in the Universal <span class="tooltip" tabindex="0" ><strong>Render Pipeline</strong><span class="tooltiptext">A series of operations that take the contents of a Scene, and displays them on a screen. Unity lets you choose from pre-built render pipelines, or write your own. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about render-pipelines.html" href="../render-pipelines.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#renderpipeline" aria-label="Go to glossary anchor for renderpipeline">Glossary</a></span></span></span> (URP).</p>
+
+<p>
+<strong>Note:</strong> URP implements certain Lit shader material features as shader variants, which require more <a href="../SRPBatcher.html"><strong>SRP Batcher</strong></a> batches. For optimal performance, disable unused features.</p>
+
+<p><a name="surface-options" aria-hidden="true"></a></p>
+
+<h2>Surface Options</h2>
+
+<p>The <strong>Surface Options</strong> section controls how URP renders the material on-screen.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Property</strong></th>
+	<th style="text-align:left;"><strong>Sub-property</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Workflow Mode</strong></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">Selects whether Unity calculates reflections using a metallic value or a specular color. The options are:<ul>
+<li>
+<strong>Specular</strong>: Uses a specular color input to define the brightness and tint of specular reflections for non‑metallic surfaces.</li>
+<li>
+<strong>Metallic</strong>: Uses a metallic input to define how much of the surface behaves like metal. Metallic surfaces reflect the environment color, while non‑metallic surfaces reflect the <strong>Base Map</strong> color.</li>
+</ul>For more information, refer to <a href="../StandardShaderMetallicVsSpecular.html">Metallic and specular workflows</a>. This property affects batching performance.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Surface Type</strong></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">Sets whether the surface is opaque or transparent. The options are the following: <ul>
+<li>
+<strong>Opaque</strong>: The surface is fully opaque and doesn’t use transparency blending. URP renders opaque surfaces first.</li>
+<li>
+<strong>Transparent</strong>: Blends the surface with the background. URP renders transparent surfaces in a separate render pass after opaque surfaces.</li>
+</ul> This property affects batching performance.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Blending Mode</strong></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">Sets how the shader blends the color of a transparent material with the background. This property is available only when you set <strong>Surface Type</strong> to <strong>Transparent</strong>. The options are:<ul>
+<li>
+<strong>Alpha</strong>: Calculates transparency using the alpha value of the material.</li>
+<li>
+<strong>Premultiply</strong>: Calculates transparency using the alpha value of the material, but multiplies the RGB values by the alpha value first.</li>
+<li>
+<strong>Additive</strong>: Adds the color of the material to the background color.</li>
+<li>
+<strong>Multiply</strong>: Multiplies the color of the material with the background color.</li>
+</ul>For more information about blending modes, refer to <a href="blending-modes.html">Blending modes</a>. This property affects batching performance.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Preserve Specular Lighting</strong></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">Keeps specular highlights on transparent surfaces by not applying the alpha value. The specular highlights appear even if the material is fully transparent. This property is available only if you set <strong>Surface Type</strong> to <strong>Transparent</strong> and <strong>Blending Mode</strong> to either <strong>Alpha</strong> or <strong>Additive</strong>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Render Face</strong></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">Specifies which faces of the mesh the shader renders. The options are:<ul>
+<li>
+<strong>Front</strong>: Renders only front‑facing triangles. This is the default. </li>
+<li>
+<strong>Back</strong>: Renders only back‑facing triangles.</li>
+<li>
+<strong>Both</strong>: Renders both front and back faces.</li>
+</ul>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Alpha Clipping</strong></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">Discards <span class="tooltip" tabindex="0" ><strong>pixels</strong><span class="tooltiptext">The smallest unit in a computer image. Pixel size depends on your screen resolution. Pixel lighting is calculated at every screen pixel. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ShadowPerformance.html" href="../ShadowPerformance.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#pixel" aria-label="Go to glossary anchor for pixel">Glossary</a></span></span></span> if their alpha value is lower than the <strong>Threshold</strong> value. The default value is 0.5. Use this property to create hard edges between opaque and transparent areas, for example to create blades of grass. This property affects batching performance.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Threshold</strong></td>
+	<td style="text-align:left;">Sets the minimum alpha value for a pixel to be visible. The default value is 0.5. This property is only available if you enable <strong>Alpha Clipping</strong>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Receive Shadows</strong></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">Determines whether the material receives and displays shadows cast from other objects. This property affects batching performance.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="surface-inputs" aria-hidden="true"></a></p>
+
+<h2>Surface Inputs</h2>
+
+<p>The <strong>Surface Inputs</strong> describe the surface itself. For example, use these properties to make your surface look wet, dry, rough, or smooth.</p>
+
+<p>
+<strong>Note:</strong> You can use a single RGBA texture for the metallic, smoothness, and occlusion properties. For more information, refer to <a href="shaders-in-universalrp-channel-packed-texture.html">Assign a channel-packed texture to a material</a>.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Property</strong></th>
+	<th style="text-align:left;"><strong>Sub-property</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Base Map</strong></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">Sets the surface color, also known as diffuse. To assign a texture, select the picker (<strong>⊙</strong>). To assign a color, either as the main color or a tint on top of the texture, select the swatch or the dropper.<br><br>If you set <strong>Surface Type</strong> to <strong>Transparent</strong> or enable <strong>Alpha Clipping</strong>, Unity uses the alpha channel to calculate the transparency of the surface.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Metallic Map</strong></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">Sets how metallic the surface is. This property is available only if you set <strong>Workflow Mode</strong> to <strong>Metallic</strong>. To assign a texture, select the picker (<strong>⊙</strong>). To adjust the surface reflectivity, use the slider. The range is 0 to 1, where 0 is a non-metallic surface like plastic or wood, and 1 is a metallic surface like silver.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Specular Map</strong></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">Sets the color of reflections. This property is available only if you set <strong>Workflow Mode</strong> to <strong>Specular</strong>. To assign a texture, select the picker (<strong>⊙</strong>). To assign a color, select the swatch or the dropper.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Smoothness</strong></td>
+	<td style="text-align:left;">Sets the smoothness of the surface, which affects the clarity of reflections. The range is 0 to 1, where 0 provides a wide, rough highlight, and 1 provides a small, sharp highlight like glass. For more information, refer to <a href="../StandardShaderMaterialParameterMetallic.html">Configure reflections in prebuilt shaders</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Source</strong></td>
+	<td style="text-align:left;">Selects a source to use as a smoothness map. The options are the following: <ul>
+<li>
+<strong>Metallic Alpha</strong>: Uses the alpha channel from the <strong>Metallic Map</strong> texture. This is the default option.</li>
+<li>
+<strong>Albedo Alpha</strong>: Uses the alpha channel from the <strong>Base Map</strong> texture.</li>
+</ul>Unity multiplies the texture values by the <strong>Smoothness</strong> value. This property affects batching performance.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><span class="tooltip" tabindex="0" ><strong>Normal Map</strong><span class="tooltiptext">A type of Bump Map texture that allows you to add surface detail such as bumps, grooves, and scratches to a model which catch the light as if they are represented by real geometry.<br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#normalmap" aria-label="Go to glossary anchor for normalmap">Glossary</a></span></span></span></strong></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">Adds details like bumps, scratches, and grooves. To assign a normal map, select the picker (<strong>⊙</strong>). Use the slider to adjust the intensity of the effect. The range is 0 to 1, where lower values create less visible details. For more information, refer to <a href="../StandardShaderMaterialParameterNormalMap.html">Introduction to normal maps (bump mapping)</a>. This property affects batching performance.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Height Map</strong></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">Adds the appearance of large bumps and protrusions. To assign a height map, select the picker (<strong>⊙</strong>). Use the slider to adjust the intensity of the effect. The range is 0 to 1, where lower values create a less visible effect. For more information, refer to <a href="../StandardShaderMaterialParameterHeightMap.html">Height maps</a>. This property affects batching performance.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Occlusion Map</strong></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">Simulates shadows in corners and crevices to make lighting look more realistic. To assign an occlusion map, select the picker (<strong>⊙</strong>). Use the slider to adjust the intensity of the effect. For more information, refer to <a href="../StandardShaderMaterialParameterOcclusionMap.html">Occlusion maps</a>. This property affects batching performance.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Emission</strong></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">Enables the surface emitting a color as a light source. This property affects batching performance.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Emission Map</strong></td>
+	<td style="text-align:left;">Sets the color the material emits as a light source. The default is black, which means no emission. To assign a texture, select the picker (<strong>⊙</strong>). To assign a color, either as the main color or a tint on top of the texture, select the swatch or the dropper. For effects like lava that glow brighter than white while still being another color, increase the <strong>Intensity</strong> value in the color picker. This property affects batching performance.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;"><strong>Global Illumination</strong></td>
+	<td style="text-align:left;">Sets whether Unity bakes the emissive light cast onto other GameObjects, or calculates it in real-time. The options are: <ul>
+<li>
+<strong>Realtime</strong>: Unity calculates the emission in real-time. This property only has an effect if you <a href="../realtime-gi-using-enlighten-landing.html">Create lightmaps at runtime with Enlighten Realtime Global Illumination</a>.</li>
+<li>
+<strong>Baked</strong>: Unity bakes the emission into lightmaps. This property only has an effect if you <a href="../Lightmapping-baking-before-runtime.html">bake lightmaps before runtime</a>.</li>
+<li>
+<strong>None</strong>: Disables other GameObjects receiving the emissive light.</li>
+</ul>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Tiling</strong></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">Scales the surface input textures along their UV axes. The default value is 1, which means no scaling. Set a higher value to make the textures repeat across your <span class="tooltip" tabindex="0" ><strong>mesh</strong><span class="tooltiptext">The main graphics primitive of Unity. Meshes make up a large part of your 3D worlds. Unity supports triangulated or Quadrangulated polygon meshes. Nurbs, Nurms, Subdiv surfaces must be converted to polygons. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about mesh.html" href="../mesh.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#Mesh" aria-label="Go to glossary anchor for Mesh">Glossary</a></span></span></span>. Set a lower value to stretch the textures.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Offset</strong></td>
+	<td style="text-align:left;"></td>
+	<td style="text-align:left;">Positions the surface input textures on the mesh.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="detail-inputs" aria-hidden="true"></a></p>
+
+<h2>Detail Inputs</h2>
+
+<p>The <strong>Detail Inputs</strong> section adds extra details to the surface. For more information, refer to <a href="../StandardShaderMaterialParameterDetail.html">Secondary Maps (Detail Maps) and Detail Mask</a>.</p>
+
+<p>
+<strong>Note</strong>: These properties require a GPU that supports shader model 2.5 or higher. For more information about shader models, refer to <a href="../SL-ShaderCompileTargets.html">Set a shader to require a shader model or GPU feature</a>.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Property</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Mask</strong></td>
+	<td style="text-align:left;">Defines the areas where Unity overlays the detail map textures over the surface input textures. To assign a mask texture, select the picker (<strong>⊙</strong>). Unity uses the alpha channel of the texture as the mask. The <strong>Tiling</strong> and <strong>Offset</strong> properties have no effect on <strong>Mask</strong>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Base Map</strong></td>
+	<td style="text-align:left;">Overlays a second more detailed color texture over the <strong>Base Map</strong> in the <strong>Surface Inputs</strong> section. To assign a detail texture, select the picker (<strong>⊙</strong>). Use the slider to adjust the visibility of the texture.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Normal Map</strong></td>
+	<td style="text-align:left;">Overlays a second more detailed normal map over the <strong>Normal Map</strong> in the <strong>Surface Inputs</strong> section. To assign a normal map, select the picker (<strong>⊙</strong>). Use the slider to adjust the intensity of the effect.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Tiling</strong></td>
+	<td style="text-align:left;">Scales the detail map textures along their UV axes. The default value is 1, which means no scaling. Set a higher value to make the textures repeat across your mesh. Set a lower value to stretch the textures.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Offset</strong></td>
+	<td style="text-align:left;">Positions the detail map textures on the mesh.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="advanced" aria-hidden="true"></a></p>
+
+<h2>Advanced Options</h2>
+
+<p>The <strong>Advanced Options</strong> section controls the rendering calculations Unity uses.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Property</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Specular Highlights</strong></td>
+	<td style="text-align:left;">Adds specular highlights from direct lighting, for example <a href="../Lighting.html">Directional, Point, and Spot lights</a>. This means that your material reflects the shine from these light sources. Disable this property to make shaders render faster. This property affects batching performance.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Environment Reflections</strong></td>
+	<td style="text-align:left;">Samples reflections using the nearest <span class="tooltip" tabindex="0" ><a href="../class-ReflectionProbe.html">Reflection Probe</a><span class="tooltiptext">A rendering component that captures a spherical view of its surroundings in all directions, rather like a camera. The captured image is then stored as a Cubemap that can be used by objects with reflective materials. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-ReflectionProbe.html" href="../class-ReflectionProbe.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#ReflectionProbe" aria-label="Go to glossary anchor for ReflectionProbe">Glossary</a></span></span></span>, or the <span class="tooltip" tabindex="0" ><a href="../LightProbes.html">Light Probe</a><span class="tooltiptext">Light probes store information about how light passes through space in your scene. A collection of light probes arranged within a given space can improve lighting on moving objects and static LOD scenery within that space. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about LightProbes.html" href="../LightProbes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#LightProbe" aria-label="Go to glossary anchor for LightProbe">Glossary</a></span></span></span> set in the <a href="../lighting-window.html">Lighting window</a>. Disable this property to make shaders render faster, but remove reflections. This property affects batching performance.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Sorting Priority</strong></td>
+	<td style="text-align:left;">Determines when Unity renders the material. Unity renders materials with lower values first. Use this property to prevent Unity from rendering pixels twice by rendering materials behind other materials. This property works similarly to the <a href="../../ScriptReference/Material-renderQueue.html">render queue</a> in the Built-In Render Pipeline.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Enable GPU Instancing</strong></td>
+	<td style="text-align:left;">Renders meshes with the same geometry and material in a single batch when possible. This makes rendering faster. URP can’t render meshes in one batch if they have different materials or if the hardware doesn’t support GPU instancing. For more information, refer to <a href="../GPUInstancing-landing.html">GPU instancing</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Alembic Motion Vectors</strong></td>
+	<td style="text-align:left;">Enables motion vector support for meshes streamed through <a href="../com.unity.formats.alembic">Alembic</a> files. For more information, refer to <a href="features/motion-vectors-shader-support.html">Built-in shader support for motion vectors</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><span class="tooltip" tabindex="0" ><strong>XR</strong><span class="tooltiptext">An umbrella term encompassing Virtual Reality (VR), Augmented Reality (AR) and Mixed Reality (MR) applications. Devices supporting these forms of interactive applications can be referred to as XR devices. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about XR.html" href="../XR.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#XR" aria-label="Go to glossary anchor for XR">Glossary</a></span></span></span> Motion Vectors Pass (SpaceWarp)</strong></td>
+	<td style="text-align:left;">Enables URP running a motion vector render pass in XR to improve performance. This property is only available if your project meets the prerequisites for <a href="https://docs.unity3d.com/Packages/com.unity.xr.openxr@latest?subfolder=/manual/features/spacewarp.html">URP Application SpaceWarp</a>.</td>
+</tr>
+</tbody>
+</table>
+
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="../urp/blending-modes.html"></a></span><div class="tip">Blending Modes in URP</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="../urp/simple-lit-shader.html"></a></span><div class="tip">Simple Lit shader material Inspector window reference for URP</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

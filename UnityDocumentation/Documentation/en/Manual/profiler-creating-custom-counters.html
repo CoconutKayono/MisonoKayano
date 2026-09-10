@@ -1,0 +1,323 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Visualizing profiler counters</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<meta property="relative-path-to-manual" content="">
+<meta property="version-switcher-versions-with-this-page" content="Versions with this page:">
+<meta property="version-switcher-versions-without-this-page" content="Versions without this page:">
+<meta property="version-switcher-supported" content="Supported">
+<meta property="version-switcher-legacy" content="Legacy">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/Manual/profiler-creating-custom-counters.html">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20260626"></script><script type="text/javascript" src="docdata/toc.js?ts=20260626"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20260626"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20260626">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20260626">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/profiler-creating-custom-counters.html">English</a></li>
+<li><a href="/cn/current/Manual/profiler-creating-custom-counters.html">中文</a></li>
+<li><a href="/ja/current/Manual/profiler-creating-custom-counters.html">日本語</a></li>
+<li><a href="/kr/current/Manual/profiler-creating-custom-counters.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: Unity 6.7 Beta</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/profiler-creating-custom-counters.html">English</a></li>
+<li><a href="/cn/current/Manual/profiler-creating-custom-counters.html">中文</a></li>
+<li><a href="/ja/current/Manual/profiler-creating-custom-counters.html">日本語</a></li>
+<li><a href="/kr/current/Manual/profiler-creating-custom-counters.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="analysis.html">Optimization</a></li>
+<li><a href="Profiler.html">Unity Profiler</a></li>
+<li><a href="profiler-customizing.html">Customizing the Profiler</a></li>
+<li><a href="profiler-adding-information-code.html">Adding profiling information to your code</a></li>
+<li>Visualizing profiler counters</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="profiler-add-counters-code.html"></a></span><div class="tip">Adding profiler counters to your code</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="profiler-markers.html"></a></span><div class="tip">Profiler markers reference</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Visualizing profiler counters</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Once you’ve <a href="profiler-add-counters-code.html">added Profiler counters to your code</a>, you can visualize them in the Profiler window, or in a build of your application.</p>
+
+<h2>Visualizing custom counters in the Profiler window</h2>
+
+<p>To view the data that <code>ProfilerCounter</code> or <code>ProfilerCounterValue</code> generates in the Profiler window, you can use a <a href="profiler-customizing.html">custom Profiler module</a>. This might help to visually recognize relationships with other system metrics and identify performance issues quickly. </p>
+
+<h3>Adding metrics to your code</h3>
+
+<p>The following example assumes that the GameManager class handles high level logic and knows about enemies. To update the value of the counter, in the <code>Update</code> or <code>LateUpdate</code> method (depending on when the logic is performed with spawning or destroying enemies), use the <code>Sample</code> method to push the enemy’s count value to the Profiler:</p>
+
+<pre><code class="lang-cs">using UnityEngine;
+using Unity.Profiling;
+
+class GameManager : MonoBehaviour
+{
+    Enemy[] m_Enemies;
+
+    void Update()
+    {
+        GameStats.EnemyCount.Sample(m_Enemies.Length);
+    }
+}
+</code></pre>
+
+<p>To pass the bullet count to the Profiler, this example assumes that there’s a shell script that manages the bullet lifecycle. It then increases the <code>GameStats.BulletCount</code> value in <code>Awake</code> and decreases it in <code>OnDestroy</code> to give accurate information about the current bullet flow in the game.</p>
+
+<pre><code class="lang-cs">using UnityEngine;
+using Unity.Profiling;
+
+public class Shell : MonoBehaviour
+{
+    void Awake()
+    {
+        GameStats.BulletCount.Value += 1;
+    }
+    void OnDestroy()
+    {
+        GameStats.BulletCount.Value -= 1;
+    }
+}
+</code></pre>
+
+<p>
+<strong>Note:</strong> Unity compiles out both <code>ProfilerCounter</code> and <code>ProfilerCounterValue</code> in non-development builds.</p>
+
+<h3>Add a custom module to the Profiler window</h3>
+
+<p>Use the <a href="profiler-module-editor.html">Profiler Module Editor</a> to select built-in or newly added counters for the visualization. To open the Profiler Module Editor:</p>
+
+<ol>
+<li>Open the Profiler Window (<strong>Window &gt; Analysis &gt; Profiler</strong>).</li>
+<li>Select the Profiler Module dropdown in the top left of the window. Click the gear icon, and the Profiler Module Editor opens in a new window.</li>
+<li>Select <strong>Add</strong> and then choose the counters you want to visualize from the <strong>User</strong> list on the right hand side of the window.</li>
+</ol>
+
+<p>
+<strong>Important:</strong> If you don’t have any data loaded into the Profiler window, then any counters you’ve created don’t appear in the Available Counters pane when you load the Profiler Module Editor. To view custom counters, <a href="profiler-collect-data">capture or load some data</a> that has your emitted counters in with the Profiler, and reopen the Profiler Module Editor.</p>
+
+<p>You can then view the data in the Profiler window alongside other counters. For more information, refer to <a href="profiler-creating-custom-modules.html">Creating custom Profiler modules</a>.</p>
+
+<figure>
+<img src="../uploads/Main/profiler-window-custom-module.png" alt="Module with custom counters in Profiler Window.">
+<figcaption>Module with custom counters in Profiler Window.</figcaption>
+</figure>
+
+<p>
+<strong>Note:</strong> Counters declared as static are dynamically initialized in the C# code when a type is initialized and might not be available until they’re actually initialized and used. This applies to both Edit and Play modes. If your counters don’t appear in the Profiler Module Editor, <a href="profiling-target-device.html">record some data with the Profiler</a> first for a few frames.</p>
+
+<h2>Visualizing Profiler counters in a built player</h2>
+
+<p>When you run your project in a built player, you don’t have access to the Profiler window. However, you can display counters as UI elements in a built player. This means you can include profiling tools in a build of your application. </p>
+
+<p>The following image displays counters in the top left of the <span class="tooltip" tabindex="0" ><strong>scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html" href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span> using custom UI in a built player:</p>
+
+<figure>
+<img src="../uploads/Main/Tanks-Runtime-Stats.png" alt="Tanks game with custom information overlaid">
+<figcaption>Tanks game with custom information overlaid</figcaption>
+</figure>
+
+<p>
+<strong>Note:</strong> Not all <span class="tooltip" tabindex="0" ><strong>Profiler counters</strong><span class="tooltiptext">Placed in code with the ProfilerCounter API to track metrics, such as the number of enemies spawned in your game. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about https://docs.unity3d.com/Packages/com.unity.profiling.core@latest/index.html?subfolder=/manual/profilercounter-guide.html" href="https://docs.unity3d.com/Packages/com.unity.profiling.core@latest/index.html?subfolder=/manual/profilercounter-guide.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#profilercounter" aria-label="Go to glossary anchor for profilercounter">Glossary</a></span></span></span> are available in Release Players (non-development builds). Use <a href="../ScriptReference/Unity.Profiling.ProfilerRecorder.Valid.html"><code>ProfilerRecorder.Valid</code></a> to determine if the data is available and that the Profiler can record it. Alternatively, you can use <a href="../ScriptReference/Unity.Profiling.LowLevel.Unsafe.ProfilerRecorderHandle.GetAvailable.html"><code>ProfilerRecorderHandle.GetAvailable</code></a> to enumerate all available Profiler statistics.</p>
+
+<h3>Getting counter values in players</h3>
+
+<p>Profiler counters give you an insight into important game or engine system metrics. If you have a continuous integration setup or want to visualize key performance metrics in your application during a test play through you can use the <a href="../ScriptReference/Unity.Profiling.ProfilerRecorder.html"><code>ProfilerRecorder</code></a> API to get custom and built-in Profiler counter values.</p>
+
+<p>For example, the following script displays the frame time, Mono/<span class="tooltip" tabindex="0" ><strong>IL2CPP</strong><span class="tooltiptext">A Unity-developed scripting back-end which you can use as an alternative to Mono when building projects for some platforms. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ./scripting-backends-il2cpp.html" href="./scripting-backends-il2cpp.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#IL2CPP" aria-label="Go to glossary anchor for IL2CPP">Glossary</a></span></span></span> heap size, and total memory that the application uses.</p>
+
+<pre><code class="lang-cs">using System.Collections.Generic;
+using System.Text;
+using Unity.Profiling;
+using UnityEngine;
+
+public class StatsScript : MonoBehaviour
+{
+    string statsText;
+    ProfilerRecorder systemMemoryRecorder;
+    ProfilerRecorder gcMemoryRecorder;
+    ProfilerRecorder mainThreadTimeRecorder;
+
+    double GetRecorderFrameAverage(ProfilerRecorder recorder)
+    {
+        var samplesCount = recorder.Capacity;
+        if (samplesCount == 0)
+            return 0;
+
+        double r = 0;
+        unsafe
+        {
+            var samples = stackalloc ProfilerRecorderSample[samplesCount];
+            recorder.CopyTo(samples, samplesCount);
+            for (var i = 0; i &lt; samplesCount; ++i)
+                r += samples[i].Value;
+            r /= samplesCount;
+        }
+
+        return r;
+    }
+
+    void OnEnable()
+    {
+        systemMemoryRecorder = ProfilerRecorder.StartNew(ProfilerCategory.Memory, &quot;System Used Memory&quot;);
+        gcMemoryRecorder = ProfilerRecorder.StartNew(ProfilerCategory.Memory, &quot;GC Reserved Memory&quot;);
+        mainThreadTimeRecorder = ProfilerRecorder.StartNew(ProfilerCategory.Internal, &quot;Main Thread&quot;, 15);
+    }
+
+    void OnDisable()
+    {
+        systemMemoryRecorder.Dispose();
+        gcMemoryRecorder.Dispose();
+        mainThreadTimeRecorder.Dispose();
+    }
+
+    void Update()
+    {
+        var sb = new StringBuilder(500);
+        sb.AppendLine($&quot;Frame Time: {GetRecorderFrameAverage(mainThreadTimeRecorder) * (1e-6f):F1} ms&quot;);
+        sb.AppendLine($&quot;GC Memory: {gcMemoryRecorder.LastValue / (1024 * 1024)} MB&quot;);
+        sb.AppendLine($&quot;System Memory: {systemMemoryRecorder.LastValue / (1024 * 1024)} MB&quot;);
+        statsText = sb.ToString();
+    }
+
+    void OnGUI()
+    {
+        GUI.TextArea(new Rect(10, 30, 250, 50), statsText);
+    }
+}
+</code></pre>
+
+<p>
+<strong>Important:</strong> Use <code>ProfilerRecorder.Dispose</code> to free unmanaged resources associated with the <code>ProfilerRecorder</code>.</p>
+
+<h2>Getting counter values from Profiler frame data in the Editor</h2>
+
+<p>To get Profiler counter values when processing Profiler frame data in the Editor, use the <a href="../ScriptReference/Profiling.FrameDataView.html"><code>FrameDataView</code></a> API.</p>
+
+<p>You can use the <a href="../ScriptReference/Profiling.FrameDataView.GetCounterValueAsInt.html"><code>FrameDataView.GetCounterValueAsInt</code></a>, <a href="../ScriptReference/Profiling.FrameDataView.GetCounterValueAsLong.html"><code>FrameDataView.GetCounterValueAsLong</code></a>, <a href="../ScriptReference/Profiling.FrameDataView.GetCounterValueAsFloat.html"><code>FrameDataView.GetCounterValueAsFloat</code></a> and <a href="../ScriptReference/Profiling.FrameDataView.GetCounterValueAsDouble.html"><code>FrameDataView.GetCounterValueAsDouble</code></a> to get a frame value of the specific counter, like so:</p>
+
+<pre><code class="lang-cs">using UnityEditor.Profiling;
+
+class Example
+{
+    static int ExtractMyCounterValue(FrameDataView frameData, string counterName)
+    {
+        var counterMarkerId = frameData.GetMarkerId(counterName);
+        return frameData.GetCounterValueAsInt(counterMarkerId);
+    }
+}
+</code></pre>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="profiler-add-counters-code.html">Adding profiler counters to your code</a></li>
+<li><a href="profiler-module-editor.html">Profiler Module Editor reference</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="profiler-add-counters-code.html"></a></span><div class="tip">Adding profiler counters to your code</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="profiler-markers.html"></a></span><div class="tip">Profiler markers reference</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

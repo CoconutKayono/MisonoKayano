@@ -1,0 +1,318 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Limitations of the WebGPU graphics API</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<meta property="relative-path-to-manual" content="">
+<meta property="version-switcher-versions-with-this-page" content="Versions with this page:">
+<meta property="version-switcher-versions-without-this-page" content="Versions without this page:">
+<meta property="version-switcher-supported" content="Supported">
+<meta property="version-switcher-legacy" content="Legacy">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/Manual/WebGPU-limitations.html">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20260626"></script><script type="text/javascript" src="docdata/toc.js?ts=20260626"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20260626"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20260626">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20260626">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/WebGPU-limitations.html">English</a></li>
+<li><a href="/cn/current/Manual/WebGPU-limitations.html">中文</a></li>
+<li><a href="/ja/current/Manual/WebGPU-limitations.html">日本語</a></li>
+<li><a href="/kr/current/Manual/WebGPU-limitations.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: Unity 6.7 Beta</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/WebGPU-limitations.html">English</a></li>
+<li><a href="/cn/current/Manual/WebGPU-limitations.html">中文</a></li>
+<li><a href="/ja/current/Manual/WebGPU-limitations.html">日本語</a></li>
+<li><a href="/kr/current/Manual/WebGPU-limitations.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="PlatformSpecific.html">Platform development  </a></li>
+<li><a href="webgl.html">Web</a></li>
+<li><a href="webgl-develop.html">Web development</a></li>
+<li><a href="webgl-graphics.html">Web graphics APIs</a></li>
+<li><a href="WebGPU.html">WebGPU</a></li>
+<li>Limitations of the WebGPU graphics API</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="WebGPU-features.html"></a></span><div class="tip">Introduction to the WebGPU graphics API</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="WebGPU-enable.html"></a></span><div class="tip">Enable the WebGPU graphics API</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Limitations of the WebGPU graphics API</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>The <a href="WebGPU.html">WebGPU</a> graphics API provides useful graphics features. But it also has some limitations you need to be aware of: </p>
+
+<ul>
+<li><a href="#no-support">Features with no support in WebGPU</a></li>
+<li><a href="#limited-browser-support">Limited browser support</a></li>
+<li><a href="#compute-shader-limitations">Compute shader limitations</a></li>
+<li><a href="#gpu-readback">GPU readback</a></li>
+<li><a href="#texture-format-limitations">Texture format limitations</a></li>
+<li><a href="#render-texture-channels">Render texture channels</a></li>
+<li><a href="#fonts-web">Fonts</a></li>
+<li><span class="tooltip" tabindex="0" ><a href="#global-illumination-web">Global illumination</a><span class="tooltiptext">A group of techniques that model both direct and indirect lighting to provide realistic lighting results.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#globalillumination" aria-label="Go to glossary anchor for globalillumination">Glossary</a></span></span></span></li>
+<li><a href="#video-web">Video</a></li>
+<li><span class="tooltip" tabindex="0" ><a href="#shader-variants-web">Shader variants</a><span class="tooltiptext">A verion of a shader program that Unity generates according to a specific combination of shader keywords and their status. A Shader object can contain multiple shader variants. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about shader-variants.html" href="shader-variants.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#shadervariant" aria-label="Go to glossary anchor for shadervariant">Glossary</a></span></span></span></li>
+</ul>
+
+<h2>Features with no support in WebGPU <a name="no-support" aria-hidden="true"></a>
+</h2>
+
+<p>Although WebGPU unlocks useful graphics features, there are a few it doesn’t support yet:</p>
+
+<ul>
+<li>Async compute</li>
+<li><span class="tooltip" tabindex="0" ><a href="DynamicResolution-landing.html">Dynamic resolution</a><span class="tooltiptext">A Camera setting that allows you to dynamically scale individual render targets to reduce workload on the GPU. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about DynamicResolution-landing.html" href="DynamicResolution-landing.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#dynamicresolution" aria-label="Go to glossary anchor for dynamicresolution">Glossary</a></span></span></span></li>
+<li><a href="class-CubemapArray-create.html">Cubemap arrays</a></li>
+</ul>
+
+<p><a name="limited-browser-support" aria-hidden="true"></a></p>
+
+<h2>Limited browser support</h2>
+
+<p>WebGPU is currently experimental and not supported by all browsers and devices. For more information, refer to the MDN Web docs on <a href="https://developer.mozilla.org/en-US/docs/Web/API/WebGPU_API#accessing_a_device">Accessing a device</a> and <a href="https://developer.mozilla.org/en-US/docs/Web/API/WebGPU_API#browser_compatibility">Browser compatibility</a>. For browser support, refer to <a href="https://caniuse.com/webgpu">Can I use: WebGPU</a>.</p>
+
+<p><a name="compute-shader-limitations" aria-hidden="true"></a></p>
+
+<h2>Compute shader limitations</h2>
+
+<p>There are a few limitations to compute <span class="tooltip" tabindex="0" ><strong>shader</strong><span class="tooltiptext">A program that runs on the GPU. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Shaders.html" href="Shaders.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#shader" aria-label="Go to glossary anchor for shader">Glossary</a></span></span></span> in Web. </p>
+
+<h3>No RWBuffer support</h3>
+
+<p>You can use structured buffers, <code>RWStructuredBuffer</code>, but not <code>RWBuffer</code> in compute shaders.
+Limited read-write storage texture formats
+WebGPU only supports a limited set of <span class="tooltip" tabindex="0" ><strong>texture formats</strong><span class="tooltiptext">A file format for handling textures during real-time rendering by 3D graphics hardware, such as a graphics card or mobile device. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about texture-choose-format-by-platform.html" href="texture-choose-format-by-platform.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#textureformat" aria-label="Go to glossary anchor for textureformat">Glossary</a></span></span></span> for read-write storage textures in compute shaders. HLSL doesn’t explicitly state the access type of a storage texture, so it’s based on usage.</p>
+
+<pre><code class="lang-js">RWTexture2D&lt;float&gt; tex; // storage texture
+tex[uv] = 1.0f; // write only
+tex[uv] += 1.0f; // read-write
+</code></pre>
+
+<p>Write-only storage textures are generally much better supported. Refer to <a href="#texture-format-limitations">Texture format limitations</a>.</p>
+
+<h3>Strict uniformity analysis</h3>
+
+<p>With WebGPU, you must only call barrier functions from within uniform control flow. Otherwise, WebGPU will fail to compile the shader. Uniform control flow occurs when all threads in a workgroup execute the same code path.</p>
+
+<p>The following are HLSL barrier functions: </p>
+
+<ul>
+<li><code>GroupMemoryBarrier</code></li>
+<li><code>GroupMemoryBarrirWithGroupSync</code></li>
+<li><code>DeviceMemoryBarrier</code></li>
+<li><code>DeviceMemoryBarrierWithGroupSync</code></li>
+<li><code>AllMemoryBarrier</code></li>
+<li><code>AllMemoryBarrierWithGroupSync</code></li>
+</ul>
+
+<h3>Async compute</h3>
+
+<p>WebGPU doesn’t support async compute.</p>
+
+<h3>No HLSL extended features</h3>
+
+<p>WebGPU doesn’t provide support for the following features:</p>
+
+<ul>
+<li><p>Wave Intrinsics (WaveBasic, WaveVote, WaveBallot, WaveMath, WaveMultiPrefix)</p></li>
+<li><p>QuadShuffle</p></li>
+<li><p>Int64</p></li>
+<li><p>Native16Bit</p></li>
+</ul>
+
+<p><a name="gpu-readback" aria-hidden="true"></a></p>
+
+<h2>GPU readback</h2>
+
+<p>WebGPU doesn’t support synchronous readback of buffer or texture data from the GPU to the CPU.
+The following functions will not work:</p>
+
+<ul>
+<li><p><a href="https://docs.unity3d.com/ScriptReference/Texture2D.GetPixels.html">Texture2D.GetPixels</a></p></li>
+<li><p><a href="https://docs.unity3d.com/ScriptReference/ComputeBuffer.GetData.html">ComputeBuffer.GetData</a></p></li>
+<li><p><a href="https://docs.unity3d.com/ScriptReference/ScreenCapture.CaptureScreenshot.html">ScreenCapture.CaptureScreenshot</a></p></li>
+<li><p><a href="https://docs.unity3d.com/ScriptReference/ScreenCapture.CaptureScreenshotAsTexture.html">ScreenCapture.CaptureScreenshotAsTexture</a></p></li>
+</ul>
+
+<p>Instead, use the <code>AsyncGPUReadback</code> API to read buffer or texture data from the GPU to the CPU. For screen captures, use <code>ScreenCapture.CaptureScreenshotIntoRenderTexture</code> along with <code>AsyncGPUReadback</code>.</p>
+
+<p><a name="texture-format-limitations" aria-hidden="true"></a></p>
+
+<h2>Texture format limitations</h2>
+
+<p>For information about WebGPU texture format capabilities, refer to the W3 documentation on <a href="https://www.w3.org/TR/webgpu">WebGPU</a>. Some formats are more restrictive than on other APIs, especially for storage texture usage. </p>
+
+<p>For example, WebGPU doesn’t support <code>RGBA8</code> or <code>RHalf</code> as a read-write storage texture format. If you do create a RenderTexture with that format, you must set <code>enableRandomWrite</code> to <code>false</code>, which is the default value. </p>
+
+<p>However, WebGPU supports <code>RFloat</code> as a storage texture format, so if you create a RenderTexture with <code>RFloat</code> format, <code>enableRandomWrite</code> doesn’t need to be <code>false</code>.</p>
+
+<p>You can use <a href="https://docs.unity3d.com/ScriptReference/SystemInfo.GetCompatibleFormat.html">SystemInfo.GetCompatibleFormat</a> to find a format that will work for a given usage.</p>
+
+<p><a name="render-texture-channels" aria-hidden="true"></a></p>
+
+<h2>Render texture channels</h2>
+
+<p>The output type of a fragment shader must have a greater or equal number of channels as the target <span class="tooltip" tabindex="0" ><strong>render texture</strong><span class="tooltiptext">A special type of Texture that is created and updated at runtime. To use them, first create a new Render Texture and designate one of your Cameras to render into it. Then you can use the Render Texture in a Material just like a regular Texture. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-RenderTexture.html" href="class-RenderTexture.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#RenderTexture" aria-label="Go to glossary anchor for RenderTexture">Glossary</a></span></span></span> format.</p>
+
+<p>If the RenderTexture is RGBA, it has 4 channels. The fragment shader must output a <code>float4</code> or <code>half4</code>. If it returns a float or half, WebGPU will encounter an error because there are channels of the render texture that will be uninitialized.</p>
+
+<p>If a RenderTexture is R8, it has 1 channel. The fragment shader can then output a float or half. The fragment shader can also return a float4 or half4, and the extra output channels will be ignored.</p>
+
+<h2> General recommendations and limitations for both WebGL2 and WebGPU</h2>
+
+<p>Both WebGL2 and WebGPU share the same following recommendations and limitations: </p>
+
+<ul>
+<li>
+<a href="#fonts-web">Recommendations for how to use fonts in Web</a>.</li>
+<li>
+<a href="#global-illumination-web">Restrictions on global illumination in Web</a>.</li>
+<li>
+<a href="#video-web">Recommendations on how to use video in Web</a>.</li>
+<li>
+<a href="#shader-variants-web">Restrictions on shader variants in Web</a>.</li>
+</ul>
+
+<h3>Recommendations for how to use fonts in Web <a name="fonts-web" aria-hidden="true"></a>
+</h3>
+
+<p>Unity Web supports dynamic font rendering similar to other Unity platforms. However, Unity Web doesn’t have access to the fonts installed on the user’s machine, so if you want to use any fonts, include them in the project folder (including any fallback fonts for international characters, or bold/italic versions of fonts), and set as fallback font names.</p>
+
+<p><a name="restrictions-on-global-illumination-in-web" aria-hidden="true"></a></p>
+
+<h3>Restrictions on global illumination in Web <a name="global-illumination-web" aria-hidden="true"></a>
+</h3>
+
+<p>Unity Web only supports <a href="LightingInUnity.html#globalIllumination">Baked Global Illumination</a>. Realtime Global Illumination isn’t currently supported in Web. Also, Unity Web supports non-directional <span class="tooltip" tabindex="0" ><strong>lightmaps</strong><span class="tooltiptext">A pre-rendered texture that contains the effects of light sources on static objects in the scene. Lightmaps are overlaid on top of scene geometry to create the effect of lighting. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Lightmapping.html" href="Lightmapping.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Lightmap" aria-label="Go to glossary anchor for Lightmap">Glossary</a></span></span></span> only.</p>
+
+<h3>Recommendations on how to use video in Web <a name="video-web" aria-hidden="true"></a>
+</h3>
+
+<p>You can’t use <code>VideoClipImporter</code> to import video clips to your Unity project because it might increase the initial asset data download size and prevent network streaming. To use video playback in Web: </p>
+
+<ol>
+<li>Use the <code>URL</code> option in the VideoPlayer component.</li>
+<li>Place the asset in the <code>StreamingAssets</code> directory to use the built-in network streaming of your browser.</li>
+</ol>
+
+<h3>Restrictions on shader variants in Web <a name="shader-variants-web" aria-hidden="true"></a>
+</h3>
+
+<p>Due to limited available memory in Web, don’t include unwanted shader variants because it can lead to unnecessary memory usage. Therefore, it’s recommended to familiarize yourself with <a href="shader-variants.html">shader variants</a> and <a href="shader-variant-stripping.html">shader stripping</a>. Also, take extra care to ensure that you don’t add shaders with too many variants (for example, Unity’s <a href="shader-StandardShader.html">Standard Shader</a>) to the <a href="class-GraphicsSettings.html#Always">Always-included Shaders</a> section in <a href="class-GraphicsSettings.html">Graphics Settings</a>.</p>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="WebGPU.html">WebGPU</a></li>
+<li><a href="WebGPU-features.html">Introduction to the WebGPU graphics API</a></li>
+<li><a href="WebGPU-enable.html">Enable the WebGPU graphics API</a></li>
+<li><a href="WebGL2.html">WebGL2</a></li>
+<li><a href="web-graphics-apis-intro.html">Compare WebGPU and WebGL2</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="WebGPU-features.html"></a></span><div class="tip">Introduction to the WebGPU graphics API</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="WebGPU-enable.html"></a></span><div class="tip">Enable the WebGPU graphics API</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

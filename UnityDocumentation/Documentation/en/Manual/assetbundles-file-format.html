@@ -1,0 +1,332 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: AssetBundle file format reference</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<meta property="relative-path-to-manual" content="">
+<meta property="version-switcher-versions-with-this-page" content="Versions with this page:">
+<meta property="version-switcher-versions-without-this-page" content="Versions without this page:">
+<meta property="version-switcher-supported" content="Supported">
+<meta property="version-switcher-legacy" content="Legacy">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/Manual/assetbundles-file-format.html">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20260626"></script><script type="text/javascript" src="docdata/toc.js?ts=20260626"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20260626"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20260626">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20260626">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/assetbundles-file-format.html">English</a></li>
+<li><a href="/cn/current/Manual/assetbundles-file-format.html">中文</a></li>
+<li><a href="/ja/current/Manual/assetbundles-file-format.html">日本語</a></li>
+<li><a href="/kr/current/Manual/assetbundles-file-format.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: Unity 6.7 Beta</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/assetbundles-file-format.html">English</a></li>
+<li><a href="/cn/current/Manual/assetbundles-file-format.html">中文</a></li>
+<li><a href="/ja/current/Manual/assetbundles-file-format.html">日本語</a></li>
+<li><a href="/kr/current/Manual/assetbundles-file-format.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="assets-and-media.html">Assets and media</a></li>
+<li><a href="assets-managing-runtime.html">Managing assets at runtime</a></li>
+<li><a href="assetbundles-section.html">Use AssetBundles to load assets at runtime</a></li>
+<li><a href="assetbundles-creating.html">Creating AssetBundles</a></li>
+<li>AssetBundle file format reference</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="assetbundles-compression-format.html"></a></span><div class="tip">AssetBundle compression formats</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="AssetBundles-Native.html"></a></span><div class="tip">Loading assets from AssetBundles</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>AssetBundle file format reference</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>When you use <code>BuildPipeline.BuildAssetBundles</code> to <a href="AssetBundles-Building.html">build AssetBundles</a>, Unity writes the following files to a specified output directory:</p>
+
+<ul>
+<li>
+<a href="#assetbundle-files">The AssetBundle files</a>.</li>
+<li>
+<a href="#manifest-files">A <code>.manifest</code> file for each AssetBundle file</a>.</li>
+<li>
+<a href="#manifest-bundles">A manifest bundle</a>.</li>
+</ul>
+
+<p>
+<strong>Note:</strong> If you use the <a href="http://docs.unity3d.com/Packages/com.unity.addressables@latest">Addressables package</a> to build AssetBundles, it produces an AssetBundle file but no manifest files or manifest bundles.</p>
+
+<p><a id="archive-format" aria-hidden="true"></a></p>
+
+<h2>Unity archive file format</h2>
+
+<p>The Unity archive file format is a generic packaging format that can store any type of file, similar to a .zip file. Archive files are <a href="https://en.wikipedia.org/wiki/Mount_(computing)">mounted</a> into Unity’s <a href="https://en.wikipedia.org/wiki/Virtual_file_system">virtual file system</a> (VFS), which allows them to be accessed in a uniform way across different platforms.</p>
+
+<p>Unity uses the archive format for AssetBundles, where archive files are created as a final stage of the <a href="AssetBundles-Building.html">AssetBundle build process</a>. They are mounted into the Unity virtual file system when the AssetBundle is <a href="AssetBundles-Native.html">loaded</a>. The archive format is also used for Players built with LZ4 <span class="tooltip" tabindex="0" ><strong>compression</strong><span class="tooltiptext">A method of storing data that reduces the amount of storage space it requires. See <a href="texture-choose-format-by-platform.html">Texture Compression</a>, <a href="class-AnimationClip.html#AssetProperties">Animation Compression</a>, <a href="class-AudioClip.html">Audio Compression</a>, <a href="ReducingFilesize.html">Build Compression</a>.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#compression" aria-label="Go to glossary anchor for compression">Glossary</a></span></span></span>, in which case the archive is mounted automatically when the Player runs.</p>
+
+<p>Usually you don’t need to interact with archives at a low level. However, Unity provides the API <a href="../ScriptReference/Unity.IO.Archive.ArchiveFileInterface.html"><code>ArchiveFileInterface</code></a> to manage archive files directly with low-level APIs as needed.</p>
+
+<p><a id="assetbundle-files" aria-hidden="true"></a></p>
+
+<h2>AssetBundle files</h2>
+
+<p>The AssetBundle file is an <a href="#archive-format">archive file</a> that contains multiple files which loads in assets at runtime. The following diagram contains an example of an AssetBundle file layout:</p>
+
+<figure>
+<img src="../uploads/Main/AssetBundles-Building-0.png" alt="Internal structure of a typical AssetBundle file depicted as a series of containers. ">
+<figcaption>Internal structure of a typical AssetBundle file depicted as a series of containers. </figcaption>
+</figure>
+
+<ul>
+<li>It contains a series of nested containers, where the outermost is an instance of the archive file system with the same name as the AssetBundle.</li>
+<li>In this example, the <code>ArchiveFileSystem</code> archive file contains two files:
+
+<ul>
+<li>The main AssetBundle file, in Unity’s serialized file format. This file contains the <a href="../ScriptReference/AssetBundle.html"><code>AssetBundle</code></a> object and the objects from all the assets included in the AssetBundle.</li>
+<li>One or more <span class="tooltip" tabindex="0" ><strong>audio clips</strong><span class="tooltiptext">A container for audio data in Unity. Unity supports mono, stereo and multichannel audio assets (up to eight channels). Unity can import .aif, .wav, .mp3, and .ogg audio file format, and .xm, .mod, .it, and .s3m tracker module formats. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-AudioClip.html" href="class-AudioClip.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#AudioClip" aria-label="Go to glossary anchor for AudioClip">Glossary</a></span></span></span> stored inside a file with the <code>.resource</code> extension.</li>
+</ul>
+</li>
+</ul>
+
+<p>The way Unity organizes the content inside an AssetBundle is called the build layout. The build layout depends on whether the AssetBundle contains assets or <span class="tooltip" tabindex="0" ><strong>scenes</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html" href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span>:</p>
+
+<ul>
+<li>
+<strong>Asset AssetBundles</strong>: Contains all the objects from the assets in a single serialized file inside the Unity archive file. It also contains all the objects referenced by those assets, unless another AssetBundle exposes the referenced asset. The same referenced object might be duplicated in multiple AssetBundles.</li>
+<li>
+<strong>Scene AssetBundles</strong>: Has a similar layout for a <a href="build-content-output.html">Player build</a>. Each scene has a serialized file with the objects from that scene, with a file name like <code>PlayerBuild-SceneFileName</code>. This corresponds to the <code>level0</code> files in a Player build. Unity stores assets referenced from a scene file in a <code>sharedasset</code> file, for example <code>PlayerBuild-SceneFileName.sharedasset</code>, unless another AssetBundle exposes the referenced asset. Because the <code>sharedasset</code> calculation only covers scenes that are in the same AssetBundle, if scenes are stored in individual AssetBundles rather than storing them together in a single AssetBundle, then Unity might create a significant amount of duplicated objects. However, there can be performance and distribution advantages to storing scenes in separate AssetBundles.</li>
+</ul>
+
+<p>The naming convention for the serialized file inside an archive is as follows:</p>
+
+<ul>
+<li>Asset AssetBundles name the serialized file as <code>CAB-</code>, followed by the MD4 hash of the AssetBundle name. For example, <code>CAB-cc6c60ef8808e0fc6663136604321554</code>.</li>
+<li>Scene AssetBundles created with <a href="../ScriptReference/BuildPipeline.BuildAssetBundles.html"><code>BuildPipeline.BuildAssetBundles</code></a> use a name that begins with <code>PlayerBuild-</code> followed by the scene’s file name (without path and extension). For example, <code>Assets/Scene1.unity</code> becomes <code>PlayerBuild-Scene1</code>. Because of this convention give each scene file a unique file name to avoid conflicts.</li>
+<li>Scene AssetBundles created by <a href="https://docs.unity3d.com/Packages/com.unity.addressables@latest">Addressables</a> name each scene serialized file as <code>CAB-</code>, followed by the MD4 hash of the project relative path of the scene. The accompanying <code>sharedasset</code> file has the same file name, followed by the <code>.sharedasset</code> extension.</li>
+</ul>
+
+<p>As with Player builds, each serialized file inside an AssetBundle can be accompanied by a <code>.resS</code> and a <code>.resource</code> file to store large binary data. All audio or video is stored in <code>.resource</code> files, and textures and meshes are stored in the <code>.resS</code> format. These files are named after the serialized file they accompany, for example <code>CAB-cc6c60ef8808e0fc6663136604321554.resource</code> or <code>PlayerBuild-Scene1.sharedasset.resS</code>.</p>
+
+<h2>Examining AssetBundle file contents</h2>
+
+<p>The Unity Editor installation includes the <code>WebExtract</code> and <code>Binary2Text</code> executables which you can use to extract the files nested inside the AssetBundle and produce a text format dump of the contents of a binary <code>SerializedFile</code>. Its output is similar to the YAML format used by Unity.</p>
+
+<p>For more information about these tools, refer to <a href="assetbundles-analyze.html">Analyzing AssetBundles</a>.</p>
+
+<p><a id="manifest-files" aria-hidden="true"></a></p>
+
+<h2>Manifest files</h2>
+
+<p>For every AssetBundle generated, Unity generates an associated manifest file. The manifest file has the extension <code>.manifest</code> and you can open it with any text editor. </p>
+
+<p>It includes the following content:</p>
+
+<ul>
+<li>The hashes required for incremental build calculations and content verification. For more information, refer to <a href="../ScriptReference/BuildPipeline.GetHashForAssetBundle.html"><code>BuildPipeline.GetHashForAssetBundle</code></a>.</li>
+<li>The cyclic redundancy check (CRC). You can get this information with <a href="../ScriptReference/BuildPipeline.GetCRCForAssetBundle.html"><code>BuildPipeline.GetCRCForAssetBundle</code></a>.</li>
+<li>The list of scenes or assets in the AssetBundle.</li>
+<li>The list of any AssetBundles that this AssetBundle depends on, as absolute paths.</li>
+<li>Type usage information that is used for type stripping. This includes usage of Unity objects, MonoBehaviour and ScriptableObject-derived classes, and <a href="../ScriptReference/SerializeReference.html"><code>SerializeReference</code></a> types. For more information, refer to <a href="../ScriptReference/BuildPlayerOptions-assetBundleManifestPath.html"><code>BuildPlayerOptions.assetBundleManifestPath</code></a>.</li>
+</ul>
+
+<p>The following is an example of the contents of an AssetBundle manifest file:</p>
+
+<pre><code class="lang-yml">ManifestFileVersion: 0
+UnityVersion: 6000.2.0a6
+CRC: 4208470199
+Compression: None
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 81197c4674c1f389b3568a0aa1b41119
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 3c2131fb3360d17991621f547033218e
+  IncrementalBuildHash:
+    serializedVersion: 2
+    Hash: 489e266cfc1b361a94c3efc39afecb54
+HashAppended: 0
+ClassTypes:
+- Class: 1
+  Script: {instanceID: 0}
+- Class: 4
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Scenes/Scene2.unity
+- Assets/Scenes/SampleScene.unity
+Dependencies:
+- C:/MyBuild/audio.bundle
+- C:/MyBuild/sprites.bundle
+</code></pre>
+
+<p>Unity uses the <code>.manifest</code> files for its <a href="building-introduction.html">incremental build pipeline</a>. When performing a build, Unity checks the existing AssetBundles and <code>.manifest</code> files to determine if the AssetBundle needs to be rebuilt or can be reused. If you delete the <code>.manifest</code> files then Unity always rebuilds the AssetBundles from scratch.</p>
+
+<p>Manifest files aren’t required to load the AssetBundles, so you don’t need to distribute them. If <code>BuildAssetBundleOptions.AppendHashToAssetBundleName</code> is used, the hash is appended to the AssetBundle file name, but this hash isn’t included in the <code>.manifest</code> file name.</p>
+
+<h3>Root manifest file</h3>
+
+<p>In addition to the .manifest file for each AssetBundle, Unity generates a root <code>.manifest</code>, named after the build folder itself (for example, <code>MyBuildFolder.manifest</code>). This file lists the generated AssetBundles and their dependencies, with paths relative to the build directory. It also contains the CRC of the manifest AssetBundle. This root manifest is crucial for code stripping during Player builds, because its path can be passed to <code>BuildPipeline.BuildPlayer</code> to prevent script types and Unity modules required by AssetBundles from being stripped.</p>
+
+<p>The following is an example of a root manifest file:</p>
+
+<pre><code>ManifestFileVersion: 0
+CRC: 2309754985
+AssetBundleManifest:
+  AssetBundleInfos:
+    Info_0:
+      Name: bundle_prefab
+      Dependencies:
+        Dependency_0: bundle_sobject
+    Info_1:
+      Name: bundle_sobject
+      Dependencies: {}
+</code></pre>
+
+<p><a id="manifest-bundles" aria-hidden="true"></a></p>
+
+<h2>Manifest bundles</h2>
+
+<p>Unity additionally generates a manifest bundle, which is an AssetBundle file named after the directory it’s located in. It contains the <a href="../ScriptReference/AssetBundleManifest.html"><code>AssetBundleManifest</code></a> object which Unity uses to determine which bundle dependencies to load at runtime. </p>
+
+<p>There are two additional files generated by the build.</p>
+
+<p>The first is a small AssetBundle that is named after the directory that it’s located in (where the AssetBundles were built to). This file is called the <code>Manifest Bundle</code> and it contains the <a href="../ScriptReference/AssetBundleManifest.html">AssetBundleManifest</a> object which will be useful for figuring out which bundle dependencies to load at runtime. For information on how to use this bundle, refer to <a href="AssetBundles-Native.html">Loading assets from bundles</a>.</p>
+
+<p>The manifest bundle also includes its own <code>.manifest</code> file. The following is an example of a manifest bundle’s manifest file:</p>
+
+<pre><code class="lang-yml">ManifestFileVersion: 0
+AssetBundleManifest:
+  AssetBundleInfos:
+    Info_0:
+      Name: scene1assetbundle
+      Dependencies: {}
+</code></pre>
+
+<p>The <code>.manifest</code> file for the manifest bundle records how AssetBundles relate, and what their dependencies are. This information is similar to the information recorded by the <code>AssetBundleManifest</code> object inside the manifest bundle. </p>
+
+<p>The manifest file is important to prevent code stripping for unused types that you use in your AssetBundle. If you have enabled <a href="managed-code-stripping.html">code stripping</a> in your project, set <a href="../ScriptReference/BuildPlayerOptions-assetBundleManifestPath.html"><code>BuildPlayerOptions.assetBundleManifestPath</code></a> to pass the path to this manifest when performing player builds.</p>
+
+<p><a id="build-report" aria-hidden="true"></a></p>
+
+<h2>Build Report</h2>
+
+<p>AssetBundle builds additionally generate a <code>BuildReport</code> file which is a Unity <code>SerializedFile</code> written to <code>Library/LastBuild.buildreport</code> inside the project directory. This file is useful to view a summary of the timings for build steps and a detailed view of the contents of the AssetBundle. You can use the <a href="../ScriptReference/Build.Reporting.BuildReport.html"><code>BuildReport</code></a> API to read information from the <code>BuildReport</code> file.</p>
+
+<p>You can also use the following tools to view the content of the <code>BuildReport</code> file:</p>
+
+<ul>
+<li><a href="https://docs.unity3d.com/Packages/com.unity.project-auditor@latest">Project Auditor</a></li>
+<li><a href="https://docs.unity3d.com/Packages/com.unity.build-report-inspector@latest">Build Report Inspector</a></li>
+</ul>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="AssetBundles-Native.html">Loading assets from AssetBundles</a></li>
+<li><a href="AssetBundles-Dependencies.html">Handling dependencies between AssetBundles</a></li>
+<li><a href="../ScriptReference/AssetBundleManifest.html"><code>AssetBundleManifest</code> API documentation</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="assetbundles-compression-format.html"></a></span><div class="tip">AssetBundle compression formats</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="AssetBundles-Native.html"></a></span><div class="tip">Loading assets from AssetBundles</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

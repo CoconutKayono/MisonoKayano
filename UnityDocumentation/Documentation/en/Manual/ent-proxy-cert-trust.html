@@ -1,0 +1,247 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Trusting the web proxy security certificate</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<meta property="relative-path-to-manual" content="">
+<meta property="version-switcher-versions-with-this-page" content="Versions with this page:">
+<meta property="version-switcher-versions-without-this-page" content="Versions without this page:">
+<meta property="version-switcher-supported" content="Supported">
+<meta property="version-switcher-legacy" content="Legacy">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/Manual/ent-proxy-cert-trust.html">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20260626"></script><script type="text/javascript" src="docdata/toc.js?ts=20260626"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20260626"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20260626">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20260626">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/ent-proxy-cert-trust.html">English</a></li>
+<li><a href="/cn/current/Manual/ent-proxy-cert-trust.html">中文</a></li>
+<li><a href="/ja/current/Manual/ent-proxy-cert-trust.html">日本語</a></li>
+<li><a href="/kr/current/Manual/ent-proxy-cert-trust.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: Unity 6.7 Beta</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/ent-proxy-cert-trust.html">English</a></li>
+<li><a href="/cn/current/Manual/ent-proxy-cert-trust.html">中文</a></li>
+<li><a href="/ja/current/Manual/ent-proxy-cert-trust.html">日本語</a></li>
+<li><a href="/kr/current/Manual/ent-proxy-cert-trust.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="get-started.html">Get started</a></li>
+<li><a href="install-and-upgrade.html">Install and upgrade</a></li>
+<li><a href="ent-deployment.html">Deploy Unity across your enterprise</a></li>
+<li><a href="ent-web-proxies.html">Set up Unity for web proxies</a></li>
+<li>Trusting the web proxy security certificate</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="ent-proxy-autoconfig-store-mac.html"></a></span><div class="tip">Store credentials for automatic proxy configuration (macOS)</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="ent-proxy-env-vars.html"></a></span><div class="tip">Use environment variables to identify your web proxy</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Trusting the web proxy security certificate</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Some enterprises use SSL inspection as part of their <span class="no tooltip">networking</span> environment, to inspect, track, and control network traffic.</p>
+
+<p>With SSL inspection, the web proxy acts as the server to the actual client, and then acts as the client to the actual server. To prevent the client from seeing a security warning, the web proxy must present a valid SSL/TLS certificate to the client on behalf of the server. Without a valid SSL/TLS certificate, the client might not trust the web proxy, and might block or warn the user that their connection isn’t secure.</p>
+
+<p>SSL inspection is sometimes associated with a machine-in-the-middle (MITM).</p>
+
+<p>It’s assumed that your web proxy that uses SSL inspection is already set up. It’s also assumed that client computers are configured at the operating system level to accept the SSL/TLS certificate so they can communicate with the web proxy.</p>
+
+<p>Even with certificates trusted at the operating system level, client computers must be configured to:</p>
+
+<p><a name="necc-env-var" aria-hidden="true"></a></p>
+
+<ul>
+<li>
+<a href="ent-proxy-autoconfig-enable.html">Enable automatic proxy configuration</a> to make the Unity Hub trust the certificates.</li>
+<li>
+<a href="#necc-env-var">Set the NODE_EXTRA_CA_CERTS environment variable</a> or <a href="#config-file">set a global configuration file</a> to make the Unity Package Manager trust certificates.</li>
+</ul>
+
+<p>As an alternative, you can <a href="ent-proxy-exception-list.html">define exceptions on your web proxy</a> so that Unity URLs aren’t subject to SSL inspection.</p>
+
+<h2>Set certificates with the NODE_EXTRA_CA_CERTS environment variable</h2>
+
+<p>To enable Unity Package Manager operations with a web proxy that uses SSL inspection, you must set the <code>NODE_EXTRA_CA_CERTS</code> environment variable or <a href="#config-file">set certificates with a configuration file</a>.</p>
+
+<p>The certificate file must be distributed to each computer running Unity. Then, the <code>NODE_EXTRA_CA_CERTS</code> environment variable must be set so its value points the absolute path of the certificate file. Whether you do this manually or use a more scalable method, the certificate and environment variable must be set on each device that communicates with the web proxy. Follow these general steps:</p>
+
+<ol>
+<li>Create a text file with one or more certificates for custom certificate authorities. The file must consist of one or more trusted certificates in the Privacy-Enhanced Mail (PEM) format. Refer to the help for your web proxy software for details.</li>
+<li>Distribute the <code>.pem</code> file to each computer that has an instance of Unity.</li>
+<li>Define the <code>NODE_EXTRA_CA_CERTS</code> environment variable in a command file. Refer to <a href="ent-proxy-cmd-file.html">Create a command file to set environment variables and open applications</a>.</li>
+</ol>
+
+<h3>Examples</h3>
+
+<p>In the following examples, <code>mycert.pem</code> is the name of the certificate, and it exists in the user’s home directory.</p>
+
+<h4>Windows</h4>
+
+<pre><code class="lang-shell">set NODE_EXTRA_CA_CERTS=C:\Users\username\mycert.pem
+</code></pre>
+
+<p><a name="config-file" aria-hidden="true"></a></p>
+
+<h4>macOS and Linux</h4>
+
+<pre><code class="lang-shell">export NODE_EXTRA_CA_CERTS=/Users/username/mycert.pem
+</code></pre>
+
+<p>You can find more information about the <code>NODE_EXTRA_CA_CERTS</code> environment variable in the <a href="https://nodejs.org/api/cli.html" target="_blank" rel="noopener noreferrer">Node.js documentation</a>.</p>
+
+<h2>Set certificates with a configuration file</h2>
+
+<p>Follow this process if you’re unable to set certificates with the <code>NODE_EXTRA_CA_CERTS</code> environment variable to enable Unity Package Manager operations.</p>
+
+<p>
+<strong>Note</strong>: Whether you add or update the configuration file manually or by using a more scalable method, you must apply the addition or update to each client computer. </p>
+
+<ol>
+<li><p>Locate the <a href="upm-config-files.html"><code>upmconfig.toml</code> global configuration file</a>. If the file doesn’t already exist, create an empty text file.</p></li>
+<li>
+<p>Create a text file with one or more certificates for custom certificate authorities. The file must consist of one or more trusted certificates in the Privacy-Enhanced Mail (PEM) format. For example:</p>
+
+<pre><code class="lang-pem">-----BEGIN CERTIFICATE-----
+MIIC+zCCAeOgAwIBAgIJAO0U6hVJnbvjMA0GCSqGSIb3DQEBBQUAMBQxEjAQBgNV
+BAMMCWxvY2FsaG9zdDAeFw0xOTAzMTIwMTIxMzRaFw0yOTAzMDkwMTIxMzRaMBQx
+(additional lines omitted for conciseness)
+LFwHSUdqk0lJK4b0mCwyTHNvYO1IDziE5EKwfuaKVgOa62iCHVahgIVa+een4EfS
+hCCr3M3cq11Mi+mnRi1scxxrOno4OEEChWg2szZLlxBrkVJllrrq620XJ6RLB/8=
+-----END CERTIFICATE-----
+-----BEGIN CERTIFICATE-----
+MIIDtzCCAp+gAwIBAgIQDOfg5RfYRv6P5WD8G/AwOTANBgkqhkiG9w0BAQUFADBl
+MQswCQYDVQQGEwJVUzEVMBMGA1UEChMMRGlnaUNlcnQgSW5jMRkwFwYDVQQLExB3
+(additional lines omitted for conciseness)
+H2sMNgcWfzd8qVttevESRmCD1ycEvkvOl77DZypoEd+A5wwzZr8TDRRu838fYxAe
++o0bJW1sj6W3YQGx0qMmoRBxna3iw/nDmVG3KwcIzi7mULKn+gpFL6Lw8g==
+-----END CERTIFICATE-----
+</code></pre>
+</li>
+<li><p>Save this file to the same folder as the global configuration file if possible, although Unity supports any location on the file system.</p></li>
+<li>
+<p>In the global configuration file, add the <strong>caFile</strong> key and set its value as an absolute file path to your PEM file. <strong>Important</strong>: When setting Windows paths in TOML files, use forward slashes (<code>/</code>) or double backslashes (<code>\\</code>). Don’t use single backslashes (<code>\</code>) because they’re special characters which mark escape sequences and can cause TOML parsing errors.</p>
+
+<p><strong>Windows example</strong></p>
+
+<pre><code class="lang-toml">caFile = &quot;C:\\ProgramData\\Unity\\config\\cert.pem&quot;
+</code></pre>
+
+<p><strong>macOS and Linux example</strong></p>
+
+<pre><code class="lang-toml">caFile = &quot;/etc/cert.pem&quot;
+</code></pre>
+</li>
+</ol>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="ent-proxy-autoconfig.html">Using Unity through web proxies</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="ent-proxy-autoconfig-store-mac.html"></a></span><div class="tip">Store credentials for automatic proxy configuration (macOS)</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="ent-proxy-env-vars.html"></a></span><div class="tip">Use environment variables to identify your web proxy</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

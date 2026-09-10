@@ -1,0 +1,2 @@
+问：使用DouyinObjectService.NetSpawn生成了网络对象，但是用DouyinObjectService.GetDouyinObject根据ID获取网络对象为nil
+答：查看配置的网络对象物体，该物体身上必须挂载DouyinScript的Lua脚本，不能不挂脚本或者只挂载Douyin Object Sync组件

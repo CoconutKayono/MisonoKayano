@@ -1,0 +1,897 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Troubleshooting lightmapping artifacts</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<meta property="relative-path-to-manual" content="">
+<meta property="version-switcher-versions-with-this-page" content="Versions with this page:">
+<meta property="version-switcher-versions-without-this-page" content="Versions without this page:">
+<meta property="version-switcher-supported" content="Supported">
+<meta property="version-switcher-legacy" content="Legacy">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/Manual/troubleshooting-lightmapping-artifacts.html">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20260626"></script><script type="text/javascript" src="docdata/toc.js?ts=20260626"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20260626"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20260626">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20260626">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/troubleshooting-lightmapping-artifacts.html">English</a></li>
+<li><a href="/cn/current/Manual/troubleshooting-lightmapping-artifacts.html">中文</a></li>
+<li><a href="/ja/current/Manual/troubleshooting-lightmapping-artifacts.html">日本語</a></li>
+<li><a href="/kr/current/Manual/troubleshooting-lightmapping-artifacts.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: Unity 6.7 Beta</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/troubleshooting-lightmapping-artifacts.html">English</a></li>
+<li><a href="/cn/current/Manual/troubleshooting-lightmapping-artifacts.html">中文</a></li>
+<li><a href="/ja/current/Manual/troubleshooting-lightmapping-artifacts.html">日本語</a></li>
+<li><a href="/kr/current/Manual/troubleshooting-lightmapping-artifacts.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="LightingOverview.html">Lighting</a></li>
+<li><a href="direct-and-indirect-lighting.html">Direct and indirect lighting</a></li>
+<li><a href="Lightmapping-landing.html">Precalculating surface lighting with lightmaps</a></li>
+<li><a href="Lightmapping-baking-before-runtime.html">Baking lightmaps before runtime</a></li>
+<li><a href="Lightmapping-troubleshooting.html">Troubleshooting baked lightmaps</a></li>
+<li>Troubleshooting lightmapping artifacts</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="Lightmapping-troubleshooting.html"></a></span><div class="tip">Troubleshooting baked lightmaps</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="troubleshooting-lightmapping-quality.html"></a></span><div class="tip">Troubleshooting lightmapping quality issues</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Troubleshooting lightmapping artifacts</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+<div class="res-examples" style="background-color: #f2dede; font-size: 14px;">
+<p style="margin: 0; font-size: 14px;">
+<strong style="font-size: 14px;">Important</strong>: The Built-In Render Pipeline is deprecated and will be made obsolete in a future release.<br>It remains supported, including bug fixes and maintenance, through the full Unity 6.7 LTS lifecycle.<br>For more information on migration, refer to <a href="urp/upgrading-from-birp.html">Migrating from the Built-In Render Pipeline to the Universal Render Pipeline</a> and <a href="render-pipelines-feature-comparison.html">Render pipeline feature comparison</a>.</p>
+</div>
+<div class="clear"></div>
+
+<p>Fix baked lighting artifacts such as dark spots, smudges, shadow leaks, blocky textures, fireflies, or incorrect shading when using baked <span class="tooltip" tabindex="0" ><strong>Global Illumination</strong><span class="tooltiptext">A group of techniques that model both direct and indirect lighting to provide realistic lighting results.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#globalillumination" aria-label="Go to glossary anchor for globalillumination">Glossary</a></span></span></span> (GI).</p>
+
+<h2>Lightmap UV artifacts</h2>
+
+<p>Fix distorted or warped surfaces and shading or darkening issues.</p>
+
+<p>When importing a 3D model, generating lightmaps, or setting up baked lighting in a scene, improperly configured or missing <span class="tooltip" tabindex="0" ><strong>lightmap</strong><span class="tooltiptext">A pre-rendered texture that contains the effects of light sources on static objects in the scene. Lightmaps are overlaid on top of scene geometry to create the effect of lighting. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Lightmapping.html" href="Lightmapping.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Lightmap" aria-label="Go to glossary anchor for Lightmap">Glossary</a></span></span></span> UVs can cause visual distortions on lightmapped surfaces.</p>
+
+<h3>Symptom</h3>
+
+<p>Artifacts caused by incorrect lightmap UVs typically appear as:</p>
+
+<ul>
+<li><p>Distorted or warped surfaces on objects.</p></li>
+<li><p>Shading or darkening issues, particularly around edges.</p></li>
+</ul>
+
+<p>
+<strong>Example:</strong> Severe artifacts on objects with missing lightmap UVs (left) compared to correctly authored lightmap UVs (right).</p>
+
+<figure>
+<img src="../uploads/Main/lightmap-uv-artifacts.jpg" alt="Severe artifacts on objects with missing lightmap UVs (left) compared to correctly authored lightmap UVs (right). ">
+<figcaption>Severe artifacts on objects with missing lightmap UVs (left) compared to correctly authored lightmap UVs (right). </figcaption>
+</figure>
+
+<h3>Cause</h3>
+
+<p>Lightmap UVs have specific requirements distinct from <a href="mesh-vertex-data.html#uvs">standard texture UVs</a>:</p>
+
+<ul>
+<li>No overlapping UV charts.</li>
+<li>Adequate margin between UV charts to prevent light bleed.</li>
+<li>Minimal distortion in area and angles.</li>
+<li>Uniform scaling across UV charts.</li>
+<li>UV charts confined within the [0,1] UV space.</li>
+</ul>
+
+<p>Failure to meet these criteria can result in artifacts after baking the lightmap.</p>
+
+<h3>Resolution</h3>
+
+<p>You can resolve these issues by addressing improperly configured lightmap UVs, invalid texels, <span class="tooltip" tabindex="0" ><strong>compression</strong><span class="tooltiptext">A method of storing data that reduces the amount of storage space it requires. See <a href="texture-choose-format-by-platform.html">Texture Compression</a>, <a href="class-AnimationClip.html#AssetProperties">Animation Compression</a>, <a href="class-AudioClip.html">Audio Compression</a>, <a href="ReducingFilesize.html">Build Compression</a>.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#compression" aria-label="Go to glossary anchor for compression">Glossary</a></span></span></span> problems, <span class="tooltip" tabindex="0" ><strong>light probe</strong><span class="tooltiptext">Light probes store information about how light passes through space in your scene. A collection of light probes arranged within a given space can improve lighting on moving objects and static LOD scenery within that space. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about LightProbes.html" href="LightProbes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#LightProbe" aria-label="Go to glossary anchor for LightProbe">Glossary</a></span></span></span> ringing, or denoising and filtering artifacts.</p>
+
+<p>
+<strong>Note:</strong> Use the <strong>UV Overlap</strong> and <strong>Baked Lightmap</strong> <a href="GIVis.html">debug draw modes</a> to identify lightmap UV issues.</p>
+
+<p>To resolve lightmap UV problems, follow these steps.</p>
+
+<h4>Generate optimized lightmap UVs</h4>
+
+<p>To generate lightmap UVs, refer to <a href="LightingGiUvs-GeneratingLightmappingUVs.html">Generate lightmap UVs</a>.</p>
+
+<p>To optimize generated lightmap UVs, in <a href="LightingGiUvs-Reference.html">Lightmap UVs Settings</a>, set <strong>Pack Margin</strong> to <strong>Calculate</strong>. If your lightmap fulfills the <strong>Min Lightmap Resolution</strong> and your object fulfills the <strong>Min Object Scale</strong>, Unity ensures there’s no bleeding between charts by conservatively calculating a pack margin large enough to prevent leaks.</p>
+
+<p>
+<strong>Note</strong>: Large margins can cause low-texture packing.</p>
+
+<figure>
+<img src="../uploads/Main/lightmapping-pack-margin.png" alt="Comparison of a Cornell box in shaded view. Dark artifacts around the objects’ edges caused by the UV overlaps are present when Pack Margin is Manual. The artifacts arent visible when Pack Margin is Calculate.">
+<figcaption>Comparison of a Cornell box in shaded view. Dark artifacts around the objects’ edges caused by the UV overlaps are present when Pack Margin is Manual. The artifacts aren’t visible when Pack Margin is Calculate.</figcaption>
+</figure>
+
+<h4>Create custom lightmap UVs</h4>
+
+<p>For complex models, manually authoring lightmap UVs in a digital content creation (DCC) program may yield better results. Ensure the UVs are placed in the second (UV1) channel.</p>
+
+<h4>Increase lightmap resolution</h4>
+
+<p>Use the lowest resolution that resolves the artifacts to minimize memory usage and bake times.</p>
+
+<h2>Invalid texel artifacts</h2>
+
+<p>Fix blocky artifacts in baked lightmaps and red-highlighted texels in the <strong>Texel Validity</strong> <span class="tooltip" tabindex="0" ><strong>scene view</strong><span class="tooltiptext">An interactive view into the world you are creating. You use the Scene View to select and position scenery, characters, cameras, lights, and all other types of Game Object. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheSceneView.html" href="UsingTheSceneView.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#SceneView" aria-label="Go to glossary anchor for SceneView">Glossary</a></span></span></span> mode.</p>
+
+<p>When baking a lightmap or optimizing a scene in the Editor’s <strong>Lighting</strong> or <strong>Scene</strong> view, invalid texels in lightmaps can cause blocky artifacts.</p>
+
+<h3>Symptom</h3>
+
+<p>Scenes with invalid texels may display:</p>
+
+<ul>
+<li><p>Blocky artifacts in baked lightmaps.</p></li>
+<li><p>Red-highlighted texels in the <strong>Texel Validity</strong> scene view mode.</p></li>
+</ul>
+
+<p>
+<strong>Example:</strong> One-sided curtain <span class="tooltip" tabindex="0" ><strong>mesh</strong><span class="tooltiptext">The main graphics primitive of Unity. Meshes make up a large part of your 3D worlds. Unity supports triangulated or Quadrangulated polygon meshes. Nurbs, Nurms, Subdiv surfaces must be converted to polygons. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about mesh.html" href="mesh.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Mesh" aria-label="Go to glossary anchor for Mesh">Glossary</a></span></span></span> causing invalid texel artifacts after baking (left). The <strong>Texel Validity</strong> scene view mode highlights these invalid texels in red (right), particularly around the curtain area.</p>
+
+<figure>
+<img src="../uploads/Main/invalid-texel-artifacts.jpg" alt="One-sided curtain mesh causing invalid texel artifacts after baking (left)">
+<figcaption>One-sided curtain mesh causing invalid texel artifacts after baking (left)</figcaption>
+</figure>
+
+<h3>Cause</h3>
+
+<p>Invalid texels occur when:</p>
+
+<ul>
+<li><p>Texels fail to receive light from direct, indirect, or environment sources.</p></li>
+<li><p>Rays originating from texels intersect back-facing surfaces.</p></li>
+</ul>
+
+<p>Filtering and denoising can spread invalid texels to neighboring areas. Resolving them early minimizes reliance on <span class="tooltip" tabindex="0" ><strong>post-processing</strong><span class="tooltiptext">A process that improves product visuals by applying filters and effects before the image appears on screen. You can use post-processing effects to simulate physical camera and film properties, for example Bloom and Depth of Field. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about PostProcessingOverview.html" href="PostProcessingOverview.html">More info</a> <span class="search-words">post processing, postprocessing, postprocess</span><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#post-processing" aria-label="Go to glossary anchor for post-processing">Glossary</a></span></span></span>.</p>
+
+<h3>Resolution</h3>
+
+<p>
+<strong>Note:</strong> Use the <strong>Texel Validity</strong> <a href="GIVis.html">scene view draw mode</a> for effective debugging.</p>
+
+<h4>Adjust mesh normals</h4>
+
+<p>Ensure visible polygons have outward-facing normals to avoid shading errors.</p>
+
+<p>Vertex normal direction determines which side of the polygon appears as the front (visible) side. Flipping the direction of the normal renders the face invisible unless you are using double-sided <span class="tooltip" tabindex="0" ><strong>shaders</strong><span class="tooltiptext">A program that runs on the GPU. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Shaders.html" href="Shaders.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#shader" aria-label="Go to glossary anchor for shader">Glossary</a></span></span></span>. Always ensure that the polygons, that you want to be visible, have their normals pointing outwards.</p>
+
+<p>
+<strong>Example:</strong> Proper shading with outward-facing normals on the center cube. Blue polygons in the cube on the left and orange polygons in the cube on the right are flipped. Cubes on the left and right both exhibit invalid texel artifacts after baking, whereas the one in the center doesn’t.</p>
+
+<figure>
+<img src="../uploads/Main/adjust-mesh-normals.jpg" alt="Proper shading with outward-facing normals on the center cube">
+<figcaption>Proper shading with outward-facing normals on the center cube</figcaption>
+</figure>
+
+<p>Most 3D modeling applications generate correct normals automatically. </p>
+
+<p>To manually adjust normals, refer to your 3D modeling package documentation.</p>
+
+<h4>Avoid open faces</h4>
+
+<p>To reduce the likelihood of invalid texels with watertight meshes, follow these steps:</p>
+
+<ul>
+<li><p>Cap open faces.</p></li>
+<li><p>Weld overlapping vertices.</p></li>
+<li><p>Avoid using line or point geometry.</p></li>
+<li><p>Limit floating geometry to necessary cases.</p></li>
+</ul>
+
+<p>Tools like xView in 3ds Max can help identify mesh issues.</p>
+
+<h4>Enable double-sided Global Illumination</h4>
+
+<p>For thin, one-sided meshes like curtains or foliage, enable <strong>Double-Sided Global Illumination</strong>.</p>
+
+<p>
+<strong>Example:</strong> Enabling double-sided GI resolves invalid texels and enhances light bounce for one-sided meshes. The Texel Validity scene view no longer shows any invalid texels in red around the curtains (right). Notice that not only the artifacts are gone, but the light also bounces off curtains.</p>
+
+<figure>
+<img src="../uploads/Main/enable-double-sided-global-illumination.jpg" alt="Enabling double-sided GI resolves invalid texels and enhances light bounce for one-sided meshes">
+<figcaption>Enabling double-sided GI resolves invalid texels and enhances light bounce for one-sided meshes</figcaption>
+</figure>
+
+<p>To enable <strong>Double-Sided Global Illumination</strong>, follow these steps:</p>
+
+<ul>
+<li>
+<p>For the Built-in <span class="tooltip" tabindex="0" ><strong>Render Pipeline</strong><span class="tooltiptext">A series of operations that take the contents of a Scene, and displays them on a screen. Unity lets you choose from pre-built render pipelines, or write your own. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about render-pipelines.html" href="render-pipelines.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#renderpipeline" aria-label="Go to glossary anchor for renderpipeline">Glossary</a></span></span></span>, enable the <strong>Double-Sided Global Illumination</strong> checkbox in the <a href="StandardShaderMaterialParameters.html">Material Inspector</a>.</p>
+
+<p>This step also applies to custom ShaderGraph materials.</p>
+</li>
+<li><p>For the Universal Render Pipeline (URP), set the <strong>Render Face</strong> dropdown to <strong>Both</strong>. You can find this property under the Surface category in the <a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.universal@latest/?subfolder=/manual/lit-shader.html">Lit Shader</a>.</p></li>
+<li>
+<p>For the High Definition Render Pipeline (HDRP), navigate to the <strong>Surface</strong> category in the <a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.high-definition@latest/?subfolder=/manual/Lit-Shader.html">Lit Shader</a> and configure the following properties:</p>
+
+<ul>
+<li>
+<strong>Double-Sided</strong>: Enable this checkbox to disable backface culling. This also enables double-sided GI.</li>
+<li>
+<strong>Double-Sided GI</strong>: Use this dropdown to control double-sided GI behavior.
+
+<ul>
+<li>
+<strong>Auto</strong>: Enables double-sided GI if the <strong>Double-Sided</strong> property is enabled.</li>
+<li>
+<strong>On</strong>: Forces double-sided GI to be enabled, overriding the double-sided GI behavior without making the material appear double-sided.</li>
+<li>
+<strong>Off</strong>: Disables double-sided GI, overriding the double-sided GI behavior without making the material appear double-sided.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+<p>You can also control the double-sided GI property via the <a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.high-definition@latest/?subfolder=/manual/api/UnityEngine.Rendering.HighDefinition.HDMaterialProperties.html#UnityEngine_Rendering_HighDefinition_HDMaterialProperties_kDoubleSidedEnable">kDoubleSidedEnable API</a>.</p>
+
+<p>
+<strong>Example:</strong> Double-Sided Global Illumination disabled (left) and enabled (right). Notice dark artifacts where the meshes intersect in the image on the right. In such cases, disable Double-Sided Global Illumination to achieve correct output.</p>
+
+<figure>
+<img src="../uploads/Main/double-sided-global-illumination-disabled.jpg" alt="Double-Sided Global Illumination disabled (left) and enabled (right)">
+<figcaption>Double-Sided Global Illumination disabled (left) and enabled (right)</figcaption>
+</figure>
+
+<p>Lightmapper marks texels as invalid when they receive no illumination or intersect backfaces. This allows the dilation filter to push lighting data from valid surrounding texels into partially covered texels. Doing so helps to remove dark artifacts at geometry junctions.</p>
+
+<p>Enabling double-sided GI by default for all materials would result in a darkening effect where meshes intersect or overlap.</p>
+
+<h4>Adjust the backface tolerance property</h4>
+
+<p>To configure the <strong>Backface Tolerance</strong> property, follow these steps:</p>
+
+<ol>
+<li><p>Create a new <a href="class-LightmapParameters.html">Lightmap Parameters asset</a>.</p></li>
+<li><p>Navigate to the <strong>Lightmapping</strong> section in the <span class="tooltip" tabindex="0" ><a href="class-MeshRenderer.html">Mesh Renderer</a><span class="tooltiptext">A mesh component that takes the geometry from the Mesh Filter and renders it at the position defined by the object’s Transform component. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-MeshRenderer.html" href="class-MeshRenderer.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#MeshRenderer" aria-label="Go to glossary anchor for MeshRenderer">Glossary</a></span></span></span> component.</p></li>
+<li><p>Assign the <strong>Lightmap Parameters</strong> asset to the <strong>Mesh Renderer</strong> component.</p></li>
+</ol>
+
+<p>The <strong>Backface Tolerance</strong> property controls the percentage of rays that must hit front-facing geometry to consider a texel valid:</p>
+
+<ul>
+<li><p>Increasing the value increases the likelihood that the <span class="tooltip" tabindex="0" ><strong>lightmapper</strong><span class="tooltiptext">A tool in Unity that bakes lightmaps according to the arrangement of lights and geometry in your scene. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Lightmapping.html" href="Lightmapping.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Lightmapper" aria-label="Go to glossary anchor for Lightmapper">Glossary</a></span></span></span> marks a texel as invalid when it encounters backfaces.</p></li>
+<li><p>Lowering this value reduces the number of invalidated texels.</p></li>
+</ul>
+
+<p>
+<strong>Note:</strong> Low <strong>Backface Tolerance</strong> values may result in a loss of occlusion and/or bounce lighting, potentially altering the appearance of the scene.</p>
+
+<h4>Move meshes closer to the world origin</h4>
+
+<p>Limitations imposed by the 32-bit floating-point precision format can be the cause of invalid texels when placing lightmapped meshes far away from the world origin (0,0,0), or if they have a massive scale. This issue is not limited to lightmapped meshes; objects and animations lose precision the farther away they are from world origin.</p>
+
+<p>To solve precision issues, follow these steps:</p>
+
+<ul>
+<li><p>Move meshes closer to the (0, 0, 0) origin.</p></li>
+<li><p>Adjust the <strong>Push Off</strong> value in the Lightmap Parameters asset.</p></li>
+</ul>
+
+<h2>Denoising artifacts</h2>
+
+<p>Fix smears, smudges, or ringing around edges and black lightmaps or excessive noise.</p>
+
+<p>When configuring denoising settings to bake a lightmap in the Editor’s <strong>Lighting</strong> or <strong>Scene</strong> view, machine learning denoisers may introduce artifacts.</p>
+
+<h3>Symptom</h3>
+
+<p>Denoising artifacts may include:</p>
+
+<ul>
+<li>Smears, smudges, or ringing around edges.</li>
+<li>Black lightmaps or excessive noise when denoising fails.</li>
+<li>Bright <span class="tooltip" tabindex="0" ><strong>pixels</strong><span class="tooltiptext">The smallest unit in a computer image. Pixel size depends on your screen resolution. Pixel lighting is calculated at every screen pixel. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ShadowPerformance.html" href="ShadowPerformance.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#pixel" aria-label="Go to glossary anchor for pixel">Glossary</a></span></span></span> across the scene. These artifacts are sometimes called fireflies.</li>
+</ul>
+
+<p>
+<strong>Example:</strong> Severe artifacts with low sample counts (left), while higher sample counts produce cleaner results (right). Denoising Artifacts with Open Image Denoiser enabled. Severe artifacts are visible when all sample counts are set to 32 with the Open Image Denoiser enabled (left). The image is cleaner with all sample counts set to 2K and the Open Image Denoiser enabled (right).</p>
+
+<figure>
+<img src="../uploads/Main/severe-artifacts-with-low-sample-counts.jpg" alt="Severe artifacts with low sample counts (left); higher sample counts produce cleaner results (right)">
+<figcaption>Severe artifacts with low sample counts (left); higher sample counts produce cleaner results (right)</figcaption>
+</figure>
+
+<h3>Cause</h3>
+
+<p>Denoising artifacts typically occur in the following scenarios:</p>
+
+<ul>
+<li>The scene is too complex for the amount of data the denoiser collects.</li>
+<li>The denoiser lacks the necessary training data for a scene like yours.</li>
+<li>You have thin geometry or overlapping edges. When Unity dilates geometry during lightmapping, it might create invalid texels that the denoiser can’t resolve.</li>
+<li>You use high-intensity lights that require high-definition range (HDR) lightmaps.</li>
+</ul>
+
+<p>Indirect noise often contributes significantly to poor results.</p>
+
+<h3>Resolution</h3>
+
+<h4>Increase the sample count</h4>
+
+<p>Most denoisers perform effectively with at least 256 samples. You can improve denoising performance by increasing the sample count.</p>
+
+<h4>Use a different denoiser</h4>
+
+<p>To select a specific denoiser based on the scene’s characteristics, follow these steps:</p>
+
+<ol>
+<li>
+<p>Set <strong>Filtering</strong> to <strong>Advanced</strong>.</p>
+
+<p>Refer to <a href="progressive-lightmapper.html">Progressive GPU</a>.</p>
+</li>
+<li><p>Specify the desired denoiser for direct, indirect, and <span class="tooltip" tabindex="0" ><strong>ambient occlusion</strong><span class="tooltiptext">A method to approximate how much ambient light (light not coming from a specific direction) can hit a point on a surface.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#ambientocclusion" aria-label="Go to glossary anchor for ambientocclusion">Glossary</a></span></span></span> buffers.</p></li>
+</ol>
+
+<h4>Use Gaussian or A-Trous filters</h4>
+
+<p>To use Gaussian or A-Trous filters, follow these steps:</p>
+
+<ol>
+<li>
+<p>Set <strong>Filtering</strong> to <strong>Advanced</strong>.</p>
+
+<p>Refer to <a href="progressive-lightmapper.html">Progressive GPU</a>.</p>
+</li>
+<li><p>Choose the desired filter type.</p></li>
+</ol>
+
+<p>You can combine these filters with machine learning denoisers for enhanced results.</p>
+
+<h2>Fireflies</h2>
+
+<p>Fix speckled noise (fireflies) caused by a bright light source placed close to scene geometry.</p>
+
+<h3>Symptom</h3>
+
+<p>
+<img src="../uploads/Main/fireflies-troubleshooting-example.jpeg" alt="A Cornell box scene, with a single cube in an empty room. On the left, the image is noisy. On the right, the image is clear.">
+<strong>Example:</strong> Speckled noise (fireflies) visible (left). After baking with 16K indirect samples and enabling <strong>Open Image Denoiser</strong> to remove the noise (right).</p>
+
+<p>Speckled noise (fireflies) can be visible in brightly lit small areas.</p>
+
+<h3>Cause</h3>
+
+<p>Small, high luminosity areas in the lightmap cause speckled noise to appear. Such areas can be missed when spawning rays from texels. When rays intersect those high intensity areas, they skew the average luminosity estimate. This results in speckled noise which are often referred to as “fireflies”.</p>
+
+<h3>Resolution</h3>
+
+<p>
+<strong>Note:</strong> The splat clamping feature is being developed to addressing this issue for punctual lights. Refer to the following solutions to resolve issues for now.</p>
+
+<h3>Increase sample counts</h3>
+
+<p>This is a brute force method. To achieve acceptable results, use 4K or higher indirect sample in conjunction with filtering and denoising.</p>
+
+<h3>Enable importance sampling</h3>
+
+<p>To reduce noise in scenes with high frequency <span class="tooltip" tabindex="0" ><strong>HDRIs</strong><span class="tooltiptext">high dynamic range image<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#HDRI" aria-label="Go to glossary anchor for HDRI">Glossary</a></span></span></span>:</p>
+
+<p>
+<img src="../uploads/Main/importance-sampling-ex1.jpeg" alt="A Cornell box scene, with two cuboids in an empty room, and a skylight. The left image is noisy with pixels from a skybox of a landscape at sunset, which is shown as a sphere on the right. The middle image is clear.">
+<strong>Example:</strong> Fireflies caused by the high frequency HDRI (left). The same scene after enabling the <strong>Importance Sampling</strong> toggle (center). High frequency <span class="tooltip" tabindex="0" ><strong>cubemap</strong><span class="tooltiptext">A collection of six square textures that can represent the reflections in an environment or the skybox drawn behind your geometry. The six squares form the faces of an imaginary cube that surrounds an object; each face represents the view along the directions of the world axes (up, down, left, right, forward and back). <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-Cubemap-landing.html" href="class-Cubemap-landing.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Cubemap" aria-label="Go to glossary anchor for Cubemap">Glossary</a></span></span></span> used to illuminate the scene (right).</p>
+
+<p>
+<img src="../uploads/Main/importance-sampling-ex2.jpeg" alt="A Cornell box scene, with two cuboids in an empty room, and a skylight. The left image is clear. The middle image is noisy with pixels from a skybox of a river scene, which is shown as a sphere on the right.">
+<strong>Example:</strong> Enabling <strong>Importance Sampling</strong> can introduce noise when using low frequency HDRIs. <strong>Importance Sampling</strong> disabled (left). <strong>Importance Sampling</strong> enabled (center). Low frequency cubemaps used to illuminate the scene (right).</p>
+
+<p>Enable importance sampling if:</p>
+
+<ul>
+<li>You are using a high frequency HDRI image for environment lighting. An example of this would be an HDRI with a bright sunspot in the horizon.</li>
+</ul>
+
+<p>Disable importance sampling if:</p>
+
+<ul>
+<li>You are using a low frequency HDRI image for environment lighting. An example of this would be an overcast HDRI or a solid color <span class="tooltip" tabindex="0" ><strong>skybox</strong><span class="tooltiptext">A special type of Material used to represent skies. Usually six-sided. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about sky-landing.html" href="sky-landing.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Skybox" aria-label="Go to glossary anchor for Skybox">Glossary</a></span></span></span>.</li>
+</ul>
+
+<p>
+<strong>Warning:</strong> Enabling importance sampling when using low frequency HDRIs can result in increased noise levels instead.</p>
+
+<h3>Enable filtering and denoising</h3>
+
+<p>To remove the noise, enable ML denoisers in conjunction with filtering. To get clean results, use high sample counts.</p>
+
+<h3>Avoid small baked emissive objects</h3>
+
+<p>To reduce issues when using emissive materials, reduce the number of small baked emissive objects by:
+1. Set the <strong>Global Illumination</strong> property of the <span class="tooltip" tabindex="0" ><strong>GameObject</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-GameObject.html" href="class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span> to None in the <strong>Material <span class="tooltip" tabindex="0" ><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheInspector.html" href="UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span></strong>. </p>
+
+<p>The object will keep its self-illuminating appearance, but it won’t contribute to global illumination. Reducing the number of small baked emissive objects can help reduce noise.</p>
+
+<h3>Move baked lights away from static geometry</h3>
+
+<p>URP and HDRP use inverse square falloff for lights by default. In the Built-in render pipeline, you can achieve the same effect by using custom falloff <span class="tooltip" tabindex="0" ><strong>scripts</strong><span class="tooltiptext">A piece of code that allows you to create your own Components, trigger game events, modify Component properties over time and respond to user input in any way you like. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about creating-scripts.html" href="creating-scripts.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scripts" aria-label="Go to glossary anchor for Scripts">Glossary</a></span></span></span>. The unfortunate side effect being that such lights might lead to increased noise levels when placed very close to static geometry. Ensure that there is enough distance between the static geometry and the lights in the scene.</p>
+
+<h2>Filtering artifacts</h2>
+
+<p>Fix Gaussian light leaks, blurs, and splotches, A-Trous speckles, and <span class="tooltip" tabindex="0" ><strong>HDR</strong><span class="tooltiptext">high dynamic range<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#HDR" aria-label="Go to glossary anchor for HDR">Glossary</a></span></span></span> denoise failures.</p>
+
+<p>When baking a lightmap in the Editor’s Lighting or Scene view, using a Gaussian or an A-Trous filter to reduce noise can create artifacts.</p>
+
+<h3>Symptom</h3>
+
+<p>Filtering artifacts depend on the filter type:</p>
+
+<p>
+<strong>Example:</strong> Scene filtered using Gaussian filter at a 1 texel radius. With all samples set to 32, the final lightmap exhibits splotches (left). Baking with all samples set to 2K and with Gaussian filtering enabled yields better results (right).</p>
+
+<figure>
+<img src="../uploads/Main/gaussian-filter-at-1-texel-radius.jpg" alt="Scene filtered using Gaussian filter at a 1 texel radius">
+<figcaption>Scene filtered using Gaussian filter at a 1 texel radius</figcaption>
+</figure>
+
+<p>
+<strong>Example:</strong> Scene filtered using A-Trous filter. With all samples set to 32, A-Trous edge preservation algorithm cannot distinguish between noise and edges, and thus completely fails (left). After increasing all samples to 2K, A-Trous filter yields decent results, with less blurring when compared to Gaussian (right).</p>
+
+<figure>
+<img src="../uploads/Main/a-trous-filter.jpg" alt="Scene filtered using A-Trous filter">
+<figcaption>Scene filtered using A-Trous filter</figcaption>
+</figure>
+
+<h3>Cause</h3>
+
+<p>Filtering artifacts causes depend on the filter type:</p>
+
+<ul>
+<li>
+<p>
+<strong>Gaussian Filter</strong>:</p>
+
+<ul>
+<li>Light or shadow leakage through geometry.</li>
+<li>Blurry lightmaps.</li>
+<li>Splotchy lightmaps.</li>
+</ul>
+</li>
+<li>
+<p>
+<strong>A-Trous Filter</strong>:</p>
+
+<ul>
+<li>Speckled noise at low sample counts.</li>
+<li>Failure to denoise HDR lightmaps (noise interpreted as edges).</li>
+</ul>
+</li>
+</ul>
+
+<h3>Resolution</h3>
+
+<h4>Increase sample count</h4>
+
+<p>You can reduce artifacts such as splotches or speckles by increasing sample counts.</p>
+
+<h4>Use a machine learning denoiser</h4>
+
+<p>Machine learning denoisers effectively remove noise with fewer biases compared to traditional filters. Combining them with filters can enhance results:</p>
+
+<ul>
+<li>
+<strong>A-Trous</strong>: Works well with machine learning denoisers to preserve edges.</li>
+<li>
+<strong>Gaussian</strong>: Performs better with a low radius setting.</li>
+</ul>
+
+<h4>Adjust filtering settings</h4>
+
+<p>To adjust the filtering strength, adjust the filter’s <strong>radius</strong> and <strong>sigma. If your scene has lightmap leaking artifacts or blurring, reduce the </strong>Gaussian** filter’s <strong>radius</strong> value. This reduces the amount of bilateral blurring and prevents texel smearing.</p>
+
+<p>Refer to <a href="progressive-lightmapper.html">Progressive GPU</a>.</p>
+
+<h2>Compression artifacts</h2>
+
+<p>Fix color banding and blocky artifacts.</p>
+
+<p>When optimizing lightmaps for mobile performance during lightmap baking or asset compression in the Editor’s <strong>Lighting</strong> or Inspector windows, artifacts can occur.</p>
+
+<h3>Symptom</h3>
+
+<p>Color banding and blocky artifacts.</p>
+
+<p>
+<strong>Example:</strong> Banding artifacts introduced by low-quality compression on Android platform (left). You can fix banding artifacts by using high-quality compression (right).</p>
+
+<figure>
+<img src="../uploads/Main/banding-artifacts.jpg" alt="Banding artifacts introduced by low-quality compression on Android platform (left)">
+<figcaption>Banding artifacts introduced by low-quality compression on Android platform (left)</figcaption>
+</figure>
+
+<h3>Cause</h3>
+
+<p>Color banding and blocky artifacts are often associated with low-quality <span class="tooltip" tabindex="0" ><strong>texture compression</strong><span class="tooltiptext">3D Graphics hardware requires Textures to be compressed in specialized formats which are optimized for fast Texture sampling. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about texture-choose-format-by-platform.html" href="texture-choose-format-by-platform.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#texturecompression" aria-label="Go to glossary anchor for texturecompression">Glossary</a></span></span></span>. Unity attempts to select automatically the best compression format for the target platform. Due to compatibility concerns, <span class="tooltip" tabindex="0" ><strong>texture formats</strong><span class="tooltiptext">A file format for handling textures during real-time rendering by 3D graphics hardware, such as a graphics card or mobile device. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about texture-choose-format-by-platform.html" href="texture-choose-format-by-platform.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#textureformat" aria-label="Go to glossary anchor for textureformat">Glossary</a></span></span></span> intended for mobile platforms are often more affected by compression artifacts.</p>
+
+<h3>Resolution</h3>
+
+<h4>Adjust lightmap encoding</h4>
+
+<p>To adjust lightmap encoding, follow these steps:</p>
+
+<ol>
+<li><p>Open <strong>Edit</strong> &gt; <strong>Project Settings</strong> &gt; <strong>Player</strong> &gt; <strong>Other Settings</strong>.</p></li>
+<li><p>Modify the <strong>Lightmap Encoding</strong> setting for each target platform.</p></li>
+</ol>
+
+<h4>Configure HDR cubemap encoding</h4>
+
+<p>To configure HDR cubemap encoding for reflective objects with compression artifacts, follow these steps:</p>
+
+<ol>
+<li><p>Open <strong>Edit</strong> &gt; <strong>Project Settings</strong> &gt; <strong>Player</strong> &gt; <strong>Other Settings</strong>.</p></li>
+<li><p>Modify the <strong>HDR Cubemap Encoding</strong> setting.</p></li>
+</ol>
+
+<p>
+<strong>Note:</strong> The <strong>HDR Cubemap Encoding</strong> setting is available in Unity 2022.1 and later.</p>
+
+<h4>Modify lightmap compression</h4>
+
+<p>To control compression quality, follow these steps:</p>
+
+<ol>
+<li><p>Go to <strong>Window &gt; Rendering &gt; Lighting</strong>.</p></li>
+<li><p>In the <strong>Lighting</strong> window, locate the <strong>Lightmaps</strong> tab.</p></li>
+<li><p>Find the <strong>Lightmap Compression</strong> dropdown under the <strong>Lightmaps</strong> settings section.</p></li>
+<li>
+<p>Select a compression quality.</p>
+
+<p>Higher quality presets result in fewer compression artifacts post-bake.</p>
+</li>
+</ol>
+
+<h4>Manually override texture formats</h4>
+
+<p>To manually override texture formats, follow these steps:</p>
+
+<ol>
+<li><p>Locate the lightmap textures in the <strong>Project</strong> window.</p></li>
+<li><p>Select a lightmap texture.</p></li>
+<li><p>In the <strong>Inspector</strong> window, enable the <strong>Override</strong> checkbox for the desired platform.</p></li>
+<li><p>Select the desired compression format.</p></li>
+<li><p>Click <strong>Apply</strong>.</p></li>
+</ol>
+
+<p>
+<strong>Note:</strong> Custom overrides reset after rebaking lighting. Repeat these steps after each bake.</p>
+
+<h2>Light probe ringing artifacts</h2>
+
+<p>Fix unnatural probe lighting and visible rippling artifacts.</p>
+
+<p>When setting up light probes or baking lightmaps in the Editor’s <strong>Lighting</strong> or <strong>Scene</strong> view, ringing artifacts in light probes can cause incorrect shading.</p>
+
+<h3>Symptom</h3>
+
+<ul>
+<li><p>Objects lit by light probes exhibit unnatural lighting.</p></li>
+<li><p>Visible rippling or artifacts around light probes.</p></li>
+</ul>
+
+<p>
+<strong>Example:</strong> Remove Ringing disabled (left) and enabled (right). Notice how negative light probe values result in wrong shading for the statue on the left. You can fix this issue by enabling the Remove ringing option, but as a result, the final output can appear very smooth.</p>
+
+<figure>
+<img src="../uploads/Main/remove-ringing.jpg" alt="Remove Ringing disabled (left) and enabled (right)">
+<figcaption>Remove Ringing disabled (left) and enabled (right)</figcaption>
+</figure>
+
+<h3>Cause</h3>
+
+<p>For performance reasons, Unity encodes light probes using Spherical Harmonics. However, this lossy compression technique can’t faithfully represent environments where lighting changes quickly across the sphere of directions. In cases such as light entering through a small hole in a cave roof, Spherical Harmonics can yield brighter or dimmer illumination than expected. This is called overshooting, or ringing. For more information, refer to <a href="https://en.wikipedia.org/wiki/Gibbs_phenomenon">Gibbs phenomenon</a>.</p>
+
+<h3>Resolution</h3>
+
+<p>
+<strong>Note:</strong> To make debugging easier, enable <span class="tooltip" tabindex="0" ><strong>Gizmos</strong><span class="tooltiptext">A graphic overlay associated with a GameObject in a Scene, and displayed in the Scene View. Built-in scene tools such as the move tool are Gizmos, and you can create custom Gizmos using textures or scripting. Some Gizmos are only drawn when the GameObject is selected, while other Gizmos are drawn by the Editor regardless of which GameObjects are selected. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about GizmosMenu.html#GizmosIcons" href="GizmosMenu.html#GizmosIcons">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Gizmo" aria-label="Go to glossary anchor for Gizmo">Glossary</a></span></span></span> in the <span class="tooltip" tabindex="0" ><a href="overlays-reference-view-options.html">scene</a><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html" href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span> <span class="tooltip" tabindex="0" ><strong>viewport</strong><span class="tooltiptext">The user’s visible area of an app on their screen.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#viewport" aria-label="Go to glossary anchor for viewport">Glossary</a></span></span></span> and adjust the <strong>Light Probe Visualization</strong> property in the <a href="lighting-window.html#WorkflowSettings">workflow settings</a>.</p>
+
+<h4>Remove light probe ringing</h4>
+
+<p>To remove light probe ringing, follow these steps:</p>
+
+<ol>
+<li><p>Select the <strong><span class="tooltip" tabindex="0" ><strong>Light Probe Group</strong><span class="tooltiptext">A component that enables you to add Light Probes to GameObjects in your scene. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-LightProbeGroup.html" href="class-LightProbeGroup.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#LightProbeGroup" aria-label="Go to glossary anchor for LightProbeGroup">Glossary</a></span></span></span></strong> component.</p></li>
+<li><p>Enable the <strong>Remove Ringing</strong> property.</p></li>
+</ol>
+
+<p>
+<strong>Note:</strong> This option reduces contrast in probe-lit objects. Disable it if your scene does not exhibit ringing artifacts.</p>
+
+<h4>Adjust scene lighting</h4>
+
+<p>To mitigate ringing artifacts caused by high-intensity direct lighting, follow these steps:</p>
+
+<ul>
+<li><p>Lower the <strong>Intensity</strong> value in the <strong>Light</strong> component.</p></li>
+<li><p>Use <span class="tooltip" tabindex="0" ><a href="LightModes-introduction.html#mixed">mixed lights</a><span class="tooltiptext">Light components whose Mode property is set to Mixed. Some calculations for Mixed Lights are performed in advance, and some calculations for Mixed Lights are performed at runtime. The behavior of all Mixed Lights in a Scene is determined by the Scene’s Lighting Mode. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about LightModes-landing.html" href="LightModes-landing.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#MixedLights" aria-label="Go to glossary anchor for MixedLights">Glossary</a></span></span></span> to balance real-time direct lighting and baked indirect lighting.</p></li>
+</ul>
+
+<p><a name="Lightmapping-SeamStitching" aria-hidden="true"></a></p>
+
+<h2>Hard edges in lightmaps</h2>
+
+<p>Smooth hard edges and lighting discontinuities at seams and chart boundaries.</p>
+
+<h3>Symptom</h3>
+
+<p>When using baked lightmaps with the <a href="progressive-lightmapper.html">Progressive Lightmapper</a>, you may notice:</p>
+
+<ul>
+<li><p>Hard edges appearing along seams between separate mesh faces.</p></li>
+<li><p>Visible discontinuities in lighting at chart boundaries in the lightmap.</p></li>
+</ul>
+
+<figure>
+<img src="../uploads/Main/stitch_off.jpg" alt="Hard edges in lightmaps">
+<figcaption>Hard edges in lightmaps</figcaption>
+</figure>
+
+<h3>Cause</h3>
+
+<p>When Unity bakes lightmaps, it treats mesh faces that are close together but separate as distinct in lightmap space, creating edges known as seams.</p>
+
+<p>Ideally, seams are invisible, but they can sometimes appear with hard edges. This happens because the GPU cannot blend texel values between separated charts in the lightmap, treating them as distinct entities and causing visible discontinuities.</p>
+
+<h3>Resolution</h3>
+
+<p>Seam stitching smooths hard edges on GameObjects rendered with baked lightmaps from the Progressive Lightmapper. When enabled, Unity performs additional calculations to improve the appearance of seams in the lightmap. While stitching isn’t perfect, it often significantly enhances the final result. However, this feature increases baking time, so it is disabled by default.</p>
+
+<p>When active, the lightmapper identifies pairs of edges to stitch and smooths the illumination across seams. This applies only to straight edges that run horizontally or vertically along chart boundaries in the atlas and works with axis-aligned rectangles in UV space. </p>
+
+<p><strong>Note:</strong></p>
+
+<ul>
+<li>Seam stitching works only with the <a href="progressive-lightmapper.html">Progressive Lightmapper</a>.</li>
+<li>Seam stitching applies to single GameObjects only; it cannot smooth seams between multiple GameObjects.</li>
+</ul>
+
+<p>To smooth hard edges:</p>
+
+<ol>
+<li><p>Select a GameObject with a Mesh Renderer component in the scene.</p></li>
+<li><p>In the <strong>Mesh Renderer Inspector</strong>, in the <strong>Lightmapping</strong> section, enable <strong>Stitch Seams</strong>.</p></li>
+</ol>
+
+<p>Alternatively, use the <a href="../ScriptReference/MeshRenderer-stitchLightmapSeams.html">MeshRenderer.stitchLightmapSeams</a> API to programmatically enable seam stitching.</p>
+
+<p>
+<strong>Example:</strong> A Scene with seam stitching.</p>
+
+<figure>
+<img src="../uploads/Main/stitch_on.jpg" alt="Seam stitching">
+<figcaption>Seam stitching</figcaption>
+</figure>
+
+<p><a name="ProgressiveLightmapper-UVOverlap" aria-hidden="true"></a></p>
+
+<h2>Light bleeding in lightmaps</h2>
+
+<p>Fix lightmap aliasing, UV overlaps, and red highlight warnings.</p>
+
+<h3>Symptom</h3>
+
+<p>Light bleeding typically manifests as:</p>
+
+<ul>
+<li>Aliasing or pixelation in the rendered lightmap.</li>
+<li>Overlapping UVs detected by Unity, with warning messages in the console.</li>
+<li>Red highlights in the <strong>UV Overlap</strong> draw mode or <strong>Baked Lightmaps Preview</strong>.</li>
+</ul>
+
+<p>
+<strong>Example:</strong> Red pixels indicate overlapping chart neighbourhoods.</p>
+
+<figure>
+<img src="../uploads/Main/ProgressiveLightmapper-UVOverlap-183-1.png" alt="Light bleeding in lightmaps">
+<figcaption>Light bleeding in lightmaps</figcaption>
+</figure>
+
+<h3>Cause</h3>
+
+<p>Light bleeding occurs when data from one lightmap chart spills onto another due to insufficient spacing between charts, leading to graphical artifacts such as aliasing or pixelation.</p>
+
+<p>Each lightmap comprises multiple charts, which Unity maps to mesh faces at runtime. These charts store lighting data used to calculate the final appearance. During rendering, the GPU samples lighting data by interpolating the values of the four nearest texels, known as the bilinear neighborhood. When charts are placed too closely, their neighborhoods overlap, causing light bleeding. Factors influencing this issue include lightmap resolution, mesh UVs, and Importer settings. Unity provides tools to detect and address these problems.</p>
+
+<p>
+<strong>Example:</strong> Graphical artifacts due to chart bleeding.</p>
+
+<figure>
+<img src="../uploads/Main/ProgressiveLightmapper-UVOverlap-183-0.png" alt="Graphical artifacts due to chart bleeding">
+<figcaption>Graphical artifacts due to chart bleeding</figcaption>
+</figure>
+
+<p>Light bleeding is caused by overlapping chart neighborhoods in the lightmap. This occurs when there is insufficient spacing between charts, often due to:</p>
+
+<ul>
+<li>Insufficient margins in user-provided lightmap UVs.</li>
+<li>Small pack margins in Unity-generated lightmap UVs.</li>
+<li>Low lightmap resolution.</li>
+<li>A high density of charts within a single lightmap.</li>
+</ul>
+
+<h3>Resolution</h3>
+
+<p>To resolve light bleeding, follow these steps.</p>
+
+<h4>Adjust lightmap UV margins</h4>
+
+<ul>
+<li><p>If providing UVs manually, increase the margins using your 3D modeling software.</p></li>
+<li>
+<p>For Unity-generated UVs, go to the Model Import Settings and:</p>
+
+<ul>
+<li>Set the <strong>Margin Method</strong> to <strong>Calculate</strong> and adjust <strong>Min Lightmap Resolution</strong> and <strong>Min Object Scale</strong>.</li>
+<li>Alternatively, set the <strong>Margin Method</strong> to <strong>Manual</strong> and increase the <strong>Pack Margin</strong> value.</li>
+</ul>
+
+<p>Refer to the <a href="LightingGiUvs-GeneratingLightmappingUVs.html">Generating lightmapping UVs</a> documentation for more details.</p>
+</li>
+</ul>
+
+<h4>Increase lightmap resolution</h4>
+
+<ul>
+<li><p>To increase resolution globally, adjust the <strong>Lightmapper Settings</strong> in the <strong>Lighting</strong> tab.</p></li>
+<li><p>To increase resolution for a specific GameObject, modify its <strong>Lightmap Settings</strong> in the Mesh Renderer component.</p></li>
+</ul>
+
+<h4>Use Unity’s visualization tools to identify overlaps</h4>
+
+<ul>
+<li>
+<p>Enable the <strong>UV Overlap</strong> draw mode in the Scene View to highlight problematic texels.</p>
+
+<p>
+<strong>Example:</strong> Scene View using UV Overlap draw mode (see dropdown in top left).</p>
+
+<figure>
+<img src="../uploads/Main/ProgressiveLightmapper-UVOverlap-183-2.png" alt="UV Overlap draw mode">
+<figcaption>UV Overlap draw mode</figcaption>
+</figure>
+</li>
+<li>
+<p>Use the <strong>Baked Lightmaps Preview</strong> to view and diagnose UV overlaps in the <strong>Lighting</strong> window.</p>
+
+<p>
+<strong>Example:</strong> The Baked Lightmaps Preview in the Lighting window’s Baked Lightmaps tab.</p>
+
+<figure>
+<img src="../uploads/Main/ProgressiveLightmapper-UVOverlap-183-3.png" alt="Baked Lightmaps Preview">
+<figcaption>Baked Lightmaps Preview</figcaption>
+</figure>
+</li>
+</ul>
+
+<p>By implementing these solutions, you can minimize or eliminate light bleeding artifacts.</p>
+
+<p>
+<strong>Example:</strong> Same mesh as before, but without bleeding artifacts.</p>
+
+<figure>
+<img src="../uploads/Main/ProgressiveLightmapper-UVOverlap-183-4.jpg" alt="Same mesh as before, but without bleeding artifacts">
+<figcaption>Same mesh as before, but without bleeding artifacts</figcaption>
+</figure>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="../ScriptReference/Material-doubleSidedGI.html">Double-Sided Global Illumination</a></li>
+<li><a href="GIVis.html">GI visualizations in the Scene View</a></li>
+<li><a href="LightingGiUvs-GeneratingLightmappingUVs.html">Generating lightmapping UVs</a></li>
+<li><a href="class-LightmapParameters.html">Lightmap Parameters Asset</a></li>
+<li><a href="../ScriptReference/MeshRenderer-stitchLightmapSeams.html">MeshRenderer.stitchLightmapSeams API</a></li>
+<li><a href="progressive-lightmapper.html">Progressive Lightmapper</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="Lightmapping-troubleshooting.html"></a></span><div class="tip">Troubleshooting baked lightmaps</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="troubleshooting-lightmapping-quality.html"></a></span><div class="tip">Troubleshooting lightmapping quality issues</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

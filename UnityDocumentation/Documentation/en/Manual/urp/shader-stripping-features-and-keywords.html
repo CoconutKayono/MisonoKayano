@@ -1,0 +1,663 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Settings and keywords reference for stripping keywords in URP</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<meta property="relative-path-to-manual" content="../">
+<meta property="version-switcher-versions-with-this-page" content="Versions with this page:">
+<meta property="version-switcher-versions-without-this-page" content="Versions without this page:">
+<meta property="version-switcher-supported" content="Supported">
+<meta property="version-switcher-legacy" content="Legacy">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/Manual/urp/shader-stripping-features-and-keywords.html">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../../StaticFilesManual/js/jquery.js?ts=20260626"></script><script type="text/javascript" src="../../StaticFilesManual/js/core.js?ts=20260626"></script><script type="text/javascript" src="../../StaticFilesManual/js/image-comp.js?ts=20260626"></script><script type="text/javascript" src="../docdata/toc.js?ts=20260626"></script><script type="text/javascript" src="../docdata/global_toc.js?ts=20260626"></script><link rel="stylesheet" type="text/css" href="../../StaticFilesManual/css/core.css?ts=20260626">
+<link rel="stylesheet" type="text/css" href="../../StaticFilesManual/css/icons.css?ts=20260626">
+<link rel="stylesheet" href="../../StaticFilesManual/css/prism.css">
+<script src="../../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="../30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../index.html" class="selected">Manual</a></li>
+<li><a href="../../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/urp/shader-stripping-features-and-keywords.html">English</a></li>
+<li><a href="/cn/current/Manual/urp/shader-stripping-features-and-keywords.html">中文</a></li>
+<li><a href="/ja/current/Manual/urp/shader-stripping-features-and-keywords.html">日本語</a></li>
+<li><a href="/kr/current/Manual/urp/shader-stripping-features-and-keywords.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: Unity 6.7 Beta</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/urp/shader-stripping-features-and-keywords.html">English</a></li>
+<li><a href="/cn/current/Manual/urp/shader-stripping-features-and-keywords.html">中文</a></li>
+<li><a href="/ja/current/Manual/urp/shader-stripping-features-and-keywords.html">日本語</a></li>
+<li><a href="/kr/current/Manual/urp/shader-stripping-features-and-keywords.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="../materials-and-shaders.html">Materials and shaders</a></li>
+<li><a href="../built-in-materials-and-shaders.html">Prebuilt materials and shaders</a></li>
+<li><a href="../urp/shaders-in-universalrp.html">Prebuilt shaders in URP</a></li>
+<li><a href="../urp/shader-stripping-landing.html">Reducing shader variants in URP</a></li>
+<li>Settings and keywords reference for stripping keywords in URP</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="../urp/shader-stripping-fog.html"></a></span><div class="tip">Enable dynamic branching in shaders in URP</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="../urp/shaders-in-universalrp-reference.html"></a></span><div class="tip">Shader Material Inspector window reference for URP</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Settings and keywords reference for stripping keywords in URP</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Explore the settings and <span class="tooltip" tabindex="0" ><strong>shader</strong><span class="tooltiptext">A program that runs on the GPU. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Shaders.html" href="../Shaders.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#shader" aria-label="Go to glossary anchor for shader">Glossary</a></span></span></span> keywords you can use to speed up build time in the Universal <span class="tooltip" tabindex="0" ><strong>Render Pipeline</strong><span class="tooltiptext">A series of operations that take the contents of a Scene, and displays them on a screen. Unity lets you choose from pre-built render pipelines, or write your own. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about render-pipelines.html" href="../render-pipelines.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#renderpipeline" aria-label="Go to glossary anchor for renderpipeline">Glossary</a></span></span></span> (URP) by stripping shader variants. For more information, refer to <a href="shader-stripping-features.html">Strip shader variants</a>.</p>
+
+<p>
+<strong>Important</strong>: When you remove built-in shader keywords, Unity might strip shader variants your built project needs. To check how many shader variants your project has, enable strict shader variant matching, otherwise Unity might replace missing shader variants with others. For more information, refer to <a href="../shader-how-many-variants.html#highlight-missing-shaders">Check how many shader variants you have</a>. </p>
+
+<h2>Decals</h2>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Feature</strong></th>
+	<th style="text-align:left;"><strong>Location in the Editor</strong></th>
+	<th style="text-align:left;"><strong>Keyword set for Shader Build Settings</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">Decals that use <strong>DBuffer</strong> mode</td>
+	<td style="text-align:left;">
+<a href="urp-universal-renderer.html">Universal Renderer</a>. In the Decals Renderer Feature, set <strong>Technique</strong> to <strong>Screen Space</strong>.</td>
+	<td style="text-align:left;"><code>_ _DBUFFER_MRT1 _DBUFFER_MRT2 _DBUFFER_MRT3</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;">Decals that use <strong>Screen Space</strong> mode</td>
+	<td style="text-align:left;">
+<a href="urp-universal-renderer.html">Universal Renderer</a>. In the Decals Renderer Feature, set <strong>Technique</strong> to <strong>DBuffer</strong>.</td>
+	<td style="text-align:left;">
+<code>_DECAL_NORMAL_BLEND_LOW</code> <code>_DECAL_NORMAL_BLEND_MEDIUM</code> <code>_DECAL_NORMAL_BLEND_HIGH</code>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Rendering layers for decals</td>
+	<td style="text-align:left;">
+<a href="urp-universal-renderer.html">Universal Renderer</a>. In the Decals Renderer Feature, disable <strong>Use Rendering Layers</strong>.</td>
+	<td style="text-align:left;"><code>_ _DECAL_LAYERS</code></td>
+</tr>
+</tbody>
+</table>
+
+<h2>Fog</h2>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Feature</strong></th>
+	<th style="text-align:left;"><strong>Location in the Editor</strong></th>
+	<th style="text-align:left;"><strong>Keyword set for Shader Build Settings</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">Fog</td>
+	<td style="text-align:left;">
+<a href="../lighting-window.html">Lighting window</a>. In the <strong>Other Settings</strong> section, disable <strong>Fog</strong>.</td>
+	<td style="text-align:left;"><code>_ _FOG_LINEAR FOG_EXP FOG_EXP2</code></td>
+</tr>
+</tbody>
+</table>
+
+<p>To keep fog but reduce shader variants by using dynamic branching, refer to <a href="shader-stripping-fog.html">Enable dynamic branching in prebuilt shaders</a>.</p>
+
+<h2>Level of detail (LOD)</h2>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Feature</strong></th>
+	<th style="text-align:left;"><strong>Location in the Editor</strong></th>
+	<th style="text-align:left;"><strong>Keyword set for Shader Build Settings</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><span class="tooltip" tabindex="0" ><strong>LOD</strong><span class="tooltiptext">The <em>Level Of Detail</em> (LOD) technique is an optimization that reduces the number of triangles that Unity has to render for a GameObject when its distance from the Camera increases. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about LevelOfDetail.html" href="../LevelOfDetail.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#LOD" aria-label="Go to glossary anchor for LOD">Glossary</a></span></span></span> transitions</td>
+	<td style="text-align:left;">
+<a href="universalrp-asset.html">URP Asset</a>. In the <strong>Quality</strong> section, disable <strong>LOD Cross Fade</strong>.</td>
+	<td style="text-align:left;"><code>_ LOD_FADE_CROSSFADE</code></td>
+</tr>
+</tbody>
+</table>
+
+<p>For other ways to reduce LOD shader variants, refer to <a href="shader-stripping-lod">Strip LOD shader variants</a>.</p>
+
+<h2>Lighting</h2>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Feature</strong></th>
+	<th style="text-align:left;"><strong>Location in the Editor</strong></th>
+	<th style="text-align:left;"><strong>Keyword set for Shader Build Settings</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">Additional lights (Forward rendering paths only)</td>
+	<td style="text-align:left;">
+<a href="universalrp-asset.html">URP Asset</a>. In the <strong>Lighting section</strong>, set <strong>Additional Lights</strong> to <strong>Disabled</strong>.</td>
+	<td style="text-align:left;"><code>_ _ADDITIONAL_LIGHTS_VERTEX _ADDITIONAL_LIGHTS</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;">Light cookies</td>
+	<td style="text-align:left;">
+<a href="light-component.html">Light components</a>. In the <strong>Emission</strong> section, remove cookie textures from all lights in your project.</td>
+	<td style="text-align:left;"><code>_ _LIGHT_COOKIES</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;">Rendering layers for lights</td>
+	<td style="text-align:left;">
+<a href="universalrp-asset.html">URP Asset</a>. For more information, refer to <span class="tooltip" tabindex="0" ><a href="features/rendering-layers.html">Rendering Layers</a><span class="tooltiptext">A layer that defines how specific effects are applied across different objects. Rendering layers don’t define draw order. They’re selection groups you assign objects to. Rendering layers let lights, decals, shadows, and custom passes include or ignore specific objects.<br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#renderinglayer" aria-label="Go to glossary anchor for renderinglayer">Glossary</a></span></span></span>.</td>
+	<td style="text-align:left;"><code>_ _LIGHT_LAYERS</code></td>
+</tr>
+</tbody>
+</table>
+
+<h2>Lightmapping</h2>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Feature</strong></th>
+	<th style="text-align:left;"><strong>Location in the Editor</strong></th>
+	<th style="text-align:left;"><strong>Keyword set for Shader Build Settings</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><span class="tooltip" tabindex="0" ><strong>Lightmaps</strong><span class="tooltiptext">A pre-rendered texture that contains the effects of light sources on static objects in the scene. Lightmaps are overlaid on top of scene geometry to create the effect of lighting. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Lightmapping.html" href="../Lightmapping.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#Lightmap" aria-label="Go to glossary anchor for Lightmap">Glossary</a></span></span></span></td>
+	<td style="text-align:left;">
+<a href="../Lightmaps-reference.html">Lightmapping settings</a>. Disable <strong>Realtime <span class="tooltip" tabindex="0" ><strong>Global Illumination</strong><span class="tooltiptext">A group of techniques that model both direct and indirect lighting to provide realistic lighting results.<br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#globalillumination" aria-label="Go to glossary anchor for globalillumination">Glossary</a></span></span></span></strong> and <strong>Baked Global Illumination</strong>.</td>
+	<td style="text-align:left;"><code>_ LIGHTMAP_ON</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;">Directional lightmaps</td>
+	<td style="text-align:left;">
+<a href="../Lightmaps-reference.html">Lightmapping settings</a>. Set <strong>Directional Mode</strong> to <strong>Non-Directional</strong>.</td>
+	<td style="text-align:left;"><code>_ DIRLIGHTMAP_COMBINED</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;">Bicubic sampling of lightmaps</td>
+	<td style="text-align:left;">
+<a href="urp-global-settings.html">Graphics settings</a>. In the <strong>Lighting</strong> section, disable <strong>Use Bicubic Lightmap Sampling</strong>.</td>
+	<td style="text-align:left;"><code>_ LIGHTMAP_BICUBIC_SAMPLING</code></td>
+</tr>
+</tbody>
+</table>
+
+<h2>Materials</h2>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Feature</strong></th>
+	<th style="text-align:left;"><strong>Location in the Editor</strong></th>
+	<th style="text-align:left;"><strong>Keyword set for Shader Build Settings</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">Alpha clipping</td>
+	<td style="text-align:left;">
+<a href="shaders-in-universalrp-reference.html">Material properties</a>. In the <strong>Surface Options</strong> section, disable <strong>Alpha Clipping</strong>.</td>
+	<td style="text-align:left;"><code>_ _ALPHATEST_ON</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;">Clear coat</td>
+	<td style="text-align:left;">
+<a href="shaders-in-universalrp-reference.html">Material properties</a>. In the <strong>Detail Inputs</strong> section, disable <strong>Clear coat</strong> for all Complex Lit materials.</td>
+	<td style="text-align:left;"><code>_ _CLEARCOAT _CLEARCOATMAP</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;">Detail mapping</td>
+	<td style="text-align:left;">
+<a href="shaders-in-universalrp-reference.html">Material properties</a>. In the <strong>Detail Inputs</strong> section, remove the textures for all materials.</td>
+	<td style="text-align:left;"><code>_ _DETAIL_MULX2 _DETAIL_SCALED</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;">Emission</td>
+	<td style="text-align:left;">
+<a href="shaders-in-universalrp-reference.html">Material properties</a>. In the <strong>Detail Inputs</strong> section, disable <strong>Emission</strong> for all materials.</td>
+	<td style="text-align:left;"><code>_ _EMISSION</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;">Environment reflections</td>
+	<td style="text-align:left;">
+<a href="shaders-in-universalrp-reference.html">Material properties</a>. In the <strong>Advanced Options</strong> section, disable <strong>Environment Reflections</strong>.</td>
+	<td style="text-align:left;">
+<code>_ _ENVIRONMENTREFLECTIONS_OFF</code>. Removing this keyword enables environment reflections.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Height maps</td>
+	<td style="text-align:left;">
+<a href="shaders-in-universalrp-reference.html">Material properties</a>. In the <strong>Surface Inputs</strong> section, remove the <strong>Height Map</strong> texture for all materials.</td>
+	<td style="text-align:left;"><code>_ _PARALLAXMAP</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;">Metallic or specular maps</td>
+	<td style="text-align:left;">
+<a href="shaders-in-universalrp-reference.html">Material properties</a>. In the <strong>Surface Inputs</strong> section, remove the <strong>Metallic Map</strong> or <strong>Specular Map</strong> texture for all materials.</td>
+	<td style="text-align:left;"><code>_ _METALLICSPECGLOSSMAP</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><span class="tooltip" tabindex="0" ><strong>Normal maps</strong><span class="tooltiptext">A type of Bump Map texture that allows you to add surface detail such as bumps, grooves, and scratches to a model which catch the light as if they are represented by real geometry.<br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#normalmap" aria-label="Go to glossary anchor for normalmap">Glossary</a></span></span></span></td>
+	<td style="text-align:left;">
+<a href="shaders-in-universalrp-reference.html">Material properties</a>. In the <strong>Surface Inputs</strong> section, remove the <strong>Normal Map</strong> texture for all materials.</td>
+	<td style="text-align:left;"><code>_ _NORMALMAP</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;">Occlusion maps</td>
+	<td style="text-align:left;">
+<a href="shaders-in-universalrp-reference.html">Material properties</a>. In the <strong>Surface Inputs</strong> section, remove the <strong>Occlusion Map</strong> texture for all materials.</td>
+	<td style="text-align:left;"><code>_ _OCCLUSIONMAP</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;">Shadows</td>
+	<td style="text-align:left;">
+<a href="shaders-in-universalrp-reference.html">Material properties</a>. In the <strong>Surface Options</strong> section, disable <strong>Receive shadows</strong>.</td>
+	<td style="text-align:left;">
+<code>_ _RECEIVE_SHADOWS_OFF</code>. Set <strong>Override type</strong> to <code>shader_feature</code> or <code>multi_compile</code>. Removing this keyword enables <span class="tooltip" tabindex="0" ><strong>GameObjects</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-GameObject.html" href="../class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span> receiving shadows.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Smoothness from <strong>Base Map</strong> alpha</td>
+	<td style="text-align:left;">
+<a href="shaders-in-universalrp-reference.html">Material properties</a>. In the <strong>Surface Inputs</strong> section, under <strong>Metallic Map</strong> or <strong>Specular Map</strong>, set <strong>Source</strong> to <strong>Metallic Alpha</strong> or <strong>Specular Alpha</strong>.</td>
+	<td style="text-align:left;"><code>_ _SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;">Specular highlights</td>
+	<td style="text-align:left;">
+<a href="shaders-in-universalrp-reference.html">Material properties</a>. In the <strong>Advanced Options</strong> section, disable <strong>Specular Highlights</strong>.</td>
+	<td style="text-align:left;">
+<code>_ _SPECULARHIGHLIGHTS_OFF</code>. Removing this keyword enables specular highlights.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Specular highlights on transparent materials</td>
+	<td style="text-align:left;">
+<a href="shaders-in-universalrp-reference.html">Material properties</a>. In the <strong>Surface Options</strong> section on all transparent materials, disable <strong>Preserve Specular Lighting</strong> and set <strong>Blending Mode</strong> to either <strong>Alpha</strong>, <strong>Premultiply</strong>, or <strong>Additive</strong>.</td>
+	<td style="text-align:left;"><code>_ _ALPHAPREMULTIPLY_ON _ALPHAMODULATE_ON</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;">Specular setup</td>
+	<td style="text-align:left;">
+<a href="shaders-in-universalrp-reference.html">Material properties</a>. In the <strong>Surface Options</strong> section, set <strong>Workflow mode</strong> to <strong>Metallic</strong> for all materials.</td>
+	<td style="text-align:left;"><code>_ _SPECULAR_SETUP</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;">Transparency</td>
+	<td style="text-align:left;">In the <strong>Surface Options</strong> section of the Material properties, set <strong>Surface Type</strong> to <strong>Opaque</strong> for all materials.</td>
+	<td style="text-align:left;"><code>_SURFACE_TYPE_TRANSPARENT</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;"><span class="tooltip" tabindex="0" ><strong>Terrain</strong><span class="tooltiptext">The landscape in your scene. A Terrain GameObject adds a large flat plane to your scene and you can use the Terrain’s Inspector window to create a detailed landscape. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about terrain-UsingTerrains.html" href="../terrain-UsingTerrains.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#Terrain" aria-label="Go to glossary anchor for Terrain">Glossary</a></span></span></span> holes</td>
+	<td style="text-align:left;">
+<a href="universalrp-asset.html">URP Asset</a>. In the <strong>Rendering</strong> section. Disable <strong>Terrain Holes</strong>.</td>
+	<td style="text-align:left;">N/A</td>
+</tr>
+</tbody>
+</table>
+
+<h2>Post-processing</h2>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Feature</strong></th>
+	<th style="text-align:left;"><strong>Location in the Editor</strong></th>
+	<th style="text-align:left;"><strong>Keyword set for Shader Build Settings</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">Bloom</td>
+	<td style="text-align:left;">
+<a href="VolumeOverrides.html">Volume Overrides</a>. Remove the <span class="tooltip" tabindex="0" ><a href="post-processing-bloom.html">Bloom</a><span class="tooltiptext">A post-processing effect used to reproduce an imaging artifact of real-world cameras. The effect produces fringes of light extending from the borders of bright areas in an image, contributing to the illusion of an extremely bright light overwhelming the camera or eye capturing the scene.<br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#Bloom" aria-label="Go to glossary anchor for Bloom">Glossary</a></span></span></span> Volume Override.</td>
+	<td style="text-align:left;"><code>_ _BLOOM_LQ _BLOOM_HQ _BLOOM_LQ_DIRT _BLOOM_HQ_DIRT</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;">Chromatic Aberration</td>
+	<td style="text-align:left;">
+<a href="VolumeOverrides.html">Volume Overrides</a>. Remove the <a href="post-processing-chromatic-aberration.html">Chromatic Aberration</a> Volume Override.</td>
+	<td style="text-align:left;"><code>_ _CHROMATIC_ABERRATION</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;">Depth of Field - high quality sampling</td>
+	<td style="text-align:left;">
+<a href="VolumeOverrides.html">Volume Overrides</a>. In the <span class="tooltip" tabindex="0" ><a href="depth-of-field-urp.html">Depth of Field</a><span class="tooltiptext">A post-processing effect that simulates the focus properties of a camera lens. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about PostProcessingOverview.html" href="../PostProcessingOverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#depthoffield" aria-label="Go to glossary anchor for depthoffield">Glossary</a></span></span></span> Volume Override, disable <strong>High Quality Sampling</strong>.</td>
+	<td style="text-align:left;"><code>_ _HIGH_QUALITY_SAMPLING</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;">Dithering</td>
+	<td style="text-align:left;">
+<a href="camera-component-reference.html">Camera properties</a>. In the <strong>Rendering</strong> section, disable <strong>Dithering</strong>.</td>
+	<td style="text-align:left;"><code>_ _DITHERING</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;">Film Grain</td>
+	<td style="text-align:left;">
+<a href="VolumeOverrides.html">Volume Overrides</a>. Remove the <a href="post-processing-film-grain.html">Film Grain</a> Volume Override.</td>
+	<td style="text-align:left;"><code>_ _FILM_GRAIN</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;">Lens Distortion</td>
+	<td style="text-align:left;">
+<a href="VolumeOverrides.html">Volume Overrides</a>. Remove the <a href="post-processing-lens-distortion.html">Lens Distortion</a> Volume Override.</td>
+	<td style="text-align:left;"><code>_ _DISTORTION</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;">Screen Space <span class="tooltip" tabindex="0" ><strong>Ambient Occlusion</strong><span class="tooltiptext">A method to approximate how much ambient light (light not coming from a specific direction) can hit a point on a surface.<br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#ambientocclusion" aria-label="Go to glossary anchor for ambientocclusion">Glossary</a></span></span></span> (SSAO)</td>
+	<td style="text-align:left;">
+<a href="urp-universal-renderer.html">Universal Renderer</a>. Remove the <a href="post-processing-ssao.html">Screen Space Ambient Occlusion Renderer Feature</a>.</td>
+	<td style="text-align:left;"><code>_ _SCREEN_SPACE_OCCLUSION</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;">Tonemapping</td>
+	<td style="text-align:left;">
+<a href="VolumeOverrides.html">Volume Overrides</a>. Remove <span class="tooltip" tabindex="0" ><a href="post-processing-tonemapping.html">Tonemapping</a><span class="tooltiptext">The process of remapping HDR values of an image into a range suitable to be displayed on screen. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about PostProcessingOverview.html" href="../PostProcessingOverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#tonemapping" aria-label="Go to glossary anchor for tonemapping">Glossary</a></span></span></span> Volume Override.</td>
+	<td style="text-align:left;"><code>_ _HDR_GRADING _TONEMAP_ACES _TONEMAP_NEUTRAL</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;">Alpha processing</td>
+	<td style="text-align:left;">
+<a href="universalrp-asset.html">URP Asset</a>. In the <strong><span class="tooltip" tabindex="0" ><strong>Post-processing</strong><span class="tooltiptext">A process that improves product visuals by applying filters and effects before the image appears on screen. You can use post-processing effects to simulate physical camera and film properties, for example Bloom and Depth of Field. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about PostProcessingOverview.html" href="../PostProcessingOverview.html">More info</a> <span class="search-words">post processing, postprocessing, postprocess</span><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#post-processing" aria-label="Go to glossary anchor for post-processing">Glossary</a></span></span></span></strong> section, disable <strong>Alpha Output</strong>.</td>
+	<td style="text-align:left;"><code>_ _ENABLE_ALPHA_OUTPUT</code></td>
+</tr>
+</tbody>
+</table>
+
+<h2>Rendering paths</h2>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Feature</strong></th>
+	<th style="text-align:left;"><strong>Location in the Editor</strong></th>
+	<th style="text-align:left;"><strong>Keyword set for Shader Build Settings</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">Accurate G-buffer normals (Deferred rendering paths only)</td>
+	<td style="text-align:left;">
+<a href="urp-universal-renderer.html">Universal Renderer</a>. In the <strong>Rendering</strong> section, disable <strong>Accurate G-buffer normals</strong>. This has no effect on platforms that use the Vulkan graphics API.</td>
+	<td style="text-align:left;"><code>_ _GBUFFER_NORMALS_OCT</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;">Fast sRGB to linear conversion</td>
+	<td style="text-align:left;">
+<a href="universalrp-asset.html">URP Asset</a>. In the <strong>Post-processing</strong> section, disable <strong>Fast sRGB/Linear conversions</strong>.</td>
+	<td style="text-align:left;"><code>_ _USE_FAST_SRGB_LINEAR_CONVERSION</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;">Forward+ <span class="tooltip" tabindex="0" ><strong>rendering path</strong><span class="tooltiptext">The technique that a render pipeline uses to render graphics. Choosing a different rendering path affects how lighting and shading are calculated. Some rendering paths are more suited to different platforms and hardware than others. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about RenderingPaths.html" href="../RenderingPaths.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#renderingpath" aria-label="Go to glossary anchor for renderingpath">Glossary</a></span></span></span></td>
+	<td style="text-align:left;">
+<a href="urp-universal-renderer.html">Universal Renderer</a>. In the <strong>Rendering</strong> section, set <strong>Rendering Path</strong> to <strong>Forward+</strong> or <strong>Deferred+</strong>.</td>
+	<td style="text-align:left;"><code>_ _CLUSTER_LIGHT_LOOP</code></td>
+</tr>
+</tbody>
+</table>
+
+<h2>Reflections</h2>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Feature</strong></th>
+	<th style="text-align:left;"><strong>Location in the Editor</strong></th>
+	<th style="text-align:left;"><strong>Keyword set for Shader Build Settings</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><span class="tooltip" tabindex="0" ><strong>Reflection Probe</strong><span class="tooltiptext">A rendering component that captures a spherical view of its surroundings in all directions, rather like a camera. The captured image is then stored as a Cubemap that can be used by objects with reflective materials. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-ReflectionProbe.html" href="../class-ReflectionProbe.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#ReflectionProbe" aria-label="Go to glossary anchor for ReflectionProbe">Glossary</a></span></span></span> blending</td>
+	<td style="text-align:left;">
+<a href="../class-ReflectionProbe.html">Reflection Probe properties</a>. Disable <strong>Probe Blending</strong> for all Reflection Probes.</td>
+	<td style="text-align:left;"><code>_ _REFLECTION_PROBE_BLENDING</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;">Reflection Probe box projection</td>
+	<td style="text-align:left;">
+<a href="../class-ReflectionProbe.html">Reflection Probe properties</a>. Disable <strong>Box Projection</strong> for all Reflection Probes.</td>
+	<td style="text-align:left;"><code>_ _REFLECTION_PROBE_BOX_PROJECTION</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;">Reflection Probe rotation</td>
+	<td style="text-align:left;">
+<a href="urp-global-settings.html">Graphics settings</a>. In the <strong>Lighting</strong> section, disable <strong>Use Reflection Probe Rotation</strong>.</td>
+	<td style="text-align:left;"><code>_ REFLECTION_PROBE_ROTATION</code></td>
+</tr>
+</tbody>
+</table>
+
+<h2>Shadows</h2>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Feature</strong></th>
+	<th style="text-align:left;"><strong>Location in the Editor</strong></th>
+	<th style="text-align:left;"><strong>Keyword set for Shader Build Settings</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">Main lights cast shadows</td>
+	<td style="text-align:left;">
+<a href="universalrp-asset.html">URP Asset</a>. In the <strong>Lighting</strong> section, under <strong>Main Light</strong>, disable <strong>Cast Shadows</strong>.</td>
+	<td style="text-align:left;"><code>_ _MAIN_LIGHT_SHADOWS _MAIN_LIGHT_SHADOWS_CASCADE _MAIN_LIGHT_SHADOWS_SCREEN</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;">Additional lights cast shadows</td>
+	<td style="text-align:left;">
+<a href="universalrp-asset.html">URP Asset</a>. In the <strong>Lighting</strong> section, under <strong>Additional Lights</strong>, disable <strong>Cast Shadows</strong>.</td>
+	<td style="text-align:left;"><code>_ _ADDITIONAL_LIGHT_SHADOWS</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;">Point Lights cast shadows</td>
+	<td style="text-align:left;">
+<a href="light-component.html">Light components</a>. In the <strong>Shadows</strong> section, set <strong>Shadow Type</strong> to <strong>No Shadows</strong> for all Point Lights.</td>
+	<td style="text-align:left;"><code>_ _CASTING_PUNCTUAL_LIGHT_SHADOW</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;">Soft shadows</td>
+	<td style="text-align:left;">
+<a href="universalrp-asset.html">URP Asset</a>. In the <strong>Shadows</strong> section, disable <strong>Soft Shadows</strong>.</td>
+	<td style="text-align:left;"><code>_ _SHADOWS_SOFT _SHADOWS_SOFT_LOW _SHADOWS_SOFT_MEDIUM _SHADOWS_SOFT_HIGH</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;">Shadows from the Subtractive Lighting Mode</td>
+	<td style="text-align:left;">
+<a href="universalrp-asset.html">URP Asset</a>. In the <strong>Lighting</strong> section, disable <strong>Mixed Lighting</strong>.</td>
+	<td style="text-align:left;"><code>_ LIGHTMAP_SHADOW_MIXING</code></td>
+</tr>
+<tr>
+	<td style="text-align:left;">Shadows from the <span class="tooltip" tabindex="0" ><strong>Shadowmask</strong><span class="tooltiptext">A shadowmask texture uses the same UV layout and resolution as its corresponding lightmap texture. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about lighting-mode.html#shadowmask" href="../lighting-mode.html#shadowmask">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#Shadowmask" aria-label="Go to glossary anchor for Shadowmask">Glossary</a></span></span></span> Lighting Mode</td>
+	<td style="text-align:left;">
+<a href="../Lightmaps-reference.html">Lightmapping settings</a>. Set <strong>Lighting Mode</strong> to <strong>Baked Indirect</strong> or <strong>Subtractive</strong>.</td>
+	<td style="text-align:left;"><code>_ SHADOWS_SHADOWMASK</code></td>
+</tr>
+</tbody>
+</table>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="../shader-variants-landing.html">Reducing shader variants</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="../urp/shader-stripping-fog.html"></a></span><div class="tip">Enable dynamic branching in shaders in URP</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="../urp/shaders-in-universalrp-reference.html"></a></span><div class="tip">Shader Material Inspector window reference for URP</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

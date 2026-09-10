@@ -1,0 +1,539 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Move elements at runtime</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<meta property="relative-path-to-manual" content="">
+<meta property="version-switcher-versions-with-this-page" content="Versions with this page:">
+<meta property="version-switcher-versions-without-this-page" content="Versions without this page:">
+<meta property="version-switcher-supported" content="Supported">
+<meta property="version-switcher-legacy" content="Legacy">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/Manual/UIE-move-elements-at-runtime.html">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20260626"></script><script type="text/javascript" src="docdata/toc.js?ts=20260626"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20260626"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20260626">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20260626">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/UIE-move-elements-at-runtime.html">English</a></li>
+<li><a href="/cn/current/Manual/UIE-move-elements-at-runtime.html">中文</a></li>
+<li><a href="/ja/current/Manual/UIE-move-elements-at-runtime.html">日本語</a></li>
+<li><a href="/kr/current/Manual/UIE-move-elements-at-runtime.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: Unity 6.7 Beta</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/UIE-move-elements-at-runtime.html">English</a></li>
+<li><a href="/cn/current/Manual/UIE-move-elements-at-runtime.html">中文</a></li>
+<li><a href="/ja/current/Manual/UIE-move-elements-at-runtime.html">日本語</a></li>
+<li><a href="/kr/current/Manual/UIE-move-elements-at-runtime.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="UIToolkits.html">UI systems</a></li>
+<li><a href="UIElements.html">UI Toolkit</a></li>
+<li><a href="UIE-support-for-runtime-ui.html">Support for runtime UI</a></li>
+<li><a href="UIE-runtime-examples.html">UI Toolkit runtime examples</a></li>
+<li>Move elements at runtime</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="UIE-runtime-examples.html"></a></span><div class="tip">UI Toolkit runtime examples</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="UIE-work-with-text.html"></a></span><div class="tip">Work with text</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Move elements at runtime</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>This example demonstrates how to dynamically set the position of a <span class="tooltip" tabindex="0" ><strong>visual element</strong><span class="tooltiptext">A node of a visual tree that instantiates or derives from the C# <a href="../ScriptReference/UIElements.VisualElement.html"><code>VisualElement</code></a> class. You can style the look, define the behaviour, and display it on screen as part of the UI. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UIE-VisualTree.html" href="UIE-VisualTree.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#visualelement" aria-label="Go to glossary anchor for visualelement">Glossary</a></span></span></span> at runtime. The recommended best practice to move elements at runtime is to use <code>style.translate</code> and set the <code>DynamicTransform</code> usage hint on the moving element. This approach is optimal for performance as it avoids dirtying the layout and keeps updates confined to the transform stage. For more information, refer to <a href="UIE-use-usage-hints-to-reduce-draw-calls-and-geometry-regeneration.html">Optimize performance of moving elements at runtime</a>.</p>
+
+<h2>Example overview</h2>
+
+<p>This example creates a <span class="tooltip" tabindex="0" ><strong>prefab</strong><span class="tooltiptext">An asset type that allows you to store a GameObject complete with components and properties. The prefab acts as a template from which you can create new object instances in the scene. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Prefabs.html" href="Prefabs.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#prefab" aria-label="Go to glossary anchor for prefab">Glossary</a></span></span></span> in the <span class="tooltip" tabindex="0" ><strong>scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html" href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span>. The prefab represents a non-player character (NPC) that moves randomly within a specified range. The NPC has a name tag that follows it and scales based on the distance from the <span class="tooltip" tabindex="0" ><strong>camera</strong><span class="tooltiptext">A component which creates an image of a particular viewpoint in your scene. The output is either drawn to the screen or captured as a texture. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CamerasOverview.html" href="CamerasOverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Camera" aria-label="Go to glossary anchor for Camera">Glossary</a></span></span></span>.</p>
+
+<figure>
+<img src="../uploads/Main/uitk/move-elements-runtime.gif" alt="Move elements at runtime">
+<figcaption>Move elements at runtime</figcaption>
+</figure>
+
+<p>You can find the completed files that this example creates in this <a href="https://github.com/Unity-Technologies/ui-toolkit-manual-code-examples/tree/6000.5/move-elements-at-runtime">GitHub repository</a>.</p>
+
+<h2>Prerequisites</h2>
+
+<p>This guide is for developers familiar with the Unity Editor, UI Toolkit, and C# scripting. Before you start, get familiar with the following:</p>
+
+<ul>
+<li><a href="UIE-UXML.html">Structure UI with UXML</a></li>
+<li><a href="UIBuilder.html">UI Builder</a></li>
+<li><a href="UIE-Transform.html">USS transform</a></li>
+<li><a href="../ScriptReference/UIElements.UsageHints.DynamicTransform.html"><code>UsageHints.DynamicTransform</code></a></li>
+</ul>
+
+<h2>Create the UI container</h2>
+
+<p>Create a UXML in your project and define a VisualElement within it. The VisualElment acts as the parent container for any child elements that you plan to move dynamically during runtime.</p>
+
+<ol>
+<li>Create a Unity project with any template.</li>
+<li>In the <span class="tooltip" tabindex="0" ><strong>Project window</strong><span class="tooltiptext">A window that shows the contents of your <code>Assets</code> folder (Project tab) <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ProjectView.html" href="ProjectView.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Projectwindow" aria-label="Go to glossary anchor for Projectwindow">Glossary</a></span></span></span>, create a folder named <code>UI</code> to store the UXML and USS files.</li>
+<li>In the <code>UI</code> folder, create a UXML file named <code>NameTagContainer.uxml</code>.</li>
+<li>Double-click the <code>NameTagContainer.uxml</code> file to open it in the UI Builder.</li>
+<li>Add a VisualElement to the <strong>Hierarchy</strong> panel and name it as <code>BaseContainer</code>.</li>
+<li>Save your changes.</li>
+</ol>
+
+<p>The finished <code>NameTagContainer.uxml</code> file looks like this:</p>
+
+<pre><code class="lang-cs">&lt;engine:UXML xmlns:engine=&quot;UnityEngine.UIElements&quot; &gt;
+    &lt;engine:VisualElement name=&quot;BaseContainer&quot; style=&quot;flex-grow: 1;&quot; /&gt;
+&lt;/engine:UXML&gt;
+</code></pre>
+
+<h2>Create the name tag UXML template</h2>
+
+<p>Create a USS file to style the name tag and a UXML file to define the name tag template. The name tag template is a Label element that displays the name of the NPC. The name tag follows the NPC in the Scene.</p>
+
+<ol>
+<li>
+<p>In the <code>UI</code> folder, create a USS file named <code>NameTag.uss</code> with the following content:</p>
+
+<pre><code class="lang-cs"> #NameTag {
+     /* This sets the position of the Label element to be absolute, rather than relative to the parent container. */
+     position: absolute;
+     /* This ensures that the pivot point of the Label element is centered, rather than in the top left corner.*/
+     translate: -50% -50%;
+     -unity-font-style: bold;
+     color: rgb(181, 210, 248);
+     -unity-text-outline-width: 1px;
+     -unity-text-outline-color: rgb(11, 60, 123);
+ }
+</code></pre>
+</li>
+<li><p>In the <code>UI</code> folder, create a UXML file named <code>NameTag.uxml</code>.</p></li>
+<li><p>Double-click the <code>NameTag.uxml</code> file to open it in the UI Builder.</p></li>
+<li><p>Add a Label to the <strong>Hierarchy</strong> panel and name it <code>NameTag</code>.</p></li>
+<li>
+<p>In the <strong><span class="tooltip" tabindex="0" ><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheInspector.html" href="UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span></strong> panel, do the following:</p>
+
+<ul>
+<li>Set <strong>Text</strong> to <code>NPC</code>. This value represents the name of the NPC.</li>
+<li>Set <strong>Picking Mode</strong> to <code>Ignore</code>. This prevents the Label element from responding to mouse events, which is more optimal for performance.</li>
+</ul>
+</li>
+<li><p>In the <strong>StyleSheets</strong> panel, select <strong>+</strong> &gt; <strong>Add Existing USS</strong>.</p></li>
+<li><p>Follow the instruction to add the <code>NameTag.uss</code> file.</p></li>
+<li>
+<p>Check the Label element in the <span class="tooltip" tabindex="0" ><strong>Viewport</strong><span class="tooltiptext">The user’s visible area of an app on their screen.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#viewport" aria-label="Go to glossary anchor for viewport">Glossary</a></span></span></span>. The <code>translate: -50% -50%</code> style centers the pivot point of the Label element, causing it to appear in the top-left corner of the Viewport. This is expected behavior. The name tag will be positioned relative to the NPC <span class="tooltip" tabindex="0" ><strong>GameObject</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-GameObject.html" href="class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span> in the scene.</p>
+
+<p><img src="../uploads/Main/uitk/name-tag-viewport.png" alt="NameTag in the Viewport"></p>
+</li>
+<li><p>Save your changes.</p></li>
+</ol>
+
+<p>The finished <code>NameTag.uxml</code> file might look like this:</p>
+
+<pre><code class="lang-cs">&lt;engine:UXML xmlns:engine=&quot;UnityEngine.UIElements&quot;&gt;
+    &lt;Style src=&quot;NameTag.uss&quot; /&gt;
+    &lt;engine:Label text=&quot;NPC&quot; name=&quot;NameTag&quot; picking-mode=&quot;Ignore&quot; /&gt;
+&lt;/engine:UXML&gt;
+</code></pre>
+
+<h2>Create the random movement script</h2>
+
+<p>Create a <code>RandomMovement</code> class that handles random movement of the NPC prefab. The NPC moves within a specified range and changes direction when it reaches the boundary. </p>
+
+<p>Set the <code>DynamicTransform</code> usage hint on the moving element to optimize performance.</p>
+
+<p>
+<strong>Note</strong>: The recommended best practice is to apply the usage hint to the transformed element which in this case is the name tag template container rather than the child label.</p>
+
+<ol>
+<li>In the Project window, create a folder named <code>Scripts</code> to store the C# <span class="tooltip" tabindex="0" ><strong>scripts</strong><span class="tooltiptext">A piece of code that allows you to create your own Components, trigger game events, modify Component properties over time and respond to user input in any way you like. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about creating-scripts.html" href="creating-scripts.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scripts" aria-label="Go to glossary anchor for Scripts">Glossary</a></span></span></span>.</li>
+<li>In the <code>Scripts</code> folder, create a C# script named <code>RandomMovement.cs</code> with the following content:</li>
+</ol>
+
+<pre><code class="lang-cs">using UnityEngine;
+using Random = UnityEngine.Random;
+
+public class RandomMovement : MonoBehaviour
+{
+    public float moveSpeed;
+
+    public float movementRange;
+
+    public Vector3 targetPosition;
+
+    private float m_PositionY;
+
+    // Initialize the starting position and target position of the GameObject.
+    void Start()
+    {
+        m_PositionY = transform.position.y;
+        targetPosition = new Vector3(0, m_PositionY, 0);
+    }
+
+    // Updates the position of the GameObject at fixed intervals.
+    // Move the GameObject towards the target position, and sets a new random target position when the current target is reached.
+    void FixedUpdate()
+    {
+        if (transform.position != targetPosition)
+        {
+            transform.position = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
+        }
+        else
+        {
+            targetPosition = new Vector3(Random.Range(-movementRange, movementRange), m_PositionY, Random.Range(-movementRange, movementRange));
+        }
+    }
+}
+</code></pre>
+
+<h2>Create the moving name tag script</h2>
+
+<p>Create a <code>MovingNameTag</code> class that manages the position and scale of the name tag. The name tag follows the NPC GameObject in the scene. The name tag scales based on the distance from the Camera and is culled when it is too far away or behind the camera. </p>
+
+<ul>
+<li>In the <code>Scripts</code> folder, create a C# script named <code>MovingNameTag.cs</code> with the following content:</li>
+</ul>
+
+<pre><code class="lang-cs">using System;
+using UnityEngine;
+using UnityEngine.UIElements;
+
+public class MovingNameTag : MonoBehaviour
+{
+    [SerializeField]
+    VisualTreeAsset m_NameTagTemplate;
+
+    [SerializeField]
+    PanelRenderer m_BaseContainerDocument;
+
+    [SerializeField]
+    Transform m_UITransform;
+
+    [SerializeField]
+    float m_ScaleMultiplier;
+
+    [SerializeField]
+    float m_DistanceCullingRange;
+
+    VisualElement m_Root;
+    VisualElement m_BaseContainer;
+    VisualElement m_NpcNameTag;
+    
+    Camera m_MainCamera;
+    
+    void Awake()
+    {
+        m_MainCamera = Camera.main;
+        
+        m_BaseContainerDocument.RegisterUIReloadCallback((panelRenderer, root) =&gt;
+        {
+            m_BaseContainer = root.Q&lt;VisualElement&gt;(&quot;BaseContainer&quot;);
+
+            m_NpcNameTag = m_NameTagTemplate.Instantiate();
+
+            // Set DynamicTransform hint on the moving element to optimize performance.
+            m_NpcNameTag.usageHints = UsageHints.DynamicTransform;
+            m_BaseContainer.Add(m_NpcNameTag);
+            m_NpcNameTag.style.position = new StyleEnum&lt;Position&gt;(Position.Absolute);
+        });
+    }
+
+    void Update()
+    {
+        SetNameTagPositionAndScale();
+    }
+
+    void SetNameTagPositionAndScale()
+    {
+        var cameraSpaceLocation = GetCameraSpaceLocation(m_UITransform);
+        
+        // Use style.translate to set the position of the name tag.
+        m_NpcNameTag.style.translate = new Translate(cameraSpaceLocation.x, cameraSpaceLocation.y);
+
+        // Get distance of NPC from camera.
+        var distance = Vector3.Distance(m_UITransform.position, m_MainCamera.transform.position);
+        
+        // Calculate 1/distance so the name tag get smaller as the distance gets bigger.
+        var scale = 1 / distance * m_ScaleMultiplier;
+
+        m_NpcNameTag.style.scale = new Scale(new Vector2(scale, scale));
+        
+        // Display name tag based on whether it's in front of the camera and within culling range.
+        if (cameraSpaceLocation.z &lt; 0 || distance &gt; m_DistanceCullingRange)
+        {
+            m_NpcNameTag.style.display = DisplayStyle.None;
+        }
+        else
+        {
+            m_NpcNameTag.style.display = DisplayStyle.Flex;
+        }
+    }
+
+    Vector3 GetCameraSpaceLocation(Transform objectTransform)
+    {
+        // Get the size of the parent visual element of the name tag.
+        var containerSize = m_BaseContainer.layout.size;
+        var screenPoint = m_MainCamera.WorldToViewportPoint(objectTransform.position);
+        var output = new Vector3(screenPoint.x * containerSize.x, (1 - screenPoint.y) * containerSize.y, screenPoint.z);
+        
+        return output;
+    }
+}
+</code></pre>
+
+<h2>Create the sort elements script</h2>
+
+<p>Create a <code>SortElements</code> class that sorts the name tags based on their scale, which is based on the distance of the objects they follow.</p>
+
+<ul>
+<li>In the <code>Scripts</code> folder, create a C# script named <code>SortElements.cs</code> with the following content:</li>
+</ul>
+
+<pre><code class="lang-cs">using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UIElements;
+
+public class SortElements : MonoBehaviour
+{
+    [SerializeField]
+    PanelRenderer m_MovingElements;
+
+    VisualElement m_BaseContainer;
+
+    MovingNameTag[] m_MovingNameTags;
+
+    void Start()
+    {
+        m_MovingNameTags = FindObjectsByType&lt;MovingNameTag&gt;();
+        m_MovingElements.RegisterUIReloadCallback((panelRenderer, root) =&gt;
+        {
+            m_BaseContainer = root.Q&lt;VisualElement&gt;(&quot;BaseContainer&quot;);
+        });
+    }
+
+    void Update()
+    {
+        m_BaseContainer.Sort(CompareOrder);
+    }
+
+    static int CompareOrder(VisualElement x, VisualElement y)
+    {
+        // Compare the scale of the visual elements in the base container, which is
+        // determined by the distance of the object it follows in the MovingNameTag component
+        return x.style.scale.value.value.x.CompareTo(y.style.scale.value.value.x);
+    }
+}
+</code></pre>
+
+<h2>Set up the scene basics</h2>
+
+<p>Set up the scene with a floor and a Panel Renderer GameObject. A floor is a <a href="PrimitiveObjects.html">Plane GameObject</a> that represents the floor of the scene.</p>
+
+<p>The Panel Renderer GameObject is the UI that contains the visual elements that move at runtime. The UI contains the <code>SortElements</code> component, which sorts the name tags based on their scale.</p>
+
+<ol>
+<li><p>In the SampleScene, add a Plane GameObject named <code>Floor</code>. </p></li>
+<li><p>Add a material to the floor.</p></li>
+<li><p>In the <strong>Hierarchy</strong> window, select <strong>UI Toolkit</strong> &gt; <strong>Panel Renderer</strong> and name it as <code>UI</code>.</p></li>
+<li>
+<p>In the <strong>Inspector</strong> window of the Panel Renderer GameObject, do the following:</p>
+
+<ul>
+<li>Set the <strong>Source Asset</strong> to <code>NameTagContainer</code>.</li>
+<li>Add the <code>SortElements</code> component.</li>
+</ul>
+</li>
+<li><p>In the <strong>Sort Elements</strong> component field, set <strong>Moving Elements</strong> to <code>UI</code>. This makes the <code>SortElements</code> component reference the Panel Renderer Component, which in turn references the <code>NameTagContainer</code> source asset.</p></li>
+</ol>
+
+<h2>Set up the NPC prefab</h2>
+
+<p>Create an NPC prefab that moves randomly within a specified range.</p>
+
+<ol>
+<li><p>In the SampleScene, create an empty GameObject named <code>NPC</code>. </p></li>
+<li><p>In the <strong>Inspector</strong> window of the <code>NPC</code> GameObject, add the <code>RandomMovement</code> component. This component manages the random movement of the NPC.</p></li>
+<li><p>In the <strong>Random Movement</strong> component field, do the following:</p></li>
+<li><p>Set the <strong>Speed</strong> to <code>2</code>. This value determines the speed at which the NPC moves.</p></li>
+<li><p>Set the <strong>Range</strong> to <code>10</code>. This value determines the range within which the NPC moves.</p></li>
+</ol>
+
+<p>
+<strong>Note</strong>: The <strong>Random Movement</strong> component contains a <strong><span class="tooltip" tabindex="0" ><strong>Target Position</strong><span class="tooltiptext">A joint property to set the target position that the joint’s drive force should move it to. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-ConfigurableJoint.html" href="class-ConfigurableJoint.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#targetposition" aria-label="Go to glossary anchor for targetposition">Glossary</a></span></span></span></strong> field that represents the NPC’s next target position, which is randomly set in the script. This field is primarily for debugging purposes and you don’t need to manually set it.</p>
+
+<h2>Set up the child GameObjects of the NPC prefab</h2>
+
+<p>The NPC prefab contains three child GameObjects:</p>
+
+<ul>
+<li>A Capsule GameObject that represents the NPC.</li>
+<li>An empty GameObject called <code>UI_NameTag</code> that represents the name tag that follows the NPC.</li>
+<li>An empty GameObject called <code>UI_Transform</code> that represents the position of the name tag. This GameObject acts as a reference point or anchor for the name tag, defining where the name tag is positioned in relation to the NPC.</li>
+</ul>
+
+<p>The <code>MovingNameTag</code> component moves the name tag based on the position of the <code>UI_Transform</code> GameObject. This setup allows for better organization and flexibility. If you need to adjust the position of the name tag, you can simply modify the <code>UI_Transform</code> GameObject’s position without affecting the NPC GameObject or other components.</p>
+
+<ol>
+<li><p>Right-click the <code>NPC</code> GameObject and select <strong>3D Object</strong> &gt; <strong>Capsule</strong> to add a child Capsule GameObject. </p></li>
+<li><p>Set Capsule’s <code>Y</code> position to <code>1</code> so that it doesn’t clip into the floor plane.</p></li>
+<li><p>Add a material to the Capsule GameObject, such as a blue surface material if you have one.</p></li>
+<li><p>Right-click the <code>NPC</code> GameObject and select <strong>Create Empty</strong> to add another empty child GameObject and name it <code>UI_Transform</code>.</p></li>
+<li>
+<p>In the <strong>Inspector</strong> window of the <code>UI_Transform</code> GameObject, select the arrow icon on the top-right corner and select an icon for it. This icon allows you to easily identify the GameObject in the <span class="tooltip" tabindex="0" ><strong>Scene view</strong><span class="tooltiptext">An interactive view into the world you are creating. You use the Scene View to select and position scenery, characters, cameras, lights, and all other types of Game Object. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheSceneView.html" href="UsingTheSceneView.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#SceneView" aria-label="Go to glossary anchor for SceneView">Glossary</a></span></span></span> for debugging purposes.</p>
+
+<p><img src="../uploads/Main/uitk/ui_transform_icon.png" alt="Set an icon for UI_Transform"></p>
+</li>
+<li><p>In the <strong>Inspector</strong> window of the <code>UI_Transform</code> GameObject, set the position to <code>(0, 3, 0)</code>. This value represents the position of the name tag relative to the NPC GameObject.</p></li>
+<li><p>Right-click the <code>NPC</code> GameObject and select <strong>Create Empty</strong> to add a child GameObject and name it <code>UI_NameTag</code>.</p></li>
+<li><p>Add the <code>MovingNameTag</code> component to the <code>UI_NameTag</code> GameObject. This component manages the position and scale of the name tag.</p></li>
+<li>
+<p>In the <strong>Moving Name Tag</strong> component field, do the following:</p>
+
+<ul>
+<li>Set the <strong>Name Tag Template</strong> to <code>NameTag</code>.</li>
+<li>Set the <strong>Base Container Document</strong> to <code>UI (Panel Renderer)</code>. This value represents the container for the UI elements that are moved at runtime.</li>
+<li>Set the <strong>UI Transform</strong> to <code>UI_Transform</code>. This value represents the position of the name tag.</li>
+<li>Set the <strong>Scale Multiplier</strong> to <code>50</code>. This value scales the name tag based on the distance from the camera.</li>
+<li>Set the <strong>Distance Culling Range</strong> to <code>20</code>. This value culls the name tag when it’s too far away or behind the camera.</li>
+</ul>
+</li>
+</ol>
+
+<p>Your finished hierarchy looks like this:</p>
+
+<pre><code class="lang-text">- Floor
+- UI (Panel Renderer)
+  - NameTagContainer.uxml (Source Asset)
+  - SortElements (Component)
+- NPC
+  - Capsule
+  - UI_Transform
+  - UI_NameTag
+     - MovingNameTag (Component)
+</code></pre>
+
+<h2>Test the example</h2>
+
+<p>Duplicate the NPC prefab to create multiple NPCs in the scene. The name tags follow the NPCs and scale based on the distance from the camera.</p>
+
+<ol>
+<li>In the <strong>Hierarchy</strong> window, right-click the <code>NPC</code> GameObject and select <strong>Duplicate</strong>.</li>
+<li>Repeat the previous steps a few times to create multiple NPCs in the scene.</li>
+<li>Move the NPCs to different positions in the scene.</li>
+<li>Enter Play mode. The name tags follow the NPCs and scale based on the distance from the Camera.</li>
+<li>Pause the game.</li>
+<li>Select <strong>Window</strong> &gt; <strong>UI Toolkit</strong> &gt; <strong>Debugger</strong> to open the <strong>UI Toolkit Debugger</strong> window.</li>
+<li>In the <strong>UI Toolkit Debugger</strong> window, from the <strong>Select a Panel</strong> list, select <strong>PanelSettings</strong>.</li>
+<li>Select <strong>PanelRootElement</strong> &gt; <strong>TemplateContainer</strong> &gt; <strong>VisualElement</strong> &gt; <strong>TemplateContainer</strong> to view the style properties of the name tag.</li>
+<li>Un-pause the game. The translate properties of the name tag is updated dynamically as the NPC moves.</li>
+</ol>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="UIE-get-started-with-runtime-ui.html">Get started with runtime UI</a></li>
+<li><a href="ui-systems/panel-renderer-component.html">Create a Panel Renderer component</a></li>
+<li><a href="UIE-use-usage-hints-to-reduce-draw-calls-and-geometry-regeneration.html">Optimize performance of moving elements at runtime</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="UIE-runtime-examples.html"></a></span><div class="tip">UI Toolkit runtime examples</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="UIE-work-with-text.html"></a></span><div class="tip">Work with text</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

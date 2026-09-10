@@ -1,0 +1,209 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Introduction to Animator Controllers</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<meta property="relative-path-to-manual" content="">
+<meta property="version-switcher-versions-with-this-page" content="Versions with this page:">
+<meta property="version-switcher-versions-without-this-page" content="Versions without this page:">
+<meta property="version-switcher-supported" content="Supported">
+<meta property="version-switcher-legacy" content="Legacy">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/Manual/class-AnimatorController.html">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20260626"></script><script type="text/javascript" src="docdata/toc.js?ts=20260626"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20260626"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20260626">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20260626">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/class-AnimatorController.html">English</a></li>
+<li><a href="/cn/current/Manual/class-AnimatorController.html">中文</a></li>
+<li><a href="/ja/current/Manual/class-AnimatorController.html">日本語</a></li>
+<li><a href="/kr/current/Manual/class-AnimatorController.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: Unity 6.7 Beta</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/class-AnimatorController.html">English</a></li>
+<li><a href="/cn/current/Manual/class-AnimatorController.html">中文</a></li>
+<li><a href="/ja/current/Manual/class-AnimatorController.html">日本語</a></li>
+<li><a href="/kr/current/Manual/class-AnimatorController.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="AnimationSection.html">Animation</a></li>
+<li><a href="animation-mecanim.html">Mecanim Animation system</a></li>
+<li><a href="animation-animator-controller.html">Animator Controller</a></li>
+<li>Introduction to Animator Controllers</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="animation-animator-controller.html"></a></span><div class="tip">Animator Controller</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="AnimatorControllerCreation.html"></a></span><div class="tip">Create an Animator Controller</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Introduction to Animator Controllers</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Use an <strong>Animator Controller</strong> to arrange and maintain a set of <span class="tooltip" tabindex="0" ><strong>Animation Clips</strong><span class="tooltiptext">Animation data that can be used for animated characters or simple animations. It is a simple “unit” piece of motion, such as (one specific instance of) “Idle”, “Walk” or “Run”. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-AnimationClip.html" href="class-AnimationClip.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#AnimationClip" aria-label="Go to glossary anchor for AnimationClip">Glossary</a></span></span></span> and associated <span class="tooltip" tabindex="0" ><strong>Animation Transitions</strong><span class="tooltiptext">Allows a state machine to switch or blend from one animation state to another. Transitions define how long a blend between states should take, and the conditions that activate them. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about StateMachineTransitions.html" href="StateMachineTransitions.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#AnimationTransition" aria-label="Go to glossary anchor for AnimationTransition">Glossary</a></span></span></span> for a character or an animated <span class="tooltip" tabindex="0" ><strong>GameObject</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-GameObject.html" href="class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span>. </p>
+
+<p>In most situations, it’s normal to have multiple animations and transition between them when certain game conditions occur. For example, you could transition from a walk animation to a jump whenever the spacebar is pressed. However, even if you just have a single animation clip, you still need to place it into an Animator Controller to use it on a Game Object.</p>
+
+<p>The Animator Controller has references to the Animation clips it uses. The Animator Controller manages the various Animation Clips and the Transitions between them using a <strong><span class="tooltip" tabindex="0" ><strong>State Machine</strong><span class="tooltiptext">The set of states in an Animator Controller that a character or animated GameObject can be in, along with a set of transitions between those states and a variable to remember the current state. The states available will depend on the type of gameplay, but typical states include things like idling, walking, running and jumping. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about StateMachineBasics.html" href="StateMachineBasics.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#StateMachine" aria-label="Go to glossary anchor for StateMachine">Glossary</a></span></span></span></strong>, which could be thought of as a flow-chart of Animation Clips and Transitions. you can find more information about state machines <a href="AnimationStateMachines.html">here</a>.</p>
+
+<figure>
+<img src="../uploads/Main/MecanimAnimatorControllerWindow.png" alt="A simple Animator Controller">
+<figcaption>A simple Animator Controller</figcaption>
+</figure>
+
+<p>Unity automatically creates an Animator Controller when you begin animating a GameObject using the Animation Window, or when you attach an Animation Clip to a GameObject.</p>
+
+<p>To manually create an Animator Controller, right-click within either column of the Project window and select <strong>Create</strong> &gt; <strong>Animator Controller</strong>.</p>
+
+<p>The following topics provide more details on the Animator Controller Asset and state machines:</p>
+
+<ul>
+<li><a href="AnimatorControllerCreation.html">Create an Animator Controller</a></li>
+<li><a href="Animator.html">Animator Controller Asset</a></li>
+<li><span class="tooltip" tabindex="0" ><a href="AnimatorWindow.html">Animator Window</a><span class="tooltiptext">The window where the Animator Controller is visualized and edited. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about AnimatorWindow.html" href="AnimatorWindow.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#AnimatorWindow" aria-label="Go to glossary anchor for AnimatorWindow">Glossary</a></span></span></span></li>
+<li><span class="tooltip" tabindex="0" ><a href="AnimationStateMachines.html">Animation State Machine</a><span class="tooltiptext">A graph within an Animator Controller that controls the interaction of Animation States. Each state references an Animation Blend Tree or a single Animation Clip. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about AnimationStateMachines.html" href="AnimationStateMachines.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#AnimationStateMachine" aria-label="Go to glossary anchor for AnimationStateMachine">Glossary</a></span></span></span></li>
+</ul>
+
+<h2>Navigation</h2>
+
+<p>Use the scroll wheel to zoom in and zoom out of the Animator Controller view.</p>
+
+<p>To focus on an item in the Animator Controller view, select one or multiple states (click or drag a selection box around the states you wish to select), then press the F key to zoom in on the selection.</p>
+
+<figure>
+<img src="../uploads/Main/classAnimatorController-Focus.jpg" alt="Focus on selected states">
+<figcaption>Focus on selected states</figcaption>
+</figure>
+
+<p>Press the A key to fit all of the animation states into the Animator Controller view.</p>
+
+<p>Unity preserves your selection. Press the A and F keys to switch between your selected animation states and the entire Animator Controller.</p>
+
+<figure>
+<img src="../uploads/Main/classAnimatorController-Autofit.jpg" alt="Unity automatically fits all states in the Animator Controller view when the A key is pressed">
+<figcaption>Unity automatically fits all states in the Animator Controller view when the A key is pressed</figcaption>
+</figure>
+
+<p>During Play Mode, the Animator pans the view so that the current state being played is always visible. The Animator Controller respects the independent zoom factors of the Base Layer and Sub-State Machine, and the window pans automatically to ensure visibility of the active state or states.</p>
+
+<p>To modify the zoom during Play Mode, follow these steps:</p>
+
+<ol>
+<li>Enable <strong>Auto Live Link</strong> in the Animator Controller window.</li>
+<li>Click the Play button to enter Play Mode.</li>
+<li>Click Pause.</li>
+<li>In the Animator Controller view, select the state or states you want to zoom into.</li>
+<li>Press the F key to zoom into the selection.</li>
+<li>Click the Play button again to resume Play Mode.</li>
+</ol>
+
+<p>Note that the Animator Controller view pans to each state when it is active.</p>
+
+<figure>
+<img src="../uploads/Main/classAnimatorController-Pans.png" alt="The Animator pans to the active state">
+<figcaption>The Animator pans to the active state</figcaption>
+</figure>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="animation-animator-controller.html"></a></span><div class="tip">Animator Controller</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="AnimatorControllerCreation.html"></a></span><div class="tip">Create an Animator Controller</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

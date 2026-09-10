@@ -1,0 +1,492 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Build assets into AssetBundles</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<meta property="relative-path-to-manual" content="">
+<meta property="version-switcher-versions-with-this-page" content="Versions with this page:">
+<meta property="version-switcher-versions-without-this-page" content="Versions without this page:">
+<meta property="version-switcher-supported" content="Supported">
+<meta property="version-switcher-legacy" content="Legacy">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/Manual/AssetBundles-Building.html">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20260626"></script><script type="text/javascript" src="docdata/toc.js?ts=20260626"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20260626"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20260626">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20260626">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/AssetBundles-Building.html">English</a></li>
+<li><a href="/cn/current/Manual/AssetBundles-Building.html">中文</a></li>
+<li><a href="/ja/current/Manual/AssetBundles-Building.html">日本語</a></li>
+<li><a href="/kr/current/Manual/AssetBundles-Building.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: Unity 6.7 Beta</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/AssetBundles-Building.html">English</a></li>
+<li><a href="/cn/current/Manual/AssetBundles-Building.html">中文</a></li>
+<li><a href="/ja/current/Manual/AssetBundles-Building.html">日本語</a></li>
+<li><a href="/kr/current/Manual/AssetBundles-Building.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="assets-and-media.html">Assets and media</a></li>
+<li><a href="assets-managing-runtime.html">Managing assets at runtime</a></li>
+<li><a href="assetbundles-section.html">Use AssetBundles to load assets at runtime</a></li>
+<li><a href="assetbundles-creating.html">Creating AssetBundles</a></li>
+<li>Build assets into AssetBundles</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="assetbundles-assign-assets.html"></a></span><div class="tip">Assign assets to an AssetBundle</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="assetbundles-compression-format.html"></a></span><div class="tip">AssetBundle compression formats</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Build assets into AssetBundles</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>To build assets into an AssetBundle, you must <a href="assetbundles-assign-assets.html">assign assets to an AssetBundle</a>, either in the Unity Editor or through a script. You can then create and use a script to build the AssetBundles. For information on the best approaches for organizing assets into AssetBundles, refer to <a href="AssetBundles-Preparing.html">Preparing assets for AssetBundles</a>. </p>
+
+<p>
+<strong>Note</strong>: This workflow describes the creation of AssetBundles with the built-in <a href="../ScriptReference/BuildPipeline.BuildAssetBundles.html"><code>BuildPipeline.BuildAssetBundles</code></a> API. A more user-friendly alternative is to use the <a href="http://docs.unity3d.com/Packages/com.unity.addressables@latest/index.html">Addressables</a> package.</p>
+
+<h2>AssetBundle build script</h2>
+
+<p>To build AssetBundles, you must create a build script and place it a folder called <code>Editor</code> in the <code>Assets</code> folder. </p>
+
+<p>The following script is an example of an AssetBundle build script. It adds a menu item at the bottom of the Assets menu called <strong>Build AssetBundles</strong>. When you select <strong>Build AssetBundles</strong> the <code>BuildAllAssetBundles</code> method is called. A progress bar appears while the build takes all the assets you labeled with an AssetBundle name and uses them to populate AssetBundles at the path that <code>assetBundleDirectory</code> defines.</p>
+
+<pre><code class="lang-cs">using UnityEditor;
+using System.IO;
+
+public class CreateAssetBundles
+{
+    [MenuItem(&quot;Assets/Build AssetBundles&quot;)]
+    static void BuildAllAssetBundles()
+    {
+        // Ensure the AssetBundles directory exists, and if it doesn't, create it.
+        string assetBundleDirectory = &quot;Assets/AssetBundles&quot;;
+        if (!Directory.Exists(assetBundleDirectory))
+            Directory.CreateDirectory(assetBundleDirectory);
+
+        // Build all AssetBundles and place them in the specified directory.
+        BuildPipeline.BuildAssetBundles(assetBundleDirectory,
+                                        BuildAssetBundleOptions.None,
+                                        BuildTarget.StandaloneWindows);
+    }
+}
+</code></pre>
+
+<p>The script has the following arguments:</p>
+
+<ul>
+<li>
+<code>assetBundleDirectory</code>: The directory to output the AssetBundles to within the current Unity project. The folder doesn’t need to be in the <code>Assets</code> folder. In the code example, it creates the folder on demand if it doesn’t exist.</li>
+<li>
+<code>BuildAssetBundleOptions.None</code>: The default value for the build options argument. You can use this argument to specify one or more flags to enable a variety of optional behaviours. For example, this argument controls the choice of <a href="assetbundles-compression-format.html">compression algorithm</a>. For a full list of options available refer to <a href="../ScriptReference/BuildAssetBundleOptions.html">the <code>BuildAssetBundleOptions</code> API documentation</a>.</li>
+<li>
+<code>BuildTarget.StandaloneWindows</code>: Defines the <a href="../ScriptReference/BuildTarget.html">target platform</a> for the AssetBundles. Alternatively, you can call <code>EditorUserBuildSettings.activeBuildTarget</code>, which returns the platform profile currently set as active in the <span class="tooltip" tabindex="0" ><a href="build-profiles.html">Build Profiles</a><span class="tooltiptext">A set of customizable configuration settings to use when creating a build for your target platform. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about build-profiles.html" href="build-profiles.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#buildprofile" aria-label="Go to glossary anchor for buildprofile">Glossary</a></span></span></span> window.</li>
+</ul>
+
+<h2>Build subsets of AssetBundles</h2>
+
+<p>When you give the <a href="../ScriptReference/BuildPipeline.BuildAssetBundles.html"><code>BuildPipeline.BuildAssetBundles</code></a> method no specific AssetBundle names, it builds all AssetBundles defined in the project. If you only want to build a subset of AssetBundles, you query the AssetDatabase for defined AssetBundles and then pass a filtered list to the build pipeline.</p>
+
+<p>The following script demonstrates how to retrieve all AssetBundle names and their assigned assets, allowing you to filter or modify the list before building:</p>
+
+<pre><code class="lang-cs">
+using UnityEditor;
+using System.IO;
+using UnityEngine;
+using System.Collections.Generic;
+
+public class BuildSubsetAssetBundles
+{
+    [MenuItem(&quot;Assets/Build Selected AssetBundles&quot;)]
+    static void BuildSpecificAssetBundles()
+    {
+        string assetBundleDirectory = &quot;Assets/AssetBundles&quot;;
+        if (!Directory.Exists(assetBundleDirectory))
+        {
+            Directory.CreateDirectory(assetBundleDirectory);
+        }
+
+        List&lt;AssetBundleBuild&gt; builds = new List&lt;AssetBundleBuild&gt;();
+        string[] allAssetBundleNames = AssetDatabase.GetAllAssetBundleNames();
+
+        // Example: Only build AssetBundles that start with &quot;environment&quot;
+        foreach (string bundleName in allAssetBundleNames)
+        {
+            if (bundleName.StartsWith(&quot;environment&quot;))
+            {
+                AssetBundleBuild build = new AssetBundleBuild
+                {
+                    assetBundleName = bundleName,
+                    assetNames = AssetDatabase.GetAssetPathsFromAssetBundle(bundleName)
+                };
+                builds.Add(build);
+            }
+        }
+
+        if (builds.Count &gt; 0)
+        {
+            BuildPipeline.BuildAssetBundles(assetBundleDirectory,
+                                            builds.ToArray(),
+                                            BuildAssetBundleOptions.None,
+                                            BuildTarget.StandaloneWindows);
+            Debug.Log($&quot;Built {builds.Count} specific AssetBundles.&quot;);
+        }
+        else
+        {
+            Debug.Log(&quot;No AssetBundles matching criteria found to build.&quot;);
+        }
+    }
+
+    [MenuItem(&quot;Assets/Log All AssetBundle Assignments&quot;)]
+    static void LogAllAssetBundleAssignments()
+    {
+        string[] allAssetBundleNames = AssetDatabase.GetAllAssetBundleNames();
+        Debug.Log($&quot;Total AssetBundles Defined: {allAssetBundleNames.Length}&quot;);
+        foreach (string bundleName in allAssetBundleNames)
+        {
+            string[] assetPaths = AssetDatabase.GetAssetPathsFromAssetBundle(bundleName);
+            Debug.Log($&quot;AssetBundle: {bundleName} (Assets: {assetPaths.Length})&quot;);
+            foreach (string path in assetPaths)
+            {
+                Debug.Log($&quot;  - {path}&quot;);
+            }
+        }
+    }
+}
+</code></pre>
+
+<p>This approach allows your script to respect existing <span class="tooltip" tabindex="0" ><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheInspector.html" href="UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span> assignments while giving you granular control over which AssetBundles are built.</p>
+
+<h2>Include AssetBundles in a Player build</h2>
+
+<p>This example demonstrates an advanced AssetBundle build script that builds AssetBundles and includes them in a Player build. It introduces several concepts:</p>
+
+<ul>
+<li>
+<strong>Using the active build profile</strong>: The script sets the <span class="tooltip" tabindex="0" ><strong>scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html" href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span> list, flags, and settings based on the <a href="build-profile-scene-list.html">active build profile</a>. Before using this script, create <a href="create-build-profile.html">build profiles</a> in the <strong>Build Profiles</strong> window to configure the builds.</li>
+<li>
+<strong>Dynamic output paths</strong>: The script uses a naming convention for the output path based on the profile name and a timestamp, similar to what a basic build server might do.</li>
+<li>
+<strong>AssetBundle builds</strong>: The script performs an AssetBundle build followed by a Player build.</li>
+<li>
+<strong>Type preservation</strong>: The script provides type information from the AssetBundle build as an input to the Player build, so that <a href="managed-code-stripping-content.html">managed code stripping</a> doesn’t remove types used in the AssetBundles.</li>
+<li>
+<strong>Build callbacks</strong>: The script uses a <a href="../ScriptReference/Build.BuildPlayerProcessor.html"><code>BuildPlayerProcessor</code></a> <a href="build-callbacks.html">build callback</a> to inject the AssetBundles into the <a href="StreamingAssets.html"><code>StreamingAssets</code> folder</a> of the Player build.</li>
+</ul>
+
+<pre><code class="lang-cs">using UnityEngine;
+using System.IO;
+using UnityEditor;
+using UnityEditor.Build;
+using UnityEditor.Build.Reporting;
+using UnityEditor.Build.Profile;
+
+// Example BuildScript that supports building the current build profile.
+//
+//
+// It builds AssetBundles and includes them in the player build.
+// Each time it runs it builds into a new directory derived from the
+// current build profile and timestamp.
+public class BuildScript
+{
+    public const string kBuildRootPath = &quot;Build&quot;; // All builds are inside this top level project folder
+    public const string kAssetBundleDirectory = &quot;AssetBundles&quot;;
+    public const string kPlayerDirectory = &quot;Player&quot;;
+    public const string kAppName = &quot;MyGame&quot;;
+    public const string kTextureSourceDirectory = &quot;Assets/Textures&quot;;
+    public const string kTextureSearchPattern = &quot;*.png&quot;;
+
+    // Global variable so that RegisterContentForPlayer can find the correct AssetBundles to include in the player build
+    public static string gCurrentBuildRootPath = null;
+
+    [MenuItem(&quot;Build/Build Active Profile&quot;)]
+    public static void BuildPlayerAndBundles()
+    {
+        var profile = BuildProfile.GetActiveBuildProfile();
+        if (profile == null)
+            throw new BuildFailedException(&quot;No active build profile is set.&quot; +
+                &quot;Use the Build Profiles window or the `-activeBuildProfile` cli argument&quot;);
+
+        // Use a timestamp so that each build goes to a unique output folder
+        var timeStamp = System.DateTime.Now.ToString(&quot;yyyy-MM-dd_HH-mm-ss&quot;);
+        gCurrentBuildRootPath = $&quot;{kBuildRootPath}/{profile.name}/{timeStamp}&quot;;
+
+        // Build AssetBundles so that they can be shipped inside the player
+        var assetBundleBuildPath = BuildAssetBundles(gCurrentBuildRootPath);
+
+        // To preserve types used by the AssetBundles
+        var assetBundleManifestPath = assetBundleBuildPath + &quot;/AssetBundles.manifest&quot;;
+
+        // Build the player
+        var playerBuildOptions = new BuildPlayerWithProfileOptions()
+        {
+            buildProfile = profile,
+            locationPathName = CreatePlayerOutputPath(gCurrentBuildRootPath),
+            assetBundleManifestPath = assetBundleManifestPath,
+
+            // These options can be adjusted as needed.
+            // Note: the development and compression flags come from the build profile
+            options = BuildOptions.CleanBuildCache | BuildOptions.StrictMode
+        };
+
+        // Convenient for manual testing
+        if (!Application.isBatchMode)
+            playerBuildOptions.options |= BuildOptions.AutoRunPlayer;
+
+        var report = BuildPipeline.BuildPlayer(playerBuildOptions);
+
+        gCurrentBuildRootPath = null;
+
+        if (report.summary.result != BuildResult.Succeeded)
+            throw new BuildFailedException(&quot;Player build failed, see Editor log for details&quot;);
+
+        Debug.Log($&quot;Completed build to {playerBuildOptions.locationPathName}&quot;);
+    }
+
+    private static string BuildAssetBundles(string buildRootDirectory)
+    {
+        var assetBundlePath = buildRootDirectory + &quot;/&quot; + kAssetBundleDirectory;
+
+        if (!Directory.Exists(assetBundlePath))
+            Directory.CreateDirectory(assetBundlePath);
+
+        // For simplicity in this example, define a single AssetBundle,
+        // containing all the textures found inside a hard-coded directory in the project
+        string[] texturePaths = Directory.GetFiles(kTextureSourceDirectory, kTextureSearchPattern, SearchOption.AllDirectories);
+
+        var assetBundleContents = new AssetBundleBuild()
+        {
+            assetBundleName = &quot;textures.bundle&quot;,
+            assetNames = texturePaths
+        };
+
+        // The target platform will be automatically set based on the active build profile
+        var assetBundleBuildOptions = new BuildAssetBundlesParameters()
+        {
+            outputPath = assetBundlePath,
+            bundleDefinitions = new AssetBundleBuild[] { assetBundleContents }
+        };
+
+        AssetBundleManifest manifest = BuildPipeline.BuildAssetBundles(assetBundleBuildOptions);
+
+        if (manifest == null)
+            throw new BuildFailedException(&quot;AssetBundle build failed, see Editor log for details&quot;);
+
+        return assetBundlePath;
+    }
+
+    private static string CreatePlayerOutputPath(string buildRootDirectory)
+    {
+        var playerOutputFolder = $&quot;{buildRootDirectory}/{kPlayerDirectory}&quot;;
+
+        if (!Directory.Exists(playerOutputFolder))
+            Directory.CreateDirectory(playerOutputFolder);
+
+        var playerPath = $&quot;{playerOutputFolder}/{kAppName}&quot;;
+
+        // This property will match the target in the active build profile
+        var target = EditorUserBuildSettings.activeBuildTarget;
+
+        // See &quot;Build path requirements for target platforms&quot; in the Unity Manual
+        if ((target == BuildTarget.StandaloneWindows64) ||
+            (target == BuildTarget.StandaloneWindows))
+            playerPath += &quot;.exe&quot;;
+        else if (target == BuildTarget.StandaloneOSX)
+            playerPath += &quot;.app&quot;;
+        else if (target == BuildTarget.StandaloneLinux64)
+            playerPath += &quot;.x86_64&quot;;
+        else if (target == BuildTarget.Android)
+            playerPath += &quot;.aab&quot;;
+
+        return playerPath;
+    }
+}
+
+// Put the AssetBundle build directory into the StreamingAssets folder of the player output.
+// This approach keeps built content separate from the source project, avoiding clutter in &quot;Assets/StreamingAssets&quot;.
+public class RegisterContentForPlayer : BuildPlayerProcessor
+{
+    public override void PrepareForBuild(BuildPlayerContext buildPlayerContext)
+    {
+        var currentBuildPath = BuildScript.gCurrentBuildRootPath;
+
+        if (string.IsNullOrEmpty(currentBuildPath))
+            // Do not do anything if we are not in a build initiated by BuildScript
+            return;
+
+        buildPlayerContext.AddAdditionalPathToStreamingAssets(currentBuildPath + &quot;/&quot; + BuildScript.kAssetBundleDirectory);
+    }
+
+    public override int callbackOrder =&gt; 1;
+}
+
+</code></pre>
+
+<p>To use this script in the Unity Editor:</p>
+
+<ol>
+<li>Select the build profile in the <strong>Build Profiles</strong> window.</li>
+<li>Select <strong>Build &gt; Build Active Profile</strong> from the menu.</li>
+</ol>
+
+<p>You can also invoke this script from the command line. On Windows, the command is as follows:</p>
+
+<pre><code>.\Unity.exe -batchmode -projectPath &quot;C:\UnityProjects\CLIBuildExample&quot; -activeBuildProfile &quot;Assets\Settings\Build Profiles\MyWindowsProfile.asset&quot; -executeMethod BuildScript.BuildPlayerAndBundles -logFile C:\logs\buildlog.txt -quit
+</code></pre>
+
+<p>An equivalent command on macOS is as follows:</p>
+
+<pre><code>Unity -batchmode -projectPath &quot;~/UnityProjects/CLIBuildExample&quot; -activeBuildProfile &quot;Assets/Settings/Build Profiles/MyWeb - Desktop - Development.asset&quot; -executeMethod BuildScript.BuildPlayerAndBundles -logFile &quot;~/logs/buildlog.txt&quot; -quit
+</code></pre>
+
+<p>
+<strong>Note</strong>: Adjust the paths in these command lines to match your device configuration and the path to your Unity project. For more information about command line arguments, refer to <a href="build-command-line.html">Build a player from the command line</a>.</p>
+
+<h2>Perform a clean build</h2>
+
+<p>When you create an official AssetBundle release, perform a <a href="build-clean-build.html">clean build</a> to ensure Unity rebuilds all content during the build process. To perform a clean build, pass the <a href="../ScriptReference/BuildAssetBundleOptions.ForceRebuildAssetBundle.html"><code>BuildAssetBundleOptions.ForceRebuildAssetBundle</code></a> flag as an option to <code>BuildPipeline.BuildAssetBundles</code>.</p>
+
+<p>In some projects, you can delete the <code>Library/ShaderCache</code> directory to force a full recompilation of shaders, or to reclaim disk space from obsolete <span class="tooltip" tabindex="0" ><strong>shader</strong><span class="tooltiptext">A program that runs on the GPU. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Shaders.html" href="Shaders.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#shader" aria-label="Go to glossary anchor for shader">Glossary</a></span></span></span> data. However, deleting the <code>ShaderCache</code> folder increases the time it takes for Unity to create another build.</p>
+
+<p>For more information on clean builds, refer to <a href="build-clean-build.html">Create a clean build</a>.</p>
+
+<h2>Changing target platform</h2>
+
+<p>The <a href="../ScriptReference/BuildPipeline.BuildAssetBundles.html"><code>BuildPipeline.BuildAssetBundles</code></a> API allows you to specify the target and sub target platform for deploying AssetBundles.</p>
+
+<p>If the specified target platform differs from the one configured in <a href="build-profiles.html">Build Profiles</a>, Unity must recompile Editor <span class="tooltip" tabindex="0" ><strong>scripts</strong><span class="tooltiptext">A piece of code that allows you to create your own Components, trigger game events, modify Component properties over time and respond to user input in any way you like. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about creating-scripts.html" href="creating-scripts.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scripts" aria-label="Go to glossary anchor for Scripts">Glossary</a></span></span></span> and reimport assets such as textures that have platform-specific representations. After the build is complete, Unity restores the original target platform settings.</p>
+
+<p>This process can significantly increase build times. Additionally, the script containing the <code>BuildPipeline.BuildAssetBundles</code> call continues to execute as compiled for the current target platform, not the specified build target. This can cause issues if the build script or callback scripts rely on platform-specific code or assemblies.</p>
+
+<p>To avoid this issue, ensure that any code executed during a build dynamically checks the target platform (for example, using <code>if</code> statements) rather than relying on platform-specific conditional compilation (such as, <code>#ifdef</code> statements). It’s best practice to always set the target to the desired target, then launch the script that builds AssetBundles to avoid any issues from code outside your control such as build callbacks inside packages.</p>
+
+<p>For command line builds, use the <code>--buildTarget</code> or <code>-activeBuildProfile</code> <a href="EditorCommandLineArguments.html">command line argument</a> to align the target platform with your build requirements. For more information, refer to <a href="build-command-line.html">Create a build from the command line</a>.</p>
+
+<h2>Rebuilding assets incrementally</h2>
+
+<p>Each AssetBundle has a hash that Unity uses to determine whether it needs to be rebuilt. Unity determines how to rebuild AssetBundles <a href="building-introduction.html#incremental-build-pipeline">incrementally</a> as follows:</p>
+
+<ol>
+<li>If a <code>.manifest</code> file from a previous build of that AssetBundle exists, Unity compares the IncrementalBuildHash hashes from both builds.</li>
+<li>If the AssetBundle hashes match, then Unity calculates and compares their type tree hashes. Unity uses <code>TypeTreeHash</code> as a secondary hash to detect whether any objects used in the AssetBundle have newer serialization formats. You can ignore this check by specifying the <a href="../ScriptReference/BuildAssetBundleOptions.IgnoreTypeTreeChanges.html"><code>BuildAssetBundleOptions.IgnoreTypeTreeChanges</code></a> flag.</li>
+<li>If the AssetBundle hash and the type tree hash don’t match, then Unity rebuilds the AssetBundle unless you’ve specified <code>BuildAssetBundleOptions.ForceRebuildAssetBundle,</code> which rebuilds the AssetBundle every time.</li>
+<li>Unity serializes the newly calculated hash values into the new AssetBundle’s <code>.manifest</code> file.</li>
+</ol>
+
+<p>The AssetBundle IncrementalBuildHash considers inputs such as the target platform, included assets, dependencies, build options, and platform-specific settings like <span class="tooltip" tabindex="0" ><strong>mesh</strong><span class="tooltiptext">The main graphics primitive of Unity. Meshes make up a large part of your 3D worlds. Unity supports triangulated or Quadrangulated polygon meshes. Nurbs, Nurms, Subdiv surfaces must be converted to polygons. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about mesh.html" href="mesh.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Mesh" aria-label="Go to glossary anchor for Mesh">Glossary</a></span></span></span> stripping and lighting configurations. However, this hash doesn’t consider every possible build influence, which might lead to crashes or unexpected failures if the incremental build systems doesn’t detect all changes. Use incremental builds for internal development but perform a <a href="build-clean-build.html">clean build</a> when creating a release build.</p>
+
+<p>
+<strong>Warning</strong>: The <code>TypeTreeHash</code> is distinct from the main <code>AssetBundle</code> input hash (IncrementalBuildHash). A change in the <code>TypeTreeHash</code> can force an incremental build without changing the <code>AssetBundle</code> input hash value, so the <code>AssetBundle</code> input hash isn’t an ideal value for tracking file versions. It’s more reliable to use a hash based on the content or other version numbering scheme. For more information, refer to <a href="assetbundles-caching.html#cache-version-hash">Cache version hash</a>.</p>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="AssetBundles-Native.html">Loading AssetBundles</a></li>
+<li><a href="assetbundles-compression-format.html">AssetBundle compression formats</a></li>
+<li><a href="AssetBundles-Preparing.html">Preparing assets for AssetBundles</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="assetbundles-assign-assets.html"></a></span><div class="tip">Assign assets to an AssetBundle</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="assetbundles-compression-format.html"></a></span><div class="tip">AssetBundle compression formats</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

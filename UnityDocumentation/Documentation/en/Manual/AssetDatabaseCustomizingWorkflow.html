@@ -1,0 +1,233 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Programming with the Asset Database</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<meta property="relative-path-to-manual" content="">
+<meta property="version-switcher-versions-with-this-page" content="Versions with this page:">
+<meta property="version-switcher-versions-without-this-page" content="Versions without this page:">
+<meta property="version-switcher-supported" content="Supported">
+<meta property="version-switcher-legacy" content="Legacy">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/Manual/AssetDatabaseCustomizingWorkflow.html">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20260626"></script><script type="text/javascript" src="docdata/toc.js?ts=20260626"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20260626"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20260626">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20260626">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/AssetDatabaseCustomizingWorkflow.html">English</a></li>
+<li><a href="/cn/current/Manual/AssetDatabaseCustomizingWorkflow.html">中文</a></li>
+<li><a href="/ja/current/Manual/AssetDatabaseCustomizingWorkflow.html">日本語</a></li>
+<li><a href="/kr/current/Manual/AssetDatabaseCustomizingWorkflow.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: Unity 6.7 Beta</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/AssetDatabaseCustomizingWorkflow.html">English</a></li>
+<li><a href="/cn/current/Manual/AssetDatabaseCustomizingWorkflow.html">中文</a></li>
+<li><a href="/ja/current/Manual/AssetDatabaseCustomizingWorkflow.html">日本語</a></li>
+<li><a href="/kr/current/Manual/AssetDatabaseCustomizingWorkflow.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="assets-and-media.html">Assets and media</a></li>
+<li><a href="AssetDatabase.html">Managing assets with the Asset Database</a></li>
+<li>Programming with the Asset Database</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="AssetDatabaseRefreshing.html"></a></span><div class="tip">Refreshing the Asset Database</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="Presets.html"></a></span><div class="tip">Reusing settings with preset assets</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Programming with the Asset Database</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>The <code>AssetDatabase</code> class has methods that allow you to access and perform operations on assets in the same way the Unity Editor does. You can create, import, delete, copy, move, load, and save assets, and search the asset database.</p>
+
+<p>This means you can create anything from simple adjustments to powerful tools and customizations to your project’s asset workflow, using Unity’s <a href="../ScriptReference/Editor.html">Editor scripting</a> and <a href="editor-EditorWindows.html">Editor window customization</a>.</p>
+
+<p>For the full list of methods available, and documentation for each of the methods, refer to the <a href="../ScriptReference/AssetDatabase.html"><code>AssetDatabase</code></a> API reference.</p>
+
+<h2>Batching AssetDatabase operations</h2>
+
+<p>You can use batching to save time when making changes to assets from code. If you make changes to multiple assets, the Asset Database’s default behavior is to process each change in turn, and perform a full <a href="AssetDatabaseRefreshing.html">refresh process</a> for the asset before moving on to the next line of code.</p>
+
+<p>The following example changes three assets, copying <code>Asset1</code>, moving <code>Asset2</code>, and deleting <code>Asset3</code>:</p>
+
+<pre><code class="lang-cs">AssetDatabase.CopyAsset(&quot;Assets/Asset1.txt&quot;, &quot;Assets/Text/Asset1.txt&quot;);
+AssetDatabase.MoveAsset(&quot;Assets/Asset2.txt&quot;, &quot;Assets/Text/Asset2.txt&quot;);
+AssetDatabase.DeleteAsset(&quot;Assets/Asset3.txt&quot;);
+</code></pre>
+
+<p>Without batching, Unity processes each change before moving on to the next line of code. This takes an unnecessarily long time and triggers many callbacks.</p>
+
+<p>To save time you can use the <code>AssetDatabase</code> APIs to pause automatic asset importing, define a series of asset operations in your code, and then resume automatic importing. On resumption, the Asset Database processes your defined asset operations as a batch, which is faster than processing them one by one.</p>
+
+<p>For more details and an example implementation, refer to the <a href="../ScriptReference/AssetDatabase.StartAssetEditing.html"><code>AssetDatabase.StartAssetEditing</code></a> API reference.</p>
+
+<h2>Accessing sub-assets</h2>
+
+<p>Asset files can contain multiple serialized objects, each of which can be considered an asset for the purposes of scripting with the <code>AssetDatabase</code> class. For example, a <strong>.<span class="tooltip" tabindex="0" ><strong>prefab</strong><span class="tooltiptext">An asset type that allows you to store a GameObject complete with components and properties. The prefab acts as a template from which you can create new object instances in the scene. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Prefabs.html" href="Prefabs.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#prefab" aria-label="Go to glossary anchor for prefab">Glossary</a></span></span></span></strong> asset file could contain a serialized <span class="tooltip" tabindex="0" ><strong>GameObject</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-GameObject.html" href="class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span> with multiple components attached. Each of those components are also serialized as objects in the asset file, and so when accessing the contents of the prefab asset using <code>AssetDatabase</code> methods, the component objects within the asset file are considered sub-assets.</p>
+
+<p>When asset types contain more than one serialized asset object, Unity treats one of the assets as the main asset. The main asset is always the first asset added to the file, unless otherwise specified with the <a href="../ScriptReference/AssetDatabase.SetMainObject.html"><code>SetMainObject</code></a> method.</p>
+
+<p>The Editor displays some types of sub-assets in the <span class="tooltip" tabindex="0" ><strong>project window</strong><span class="tooltiptext">A window that shows the contents of your <code>Assets</code> folder (Project tab) <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ProjectView.html" href="ProjectView.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Projectwindow" aria-label="Go to glossary anchor for Projectwindow">Glossary</a></span></span></span>. In the following example, an FBX asset file containing a <code>Space Frigate</code> model is expanded in the <strong>Project</strong> window to reveal a material and a <span class="tooltip" tabindex="0" ><strong>mesh</strong><span class="tooltiptext">The main graphics primitive of Unity. Meshes make up a large part of your 3D worlds. Unity supports triangulated or Quadrangulated polygon meshes. Nurbs, Nurms, Subdiv surfaces must be converted to polygons. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about mesh.html" href="mesh.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Mesh" aria-label="Go to glossary anchor for Mesh">Glossary</a></span></span></span> as sub-assets:</p>
+
+<figure>
+<img src="../uploads/Main/AssetDatabaseCustomizingSubAssets.png" alt="An FBX asset file in the Project window, showing two sub-assets, a material and mesh">
+<figcaption>An FBX asset file in the Project window, showing two sub-assets, a material and mesh</figcaption>
+</figure>
+
+<p>Some sub-asset types don’t show in the <strong>Project</strong> window. For example, the <code>Space Frigate</code> asset file in the previous example actually contains more than the two sub-assets displayed in the project window. You can see the real number of assets when you access the asset file using <code>AssetDatabase</code> methods, as demonstrated in the following example:</p>
+
+<pre><code class="lang-cs">using UnityEngine;
+using UnityEditor;
+
+public class Example : MonoBehaviour
+{
+    [MenuItem(&quot;AssetDatabase/InspectAssets&quot;)]
+
+    private static void InspectAssets()
+    {
+        Object[] data = AssetDatabase.LoadAllAssetsAtPath(&quot;Assets/Space Frigate.fbx&quot;);
+
+        Debug.Log(data.Length + &quot; Assets&quot;);
+        foreach (Object o in data)
+        {
+            Debug.Log(o);
+        }
+    }
+}
+</code></pre>
+
+<p>In this case, the output shows that the imported, serialized version of this file contains six assets:</p>
+
+<pre><code class="lang-plain">6 Assets
+Space Frigate (UnityEngine.GameObject)
+space_frigate_0 (UnityEngine.Material)
+space_frigate_0 (UnityEngine.Mesh)
+Space Frigate (UnityEngine.Transform)
+Space Frigate (UnityEngine.MeshRenderer)
+Space Frigate (UnityEngine.MeshFilter)
+</code></pre>
+
+<p>This is because the GameObject, material, the mesh data itself, and each of the components that Unity automatically added to the GameObject during the import process (the Transform, the MeshFilter, and the MeshRenderer), each count as a separate serialized object. Therefore they are sub-assets of the asset file, and as far as the <code>AssetDatabase</code> API is concerned, are each a separate asset.</p>
+
+<h2>Asset import order and code execution</h2>
+
+<p>The <a href="AssetDatabaseRefreshing.html#refresh-process">asset import order</a> has some important implications for your code. <span class="tooltip" tabindex="0" ><strong>Scripts</strong><span class="tooltiptext">A piece of code that allows you to create your own Components, trigger game events, modify Component properties over time and respond to user input in any way you like. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about creating-scripts.html" href="creating-scripts.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scripts" aria-label="Go to glossary anchor for Scripts">Glossary</a></span></span></span> are always imported and compiled before all other non-default assets, because they can include custom <a href="../ScriptReference/AssetPostprocessor.html">asset post-processors</a> or <a href="../ScriptReference/AssetImporters.ScriptedImporter.html">scripted importers</a> that are used later to import non-script assets.</p>
+
+<p>The <a href="../ScriptReference/InitializeOnLoadAttribute.html"><code>[InitializeOnLoad]</code></a> attribute is a common way to run code on project startup or when scripts change. This callback runs after domain reload, but before import of non-script assets. Methods such as <a href="../ScriptReference/AssetDatabase.LoadAssetAtPath.html"><code>AssetDatabase.LoadAssetAtPath</code></a> that rely on the asset being imported won’t work as intended if called from <code>[InitializeOnLoad]</code>. They will return null for assets being imported for the first time, and return the outdated version of assets being reimported.</p>
+
+<p>Code for custom <a href="ScriptedImporters.html">scripted importers</a>, asset pre-processors, and asset post-processors should not rely on specific assets being imported in a determined order. The import process groups assets into queues by type. The types are imported in a predefined order, but the import order among assets of the same type is not deterministic, unless you use <a href="../ScriptReference/AssetImporters.ScriptedImporter.GatherDependenciesFromSourceFile.html"><code>ScriptedImporter.GatherDependenciesFromSourceFile</code></a>. Using <code>GatherDependenciesFromSourceFile</code> also creates a dependency between the assets, so modifying an asset triggers reimport of any assets that depend on it.</p>
+
+<p>
+<strong>Note:</strong> Default assets are imported by the <a href="BuiltInImporters">built-in DefaultImporter</a> before script assets, so any script-defined <a href="../ScriptReference/AssetPostprocessor.OnPostprocessAllAssets.html"><code>OnPostProcessAllAssets</code></a> won’t run for default assets.</p>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="asset-database-contents.html">Contents of the Asset Database</a></li>
+<li><a href="AssetDatabaseRefreshing.html">Refreshing the Asset Database</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="AssetDatabaseRefreshing.html"></a></span><div class="tip">Refreshing the Asset Database</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="Presets.html"></a></span><div class="tip">Reusing settings with preset assets</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

@@ -1,0 +1,264 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Integrated development environment (IDE) support</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<meta property="relative-path-to-manual" content="">
+<meta property="version-switcher-versions-with-this-page" content="Versions with this page:">
+<meta property="version-switcher-versions-without-this-page" content="Versions without this page:">
+<meta property="version-switcher-supported" content="Supported">
+<meta property="version-switcher-legacy" content="Legacy">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/Manual/scripting-ide-support.html">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20260626"></script><script type="text/javascript" src="docdata/toc.js?ts=20260626"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20260626"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20260626">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20260626">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/scripting-ide-support.html">English</a></li>
+<li><a href="/cn/current/Manual/scripting-ide-support.html">中文</a></li>
+<li><a href="/ja/current/Manual/scripting-ide-support.html">日本語</a></li>
+<li><a href="/kr/current/Manual/scripting-ide-support.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: Unity 6.7 Beta</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/scripting-ide-support.html">English</a></li>
+<li><a href="/cn/current/Manual/scripting-ide-support.html">中文</a></li>
+<li><a href="/ja/current/Manual/scripting-ide-support.html">日本語</a></li>
+<li><a href="/kr/current/Manual/scripting-ide-support.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="scripting.html">Programming in Unity</a></li>
+<li><a href="environment-and-tools.html">Environment and tools</a></li>
+<li>Integrated development environment (IDE) support</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="environment-and-tools.html"></a></span><div class="tip">Environment and tools</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="overview-of-dot-net-in-unity.html"></a></span><div class="tip">Unity .NET features</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Integrated development environment (IDE) support</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>An integrated development environment (IDE) is an application that combines a range of tools for developing software, typically including a code editor, code completion, code analysis and diagnostics, running tests, and debugging. Unity supports the following C# IDEs:</p>
+
+<ul>
+<li><a href="#visual-studio">Visual Studio</a></li>
+<li><a href="#vs-code">Visual Studio Code</a></li>
+<li><a href="#rider">JetBrains Rider</a></li>
+</ul>
+
+<p>New installations of the Unity Editor on Windows and macOS include the default IDE for the platform by default. You can also add an IDE as a new module to an existing Unity installation. For more information, refer to <a href="https://docs.unity.com/hub/add-modules">Add modules to a Unity Editor installation</a>.</p>
+
+<p><a name="script-editor" aria-hidden="true"></a></p>
+
+<h2>External script editor preference</h2>
+
+<p>The <strong>External Script Editor</strong> setting in the <a href="Preferences.html">Preferences window</a> determines which IDE Unity C# script files open in for editing. Unity automatically assigns the IDE included in an installation as the default external script Editor. To change this setting, go to <strong>Edit</strong> &gt; <strong>Preferences</strong> (macOS: <strong>Unity</strong> &gt; <strong>Settings</strong>) &gt; <strong>External Tools</strong> &gt; <strong>External Script Editor</strong>.</p>
+
+<p>This setting is enough if all you want to do is open, view, or make simple edits to C# source files. A full IDE experience including code analysis and debugging typically requires additional plugins or extensions, which are detailed in the following sections.</p>
+
+<p><a name="visual-studio" aria-hidden="true"></a></p>
+
+<h2>Visual Studio (Windows)</h2>
+
+<p>
+<a href="https://visualstudio.microsoft.com/downloads/">Visual Studio</a> is the default IDE for Unity on Windows. It’s recommended to always use the latest version where possible. New installations of the Unity Editor on Windows include Visual Studio Community and the other debugging requirements listed in this section by default. If you’re using a pre-existing installation of Visual Studio or the Unity Editor, you might need to install or configure some of the items manually.</p>
+
+<h3>Visual Studio configuration for debugging</h3>
+
+<p>In addition to your installation of Visual Studio, the full IDE experience including debugging Unity C# code requires:</p>
+
+<p>For your Visual Studio IDE:</p>
+
+<ul>
+<li><a href="https://docs.microsoft.com/en-us/visualstudio/gamedev/unity/get-started/visual-studio-tools-for-unity">Visual Studio Tools for Unity</a></li>
+</ul>
+
+<p>For your Unity Editor:</p>
+
+<ul>
+<li>Unity <a href="https://docs.unity3d.com/Packages/com.unity.ide.visualstudio@latest/">Visual Studio Editor package</a> (Included in a Unity Editor installation as part of the <a href="DeveloperToolsFeature.html">Engineering feature set</a>)</li>
+<li>Visual Studio set as the <a href="#script-editor">external script editor</a>.</li>
+</ul>
+
+<p>For more information on the debugging features of the Unity Editor, refer to <a href="managed-code-debugging.html">Debug C# code in Unity</a>.</p>
+
+<p>For more information on using Visual Studio with Unity, refer to <a href="https://docs.microsoft.com/en-us/visualstudio/gamedev/unity/get-started/using-visual-studio-tools-for-unity?pivots=windows">Using Visual Studio Tools for Unity</a>
+</p>
+
+<h3>Code analyzers</h3>
+
+<p>Unity uses Visual Studio’s C# compiler to compile <span class="tooltip" tabindex="0" ><strong>scripts</strong><span class="tooltiptext">A piece of code that allows you to create your own Components, trigger game events, modify Component properties over time and respond to user input in any way you like. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about creating-scripts.html" href="creating-scripts.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scripts" aria-label="Go to glossary anchor for Scripts">Glossary</a></span></span></span>. When you use the Visual Studio Editor package with Visual Studio, both Unity and Visual Studio display details of any errors in your scripts.</p>
+
+<p>Due to differences in the way Unity and Visual Studio compiles user code, <code>Microsoft.Unity.Analyzers.dll</code> isn’t configured automatically in the Unity Editor. To configure it, follow the instructions in <a href="install-existing-analyzer.html">Install and use an existing analyzer or source generator</a> using the <a href="https://www.nuget.org/packages/Microsoft.Unity.Analyzers">Microsoft.Unity.Analyzers nuget repository</a> as your source.</p>
+
+<h3>Project and solution files</h3>
+
+<p>Unity automatically creates and maintains a Visual Studio .sln and .csproj file. You can control whether Unity generates .csproj files for additional packages in your project. For more information, refer to <a href="https://docs.unity3d.com/Packages/com.unity.ide.visualstudio@latest/index.html?subfolder=/manual/using-visual-studio-editor.html">Using the Visual Studio Editor package</a>.</p>
+
+<p><a name="vs-code" aria-hidden="true"></a></p>
+
+<h2>Visual Studio Code (Windows, macOS, Linux)</h2>
+
+<p>
+<a href="https://code.visualstudio.com/download">Visual Studio Code</a> is the default IDE for Unity projects on macOS. It’s recommended to always use the latest version where possible. New installations of the Unity Editor on macOS include Visual Studio Code and the other debugging requirements listed in this section by default. If you’re using a pre-existing installation of VS Code or the Unity Editor, you might need to install or configure some of the items manually.</p>
+
+<h3>VS Code configuration for debugging</h3>
+
+<p>In addition to your installation of Visual Studio Code itself, the full IDE experience including debugging Unity C# code requires:</p>
+
+<p>For your Visual Studio Code IDE:</p>
+
+<ul>
+<li><a href="https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.csharp">C# For Visual Studio Code Extension</a></li>
+<li><a href="https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.csdevkit">C# Dev Kit for Visual Studio Code Extension</a></li>
+<li><a href="https://marketplace.visualstudio.com/items?itemName=visualstudiotoolsforunity.vstuc">Unity for Visual Studio Code Extension</a></li>
+</ul>
+
+<p>For your Unity Editor:</p>
+
+<ul>
+<li>
+<a href="https://docs.unity3d.com/Packages/com.unity.ide.visualstudio@latest/">Unity Visual Studio Editor package</a> 2.0.20+ (Included in a Unity Editor installation as part of the <a href="DeveloperToolsFeature.html">Engineering feature set</a>)</li>
+<li>Visual Studio Code set as the <a href="#script-editor">external script editor</a>.</li>
+</ul>
+
+<p>
+<strong>Note</strong>: The Unity <strong>Visual Studio Code</strong> Editor package <a href="https://docs.unity3d.com/Packages/com.unity.ide.vscode@latest">com.unity.ide.vscode</a> is no longer supported and should not be used. The <strong>Visual Studio Editor</strong> package <a href="https://docs.unity3d.com/Packages/com.unity.ide.visualstudio@latest/">com.unity.ide.visualstudio</a> now supports Visual Studio Code in addition to Visual Studio.</p>
+
+<p>For more information on the debugging features of the Unity Editor, refer to <a href="managed-code-debugging.html">Debug C# code in Unity</a>.</p>
+
+<p>For information on using VS Code with Unity, refer to the VS Code documentation on <a href="https://code.visualstudio.com/docs/other/unity">Unity Development with VS Code</a>.</p>
+
+<p><a name="rider" aria-hidden="true"></a></p>
+
+<h2>JetBrains Rider (Windows, macOS, Linux)</h2>
+
+<p>
+<a href="https://www.jetbrains.com/rider/">JetBrains Rider</a> is a C# IDE with comprehensive C# language and debugging support. It’s recommended to always use latest version where possible.</p>
+
+<h3>Rider configuration for debugging</h3>
+
+<p>In addition to your installation of Rider itself, the full IDE experience including debugging Unity C# code requires:</p>
+
+<p>For your Unity Editor:</p>
+
+<ul>
+<li>
+<a href="https://docs.unity3d.com/Packages/com.unity.ide.rider@latest/">Unity JetBrains Rider package</a> (Included in a Unity Editor installation as part of the <a href="DeveloperToolsFeature.html">Engineering feature set</a>).</li>
+<li>Rider set as the <a href="#script-editor">external script editor</a>.</li>
+</ul>
+
+<p>For more information on the debugging features of the Unity Editor, refer to <a href="managed-code-debugging.html">Debug C# code in Unity</a>.</p>
+
+<p>For more information on using JetBrains Rider with Unity, refer to <a href="https://www.jetbrains.com/lp/dotnet-unity/">Rider for Unity</a>.</p>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="managed-code-debugging.html">Debug C# code in Unity</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="environment-and-tools.html"></a></span><div class="tip">Environment and tools</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="overview-of-dot-net-in-unity.html"></a></span><div class="tip">Unity .NET features</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

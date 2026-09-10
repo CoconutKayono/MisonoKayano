@@ -1,0 +1,315 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Create a custom swirl filter</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<meta property="relative-path-to-manual" content="../">
+<meta property="version-switcher-versions-with-this-page" content="Versions with this page:">
+<meta property="version-switcher-versions-without-this-page" content="Versions without this page:">
+<meta property="version-switcher-supported" content="Supported">
+<meta property="version-switcher-legacy" content="Legacy">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/Manual/ui-systems/create-custom-swirl-filter.html">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../../StaticFilesManual/js/jquery.js?ts=20260626"></script><script type="text/javascript" src="../../StaticFilesManual/js/core.js?ts=20260626"></script><script type="text/javascript" src="../../StaticFilesManual/js/image-comp.js?ts=20260626"></script><script type="text/javascript" src="../docdata/toc.js?ts=20260626"></script><script type="text/javascript" src="../docdata/global_toc.js?ts=20260626"></script><link rel="stylesheet" type="text/css" href="../../StaticFilesManual/css/core.css?ts=20260626">
+<link rel="stylesheet" type="text/css" href="../../StaticFilesManual/css/icons.css?ts=20260626">
+<link rel="stylesheet" href="../../StaticFilesManual/css/prism.css">
+<script src="../../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="../30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../index.html" class="selected">Manual</a></li>
+<li><a href="../../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/ui-systems/create-custom-swirl-filter.html">English</a></li>
+<li><a href="/cn/current/Manual/ui-systems/create-custom-swirl-filter.html">中文</a></li>
+<li><a href="/ja/current/Manual/ui-systems/create-custom-swirl-filter.html">日本語</a></li>
+<li><a href="/kr/current/Manual/ui-systems/create-custom-swirl-filter.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: Unity 6.7 Beta</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/ui-systems/create-custom-swirl-filter.html">English</a></li>
+<li><a href="/cn/current/Manual/ui-systems/create-custom-swirl-filter.html">中文</a></li>
+<li><a href="/ja/current/Manual/ui-systems/create-custom-swirl-filter.html">日本語</a></li>
+<li><a href="/kr/current/Manual/ui-systems/create-custom-swirl-filter.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="../UIToolkits.html">UI systems</a></li>
+<li><a href="../UIElements.html">UI Toolkit</a></li>
+<li><a href="../UIE-USS.html">Style UI</a></li>
+<li><a href="../ui-systems/uss-filter.html">Apply post-processing effects with USS filter</a></li>
+<li>Create a custom swirl filter</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="../ui-systems/uss-filter-transitions.html"></a></span><div class="tip">USS filter transitions</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="../ui-systems/ui-shader-graph.html"></a></span><div class="tip">UI Shader Graph</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Create a custom swirl filter</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>You can create custom filters to apply any effect you want to a <span class="tooltip" tabindex="0" ><strong>visual element</strong><span class="tooltiptext">A node of a visual tree that instantiates or derives from the C# <a href="../../ScriptReference/UIElements.VisualElement.html"><code>VisualElement</code></a> class. You can style the look, define the behaviour, and display it on screen as part of the UI. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UIE-VisualTree.html" href="../UIE-VisualTree.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#visualelement" aria-label="Go to glossary anchor for visualelement">Glossary</a></span></span></span>. To create a custom filter, define the filter function in a custom filter asset. The custom filter asset defines the filter parameters, passes, and parameter bindings.</p>
+
+<p>This example demonstrates a custom filter, created in the custom filter asset’s <strong><span class="tooltip" tabindex="0" ><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheInspector.html" href="../UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span></strong> window. You can also <a href="custom-filters.html#create-a-custom-filter-in-c">create custom filters in C# code</a>.</p>
+
+<h2>Example overview</h2>
+
+<p>This example creates a custom filter with a swirl effect, which distorts the visual element by rotating it around a center point.</p>
+
+<figure>
+<img src="../../uploads/Main/uss/swirl.png" alt="Example swirl filter effect">
+<figcaption>Example swirl filter effect</figcaption>
+</figure>
+
+<p>You can provide custom filter functions with parameters, set in style or directly in the UI Builder. For example, the built-in blur filter function has only one parameter: the blur radius. This custom swirl filter function has two parameters, the angle and the radius of the swirl:</p>
+
+<ul>
+<li>
+<strong>Angle</strong>: Sets the angle of the swirl effect.</li>
+<li>
+<strong>Radius</strong>: Sets the radius of the swirl effect.</li>
+</ul>
+
+<p>This example uses a sample <a href="https://github.com/Unity-Technologies/ui-toolkit-manual-code-examples/tree/master/create-a-custom-swirl-filter/SwirlFilter/Swirl.shader">swirl shader</a> and <span class="tooltip" tabindex="0" ><a href="https://github.com/Unity-Technologies/ui-toolkit-manual-code-examples/tree/master/create-a-custom-swirl-filter/SwirlFilter/Swirl.mat">material</a><span class="tooltiptext">An asset that defines how a surface should be rendered. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-Material.html" href="../class-Material.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#Material" aria-label="Go to glossary anchor for Material">Glossary</a></span></span></span> to create the swirl filter. The <span class="tooltip" tabindex="0" ><strong>shader</strong><span class="tooltiptext">A program that runs on the GPU. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Shaders.html" href="../Shaders.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#shader" aria-label="Go to glossary anchor for shader">Glossary</a></span></span></span>, which defines the effect, includes two properties—<code>_Angle</code>and <code>_Radius</code>—to control the swirl’s angle and radius. The material file, <code>Swirl.mat</code>, is configured to use the swirl shader. To apply the effect, bind the material properties to the filter parameters.</p>
+
+<p>You can find the completed files for the example in this <a href="https://github.com/Unity-Technologies/ui-toolkit-manual-code-examples/tree/master/create-a-custom-swirl-filter">GitHub repository</a>.</p>
+
+<h2>Prerequisites</h2>
+
+<p>This guide is for developers familiar with the Unity Editor, UI Toolkit, and C# scripting. Before you start, get familiar with the following:</p>
+
+<ul>
+<li><a href="../UIE-UXML.html">UXML</a></li>
+<li><a href="../UIE-about-uss.html">USS</a></li>
+<li><a href="uss-filter.html">USS filter</a></li>
+</ul>
+
+<h2>Create a custom filter asset</h2>
+
+<p>Create the filter asset and define the filter parameters, passes, and parameter bindings in the asset’s <strong>Inspector</strong> window.</p>
+
+<ol>
+<li><p>Create a project in Unity with any template.</p></li>
+<li><p>In the <code>Assets</code> folder, create a folder named <code>SwirlFilter</code>.</p></li>
+<li>Download and import the following files into the <code>SwirlFilter</code> folder:
+
+<ul>
+<li><a href="https://github.com/Unity-Technologies/ui-toolkit-manual-code-examples/tree/master/create-a-custom-swirl-filter/SwirlFilter/Swirl.shader">Swirl.shader</a></li>
+<li><a href="https://github.com/Unity-Technologies/ui-toolkit-manual-code-examples/tree/master/create-a-custom-swirl-filter/SwirlFilter/Swirl.mat">Swirl.mat</a></li>
+</ul>
+</li>
+<li><p>To create a <a href="../../ScriptReference/UIElements.FilterFunctionDefinition.html"><code>FilterFunctionDefinition</code></a> asset, right-click in the <code>SwirlFilter</code> folder and select <strong>Create</strong> &gt; <strong>UI Toolkit</strong> &gt; <strong>Filter Function Definition</strong>.</p></li>
+<li><p>Rename the asset to <code>SwirlFilter</code>.</p></li>
+<li><p>In the <strong>Inspector</strong> window for the <code>SwirlFilter</code> asset, set <strong>Filter Name</strong> to <code>swirl</code>.</p></li>
+<li><p>In the <strong>Parameters</strong> section, add the two parameters and set the <strong>Type</strong> of both parameters to <code>float</code>. </p></li>
+<li><p>Set the name of the first parameter to <code>Angle</code>. This controls the angle of the swirl.</p></li>
+<li><p>Set the name of the second parameter to <code>Radius</code>. This controls the radius of the swirl.</p></li>
+<li><p>In the <strong>Passes</strong> section, add a new element and set the <strong>Material</strong> to <code>Swirl.shader</code>.</p></li>
+<li><p>In the <strong>Parameter Bindings</strong> section, add two bindings.</p></li>
+<li>
+<p>For the first binding, do the following:</p>
+
+<ul>
+<li>Set the <strong>Index</strong> to <code>0</code>.</li>
+<li>Set the <strong>Property</strong> to <code>_Angle</code>.</li>
+</ul>
+</li>
+<li>
+<p>For the second binding, do the following:</p>
+
+<ul>
+<li>Set the <strong>Index</strong> to <code>1</code>.</li>
+<li>Set the <strong>Property</strong> to <code>_Radius</code>.</li>
+</ul>
+
+<figure>
+<img src="../../uploads/Main/uss/swirl-filter-function.png" alt="Define swirl filter in the Inspector window">
+<figcaption>Define swirl filter in the Inspector window</figcaption>
+</figure>
+</li>
+</ol>
+
+<h2>Create the UI Document and the style sheet</h2>
+
+<p>To get the swirl effect, create a UXML file with two VisualElements with different background colors. The first VisualElement is the parent element, and the second VisualElement is the child element. Apply the custom filter to the parent element so that the child element is affected by the filter.</p>
+
+<ol>
+<li>
+<p>Create a new UI Toolkit USS file named <code>SwirlFilterExample.uss</code> with the following content:</p>
+
+<pre><code class="lang-css">.outside {
+    flex-grow: 1;
+    position: absolute;
+    height: 207px;
+    width: 234px;
+    top: 46px;
+    left: 27px;
+    background-color: rgb(255, 0, 0);
+}
+    
+.inside {
+    flex-grow: 1;
+    position: absolute;
+    height: 75px;
+    width: 100px;
+    top: 46px;
+    left: 27px;
+    background-color: rgb(0, 255, 247);
+}
+</code></pre>
+</li>
+<li>
+<p>Create a new UI Toolkit UXML file named <code>SwirlFilterExample.uxml</code> with the following content:</p>
+
+<pre><code class="lang-xml">&lt;engine:UXML xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:engine=&quot;UnityEngine.UIElements&quot; xmlns:editor=&quot;UnityEditor.UIElements&quot; noNamespaceSchemaLocation=&quot;../UIElementsSchema/UIElements.xsd&quot; editor-extension-mode=&quot;False&quot;&gt;
+    &lt;Style src=&quot;SwirlFilterExample.uss&quot; /&gt;
+    &lt;engine:VisualElement class=&quot;outside&quot;&gt;
+        &lt;engine:VisualElement class=&quot;inside&quot; /&gt;
+    &lt;/engine:VisualElement&gt;
+&lt;/engine:UXML&gt;
+</code></pre>
+</li>
+</ol>
+
+<h2>Apply the custom filter in the UI Builder</h2>
+
+<p>To apply the custom filter in the UI Builder, add the custom filter function to the UI Builder and set the parameters.</p>
+
+<ol>
+<li><p>Double-click the <code>SwirlFilterExample.uxml</code> file to open it in the UI Builder.</p></li>
+<li><p>In the <strong>StyleSheets</strong> panel, select <strong>+</strong> &gt; <strong>Add Existing USS</strong> and select <code>SwirlFilterExample.uss</code>.</p></li>
+<li><p>In the <strong>Hierarchy</strong> panel, select the parent VisualElement.</p></li>
+<li><p>In the <strong>Inspector</strong> panel, select <strong>Inline Styles</strong> &gt; <strong>Filter</strong>.</p></li>
+<li><p>In the <strong>Filter</strong> section, click the <strong>Add(+)</strong> button.</p></li>
+<li><p>In the <strong>Function</strong> dropdown, select <code>Custom</code>.</p></li>
+<li><p>Set <strong>Definition</strong> to <code>SwirlFilter</code>.</p></li>
+<li><p>In the <strong>Angle</strong> field, set the angle value, such as <code>58.9</code>.</p></li>
+<li>
+<p>In the <strong>Radius</strong> field, set the radius value, such as <code>2.3</code>. </p>
+
+<figure>
+<img src="../../uploads/Main/uss/apply-swirl-filter.png" alt="Apply swirl filter in UI Builder">
+<figcaption>Apply swirl filter in UI Builder</figcaption>
+</figure>
+</li>
+<li><p>You can adjust the angle and radius values to check the effect of the swirl filter in the <strong><span class="tooltip" tabindex="0" ><strong>ViewPort</strong><span class="tooltiptext">The user’s visible area of an app on their screen.<br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#viewport" aria-label="Go to glossary anchor for viewport">Glossary</a></span></span></span></strong> of the UI Builder.</p></li>
+</ol>
+
+<h2>Save the filter function to USS</h2>
+
+<p>You can save the filter function to the USS file instead of applying it as the inline style.</p>
+
+<ol>
+<li><p>In the <strong>Inspector</strong> panel of the parent VisualElement, click in the <strong>Style Class List</strong> field and enter <code>.filter-effect</code>.</p></li>
+<li>
+<p>Select <strong>Extract Inlined Style to New Class</strong>. This adds the following USS class to the <code>SwirlFilterExample.uss</code> file and applies the class to the parent VisualElement:</p>
+
+<pre><code class="lang-css">.filterEffect {
+    filter: filter(&quot;SwirlFilter/SwirlFilterFunction.asset&quot; 58.9 2.3);
+}
+</code></pre>
+</li>
+</ol>
+
+<h2>Addition resources</h2>
+
+<ul>
+<li><a href="../UIE-uss-properties.html">USS properties</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="../ui-systems/uss-filter-transitions.html"></a></span><div class="tip">USS filter transitions</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="../ui-systems/ui-shader-graph.html"></a></span><div class="tip">UI Shader Graph</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

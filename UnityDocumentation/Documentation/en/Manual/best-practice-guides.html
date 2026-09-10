@@ -1,0 +1,335 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Best practice guides</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<meta property="relative-path-to-manual" content="">
+<meta property="version-switcher-versions-with-this-page" content="Versions with this page:">
+<meta property="version-switcher-versions-without-this-page" content="Versions without this page:">
+<meta property="version-switcher-supported" content="Supported">
+<meta property="version-switcher-legacy" content="Legacy">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/Manual/best-practice-guides.html">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20260626"></script><script type="text/javascript" src="docdata/toc.js?ts=20260626"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20260626"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20260626">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20260626">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/best-practice-guides.html">English</a></li>
+<li><a href="/cn/current/Manual/best-practice-guides.html">中文</a></li>
+<li><a href="/ja/current/Manual/best-practice-guides.html">日本語</a></li>
+<li><a href="/kr/current/Manual/best-practice-guides.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: Unity 6.7 Beta</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/best-practice-guides.html">English</a></li>
+<li><a href="/cn/current/Manual/best-practice-guides.html">中文</a></li>
+<li><a href="/ja/current/Manual/best-practice-guides.html">日本語</a></li>
+<li><a href="/kr/current/Manual/best-practice-guides.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul><li>Best practice guides</li></ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="UnityServices.html"></a></span><div class="tip">Unity Services</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="best-practice-guides/ui-toolkit-for-advanced-unity-developers/bpg-uiad-index.html"></a></span><div class="tip">UI Toolkit for advanced Unity developers</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Best practice guides</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Discover and learn production-tested best practices from Unity experts in the following areas:</p>
+
+<ul>
+<li><a href="#art-and-design"><strong>Art and design</strong></a></li>
+<li><a href="#devops"><strong>DevOps</strong></a></li>
+<li><a href="#graphics-rendering"><strong>Graphics &amp; rendering</strong></a></li>
+<li><a href="#performance-optimization"><strong>Performance optimization</strong></a></li>
+<li><a href="#scripting"><strong>Scripting</strong></a></li>
+</ul>
+<div class="clear"></div>
+
+<p><a id="art-and-design" aria-hidden="true"></a></p>
+
+<h2>Art and design</h2>
+<div class="bestpractice-container">
+<div class="bestpractice-section">
+<a href="https://unity.com/resources/create-virtual-mixed-reality-experiences-unity?isGated=false"><img src="../uploads/Main/create-virtual-mixed-reality-experiences.png" alt=""></a>
+
+<h3><a href="https://unity.com/resources/create-virtual-mixed-reality-experiences-unity?isGated=false">Create virtual and mixed reality experiences in Unity</a></h3>
+
+<p>Read this e-book to get practical tips for working with the <span class="tooltip" tabindex="0" ><strong>VR</strong><span class="tooltiptext">Virtual Reality <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about VROverview.html" href="VROverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#VR" aria-label="Go to glossary anchor for VR">Glossary</a></span></span></span> template in Unity, the <span class="tooltip" tabindex="0" ><strong>XR</strong><span class="tooltiptext">An umbrella term encompassing Virtual Reality (VR), Augmented Reality (AR) and Mixed Reality (MR) applications. Devices supporting these forms of interactive applications can be referred to as XR devices. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about XR.html" href="XR.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#XR" aria-label="Go to glossary anchor for XR">Glossary</a></span></span></span> Interaction Toolkit, Apple Vision Pro and visionOS, and more.</p>
+</div>
+<div class="bestpractice-section">
+<a href="https://unity.com/resources/definitive-guide-animation-unity-2022-lts-ebook?isGated=false"><img src="../uploads/Main/definitive-guide-to-animation.png" alt=""></a>
+
+<h3><a href="https://unity.com/resources/definitive-guide-animation-unity-2022-lts-ebook?isGated=false">The definitive guide to animation in Unity</a></h3>
+
+<p>This guide aims to provide animators and technical artists with an in-depth understanding of the animation features in Unity. Learn about importing and exporting animations, <span class="tooltip" tabindex="0" ><strong>humanoid animations</strong><span class="tooltiptext">An animation using humanoid skeletons. Humanoid models generally have the same basic structure, representing the major articulate parts of the body, head and limbs. This makes it easy to map animations from one humanoid skeleton to another, allowing retargeting and inverse kinematics. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ConfiguringtheAvatar.html" href="ConfiguringtheAvatar.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Humanoidanimation" aria-label="Go to glossary anchor for Humanoidanimation">Glossary</a></span></span></span>, shortcuts, animating UI, events, and more.</p>
+</div>
+<div class="bestpractice-section">
+<a href="https://unity.com/resources/2d-game-art-animation-lighting-unity-6-3-lts?isGated=false"><img src="../uploads/Main/best-practice-2d-game-art-animation-lighting.png" alt=""></a>
+
+<h3><a href="https://unity.com/resources/2d-game-art-animation-lighting-unity-6-3-lts?isGated=false">2D game art, animation, and lighting for artists</a></h3>
+
+<p>Our popular 2D e-book is now updated to include techniques and workflows for developing a professional 2D game in Unity 6.3 LTS. Get best practices for art, design, animation, lights, and VFX, plus tips on how to use 3D assets in 2D games.</p>
+</div>
+<div class="bestpractice-section">
+<a href="https://unity.com/resources/game-designer-playbook?isGated=false"><img src="../uploads/Main/best-practice-create-bettergameplay.png" alt=""></a>
+
+<h3><a href="https://unity.com/resources/game-designer-playbook?isGated=false">The Unity Game Designer Playbook</a></h3>
+
+<p>This guide is designed to help experienced game designers learn how to prototype their ideas in Unity for more efficient creation and team collaboration. Learn about visual scripting, creating input, level design tools, microinteractions, and more.</p>
+</div>
+<div class="bestpractice-section">
+<a href="https://unity.com/resources/scalable-performant-ui-uitoolkit-unity-6?isGated=false"><img src="../uploads/Main/best-practice-ui-toolkit.png" alt=""></a>
+
+<h3><a href="best-practice-guides/ui-toolkit-for-advanced-unity-developers/bpg-uiad-index.html">UI Toolkit for advanced Unity developers</a></h3>
+
+<p>This guide for UI artists, UI designers, and UI programmers illustrates many features-in-action with examples from two official Unity UI Toolkit samples. Each section in the e-book focuses on specific toolsets, making it easy to choose the most relevant parts for your role.</p>
+</div>
+<div class="bestpractice-section">
+<a href="https://unity.com/resources/introduction-to-level-design-in-game-development-and-in-unity?isGated=false"><img src="../uploads/Main/introduction-to-game-level-design.png" alt=""></a>
+
+<h3><a href="https://unity.com/resources/introduction-to-level-design-in-game-development-and-in-unity?isGated=false">Introduction to game level design</a></h3>
+
+<p>Written by professional level designers in the gaming industry and Unity product experts, this guide provides career tips and instructions on using Unity tools suited to worldbuilding, such as Unity ProBuilder and the <span class="tooltip" tabindex="0" ><strong>Terrain</strong><span class="tooltiptext">The landscape in your scene. A Terrain GameObject adds a large flat plane to your scene and you can use the Terrain’s Inspector window to create a detailed landscape. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about terrain-UsingTerrains.html" href="terrain-UsingTerrains.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Terrain" aria-label="Go to glossary anchor for Terrain">Glossary</a></span></span></span> system.</p>
+</div>
+</div>
+<div class="clear"></div>
+
+<p><a id="devops" aria-hidden="true"></a></p>
+
+<h2>DevOps</h2>
+<div class="bestpractice-container">
+<div class="bestpractice-section">
+<a href="https://unity.com/resources/best-practices-version-control-unity-6"><img src="../uploads/Main/bp-version-control-u6.png" alt=""></a>
+
+<h3><a href="https://unity.com/resources/best-practices-version-control-unity-6">Best practices for project organization and version control</a></h3>
+
+<p>This guide explains the key concepts of <span class="tooltip" tabindex="0" ><strong>version control</strong><span class="tooltiptext">A system for managing file changes. You can use Unity in conjunction with most common version control tools, including Perforce, Git, Mercurial and Unity Version Control (UVCS). <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about VersionControl.html" href="VersionControl.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#versioncontrol" aria-label="Go to glossary anchor for versioncontrol">Glossary</a></span></span></span>, compares some of the different version control systems available, and provides an introduction to additional Unity DevOps tools like Unity Asset Manager and <span class="tooltip" tabindex="0" ><strong>Build Automation</strong><span class="tooltiptext">A continuous integration service for Unity projects that automates the process of creating builds on Unity’s servers. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about https://docs.unity.com/devops/en/manual/unity-build-automation" href="https://docs.unity.com/devops/en/manual/unity-build-automation">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#BuildAutomation" aria-label="Go to glossary anchor for BuildAutomation">Glossary</a></span></span></span>.</p>
+</div>
+</div>
+<div class="clear"></div>
+
+<p><a id="graphics-rendering" aria-hidden="true"></a></p>
+
+<h2>Graphics &amp; rendering</h2>
+<div class="bestpractice-container">
+<div class="bestpractice-section">
+<a href="https://unity.com/resources/create-shaders-visual-effects-urp-unity-6?isGated=false"><img src="../uploads/Main/URP_cookbook_Unity_6.png" alt=""></a>
+
+<h3><a href="https://unity.com/resources/create-shaders-visual-effects-urp-unity-6?isGated=false">Create popular shaders and visual effects with the Universal Render Pipeline</a></h3>
+
+<p>This e-book covers the creation of versatile shaders and visual effects with URP in Unity 6. You’ll find steps for creating a toon and outline <span class="tooltip" tabindex="0" ><strong>shader</strong><span class="tooltiptext">A program that runs on the GPU. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Shaders.html" href="Shaders.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#shader" aria-label="Go to glossary anchor for shader">Glossary</a></span></span></span> with Shader Graph, creating X-ray-like image effects with stencils, and more.</p>
+</div>
+<div class="bestpractice-section">
+<a href="https://unity.com/resources/introduction-to-urp-advanced-creators-unity-6"><img src="../uploads/Main/bp-introduction-to-urp-u6.png" alt=""></a>
+
+<h3><a href="https://unity.com/resources/introduction-to-urp-advanced-creators-unity-6">Introduction to the Universal Render Pipeline for advanced Unity creators</a></h3>
+
+<p>Get in-depth guidance on how to set up URP for a new project, work with URP Quality Settings, Adaptive Probe Volumes, URP and custom shaders, HLSL includes, and more.</p>
+</div>
+<div class="bestpractice-section">
+<a href="https://unity.com/resources/lighting-environments-hdrp-unity-6?isGated=false"><img src="../uploads/Main/best-practice-lighting-hdrp-u6.png" alt=""></a>
+
+<h3><a href="https://unity.com/resources/lighting-environments-hdrp-unity-6?isGated=false">Lighting and environments in the High Definition Render Pipeline in Unity 6</a></h3>
+
+<p>This edition of the e-book covers all the capabilities included in HDRP in Unity 6 and 6.1, such as lighting, environment effects, and performance and optimization.</p>
+</div>
+<div class="bestpractice-section">
+<a href="https://unity.com/resources/creating-advanced-vfx-unity6?isGated=false"><img src="../uploads/Main/A_scene_created_in_Unity_by_Sakura_Rabbit.png" alt=""></a>
+
+<h3><a href="https://unity.com/resources/creating-advanced-vfx-unity6?isGated=false">The definitive guide to creating advanced visual effects in Unity</a></h3>
+
+<p>Use this comprehensive guide to learn how to incorporate the VFX Graph into your applications. It includes specific instructions on how to use the VFX Graph, and its related tools, to build real-time visual effects in Unity 6.</p>
+</div>
+</div>
+<div class="clear"></div>
+
+<p><a id="performance-optimization" aria-hidden="true"></a></p>
+
+<h2>Performance optimization</h2>
+<div class="bestpractice-container">
+<div class="bestpractice-section">
+<a href="https://unity.com/resources/mobile-xr-web-game-performance-optimization-unity-6"><img src="../uploads/Main/optimize-mobile-performance-u6.png" alt=""></a>
+
+<h3><a href="https://unity.com/resources/mobile-xr-web-game-performance-optimization-unity-6">Optimize your game performance for mobile, XR, and Web in Unity</a></h3>
+
+<p>This guide brings together all the best and latest mobile, XR, and Unity Web performance optimization tips for Unity 6.</p>
+</div>
+<div class="bestpractice-section">
+<a href="https://unity.com/resources/console-pc-game-performance-optimization-unity-6"><img src="../uploads/Main/optimize-console-performance-u6.png" alt=""></a>
+
+<h3><a href="https://unity.com/resources/console-pc-game-performance-optimization-unity-6">Optimize your game performance for consoles and PCs in Unity</a></h3>
+
+<p>This guide brings together all the best and latest PC and console performance optimization tips available in Unity 6.</p>
+</div>
+<div class="bestpractice-section">
+<a href="https://unity.com/resources/ultimate-guide-to-profiling-unity-games-unity-6?isGated=false"><img src="../uploads/Main/best-practice-profiling-ultimate-guide-unity-6.png" alt=""></a>
+
+<h3><a href="https://unity.com/resources/ultimate-guide-to-profiling-unity-games-unity-6?isGated=false">Ultimate guide to profiling Unity games</a></h3>
+
+<p>This updated guide provides advanced knowledge and tips for profiling, memory management, and power consumption optimization with Unity 6 profiling tools.</p>
+</div>
+<div class="bestpractice-section">
+<a href="https://unity.com/resources/unity-game-dev-field-guide?isGated=false"><img src="../uploads/Main/best-practice-game-dev-field.png" alt=""></a>
+
+<h3><a href="https://unity.com/resources/unity-game-dev-field-guide?isGated=false">The Unity game dev field guide</a></h3>
+
+<p>This guide helps you get familiar with the latest Unity features and workflows. It covers Editor navigation, setting up your development environment, Unity’s profiling tools, physics, and Input Systems.</p>
+</div>
+<div class="bestpractice-section">
+<a href="https://unity.com/resources/tips-improve-productivity-workflow-unity-6"><img src="../uploads/Main/best-practice-productivity-tips-unity-6.png" alt=""></a>
+
+<h3><a href="https://unity.com/resources/tips-improve-productivity-workflow-unity-6">Tips to increase productivity with Unity 6</a></h3>
+
+<p>This 100+ page guide offers tips to speed up your workflows throughout every stage of game development. The guide focuses on Editor navigation, working in 2D, debugging and profiling, URP, HDRP, UI Toolkit, and more.</p>
+</div>
+</div>
+<div class="clear"></div>
+
+<p><a id="scripting" aria-hidden="true"></a></p>
+
+<h2>Scripting</h2>
+<div class="bestpractice-container">
+<div class="bestpractice-section">
+<a href="https://unity.com/resources/c-sharp-style-guide-unity-6"><img src="../uploads/Main/best-practice-c-style-guide.png" alt=""></a>
+
+<h3><a href="https://unity.com/resources/c-sharp-style-guide-unity-6">Use a C# style guide for clean and scalable game code</a></h3>
+
+<p>Read this guide to learn how to use and adapt existing industry standard code style guides. It explores the benefits of following consistent naming conventions, formatting, commenting on code, and more.</p>
+</div>
+<div class="bestpractice-section">
+<a href="https://unity.com/resources/ultimate-guide-advanced-multiplayer-networking"><img src="../uploads/Main/best-practice-multiplayer-networking.png" alt=""></a>
+
+<h3><a href="https://unity.com/resources/ultimate-guide-advanced-multiplayer-networking">The ultimate guide to multiplayer networking for advanced Unity developers</a></h3>
+
+<p>Read this guide to explore the core concepts of Unity multiplayer, different multiplayer systems and <span class="tooltip" tabindex="0" ><strong>networking</strong><span class="tooltiptext">The Unity system that enables multiplayer gaming across a computer network. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about multiplayer.html" href="multiplayer.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#networking" aria-label="Go to glossary anchor for networking">Glossary</a></span></span></span> models, and an example of using Netcode for <span class="tooltip" tabindex="0" ><strong>GameObjects</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-GameObject.html" href="class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span>. </p>
+</div>
+<div class="bestpractice-section">
+<a href="https://unity.com/resources/dots-concepts-features-samples-resources-unity-6?isGated=false"><img src="../uploads/Main/best-practice-dots-concepts-unity-6.png" alt=""></a>
+
+<h3><a href="https://unity.com/resources/dots-concepts-features-samples-resources-unity-6?isGated=false">Introduction to DOTS concepts, features, &amp; samples for advanced Unity developers</a></h3>
+
+<p>Updated for Unity 6, this guide is a valuable primer for experienced Unity developers who are considering implementing Unity’s Data-Oriented Technology Stack (DOTS) in their projects.</p>
+</div>
+<div class="bestpractice-section">
+<a href="https://unity.com/resources/create-modular-game-architecture-scriptableobjects-unity-6?isGated=false"><img src="../uploads/Main/best-practice-create-modular-architecture-unity-6.jpeg" alt=""></a>
+
+<h3><a href="https://unity.com/resources/create-modular-game-architecture-scriptableobjects-unity-6?isGated=false">Create modular game architecture in Unity with ScriptableObjects</a></h3>
+
+<p>This edition of the e-book assembles tips and tricks from professional developers for deploying ScriptableObjects in production. These include examples of how to apply them to specific design patterns and how to avoid common pitfalls.</p>
+</div>
+<div class="bestpractice-section">
+<a href="https://unity.com/resources/design-patterns-solid-ebook?isGated=false"><img src="../uploads/Main/design-patterns-guide.png" alt=""></a>
+
+<h3><a href="https://unity.com/resources/design-patterns-solid-ebook?isGated=false">Level up your code with design patterns and SOLID</a></h3>
+
+<p>This e-book explores SOLID principles and design patterns for game development with eleven practical examples to help you write maintainable and scalable game code.</p>
+</div>
+</div>
+<div class="clear"></div>
+
+<p><br></p>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="UnityServices.html"></a></span><div class="tip">Unity Services</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="best-practice-guides/ui-toolkit-for-advanced-unity-developers/bpg-uiad-index.html"></a></span><div class="tip">UI Toolkit for advanced Unity developers</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

@@ -1,0 +1,263 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Physics Core 2D API workflow</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<meta property="relative-path-to-manual" content="../">
+<meta property="version-switcher-versions-with-this-page" content="Versions with this page:">
+<meta property="version-switcher-versions-without-this-page" content="Versions without this page:">
+<meta property="version-switcher-supported" content="Supported">
+<meta property="version-switcher-legacy" content="Legacy">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/Manual/2d-physics-api/2d-physics-api-workflow.html">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../../StaticFilesManual/js/jquery.js?ts=20260626"></script><script type="text/javascript" src="../../StaticFilesManual/js/core.js?ts=20260626"></script><script type="text/javascript" src="../../StaticFilesManual/js/image-comp.js?ts=20260626"></script><script type="text/javascript" src="../docdata/toc.js?ts=20260626"></script><script type="text/javascript" src="../docdata/global_toc.js?ts=20260626"></script><link rel="stylesheet" type="text/css" href="../../StaticFilesManual/css/core.css?ts=20260626">
+<link rel="stylesheet" type="text/css" href="../../StaticFilesManual/css/icons.css?ts=20260626">
+<link rel="stylesheet" href="../../StaticFilesManual/css/prism.css">
+<script src="../../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="../30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../index.html" class="selected">Manual</a></li>
+<li><a href="../../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/2d-physics-api/2d-physics-api-workflow.html">English</a></li>
+<li><a href="/cn/current/Manual/2d-physics-api/2d-physics-api-workflow.html">中文</a></li>
+<li><a href="/ja/current/Manual/2d-physics-api/2d-physics-api-workflow.html">日本語</a></li>
+<li><a href="/kr/current/Manual/2d-physics-api/2d-physics-api-workflow.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: Unity 6.7 Beta</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/2d-physics-api/2d-physics-api-workflow.html">English</a></li>
+<li><a href="/cn/current/Manual/2d-physics-api/2d-physics-api-workflow.html">中文</a></li>
+<li><a href="/ja/current/Manual/2d-physics-api/2d-physics-api-workflow.html">日本語</a></li>
+<li><a href="/kr/current/Manual/2d-physics-api/2d-physics-api-workflow.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="../Unity2D.html">2D game development</a></li>
+<li><a href="../2d-physics-api/2d-physics-api-landing.html">2D physics with the Physics Core 2D API</a></li>
+<li><a href="../2d-physics-api/2d-physics-api-get-started-landing.html">Get started with the Physics Core 2D API</a></li>
+<li>Physics Core 2D API workflow</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="../2d-physics-api/2d-physics-api-introduction.html"></a></span><div class="tip">Introduction to the Physics Core 2D API</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="../2d-physics-api/2d-physics-api-create-objects-landing.html"></a></span><div class="tip">Creating a scene with the Physics Core 2D API</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Physics Core 2D API workflow</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Create a 2D <span class="tooltip" tabindex="0" ><strong>scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html" href="../CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span> that simulates physics using the <a href="../../ScriptReference/Unity.U2D.Physics.PhysicsWorld.html"><code>Unity.U2D.Physics</code> API</a>.</p>
+
+<p>Follow these steps:</p>
+
+<ol>
+<li>
+<a href="#script">Include the Unity.U2D.Physics library</a> in a C# script.</li>
+<li>
+<a href="#world">Create a 2D physics world</a>.</li>
+<li>
+<a href="#physics-objects">Create physics objects</a> and add them to the world.</li>
+<li>
+<a href="#configure-objects">Configure objects with definitions</a>.</li>
+<li>
+<a href="#attach-script">Attach the script to a GameObject</a>, then enter Play mode.</li>
+</ol>
+
+<p><a name="script" aria-hidden="true"></a></p>
+
+<h2>Include the Unity.U2D.Physics library</h2>
+
+<p>In a <a href="../scripting-get-started.html">C# script</a>, add <code>using Unity.U2D.Physics;</code> at the top to include the <code>Unity.U2D.Physics</code> library.</p>
+
+<p>You can use the <code>Unity.U2D.Physics</code> API in any C# script, not only <a href="../class-MonoBehaviour.html">MonoBehaviour script files</a>. But if you use a MonoBehaviour script file, you can configure physics properties in the <strong><span class="tooltip" tabindex="0" ><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheInspector.html" href="../UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span></strong> window of a <span class="tooltip" tabindex="0" ><strong>GameObject</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-GameObject.html" href="../class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span>, move GameObjects, and attach <span class="tooltip" tabindex="0" ><strong>sprites</strong><span class="tooltiptext">A 2D graphic objects. If you are used to working in 3D, Sprites are essentially just standard textures but there are special techniques for combining and managing sprite textures for efficiency and convenience during development. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about sprite/sprite-landing.html" href="../sprite/sprite-landing.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#Sprite" aria-label="Go to glossary anchor for Sprite">Glossary</a></span></span></span>.</p>
+
+<p><a name="world" aria-hidden="true"></a></p>
+
+<h2>Create a 2D physics world</h2>
+
+<p>To add 2D physics objects, you first need to create a <code>PhysicsWorld</code> object to add them to. Do either of the following:</p>
+
+<ul>
+<li>Use the world Unity automatically creates.</li>
+<li>Create a new world.</li>
+</ul>
+
+<p>For more information, refer to <a href="2d-physics-api-world.html">Create a physics world</a>.</p>
+
+<p><a name="physics-objects" aria-hidden="true"></a></p>
+
+<h2>Create physics objects</h2>
+
+<p>To add physics objects to the world, do the following:</p>
+
+<ol>
+<li>Create a <code>PhysicsBody</code> object, which defines the position, rotation, and velocity of an object. It doesn’t define an area.</li>
+<li>Attach one or more <code>PhysicsShape</code> objects to the <code>PhysicsBody</code>, which define the area that interacts with other shapes. Unity also draws the shapes as a debug visualization.</li>
+<li>Add the body to the world you created.</li>
+</ol>
+
+<p>For more information, refer to <a href="2d-physics-api-physics-object.html">Create a physics object</a>.</p>
+
+<p><a name="configure-objects" aria-hidden="true"></a></p>
+
+<h2>Configure objects with definitions</h2>
+
+<p>To configure the properties of the world and its physics objects, create definition objects, for example <code>PhysicsBodyDefinition</code>. Definition objects contain properties like <code>position</code> and <code>gravity</code> that you can adjust in the Unity Editor, or pass into the object when you create it.</p>
+
+<p>To configure the properties in the <strong>Inspector</strong> window, make the definition object a <code>public</code> field.</p>
+
+<p>For more information, refer to <a href="2d-physics-api-definitions.html">Configure objects using definitions</a>.</p>
+
+<p><a name="attach-script" aria-hidden="true"></a></p>
+
+<h2>Attach the script to a GameObject</h2>
+
+<p>To start the simulation, you usually attach the script to a GameObject in your scene, then enter Play mode.</p>
+
+<p>By default, physics objects don’t move a GameObject. To make a physics object update the <span class="tooltip" tabindex="0" ><strong>Transform component</strong><span class="tooltiptext">A Transform component determines the Position, Rotation, and Scale of each object in the scene. Every GameObject has a Transform. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-Transform.html" href="../class-Transform.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#Transformcomponent" aria-label="Go to glossary anchor for Transformcomponent">Glossary</a></span></span></span> of the GameObject, refer to <a href="2d-physics-api-move-gameobject.html">Move a GameObject with the Physics Core 2D API</a>.</p>
+
+<p>To add a sprite, refer to <a href="2d-physics-api-add-sprite.html">Add a sprite to an object</a>.</p>
+
+<h2>Example</h2>
+
+<p>The following example creates a small circle that falls under gravity onto a large circle. Attach the script to a GameObject in your scene, then enter Play mode.</p>
+
+<pre><code class="csharp">using UnityEngine;
+using Unity.U2D.Physics;
+
+public class Example2DPhysics : MonoBehaviour
+{
+    void Start()
+    {
+        // Create the world
+        PhysicsWorld world = PhysicsWorld.defaultWorld;
+
+        // Create a body in the world, with a definition object that sets the position and enables physics
+        PhysicsBody object1 = world.CreateBody(new PhysicsBodyDefinition
+        { 
+            position = new Vector2(0.5f, 8f),
+            type = PhysicsBody.BodyType.Dynamic
+        });
+
+        // Attach a circle shape to the first body 
+        PhysicsShape object1shape = object1.CreateShape(new CircleGeometry());
+
+        // Create a second body in the world, with a definition object that sets the position and disables physics
+        PhysicsBody object2 = world.CreateBody(new PhysicsBodyDefinition
+        { 
+            position = new Vector2(0f, 0f),
+            type = PhysicsBody.BodyType.Static
+        });
+
+        // Attach a circle shape to the second body 
+        object2.CreateShape(new CircleGeometry { 
+            radius = 3f,
+        });
+    }
+}
+</code></pre>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li>
+<a href="https://github.com/Unity-Technologies/PhysicsExamples2D/tree/master/PhysicsCore2D">PhysicsCore2D repository</a> on GitHub</li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="../2d-physics-api/2d-physics-api-introduction.html"></a></span><div class="tip">Introduction to the Physics Core 2D API</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="../2d-physics-api/2d-physics-api-create-objects-landing.html"></a></span><div class="tip">Creating a scene with the Physics Core 2D API</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

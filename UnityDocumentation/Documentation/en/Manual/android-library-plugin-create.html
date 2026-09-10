@@ -1,0 +1,288 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Create an Android Library plug-in</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<meta property="relative-path-to-manual" content="">
+<meta property="version-switcher-versions-with-this-page" content="Versions with this page:">
+<meta property="version-switcher-versions-without-this-page" content="Versions without this page:">
+<meta property="version-switcher-supported" content="Supported">
+<meta property="version-switcher-legacy" content="Legacy">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/Manual/android-library-plugin-create.html">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20260626"></script><script type="text/javascript" src="docdata/toc.js?ts=20260626"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20260626"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20260626">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20260626">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/android-library-plugin-create.html">English</a></li>
+<li><a href="/cn/current/Manual/android-library-plugin-create.html">中文</a></li>
+<li><a href="/ja/current/Manual/android-library-plugin-create.html">日本語</a></li>
+<li><a href="/kr/current/Manual/android-library-plugin-create.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: Unity 6.7 Beta</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/android-library-plugin-create.html">English</a></li>
+<li><a href="/cn/current/Manual/android-library-plugin-create.html">中文</a></li>
+<li><a href="/ja/current/Manual/android-library-plugin-create.html">日本語</a></li>
+<li><a href="/kr/current/Manual/android-library-plugin-create.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="PlatformSpecific.html">Platform development  </a></li>
+<li><a href="android.html">Android</a></li>
+<li><a href="android-developing.html">Developing for Android</a></li>
+<li><a href="PluginsForAndroid.html">Create and use plug-ins in Android</a></li>
+<li><a href="android-plugin-types.html">Android plug-in types</a></li>
+<li><a href="AndroidAARPlugins.html">Android Library and Android Archive plug-ins</a></li>
+<li>Create an Android Library plug-in</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="android-library-project-and-aar-plugins-introducing.html"></a></span><div class="tip">Introducing Android Library and Android Archive plug-ins</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="android-library-project-import.html"></a></span><div class="tip">Import an Android Library plug-in</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Create an Android Library plug-in</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>You can create an Android Library <span class="tooltip" tabindex="0" ><strong>plug-in</strong><span class="tooltiptext">A set of code created outside of Unity that creates functionality in Unity. There are two kinds of plug-ins you can use in Unity: Managed plug-ins (managed .NET assemblies created with tools like Visual Studio) and Native plug-ins (platform-specific native code libraries). <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ./plug-ins.html" href="./plug-ins.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#plug-in" aria-label="Go to glossary anchor for plug-in">Glossary</a></span></span></span> in Unity. Once created, you can directly use it within your Unity project or develop it further in Android Studio.</p>
+
+<p>To create an Android Library plug-in, follow these steps:</p>
+
+<ol>
+<li>In the <strong>Project</strong> window, navigate to the folder where you want to create the Android Library plug-in.</li>
+<li>Right-click the folder and select <strong>Create</strong> &gt; <strong>Plugins</strong> &gt; <strong>Android Library</strong>.</li>
+</ol>
+
+<p>Unity creates a new Android Library plug-in that includes <code>build.gradle</code>, <code>AndroidManifest.xml</code>, and source files.</p>
+
+<p>Alternatively, you can create the Android Library plug-in manually by following these steps:</p>
+
+<ol>
+<li><p>In your Unity project, create a <code>MyFeature.androidlib</code> folder. This folder will represent a <span class="tooltip" tabindex="0" ><strong>Gradle</strong><span class="tooltiptext">An Android build system that automates several build processes. This automation means that many common build errors are less likely to occur. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about android-gradle-overview.html" href="android-gradle-overview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Gradle" aria-label="Go to glossary anchor for Gradle">Glossary</a></span></span></span> module.</p></li>
+<li>
+<p>(Optional) Unity will create a <code>build.gradle</code> for your <code>.androidlib</code> automatically on build, but if you want to override it, create a file named <code>build.gradle</code> inside the <code>MyFeature.androidlib</code> folder and add the following code:</p>
+
+<pre><code class="lang-gradle">apply plugin: 'com.android.library'
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+}
+
+android {
+    namespace &quot;com.company.myfeature&quot;
+    compileSdk getProperty(&quot;unity.compileSdkVersion&quot;) as int
+    buildToolsVersion getProperty(&quot;unity.buildToolsVersion&quot;)
+
+    compileOptions {
+        sourceCompatibility JavaVersion.valueOf(getProperty(&quot;unity.javaCompatibilityVersion&quot;))
+        targetCompatibility JavaVersion.valueOf(getProperty(&quot;unity.javaCompatibilityVersion&quot;))
+    }
+
+    defaultConfig {
+        minSdk getProperty(&quot;unity.minSdkVersion&quot;) as int
+        targetSdk getProperty(&quot;unity.targetSdkVersion&quot;) as int
+        ndk {
+            abiFilters.addAll(getProperty(&quot;unity.abiFilters&quot;).tokenize(','))
+            debugSymbolLevel getProperty(&quot;unity.debugSymbolLevel&quot;)
+        }
+        consumerProguardFiles 'proguard-rules.pro'
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+</code></pre>
+</li>
+<li>Create the following folder structure inside the <code>MyFeature.androidlib</code> folder:
+
+<ul>
+<li><code>src/main</code></li>
+<li>
+<code>src/main/java/com/company/feature</code> (or adjust the package path to match your desired package name)</li>
+</ul>
+</li>
+<li>
+<p>Create an <code>AndroidManifest.xml</code> file inside the <code>src/main</code> folder and add the following code:</p>
+
+<pre><code class="lang-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+&lt;manifest xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;/&gt;
+</code></pre>
+</li>
+<li>
+<p>Create a Java or Kotlin file (for example, <code>Controller.java</code>) inside the <code>src/main/java/com/company/feature/</code> folder and add the following code:</p>
+
+<pre><code class="lang-java">package com.company.feature;
+
+public class Controller
+{
+    public static String getFoo()
+    {
+        return &quot;This is my feature&quot;;
+    }
+}
+</code></pre>
+</li>
+</ol>
+
+<p>The Android Library plug-in is now created.</p>
+
+<h2>Use Android Library plug-ins</h2>
+
+<p>To use the Android Library plug-in within your Unity project, use the following code:</p>
+
+<pre><code class="lang-cs">using UnityEngine;
+
+public class FeatureUser : MonoBehaviour
+{
+    readonly string ControllerName = &quot;com.company.feature.Controller&quot;;
+    AndroidJavaClass m_Class;
+    void Start()
+    {
+        m_Class = new AndroidJavaClass(ControllerName);
+    }
+
+    private void OnGUI()
+    {
+        GUILayout.Space(100);
+        GUI.skin.label.fontSize = 30;
+
+        if (m_Class != null)
+        {
+            GUILayout.Label($&quot;{ControllerName}.getFoo() returns &quot; + m_Class.CallStatic&lt;string&gt;(&quot;getFoo&quot;));
+        }
+        else
+        {
+            GUILayout.Label($&quot;{ControllerName} was not found?&quot;);
+        }
+    }
+}
+
+</code></pre>
+
+<h2>Develop Android Library plug-ins</h2>
+
+<p>As the source files of the Android Library plug-ins aren’t visible in the Unity C# project, modifying or further developing the plug-in requires additional steps as follows:</p>
+
+<ol>
+<li>Open the <strong>Build Profiles</strong> (menu: <strong>File</strong> &gt; <strong>Build Profiles</strong>) window.</li>
+<li>From the list of platforms in the <strong>Platforms</strong> panel, select <strong>Android</strong>.</li>
+<li>Under <strong>Platform Settings</strong>, enable <strong>Export Project</strong> and <strong>Symlink Sources</strong>.</li>
+<li>Select <strong>Export</strong>.</li>
+<li>Select the destination folder and click <strong>Select Folder</strong> to start the export process.</li>
+<li>After Unity exports the Gradle project, import the Gradle project into Android Studio.</li>
+</ol>
+
+<p>You can develop your Android Library plug-in from Android Studio. As the Unity project directly references the plug-in, any modifications to the Android Library plug-in automatically reflect in the Unity project.</p>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="android-export-process.html">Export an Android project</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="android-library-project-and-aar-plugins-introducing.html"></a></span><div class="tip">Introducing Android Library and Android Archive plug-ins</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="android-library-project-import.html"></a></span><div class="tip">Import an Android Library plug-in</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

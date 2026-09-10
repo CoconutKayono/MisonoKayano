@@ -1,0 +1,487 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Troubleshoot D3D12 GPU crashes on Windows</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<meta property="relative-path-to-manual" content="">
+<meta property="version-switcher-versions-with-this-page" content="Versions with this page:">
+<meta property="version-switcher-versions-without-this-page" content="Versions without this page:">
+<meta property="version-switcher-supported" content="Supported">
+<meta property="version-switcher-legacy" content="Legacy">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/Manual/windows-troubleshoot-gpu-crash.html">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20260626"></script><script type="text/javascript" src="docdata/toc.js?ts=20260626"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20260626"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20260626">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20260626">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/windows-troubleshoot-gpu-crash.html">English</a></li>
+<li><a href="/cn/current/Manual/windows-troubleshoot-gpu-crash.html">中文</a></li>
+<li><a href="/ja/current/Manual/windows-troubleshoot-gpu-crash.html">日本語</a></li>
+<li><a href="/kr/current/Manual/windows-troubleshoot-gpu-crash.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: Unity 6.7 Beta</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/windows-troubleshoot-gpu-crash.html">English</a></li>
+<li><a href="/cn/current/Manual/windows-troubleshoot-gpu-crash.html">中文</a></li>
+<li><a href="/ja/current/Manual/windows-troubleshoot-gpu-crash.html">日本語</a></li>
+<li><a href="/kr/current/Manual/windows-troubleshoot-gpu-crash.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="PlatformSpecific.html">Platform development  </a></li>
+<li><a href="Windows.html">Windows</a></li>
+<li><a href="windows-develop.html">Develop for Windows</a></li>
+<li>Troubleshoot D3D12 GPU crashes on Windows</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="WindowsPlayerIL2CPPScriptingBackend.html"></a></span><div class="tip">Windows Player: IL2CPP Scripting Backend</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="d3d12-graphics-jobs-configuration.html"></a></span><div class="tip">D3D12 API and graphics jobs mode configuration</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Troubleshoot D3D12 GPU crashes on Windows</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>A GPU crash can cause the Unity Editor to close unexpectedly and return a graphics error, for example, <code>Unrecoverable D3D12 device error! Run with -force-d3d12-debug and see logs for more info</code>. Diagnosing these crashes is often difficult because the cause might not be in your project’s code. This page explains how to identify the source of a GPU crash and provides a set of steps to troubleshoot and resolve GPU crashes.</p>
+
+<h2>Types of crashes</h2>
+
+<p>There are a number of errors that you might encounter that are referred to as GPU crashes when developing in Unity:</p>
+
+<ul>
+<li>
+<strong>GPU timeout</strong>: When a graphics command takes too long to execute the operation, Windows will time out the operation and reset the graphics driver, causing a crash. For example:
+
+<ul>
+<li>An infinite loop in a <span class="tooltip" tabindex="0" ><strong>shader</strong><span class="tooltiptext">A program that runs on the GPU. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Shaders.html" href="Shaders.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#shader" aria-label="Go to glossary anchor for shader">Glossary</a></span></span></span> caused by stale or uninitialized data.</li>
+<li>Synchronization primitives in compute shader code, for example <code>GroupMemoryBarrierWithGroupSync</code> when a compute thread misses a call.</li>
+</ul>
+</li>
+<li>
+<strong>GPU page fault</strong>: Occurs when a graphics command tries to access GPU memory that’s no longer available, such as a buffer that was freed before the GPU finished using it. This action results in a crash.</li>
+<li>
+<strong>Graphics driver crash</strong>: An error occurs in a third-party dynamic link-library (.dll file) that Unity calls to handle tasks like shader compilation and resource allocation.</li>
+<li>
+<strong>GPU crash</strong>: A hardware-level failure, often caused by the GPU running out of dedicated video memory (VRAM).</li>
+</ul>
+
+<h2>Understand the driver stack</h2>
+
+<p>Unity doesn’t communicate directly with your GPU. Instead, it relies on a layered driver stack between your project and the hardware. This stack contains multiple dynamic link-libraries (DLLs). Each library acts as a bridge in the rendering pipeline, handling tasks like shader compilation, resource management, and command translation.</p>
+
+<p>When something goes wrong in one of these DLLs, the impact can be severe. Because they operate at the system level, traditional debugging methods are often inadequate. You can still get valuable insights from driver symbol servers, but you can’t step through the driver code like you can with your own code.</p>
+
+<p>Therefore, understanding the graphics driver architecture is essential. The flow is as follows:</p>
+
+<ul>
+<li>The DLLs you find in crash logs are almost always user-mode drivers (UMDs). These run in your application’s process space and handle shader compilation, command buffer generation, and resource management. When they crash, your application crashes with them, which is why Unity closes suddenly.</li>
+<li>The kernel-mode driver (KMD) operates at a lower level and manages hardware access across all applications. KMD crashes are more severe and can cause blue screens, though modern Windows can often recover by restarting the driver.</li>
+</ul>
+
+<p>User-mode drivers are complex as they’re responsible for compiling shaders, managing GPU memory and resources, and often working around bugs in applications.</p>
+
+<p>A crash usually occurs when the driver encounters an unexpected situation, such as:</p>
+
+<ul>
+<li>A shader that contains an unusual pattern that triggers a compiler bug.</li>
+<li>An untested sequence of API calls from the application.</li>
+<li>Corruption in the driver’s own shader cache.</li>
+<li>Hardware-specific bugs that appear only under certain conditions.</li>
+</ul>
+
+<h2>Rule out system-level issues</h2>
+
+<p>Before troubleshooting the driver directly, it’s important to rule out other system-level issues.</p>
+
+<p>Perform the following checks:</p>
+
+<ul>
+<li>
+<strong>Disable overlays</strong>: Applications that display overlays such as Discord, Steam, or MSI Afterburner can interfere with Unity’s rendering process. Disable or close this software before running the Editor.</li>
+<li>
+<strong>Reset your GPU to its default state</strong>: If you overclock your GPU, revert it to its default factory clock speed. Additionally, open your GPU’s control panel and restore all settings to their defaults. On some laptops, restoring default settings can cause the system to use the integrated GPU instead of the dedicated GPU, especially when the laptop isn’t connected to a power source or has a low battery. Integrated GPUs usually have less processing power and might have more compatibility issues, so ensure that you configure the Unity Editor and Player to run on your dedicated GPU.</li>
+<li>
+<strong>Check for operating system updates</strong>: Ensure your operating system is fully up-to-date. Microsoft frequently releases patches that can resolve stability issues with core components like DirectX.</li>
+<li>
+<strong>Update your graphics drivers</strong>: Outdated drivers are a common source of crashes and rendering issues. It’s recommended to update your drivers to the latest version using tools such as the NVIDIA GeForce Experience or AMD Software: Adrenalin Edition.</li>
+<li>
+<strong>Run a system file scan</strong>: To check for and repair corrupted Windows files, open Command Prompt as an Administrator and run <code>sfc /scannow</code>, followed by <code>DISM /Online /Cleanup-Image /RestoreHealth</code>.</li>
+</ul>
+
+<h2>Identify the type of crash</h2>
+
+<p>A crash is typically either a graphics driver issue or a GPU hardware issue.</p>
+
+<p>To find the cause, you need to examine the crash log. For the location of crash reports on your computer, refer to the <a href="log-files.html">Log files reference</a>.</p>
+
+<h3>Observe symptoms and analyze the Editor log</h3>
+
+<p>Common symptoms of a GPU-related failure include:</p>
+
+<ul>
+<li>A high GPU load before the crash.</li>
+<li>Visual glitches or freezes in the Editor.</li>
+<li>Sudden Editor exits.</li>
+<li>Windows resetting the display driver.</li>
+</ul>
+
+<p>If Unity intercepts the crash, you can examine the stack trace at the end of the <code>Editor.log</code> file. A graphics-related failure typically shows a specific stack trace that involves Unity’s rendering thread and the graphics API. Look for these key markers:</p>
+
+<ul>
+<li>
+<strong>A rendering thread failure</strong>: The stack trace includes <code>GfxDeviceWorker::RunGfxDeviceWorker</code>. This indicates the engine failed while dispatching instructions to the GPU rather than during standard game logic.</li>
+<li>
+<strong>Graphics API calls</strong>: The stack trace mentions the graphics API layer, such as <code>D3D12Fence::Wait</code>.</li>
+<li>
+<strong>Device error codes</strong>: The log contains errors like <code>Device failed error (887a0006)</code> or <code>Device removal</code>.</li>
+<li>
+<strong>GPU memory status</strong>: The log might indicate the memory status, for example: <code>d3d12: GfxDevice was not out of Local memory</code>.</li>
+</ul>
+
+<p>A call stack might look like the following example:</p>
+
+<pre><code>
+========== OUTPUTTING STACK TRACE ==================
+
+0x00007FFF7F3580DA (KERNELBASE) RaiseException
+0x00007FFDF037F596 (Unity) LaunchBugReporter
+0x00007FFDF0BC03A7 (Unity) EditorMonoConsole::LogToConsoleImplementation
+0x00007FFDF0BC0EE3 (Unity) EditorMonoConsole::LogToConsoleImplementation
+0x00007FFDF2AA2ED8 (Unity) DebugStringToFilePostprocessedStacktrace
+0x00007FFDF2AA26E1 (Unity) DebugStringToFile
+0x00007FFDF21608F5 (Unity) CheckDeviceStatus
+0x00007FFDF21CB7A2 (Unity) CheckCompletedValue
+0x00007FFDF21D1E70 (Unity) D3D12Fence::Wait
+0x00007FFDF2195721 (Unity) GfxDeviceD3D12::QueuePresent
+0x00007FFDF21C20DE (Unity) D3D12Window::EndRendering
+0x00007FFDF1D077CD (Unity) GfxDeviceWorker::RunCommand
+0x00007FFDF1D09FCC (Unity) GfxDeviceWorker::RunExt
+0x00007FFDF1D0A0FF (Unity) GfxDeviceWorker::RunGfxDeviceWorker
+0x00007FFDF2AC12FC (Unity) Thread::RunThreadWrapper
+0x00007FFF80CBE8D7 (KERNEL32) BaseThreadInitThunk
+0x00007FFF81F2C53C (ntdll) RtlUserThreadStart
+
+========== END OF STACKTRACE ===========
+
+</code></pre>
+
+<p>The log might also point to the exact script or asset that caused the GPU to enter a fatal state. For example, a reference to <code>CreateResources</code> in the log might trace back to a specific script and line number:</p>
+
+<pre><code>CreateResources
+...
+GPUCrash:CreateResources () (at Assets/GPUCrash.cs:25)
+GPUCrash:Update () (at Assets/GPUCrash.cs:47)
+
+</code></pre>
+
+<h3>Detailed crash logs</h3>
+
+<p>To view detailed logs, check the following prerequisites:</p>
+
+<ul>
+<li>Your device must be running Windows 11.</li>
+<li>You must enable <a href="https://learn.microsoft.com/en-us/windows/uwp/gaming/use-the-directx-runtime-and-visual-studio-graphics-diagnostic-features">Microsoft’s Graphics diagnostics tools</a>
+</li>
+<li>Start the Editor with the following arguments:
+
+<ul>
+<li><code>-force-d3d12-debug</code></li>
+<li><code>-force-d3d12-editor-pix-events</code></li>
+</ul>
+</li>
+</ul>
+
+<p>
+<strong>Note</strong>: You can also use the argument <code>-force-d3d12-debug-gbv</code> to return crash information, however, it’s recommended only as a secondary step in the debug process. It enables GPU-based validation (GBV), which can add a large amount of debug information to crash logs. Analyze the log without this flag first to avoid the production of large files.</p>
+
+<p>These arguments enable <a href="https://learn.microsoft.com/en-us/windows/win32/direct3d12/use-dred">Microsoft’s Device Removed Extended Data (DRED) API</a>, which can provide more insight into the GPU state at the time of the crash.</p>
+
+<p>The log displays errors in the following formats:</p>
+
+<ul>
+<li>Validation errors: <code>d3d12 validation error: &lt;message&gt;</code>
+</li>
+<li>DXGI errors: <code>d3d12 DXGI error: &lt;message&gt;</code>
+</li>
+</ul>
+
+<h3>DLL reference</h3>
+
+<p>For most crashes, the name of the .dll file in your crash log is the key to identifying the source. The vast majority of these happen in a User-Mode Driver (UMD), which translates commands from graphics APIs like DirectX into instructions your GPU can understand.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>DLL file</strong></th>
+	<th style="text-align:left;"><strong>Manufacturer</strong></th>
+	<th style="text-align:left;"><strong>Type</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><code>amdxc64.dll</code></td>
+	<td style="text-align:left;">AMD</td>
+	<td style="text-align:left;">UMD</td>
+	<td style="text-align:left;">Detects whether DirectX, OpenGL or Vulkan graphics API is in use.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>atidxx64.dll</code></td>
+	<td style="text-align:left;">AMD</td>
+	<td style="text-align:left;">UMD</td>
+	<td style="text-align:left;">Translates DirectX API calls, shaders, and resources into GPU-specific structures.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>igc64.dll</code></td>
+	<td style="text-align:left;">Intel</td>
+	<td style="text-align:left;">UMD</td>
+	<td style="text-align:left;">Compiles HLSL or GLSL into optimized machine code for Intel GPU architectures. Crashes here often indicate shader compilation issues. For example, this might be caused by a shader that uses features in an unexpected way or hits compiler bugs.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>igd10um64.dll</code></td>
+	<td style="text-align:left;">Intel</td>
+	<td style="text-align:left;">UMD</td>
+	<td style="text-align:left;">Translates DirectX API calls, shaders, and resources into GPU-specific structure for older Intel GPUs, for example Intel HD/UHD Graphics pre–11th gen.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>igd10um64xe.dll</code></td>
+	<td style="text-align:left;">Intel</td>
+	<td style="text-align:left;">UMD</td>
+	<td style="text-align:left;">Translates DirectX API calls, shaders, and resources into GPU-specific structures for modern Xe architecture (11th Gen Core and newer, including Arc GPUs).</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>nvwgf2umx.dll</code></td>
+	<td style="text-align:left;">NVIDIA</td>
+	<td style="text-align:left;">UMD</td>
+	<td style="text-align:left;">Translates DirectX API calls, shaders, and resources into GPU-specific structures.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>nvoglv64.dll</code></td>
+	<td style="text-align:left;">NVIDIA</td>
+	<td style="text-align:left;">UMD</td>
+	<td style="text-align:left;">If you target OpenGL instead of DirectX, this translates OpenGL API calls, compiles GLSL shaders, and manages the entire OpenGL rendering pipeline.</td>
+</tr>
+</tbody>
+</table>
+
+<h2>Fix a graphics driver crash</h2>
+
+<p>After identifying the driver, follow these steps to resolve the issue.</p>
+
+<h3>1. Perform a clean driver installation</h3>
+
+<p>Updating a driver isn’t always enough to fix a crash. A clean installation removes all old and potentially corrupt files before installing a fresh version.</p>
+
+<ul>
+<li>
+<p>
+<strong>AMD</strong>:</p>
+
+<ol>
+<li>Use the official <a href="https://www.amd.com/en/resources/support-articles/faqs/GPU-601.html"><strong>AMD Cleanup Utility</strong></a> or a third-party tool like Display Driver Uninstaller (DDU) to completely remove all existing driver files.</li>
+<li>Download and install the latest stable driver from the official AMD website. If crashes began after an update, consider rolling back to a previously stable version.</li>
+</ol>
+</li>
+<li>
+<p>
+<strong>NVIDIA</strong>:</p>
+
+<ol>
+<li>Download the latest Game Ready or Studio driver from the NVIDIA website.</li>
+<li>Run the installer and select <strong>Custom (Advanced)</strong>.</li>
+<li>On the next screen, check the <strong>Perform a clean installation</strong> box and proceed. For persistent issues, use DDU before reinstalling.</li>
+</ol>
+</li>
+<li>
+<p>
+<strong>Intel</strong>:</p>
+
+<ol>
+<li>Use a clean up tool like DDU to cleanly remove all exisiting driver files.</li>
+<li>Download and install the latest graphics drivers from the official Intel Download Center or your computer manufacturer’s website.</li>
+</ol>
+</li>
+</ul>
+
+<p>If the crash persists, try installing an older version of a driver.</p>
+
+<h3>2. Clear the shader cache</h3>
+
+<p>Corrupted shader caches maintained by Unity and the graphics driver can cause recurring compilation crashes. To clear the caches completely, delete the contents of the following folders:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Type of cache</strong></th>
+	<th style="text-align:left;"><strong>Location</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Unity’s shader cache</strong></td>
+	<td style="text-align:left;"><code>Library/ShaderCache</code></td>
+	<td style="text-align:left;">Delete the contents of this folder to clear the project Library shader cache for the Unity Editor.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Driver shader caches</strong></td>
+	<td style="text-align:left;">
+<code>%LOCALAPPDATA%\AMD\DxCache</code> <br> <code>%LOCALAPPDATA%\AMD\DxcCache</code> <br> <code>%LOCALAPPDATA%\AMD\VkCache</code> <br> <code>%LOCALAPPDATA%\AMD\GLCache</code> <br> <code>%LOCALAPPDATA%\AMD\DX9Cache</code> <br> <code>%LOCALAPPDATA%\Intel\ShaderCache</code> <br> <code>%LOCALAPPDATA%\NVIDIA\DXCache</code> <br> <code>%LOCALAPPDATA%\D3DSCache</code> <br> <code>%ProgramFiles(x86)%\Steam\steamapps\shadercache</code>
+</td>
+	<td style="text-align:left;">Delete the contents of these folders to clear the driver shader cache for the built Player.</td>
+</tr>
+</tbody>
+</table>
+
+<p>After clearing these caches, restart your computer to ensure no cached shaders remain in memory.</p>
+
+<h3>3. Use a fallback graphics API</h3>
+
+<p>If the crash is specific to DX12, you can temporarily revert to DX11 while you investigate the root cause. Use the <a href="introduction-d3d12-device-filtering-asset.html">D3D12 Device Filtering Asset</a> to create a fallback.</p>
+
+<h2>Report a crash to Unity</h2>
+
+<p>If you have tried the solutions in this document and the crash still persists, you can submit a bug report. When you submit your report, include as much detail as possible and list the steps to reproduce the issue.</p>
+
+<p>For more information on reporting bugs, refer to <a href="https://unity.com/releases/editor/qa#bug-reporting">How to report bugs</a>.</p>
+
+<h2>NVIDIA Nsight Aftermath</h2>
+
+<p>If you have an NVIDIA GPU, Unity can generate a GPU crash dump file with <a href="https://docs.nvidia.com/nsight-aftermath/"><strong>NVIDIA Nsight Aftermath</strong></a> when you run the Editor with the <code>-force-d3d12-nvidia-aftermath</code> command-line argument. </p>
+
+<p>When the GPU crashes, Unity creates a <code>.nv-gpudmp</code> file in the project directory. You can share this file or include it with other diagnostic files, such as logs, through the crash reporter window. You can inspect the crash dump in <a href="https://developer.nvidia.com/nsight-graphics"><strong>NVIDIA Nsight Graphics</strong></a>.</p>
+
+<h3>Limitations and compatibility</h3>
+
+<ul>
+<li>You can’t use <code>-force-d3d12-nvidia-aftermath</code> when using <code>-force-d3d12-debug</code> or <code>-force-d3d12-debug-gbv</code>.</li>
+<li>If Aftermath doesn’t initialize correctly, check the Editor log for errors such as <code>d3d12: could not enable Nvidia Aftermath, error: ....</code>
+</li>
+<li>GPU dump files only contain limited information, such as event markers.</li>
+<li>Unity doesn’t support shader debug information in GPU dumps, and it can’t generate GPU dumps in Player builds.</li>
+</ul>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="log-files.html">Log files reference</a></li>
+<li><a href="introduction-d3d12-device-filtering-asset.html">Introduction to D3D12 Device Filtering Asset</a></li>
+<li><a href="https://unity.com/releases/editor/qa#bug-reporting">How to report bugs</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="WindowsPlayerIL2CPPScriptingBackend.html"></a></span><div class="tip">Windows Player: IL2CPP Scripting Backend</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="d3d12-graphics-jobs-configuration.html"></a></span><div class="tip">D3D12 API and graphics jobs mode configuration</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

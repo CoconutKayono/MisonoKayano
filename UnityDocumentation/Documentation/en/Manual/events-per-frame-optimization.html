@@ -1,0 +1,271 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Using a custom update manager</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<meta property="relative-path-to-manual" content="">
+<meta property="version-switcher-versions-with-this-page" content="Versions with this page:">
+<meta property="version-switcher-versions-without-this-page" content="Versions without this page:">
+<meta property="version-switcher-supported" content="Supported">
+<meta property="version-switcher-legacy" content="Legacy">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/Manual/events-per-frame-optimization.html">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20260626"></script><script type="text/javascript" src="docdata/toc.js?ts=20260626"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20260626"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20260626">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20260626">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/events-per-frame-optimization.html">English</a></li>
+<li><a href="/cn/current/Manual/events-per-frame-optimization.html">中文</a></li>
+<li><a href="/ja/current/Manual/events-per-frame-optimization.html">日本語</a></li>
+<li><a href="/kr/current/Manual/events-per-frame-optimization.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: Unity 6.7 Beta</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/events-per-frame-optimization.html">English</a></li>
+<li><a href="/cn/current/Manual/events-per-frame-optimization.html">中文</a></li>
+<li><a href="/ja/current/Manual/events-per-frame-optimization.html">日本語</a></li>
+<li><a href="/kr/current/Manual/events-per-frame-optimization.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="scripting.html">Programming in Unity</a></li>
+<li><a href="managing-update-order.html">Managing update and execution order</a></li>
+<li>Using a custom update manager</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="player-loop-customizing.html"></a></span><div class="tip">Customizing the Player loop</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="unity-events.html"></a></span><div class="tip">Inspector-configurable custom events</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Using a custom update manager</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Unity’s built-in per-frame <a href="event-functions.html">event function</a> updates such as <a href="../ScriptReference/MonoBehaviour.Update.html"><code>Update</code></a>, <a href="../ScriptReference/MonoBehaviour.FixedUpdate.html"><code>FixedUpdate</code></a> and <a href="../ScriptReference/MonoBehaviour.LateUpdate.html"><code>LateUpdate</code></a> can impact performance at scale. Although the corresponding callbacks are invoked on your C# MonoBehaviour <span class="tooltip" tabindex="0" ><strong>scripts</strong><span class="tooltiptext">A piece of code that allows you to create your own Components, trigger game events, modify Component properties over time and respond to user input in any way you like. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about creating-scripts.html" href="creating-scripts.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scripts" aria-label="Go to glossary anchor for Scripts">Glossary</a></span></span></span>, the function calls originate from Unity’s native code. Unity has to maintain internal lists to track which objects to call these update functions on. MonoBehaviour script instances are added to or removed from these lists when they are enabled or disabled, respectively.</p>
+
+<p>While it’s convenient to add the appropriate callbacks to every MonoBehaviour instance in your project that requires them, this becomes more inefficient as the number of callbacks grows. There is a small but significant overhead to invoking managed-code callbacks from native code, which leads to the following consequences:</p>
+
+<ul>
+<li>Degraded frame times when invoking large numbers of <code>Update</code> callbacks.</li>
+<li>Degraded instantiation times when <a href="instantiating-prefabs.html">instantiating prefabs</a> that contain large numbers of MonoBehaviours, due to the performance overhead of invoking <code>Awake</code> and <code>OnEnable</code> callbacks on each component in a <span class="tooltip" tabindex="0" ><strong>prefab</strong><span class="tooltiptext">An asset type that allows you to store a GameObject complete with components and properties. The prefab acts as a template from which you can create new object instances in the scene. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Prefabs.html" href="Prefabs.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#prefab" aria-label="Go to glossary anchor for prefab">Glossary</a></span></span></span>.</li>
+</ul>
+
+<p>To avoid these issues, instead of relying on built-in callbacks you can create a global custom update manager singleton instance and have MonoBehaviour scripts, or even standard C# objects, subscribe to it. This way, the update manager singleton can distribute <code>Update</code>, <code>LateUpdate</code>, and other callbacks to all objects that have subscribed to them, and all update code stays in the managed layer. This has the additional benefit of allowing code to unsubscribe from callbacks when they have no operation to perform, which reduces the number of functions that must be called each frame.</p>
+
+<h2>When to use a custom update manager</h2>
+
+<p>A custom update manager can be beneficial when the number of MonoBehaviour instances with per-frame update callbacks reaches the hundreds or thousands. </p>
+
+<p>You can improve performance significantly by eliminating callbacks that rarely execute. Consider the following example:</p>
+
+<pre><code class="lang-cs">void Update() {
+    if(!someVeryRareCondition) { return; }
+// … some operation …
+}
+</code></pre>
+
+<p>If your project has many MonoBehaviours with <code>Update</code> callbacks similar to this, then a significant amount of the time consumed running <code>Update</code> callbacks is spent switching between native and managed code domains for MonoBehaviour execution that then exits immediately. If these classes instead subscribe to a global update manager only while <code>someVeryRareCondition</code> is true, and unsubscribe thereafter, then less time is spent both on switching code domains and evaluating the rare condition.</p>
+
+<p>
+<strong>Important</strong>: A custom update manager is not a one-size-fits-all solution. It’s important to <a href="Profiler.html">profile</a> your project to determine its specific performance issues and whether a custom update manager is appropriate. Depending on the specific performance bottlenecks in your project, other ways to optimize performance include converting your project to use the Entity Component System (ECS) architecture, or <a href="player-loop-customizing.html">customizing the Player loop</a>.</p>
+
+<h2>Example custom update manager</h2>
+
+<p>To implement a custom update manager, first create a C# script to define the interface as follows:</p>
+
+<pre><code class="lang-cs">public interface IUpdatable
+{
+    void CustomUpdate(float deltaTime);
+}
+</code></pre>
+
+<p>You can then create a MonoBehaviour script for the update manager singleton. The update manager implements the built-in <code>Update</code> callback and then other MonoBehaviour script components can subscribe to this update manager rather than to <code>Update</code> directly:</p>
+
+<pre><code class="lang-cs">// Singleton update manager. Attach to a GameObject in your scene.
+
+using System.Collections.Generic;
+using UnityEngine;
+
+public class UpdateManager : MonoBehaviour
+{
+    private static UpdateManager _instance;
+    public static UpdateManager Instance =&gt; _instance;
+
+    private readonly List&lt;IUpdatable&gt; updatables = new List&lt;IUpdatable&gt;();
+
+    void Awake()
+    {
+        if (_instance == null)
+            _instance = this;
+        else
+            Destroy(gameObject);
+    }
+
+    public void Register(IUpdatable updatable)
+    {
+        if (!updatables.Contains(updatable))
+            updatables.Add(updatable);
+    }
+
+    public void Unregister(IUpdatable updatable)
+    {
+        updatables.Remove(updatable);
+    }
+
+    void Update()
+    {
+        float deltaTime = Time.deltaTime;
+        // Optionally: for performance, iterate backwards if you allow removal during iteration
+        foreach (var updatable in updatables)
+        {
+            updatable.CustomUpdate(deltaTime);
+        }
+    }
+}
+</code></pre>
+
+<p>Finally, create a MonoBehaviour script component that registers itself with the update manager instance on enable and de-registers itself on disable. The following example uses the custom update callback to move the parent <span class="tooltip" tabindex="0" ><strong>GameObject</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-GameObject.html" href="class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span>:</p>
+
+<pre><code class="lang-cs">// Script component. Attach to a GameObject in your scene to move it on each custom update.
+
+using UnityEngine;
+
+public class MyMovingObject : MonoBehaviour, IUpdatable
+{
+    void OnEnable()
+    {
+        UpdateManager.Instance.Register(this);
+    }
+
+    void OnDisable()
+    {
+        if (UpdateManager.Instance != null)
+            UpdateManager.Instance.Unregister(this);
+    }
+
+    public void CustomUpdate(float deltaTime)
+    {
+        // Your update logic here
+        transform.position += Vector3.right * deltaTime;
+    }
+}
+</code></pre>
+
+<h2>Additional resources</h2>
+<div class="res-examples">
+
+<ul>
+<li>
+<span aria-hidden="true">📚</span> <strong>Documentation</strong>: <a href="execution-order.html">Event function execution order</a>
+</li>
+<li>
+<span aria-hidden="true">📚</span> <strong>Documentation</strong>: <a href="event-functions.html">Event functions</a>
+</li>
+<li>
+<span aria-hidden="true">📚</span> <strong>Documentation</strong>: <a href="https://unity.com/blog/engine-platform/10000-update-calls">10000 Update calls</a>
+</li>
+</ul>
+</div>
+<div class="clear"></div>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="player-loop-customizing.html"></a></span><div class="tip">Customizing the Player loop</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="unity-events.html"></a></span><div class="tip">Inspector-configurable custom events</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

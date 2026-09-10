@@ -1,0 +1,333 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Optimize shadow rendering in URP</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<meta property="relative-path-to-manual" content="">
+<meta property="version-switcher-versions-with-this-page" content="Versions with this page:">
+<meta property="version-switcher-versions-without-this-page" content="Versions without this page:">
+<meta property="version-switcher-supported" content="Supported">
+<meta property="version-switcher-legacy" content="Legacy">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/Manual/shadows-optimization.html">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20260626"></script><script type="text/javascript" src="docdata/toc.js?ts=20260626"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20260626"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20260626">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20260626">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/shadows-optimization.html">English</a></li>
+<li><a href="/cn/current/Manual/shadows-optimization.html">中文</a></li>
+<li><a href="/ja/current/Manual/shadows-optimization.html">日本語</a></li>
+<li><a href="/kr/current/Manual/shadows-optimization.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: Unity 6.7 Beta</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/shadows-optimization.html">English</a></li>
+<li><a href="/cn/current/Manual/shadows-optimization.html">中文</a></li>
+<li><a href="/ja/current/Manual/shadows-optimization.html">日本語</a></li>
+<li><a href="/kr/current/Manual/shadows-optimization.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="LightingOverview.html">Lighting</a></li>
+<li><a href="urp/lighting-landing.html">Lighting in URP</a></li>
+<li><a href="urp/Shadows-in-URP.html">Shadows in URP</a></li>
+<li>Optimize shadow rendering in URP</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="urp/shadow-cascades-visualize.html"></a></span><div class="tip">Visualize shadow cascades</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="urp/shadows-troubleshooting-urp.html"></a></span><div class="tip">Troubleshooting shadows in URP</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Optimize shadow rendering in URP</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>This page describes optimization techniques that help you make shadow rendering faster in your project.</p>
+
+<p>Factors that affect the shadow rendering time include:</p>
+
+<ul>
+<li><p>The number of visible objects that cast shadows. This number depends on the <a href="urp/shadow-resolution-urp.html#shadow-maximum-distance">Max Distance</a> property.</p></li>
+<li><p>The number of visible objects that receive shadows.</p></li>
+<li><p>The number of shadow-casting lights.</p></li>
+<li><p>The <a href="shadow-cascades-use.html">Cascade Count</a> property value and the sizes of the cascade splits.</p></li>
+<li><p>The <a href="urp/shadow-resolution-urp.html">shadow resolution</a> of the main light and additional lights.</p></li>
+<li><p>The <span class="tooltip" tabindex="0" ><a href="urp/universalrp-asset.html#soft-shadows">Soft Shadows</a><span class="tooltiptext">A shadow property that produces shadows with a soft edge. Soft shadows are more realistic compared to Hard Shadows and tend to reduce the “blocky” aliasing effect from the shadow map, but they require more processing.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#SoftShadows" aria-label="Go to glossary anchor for SoftShadows">Glossary</a></span></span></span> property.</p></li>
+</ul>
+
+<p>The following sections describe how to use those and other settings to optimize shadow rendering performance.</p>
+
+<h2>Optimize main light shadows</h2>
+
+<p>Use one of the following techniques to optimize shadows cast by the main light.</p>
+
+<h3>Use shadow cascades</h3>
+
+<p>Use the <a href="shadow-cascades-landing.html">shadow cascades</a> feature to improve the visual fidelity of shadows without increasing the shadow map resolution.</p>
+
+<p>Consider the <a href="shadow-cascades-performance.html">performance impact of shadow cascades</a> when selecting the <strong>Cascade Count</strong> value.</p>
+
+<h3>Experiment with the Soft Shadows property</h3>
+
+<p>Using the <strong>Soft Shadows</strong> property lets you achieve higher visual fidelity with lower shadow resolution values.</p>
+
+<p>The <a href="urp/universalrp-asset.html#soft-shadows"><strong>Soft Shadows</strong></a> property might have a significant performance impact on platforms that use tile-based rendering, such as mobile platforms and untethered <span class="tooltip" tabindex="0" ><strong>XR</strong><span class="tooltiptext">An umbrella term encompassing Virtual Reality (VR), Augmented Reality (AR) and Mixed Reality (MR) applications. Devices supporting these forms of interactive applications can be referred to as XR devices. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about XR.html" href="XR.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#XR" aria-label="Go to glossary anchor for XR">Glossary</a></span></span></span> platforms. If your target platform uses tile-based rendering, profile your application to determine the performance impact of this setting.</p>
+
+<p>You can use a combination of a lower shadow resolution and the <strong>Soft Shadows</strong> option as an artistic technique. While high shadow resolution makes shadows more detailed, it also makes the shadows look sharp, which might not suit all artistic styles.</p>
+
+<p>For example, in the following illustration, the image on the left has a shadow resolution of 4096 <span class="tooltip" tabindex="0" ><strong>pixels</strong><span class="tooltiptext">The smallest unit in a computer image. Pixel size depends on your screen resolution. Pixel lighting is calculated at every screen pixel. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ShadowPerformance.html" href="ShadowPerformance.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#pixel" aria-label="Go to glossary anchor for pixel">Glossary</a></span></span></span>, while the image on the right has a shadow resolution of 1024 pixels with the <strong>Soft Shadows</strong> option enabled.</p>
+
+<p>
+<img src="../uploads/urp/shadows/shadow-resolution-4096-vs-1024.png" alt="Use lower shadow resolution to achieve a softer shadow look"><br>Lower shadow resolution provides a softer shadow look, which might benefit some scenes. Left: resolution 4096 pixels, right: resolution 1024 pixels.</p>
+
+<h3>Choose the resolution and the maximum distance of the main light shadows</h3>
+
+<p>For more information about optimizing the resolution and the maximum distance of shadows from the main light, refer to <a href="urp/shadow-resolution-urp.html">Configure shadow resolution in URP</a>.</p>
+
+<h2>Optimize additional light shadows</h2>
+
+<p>Use one of the following techniques to optimize shadows cast by additional lights.</p>
+
+<h3>Optimize point light shadows</h3>
+
+<p>To create a shadow map for a point light, Unity captures the <span class="tooltip" tabindex="0" ><strong>scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html" href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span> in six directions. The performance impact of this operation is comparable with rendering shadows from six spot lights. On mobile platforms, this uses a significant amount of the available resources per frame.</p>
+
+<p>Reduce the number of shadow-casting point lights on mobile platforms, or avoid them completely.</p>
+
+<p>For more information, refer to the following pages:</p>
+
+<ul>
+<li><p><a href="urp/shadow-resolution-urp.html#shadow-resolution-additional-lights">Configure shadow resolution in URP</a></p></li>
+<li><p><a href="shadow-mapping.html">Shadow mapping</a></p></li>
+</ul>
+
+<h3>Turn lights off and on using scripting</h3>
+
+<p>To improve performance, you can use scripting to turn shadow-casting real-time lights off depending on the distance to the <span class="tooltip" tabindex="0" ><strong>camera</strong><span class="tooltiptext">A component which creates an image of a particular viewpoint in your scene. The output is either drawn to the screen or captured as a texture. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CamerasOverview.html" href="CamerasOverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Camera" aria-label="Go to glossary anchor for Camera">Glossary</a></span></span></span> or other conditions. To do this, use the <a href="../ScriptReference/Behaviour-enabled.html">Light.enabled</a> property.</p>
+
+<p>To avoid light popping, you can fade in and out the <code>intensity</code> property of a light.</p>
+
+<p>For an example of this technique, refer to the <code>DynamicLightController.cs</code> script which is attached to point lights in outdoor lanterns in the Garden scene in the <a href="urp/creating-a-new-project-with-urp.html">Universal 3D sample</a> project.</p>
+
+<h3>Use light cookies</h3>
+
+<p>In areas where objects are mostly static, point or spot lights with light cookies can serve as a substitute for lights that cast real-time shadows.</p>
+
+<p>To configure a light cookie, use the <a href="urp/light-component.html#Emission">Cookie property of a Light component</a>.</p>
+
+<p>For more information, refer to <a href="Cookies-introduction.html">Introduction to cookies</a>.</p>
+
+<h3>Use Light Explorer</h3>
+
+<p>The <a href="LightingExplorer.html"><strong>Light Explorer</strong></a> window provides a convenient overview of all lights, reflection and <span class="tooltip" tabindex="0" ><strong>light probes</strong><span class="tooltiptext">Light probes store information about how light passes through space in your scene. A collection of light probes arranged within a given space can improve lighting on moving objects and static LOD scenery within that space. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about LightProbes.html" href="LightProbes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#LightProbe" aria-label="Go to glossary anchor for LightProbe">Glossary</a></span></span></span>, and objects with emissive materials in the scene. Use this tool to quickly find lights with certain properties in the Scene.</p>
+
+<h2>General optimization techniques</h2>
+
+<p>This section contains general optimization techniques that are not specific to the main or additional lights.</p>
+
+<h3>Reduce the number of objects that cast real-time shadows</h3>
+
+<p>The number of real-time shadow-casting objects has a significant impact on shadow rendering performance.</p>
+
+<p>To exclude an object from casting shadows completely (both baked and real-time shadows), do the following:</p>
+
+<ol>
+<li><p>On a GameObject, go to <strong>Mesh Renderer</strong> &gt; <strong>Lighting</strong>.</p></li>
+<li><p>Set the <strong>Cast Shadows</strong> property <strong>Off</strong>.</p></li>
+</ol>
+
+<p>To configure a <span class="tooltip" tabindex="0" ><strong>GameObject</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-GameObject.html" href="class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span> to cast only baked shadows, use the <a href="lighting-mode.html#shadowmask">Shadowmask lighting mode</a>.</p>
+
+<h3>Use the Shadowmask lighting mode</h3>
+
+<p>The <strong><span class="tooltip" tabindex="0" ><strong>Shadowmask</strong><span class="tooltiptext">A shadowmask texture uses the same UV layout and resolution as its corresponding lightmap texture. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about lighting-mode.html#shadowmask" href="lighting-mode.html#shadowmask">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Shadowmask" aria-label="Go to glossary anchor for Shadowmask">Glossary</a></span></span></span></strong> lighting mode lets you improve shadow rendering performance by combining baked and real-time shadows at runtime.</p>
+
+<p>For general information about the Shadowmask lighting mode, refer the page <a href="lighting-mode.html#shadowmask">Lighting Mode: Shadowmask</a>
+</p>
+
+<p>Unity uses the following conditions to determine whether a light or a GameObject contributes to the Shadowmask:</p>
+
+<ul>
+<li><p>The <span class="tooltip" tabindex="0" ><strong>light mode</strong><span class="tooltiptext">A Light property that defines the use of the Light. Can be set to Realtime, Baked and Mixed. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about LightModes.html" href="LightModes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#LightMode" aria-label="Go to glossary anchor for LightMode">Glossary</a></span></span></span> of a light must be <strong>Mixed</strong>.</p></li>
+<li><p>The light must be configured to cast shadows (the <strong>Shadow Type</strong> property of a light must not be <strong>No Shadows</strong>).</p></li>
+<li><p>A GameObject must be static.</p></li>
+</ul>
+
+<p>To view the existing Shadowmask in the <span class="tooltip" tabindex="0" ><strong>Scene view</strong><span class="tooltiptext">An interactive view into the world you are creating. You use the Scene View to select and position scenery, characters, cameras, lights, and all other types of Game Object. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheSceneView.html" href="UsingTheSceneView.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#SceneView" aria-label="Go to glossary anchor for SceneView">Glossary</a></span></span></span>:</p>
+
+<ol>
+<li>Open the <strong>Draw Mode</strong> drop-down menu</li>
+<li>Select <strong>Baked Global Illumination</strong> &gt; <strong>Shadowmask</strong>.</li>
+</ol>
+
+<p>Maximum four lights can have an overlap in a Shadowmask since it uses four channels (r,g,b,a). If an area has more than four overlapping mixed lights, Unity switches additional lights from mixed to baked mode.</p>
+
+<p>To see how many lights affect a certain area, use the <strong>Lighting Complexity</strong> view in the <a href="urp/features/rendering-debugger.html">Rendering Debugger</a>.</p>
+
+<figure>
+<img src="../uploads/urp/shadows/rendering-debugger-lighting-complexity.png" alt="Material &gt; Material Filters &gt; Material Override &gt; Lighting Complexity">
+<figcaption>Material &gt; Material Filters &gt; Material Override &gt; Lighting Complexity</figcaption>
+</figure>
+
+<p>To achieve the best combination of visual fidelity and performance, use the Shadowmask mode in combination with Light Probes.</p>
+
+<h4>Choose between Distance Shadowmask and Shadowmask</h4>
+
+<p>On medium and lower tier mobile platforms, the <strong>Shadowmask</strong> mode might be a good choice from a performance perspective.</p>
+
+<p>On higher tier mobile platforms or PC and console platforms, consider using the <strong><span class="tooltip" tabindex="0" ><strong>Distance Shadowmask</strong><span class="tooltiptext">A version of the Shadowmask lighting mode that includes high quality shadows cast from static GameObjects onto dynamic GameObjects. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about lighting-mode.html#shadowmask" href="lighting-mode.html#shadowmask">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#DistanceShadowmask" aria-label="Go to glossary anchor for DistanceShadowmask">Glossary</a></span></span></span></strong> mode to achieve higher visual fidelity.</p>
+
+<p>For more information, refer to the page <a href="lighting-mode.html#shadowmask">Lighting Mode: Shadowmask</a>.</p>
+
+<h3>Configure static objects to cast baked shadows</h3>
+
+<p>When using the <a href="lighting-mode.html#shadowmask">Shadowmask lighting mode</a>, you can configure certain GameObjects to contribute to the baked shadows and not cast real-time shadows. Follow these steps:</p>
+
+<ol>
+<li>
+<p>Go the <strong>Project Settings</strong> &gt; <strong>Quality</strong> and set the <strong>Shadowmask Mode</strong> property to <strong>Shadowmask</strong>.</p>
+
+<p>In this mode, Unity uses baked shadows for every GameObject that has the <strong>Contribute <span class="tooltip" tabindex="0" ><strong>Global Illumination</strong><span class="tooltiptext">A group of techniques that model both direct and indirect lighting to provide realistic lighting results.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#globalillumination" aria-label="Go to glossary anchor for globalillumination">Glossary</a></span></span></span></strong> property enabled.</p>
+</li>
+<li><p>On a GameObject, in the <strong><span class="tooltip" tabindex="0" ><strong>Mesh</strong><span class="tooltiptext">The main graphics primitive of Unity. Meshes make up a large part of your 3D worlds. Unity supports triangulated or Quadrangulated polygon meshes. Nurbs, Nurms, Subdiv surfaces must be converted to polygons. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about mesh.html" href="mesh.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Mesh" aria-label="Go to glossary anchor for Mesh">Glossary</a></span></span></span> Renderer</strong> component, set the <strong>Cast Shadows</strong> property to <strong>On</strong>.</p></li>
+<li><p>In the <strong><span class="tooltip" tabindex="0" ><strong>Mesh Renderer</strong><span class="tooltiptext">A mesh component that takes the geometry from the Mesh Filter and renders it at the position defined by the object’s Transform component. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-MeshRenderer.html" href="class-MeshRenderer.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#MeshRenderer" aria-label="Go to glossary anchor for MeshRenderer">Glossary</a></span></span></span></strong> component, enable <strong>Contribute Global Illumination</strong>.</p></li>
+<li><p>Generate lighting for the changes to take effect.</p></li>
+</ol>
+
+<p>Now Unity renders this GameObject with the baked shadow at runtime regardless of the distance to the camera.</p>
+
+<h3>Use a separate simplified mesh for shadow casting</h3>
+
+<p>To cast a simple shadow from an object with a complex mesh, follow these steps:</p>
+
+<ol>
+<li><p>Create a simplified version of the mesh with fewer polygons.</p></li>
+<li><p>Assign any material to the simplified mesh. The material doesn’t matter because Unity doesn’t render the simplified mesh.</p></li>
+<li><p>On the original mesh, set the <strong>Cast Shadows</strong> property to <strong>Off</strong>.</p></li>
+<li><p>Place the simplified mesh in the same position as the original mesh.</p></li>
+<li><p>On the simplified mesh, set the <strong>Cast Shadows</strong> property to <strong>Shadows Only</strong>.</p></li>
+</ol>
+
+<p>With this configuration, Unity renders the original mesh but uses simplified mesh to render the shadow.</p>
+
+<h2>Profile shadow rendering</h2>
+
+<p>Use the following Unity tools to profile lighting and shadow rendering:</p>
+
+<ul>
+<li><p><a href="urp/features/rendering-debugger.html">Rendering Debugger</a></p></li>
+<li><p><a href="FrameDebugger.html">Frame Debugger</a></p></li>
+<li><p><a href="urp/render-graph-viewer-reference.html">Render Graph Viewer</a></p></li>
+<li><p><a href="Profiler.html">Unity Profiler</a></p></li>
+</ul>
+
+<p>If you need more detail, use the platform-specific profilers and debugging tools available for your target platform. Refer to <a href="performance-profiling-tools.html">Profiling tools</a> for more information.</p>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><p><a href="ShadowPerformance.html">Troubleshooting shadows</a></p></li>
+<li><p><a href="urp/shadows-troubleshooting-urp.html">Troubleshooting shadows in URP</a></p></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="urp/shadow-cascades-visualize.html"></a></span><div class="tip">Visualize shadow cascades</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="urp/shadows-troubleshooting-urp.html"></a></span><div class="tip">Troubleshooting shadows in URP</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

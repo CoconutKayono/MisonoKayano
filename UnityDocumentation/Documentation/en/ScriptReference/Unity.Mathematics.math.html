@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+  <head>
+    <script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true">
+    </script>
+    <script type="text/javascript">function OptanonWrapper() {}</script>
+    <script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script>
+    <script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&amp;l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script>
+    <link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet" />
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Unity - Scripting API: math</title>
+    <meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg" />
+    <meta name="author" content="Unity Technologies" />
+    <link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico" />
+    <link rel="icon" type="image/png" href="../../../StaticFiles/images/favicons/favicon.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFiles/images/favicons/apple-touch-icon-152x152.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFiles/images/favicons/apple-touch-icon-144x144.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFiles/images/favicons/apple-touch-icon-120x120.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFiles/images/favicons/apple-touch-icon-114x114.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFiles/images/favicons/apple-touch-icon-72x72.png" />
+    <link rel="apple-touch-icon-precomposed" href="../StaticFiles/images/favicons/apple-touch-icon.png" />
+    <link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/ScriptReference/Unity.Mathematics.math.html" />
+    <meta name="msapplication-TileColor" content="#222c37" />
+    <meta name="msapplication-TileImage" content="../StaticFiles/images/favicons/tileicon-144x144.png" />
+    <script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js">
+    </script>
+    <script type="text/javascript" src="../StaticFiles/js/jquery.js">
+    </script>
+    <script type="text/javascript" src="docdata/toc.js">//toc</script>
+    <!--local TOC-->
+    <script type="text/javascript" src="docdata/global_toc.js">//toc</script>
+    <!--global TOC, including other platforms-->
+    <script type="text/javascript" src="../StaticFiles/js/core.js">
+    </script>
+    <link rel="stylesheet" href="../StaticFiles/css/prism.css" />
+    <script type="text/javascript" src="../StaticFiles/js/prism.js">
+    </script>
+    <link rel="stylesheet" type="text/css" href="../StaticFiles/css/core.css" />
+    <script src="/StaticFilesConfig/feedback/feedback.js">
+    </script>
+    <script src="../StaticFiles/js/jquery.sidebar.min.js">
+    </script>
+    <script type="text/javascript" src="../StaticFiles/js/mobileoptimisation.js">
+    </script>
+    <link rel="stylesheet" href="../StaticFiles/css/mobileoptimisation.css" />
+    <link rel="stylesheet" href="../StaticFiles/css/icons.css" />
+  </head>
+  <body>
+    <div id="DocsAnalyticsData" data-area="none" data-pagetype="scriptref">
+    </div>
+    <div class="header-wrapper">
+      <div id="header" class="header">
+        <div class="content">
+          <div class="spacer">
+            <div class="menu">
+              <div id="nav-open" for="nav-input">
+                <span>
+                </span>
+              </div>
+              <div class="logo">
+                <a aria-label="go to the homepage" href="">
+                </a>
+              </div>
+              <div class="search-form">
+                <form action="30_search.html" method="get" class="apisearch">
+                  <input type="text" name="q" aria-label="Search scripting documentation" placeholder="Search scripting..." autosave="Unity Reference" results="5" class="sbox field" id="q">
+                  </input>
+                  <input type="submit" class="submit">
+                  </input>
+                </form>
+              </div>
+              <ul>
+                <li>
+                  <a href="../Manual/index.html">Manual</a>
+                </li>
+                <li>
+                  <a href="../ScriptReference/index.html" class="selected">Scripting API</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="more">
+            <div class="filler">
+            </div>
+            <ul>
+              <li>
+                <a href="https://unity.com/">unity.com</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="toolbar">
+        <div class="content clear">
+          <div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;"><ul id="OtherVersionsContentUl"></ul><div id="otherVersionsLegend"><ul><li><div id="supportedColour" class="legendBox"></div>Supported</li><li><div id="notFoundColour" class="legendBox"></div>Legacy</li></ul></div></div><div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div></div>
+          <div class="lang-switcher hide">
+            <div class="current toggle" data-target=".lang-list">
+              <div class="lbl">Language<span class="b">English</span></div>
+              <div class="arrow">
+              </div>
+            </div>
+            <div class="lang-list" style="display:none;">
+              <ul>
+                <li>
+                  <a href="">English</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="script-lang">
+            <ul>
+              <li class="selected" data-lang="CS">C#</li>
+            </ul>
+          </div>
+          <div class="mobileLogo">
+            <a aria-label="go to the homepage" href="https://docs.unity3d.com">
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="master-wrapper" class="master-wrapper clear">
+      <div id="sidebar" class="sidebar">
+        <div class="sidebar-wrap">
+          <div class="content">
+            <div class="sidebar-menu">
+              <div class="toc" id="customScrollbar">
+                <h2>Scripting API</h2>
+                <div class="search-form sidebar-search-form">
+                  <form action="30_search.html" method="get" class="apisearch">
+                    <input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q">
+                    </input>
+                    <input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+                    </input>
+                  </form>
+                </div>
+                <div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent">
+                  <form id="otherVersionsContentMobileForm">
+                    <div class="ui-field-contain">
+                      <label for="select-native-4">Version: Unity 6.7 Beta</label>
+                      <select name="select-native-4" id="versionsSelectMobile">
+                        <option>Select a different version</option>
+                        <optgroup id="versionsWithThisPageMobile" label="Versions with this page">
+                        </optgroup>
+                        <optgroup id="versionsWithoutThisPageMobile" label="Versions without this page">
+                        </optgroup>
+                      </select>
+                    </div>
+                  </form>
+                </div>
+                <div class="lang-switcher hide">
+                  <div class="toggle" data-target=".lang-list">
+                    <div class="lbl">Language<span class="b">English</span></div>
+                    <div class="arrow">
+                    </div>
+                  </div>
+                  <div class="lang-list" style="display:none;">
+                    <ul>
+                      <li>
+                        <a href="">English</a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="content-wrap" class="content-wrap">
+        <div class="content-block">
+          <div class="content">
+            <div class="section">
+              <div class="mb20 clear" id="">
+                <h1 class="heading inherit">math</h1>
+                <div class="clear">
+                </div>
+                <p class="cl mb0 left mr10">class in
+          Unity.Mathematics</p>
+                <div class="scrollToFeedback">
+                  <a id="scrollToFeedback" role="button" tabindex="0">Leave feedback</a>
+                </div>
+                <div class="clear">
+                </div>
+                <div class="suggest">
+                  <a class="blue-btn sbtn">Suggest a change</a>
+                  <div class="suggest-wrap rel hide">
+                    <div class="loading hide">
+                      <div>
+                      </div>
+                      <div>
+                      </div>
+                      <div>
+                      </div>
+                    </div>
+                    <div class="suggest-success hide">
+                      <h2>Success!</h2>
+                      <p>Thank you for helping us improve the quality of Unity Documentation. Although we cannot accept all submissions, we do read each suggested change from our users and will make updates where applicable.</p>
+                      <a class="gray-btn sbtn close">Close</a>
+                    </div>
+                    <div class="suggest-failed hide">
+                      <h2>Submission failed</h2>
+                      <p>For some reason your suggested change could not be submitted. Please &lt;a&gt;try again&lt;/a&gt; in a few minutes. And thank you for taking the time to help us improve the quality of Unity Documentation.</p>
+                      <a class="gray-btn sbtn close">Close</a>
+                    </div>
+                    <div class="suggest-form clear">
+                      <label for="suggest_name">Your name</label>
+                      <input id="suggest_name" type="text">
+                      </input>
+                      <label for="suggest_email">Your email</label>
+                      <input id="suggest_email" type="email">
+                      </input>
+                      <label for="suggest_body" class="clear">Suggestion<span class="r">*</span></label>
+                      <textarea id="suggest_body" class="req">
+                      </textarea>
+                      <button id="suggest_submit" class="blue-btn mr10">Submit suggestion</button>
+                      <p class="mb0">
+                        <a class="cancel left lh42 cn">Cancel</a>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="clear">
+                </div>
+              </div>
+              <div class="subsection">
+                <div class="signature">
+                  <div class="signature-CS sig-block">
+                    <span style="color:red;">
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div class="subsection">
+                <h3>Description</h3>
+                <p>
+ A static class to contain various math functions and constants.
+ </p>
+              </div>
+              <div class="subsection">
+                <h3>Static Properties</h3>
+                <table class="list">
+                  <thead>
+                    <tr>
+                      <th>Property</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math.DBL_MIN_NORMAL.html" aria-label="Go to Unity.Mathematics.math.DBL_MIN_NORMAL.html">DBL_MIN_NORMAL</a></td><td class="desc">The smallest positive normal number representable in a double. This is a f64/double precision constant.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math.E.html" aria-label="Go to Unity.Mathematics.math.E.html">E</a></td><td class="desc">The mathematical constant e also known as Euler's number. Approximately 2.72.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math.E_DBL.html" aria-label="Go to Unity.Mathematics.math.E_DBL.html">E_DBL</a></td><td class="desc">The mathematical constant e also known as Euler's number. Approximately 2.72. This is a f64/double precision constant.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math.EPSILON.html" aria-label="Go to Unity.Mathematics.math.EPSILON.html">EPSILON</a></td><td class="desc">
+ The difference between 1.0f and the next representable f32/single precision number. Beware:
+ This value is different from System.Single.Epsilon, which is the smallest, positive, denormalized f32/single.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math.EPSILON_DBL.html" aria-label="Go to Unity.Mathematics.math.EPSILON_DBL.html">EPSILON_DBL</a></td><td class="desc">
+ The difference between 1.0 and the next representable f64/double precision number. Beware:
+ This value is different from System.Double.Epsilon, which is the smallest, positive, denormalized f64/double.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math.FLT_MIN_NORMAL.html" aria-label="Go to Unity.Mathematics.math.FLT_MIN_NORMAL.html">FLT_MIN_NORMAL</a></td><td class="desc">The smallest positive normal number representable in a float.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math.INFINITY.html" aria-label="Go to Unity.Mathematics.math.INFINITY.html">INFINITY</a></td><td class="desc">
+ Single precision constant for positive infinity.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math.INFINITY_DBL.html" aria-label="Go to Unity.Mathematics.math.INFINITY_DBL.html">INFINITY_DBL</a></td><td class="desc">
+ Double precision constant for positive infinity.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math.LN10.html" aria-label="Go to Unity.Mathematics.math.LN10.html">LN10</a></td><td class="desc">The natural logarithm of 10. Approximately 2.30.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math.LN10_DBL.html" aria-label="Go to Unity.Mathematics.math.LN10_DBL.html">LN10_DBL</a></td><td class="desc">The natural logarithm of 10. Approximately 2.30. This is a f64/double precision constant.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math.LN2.html" aria-label="Go to Unity.Mathematics.math.LN2.html">LN2</a></td><td class="desc">The natural logarithm of 2. Approximately 0.69.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math.LN2_DBL.html" aria-label="Go to Unity.Mathematics.math.LN2_DBL.html">LN2_DBL</a></td><td class="desc">The natural logarithm of 2. Approximately 0.69. This is a f64/double precision constant.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math.LOG10E.html" aria-label="Go to Unity.Mathematics.math.LOG10E.html">LOG10E</a></td><td class="desc">The base 10 logarithm of e. Approximately 0.43.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math.LOG10E_DBL.html" aria-label="Go to Unity.Mathematics.math.LOG10E_DBL.html">LOG10E_DBL</a></td><td class="desc">The base 10 logarithm of e. Approximately 0.43. This is a f64/double precision constant.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math.LOG2E.html" aria-label="Go to Unity.Mathematics.math.LOG2E.html">LOG2E</a></td><td class="desc">The base 2 logarithm of e. Approximately 1.44.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math.LOG2E_DBL.html" aria-label="Go to Unity.Mathematics.math.LOG2E_DBL.html">LOG2E_DBL</a></td><td class="desc">The base 2 logarithm of e. Approximately 1.44. This is a f64/double precision constant.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math.NAN.html" aria-label="Go to Unity.Mathematics.math.NAN.html">NAN</a></td><td class="desc">
+ Single precision constant for Not a Number. NAN is considered unordered, which means all comparisons involving it are false except for not equal (operator !=).
+ As a consequence, NAN == NAN is false but NAN != NAN is true. Additionally, there are multiple bit representations for Not a Number, so if you must test if your value
+ is NAN, use isnan().
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math.NAN_DBL.html" aria-label="Go to Unity.Mathematics.math.NAN_DBL.html">NAN_DBL</a></td><td class="desc">
+ Double precision constant for Not a Number. NAN_DBL is considered unordered, which means all comparisons involving it are false except for not equal (operator !=).
+ As a consequence, NAN_DBL == NAN_DBL is false but NAN_DBL != NAN_DBL is true. Additionally, there are multiple bit representations for Not a Number, so if you must test if your value
+ is NAN_DBL, use isnan().
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math.PI.html" aria-label="Go to Unity.Mathematics.math.PI.html">PI</a></td><td class="desc">The mathematical constant pi. Approximately 3.14.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math.PI_DBL.html" aria-label="Go to Unity.Mathematics.math.PI_DBL.html">PI_DBL</a></td><td class="desc">The mathematical constant pi. Approximately 3.14. This is a f64/double precision constant.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math.PI2.html" aria-label="Go to Unity.Mathematics.math.PI2.html">PI2</a></td><td class="desc">
+ The mathematical constant (2 * pi). Approximately 6.28. Also known as math.TAU.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math.PI2_DBL.html" aria-label="Go to Unity.Mathematics.math.PI2_DBL.html">PI2_DBL</a></td><td class="desc">
+ The mathematical constant (2 * pi). Approximately 6.28. This is a f64/double precision constant. Also known as math.TAU_DBL.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math.PIHALF.html" aria-label="Go to Unity.Mathematics.math.PIHALF.html">PIHALF</a></td><td class="desc">
+ The mathematical constant (pi / 2). Approximately 1.57.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math.PIHALF_DBL.html" aria-label="Go to Unity.Mathematics.math.PIHALF_DBL.html">PIHALF_DBL</a></td><td class="desc">
+ The mathematical constant (pi / 2). Approximately 1.57. This is a f64/double precision constant.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math.SQRT2.html" aria-label="Go to Unity.Mathematics.math.SQRT2.html">SQRT2</a></td><td class="desc">The square root 2. Approximately 1.41.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math.SQRT2_DBL.html" aria-label="Go to Unity.Mathematics.math.SQRT2_DBL.html">SQRT2_DBL</a></td><td class="desc">The square root 2. Approximately 1.41. This is a f64/double precision constant.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math.TAU.html" aria-label="Go to Unity.Mathematics.math.TAU.html">TAU</a></td><td class="desc">
+ The mathematical constant tau. Approximately 6.28. Also known as math.PI2.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math.TAU_DBL.html" aria-label="Go to Unity.Mathematics.math.TAU_DBL.html">TAU_DBL</a></td><td class="desc">
+ The mathematical constant tau. Approximately 6.28. This is a f64/double precision constant. Also known as math.PI2_DBL.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math.TODEGREES.html" aria-label="Go to Unity.Mathematics.math.TODEGREES.html">TODEGREES</a></td><td class="desc">
+ The conversion constant used to convert radians to degrees. Multiply the radian value by this constant to get degrees.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math.TODEGREES_DBL.html" aria-label="Go to Unity.Mathematics.math.TODEGREES_DBL.html">TODEGREES_DBL</a></td><td class="desc">
+ The conversion constant used to convert radians to degrees. Multiply the radian value by this constant to get degrees.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math.TORADIANS.html" aria-label="Go to Unity.Mathematics.math.TORADIANS.html">TORADIANS</a></td><td class="desc">
+ The conversion constant used to convert degrees to radians. Multiply the degree value by this constant to get radians.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math.TORADIANS_DBL.html" aria-label="Go to Unity.Mathematics.math.TORADIANS_DBL.html">TORADIANS_DBL</a></td><td class="desc">
+ The conversion constant used to convert degrees to radians. Multiply the degree value by this constant to get radians.
+ </td></tr>
+    </table>
+              </div>
+              <div class="subsection">
+                <h3>Static Methods</h3>
+                <table class="list">
+                  <thead>
+                    <tr>
+                      <th>Method</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-abs.html" aria-label="Go to Unity.Mathematics.math-abs.html">abs</a></td><td class="desc">Returns the absolute value of a int value.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-acos.html" aria-label="Go to Unity.Mathematics.math-acos.html">acos</a></td><td class="desc">Returns the arccosine of a float value.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math.AffineTransform.html" aria-label="Go to Unity.Mathematics.math.AffineTransform.html">AffineTransform</a></td><td class="desc">Returns an AffineTransform constructed from a translation represented by a float3 vector and rotation represented by a unit quaternion.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-all.html" aria-label="Go to Unity.Mathematics.math-all.html">all</a></td><td class="desc">Returns true if all components of the input bool2 vector are true, false otherwise.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-angle.html" aria-label="Go to Unity.Mathematics.math-angle.html">angle</a></td><td class="desc">Returns the angle in radians between two unit quaternions.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-any.html" aria-label="Go to Unity.Mathematics.math-any.html">any</a></td><td class="desc">Returns true if any component of the input bool2 vector is true, false otherwise.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-asdouble.html" aria-label="Go to Unity.Mathematics.math-asdouble.html">asdouble</a></td><td class="desc">Returns the bit pattern of a long as a double.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-asfloat.html" aria-label="Go to Unity.Mathematics.math-asfloat.html">asfloat</a></td><td class="desc">Returns the bit pattern of an int as a float.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-asin.html" aria-label="Go to Unity.Mathematics.math-asin.html">asin</a></td><td class="desc">Returns the arcsine of a float value.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-asint.html" aria-label="Go to Unity.Mathematics.math-asint.html">asint</a></td><td class="desc">Returns the bit pattern of a uint as an int.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-aslong.html" aria-label="Go to Unity.Mathematics.math-aslong.html">aslong</a></td><td class="desc">Returns the bit pattern of a ulong as a long.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-asuint.html" aria-label="Go to Unity.Mathematics.math-asuint.html">asuint</a></td><td class="desc">Returns the bit pattern of an int as a uint.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-asulong.html" aria-label="Go to Unity.Mathematics.math-asulong.html">asulong</a></td><td class="desc">Returns the bit pattern of a long as a ulong.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-atan.html" aria-label="Go to Unity.Mathematics.math-atan.html">atan</a></td><td class="desc">Returns the arctangent of a float value.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-atan2.html" aria-label="Go to Unity.Mathematics.math-atan2.html">atan2</a></td><td class="desc">Returns the 2-argument arctangent of a pair of float values.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-back.html" aria-label="Go to Unity.Mathematics.math-back.html">back</a></td><td class="desc">
+ Unity's back axis (0, 0, -1).
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-bitmask.html" aria-label="Go to Unity.Mathematics.math-bitmask.html">bitmask</a></td><td class="desc">
+ Returns a bitmask representation of a bool4. Storing one 1 bit per component
+ in LSB order, from lower to higher bits (so 4 bits in total).
+ The component x is stored at bit 0,
+ The component y is stored at bit 1,
+ The component z is stored at bit 2,
+ The component w is stored at bit 3
+ The bool4(x = true, y = true, z = false, w = true) would produce the value 1011 = 0xB
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-bool2.html" aria-label="Go to Unity.Mathematics.math-bool2.html">bool2</a></td><td class="desc">Returns a bool2 vector constructed from two bool values.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-bool2x2.html" aria-label="Go to Unity.Mathematics.math-bool2x2.html">bool2x2</a></td><td class="desc">Returns a bool2x2 matrix constructed from two bool2 vectors.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-bool2x3.html" aria-label="Go to Unity.Mathematics.math-bool2x3.html">bool2x3</a></td><td class="desc">Returns a bool2x3 matrix constructed from three bool2 vectors.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-bool2x4.html" aria-label="Go to Unity.Mathematics.math-bool2x4.html">bool2x4</a></td><td class="desc">Returns a bool2x4 matrix constructed from four bool2 vectors.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-bool3.html" aria-label="Go to Unity.Mathematics.math-bool3.html">bool3</a></td><td class="desc">Returns a bool3 vector constructed from three bool values.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-bool3x2.html" aria-label="Go to Unity.Mathematics.math-bool3x2.html">bool3x2</a></td><td class="desc">Returns a bool3x2 matrix constructed from two bool3 vectors.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-bool3x3.html" aria-label="Go to Unity.Mathematics.math-bool3x3.html">bool3x3</a></td><td class="desc">Returns a bool3x3 matrix constructed from three bool3 vectors.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-bool3x4.html" aria-label="Go to Unity.Mathematics.math-bool3x4.html">bool3x4</a></td><td class="desc">Returns a bool3x4 matrix constructed from four bool3 vectors.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-bool4.html" aria-label="Go to Unity.Mathematics.math-bool4.html">bool4</a></td><td class="desc">Returns a bool4 vector constructed from four bool values.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-bool4x2.html" aria-label="Go to Unity.Mathematics.math-bool4x2.html">bool4x2</a></td><td class="desc">Returns a bool4x2 matrix constructed from two bool4 vectors.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-bool4x3.html" aria-label="Go to Unity.Mathematics.math-bool4x3.html">bool4x3</a></td><td class="desc">Returns a bool4x3 matrix constructed from three bool4 vectors.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-bool4x4.html" aria-label="Go to Unity.Mathematics.math-bool4x4.html">bool4x4</a></td><td class="desc">Returns a bool4x4 matrix constructed from four bool4 vectors.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-ceil.html" aria-label="Go to Unity.Mathematics.math-ceil.html">ceil</a></td><td class="desc">Returns the result of rounding a float value up to the nearest integral value greater or equal to the original value.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-ceillog2.html" aria-label="Go to Unity.Mathematics.math-ceillog2.html">ceillog2</a></td><td class="desc">
+ Computes the ceiling of the base-2 logarithm of x.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-ceilpow2.html" aria-label="Go to Unity.Mathematics.math-ceilpow2.html">ceilpow2</a></td><td class="desc">Returns the smallest power of two greater than or equal to the input.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-chgsign.html" aria-label="Go to Unity.Mathematics.math-chgsign.html">chgsign</a></td><td class="desc">Change the sign of x based on the most significant bit of y [msb(y) ? -x : x].</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-clamp.html" aria-label="Go to Unity.Mathematics.math-clamp.html">clamp</a></td><td class="desc">Returns the result of clamping the value valueToClamp into the interval (inclusive) [lowerBound, upperBound], where valueToClamp, lowerBound and upperBound are int values.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-cmax.html" aria-label="Go to Unity.Mathematics.math-cmax.html">cmax</a></td><td class="desc">Returns the maximum component of an int2 vector.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-cmin.html" aria-label="Go to Unity.Mathematics.math-cmin.html">cmin</a></td><td class="desc">Returns the minimum component of an int2 vector.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-compress.html" aria-label="Go to Unity.Mathematics.math-compress.html">compress</a></td><td class="desc">
+ Packs components with an enabled mask to the left.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-conjugate.html" aria-label="Go to Unity.Mathematics.math-conjugate.html">conjugate</a></td><td class="desc">Returns the conjugate of a quaternion value.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-cos.html" aria-label="Go to Unity.Mathematics.math-cos.html">cos</a></td><td class="desc">Returns the cosine of a float value.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-cosh.html" aria-label="Go to Unity.Mathematics.math-cosh.html">cosh</a></td><td class="desc">Returns the hyperbolic cosine of a float value.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-countbits.html" aria-label="Go to Unity.Mathematics.math-countbits.html">countbits</a></td><td class="desc">Returns number of 1-bits in the binary representation of an int value. Also known as the Hamming weight, popcnt on x86, and vcnt on ARM.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-cross.html" aria-label="Go to Unity.Mathematics.math-cross.html">cross</a></td><td class="desc">Returns the cross product of two float3 vectors.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-csum.html" aria-label="Go to Unity.Mathematics.math-csum.html">csum</a></td><td class="desc">Returns the horizontal sum of components of an int2 vector.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-decompose.html" aria-label="Go to Unity.Mathematics.math-decompose.html">decompose</a></td><td class="desc">Decomposes the AffineTransform in translation, rotation and scale.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-degrees.html" aria-label="Go to Unity.Mathematics.math-degrees.html">degrees</a></td><td class="desc">Returns the result of converting a double value from radians to degrees.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-determinant.html" aria-label="Go to Unity.Mathematics.math-determinant.html">determinant</a></td><td class="desc">Returns the determinant of a double2x2 matrix.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-distance.html" aria-label="Go to Unity.Mathematics.math-distance.html">distance</a></td><td class="desc">Returns the distance between two float values.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-distancesq.html" aria-label="Go to Unity.Mathematics.math-distancesq.html">distancesq</a></td><td class="desc">Returns the squared distance between two float values.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-dot.html" aria-label="Go to Unity.Mathematics.math-dot.html">dot</a></td><td class="desc">Returns the dot product of two int values. Equivalent to multiplication.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-double2.html" aria-label="Go to Unity.Mathematics.math-double2.html">double2</a></td><td class="desc">Returns a double2 vector constructed from two double values.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-double2x2.html" aria-label="Go to Unity.Mathematics.math-double2x2.html">double2x2</a></td><td class="desc">Returns a double2x2 matrix constructed from two double2 vectors.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-double2x3.html" aria-label="Go to Unity.Mathematics.math-double2x3.html">double2x3</a></td><td class="desc">Returns a double2x3 matrix constructed from three double2 vectors.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-double2x4.html" aria-label="Go to Unity.Mathematics.math-double2x4.html">double2x4</a></td><td class="desc">Returns a double2x4 matrix constructed from four double2 vectors.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-double3.html" aria-label="Go to Unity.Mathematics.math-double3.html">double3</a></td><td class="desc">Returns a double3 vector constructed from three double values.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-double3x2.html" aria-label="Go to Unity.Mathematics.math-double3x2.html">double3x2</a></td><td class="desc">Returns a double3x2 matrix constructed from two double3 vectors.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-double3x3.html" aria-label="Go to Unity.Mathematics.math-double3x3.html">double3x3</a></td><td class="desc">Returns a double3x3 matrix constructed from three double3 vectors.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-double3x4.html" aria-label="Go to Unity.Mathematics.math-double3x4.html">double3x4</a></td><td class="desc">Returns a double3x4 matrix constructed from four double3 vectors.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-double4.html" aria-label="Go to Unity.Mathematics.math-double4.html">double4</a></td><td class="desc">Returns a double4 vector constructed from four double values.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-double4x2.html" aria-label="Go to Unity.Mathematics.math-double4x2.html">double4x2</a></td><td class="desc">Returns a double4x2 matrix constructed from two double4 vectors.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-double4x3.html" aria-label="Go to Unity.Mathematics.math-double4x3.html">double4x3</a></td><td class="desc">Returns a double4x3 matrix constructed from three double4 vectors.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-double4x4.html" aria-label="Go to Unity.Mathematics.math-double4x4.html">double4x4</a></td><td class="desc">Returns a double4x4 matrix constructed from four double4 vectors.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-down.html" aria-label="Go to Unity.Mathematics.math-down.html">down</a></td><td class="desc">
+ Unity's down axis (0, -1, 0).
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math.Euler.html" aria-label="Go to Unity.Mathematics.math.Euler.html">Euler</a></td><td class="desc">
+ Returns the Euler angle representation of the quaternion. The returned angles depend on the specified order to apply the
+ three rotations around the principal axes. All rotation angles are in radians and clockwise when looking along the
+ rotation axis towards the origin.
+ When the rotation order is known at compile time, to get the best performance you should use the specific
+ Euler rotation constructors such as EulerZXY(...).
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math.EulerXYZ.html" aria-label="Go to Unity.Mathematics.math.EulerXYZ.html">EulerXYZ</a></td><td class="desc">
+ Returns the Euler angle representation of the quaternion following the XYZ rotation order.
+ All rotation angles are in radians and clockwise when looking along the rotation axis towards the origin.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math.EulerXZY.html" aria-label="Go to Unity.Mathematics.math.EulerXZY.html">EulerXZY</a></td><td class="desc">
+ Returns the Euler angle representation of the quaternion following the XZY rotation order.
+ All rotation angles are in radians and clockwise when looking along the rotation axis towards the origin.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math.EulerYXZ.html" aria-label="Go to Unity.Mathematics.math.EulerYXZ.html">EulerYXZ</a></td><td class="desc">
+ Returns the Euler angle representation of the quaternion following the YXZ rotation order.
+ All rotation angles are in radians and clockwise when looking along the rotation axis towards the origin.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math.EulerYZX.html" aria-label="Go to Unity.Mathematics.math.EulerYZX.html">EulerYZX</a></td><td class="desc">
+ Returns the Euler angle representation of the quaternion following the YZX rotation order.
+ All rotation angles are in radians and clockwise when looking along the rotation axis towards the origin.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math.EulerZXY.html" aria-label="Go to Unity.Mathematics.math.EulerZXY.html">EulerZXY</a></td><td class="desc">
+ Returns the Euler angle representation of the quaternion following the ZXY rotation order.
+ All rotation angles are in radians and clockwise when looking along the rotation axis towards the origin.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math.EulerZYX.html" aria-label="Go to Unity.Mathematics.math.EulerZYX.html">EulerZYX</a></td><td class="desc">
+ Returns the Euler angle representation of the quaternion following the ZYX rotation order.
+ All rotation angles are in radians and clockwise when looking along the rotation axis towards the origin.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-exp.html" aria-label="Go to Unity.Mathematics.math-exp.html">exp</a></td><td class="desc">Returns the base-e exponential of x.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-exp10.html" aria-label="Go to Unity.Mathematics.math-exp10.html">exp10</a></td><td class="desc">Returns the base-10 exponential of x.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-exp2.html" aria-label="Go to Unity.Mathematics.math-exp2.html">exp2</a></td><td class="desc">Returns the base-2 exponential of x.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-f16tof32.html" aria-label="Go to Unity.Mathematics.math-f16tof32.html">f16tof32</a></td><td class="desc">Returns the floating point representation of a half-precision floating point value.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-f32tof16.html" aria-label="Go to Unity.Mathematics.math-f32tof16.html">f32tof16</a></td><td class="desc">Returns the result converting a float value to its nearest half-precision floating point representation.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-faceforward.html" aria-label="Go to Unity.Mathematics.math-faceforward.html">faceforward</a></td><td class="desc">Conditionally flips a vector n if two vectors i and ng are pointing in the same direction. Returns n if dot(i, ng) &lt; 0, -n otherwise.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-fastinverse.html" aria-label="Go to Unity.Mathematics.math-fastinverse.html">fastinverse</a></td><td class="desc">Fast matrix inverse for rigid transforms (orthonormal basis and translation)</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-float2.html" aria-label="Go to Unity.Mathematics.math-float2.html">float2</a></td><td class="desc">Returns a float2 vector constructed from two float values.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-float2x2.html" aria-label="Go to Unity.Mathematics.math-float2x2.html">float2x2</a></td><td class="desc">Returns a float2x2 matrix constructed from two float2 vectors.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-float2x3.html" aria-label="Go to Unity.Mathematics.math-float2x3.html">float2x3</a></td><td class="desc">Returns a float2x3 matrix constructed from three float2 vectors.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-float2x4.html" aria-label="Go to Unity.Mathematics.math-float2x4.html">float2x4</a></td><td class="desc">Returns a float2x4 matrix constructed from four float2 vectors.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-float3.html" aria-label="Go to Unity.Mathematics.math-float3.html">float3</a></td><td class="desc">Returns a float3 vector constructed from three float values.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-float3x2.html" aria-label="Go to Unity.Mathematics.math-float3x2.html">float3x2</a></td><td class="desc">Returns a float3x2 matrix constructed from two float3 vectors.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-float3x3.html" aria-label="Go to Unity.Mathematics.math-float3x3.html">float3x3</a></td><td class="desc">Returns a float3x3 matrix constructed from three float3 vectors.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-float3x4.html" aria-label="Go to Unity.Mathematics.math-float3x4.html">float3x4</a></td><td class="desc">Returns a float3x4 matrix constructed from an AffineTransform.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-float4.html" aria-label="Go to Unity.Mathematics.math-float4.html">float4</a></td><td class="desc">Returns a float4 vector constructed from four float values.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-float4x2.html" aria-label="Go to Unity.Mathematics.math-float4x2.html">float4x2</a></td><td class="desc">Returns a float4x2 matrix constructed from two float4 vectors.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-float4x3.html" aria-label="Go to Unity.Mathematics.math-float4x3.html">float4x3</a></td><td class="desc">Returns a float4x3 matrix constructed from three float4 vectors.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-float4x4.html" aria-label="Go to Unity.Mathematics.math-float4x4.html">float4x4</a></td><td class="desc">Returns a float4x4 matrix constructed from an AffineTransform.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-floor.html" aria-label="Go to Unity.Mathematics.math-floor.html">floor</a></td><td class="desc">Returns the result of rounding a float value up to the nearest integral value less or equal to the original value.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-floorlog2.html" aria-label="Go to Unity.Mathematics.math-floorlog2.html">floorlog2</a></td><td class="desc">
+ Computes the floor of the base-2 logarithm of x.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-fmod.html" aria-label="Go to Unity.Mathematics.math-fmod.html">fmod</a></td><td class="desc">Returns the floating point remainder of x/y.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-forward.html" aria-label="Go to Unity.Mathematics.math-forward.html">forward</a></td><td class="desc">
+ Unity's forward axis (0, 0, 1).
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-frac.html" aria-label="Go to Unity.Mathematics.math-frac.html">frac</a></td><td class="desc">Returns the fractional part of a float value.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-half.html" aria-label="Go to Unity.Mathematics.math-half.html">half</a></td><td class="desc">Returns a half value constructed from a half values.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-half2.html" aria-label="Go to Unity.Mathematics.math-half2.html">half2</a></td><td class="desc">Returns a half2 vector constructed from two half values.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-half3.html" aria-label="Go to Unity.Mathematics.math-half3.html">half3</a></td><td class="desc">Returns a half3 vector constructed from three half values.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-half4.html" aria-label="Go to Unity.Mathematics.math-half4.html">half4</a></td><td class="desc">Returns a half4 vector constructed from four half values.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-hash.html" aria-label="Go to Unity.Mathematics.math-hash.html">hash</a></td><td class="desc">Returns a uint hash code of an AffineTransform.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-hashwide.html" aria-label="Go to Unity.Mathematics.math-hashwide.html">hashwide</a></td><td class="desc">
+ Returns a uint4 vector hash code of an AffineTransform.
+ When multiple elements are to be hashes together, it can more efficient to calculate and combine wide hash
+ that are only reduced to a narrow uint hash at the very end instead of at every step.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-int2.html" aria-label="Go to Unity.Mathematics.math-int2.html">int2</a></td><td class="desc">Returns a int2 vector constructed from two int values.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-int2x2.html" aria-label="Go to Unity.Mathematics.math-int2x2.html">int2x2</a></td><td class="desc">Returns a int2x2 matrix constructed from two int2 vectors.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-int2x3.html" aria-label="Go to Unity.Mathematics.math-int2x3.html">int2x3</a></td><td class="desc">Returns a int2x3 matrix constructed from three int2 vectors.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-int2x4.html" aria-label="Go to Unity.Mathematics.math-int2x4.html">int2x4</a></td><td class="desc">Returns a int2x4 matrix constructed from four int2 vectors.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-int3.html" aria-label="Go to Unity.Mathematics.math-int3.html">int3</a></td><td class="desc">Returns a int3 vector constructed from three int values.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-int3x2.html" aria-label="Go to Unity.Mathematics.math-int3x2.html">int3x2</a></td><td class="desc">Returns a int3x2 matrix constructed from two int3 vectors.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-int3x3.html" aria-label="Go to Unity.Mathematics.math-int3x3.html">int3x3</a></td><td class="desc">Returns a int3x3 matrix constructed from three int3 vectors.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-int3x4.html" aria-label="Go to Unity.Mathematics.math-int3x4.html">int3x4</a></td><td class="desc">Returns a int3x4 matrix constructed from four int3 vectors.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-int4.html" aria-label="Go to Unity.Mathematics.math-int4.html">int4</a></td><td class="desc">Returns a int4 vector constructed from four int values.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-int4x2.html" aria-label="Go to Unity.Mathematics.math-int4x2.html">int4x2</a></td><td class="desc">Returns a int4x2 matrix constructed from two int4 vectors.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-int4x3.html" aria-label="Go to Unity.Mathematics.math-int4x3.html">int4x3</a></td><td class="desc">Returns a int4x3 matrix constructed from three int4 vectors.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-int4x4.html" aria-label="Go to Unity.Mathematics.math-int4x4.html">int4x4</a></td><td class="desc">Returns a int4x4 matrix constructed from four int4 vectors.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-inverse.html" aria-label="Go to Unity.Mathematics.math-inverse.html">inverse</a></td><td class="desc">Returns the inverse of an AffineTransform.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-isfinite.html" aria-label="Go to Unity.Mathematics.math-isfinite.html">isfinite</a></td><td class="desc">Returns true if the input float is a finite floating point value, false otherwise.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-isinf.html" aria-label="Go to Unity.Mathematics.math-isinf.html">isinf</a></td><td class="desc">Returns true if the input float is an infinite floating point value, false otherwise.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-isnan.html" aria-label="Go to Unity.Mathematics.math-isnan.html">isnan</a></td><td class="desc">Returns true if the input float is a NaN (not a number) floating point value, false otherwise.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-ispow2.html" aria-label="Go to Unity.Mathematics.math-ispow2.html">ispow2</a></td><td class="desc">
+ Checks if the input is a power of two.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-left.html" aria-label="Go to Unity.Mathematics.math-left.html">left</a></td><td class="desc">
+ Unity's left axis (-1, 0, 0).
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-length.html" aria-label="Go to Unity.Mathematics.math-length.html">length</a></td><td class="desc">Returns the length of a float value. Equivalent to the absolute value.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-lengthsq.html" aria-label="Go to Unity.Mathematics.math-lengthsq.html">lengthsq</a></td><td class="desc">Returns the squared length of a float value. Equivalent to squaring the value.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-lerp.html" aria-label="Go to Unity.Mathematics.math-lerp.html">lerp</a></td><td class="desc">Returns the result of linearly interpolating from start to end using the interpolation parameter t.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-log.html" aria-label="Go to Unity.Mathematics.math-log.html">log</a></td><td class="desc">Returns the natural logarithm of a float value.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-log10.html" aria-label="Go to Unity.Mathematics.math-log10.html">log10</a></td><td class="desc">Returns the base-10 logarithm of a float value.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-log2.html" aria-label="Go to Unity.Mathematics.math-log2.html">log2</a></td><td class="desc">Returns the base-2 logarithm of a float value.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-lzcnt.html" aria-label="Go to Unity.Mathematics.math-lzcnt.html">lzcnt</a></td><td class="desc">Returns the componentwise number of leading zeros in the binary representations of an int vector.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-mad.html" aria-label="Go to Unity.Mathematics.math-mad.html">mad</a></td><td class="desc">Returns the result of a multiply-add operation (a * b + c) on 3 int values.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-max.html" aria-label="Go to Unity.Mathematics.math-max.html">max</a></td><td class="desc">Returns the maximum of two int values.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-min.html" aria-label="Go to Unity.Mathematics.math-min.html">min</a></td><td class="desc">Returns the minimum of two int values.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-modf.html" aria-label="Go to Unity.Mathematics.math-modf.html">modf</a></td><td class="desc">Splits a float value into an integral part i and a fractional part that gets returned. Both parts take the sign of the input.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-mul.html" aria-label="Go to Unity.Mathematics.math-mul.html">mul</a></td><td class="desc">Returns the result of transforming the AffineTransform b by the AffineTransform a.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-mulScale.html" aria-label="Go to Unity.Mathematics.math-mulScale.html">mulScale</a></td><td class="desc">
+ Matrix columns multiplied by scale components
+ m.c0.x " s.x | m.c1.x " s.y | m.c2.x " s.z
+ m.c0.y " s.x | m.c1.y " s.y | m.c2.y " s.z
+ m.c0.z " s.x | m.c1.z " s.y | m.c2.z * s.z
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-nlerp.html" aria-label="Go to Unity.Mathematics.math-nlerp.html">nlerp</a></td><td class="desc">Returns the result of a normalized linear interpolation between two quaternions q1 and a2 using an interpolation parameter t.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-normalize.html" aria-label="Go to Unity.Mathematics.math-normalize.html">normalize</a></td><td class="desc">Returns a normalized version of the float2 vector x by scaling it by 1 / length(x).</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-normalizesafe.html" aria-label="Go to Unity.Mathematics.math-normalizesafe.html">normalizesafe</a></td><td class="desc">
+ Returns a safe normalized version of the float2 vector x by scaling it by 1 / length(x).
+ Returns the given default value when 1 / length(x) does not produce a finite number.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-orthonormal_basis.html" aria-label="Go to Unity.Mathematics.math-orthonormal_basis.html">orthonormal_basis</a></td><td class="desc">
+ Generate an orthonormal basis given a single unit length normal vector.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-pow.html" aria-label="Go to Unity.Mathematics.math-pow.html">pow</a></td><td class="desc">Returns x raised to the power y.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-project.html" aria-label="Go to Unity.Mathematics.math-project.html">project</a></td><td class="desc">
+ Compute vector projection of a onto b.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-projectsafe.html" aria-label="Go to Unity.Mathematics.math-projectsafe.html">projectsafe</a></td><td class="desc">
+ Compute vector projection of a onto b. If result is not finite, then return the default value instead.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-quaternion.html" aria-label="Go to Unity.Mathematics.math-quaternion.html">quaternion</a></td><td class="desc">Returns a quaternion constructed from four float values.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-radians.html" aria-label="Go to Unity.Mathematics.math-radians.html">radians</a></td><td class="desc">Returns the result of converting a float value from degrees to radians.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-rcp.html" aria-label="Go to Unity.Mathematics.math-rcp.html">rcp</a></td><td class="desc">Returns the reciprocal a float value.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-reflect.html" aria-label="Go to Unity.Mathematics.math-reflect.html">reflect</a></td><td class="desc">Given an incident vector i and a normal vector n, returns the reflection vector r = i - 2.0f " dot(i, n) " n.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-refract.html" aria-label="Go to Unity.Mathematics.math-refract.html">refract</a></td><td class="desc">Returns the refraction vector given the incident vector i, the normal vector n and the refraction index.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-remap.html" aria-label="Go to Unity.Mathematics.math-remap.html">remap</a></td><td class="desc">Returns the result of a non-clamping linear remapping of a value x from source range [srcStart, srcEnd] to the destination range [dstStart, dstEnd].</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-reversebits.html" aria-label="Go to Unity.Mathematics.math-reversebits.html">reversebits</a></td><td class="desc">Returns the result of performing a reversal of the bit pattern of an int value.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-right.html" aria-label="Go to Unity.Mathematics.math-right.html">right</a></td><td class="desc">
+ Unity's right axis (1, 0, 0).
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math.RigidTransform.html" aria-label="Go to Unity.Mathematics.math.RigidTransform.html">RigidTransform</a></td><td class="desc">Returns a RigidTransform constructed from a rotation represented by a unit quaternion and a translation represented by a float3 vector.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-rol.html" aria-label="Go to Unity.Mathematics.math-rol.html">rol</a></td><td class="desc">Returns the result of rotating the bits of an int left by bits n.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-ror.html" aria-label="Go to Unity.Mathematics.math-ror.html">ror</a></td><td class="desc">Returns the result of rotating the bits of an int right by bits n.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-rotate.html" aria-label="Go to Unity.Mathematics.math-rotate.html">rotate</a></td><td class="desc">Returns the result of rotating a float3 vector by an AffineTransform.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-rotation.html" aria-label="Go to Unity.Mathematics.math-rotation.html">rotation</a></td><td class="desc">
+ Extracts the rotation from a matrix.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-round.html" aria-label="Go to Unity.Mathematics.math-round.html">round</a></td><td class="desc">Returns the result of rounding a float value to the nearest integral value.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-rsqrt.html" aria-label="Go to Unity.Mathematics.math-rsqrt.html">rsqrt</a></td><td class="desc">Returns the reciprocal square root of a float value.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-saturate.html" aria-label="Go to Unity.Mathematics.math-saturate.html">saturate</a></td><td class="desc">Returns the result of clamping the float value x into the interval [0, 1].</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-scaleMul.html" aria-label="Go to Unity.Mathematics.math-scaleMul.html">scaleMul</a></td><td class="desc">
+ Matrix rows multiplied by scale components
+ m.c0.x " s.x | m.c1.x " s.x | m.c2.x " s.x
+ m.c0.y " s.y | m.c1.y " s.y | m.c2.y " s.y
+ m.c0.z " s.z | m.c1.z " s.z | m.c2.z * s.z
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-select.html" aria-label="Go to Unity.Mathematics.math-select.html">select</a></td><td class="desc">Returns trueValue if test is true, falseValue otherwise.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-shuffle.html" aria-label="Go to Unity.Mathematics.math-shuffle.html">shuffle</a></td><td class="desc">Returns the result of specified shuffling of the components from two bool2 vectors into a bool value.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-sign.html" aria-label="Go to Unity.Mathematics.math-sign.html">sign</a></td><td class="desc">Returns the sign of a int value. -1 if it is less than zero, 0 if it is zero and 1 if it greater than zero.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-sin.html" aria-label="Go to Unity.Mathematics.math-sin.html">sin</a></td><td class="desc">Returns the sine of a float value.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-sincos.html" aria-label="Go to Unity.Mathematics.math-sincos.html">sincos</a></td><td class="desc">Returns the sine and cosine of the input float value x through the out parameters s and c.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-sinh.html" aria-label="Go to Unity.Mathematics.math-sinh.html">sinh</a></td><td class="desc">Returns the hyperbolic sine of a float value.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-slerp.html" aria-label="Go to Unity.Mathematics.math-slerp.html">slerp</a></td><td class="desc">Returns the result of a spherical interpolation between two quaternions q1 and a2 using an interpolation parameter t.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-smoothstep.html" aria-label="Go to Unity.Mathematics.math-smoothstep.html">smoothstep</a></td><td class="desc">Returns a smooth Hermite interpolation between 0.0f and 1.0f when x is in the interval (inclusive) [xMin, xMax].</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-sqrt.html" aria-label="Go to Unity.Mathematics.math-sqrt.html">sqrt</a></td><td class="desc">Returns the square root of a float value.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-square.html" aria-label="Go to Unity.Mathematics.math-square.html">square</a></td><td class="desc">
+ Computes the square (x * x) of the input argument x.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-step.html" aria-label="Go to Unity.Mathematics.math-step.html">step</a></td><td class="desc">Returns the result of a step function where the result is 1.0f when x &gt;= threshold and 0.0f otherwise.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-tan.html" aria-label="Go to Unity.Mathematics.math-tan.html">tan</a></td><td class="desc">Returns the tangent of a float value.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-tanh.html" aria-label="Go to Unity.Mathematics.math-tanh.html">tanh</a></td><td class="desc">Returns the hyperbolic tangent of a float value.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-transform.html" aria-label="Go to Unity.Mathematics.math-transform.html">transform</a></td><td class="desc">Returns the result of transforming a float3 point by an AffineTransform.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-transpose.html" aria-label="Go to Unity.Mathematics.math-transpose.html">transpose</a></td><td class="desc">Return the bool2x2 transpose of a bool2x2 matrix.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-trunc.html" aria-label="Go to Unity.Mathematics.math-trunc.html">trunc</a></td><td class="desc">Returns the result of truncating a float value to an integral float value.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-tzcnt.html" aria-label="Go to Unity.Mathematics.math-tzcnt.html">tzcnt</a></td><td class="desc">
+ Computes the trailing zero count in the binary representation of the input value.
+ </td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-uint2.html" aria-label="Go to Unity.Mathematics.math-uint2.html">uint2</a></td><td class="desc">Returns a uint2 vector constructed from two uint values.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-uint2x2.html" aria-label="Go to Unity.Mathematics.math-uint2x2.html">uint2x2</a></td><td class="desc">Returns a uint2x2 matrix constructed from two uint2 vectors.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-uint2x3.html" aria-label="Go to Unity.Mathematics.math-uint2x3.html">uint2x3</a></td><td class="desc">Returns a uint2x3 matrix constructed from three uint2 vectors.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-uint2x4.html" aria-label="Go to Unity.Mathematics.math-uint2x4.html">uint2x4</a></td><td class="desc">Returns a uint2x4 matrix constructed from four uint2 vectors.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-uint3.html" aria-label="Go to Unity.Mathematics.math-uint3.html">uint3</a></td><td class="desc">Returns a uint3 vector constructed from three uint values.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-uint3x2.html" aria-label="Go to Unity.Mathematics.math-uint3x2.html">uint3x2</a></td><td class="desc">Returns a uint3x2 matrix constructed from two uint3 vectors.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-uint3x3.html" aria-label="Go to Unity.Mathematics.math-uint3x3.html">uint3x3</a></td><td class="desc">Returns a uint3x3 matrix constructed from three uint3 vectors.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-uint3x4.html" aria-label="Go to Unity.Mathematics.math-uint3x4.html">uint3x4</a></td><td class="desc">Returns a uint3x4 matrix constructed from four uint3 vectors.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-uint4.html" aria-label="Go to Unity.Mathematics.math-uint4.html">uint4</a></td><td class="desc">Returns a uint4 vector constructed from four uint values.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-uint4x2.html" aria-label="Go to Unity.Mathematics.math-uint4x2.html">uint4x2</a></td><td class="desc">Returns a uint4x2 matrix constructed from two uint4 vectors.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-uint4x3.html" aria-label="Go to Unity.Mathematics.math-uint4x3.html">uint4x3</a></td><td class="desc">Returns a uint4x3 matrix constructed from three uint4 vectors.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-uint4x4.html" aria-label="Go to Unity.Mathematics.math-uint4x4.html">uint4x4</a></td><td class="desc">Returns a uint4x4 matrix constructed from four uint4 vectors.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-unitexp.html" aria-label="Go to Unity.Mathematics.math-unitexp.html">unitexp</a></td><td class="desc">Returns the natural exponent of a quaternion. Assumes w is zero.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-unitlog.html" aria-label="Go to Unity.Mathematics.math-unitlog.html">unitlog</a></td><td class="desc">Returns the natural logarithm of a unit length quaternion.</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-unlerp.html" aria-label="Go to Unity.Mathematics.math-unlerp.html">unlerp</a></td><td class="desc">Returns the result of normalizing a floating point value x to a range [a, b]. The opposite of lerp. Equivalent to (x - a) / (b - a).</td></tr>
+      <tr><td class="lbl"><a href="Unity.Mathematics.math-up.html" aria-label="Go to Unity.Mathematics.math-up.html">up</a></td><td class="desc">
+ Unity's up axis (0, 1, 0).
+ </td></tr>
+    </table>
+              </div>
+            </div>
+            <div class="section">
+              <div id="_content">
+              </div>
+            </div>
+            <div class="footer-wrapper">
+              <div class="footer clear">
+                <div class="copy">
+                  <p>
+                    <known_issues>Is something described here not working as you expect it to? It might be a <b>Known Issue</b>. Please check with the Issue Tracker at </known_issues>
+                    <a href="https://issuetracker.unity3d.com">issuetracker.unity3d.com</a>.</p>Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.
+                                        </div>
+                <div class="menu">
+                  <a href="https://unity3d.com/learn">Tutorials</a>
+                  <a href="https://answers.unity3d.com">Community Answers</a>
+                  <a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a>
+                  <a href="https://forum.unity3d.com">Forums</a>
+                  <a href="https://unity3d.com/asset-store">Asset Store</a>
+                  <a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a>
+                  <a href="https://unity.com/legal">Legal</a>
+                  <a href="https://unity.com/legal/privacy-policy">Privacy Policy</a>
+                  <a href="https://unity.com/legal/cookie-policy">Cookies</a>
+                  <a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a>
+                  <div id="ot-sdk-btn-container">
+                    <a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

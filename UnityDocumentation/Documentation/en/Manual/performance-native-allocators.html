@@ -1,0 +1,278 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Native memory allocators</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<meta property="relative-path-to-manual" content="">
+<meta property="version-switcher-versions-with-this-page" content="Versions with this page:">
+<meta property="version-switcher-versions-without-this-page" content="Versions without this page:">
+<meta property="version-switcher-supported" content="Supported">
+<meta property="version-switcher-legacy" content="Legacy">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/Manual/performance-native-allocators.html">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20260626"></script><script type="text/javascript" src="docdata/toc.js?ts=20260626"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20260626"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20260626">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20260626">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/performance-native-allocators.html">English</a></li>
+<li><a href="/cn/current/Manual/performance-native-allocators.html">中文</a></li>
+<li><a href="/ja/current/Manual/performance-native-allocators.html">日本語</a></li>
+<li><a href="/kr/current/Manual/performance-native-allocators.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: Unity 6.7 Beta</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/performance-native-allocators.html">English</a></li>
+<li><a href="/cn/current/Manual/performance-native-allocators.html">中文</a></li>
+<li><a href="/ja/current/Manual/performance-native-allocators.html">日本語</a></li>
+<li><a href="/kr/current/Manual/performance-native-allocators.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="analysis.html">Optimization</a></li>
+<li><a href="performance-memory.html">Memory in Unity</a></li>
+<li><a href="performance-native-memory.html">Native memory</a></li>
+<li>Native memory allocators</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="performance-native-memory-introduction.html"></a></span><div class="tip">Native memory introduction</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="memory-allocator-customization.html"></a></span><div class="tip">Customizing native memory allocators</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Native memory allocators</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Unity provides several allocator types, where each type represents a different relative prioritization of the following key factors:</p>
+
+<ul>
+<li>The performance impact of creating, accessing, and freeing memory.</li>
+<li>The overhead of tracking memory usage.</li>
+<li>Thread access safety.</li>
+</ul>
+
+<p>If an application has a lot of spare memory, it can use faster, memory-heavy allocators when it loads <span class="tooltip" tabindex="0" ><strong>scenes</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html" href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span> and frames. However, the more an application’s memory is limited, the more efficiently it must use the memory available, which often means using slower allocators.</p>
+
+<p>To help you get the best performance for different projects, you can <a href="memory-allocator-customization.html">customize Unity’s allocators</a> to fit the size and requirements of each application.</p>
+
+<h2>Native memory allocator types</h2>
+
+<p>Unity uses different allocator types, which all use different algorithms to organize memory. Unity’s memory manager uses these allocator types in different areas to organize the memory in your application effectively. You can adjust the size of each allocation for each area, either through the <span class="tooltip" tabindex="0" ><a href="class-PlayerSettings.html">Player settings</a><span class="tooltiptext">Settings that let you set various player-specific options for the final game built by Unity. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-PlayerSettings.html" href="class-PlayerSettings.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#PlayerSettings" aria-label="Go to glossary anchor for PlayerSettings">Glossary</a></span></span></span> window in the Unity Editor, or through the command line.</p>
+
+<p>The different types of allocators are as follows:</p>
+
+<ul>
+<li>
+<a href="#mimalloc"><strong>Mimalloc:</strong></a> A fast, general-purpose allocator with low fragmentation that lets multiple threads allocate and free memory at the same time.</li>
+<li>
+<a href="#dual-thread"><strong>Dual thread:</strong></a> A wrapper that combines two dynamic heap allocators, and a bucket allocator for small allocations. The dual thread allocator redirects allocations based on size and thread ID.</li>
+<li>
+<a href="#dynamic-heap"><strong>Dynamic heap</strong>:</a> A main heap allocator, which uses the <a href="http://www.gii.upv.es/tlsf/">Two Level Segregated Fit (TLSF) algorithm</a>.</li>
+<li>
+<a href="#bucket"><strong>Bucket:</strong></a> A fixed size lock-free allocator for small allocations before they go on the main heap.</li>
+<li>
+<a href="#tls"><strong>Thread local storage (TLS) stack:</strong></a> A last-in, first-out (LIFO) stack allocator, for temporary allocations on threads.</li>
+<li>
+<a href="#thread-safe-linear"><strong>Threadsafe linear:</strong></a> A first-in, first-out (FIFO) round-robin allocator for worker threads.</li>
+</ul>
+
+<h2>Allocator usage</h2>
+
+<p>Each allocator type has a different algorithm for fitting allocations into blocks of memory, and is therefore useful for different types of allocations. The important difference between allocations is usually persistence, or allocation lifespan, which determines where to put an allocation. For example, a long-lived (persistent) allocation goes to the heap and bucket allocators, while short-lived allocations go to the thread-safe linear and thread local storage allocators.</p>
+
+<p>When an allocation is made somewhere in code, Unity does the following:</p>
+
+<ul>
+<li>Checks if the code is currently running on the main thread:
+
+<ul>
+<li>If the code is running on the main thread, it uses a main thread dynamic heap allocator.</li>
+<li>If the code isn’t running on the main thread, the allocation blocks to get access to a threaded allocator.</li>
+</ul>
+</li>
+<li>Checks the size of the allocator:
+
+<ul>
+<li>If the size of the allocation is small enough to fit into the bucket allocator, and there’s space for it, it allocates the memory in the bucket allocator.</li>
+<li>If the allocation size is too big for the bucket allocator, or there’s no room, it uses the dynamic heap allocator.</li>
+</ul>
+</li>
+</ul>
+
+<p><a name="mimalloc" aria-hidden="true"></a></p>
+
+<h2>Mimalloc allocator</h2>
+
+<p>Mimalloc is a fast allocator designed for multithreading that you can use for any purpose. Mimalloc gives each thread its own heap. This means that memory allocation and deallocation operations don’t need threads to compete for shared locks.</p>
+
+<p>For more information about mimalloc, refer to the <a href="https://microsoft.github.io/mimalloc/index.html">Microsoft documentation on mimalloc</a>. To learn how to use mimalloc in Unity, refer to <a href="performance-mimalloc.html">Mimalloc allocator example</a>.</p>
+
+<p><a name="dual-thread" aria-hidden="true"></a></p>
+
+<h2>Dual thread allocator</h2>
+
+<p>The dual thread allocator is used for longer lived allocations and those that need to be passed between threads, such as graphics allocations that need passing from the main thread to the render thread.</p>
+
+<p>The allocator contains two dynamic heap allocators: a lock-free one for the main thread, and one for all other threads, which locks on allocation and deallocation. It also contains a bucket allocator for small, long-lived allocations.</p>
+
+<p>Unity creates several dual thread allocators by default, including the Main and Gfx dual thread allocators. File cache and Profiler allocations are always <a href="#dynamic-heap">dynamic heap allocations</a>.</p>
+
+<p>For an example of dual thread allocator usage refer to <a href="performance-dual-thread-allocator.html">Dual thread allocator example</a>.</p>
+
+<p><a name="dynamic-heap" aria-hidden="true"></a></p>
+
+<h2>Dynamic heap allocator</h2>
+
+<p>The dynamic heap allocator is the main heap allocator. It uses a <a href="http://www.gii.upv.es/tlsf/">Two Level Segregated Fit (TLSF) algorithm</a> to manage its memory. It’s used for large, long-lived allocations and for allocations that can’t fit in the bucket allocator. The allocations are divided into memory blocks of a given size, which are requested as needed. An allocation must be smaller than half a block. An allocation of half a block or more is too large for the dynamic heap allocator and in such cases Unity uses the virtual memory API to make the allocation instead.</p>
+
+<p>For an example of the dynamic heap allocator usage, refer to <a href="performance-dynamic-heap-allocator.html">Dynamic heap allocator example</a>.</p>
+
+<p><a name="bucket" aria-hidden="true"></a></p>
+
+<h2>Bucket allocator</h2>
+
+<p>The bucket allocator is a fast lock-free allocator that performs small allocations. The dual thread allocator uses the bucket allocator for small, long-lived allocations. These allocations prevent small ones from fragmenting the dynamic heap allocators.</p>
+
+<p>The bucket allocator reserves blocks of memory for allocations. Each block is divided into subsections of 16 KB. This isn’t configurable, and doesn’t appear in the user interface. Each subsection is divided into allocations. The allocation size is a multiple of a configured fixed size, called granularity. The bucket allocator has a maximum number of blocks of a given size.</p>
+
+<p>
+<strong>Important:</strong> The bucket allocator behaves differently between <a href="building-introduction.html">development and release builds</a>, due to an additional 40 byte header in the <span class="tooltip" tabindex="0" ><strong>development build</strong><span class="tooltiptext">A development build includes debug symbols and enables the Profiler. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about building-introduction.html" href="building-introduction.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#developmentbuild" aria-label="Go to glossary anchor for developmentbuild">Glossary</a></span></span></span>.</p>
+
+<p>For an example of the bucket allocator usage, refer to <a href="performance-bucket-allocator.html">Bucket allocator example</a>.</p>
+
+<p><a name="tls" aria-hidden="true"></a></p>
+
+<h2>Thread local storage stack allocator</h2>
+
+<p>The Thread local storage (TLS) stack allocator is for per thread short-lived allocations. It’s the fastest allocator. It consists of last-in-first-out (LIFO) memory stacks that set each stack pointer to 0 to clear memory. The TLS allocator is mostly used for <a href="../ScriptReference/Unity.Collections.Allocator.Temp.html"><code>Allocator.Temp</code></a> allocations, which can also come from user-written code.</p>
+
+<p>The default block size for the thread local storage (TLS) stack allocator is 4 MB for platforms and 16 MB for the Unity Editor. You can <a href="memory-allocator-customization.html">customize these values</a>. If the allocator usage exceeds the configured block size, Unity increases the block size. The limit for this increase is twice the original size.</p>
+
+<p>The TLS stack allocator’s memory allocations ideally live for less than a frame and have a similar lifespan as their encompassing scope. </p>
+
+<p>Because TLS is a stack allocator, interleaved allocation and deallocation patterns (for example, allocate a, allocate b, deallocate a, allocate c, deallocate b, etc.) can fragment it and stop the allocator from resetting the stack point down-stack. This might cause it to fill up entirely while theoretically having free space available.</p>
+
+<p>If a thread’s stack allocator is full, allocations fall back to the <a href="#thread-safe-linear">threadsafe linear allocator</a>.</p>
+
+<p>For an example of the TLS stack allocator usage, refer to <a href="performance-tls-stack-allocator.html">Thread local storage stack allocator example</a>.</p>
+
+<p><a name="thread-safe-linear" aria-hidden="true"></a></p>
+
+<h2>Thread-safe linear allocator</h2>
+
+<p>The thread-safe linear allocator is a fallback for the TLS stack allocator, and it allocates up to 16 blocks of memory. It uses a first-in-first-out (FIFO) algorithm for lock-free allocations of work buffers for jobs. When complete, the jobs dispose of these buffers. It’s mostly used for <a href="../ScriptReference/Unity.Collections.Allocator.TempJob.html"><code>Allocator.TempJob</code></a> allocations, which have a 4 frame lifetime limit, and they can also come from user-written code.</p>
+
+<p>This allocator allocates blocks of memory, then linearly allocates memory within those blocks. Available blocks are held in a pool. When one block is full, the allocator fetches a new block from the pool. When the allocator no longer needs the memory in a block, it clears the block, and the block returns to the pool of available blocks. It’s important to clear allocations quickly to make blocks available again, so a job should not stay allocated for more than a few frames.</p>
+
+<p>If all blocks of memory are full, the allocations fall back to the main <a href="#dual-thread">dual thread allocator</a>, which is a much slower allocator.</p>
+
+<p>For an example of thread-safe linear allocator usage refer to <a href="performance-threadsafe-linear-allocator.html">Thread safe linear allocator example</a>.</p>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="performance-native-memory-allocator-examples.html">Native memory allocator examples</a></li>
+<li><a href="memory-allocator-customization.html">Customizing native memory allocators</a></li>
+<li><a href="performance-native-memory-allocator-reference.html">Native memory allocators reference</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="performance-native-memory-introduction.html"></a></span><div class="tip">Native memory introduction</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="memory-allocator-customization.html"></a></span><div class="tip">Customizing native memory allocators</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

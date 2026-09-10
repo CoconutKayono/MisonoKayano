@@ -1,0 +1,376 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: TransformHandle API examples</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<meta property="relative-path-to-manual" content="">
+<meta property="version-switcher-versions-with-this-page" content="Versions with this page:">
+<meta property="version-switcher-versions-without-this-page" content="Versions without this page:">
+<meta property="version-switcher-supported" content="Supported">
+<meta property="version-switcher-legacy" content="Legacy">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/Manual/transformhandle-examples.html">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20260626"></script><script type="text/javascript" src="docdata/toc.js?ts=20260626"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20260626"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20260626">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20260626">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/transformhandle-examples.html">English</a></li>
+<li><a href="/cn/current/Manual/transformhandle-examples.html">中文</a></li>
+<li><a href="/ja/current/Manual/transformhandle-examples.html">日本語</a></li>
+<li><a href="/kr/current/Manual/transformhandle-examples.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: Unity 6.7 Beta</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/transformhandle-examples.html">English</a></li>
+<li><a href="/cn/current/Manual/transformhandle-examples.html">中文</a></li>
+<li><a href="/ja/current/Manual/transformhandle-examples.html">日本語</a></li>
+<li><a href="/kr/current/Manual/transformhandle-examples.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="scripting.html">Programming in Unity</a></li>
+<li><a href="scripting-optimization.html">Code optimization</a></li>
+<li><a href="transformhandle-landing.html">Using unmanaged API for transform operations</a></li>
+<li>TransformHandle API examples</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="class-TransformHandle.html"></a></span><div class="tip">Introduction to TransformHandle API</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="transformhandle-burst.html"></a></span><div class="tip">Using TransformHandle with Burst</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>TransformHandle API examples</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>This section contains code examples that demonstrate the difference between <code>Transform</code> and <code>TransformHandle</code> API.</p>
+
+<h2>Working with TransformHandle API</h2>
+
+<p>Because <code>TransformHandle</code> is a struct, you must assign it to a local variable before you can modify its properties. Modifying a property directly using a <code>gameObject.transformHandle</code> call results in a compiler error. This is because property accessors for structs return a copy of the struct, not a reference to it.</p>
+
+<p>For example, use the following approach to set the position of a property:</p>
+
+<pre><code class="lang-cs">TransformHandle handle = transformHandle;
+handle.position = handle.position + Vector3.one;
+</code></pre>
+
+<p>You can call methods directly on the property:</p>
+
+<pre><code class="lang-cs">// Methods can be called directly
+transformHandle.SetPositionAndRotation(Vector3.zero, Quaternion.identity);
+</code></pre>
+
+<p>To get a <code>TransformHandle</code> from a <code>transform</code> component, use the following code:</p>
+
+<pre><code class="lang-cs">transform.GetTransformHandle()
+</code></pre>
+
+<h2>Example 1: Basic transform operations</h2>
+
+<p>Example using <code>Transform</code> API:</p>
+
+<pre><code class="lang-cs">public class PlayerMovement : MonoBehaviour
+{
+    public Transform target;
+    public Transform parentObject;
+    
+    void Update()
+    {
+        // Move position
+        transform.position = transform.position + Vector3.forward * Time.deltaTime;
+        
+        // Look at target
+        if (target != null)
+            transform.LookAt(target);
+        
+        // Set parent
+        transform.SetParent(parentObject);
+        
+        // Check hierarchy
+        if (transform.IsChildOf(parentObject))
+            Debug.Log(&quot;Is child of parent&quot;);
+    }
+}
+</code></pre>
+
+<p>Example using <code>TransformHandle</code> API:</p>
+
+<pre><code class="lang-cs">public class PlayerMovement : MonoBehaviour
+{
+    public Transform target; // Still use Transform for serialization
+    public Transform parentObject;
+    
+    void Update()
+    {
+        // Get TransformHandle (required for struct operations)
+        TransformHandle selfHandle = transformHandle;
+        
+        // Move position (must store in variable first)
+        selfHandle.position = selfHandle.position + Vector3.forward * Time.deltaTime;
+        
+        // Look at target
+        if (target != null)
+            transformHandle.LookAt(target.transformHandle);
+        
+        // Set parent
+        transformHandle.SetParent(parentObject.transformHandle);
+        
+        // Check hierarchy
+        if (transformHandle.IsChildOf(parentObject.transformHandle))
+            Debug.Log(&quot;Is child of parent&quot;);
+    }
+}
+</code></pre>
+
+<h2>Example 2: Hierarchy Navigation</h2>
+
+<p>Example using <code>Transform</code> API:</p>
+
+<pre><code class="lang-cs">void ExploreHierarchy(Transform root)
+{
+    Debug.Log($&quot;Root: {root.name}, Children: {root.childCount}&quot;);
+    
+    // Iterate through children
+    foreach (Transform child in root)
+    {
+        Debug.Log($&quot;Child: {child.name}&quot;);
+        ExploreHierarchy(child); // Recursive
+    }
+    
+    // Get parent
+    if (root.parent != null)
+        Debug.Log($&quot;Parent: {root.parent.name}&quot;);
+}
+</code></pre>
+
+<p>Example using <code>TransformHandle</code> API:</p>
+
+<pre><code class="lang-cs">void ExploreHierarchy(TransformHandle root)
+{
+    Debug.Log($&quot;Root children count: {root.childCount}&quot;);
+    
+    // Iterate through direct children
+    foreach (TransformHandle child in root.DirectChildren)
+    {
+        Debug.Log($&quot;Child ID: {child.id}&quot;);
+        ExploreHierarchy(child); // Recursive
+    }
+    
+    // Get parent
+    if (root.parent.IsValid())
+        Debug.Log($&quot;Has parent: {root.parent.id}&quot;);
+}
+</code></pre>
+
+<h2>Example 3: Hierarchy operations, batch operations, custom iteration</h2>
+
+<p>Example using <code>TransformHandle</code> API:</p>
+
+<pre><code class="lang-cs">using UnityEngine;
+
+// Demonstrates advanced features of the TransformHandle API, including
+// state management, batch operations, and manual hierarchy iteration.
+public class TransformHandleAdvancedFeatures : MonoBehaviour
+{
+    // Assign a prefab in the Inspector.
+    public GameObject childPrefab;
+
+    void Start()
+    {
+        // Each method demonstrates a different set of features.
+        DemonstrateHandleStateAndManagement();
+        DemonstrateBatchOperations();
+        DemonstrateManualIteration();
+    }
+
+    // Covers checking handle validity, parent status, and un-parenting.
+    private void DemonstrateHandleStateAndManagement()
+    {
+        Debug.Log(&quot;--- Part 1: Hierarchy management ---&quot;);
+
+        if (childPrefab == null)
+        {
+            Debug.LogWarning(&quot;Child prefab not assigned. Skipping Part 1.&quot;);
+            return;
+        }
+
+        // Create a child object to work with.
+        GameObject childGo = Instantiate(childPrefab, transform);
+        TransformHandle childHandle = childGo.transformHandle;
+
+        // 1. Use HasParent() for a direct boolean check.
+        Debug.Log($&quot;Does child have a parent? {childHandle.HasParent()}&quot;);
+
+        // 2. Un-parent the object by setting its parent to TransformHandle.None.
+        Debug.Log(&quot;Un-parenting the child...&quot;);
+        childHandle.parent = TransformHandle.None;
+        Debug.Log($&quot;Child's parent is now None: &quot; +
+            $&quot;{childHandle.parent == TransformHandle.None}&quot;);
+
+        // 3. Use IsValid() to check if a handle points to a valid object.
+        Debug.Log($&quot;Is the handle valid before destroying? {childHandle.IsValid()}&quot;);
+
+        // Destroy the GameObject the handle was pointing to.
+        Destroy(childGo);
+
+        // NOTE: IsValid() will return false for this handle in the next frame,
+        // as object destruction is delayed until the end of the current frame.
+        // This check demonstrates the intended use case for preventing errors.
+        if (!childHandle.IsValid())
+        {
+            Debug.Log(&quot;Handle is no longer valid after object was destroyed.&quot;);
+        }
+    }
+
+    // Shows how to use batch operations for improved performance.
+    private void DemonstrateBatchOperations()
+    {
+        Debug.Log(&quot;\n--- Part 2: Batch operations ---&quot;);
+
+        TransformHandle handle = transformHandle;
+        var localPoints = new Vector3[] { Vector3.up, Vector3.right, Vector3.forward };
+
+        Debug.Log($&quot;Local point [0] before TransformPoints: {localPoints[0]}&quot;);
+
+        // TransformPoints modifies the array in-place, which is more efficient
+        // than transforming each point individually in a loop.
+        handle.TransformPoints(localPoints);
+
+        Debug.Log($&quot;World point [0] after TransformPoints: {localPoints[0]}&quot;);
+    }
+
+    // Demonstrates how to manually iterate through children with an enumerator.
+    private void DemonstrateManualIteration()
+    {
+        Debug.Log(&quot;\n--- Part 3: Custom iteration ---&quot;);
+
+        // Setup: Create some temporary children for the iteration demo.
+        var child1 = new GameObject(&quot;Child_A&quot;);
+        var child2 = new GameObject(&quot;Child_B&quot;);
+        child1.transform.SetParent(transform);
+        child2.transform.SetParent(transform);
+
+        // GetDirectChildrenEnumerator provides fine-grained control over iteration.
+        Debug.Log(&quot;Iterating with GetDirectChildrenEnumerator:&quot;);
+        var enumerator = transformHandle.GetDirectChildrenEnumerator();
+        while (enumerator.MoveNext())
+        {
+            TransformHandle currentChild = enumerator.Current;
+            Debug.Log($&quot;Found child via enumerator.&quot;);
+        }
+
+        // Clean up the temporary objects created for this demonstration.
+        Destroy(child1);
+        Destroy(child2);
+    }
+}
+</code></pre>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="class-TransformHandle.html">Introduction to TransformHandle API</a></li>
+<li><a href="transformhandle-burst.html">Using TransformHandle with Burst</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="class-TransformHandle.html"></a></span><div class="tip">Introduction to TransformHandle API</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="transformhandle-burst.html"></a></span><div class="tip">Using TransformHandle with Burst</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

@@ -1,0 +1,443 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Enter Play mode without domain reload</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<meta property="relative-path-to-manual" content="">
+<meta property="version-switcher-versions-with-this-page" content="Versions with this page:">
+<meta property="version-switcher-versions-without-this-page" content="Versions without this page:">
+<meta property="version-switcher-supported" content="Supported">
+<meta property="version-switcher-legacy" content="Legacy">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/Manual/domain-reloading.html">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20260626"></script><script type="text/javascript" src="docdata/toc.js?ts=20260626"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20260626"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20260626">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20260626">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/domain-reloading.html">English</a></li>
+<li><a href="/cn/current/Manual/domain-reloading.html">中文</a></li>
+<li><a href="/ja/current/Manual/domain-reloading.html">日本語</a></li>
+<li><a href="/kr/current/Manual/domain-reloading.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: Unity 6.7 Beta</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/domain-reloading.html">English</a></li>
+<li><a href="/cn/current/Manual/domain-reloading.html">中文</a></li>
+<li><a href="/ja/current/Manual/domain-reloading.html">日本語</a></li>
+<li><a href="/kr/current/Manual/domain-reloading.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="scripting.html">Programming in Unity</a></li>
+<li><a href="compilation-and-code-reload.html">Compilation and code reload </a></li>
+<li><a href="code-reloading-editor.html">Code and scene reload on entering Play mode</a></li>
+<li>Enter Play mode without domain reload</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="configurable-enter-play-mode.html"></a></span><div class="tip">Configuring how Unity enters Play mode</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="scene-reloading.html"></a></span><div class="tip">Enter Play mode without scene reload</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Enter Play mode without domain reload</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Domain reload is the code reload mechanism used by the <a href="scripting-backends-mono.html">Mono scripting backend</a>. For more information on when the Unity Editor performs code reload and how your code can hook into that process via callbacks, refer to <a href="programming-code-lifecycle.html">Code reload and the code lifecycle</a>. </p>
+
+<p>You can <a href="configurable-enter-play-mode.html#configure-play-mode">configure the Editor to perform domain reload</a> on entering Play mode to reset the application state. Resetting state before entering Play mode is often desirable so your application starts up as it would at the beginning of a new build. For example, static counters that were incremented in a previous Play mode session should begin from zero again in the next one.</p>
+
+<p>However, domain reload is also a time-consuming operation that negatively impacts iteration times when you frequently switch between Edit and Play mode. For this reason, the Editor doesn’t perform domain reload on entering Play mode by default. If you choose to keep the default configuration with domain reload off, you must then <a href="#reset-state">reset static state</a> in some other way.</p>
+
+<h2>Effects of entering Play mode with domain reload off</h2>
+
+<p>If you keep Unity’s default setting with domain reload off:</p>
+
+<ul>
+<li>Non-serialized fields keep the values assigned to them during Play mode on returning to Edit mode. This applies for fields of all script types, including MonoBehaviours (including those on prefab assets), ScriptableObjects, and your own custom C# types. For detailed information on what is and isn’t serialized in different contexts, refer to <a href="script-serialization-rules.html">Serialization rules</a>.</li>
+<li>Static variables keep their values between Play mode sessions.</li>
+<li>Static events keep their registered subscribers between Play mode sessions.</li>
+<li>There are no additional <code>OnDisable</code> or <code>OnEnable</code> calls for <span class="tooltip" tabindex="0" ><strong>scripts</strong><span class="tooltiptext">A piece of code that allows you to create your own Components, trigger game events, modify Component properties over time and respond to user input in any way you like. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about creating-scripts.html" href="creating-scripts.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scripts" aria-label="Go to glossary anchor for Scripts">Glossary</a></span></span></span> marked with the <a href="../ScriptReference/ExecuteInEditMode.html"><code>[ExecuteInEditMode]</code></a> or <a href="../ScriptReference/ExecuteAlways.html"><code>[ExecuteAlways]</code></a>.</li>
+</ul>
+
+<p>To compensate for this persistence of data between Play mode sessions and enter Play mode with a fresh application state, you must <a href="#reset-state">reset state in your code</a>.</p>
+
+<p>For more information on the effects of both domain and <span class="tooltip" tabindex="0" ><strong>scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html" href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span> reload being off, refer to <a href="configurable-enter-play-mode-details.html">Domain and scene reload execution order reference</a>.</p>
+
+<p><a name="reset-state" aria-hidden="true"></a></p>
+
+<h2>Resetting state from code</h2>
+
+<p>When domain reloading is off, the values of <a href="https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/static-classes-and-static-class-members#static-members">static fields</a> and the handlers assigned to static events persist between Play mode runs. The following code example has a static counter that increments on a press of any keyboard key.</p>
+
+<p>With domain reload on, Unity reinitializes this code on entering Play mode, erasing the state from the previous Play mode run, including the counter value. With domain reload off, the counter value is preserved from the previous run. On the next run of Play mode, the counter begins with the value it had at the end of the previous run.</p>
+
+<pre><code class="lang-cs">// Copy-paste this code into a MonoBehaviour script attached to a GameObject in your project.
+// Run it with domain reload enabled and then with domain reload disabled and note the different behavior.
+
+using UnityEngine;
+
+public class StaticsReset : MonoBehaviour
+{
+    // With domain reload disabled this counter won't reset to zero on exiting Play mode
+    static int counter = 0;
+
+    void Update()
+    {
+        if (Input.anyKeyDown)
+        {
+            counter++;
+            Debug.Log(&quot;Counter: &quot; + counter);
+        }
+    }
+
+}
+
+</code></pre>
+
+<p>You can fix the problem behavior with code that explicitly resets the counter between Play mode runs. You can either do this <a href="#manual-static-reset">manually</a> by writing code to reset the counter on entry to or exit from Play mode, or you can use the static cleanup attributes to have this done for you <a href="#automatic-static-reset">automatically</a> on entry to Play mode.</p>
+
+<h3 id="manual-static-reset">Manual reset of static state</h3>
+
+<p>You can manually reset static state on entry to or exit from Play mode using the lifecycle attributes <a href="../ScriptReference/OnEnteringPlayModeAttribute.html"><code>[OnEnteringPlayMode]</code></a> and <a href="../ScriptReference/OnExitingPlayModeAttribute.html"><code>[OnExitingPlayMode]</code></a> respectively. It’s often most efficient to reset state on exiting Play mode rather than on entering. The following example resets a static counter on exiting Play mode:</p>
+
+<pre><code class="lang-cs">using UnityEngine;
+
+public class ManualStaticsReset : MonoBehaviour
+{
+    static int counter = 0;
+
+    public static void ResetCounter() =&gt; counter = 0;
+
+    // Update is called once per frame
+    void Update()
+    {
+        if (Input.anyKeyDown)
+        {
+            counter++;
+            Debug.Log(&quot;Counter: &quot; + counter);
+        }
+    }
+
+
+}
+
+public static partial class PlayModeManager
+{
+
+    [OnEnteringPlayMode]
+    static void Init()
+    {
+        Debug.Log(&quot;Entering Play mode!&quot;);
+    }
+
+
+    [OnExitingPlayMode]
+    private static void OnExitPlayMode()
+    {
+        Debug.Log(&quot;Resetting counter.&quot;);
+        // Reset the counter so it starts from 0 on the next Play mode run
+        ManualStaticsReset.ResetCounter();
+        Debug.Log(&quot;Exiting Play mode!&quot;);
+    }
+
+}
+
+</code></pre>
+
+<p>If your code executes in Edit mode in addition to Play mode, you can’t rely on resetting state on exiting Play mode. Your code might modify a static variable while in Edit mode, so you must reset the variable on entering Play mode instead. </p>
+
+<p>
+<strong>Note</strong>: For scripts that execute in Edit mode, keeping domain reload off skips <a href="../ScriptReference/MonoBehaviour.OnDisable.html"><code>MonoBehaviour.OnDisable</code></a> and turning scene reload off skips <a href="../ScriptReference/MonoBehaviour.OnDestroy.html"><code>MonoBehaviour.OnDestroy</code></a>, which makes these methods inappropriate for resetting state in such scripts. For more information, refer to <a href="configurable-enter-play-mode-details.html">Domain and scene reload execution order reference</a>. </p>
+
+<h3 id="automatic-static-reset">Automatic reset of static state</h3>
+
+<p>The <a href="../ScriptReference/Unity.Scripting.LifecycleManagement.AutoStaticsCleanupAttribute.html"><code>[AutoStaticsCleanup]</code></a> and <a href="../ScriptReference/Unity.Scripting.LifecycleManagement.NoAutoStaticsCleanupAttribute.html"><code>[NoAutoStaticsCleanup]</code></a> attributes use code generation to reset static state automatically on entering Play mode. You can apply them to static fields to specify that the field should or should not be automatically reset on entering Play mode.</p>
+
+<p>The following example shows how to use these attributes:</p>
+
+<pre><code class="lang-cs">using Unity.Scripting.LifecycleManagement;
+using UnityEngine;
+
+public partial class AutomaticStaticsReset : MonoBehaviour
+{
+    [AutoStaticsCleanup]
+    public static int cleanedUpCounter = 0;
+    [NoAutoStaticsCleanup]
+    public static int counter = 0;
+    void Start()
+    {
+        Debug.Log(cleanedUpCounter); // Counter value is reset each time entering Play Mode
+        Debug.Log(counter); // Counter value is only reset on Domain Reload
+        cleanedUpCounter++;
+        counter++;
+    }
+}
+
+</code></pre>
+
+<p>
+<strong>Note</strong>: For more information on the specific reset behavior applied for different C# types, refer to the <a href="../ScriptReference/Unity.Scripting.LifecycleManagement.AutoStaticsCleanupAttribute.html"><code>[AutoStaticsCleanup]</code> API reference</a>.</p>
+
+<p>Automatic statics cleanup is supported by code generation and a code analyzer. When you apply <code>[AutoStaticsCleanup]</code> the code generator generates the necessary cleanup code.</p>
+
+<p>
+<strong>Important</strong>: Inline initializers (for example, <code>static MyType s_Field = new MyType()</code>) compile to static constructors, which run only once, when the type is first accessed. With domain reload off, this means they run once per Editor session, not once per Play mode session. If you mark such a field with <code>[AutoStaticsCleanup]</code>, it resets to <code>default</code> on Play mode transitions but is <strong>not</strong> re-initialized. Ensure you have code to reinitialize the field, or use <code>[NoAutoStaticsCleanup]</code> if cleanup isn’t needed.</p>
+
+<h4>Choosing the right attribute</h4>
+
+<p>The following table provides guidance on which attribute to use for common field types. These are general guidelines based on typical usage patterns; you might encounter cases that require different choices based on your specific implementation.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;">Field Type</th>
+	<th style="text-align:left;">Typical Choice</th>
+	<th style="text-align:left;">Reason</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">Events, delegates</td>
+	<td style="text-align:left;"><code>[AutoStaticsCleanup]</code></td>
+	<td style="text-align:left;">Event handlers should be reset between Play mode sessions to avoid stale references.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Collections of user objects (for example, <code>List&lt;MonoBehaviour&gt;</code>)</td>
+	<td style="text-align:left;"><code>[AutoStaticsCleanup]</code></td>
+	<td style="text-align:left;">User objects should not persist across Play mode sessions.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">ID generation counters (for example, <code>s_NextObjectID</code>)</td>
+	<td style="text-align:left;"><code>[NoAutoStaticsCleanup]</code></td>
+	<td style="text-align:left;">Counters for unique name generation should persist to maintain uniqueness across Play mode sessions.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Cached UI resources (<code>GUIStyle</code>, <code>GUIContent</code>)</td>
+	<td style="text-align:left;"><code>[NoAutoStaticsCleanup]</code></td>
+	<td style="text-align:left;"><span class="tooltip" tabindex="0" ><strong>Immutable</strong><span class="tooltiptext">You cannot change the contents of an immutable (read-only) package. This is the opposite of <strong>mutable</strong>. Most packages are immutable, including packages downloaded from the package registry or by Git URL.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#immutable" aria-label="Go to glossary anchor for immutable">Glossary</a></span></span></span> UI resources are safe to reuse.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">References to Unity objects (<code>ScriptableObject</code>, <code>MonoBehaviour</code>)</td>
+	<td style="text-align:left;"><code>[AutoStaticsCleanup]</code></td>
+	<td style="text-align:left;">Unity objects should be reset for clean Play mode sessions.</td>
+</tr>
+</tbody>
+</table>
+
+<p>Code generation for the static cleanup attributes is on by default. If you don’t want to use these attributes and prefer to write your own cleanup code instead, you can turn code generation off with a <a href="#global-config">global config file</a>.</p>
+
+<p>The autostatics cleanup code analyzer analyzes the code in your assembly to provide guidance on which static variables need to be reset and how. This is especially useful when you have domain reload off and aren’t using the static cleanup attributes, as it helps you identify which static variables need to be reset manually. Code analysis for the static cleanup attributes is off by default. You can turn it on with a <a href="#global-config">global config file</a>.</p>
+
+<p>When enabled, the analyzer emits warnings with the <code>UAL</code> prefix. The following table lists the warnings you’re most likely to encounter:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;">Code</th>
+	<th style="text-align:left;">Description</th>
+	<th style="text-align:left;">Fix</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><code>UAL0010</code></td>
+	<td style="text-align:left;">A type contains static members that require lifecycle attributes. Each affected member also shows <code>UAL0013</code>.</td>
+	<td style="text-align:left;">Add <code>[AutoStaticsCleanup]</code> or <code>[NoAutoStaticsCleanup]</code> to each member.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>UAL0011</code></td>
+	<td style="text-align:left;">An <code>[AutoStaticsCleanup]</code> or <code>[NoAutoStaticsCleanup]</code> configuration is invalid.</td>
+	<td style="text-align:left;">Check the compiler message for details.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>UAL0012</code></td>
+	<td style="text-align:left;">A type with auto-cleaned-up static members must be marked <code>partial</code> to allow the code generator to inject cleanup code.</td>
+	<td style="text-align:left;">Add <code>partial</code> keyword to the class or struct.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>UAL0013</code></td>
+	<td style="text-align:left;">A static member must be marked with <code>[AutoStaticsCleanup]</code> or <code>[NoAutoStaticsCleanup]</code>.</td>
+	<td style="text-align:left;">Add <code>[AutoStaticsCleanup]</code> or <code>[NoAutoStaticsCleanup]</code> to the member.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>UAL0014</code></td>
+	<td style="text-align:left;">A type with <code>[AutoStaticsCleanup]</code> members has an explicit static constructor.</td>
+	<td style="text-align:left;">Remove the static constructor, move initialization logic elsewhere, or use <code>[NoAutoStaticsCleanup]</code> instead if cleanup isn’t required.</td>
+</tr>
+</tbody>
+</table>
+
+<h3 id="global-config">Code generation and analysis configuration</h3>
+
+<p>You can configure code generation and code analysis settings per assembly using a <code>.globalconfig</code> file alongside the assembly. To configure these settings, do as follows:</p>
+
+<ol>
+<li>Create an <a href="assembly-definitions-creating.html">assembly definition file</a> in your scripts folder.</li>
+<li>Create an <code>&lt;assemblyDefinitionName&gt;.globalconfig</code> file in the same folder.</li>
+<li>Turn code generation and the code analyzer on or off using the following flags in a <code>.globalconfig</code> file:</li>
+</ol>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Property</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><code>is_global</code></td>
+	<td style="text-align:left;">Marks this file as an analyzer config file. Can be omitted, but if present this property must be set to <code>true</code>. The default value is <code>true</code>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>build_property.UnityEnableAutoStaticsCleanupCodeGen</code></td>
+	<td style="text-align:left;">Enables code generation for automatic statics cleanup. This must be set to <code>true</code> to use the <code>[AutoStaticsCleanup]</code> and <code>[NoAutoStaticsCleanup]</code> attributes. The default value is <code>true</code>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>build_property.UnityEnableAutoStaticsCleanupAnalysis</code></td>
+	<td style="text-align:left;">Enables code analysis for automatic statics cleanup. The analyzer analyzes the code for static variables in your assembly that need resetting and provides information on how to do so. The default value is <code>false</code>.</td>
+</tr>
+</tbody>
+</table>
+
+<p>The following is an example of a <code>.globalconfig</code> file with a configuration that corresponds to the default settings:</p>
+
+<pre><code>is_global = true # enables Roslyn
+build_property.UnityEnableAutoStaticsCleanupCodeGen = true # statics cleanup code generator on
+build_property.UnityEnableAutoStaticsCleanupAnalysis = false # statics cleanup analyzer off
+</code></pre>
+
+<p>
+<strong>Important</strong>: For packages, place the <code>.globalconfig</code> file in the same folder as the <code>.asmdef</code> file, creating the <code>.globalconfig</code> if it doesn’t exist. For scripts without an assembly definition, place it in a subfolder under <code>Assets/</code>. If you’re happy with the default configuration of code generation on and code analysis off, you don’t need to create this file and can simply begin using the static cleanup attributes in your code.</p>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="comp-ManagerGroup.html">Project Settings window</a></li>
+<li><a href="class-EditorManager.html">Editor Project Settings</a></li>
+<li><span class="tooltip" tabindex="0" ><a href="Toolbar.html">Toolbar</a><span class="tooltiptext">A row of buttons and basic controls at the top of the Unity Editor that allows you to interact with the Editor in various ways (e.g. scaling, translation). <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Toolbar.html" href="Toolbar.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#toolbar" aria-label="Go to glossary anchor for toolbar">Glossary</a></span></span></span></li>
+<li><a href="scene-reloading.html">Enter Play mode without scene reload</a></li>
+<li><a href="configurable-enter-play-mode.html">Configurable Enter Play Mode</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="configurable-enter-play-mode.html"></a></span><div class="tip">Configuring how Unity enters Play mode</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="scene-reloading.html"></a></span><div class="tip">Enter Play mode without scene reload</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

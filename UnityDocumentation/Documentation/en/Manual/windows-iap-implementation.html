@@ -1,0 +1,288 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Implement in-app purchases with Unity IAP APIs</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<meta property="relative-path-to-manual" content="">
+<meta property="version-switcher-versions-with-this-page" content="Versions with this page:">
+<meta property="version-switcher-versions-without-this-page" content="Versions without this page:">
+<meta property="version-switcher-supported" content="Supported">
+<meta property="version-switcher-legacy" content="Legacy">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/Manual/windows-iap-implementation.html">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20260626"></script><script type="text/javascript" src="docdata/toc.js?ts=20260626"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20260626"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20260626">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20260626">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/windows-iap-implementation.html">English</a></li>
+<li><a href="/cn/current/Manual/windows-iap-implementation.html">中文</a></li>
+<li><a href="/ja/current/Manual/windows-iap-implementation.html">日本語</a></li>
+<li><a href="/kr/current/Manual/windows-iap-implementation.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: Unity 6.7 Beta</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/windows-iap-implementation.html">English</a></li>
+<li><a href="/cn/current/Manual/windows-iap-implementation.html">中文</a></li>
+<li><a href="/ja/current/Manual/windows-iap-implementation.html">日本語</a></li>
+<li><a href="/kr/current/Manual/windows-iap-implementation.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="PlatformSpecific.html">Platform development  </a></li>
+<li><a href="Windows.html">Windows</a></li>
+<li><a href="xbox-on-windows-develop.html">Develop Xbox games for Windows with Microsoft GDK</a></li>
+<li><a href="xbox-games-on-windows-iap.html">In-app purchases for Xbox games on Windows</a></li>
+<li>Implement in-app purchases with Unity IAP APIs</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="windows-iap-partner-center-unity-setup.html"></a></span><div class="tip">Set up Microsoft Partner Center and Unity Editor</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="windows-iap-verification.html"></a></span><div class="tip">Verify in-app purchases with Cloud Code</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Implement in-app purchases with Unity IAP APIs</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Use Unity In-App Purchasing (IAP) APIs to initialize purchasing, map Microsoft Partner Center Store IDs to products that you want to sell, and handle purchases in your game.</p>
+
+<p>Before you implement the purchase workflow, complete <a href="windows-iap-partner-center-unity-setup.html">Set up Microsoft Partner Center and Unity Editor</a> to install required packages and configure your products.</p>
+
+<p>
+<strong>Important</strong>: <a href="https://learn.microsoft.com/en-us/gaming/gdk/docs/reference/system/xgameruntimeinit/functions/xgameruntimeinitialize?view=gdk-2604">Initialize the XGameRuntime</a> before making any IAP calls. <span class="tooltip" tabindex="0" ><strong>Unity IAP</strong><span class="tooltiptext">Abbreviation of Unity <strong>In App Purchase</strong><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#UnityIAP" aria-label="Go to glossary anchor for UnityIAP">Glossary</a></span></span></span> requires this for Xbox support.</p>
+
+<p>Follow these steps to implement purchases:</p>
+
+<ol>
+<li>
+<a href="#initialize">Initialize the purchasing system</a>.</li>
+<li>
+<a href="#define-products">Define your products</a>.</li>
+<li>
+<a href="#retrieve-productinfo">Retrieve detailed information for each product</a>.</li>
+<li>
+<a href="#retrieve-purchases">Retrieve existing purchases</a>.</li>
+<li>
+<a href="#handle-purchases">Handle purchase requests</a>.</li>
+<li>
+<a href="#confirm-access">Confirm access to the purchased product</a>.</li>
+</ol>
+
+<p><a name="initialize" aria-hidden="true"></a></p>
+
+<h2>1. Initialize the purchasing system</h2>
+
+<p>For more information, refer to the Unity IAP documentation on <a href="https://docs.unity.com/en-us/iap/set-up-in-app-purchasing#initialize-in-app-purchasing">Initialize In-App Purchasing</a>. </p>
+
+<p><a name="define-products" aria-hidden="true"></a></p>
+
+<h2>2. Define your products</h2>
+
+<p>For more information, refer to the Unity IAP documentation on <a href="https://docs.unity.com/en-us/iap/define-your-products#define-products-programmatically">Define products programmatically</a>. </p>
+
+<p>
+<strong>Note</strong>: Each product in Xbox Store has its own <strong>Store ID</strong> generated by Microsoft Partner Center when you create add-ons. Enter this ID into the <a href="https://docs.unity3d.com/Packages/com.unity.purchasing@latest/index.html?subfolder=/api/UnityEngine.Purchasing.ProductDefinition.html#UnityEngine_Purchasing_ProductDefinition__ctor_System_String_System_String_UnityEngine_Purchasing_ProductType_"><code>ProductDefinition</code></a> as the <code>storeSpecificId</code>. </p>
+
+<h3>Xbox Store only</h3>
+
+<p>If your game targets only Xbox Store, construct your <code>ProductDefinition</code> with the product’s <strong>Store ID</strong> as the <code>storeSpecificId</code>:</p>
+
+<pre><code class="lang-cs">ICatalogProvider catalogProvider = new CatalogProvider(); 
+var products = new List&lt;ProductDefinition&gt;
+{ 
+new(&quot;com.mygame.coins100&quot;, &quot;9PEXAMPLE001&quot;, ProductType.Consumable), 
+new(&quot;com.mygame.extralevel&quot;, &quot;9NEXAMPLE002&quot;, ProductType.NonConsumable) 
+};  
+catalogProvider.AddProducts(products);
+</code></pre>
+
+<h3>Multiple stores</h3>
+
+<p>If your game supports multiple stores and you want the same product on these stores, use the <a href="https://docs.unity3d.com/Packages/com.unity.purchasing@latest/index.html?subfolder=/api/UnityEngine.Purchasing.StoreSpecificIds.html"><code>StoreSpecificIds</code></a> mapping:</p>
+
+<pre><code class="lang-cs">ICatalogProvider catalogProvider = new CatalogProvider(); 
+var products = new List&lt;ProductDefinition&gt;
+{  
+   new(&quot;com.mygame.coins100&quot;, ProductType.Consumable),
+   new(&quot;com.mygame.extralevel&quot;, ProductType.NonConsumable)
+};
+var coinIds = new StoreSpecificIds
+{
+   { &quot;9PEXAMPLE001&quot;, XboxStore.Name }
+};
+var extraLevelIds = new StoreSpecificIds
+{
+   { &quot;9NEXAMPLE002&quot;, XboxStore.Name }
+};
+var storeSpecificIds = new Dictionary&lt;string, StoreSpecificIds&gt;
+{
+   { &quot;com.mygame.coins100&quot;, coinIds },
+   { &quot;com.mygame.extralevel&quot;, extraLevelIds }
+};
+catalogProvider.AddProducts(products, storeSpecificIds);
+</code></pre>
+
+<p><a name="retrieve-productinfo" aria-hidden="true"></a></p>
+
+<h2>3. Retrieve detailed information for each product</h2>
+
+<p>For more information, refer to the IAP documentation on <a href="https://docs.unity.com/en-us/iap/set-up-in-app-purchasing#fetch-products">Fetch products</a>. </p>
+
+<p>
+<strong>Note</strong>: It’s recommended to fetch products using <a href="https://docs.unity3d.com/Packages/com.unity.purchasing@latest/index.html?subfolder=/api/UnityEngine.Purchasing.Extension.ICatalogProvider.html#UnityEngine_Purchasing_Extension_ICatalogProvider_FetchProducts_System_Action_System_Collections_Generic_List_UnityEngine_Purchasing_ProductDefinition___System_String_"><code>ICatalogProvider.FetchProducts</code></a>, because the <code>StoreSpecificIds</code> are already mapped when you define products. If you want to fetch products using <a href="https://docs.unity3d.com/Packages/com.unity.purchasing@latest/index.html?subfolder=/api/UnityEngine.Purchasing.StoreController.html#UnityEngine_Purchasing_StoreController_FetchProducts_System_Collections_Generic_List_UnityEngine_Purchasing_ProductDefinition__UnityEngine_Purchasing_IRetryPolicy_"><code>StoreController.FetchProducts</code></a>, create different <code>ProductDefinition</code> lists per store. The following code example demonstrates how to create product lists based on the store:</p>
+
+<pre><code class="lang-cs">var products = new List&lt;ProductDefinition&gt;();
+var storeName = DefaultStoreHelper.GetDefaultStoreName();
+if (storeName == XboxStore.Name)
+{
+   products.Add(new ProductDefinition(&quot;com.mygame.coins100&quot;, &quot;9PEXAMPLE001&quot;, ProductType.Consumable));
+   products.Add(new ProductDefinition(&quot;com.mygame.extralevel&quot;, &quot;9NEXAMPLE002&quot;, ProductType.NonConsumable));
+}
+else
+{
+   products.Add(new ProductDefinition(&quot;com.mygame.coins100&quot;, ProductType.Consumable));
+   products.Add(new ProductDefinition(&quot;com.mygame.extralevel&quot;, ProductType.NonConsumable));
+}
+var storeController = UnityIAPServices.StoreController();
+storeController.FetchProducts(products);
+</code></pre>
+
+<p><a name="retrieve-purchases" aria-hidden="true"></a></p>
+
+<h2>4. Retrieve existing purchases</h2>
+
+<p>For more information, refer to the Unity IAP documentation on <a href="https://docs.unity.com/en-us/iap/set-up-in-app-purchasing#fetch-purchases">Fetch purchases</a>.</p>
+
+<p><a name="handle-purchases" aria-hidden="true"></a></p>
+
+<h2>5. Handle purchase requests</h2>
+
+<p>For more information, refer to the IAP documentation on <a href="https://docs.unity.com/en-us/iap/purchases">Purchases</a>. </p>
+
+<p><a name="confirm-access" aria-hidden="true"></a></p>
+
+<h2>6. Confirm access to the purchased product</h2>
+
+<p>Use entitlement checks to confirm that the user has valid access to the purchased product. For more information, refer to the Unity IAP API documentation on <a href="https://docs.unity3d.com/Packages/com.unity.purchasing@latest/index.html?subfolder=/api/UnityEngine.Purchasing.IPurchaseService.html#UnityEngine_Purchasing_IPurchaseService_CheckEntitlement_UnityEngine_Purchasing_Product_">CheckEntitlement(Product)</a>.</p>
+
+<p>After you complete the implementation, verify your purchase workflow in a sandbox environment. You can optionally <a href="windows-iap-verification.html">verify in-app purchases with Cloud Code</a> to protect your game against spoofed or tampered purchases.</p>
+
+<h2>Limitations</h2>
+
+<p>Unity IAP for Xbox Store doesn’t support the following features:</p>
+
+<ul>
+<li>Subscription management: Users must manage their subscriptions through their <a href="https://account.microsoft.com/account">Microsoft account</a>.</li>
+<li>Xbox Game Pass purchases: Xbox Game Pass related purchases aren’t available.</li>
+<li>Multiple store support: Stores other than Xbox Store on Windows aren’t supported.</li>
+<li>User account changes during gameplay: Unity IAP doesn’t update entitlements if the user changes accounts while the game is running. <a href="https://docs.unity.com/en-us/iap/set-up-in-app-purchasing#initialize-in-app-purchasing">Re-initialize the purchasing system</a> to retrieve products and purchases for the new user.</li>
+</ul>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="https://docs.unity.com/en-us/iap/get-started#install-the-iap-package">Get started with Unity IAP</a></li>
+<li><a href="https://docs.unity.com/en-us/iap/products-and-catalogs#product-types">Product types</a></li>
+<li><a href="https://docs.unity3d.com/Packages/com.unity.purchasing@5.0/api/">Unity IAP scripting API reference</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="windows-iap-partner-center-unity-setup.html"></a></span><div class="tip">Set up Microsoft Partner Center and Unity Editor</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="windows-iap-verification.html"></a></span><div class="tip">Verify in-app purchases with Cloud Code</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

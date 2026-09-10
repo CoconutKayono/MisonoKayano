@@ -1,0 +1,243 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Garbage collection modes</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<meta property="relative-path-to-manual" content="">
+<meta property="version-switcher-versions-with-this-page" content="Versions with this page:">
+<meta property="version-switcher-versions-without-this-page" content="Versions without this page:">
+<meta property="version-switcher-supported" content="Supported">
+<meta property="version-switcher-legacy" content="Legacy">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/Manual/performance-incremental-garbage-collection.html">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20260626"></script><script type="text/javascript" src="docdata/toc.js?ts=20260626"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20260626"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20260626">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20260626">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/performance-incremental-garbage-collection.html">English</a></li>
+<li><a href="/cn/current/Manual/performance-incremental-garbage-collection.html">中文</a></li>
+<li><a href="/ja/current/Manual/performance-incremental-garbage-collection.html">日本語</a></li>
+<li><a href="/kr/current/Manual/performance-incremental-garbage-collection.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: Unity 6.7 Beta</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/performance-incremental-garbage-collection.html">English</a></li>
+<li><a href="/cn/current/Manual/performance-incremental-garbage-collection.html">中文</a></li>
+<li><a href="/ja/current/Manual/performance-incremental-garbage-collection.html">日本語</a></li>
+<li><a href="/kr/current/Manual/performance-incremental-garbage-collection.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="analysis.html">Optimization</a></li>
+<li><a href="performance-memory.html">Memory in Unity</a></li>
+<li><a href="performance-managed-memory.html">Managed memory</a></li>
+<li>Garbage collection modes</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="performance-garbage-collector.html"></a></span><div class="tip">Garbage collector overview</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="performance-disabling-garbage-collection.html"></a></span><div class="tip">Configuring garbage collection</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Garbage collection modes</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Unity’s <a href="performance-garbage-collector.html">garbage collector</a> has the following modes:</p>
+
+<ul>
+<li>
+<a href="#incremental-garbage-collection">Incremental garbage collection</a>: Enabled by default. This mode spreads out the process of garbage collection over multiple frames.</li>
+<li>
+<a href="#non-incremental-garbage-collection">Non-incremental garbage collection mode</a>: If you disable the <strong>Incremental GC Player Setting</strong> (<strong>Project Settings</strong> &gt; <strong>Player</strong> &gt; <strong>Configuration</strong>), the garbage collector stops running your application to inspect and process objects on the heap. This mode is also known as stop-the-world garbage collection.</li>
+<li>
+<a href="#manual-garbage-collection">Manual garbage collection</a>: Use the <a href="../ScriptReference/Scripting.GarbageCollector.GCMode.html"><code>GarbageCollector.GCMode</code></a> API to take full control of when Unity runs the garbage collector.</li>
+</ul>
+
+<p>For information on how to use each of the garbage collection modes, refer to <a href="performance-disabling-garbage-collection.html">Configuring garbage collection</a>.</p>
+
+<p><a name="incremental-garbage-collection" aria-hidden="true"></a></p>
+
+<h2>Incremental garbage collection</h2>
+
+<p>Incremental garbage collection spreads out the process of garbage collection over multiple frames. This is the default garbage collection behavior in Unity.</p>
+
+<p>Unity’s garbage collector uses the <a href="https://www.hboehm.info/gc/">Boehm-Demers-Weiser garbage collector</a>. By default, Unity uses it in incremental mode, which means that the garbage collector splits up its workload over multiple frames and makes shorter interruptions to your application’s execution. </p>
+
+<p>In <a href="#non-incremental-garbage-collection">non-incremental mode</a>, Unity stops the main CPU thread (<a href="https://en.wikipedia.org/wiki/Tracing_garbage_collection#Stop-the-world_vs._incremental_vs._concurrent">stop-the-world garbage collection</a>) in one long interruption to process all objects on the managed heap.</p>
+
+<p>Incremental mode doesn’t make garbage collection faster, but because it distributes the workload over multiple frames, performance spikes related to garbage collection are reduced. These interruptions are called <strong>GC spikes</strong> because they appear as large spikes in the <a href="ProfilerWindow.html">Profiler window’s</a> frame time graph.</p>
+
+<p>
+<strong>Important:</strong> The web platform doesn’t support incremental garbage collection. For more information, refer to <a href="webgl-memory.html#garbagecollection">Memory in web garbage collection considerations</a>.</p>
+
+<h3>Incremental garbage collection example</h3>
+
+<p>The following screenshots from the Profiler illustrate how incremental garbage collection reduces frame rate problems:</p>
+
+<figure>
+<img src="../uploads/Main/profiler-incremental-gc.png" alt="Profiling session with Incremental GC enabled">
+<figcaption>Profiling session with Incremental GC enabled</figcaption>
+</figure>
+
+<figure>
+<img src="../uploads/Main/profiler-incremental-gc-disabled.png" alt="Profiling session with Incremental GC disabled">
+<figcaption>Profiling session with Incremental GC disabled</figcaption>
+</figure>
+
+<p>In the top profiling session, the <a href="performance-disabling-garbage-collection.html">Incremental GC setting</a> is enabled. The application has a consistent 60 <span class="tooltip" tabindex="0" ><strong>fps</strong><span class="tooltiptext">See first person shooter, frames per second.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#FPS" aria-label="Go to glossary anchor for FPS">Glossary</a></span></span></span> frame rate, because the garbage collector distributes the garbage collection operation over several frames. The garbage collector uses a small time slice of each frame, indicated by the darker green fringe just above the yellow VSync trace.</p>
+
+<p>The bottom profiling session has the <strong>Incremental GC</strong> setting disabled, and there’s a GC spike visible. The GC spike interrupts the consistent 60 fps frame rate, and pushes the frame in which garbage collection happens over the 16 ms limit required to maintain 60 fps.</p>
+
+<p>If your application uses <span class="tooltip" tabindex="0" ><a href="../ScriptReference/QualitySettings-vSyncCount.html">VSync</a><span class="tooltiptext">Vertical synchronization (VSync) is a display setting that caps a game’s frame rate to match the refresh rate of a monitor, to prevent image tearing. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about https://en.wikipedia.org/wiki/Screen_tearing#V-sync" href="https://en.wikipedia.org/wiki/Screen_tearing#V-sync">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#VSync" aria-label="Go to glossary anchor for VSync">Glossary</a></span></span></span> or <a href="../ScriptReference/Application-targetFrameRate.html"><code>Application.targetFrameRate</code></a>, Unity adjusts the time it allocates to garbage collection based on the remaining available frame time. This way, Unity can run the garbage collector in the time it spends waiting, and can carry out garbage collection with a minimal performance impact.</p>
+
+<p>
+<strong>Note:</strong> If you set the <strong>VSync Count</strong> to anything other than <strong>Don’t Sync</strong> (in your project’s <a href="class-QualitySettings.html">Quality settings</a> or with the <a href="../ScriptReference/QualitySettings-vSyncCount.html"><code>Application.VSync</code></a> property), or you enable the <a href="../ScriptReference/Application-targetFrameRate.html"><code>Application.targetFrameRate</code></a> property, Unity automatically uses any idle time left at the end of a given frame for incremental garbage collection.</p>
+
+<p>To get more precise control over incremental garbage collection behavior, you can use the <a href="../ScriptReference/Scripting.GarbageCollector.html"><code>Scripting.GarbageCollector</code></a> class. For example, if you don’t want to use VSync or a target frame rate, you can calculate the amount of time available before the end of a frame and provide that time to the garbage collector.</p>
+
+<p>For more information, refer to <a href="performance-disabling-garbage-collection.html">Configuring garbage collection</a>.</p>
+
+<p><a name="non-incremental-garbage-collection" aria-hidden="true"></a></p>
+
+<h2>Non-incremental garbage collection mode</h2>
+
+<p>Incremental garbage collection might be problematic for your application, because when the garbage collector divides its work in this mode, it also divides the marking phase. The marking phase is the phase in which the garbage collector scans all managed objects to determine which objects are still in use, and which objects it can clean up.</p>
+
+<p>Dividing up the marking phase works well when most of the references between objects don’t change between slices of work. However, when an object reference changes, the garbage collector must scan those objects again in the next iteration. This means that too many changes might overwhelm the incremental garbage collector and create a situation where the marking phase never finishes because it always has more work to do. If this happens, the garbage collector falls back to doing a full, non-incremental collection.</p>
+
+<p>When Unity uses incremental garbage collection, it generates additional code (known as write barriers) to inform the garbage collector when it needs to scan an object whenever a reference changes. This adds some overhead when <a href="performance-managed-memory-introduction.html#managed-heap">changing references</a>, which has a performance impact in managed code.</p>
+
+<p>Therefore, there are some situations where you might want to disable incremental garbage collection to improve the performance of your application. When you <a href="performance-disabling-garbage-collection.html">disable incremental mode</a>, the garbage collector must examine the entire heap when it performs a collection pass. </p>
+
+<p>This is known as <strong>stop-the-world</strong> garbage collection, because whenever the garbage collector runs, it stops the main CPU thread. It only resumes execution once it has processed all objects on the managed heap, which might lead to GC spikes affecting the performance of your application. This delay might last for hundreds of milliseconds, depending on how many allocations the garbage collector needs to process, and the platform that your application is running on.</p>
+
+<p>The garbage collector is also non-compacting, which means that Unity doesn’t redistribute any objects in memory to close the gaps between objects.</p>
+
+<p>Non-incremental garbage collection is problematic for real-time applications such as games, because it’s difficult for your application to sustain the consistent frame rate that smooth animation requires when the garbage collector suspends your application’s execution.</p>
+
+<p>To disable incremental garbage collection, refer to <a href="performance-disabling-garbage-collection.html">Configuring garbage collection</a>.</p>
+
+<p><a name="manual-garbage-collection" aria-hidden="true"></a></p>
+
+<h2>Manual garbage collection</h2>
+
+<p>You can use the <a href="../ScriptReference/Scripting.GarbageCollector.GCMode.html"><code>GarbageCollector.GCMode</code></a> API to disable garbage collection at runtime. This prevents CPU spikes, but the memory usage of your application never decreases, because the garbage collector doesn’t collect objects that no longer have any references.</p>
+
+<p>Disabling the garbage collector requires careful memory management, or the managed heap continuously expands until your application runs out of memory, and the operating system shuts it down.</p>
+
+<p>It’s best practice to disable garbage collection during short, performance-critical parts of your application, when you’re able to calculate and control how much memory to allocate. After the performance-critical section is over, re-enable the garbage collector. <a href="profiling-collect-data-introduction.html">Profile your project</a> to ensure that you don’t trigger additional managed allocations which might cause the managed heap to get too big.</p>
+
+<p>It’s best practice to only disable the garbage collector for long-lived allocations. For example, you might want to allocate all required memory for a level of your game before it loads, and then disable the garbage collector to avoid performance overhead during the level. After the level is completed and all memory is released, you can then enable the garbage collector again and use <code>System.GC.Collect</code> to reclaim memory before loading the next level.</p>
+
+<p>For more details on how to enable and disable garbage collection at runtime, refer to <a href="performance-disabling-garbage-collection.html">Configuring garbage collection</a>.</p>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="performance-disabling-garbage-collection.html">Configuring garbage collection</a></li>
+<li><a href="performance-garbage-collector.html">Garbage collector introduction</a></li>
+<li><a href="../ScriptReference/Scripting.GarbageCollector.GCMode.html"><code>GarbageCollector.GCMode</code> API reference</a></li>
+<li><a href="../ScriptReference/Scripting.GarbageCollector.html"><code>Scripting.GarbageCollector</code> API reference</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="performance-garbage-collector.html"></a></span><div class="tip">Garbage collector overview</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="performance-disabling-garbage-collection.html"></a></span><div class="tip">Configuring garbage collection</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

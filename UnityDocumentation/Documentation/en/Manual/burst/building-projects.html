@@ -1,0 +1,383 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Platform build support reference</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<meta property="relative-path-to-manual" content="../">
+<meta property="version-switcher-versions-with-this-page" content="Versions with this page:">
+<meta property="version-switcher-versions-without-this-page" content="Versions without this page:">
+<meta property="version-switcher-supported" content="Supported">
+<meta property="version-switcher-legacy" content="Legacy">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/Manual/burst/building-projects.html">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../../StaticFilesManual/js/jquery.js?ts=20260626"></script><script type="text/javascript" src="../../StaticFilesManual/js/core.js?ts=20260626"></script><script type="text/javascript" src="../../StaticFilesManual/js/image-comp.js?ts=20260626"></script><script type="text/javascript" src="../docdata/toc.js?ts=20260626"></script><script type="text/javascript" src="../docdata/global_toc.js?ts=20260626"></script><link rel="stylesheet" type="text/css" href="../../StaticFilesManual/css/core.css?ts=20260626">
+<link rel="stylesheet" type="text/css" href="../../StaticFilesManual/css/icons.css?ts=20260626">
+<link rel="stylesheet" href="../../StaticFilesManual/css/prism.css">
+<script src="../../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="../30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../index.html" class="selected">Manual</a></li>
+<li><a href="../../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/burst/building-projects.html">English</a></li>
+<li><a href="/cn/current/Manual/burst/building-projects.html">中文</a></li>
+<li><a href="/ja/current/Manual/burst/building-projects.html">日本語</a></li>
+<li><a href="/kr/current/Manual/burst/building-projects.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: Unity 6.7 Beta</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/burst/building-projects.html">English</a></li>
+<li><a href="/cn/current/Manual/burst/building-projects.html">中文</a></li>
+<li><a href="/ja/current/Manual/burst/building-projects.html">日本語</a></li>
+<li><a href="/kr/current/Manual/burst/building-projects.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="../scripting.html">Programming in Unity</a></li>
+<li><a href="../compilation-and-code-reload.html">Compilation and code reload </a></li>
+<li><a href="../script-compilation.html">Script compilation</a></li>
+<li><a href="../burst/script-compilation-burst.html">Burst compilation</a></li>
+<li>Platform build support reference</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="../burst/editor-burst-inspector.html"></a></span><div class="tip">Burst Inspector window reference</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="../burst/building-aot-settings.html"></a></span><div class="tip">Burst AOT Settings reference</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Platform build support reference</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>When you build your project, Burst compiles your code and creates a single dynamic library in the <code>Plugins</code> folder for the platform you’re targeting. For example, on Windows, the path is <code>Data/Plugins/lib_burst_generated.dll</code>. </p>
+
+<p>
+<strong>Note</strong>: If your target platform is iOS, Unity instead generates a static library to meet Apple’s submission requirements for TestFlight.</p>
+
+<p>The job system runtime loads the generated library the first time a Burst compiled method is invoked. </p>
+
+<p>To control Burst’s AOT compilation, use the settings in the <strong>Burst AOT Settings</strong> section of the Project Settings window (<strong>Edit &gt; Project Settings &gt; Burst AOT Settings</strong>). For more information, refer to <a href="building-aot-settings.html">Burst AOT Settings reference</a>.</p>
+
+<p><a name="cross-compilation" aria-hidden="true"></a></p>
+
+<h2>Platforms without cross compilation</h2>
+
+<p>If you’re compiling for a non-desktop platform, Burst compilation requires specific platform compilation tools (similar to <span class="tooltip" tabindex="0" ><a href="../scripting-backends-il2cpp.html">IL2CPP</a><span class="tooltiptext">A Unity-developed scripting back-end which you can use as an alternative to Mono when building projects for some platforms. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ./scripting-backends-il2cpp.html" href=".././scripting-backends-il2cpp.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#IL2CPP" aria-label="Go to glossary anchor for IL2CPP">Glossary</a></span></span></span>). Desktop platforms (macOS, Linux, Windows) don’t need external toolchain support.</p>
+
+<p>The table below lists the level of support for <span class="tooltip" tabindex="0" ><strong>AOT compilation</strong><span class="tooltiptext">Ahead of Time (AOT) compilation is an optimization method used by all platforms except iOS for optimizing the size of the built player. . <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about iphone-playerSizeOptimization.html" href="../iphone-playerSizeOptimization.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#AOTCompilation" aria-label="Go to glossary anchor for AOTCompilation">Glossary</a></span></span></span> on each platform. If you select an invalid target (one with missing tools, or unsupported), Unity doesn’t use Burst compilation, but still builds the target without Burst optimizations. </p>
+
+<p>
+<strong>Note</strong>: Burst supports cross-compilation between desktop platforms (macOS/Linux/Windows) by default.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Host Editor platform</strong></th>
+	<th style="text-align:left;"><strong>Target Player platform</strong></th>
+	<th style="text-align:left;"><strong>Supported CPU architectures</strong></th>
+	<th style="text-align:left;"><strong>External toolchain requirements</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">Windows</td>
+	<td style="text-align:left;">Windows</td>
+	<td style="text-align:left;">x86 (SSE2, SSE4)<br> x64 (SSE2, SSE4, AVX, AVX2)</td>
+	<td style="text-align:left;">None</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Windows</td>
+	<td style="text-align:left;">Universal Windows Platform</td>
+	<td style="text-align:left;">x86 (SSE2, SSE4)<br> x64 (SSE2, SSE4, AVX, AVX2)<br>ARM32 (Thumb2, Neon32)<br>ARMV8 AARCH64<br><br><strong>Note:</strong> A UWP build always compiles all four targets.</td>
+	<td style="text-align:left;">Visual Studio 2017<br>Universal Windows Platform Development Workflow<br>C++ Universal Platform Tools</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Windows</td>
+	<td style="text-align:left;">iOS</td>
+	<td style="text-align:left;">ARMV8 AARCH64</td>
+	<td style="text-align:left;">Burst supports compilation for iOS from Windows. However, to build the resulting Xcode project, you need macOS with Xcode installed.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Windows</td>
+	<td style="text-align:left;">tvOS</td>
+	<td style="text-align:left;">ARMV8 AARCH64</td>
+	<td style="text-align:left;">Burst supports compilation for tvOS from Windows. However, to build the resulting Xcode project, you need macOS with Xcode installed.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Windows</td>
+	<td style="text-align:left;">visionOS</td>
+	<td style="text-align:left;">ARMV8 AARCH64</td>
+	<td style="text-align:left;">Burst supports compilation for visionOS from Windows. However, to build the resulting Xcode project, you need macOS with Xcode installed.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Windows</td>
+	<td style="text-align:left;">visionOS Simulator</td>
+	<td style="text-align:left;">ARMV8 AARCH64</td>
+	<td style="text-align:left;">Burst supports compilation for visionOS Simulator from Windows. However, to build the resulting Xcode project, you need macOS with Xcode installed.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Windows</td>
+	<td style="text-align:left;">Android</td>
+	<td style="text-align:left;">x86 SSE2<br> ARMV7 (Thumb2, Neon32)<br> ARMV8 AARCH64 (ARMV8A, ARMV8A_HALFFP, ARMV9A)</td>
+	<td style="text-align:left;">Android NDK<br><br><strong>Important:</strong> Use the Android NDK that you install through Unity Hub (via <strong>Add Component</strong>). Burst falls back to the one that the <code>ANDROID_NDK_ROOT</code> environment variable specifies if the Unity external tools settings aren’t configured.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Windows</td>
+	<td style="text-align:left;">Magic Leap 2</td>
+	<td style="text-align:left;">ARMV8 AARCH64</td>
+	<td style="text-align:left;">From Unity 6, Magic Leap 2 requires the <a href="https://docs.unity3d.com/Packages/com.unity.xr.openxr@latest">OpenXR plugin</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Windows</td>
+	<td style="text-align:left;">Xbox One</td>
+	<td style="text-align:left;">x64 SSE4</td>
+	<td style="text-align:left;">Microsoft GDK</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Windows</td>
+	<td style="text-align:left;">Xbox Series</td>
+	<td style="text-align:left;">x64 AVX2</td>
+	<td style="text-align:left;">Microsoft GDK</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Windows</td>
+	<td style="text-align:left;">PlayStation 4</td>
+	<td style="text-align:left;">x64 SSE4</td>
+	<td style="text-align:left;">Minimum PS4 SDK version 8.00</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Windows</td>
+	<td style="text-align:left;">PlayStation 5</td>
+	<td style="text-align:left;">x64 AVX2</td>
+	<td style="text-align:left;">Minimum PS5 SDK version 2.00</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Windows</td>
+	<td style="text-align:left;">Nintendo Switch</td>
+	<td style="text-align:left;">ARMV8 AARCH64</td>
+	<td style="text-align:left;">None</td>
+</tr>
+<tr>
+	<td style="text-align:left;">macOS</td>
+	<td style="text-align:left;">macOS</td>
+	<td style="text-align:left;">x64 (SSE2, SSE4, AVX, AVX2), Apple Silicon</td>
+	<td style="text-align:left;">None</td>
+</tr>
+<tr>
+	<td style="text-align:left;">macOS</td>
+	<td style="text-align:left;">iOS</td>
+	<td style="text-align:left;">ARMV8 AARCH64</td>
+	<td style="text-align:left;">To build the resulting Xcode project, you need Xcode installed.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">macOS</td>
+	<td style="text-align:left;">tvOS</td>
+	<td style="text-align:left;">ARMV8 AARCH64</td>
+	<td style="text-align:left;">To build the resulting Xcode project, you need Xcode installed.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">macOS</td>
+	<td style="text-align:left;">visionOS</td>
+	<td style="text-align:left;">ARMV8 AARCH64</td>
+	<td style="text-align:left;">To build the resulting Xcode project, you need Xcode installed.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">macOS</td>
+	<td style="text-align:left;">visionOS Simulator</td>
+	<td style="text-align:left;">ARMV8 AARCH64</td>
+	<td style="text-align:left;">To build the resulting Xcode project, you need Xcode installed.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">macOS</td>
+	<td style="text-align:left;">Android</td>
+	<td style="text-align:left;">x86 SSE2<br> ARMV7 (Thumb2, Neon32)<br> ARMV8 AARCH64 (ARMV8A, ARMV8A_HALFFP, ARMV9A)</td>
+	<td style="text-align:left;">Android NDK<br><br><strong>Important:</strong> Use the Android NDK that you install through Unity Hub (via <strong>Add Component</strong>). Burst falls back to the one that the <code>ANDROID_NDK_ROOT</code> environment variable specifies if the Unity external tools settings aren’t configured.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">macOS</td>
+	<td style="text-align:left;">Magic Leap 2</td>
+	<td style="text-align:left;">ARMV8 AARCH64</td>
+	<td style="text-align:left;">From Unity 6, Magic Leap 2 requires the <a href="https://docs.unity3d.com/Packages/com.unity.xr.openxr@latest">OpenXR plugin</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Linux</td>
+	<td style="text-align:left;">Linux</td>
+	<td style="text-align:left;">x64 (SSE2, SSE4, AVX, AVX2)</td>
+	<td style="text-align:left;">None</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Linux</td>
+	<td style="text-align:left;">iOS</td>
+	<td style="text-align:left;">ARMV8 AARCH64</td>
+	<td style="text-align:left;">Burst supports compilation for iOS from Linux. However, to build the resulting Xcode project, you need macOS with Xcode installed.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Linux</td>
+	<td style="text-align:left;">tvOS</td>
+	<td style="text-align:left;">ARMV8 AARCH64</td>
+	<td style="text-align:left;">Burst supports compilation for tvOS from Linux. However, to build the resulting Xcode project, you need macOS with Xcode installed.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Linux</td>
+	<td style="text-align:left;">visionOS</td>
+	<td style="text-align:left;">ARMV8 AARCH64</td>
+	<td style="text-align:left;">Burst supports compilation for visionOS from Linux. However, to build the resulting Xcode project, you need macOS with Xcode installed.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Linux</td>
+	<td style="text-align:left;">visionOS Simulator</td>
+	<td style="text-align:left;">ARMV8 AARCH64</td>
+	<td style="text-align:left;">Burst supports compilation for visionOS Simulator from Linux. However, to build the resulting Xcode project, you need macOS with Xcode installed.</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+<strong>Note</strong>: The maximum target CPU is hardcoded per platform. For standalone builds that target desktop platforms (Windows/Linux/macOS) you can choose the supported targets via the <a href="building-aot-settings.html">Burst AOT Settings</a>.</p>
+
+<h3>Unsupported project types</h3>
+
+<p>Some projects can’t use Burst as the compiler:</p>
+
+<ul>
+<li>Android projects from the Linux Editor.</li>
+<li>Xcode projects generated from the <strong>Create Xcode Project</strong> option.</li>
+</ul>
+
+<h2>Multiple Burst targets</h2>
+
+<p>When Burst compiles multiple target platforms during a build, it has to perform separate compilations. For example, if you want to compile <code>X64_SSE2</code> and <code>X64_SSE4</code>, Burst has to do two separate compilations to generate code for each of the targets you choose.</p>
+
+<p>To keep the combinations of targets to a minimum, Burst target platforms require multiple processor instruction sets underneath:</p>
+
+<ul>
+<li>
+<code>SSE4.2</code> is gated on having <code>SSE4.2</code> and <code>POPCNT</code> instruction sets.</li>
+<li>
+<code>AVX2</code> is gated on having <code>AVX2</code>, <code>FMA</code>, <code>F16C</code>, <code>BMI1</code>, and <code>BMI2</code> instruction sets.</li>
+<li>
+<code>ARMV8A</code> is a basic Armv8-A CPU target</li>
+<li>
+<code>ARMV8A_HALFFP</code> is <code>ARMV8A</code> plus the following extensions: <code>fullfp16</code>, <code>dotprod</code>, <code>crypto</code>, <code>crc</code>, <code>rdm</code>, <code>lse</code>. In practice, this means Cortex A75/A55 and later cores.</li>
+<li>
+<code>ARMV9A</code> is <code>ARMV8A_HALFFP</code> plus SVE2 support. In practice, this means Cortex X2/A710/A510 and later cores. <strong>Important:</strong> this target is currently experimental.</li>
+</ul>
+
+<h2>Dynamic dispatch based on runtime CPU features</h2>
+
+<p>For all <code>x86</code>/<code>x64</code> CPU desktop platforms, as well as for 64-bit Arm on Android, Burst takes into account the CPU features available at runtime to dispatch jobs to different versions it compiles.</p>
+
+<p>For <code>x86</code> and <code>x64</code> CPUs, Burst supports <code>SSE2</code> and <code>SSE4</code> instruction sets at runtime only. </p>
+
+<p>For example, with dynamic CPU dispatch, if your CPU supports <code>SSE3</code> and below, Burst selects <code>SSE2</code> automatically.</p>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="building-aot-settings.html">Burst AOT Settings reference</a></li>
+<li><a href="editor-reference-overview.html">Editor reference</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="../burst/editor-burst-inspector.html"></a></span><div class="tip">Burst Inspector window reference</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="../burst/building-aot-settings.html"></a></span><div class="tip">Burst AOT Settings reference</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

@@ -1,0 +1,256 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Avoid C# reflection overhead</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<meta property="relative-path-to-manual" content="">
+<meta property="version-switcher-versions-with-this-page" content="Versions with this page:">
+<meta property="version-switcher-versions-without-this-page" content="Versions without this page:">
+<meta property="version-switcher-supported" content="Supported">
+<meta property="version-switcher-legacy" content="Legacy">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/Manual/performance-gc-avoid-reflection.html">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20260626"></script><script type="text/javascript" src="docdata/toc.js?ts=20260626"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20260626"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20260626">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20260626">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/performance-gc-avoid-reflection.html">English</a></li>
+<li><a href="/cn/current/Manual/performance-gc-avoid-reflection.html">中文</a></li>
+<li><a href="/ja/current/Manual/performance-gc-avoid-reflection.html">日本語</a></li>
+<li><a href="/kr/current/Manual/performance-gc-avoid-reflection.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: Unity 6.7 Beta</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/performance-gc-avoid-reflection.html">English</a></li>
+<li><a href="/cn/current/Manual/performance-gc-avoid-reflection.html">中文</a></li>
+<li><a href="/ja/current/Manual/performance-gc-avoid-reflection.html">日本語</a></li>
+<li><a href="/kr/current/Manual/performance-gc-avoid-reflection.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="analysis.html">Optimization</a></li>
+<li><a href="performance-memory.html">Memory in Unity</a></li>
+<li><a href="performance-managed-memory.html">Managed memory</a></li>
+<li>Avoid C# reflection overhead</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="performance-track-garbage-collection.html"></a></span><div class="tip">Tracking garbage collection allocations</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="performance-native-memory.html"></a></span><div class="tip">Native memory</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Avoid C# reflection overhead</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Both the <span class="tooltip" tabindex="0" ><a href="scripting-backends-mono.html">Mono</a><span class="tooltiptext">A scripting backend used in Unity. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ./scripting-backends-il2cpp.html" href="./scripting-backends-il2cpp.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Mono" aria-label="Go to glossary anchor for Mono">Glossary</a></span></span></span> and <span class="tooltip" tabindex="0" ><a href="scripting-backends-il2cpp.html">IL2CPP</a><span class="tooltiptext">A Unity-developed scripting back-end which you can use as an alternative to Mono when building projects for some platforms. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about ./scripting-backends-il2cpp.html" href="./scripting-backends-il2cpp.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#IL2CPP" aria-label="Go to glossary anchor for IL2CPP">Glossary</a></span></span></span> <span class="tooltip" tabindex="0" ><strong>scripting backends</strong><span class="tooltiptext">A framework that powers scripting in Unity. Unity supports three different scripting backends depending on target platform: Mono, .NET and IL2CPP. Universal Windows Platform, however, supports only two: .NET and IL2CPP. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about scripting-backends.html" href="scripting-backends.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#ScriptingBackend" aria-label="Go to glossary anchor for ScriptingBackend">Glossary</a></span></span></span> internally cache all C# <a href="https://learn.microsoft.com/en-us/dotnet/api/system.reflection?view=net-9.0"><code>System.Reflection</code></a> objects and Unity doesn’t garbage collect them. This means the garbage collector continuously scans the cached C# reflection objects during the lifetime of your application, which causes unnecessary and potentially significant garbage collector overhead.</p>
+
+<p>To minimize the garbage collector overhead, avoid using methods that create a lot of C# reflection objects at runtime, such as <a href="https://docs.microsoft.com/en-us/dotnet/api/system.reflection.assembly.gettypes"><code>Assembly.GetTypes</code></a> and <a href="https://docs.microsoft.com/en-us/dotnet/api/system.type.getmethods"><code>Type.GetMethods</code></a>. Instead, scan assemblies in the Unity Editor for the required data and serialize it or use code generation to make the data available for use at runtime.</p>
+
+<h2>Scan assemblies in the Editor</h2>
+
+<p>The following example shows how to scan assemblies in the Editor, serialize the data, and use it at runtime without reflection. Suppose you want to find all types that implement an interface called <code>IMyFeature</code> and use that information at runtime. You can write an Editor script that scans for all types implementing <code>IMyFeature</code> and saves their names to a <code>ScriptableObject</code> or a JSON file as follows:</p>
+
+<pre><code class="lang-cs">using UnityEngine;
+using UnityEditor;
+using System;
+using System.Linq;
+using System.Reflection;
+using System.Collections.Generic;
+
+[CreateAssetMenu(menuName = &quot;Feature/FeatureTypeList&quot;)]
+public class FeatureTypeList : ScriptableObject
+{
+    public List&lt;string&gt; typeNames;
+}
+
+public static class FeatureTypeScanner
+{
+    [MenuItem(&quot;Tools/Scan IMyFeature Types&quot;)]
+    public static void ScanTypes()
+    {
+        var featureType = typeof(IMyFeature);
+        var types = AppDomain.CurrentDomain.GetAssemblies()
+            .SelectMany(a =&gt; a.GetTypes())
+            .Where(t =&gt; featureType.IsAssignableFrom(t) &amp;&amp; !t.IsInterface &amp;&amp; !t.IsAbstract)
+            .Select(t =&gt; t.FullName)
+            .ToList();
+
+        // Create/overwrite the asset
+        var asset = ScriptableObject.CreateInstance&lt;FeatureTypeList&gt;();
+        asset.typeNames = types;
+        AssetDatabase.CreateAsset(asset, &quot;Assets/FeatureTypeList.asset&quot;);
+        AssetDatabase.SaveAssets();
+
+        Debug.Log($&quot;Found {types.Count} types implementing IMyFeature. Saved to FeatureTypeList.asset&quot;);
+    }
+}
+</code></pre>
+
+<p>Run <strong>Tools &gt; Scan IMyFeature Types</strong> from the menu. This will create <code>Assets/FeatureTypeList.asset</code> containing the list of type names.</p>
+
+<p>At runtime, you can load this asset and use the type names for instantiation via <code>Activator.CreateInstance</code>, or just for display. No reflection is needed if you use codegen, as follows:</p>
+
+<pre><code class="lang-cs">public class FeatureTypeLoader : MonoBehaviour
+{
+    public FeatureTypeList featureTypes;
+
+    void Start()
+    {
+        var assemblyName = this.GetType().Assembly.FullName;
+        foreach (var typeName in featureTypes.typeNames)
+        {
+            Debug.Log(&quot;Instantiating feature type: &quot; + typeName);
+            Activator.CreateInstance(assemblyName, typeName);
+            // You can also use Type.GetType(typeName) (both of these still uses reflection but only on the pre-selected feature types instead of casting a wider net across all sort of types in the assembly.)
+        }
+    }
+}
+</code></pre>
+
+<h2>Use code generation</h2>
+
+<p>Instead of storing type names, you can generate a C# file at Editor time that contains a static array of types or delegates, eliminating all runtime reflection. The following code example generates a file <code>Assets/GeneratedFeatureTypes.cs</code> with a static array of the discovered types, which you can use at runtime with no reflection:</p>
+
+<pre><code class="lang-cs">using UnityEditor;
+using System;
+using System.Linq;
+using System.Text;
+using System.IO;
+
+public static class FeatureTypeCodeGen
+{
+    [MenuItem(&quot;Tools/CodeGen IMyFeature Types&quot;)]
+    public static void CodeGenTypes()
+    {
+        var featureType = typeof(IMyFeature);
+        var types = AppDomain.CurrentDomain.GetAssemblies()
+            .SelectMany(a =&gt; a.GetTypes())
+            .Where(t =&gt; featureType.IsAssignableFrom(t) &amp;&amp; !t.IsInterface &amp;&amp; !t.IsAbstract)
+            .ToList();
+
+        StringBuilder sb = new StringBuilder();
+        sb.AppendLine(&quot;public static class GeneratedFeatureTypes {&quot;);
+        sb.AppendLine(&quot;    public static readonly System.Type[] Types = new System.Type[] {&quot;);
+        foreach (var t in types)
+        {
+            sb.AppendLine($&quot;        typeof({t.FullName}),&quot;);
+        }
+        sb.AppendLine(&quot;    };&quot;);
+        sb.AppendLine(&quot;}&quot;);
+
+        File.WriteAllText(&quot;Assets/GeneratedFeatureTypes.cs&quot;, sb.ToString());
+        AssetDatabase.Refresh();
+        Debug.Log(&quot;Generated FeatureTypes.cs with &quot; + types.Count + &quot; types.&quot;);
+    }
+}
+</code></pre>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="performance-incremental-garbage-collection.html">Garbage collection modes</a></li>
+<li><a href="performance-disabling-garbage-collection.html">Configuring garbage collection</a></li>
+<li><a href="performance-optimizing-code-managed-memory.html">Optimizing your code for managed memory</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="performance-track-garbage-collection.html"></a></span><div class="tip">Tracking garbage collection allocations</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="performance-native-memory.html"></a></span><div class="tip">Native memory</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

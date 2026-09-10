@@ -1,0 +1,287 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Tonemapping Volume Override reference for URP</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<meta property="relative-path-to-manual" content="../">
+<meta property="version-switcher-versions-with-this-page" content="Versions with this page:">
+<meta property="version-switcher-versions-without-this-page" content="Versions without this page:">
+<meta property="version-switcher-supported" content="Supported">
+<meta property="version-switcher-legacy" content="Legacy">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/Manual/urp/post-processing-tonemapping.html">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../../StaticFilesManual/js/jquery.js?ts=20260626"></script><script type="text/javascript" src="../../StaticFilesManual/js/core.js?ts=20260626"></script><script type="text/javascript" src="../../StaticFilesManual/js/image-comp.js?ts=20260626"></script><script type="text/javascript" src="../docdata/toc.js?ts=20260626"></script><script type="text/javascript" src="../docdata/global_toc.js?ts=20260626"></script><link rel="stylesheet" type="text/css" href="../../StaticFilesManual/css/core.css?ts=20260626">
+<link rel="stylesheet" type="text/css" href="../../StaticFilesManual/css/icons.css?ts=20260626">
+<link rel="stylesheet" href="../../StaticFilesManual/css/prism.css">
+<script src="../../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="../30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../index.html" class="selected">Manual</a></li>
+<li><a href="../../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/urp/post-processing-tonemapping.html">English</a></li>
+<li><a href="/cn/current/Manual/urp/post-processing-tonemapping.html">中文</a></li>
+<li><a href="/ja/current/Manual/urp/post-processing-tonemapping.html">日本語</a></li>
+<li><a href="/kr/current/Manual/urp/post-processing-tonemapping.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: Unity 6.7 Beta</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/urp/post-processing-tonemapping.html">English</a></li>
+<li><a href="/cn/current/Manual/urp/post-processing-tonemapping.html">中文</a></li>
+<li><a href="/ja/current/Manual/urp/post-processing-tonemapping.html">日本語</a></li>
+<li><a href="/kr/current/Manual/urp/post-processing-tonemapping.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="../post-processing-and-full-screen-effects.html">Post-processing</a></li>
+<li><a href="../urp/post-processing-and-full-screen-effects-urp.html">Post-processing and full-screen effects in URP</a></li>
+<li><a href="../urp/EffectList.html">Post-processing Volume Overrides reference for URP</a></li>
+<li>Tonemapping Volume Override reference for URP</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="../urp/Post-Processing-Split-Toning.html"></a></span><div class="tip">Split Toning Volume Override reference for URP</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="../urp/post-processing-vignette.html"></a></span><div class="tip">Vignette Volume Override reference for URP</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Tonemapping Volume Override reference for URP</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Tonemapping is the process of remapping the <span class="tooltip" tabindex="0" ><strong>HDR</strong><span class="tooltiptext">high dynamic range<br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#HDR" aria-label="Go to glossary anchor for HDR">Glossary</a></span></span></span> values of an image to a new range of values. Its most common purpose is to make an image with a low dynamic range appear to have a higher range. For more information, refer to the <a href="https://en.wikipedia.org/wiki/Tone_mapping">Wikipedia article on Tone mapping</a>.</p>
+
+<h2>Properties</h2>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Property</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Mode</strong></td>
+	<td style="text-align:left;">Select a tonemapping algorithm to use for color grading. The options are:<ul>
+<li>
+<strong>None</strong>: Use this option if you do not want to apply tonemapping.</li>
+<li>
+<strong>Neutral</strong>: Use this option if you only want range-remapping with minimal impact on color hue &amp; saturation. It is generally a good starting point for extensive color grading.</li>
+<li>
+<strong>ACES</strong>: Use this option to apply a close approximation of the reference ACES tonemapper, for a more cinematic look. It is more contrasted than Neutral, and has an effect on actual color hue &amp; saturation. If you use this tonemapper, Unity does all the grading operations in the ACES color spaces, for optimal precision and results.<br><strong>Note</strong>: ACES HDR tonemapping is not supported on Android devices with Adreno 300 series GPU.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+
+<p><a name="hdr-output" aria-hidden="true"></a></p>
+
+<h2>HDR Output</h2>
+
+<p>When <a href="post-processing/hdr-in-urp.html">HDR Output</a> is enabled, additional properties become available for the <span class="tooltip" tabindex="0" ><strong>Tonemapping</strong><span class="tooltiptext">The process of remapping HDR values of an image into a range suitable to be displayed on screen. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about PostProcessingOverview.html" href="../PostProcessingOverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#tonemapping" aria-label="Go to glossary anchor for tonemapping">Glossary</a></span></span></span> Volume Override. The available properties vary depending on the <strong>Mode</strong> property.</p>
+
+<h3>Neutral</h3>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;">Property</th>
+	<th style="text-align:left;">Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Neutral HDR Range Reduction Mode</strong></td>
+	<td style="text-align:left;">The curve that the Player uses for tone mapping. The options are:<ul>
+<li>
+<strong>BT2390</strong>: The default. Defined by the <a href="https://www.itu.int/pub/R-REP-BT.2390">BT.2390</a> broadcasting recommendations.</li>
+<li>
+<strong>Reinhard</strong>: A simple Tone Mapping operator.</li>
+</ul>This option is only available when you enable <a href="urp-asset-additional-settings.html">Advanced Properties</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Hue Shift Amount</strong></td>
+	<td style="text-align:left;">The value determines the extent to which your content retains its original hue after you apply HDR settings. When this value is 0, the tonemapper attempts to preserve the hue of your content as much as possible by only tonemapping luminance.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Detect Paper White</strong></td>
+	<td style="text-align:left;">Enable this property if you want URP to use the Paper White value that the display communicates to the Unity Engine. In some cases, the value the display communicates may not be accurate. Implement a calibration menu for your application so that users can display your content correctly on displays that communicate inaccurate values.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Paper White</strong></td>
+	<td style="text-align:left;">The Paper White value of the display. If you do not enable <strong>Detect Paper White</strong>, you must specify a value here.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Detect Brightness Limits</strong></td>
+	<td style="text-align:left;">Enable this property if you want URP to use the minimum and maximum nit values that the display communicates. In some cases, the value the display communicates may not be accurate. It is best practice to implement a calibration menu for your application to allow for these situations.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Min Nits</strong></td>
+	<td style="text-align:left;">The minimum brightness value of the display. If you do not enable <strong>Detect Brightness Limits</strong>, you must specify a value here and in <strong>Max Nits</strong>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Max Nits</strong></td>
+	<td style="text-align:left;">The maximum brightness value of the display. If you do not enable <strong>Detect Brightness Limits</strong>, you must specify a value here and in <strong>Min Nits</strong>.</td>
+</tr>
+</tbody>
+</table>
+
+<h4>Misuse of Hue Shift Amount</h4>
+
+<p>Creators might author some content with the intention to use <strong>Hue Shift Amount</strong> to produce special effects. In the illustration below, the <strong>Hue Shift Amount</strong> is 0 for Image A and 1 for Image B. The flames image B appear more intense because of the hue shift effect. It is preferable not to author content in this way, because settings optimized for special effects can have undesirable effects on other content in the <span class="tooltip" tabindex="0" ><strong>scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html" href="../CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span>.</p>
+
+<figure>
+<img src="../../uploads/urp/post-proc/hdr/HDR-Output-HueShift.png" alt="Image A: Output when Hue Shift Amount is 0. Image B: Output when Hue Shift Amount is 1.">
+<figcaption>Image A: Output when Hue Shift Amount is 0. Image B: Output when Hue Shift Amount is 1.</figcaption>
+</figure>
+
+<h3>ACES</h3>
+
+<p>This mode has fixed presets to target 1000, 2000, and 4000 nit displays. It is best practice to implement a calibration menu for your application to ensure that the user can select the right preset.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;">Property</th>
+	<th style="text-align:left;">Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>ACES Preset</strong></td>
+	<td style="text-align:left;">The tone mapper preset to use. The options are:<ul>
+<li>
+<strong>ACES 1000 Nits</strong>: The default. This curve targets 1000 nits displays.</li>
+<li>
+<strong>ACES 2000 Nits</strong>: Curve that targets 2000 nits displays.</li>
+<li>
+<strong>ACES 4000 Nits</strong>: Curve that targets 4000 nits displays.</li>
+</ul>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Detect Paper White</strong></td>
+	<td style="text-align:left;">Enable this property if you want URP to use the Paper White value that the display communicates to the Unity Engine. In some cases, the value the display communicates may not be accurate. Implement a calibration menu for your application so that users can display your content correctly on displays that communicate inaccurate values.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Paper White</strong></td>
+	<td style="text-align:left;">The Paper White value of the display. If you do not enable <strong>Detect Paper White</strong>, you must specify a value here.</td>
+</tr>
+</tbody>
+</table>
+
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="../urp/Post-Processing-Split-Toning.html"></a></span><div class="tip">Split Toning Volume Override reference for URP</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="../urp/post-processing-vignette.html"></a></span><div class="tip">Vignette Volume Override reference for URP</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

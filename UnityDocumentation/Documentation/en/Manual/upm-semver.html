@@ -1,0 +1,530 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Package versioning</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<meta property="relative-path-to-manual" content="">
+<meta property="version-switcher-versions-with-this-page" content="Versions with this page:">
+<meta property="version-switcher-versions-without-this-page" content="Versions without this page:">
+<meta property="version-switcher-supported" content="Supported">
+<meta property="version-switcher-legacy" content="Legacy">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/Manual/upm-semver.html">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20260626"></script><script type="text/javascript" src="docdata/toc.js?ts=20260626"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20260626"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20260626">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20260626">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/upm-semver.html">English</a></li>
+<li><a href="/cn/current/Manual/upm-semver.html">中文</a></li>
+<li><a href="/ja/current/Manual/upm-semver.html">日本語</a></li>
+<li><a href="/kr/current/Manual/upm-semver.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: Unity 6.7 Beta</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/upm-semver.html">English</a></li>
+<li><a href="/cn/current/Manual/upm-semver.html">中文</a></li>
+<li><a href="/ja/current/Manual/upm-semver.html">日本語</a></li>
+<li><a href="/kr/current/Manual/upm-semver.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="PackagesList.html">Packages and package management</a></li>
+<li><a href="cus-pkg-lp.html">Package creation</a></li>
+<li><a href="cus-pkg-development.html">Package development</a></li>
+<li>Package versioning</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="cus-tests.html"></a></span><div class="tip">Add tests to your package</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="cus-changelog.html"></a></span><div class="tip">Update the package changelog</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Package versioning</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Package versions in Unity follow the Semantic Versioning convention. By using Semantic Versioning, you can communicate the scope of changes to your users whenever you alter assets, assemblies, APIs, or other elements that affect package compatibility.</p>
+
+<p>
+<strong>Note</strong>: This page uses the following terminology:</p>
+
+<ul>
+<li>
+<strong>Consumer</strong> refers to any code or project that depends on (and uses) your package, including:
+
+<ul>
+<li>Unity projects that install your package.</li>
+<li>Other packages that declare your package as a dependency.</li>
+<li>Assembly definitions (<code>.asmdef</code> files) in a project that reference your package’s assemblies.</li>
+<li><span class="tooltip" tabindex="0" ><strong>Scripts</strong><span class="tooltiptext">A piece of code that allows you to create your own Components, trigger game events, modify Component properties over time and respond to user input in any way you like. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about creating-scripts.html" href="creating-scripts.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scripts" aria-label="Go to glossary anchor for Scripts">Glossary</a></span></span></span> that reference your public types or assets by globally unique identifiers (GUID).</li>
+</ul>
+</li>
+<li>
+<strong>API surface</strong> is everything that consumers rely on. This includes assemblies and their public APIs, any assets referenced by a GUID, and package manifest constraints.</li>
+</ul>
+
+<p>The <a href="https://semver.org/">Semantic Versioning</a> convention uses the <code>major.minor.patch</code> format:</p>
+
+<ul>
+<li>
+<code>major</code>: Incrementing this element represents a breaking change. Changes that remove or hide something are typically considered breaking changes.</li>
+<li>
+<code>minor</code>: Incrementing this element represents backward-compatible additions or changes.</li>
+<li>
+<code>patch</code>: Incrementing this element represents bug fixes only.</li>
+</ul>
+
+<p><a name="semver-guidelines" aria-hidden="true"></a></p>
+
+<h2>Basic Semantic Versioning guidelines</h2>
+
+<p>Start new packages at version <code>0.1.0</code> while APIs are unstable. The major version number <code>0</code> indicates that packages are in the initial development phase. During this phase, package APIs change often, frequently in a breaking manner. Keep the major version number at <code>0</code> until you consider your package stable enough and ready for use in production.</p>
+
+<p>When the package is ready for production, release version <code>1.0.0</code>, then: </p>
+
+<ul>
+<li>Increment the major version when you make API changes that break backward compatibility. This means code that worked with the previous version might not work with the new version without modifications.
+
+<ul>
+<li>
+<strong>Example</strong>: Versions <code>1.2.3</code> and <code>2.0.0</code> aren’t compatible and can’t be used interchangeably without risk.</li>
+<li>
+<strong>Note</strong>: When you increment the major version, always reset the minor and patch values to <code>0</code>.</li>
+</ul>
+</li>
+<li>Increment the minor value any time you introduce a functionality change in a backward-compatible way.
+
+<ul>
+<li>
+<strong>Example</strong>: You can use Version <code>1.3.0</code> to fulfill a dependency on <code>1.2.0</code>, because <code>1.3.0</code> is backward-compatible. However, you can’t use <code>1.2.0</code> to fulfill a dependency on <code>1.3.0</code>.</li>
+<li>
+<strong>Note</strong>: When you increment the minor version, always reset the patch version to <code>0</code>.</li>
+</ul>
+</li>
+<li>Increment the patch value any time you introduce a bug fix or any small backward-compatible change that doesn’t change the API.
+
+<ul>
+<li>
+<strong>Example</strong>: Versions <code>1.3.0</code> and <code>1.3.1</code> are interchangeable because they have the same API, even though <code>1.3.1</code> contains a bug fix not present in <code>1.3.0</code>.</li>
+</ul>
+</li>
+</ul>
+
+<p>Unity’s Package Manager relies on these versioning rules to resolve dependencies and select compatible package versions automatically.</p>
+
+<h2>Change the version number</h2>
+
+<p>When you have decided which version number to increment, you can use either of the following methods to set the version number:</p>
+
+<ul>
+<li>Update the <strong>Version</strong> field in the <strong><span class="tooltip" tabindex="0" ><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheInspector.html" href="UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span></strong> window.</li>
+<li>Update the <code>version</code> property in the package manifest file.</li>
+</ul>
+
+<p>For more information, refer to <a href="cus-edit-manifest.html">Edit the package manifest</a>.</p>
+
+<h2>Summary of versioning rules</h2>
+
+<p>The following table summarizes the Semantic Versioning rules for incrementing parts of a version number. Later sections describe these changes in detail.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Area</strong></th>
+	<th style="text-align:left;"><strong>Change type or context</strong></th>
+	<th style="text-align:left;"><strong>Minimum version to increment</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">Assets</td>
+	<td style="text-align:left;">• Remove an asset visible to the Asset Database. <br>• Change an asset’s GUID.</td>
+	<td style="text-align:left;">Major</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Assets</td>
+	<td style="text-align:left;">• Add assets or content that introduce new features.</td>
+	<td style="text-align:left;">Minor</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Assets</td>
+	<td style="text-align:left;">• Adjust existing assets or content without changing their GUID.</td>
+	<td style="text-align:left;">Patch</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Assemblies</td>
+	<td style="text-align:left;">• Remove or rename an assembly. <br>• Move public APIs between assemblies.</td>
+	<td style="text-align:left;">Major</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Assemblies</td>
+	<td style="text-align:left;">• Remove platform support. <br>• Add a define constraint. <br>• Toggle the <strong>Auto Referenced</strong> setting (refer to <a href="#automatic-referencing-in-assemblies">Automatic referencing</a>.)</td>
+	<td style="text-align:left;">Major</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Assemblies</td>
+	<td style="text-align:left;">• Add an assembly. <br>• Add platforms. <br>• Remove a define constraint.</td>
+	<td style="text-align:left;">Minor</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Assemblies</td>
+	<td style="text-align:left;">• Change assembly references.</td>
+	<td style="text-align:left;">Patch</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Assemblies</td>
+	<td style="text-align:left;">• Toggle <strong>Allow ‘unsafe’ Code</strong> or <strong>Override References</strong>.</td>
+	<td style="text-align:left;">Refer to <a href="#no-api-changes-in-assemblies">patch changes in assemblies</a>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Package manifest</td>
+	<td style="text-align:left;">• Rename the package (<code>name</code> property).</td>
+	<td style="text-align:left;">Not supported</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Package manifest</td>
+	<td style="text-align:left;">• Add or remove or change a dependency (internal only, no API exposure or behavior change).</td>
+	<td style="text-align:left;">Patch</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Package manifest</td>
+	<td style="text-align:left;">• Dependency introduces a new behavior or exposes new types through your API.</td>
+	<td style="text-align:left;">Minor</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Package manifest</td>
+	<td style="text-align:left;">• Dependency change alters behavior or API in a way that’s not backward compatible.</td>
+	<td style="text-align:left;">Major</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Package manifest</td>
+	<td style="text-align:left;">• Increase the value in the <code>unity</code> or <code>unityRelease</code> property.</td>
+	<td style="text-align:left;">Minor or major</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Scripting</td>
+	<td style="text-align:left;">• Rename or remove public types, methods, properties, fields, or events. <br>• Change signatures (parameter types or count or order), return types, or member visibility (public to internal or private). <br>• Rename namespaces or move public types or namespaces between assemblies. <br>• Change enumeration (enum) values or underlying types. <br>• Remove enumeration (enum) members. <br>• Change public field or property types used in Unity serialization (including fields shown in the <strong>Inspector</strong> window.) <br>• Remove or rename serialized members.</td>
+	<td style="text-align:left;">Major</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Scripting</td>
+	<td style="text-align:left;">• Add new public types, members, or events. <br>• Add overloads or optional parameters to existing methods.</td>
+	<td style="text-align:left;">Minor</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Scripting</td>
+	<td style="text-align:left;">• Internal or private refactors. <br>• Performance improvements. <br>• Bug fixes that don’t change the public API surface. <br>• Documentation, comments, or formatting.</td>
+	<td style="text-align:left;">Patch</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Policy</td>
+	<td style="text-align:left;">• Mark APIs as obsolete.</td>
+	<td style="text-align:left;">Minor</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Policy</td>
+	<td style="text-align:left;">• Remove obsolete APIs.</td>
+	<td style="text-align:left;">Major</td>
+</tr>
+</tbody>
+</table>
+
+<p>For more information about these rules, refer to the relevant details sections for <span class="notooltips"><span class="tooltip" tabindex="0" ><a href="#details-assets">assets</a><span class="tooltiptext">Any media or data that can be used in your game or project. An asset may come from a file created outside of Unity, such as a 3D Model, an audio file or an image. You can also create some asset types in Unity, such as an Animator Controller, an Audio Mixer or a Render Texture. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about AssetWorkflow.html" href="AssetWorkflow.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#asset" aria-label="Go to glossary anchor for asset">Glossary</a></span></span></span></span>, <a href="#details-assemblies">assemblies</a>, <span class="notooltips"><span class="tooltip" tabindex="0" ><a href="#details-manifest">package manifest</a><span class="tooltiptext">Each package has a <em>manifest</em>, which provides information about the package to the Package Manager. The manifest contains information such as the name of the package, its version, a description for users, dependencies on other packages (if any), and other details. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about upm-manifestPkg.html" href="upm-manifestPkg.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#packagemanifest" aria-label="Go to glossary anchor for packagemanifest">Glossary</a></span></span></span></span>, and <a href="#details-policy">policies</a>.</p>
+
+<p><a name="details-assets" aria-hidden="true"></a></p>
+
+<h2>Details for versioning changes involving assets</h2>
+
+<p>The Asset Database tracks assets by referencing the GUID in the assets’ <code>.meta</code> files. </p>
+
+<p>The following breaking changes require an increment of the major version:</p>
+
+<ul>
+<li>Removing an asset that projects or packages might reference.</li>
+<li>Changing an asset’s GUID. If you change an asset’s GUID, the Asset Database understands this as removing the original asset and then adding a new (identical) asset. This results in a broken reference, because the original GUID no longer points to the asset, so the Asset Database can’t resolve the reference.</li>
+</ul>
+
+<p>The following non-breaking changes require an increment of the minor version:</p>
+
+<ul>
+<li>Adding new assets as a backward-compatible feature.</li>
+<li>Updating asset content without changing GUIDs, if the addition is a feature.</li>
+</ul>
+
+<p>The following non-breaking changes require an increment of the patch version:</p>
+
+<ul>
+<li>Updating asset content without changing GUIDs, if the addition is a bug fix.</li>
+</ul>
+
+<p><a name="details-assemblies" aria-hidden="true"></a></p>
+
+<h2>Details for versioning changes involving assemblies</h2>
+
+<p>Assembly definitions (<code>.asmdef</code>) define a group of scripts that the Unity Editor’s compilation pipeline uses to produce managed assemblies (<code>.dll</code> files). The following guidance also applies to precompiled assemblies.</p>
+
+<p><a name="automatic-referencing-in-assemblies" aria-hidden="true"></a></p>
+
+<h3>Automatic referencing in assemblies</h3>
+
+<p>The <strong>Auto Referenced</strong> property in the <a href="class-AssemblyDefinitionImporter.html#general">Assembly Definition Inspector window</a> controls whether Unity implicitly references an assembly. You can also control this behavior using the <code>autoReferenced</code> property in the <a href="assembly-definition-file-format.html">assembly definition file</a> (<code>.asmdef</code>) for your package.</p>
+
+<p>Increment the major or minor version, depending on the scenario:</p>
+
+<ul>
+<li>Adding an assembly that has its <strong>Auto Referenced</strong> property enabled can cause compilation conflicts in consumers. In this scenario, increment the major version.</li>
+<li>Adding an assembly that has its <strong>Auto Referenced</strong> property disabled is backward compatible. In this scenario, increment the minor version.</li>
+</ul>
+
+<p>Avoid bundling third‑party dynamic link library (DLL) files in unrelated packages, which can create unexpected implicit references.</p>
+
+<h3>Breaking changes in assemblies</h3>
+
+<p>Increment the major version when you make the following breaking changes to an assembly:</p>
+
+<ul>
+<li>Remove an assembly definition or precompiled assembly.</li>
+<li>Rename an assembly (assembly name or DLL file).</li>
+<li>Move public APIs from one assembly to another.</li>
+<li>Remove platform support. Refer to <a href="class-AssemblyDefinitionImporter.html#platforms">Assembly Definition Inspector window</a> (<strong>Platforms</strong> group) or <a href="assembly-definition-file-format.html">Assembly Definition file format reference</a> (<code>includePlatforms</code> or <code>excludePlatforms</code> properties).</li>
+<li>Add a <a href="class-AssemblyDefinitionImporter.html#define-constraints">define constraint</a> that can exclude the assembly from compilation. For information about managing constraints in a JSON format, refer to the <code>defineConstraints</code> property in <a href="assembly-definition-file-format.html">Assembly Definition file format reference</a>.</li>
+<li>Change the state of the <strong>Auto Referenced</strong> property in ways that alter availability to consumers. Refer to <a href="#automatic-referencing-in-assemblies">Automatic referencing in assemblies</a>.</li>
+<li>Mark an assembly as a <a href="test-framework/workflow-create-test-assembly.html">test assembly</a>. Unity doesn’t normally include test assemblies in builds (or compile them in some cases). When this happens, any assembly referencing the missing assembly fails to locate it, unless it’s also a test assembly.</li>
+</ul>
+
+<h3>Backward compatible API changes in assemblies</h3>
+
+<p>Increment the minor version when you make non-breaking changes to an assembly. Treat the following changes as non-breaking changes only when you add or change the assembly while the <a href="#automatic-referencing-in-assemblies">auto referenced property</a> is disabled:</p>
+
+<ul>
+<li>Add a new assembly (new <code>.asmdef</code> file with new scripts).</li>
+<li>Add platform support. Refer to <a href="class-AssemblyDefinitionImporter.html#platforms">Assembly Definition Inspector window</a> (<strong>Platforms</strong> group) or <a href="assembly-definition-file-format.html">Assembly Definition file format reference</a> (<code>includePlatforms</code> or <code>excludePlatforms</code> properties).</li>
+<li>Remove a <a href="class-AssemblyDefinitionImporter.html#define-constraints">define constraint</a> so the assembly is always compiled. For information about managing constraints in a JSON format, refer to the <code>defineConstraints</code> property in <a href="assembly-definition-file-format.html">Assembly Definition file format reference</a>.</li>
+<li>Demote a test assembly to a regular assembly.</li>
+</ul>
+
+<p>
+<strong>Note</strong>: If you make these assembly changes while the <a href="#automatic-referencing-in-assemblies">auto referenced property</a> is enabled, then the changes become breaking changes. In such cases, you must increment the major version instead of the minor version.</p>
+
+<p><a name="no-api-changes-in-assemblies" aria-hidden="true"></a></p>
+
+<h3>No API changes in assemblies</h3>
+
+<p>Increment the patch version when you make the following non-breaking changes to an assembly:</p>
+
+<ul>
+<li>Change the list of references in an assembly definition (<code>.asmdef</code>).</li>
+<li>Toggle <strong>Allow ‘unsafe’ Code</strong> or <strong>Override References</strong>. Refer to <a href="class-AssemblyDefinitionImporter.html#general">Assembly Definition Inspector window</a> (<strong>General Options</strong> group) or <a href="assembly-definition-file-format.html">Assembly Definition file format reference</a> (<code>allowUnsafeCode</code> or <code>overrideReferences</code> property).</li>
+</ul>
+
+<p>These changes don’t alter the public API surface for consumers.</p>
+
+<p><a name="details-manifest" aria-hidden="true"></a></p>
+
+<h2>Details for versioning changes involving the package manifest</h2>
+
+<p>The <a href="upm-manifestPkg.html">package manifest</a> (<code>package.json</code>) defines a package’s identity, dependencies, and metadata.</p>
+
+<h3>Name changes</h3>
+
+<p>Changing the <code>name</code> property isn’t supported. Publish the package as a new package with a different name.</p>
+
+<h3>Dependency changes</h3>
+
+<p>Depending on the change, updating dependencies might require incrementing different parts of the version number.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Change</strong></th>
+	<th style="text-align:left;"><strong>Change type or context</strong></th>
+	<th style="text-align:left;"><strong>Minimum version</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">Add a dependency</td>
+	<td style="text-align:left;">• Changes to internal API only. <br>• Changes with no API exposure and no changes to behavior.</td>
+	<td style="text-align:left;">• Patch (<a href="#automatic-referencing-in-assemblies">Auto Referenced</a> disabled) <br>• Major (<a href="#automatic-referencing-in-assemblies">Auto Referenced</a> enabled)</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Add a dependency</td>
+	<td style="text-align:left;">• Changes that introduce new behavior. <br>• Changes that expose new types in your API.</td>
+	<td style="text-align:left;">• Minor (<a href="#automatic-referencing-in-assemblies">Auto Referenced</a> disabled) <br>• Major (<a href="#automatic-referencing-in-assemblies">Auto Referenced</a> enabled)</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Add a dependency</td>
+	<td style="text-align:left;">• Changes that alter existing behavior in a way that’s not backward-compatible. <br>• Changes to existing APIs.</td>
+	<td style="text-align:left;">Major</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Remove a dependency</td>
+	<td style="text-align:left;">• Changes to internal API only without changing behavior.</td>
+	<td style="text-align:left;">Patch</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Remove a dependency</td>
+	<td style="text-align:left;">• Changes that break behavior <br>• Removing APIs that expose their types.</td>
+	<td style="text-align:left;">Major</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Change a dependency version</td>
+	<td style="text-align:left;">• Changes to internal API only without changing behavior.</td>
+	<td style="text-align:left;">• Patch (<a href="#automatic-referencing-in-assemblies">Auto Referenced</a> disabled) <br>• Major (<a href="#automatic-referencing-in-assemblies">Auto Referenced</a> enabled)</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Change a dependency version</td>
+	<td style="text-align:left;">• Changes that introduce new behavior. <br>• Changes that expose new types in your API.</td>
+	<td style="text-align:left;">• Minor (<a href="#automatic-referencing-in-assemblies">Auto Referenced</a> disabled) <br>• Major (<a href="#automatic-referencing-in-assemblies">Auto Referenced</a> enabled)</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Change a dependency version</td>
+	<td style="text-align:left;">• Changes that alter behavior or API that aren’t backward-compatible.</td>
+	<td style="text-align:left;">Major</td>
+</tr>
+</tbody>
+</table>
+
+<h3>Other manifest changes</h3>
+
+<p>You can change the <code>description</code>, <code>category</code>, <code>keywords</code>, and <code>displayName</code> properties in any release. Consider incrementing the minor version if the changes accompany new features.</p>
+
+<p>Changing the <code>unity</code> or <code>unityRelease</code> properties requires at least minor increments because these changes alter supported Unity Editor versions. Increasing the Unity version excludes a package version from working on previous Unity editors and might break a dependent project or package. Decreasing the Unity version makes the package available to older Unity editors.</p>
+
+<p><a name="details-policy" aria-hidden="true"></a></p>
+
+<h2>Details for versioning changes involving policy</h2>
+
+<p>Policy changes include deprecation and removal of packages.</p>
+
+<p>When you remove functionality from your package:</p>
+
+<ol>
+<li>Increment the minor version and release the package, marking the affected APIs as obsolete. Include a message and guidance.</li>
+<li>Increment the major version and release the package, removing those APIs.</li>
+</ol>
+
+<h2>Additional information</h2>
+
+<ul>
+<li><a href="assembly-definition-files.html">Assembly Definitions</a></li>
+<li><a href="upm-manifestPkg.html">Package manifest</a></li>
+<li>
+<a href="http://semver.org">Semantic Versioning</a> (external website)</li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="cus-tests.html"></a></span><div class="tip">Add tests to your package</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="cus-changelog.html"></a></span><div class="tip">Update the package changelog</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

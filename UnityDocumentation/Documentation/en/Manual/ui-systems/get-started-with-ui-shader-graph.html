@@ -1,0 +1,218 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Get started with UI Shader Graph</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<meta property="relative-path-to-manual" content="../">
+<meta property="version-switcher-versions-with-this-page" content="Versions with this page:">
+<meta property="version-switcher-versions-without-this-page" content="Versions without this page:">
+<meta property="version-switcher-supported" content="Supported">
+<meta property="version-switcher-legacy" content="Legacy">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/Manual/ui-systems/get-started-with-ui-shader-graph.html">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../../StaticFilesManual/js/jquery.js?ts=20260626"></script><script type="text/javascript" src="../../StaticFilesManual/js/core.js?ts=20260626"></script><script type="text/javascript" src="../../StaticFilesManual/js/image-comp.js?ts=20260626"></script><script type="text/javascript" src="../docdata/toc.js?ts=20260626"></script><script type="text/javascript" src="../docdata/global_toc.js?ts=20260626"></script><link rel="stylesheet" type="text/css" href="../../StaticFilesManual/css/core.css?ts=20260626">
+<link rel="stylesheet" type="text/css" href="../../StaticFilesManual/css/icons.css?ts=20260626">
+<link rel="stylesheet" href="../../StaticFilesManual/css/prism.css">
+<script src="../../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="../30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../index.html" class="selected">Manual</a></li>
+<li><a href="../../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/ui-systems/get-started-with-ui-shader-graph.html">English</a></li>
+<li><a href="/cn/current/Manual/ui-systems/get-started-with-ui-shader-graph.html">中文</a></li>
+<li><a href="/ja/current/Manual/ui-systems/get-started-with-ui-shader-graph.html">日本語</a></li>
+<li><a href="/kr/current/Manual/ui-systems/get-started-with-ui-shader-graph.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: Unity 6.7 Beta</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/ui-systems/get-started-with-ui-shader-graph.html">English</a></li>
+<li><a href="/cn/current/Manual/ui-systems/get-started-with-ui-shader-graph.html">中文</a></li>
+<li><a href="/ja/current/Manual/ui-systems/get-started-with-ui-shader-graph.html">日本語</a></li>
+<li><a href="/kr/current/Manual/ui-systems/get-started-with-ui-shader-graph.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="../UIToolkits.html">UI systems</a></li>
+<li><a href="../UIElements.html">UI Toolkit</a></li>
+<li><a href="../UIE-USS.html">Style UI</a></li>
+<li><a href="../ui-systems/ui-shader-graph.html">UI Shader Graph</a></li>
+<li>Get started with UI Shader Graph</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="../ui-systems/ui-shader-graph.html"></a></span><div class="tip">UI Shader Graph</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="../ui-systems/introduction-to-ui-shader-graph.html"></a></span><div class="tip">Introduction to UI Shader Graph</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Get started with UI Shader Graph</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>You can use <a href="https://docs.unity3d.com/Packages/com.unity.shadergraph@17.4/manual/index.html">Shader Graph</a> to create custom shaders for UI elements. To understand how UI <span class="tooltip" tabindex="0" ><strong>Shader</strong><span class="tooltiptext">A program that runs on the GPU. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Shaders.html" href="../Shaders.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#shader" aria-label="Go to glossary anchor for shader">Glossary</a></span></span></span> Graph works, try the following simple example to get started. This example creates a custom shader that applies a gradient effect to a button. For a more detailed overview of UI Shader Graph, refer to <a href="introduction-to-ui-shader-graph.html">Introduction to UI Shader Graph</a>.</p>
+
+<p>
+<strong>Note:</strong> UI Shader Graph only works with URP (Universal Render Pipeline).</p>
+
+<h2>Prerequisites</h2>
+
+<p>This guide is for developers familiar with the Unity Editor, UI Toolkit, and C# scripting. Before you start, get familiar with the following:</p>
+
+<ul>
+<li><a href="https://docs.unity3d.com/Packages/com.unity.shadergraph@17.4/manual/index.html">Shader Graph</a></li>
+<li><span class="tooltip" tabindex="0" ><a href="../Materials.html">Materials</a><span class="tooltiptext">An asset that defines how a surface should be rendered. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-Material.html" href="../class-Material.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#Material" aria-label="Go to glossary anchor for Material">Glossary</a></span></span></span></li>
+<li><a href="../UIBuilder.html">UI Builder</a></li>
+<li><a href="../UIE-uxml-element-Button.html">Button</a></li>
+</ul>
+
+<h2>Create a shader with a gradient effect</h2>
+
+<p>When you create a shader for UI elements, you typically use the <a href="introduction-to-ui-shader-graph.html#render-type-branch-node">Render Type Branch node</a> to handle different render types. The following steps create a simple shader that applies a UV <span class="tooltip" tabindex="0" ><strong>distortion effect</strong><span class="tooltiptext">An audio effect that modifies the sound by squashing and clipping the waveform to produce a rough, harsh result. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-AudioDistortionFilter.html" href="../class-AudioDistortionFilter.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#distortioneffect" aria-label="Go to glossary anchor for distortioneffect">Glossary</a></span></span></span> to the solid color render type of a button.</p>
+
+<ol>
+<li><p>Create a project with any URP template.</p></li>
+<li><p>In your Project window, right-click in the <code>Assets</code> folder and select <strong>Create</strong> &gt; <strong>Shader Graph</strong> &gt; <strong>URP</strong> &gt; <strong>UI Shader Graph</strong>. This creates a UI Shader Graph asset configured for UI rendering.</p></li>
+<li><p>Name the new asset <code>MyCustomShader</code>.</p></li>
+<li><p>Double-click <code>MyCustomShader</code> to open it in the <strong>Shader Graph</strong> editor.</p></li>
+<li><p>Select <strong>Create Node</strong> &gt; <strong>UI</strong> &gt; <strong>Render Type Branch</strong>.</p></li>
+<li><p>Select <strong>Create Node</strong> &gt; <strong>UV</strong> &gt; <strong>UV Distortion</strong>. </p></li>
+<li><p>Connect the <strong>UV</strong> output of the <strong>UV Distortion</strong> node to the <strong>Solid</strong> input of the <strong>Render Type Branch</strong> node.</p></li>
+<li><p>Connect the <strong>Color</strong> output of the <strong>Render Type Branch</strong> node to the <strong>Base Color</strong> input of the <strong>Fragment</strong> node.</p></li>
+<li>
+<p>Connect the <strong>Alpha</strong> output of the <strong>Render Type Branch</strong> node to the <strong>Alpha</strong> input of the <strong>Fragment</strong> node.
+ The <strong>With Shader</strong> in the <strong>Main Preview</strong> window shows the result of the shader applied to the background for the SDF and Bitmap text.</p>
+
+<figure>
+<img src="../../uploads/Main/uitk/custom-shader-example.png" alt="Simple shader graph example">
+<figcaption>Simple shader graph example</figcaption>
+</figure>
+</li>
+<li><p>Save the shader.</p></li>
+</ol>
+
+<h2>Apply the shader to UI elements</h2>
+
+<p>To apply a custom shader to a UI element, you need to create a new material that uses your shader and then assign that material to the UI element. The following steps show how to assign the custom shader you created in the previous section to a button in UI Builder. You can also assign custom shaders with <a href="../UIE-USS-SupportedProperties.html#material">USS</a> or <a href="../UIE-apply-styles-with-csharp.html">C# scripts</a>.</p>
+
+<ol>
+<li><p>Right-click in the <code>Assets</code> folder and select <strong>Create</strong> &gt; <strong>Material</strong>.</p></li>
+<li><p>Name the new material <code>MyCustomMaterial</code>.</p></li>
+<li><p>In the <span class="tooltip" tabindex="0" ><strong>Inspector</strong><span class="tooltiptext">A Unity window that displays information about the currently selected GameObject, asset or project settings, allowing you to inspect and edit the values. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about UsingTheInspector.html" href="../UsingTheInspector.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#Inspector" aria-label="Go to glossary anchor for Inspector">Glossary</a></span></span></span> window of your new material, select <code>MyCustomShader</code> from the <strong>Shader</strong> dropdown to assign it to the material.</p></li>
+<li><p>From the menu, select <strong>Window</strong> &gt; <strong>UI Toolkit</strong> &gt; <strong>UI Builder</strong> to open the UI Builder window.</p></li>
+<li><p>From the <strong>Library</strong> panel, drag a <strong>Button</strong> element into the <strong>Hierarchy</strong> panel to add a button to your UI Document.</p></li>
+<li>
+<p>In the <strong>Inspector</strong> panel for the button, from the <strong>Material</strong> dropdown list, select <code>MyCustomMaterial</code> to assign the material to the button. The <strong><span class="tooltip" tabindex="0" ><strong>Viewport</strong><span class="tooltiptext">The user’s visible area of an app on their screen.<br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#viewport" aria-label="Go to glossary anchor for viewport">Glossary</a></span></span></span></strong> in the UI Builder window shows the button with the custom shader applied.</p>
+
+<figure>
+<img src="../../uploads/Main/uitk/custom-shader-button.png" alt="Assign custom material in UI Builder">
+<figcaption>Assign custom material in UI Builder</figcaption>
+</figure>
+</li>
+</ol>
+
+<p>
+<strong>Note</strong>: When you assign a custom shader to a UI element, the shader affects the selected element and all its child elements. Any visual effects or modifications defined in your shader are applied throughout the hierarchy, enabling consistent styling and behavior across nested UI elements.</p>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="introduction-to-ui-shader-graph.html">Introduction to UI Shader Graph</a></li>
+<li><a href="https://docs.unity3d.com/Packages/com.unity.shadergraph@17.4/manual/index.html">Shader Graph documentation</a></li>
+<li><a href="../UIE-USS-SupportedProperties.html#unity-material"><code>-unity-material</code></a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="../ui-systems/ui-shader-graph.html"></a></span><div class="tip">UI Shader Graph</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="../ui-systems/introduction-to-ui-shader-graph.html"></a></span><div class="tip">Introduction to UI Shader Graph</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

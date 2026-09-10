@@ -1,0 +1,766 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Migrate from InstanceID to EntityId</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<meta property="relative-path-to-manual" content="">
+<meta property="version-switcher-versions-with-this-page" content="Versions with this page:">
+<meta property="version-switcher-versions-without-this-page" content="Versions without this page:">
+<meta property="version-switcher-supported" content="Supported">
+<meta property="version-switcher-legacy" content="Legacy">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/Manual/instanceid-to-entityid-migration.html">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20260626"></script><script type="text/javascript" src="docdata/toc.js?ts=20260626"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20260626"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20260626">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20260626">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/instanceid-to-entityid-migration.html">English</a></li>
+<li><a href="/cn/current/Manual/instanceid-to-entityid-migration.html">中文</a></li>
+<li><a href="/ja/current/Manual/instanceid-to-entityid-migration.html">日本語</a></li>
+<li><a href="/kr/current/Manual/instanceid-to-entityid-migration.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: Unity 6.7 Beta</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/instanceid-to-entityid-migration.html">English</a></li>
+<li><a href="/cn/current/Manual/instanceid-to-entityid-migration.html">中文</a></li>
+<li><a href="/ja/current/Manual/instanceid-to-entityid-migration.html">日本語</a></li>
+<li><a href="/kr/current/Manual/instanceid-to-entityid-migration.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="scripting.html">Programming in Unity</a></li>
+<li><a href="fundamental-unity-types.html">Fundamental Unity types</a></li>
+<li>Migrate from InstanceID to EntityId</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="unity-attributes.html"></a></span><div class="tip">Unity attributes</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="managing-update-order.html"></a></span><div class="tip">Managing update and execution order</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Migrate from InstanceID to EntityId</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Starting in Unity 6.4, Unity replaces the 32-bit integer <code>InstanceID</code> with the 64-bit <a href="../ScriptReference/EntityId.html"><code>EntityId</code></a> struct. <code>EntityId</code> unifies the way <span class="tooltip" tabindex="0" ><strong>GameObjects</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-GameObject.html" href="class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span> and entities identify Unity objects, and removes legacy assumptions about how object identifiers behave.</p>
+
+<p>This migration affects code that uses object identifiers directly. Common examples include Editor extensions, object lookup code, selection code, custom <a href="UIE-uxml-element-TreeView.html">TreeView</a> implementations, <a href="script-serialization-custom-serialization.html">custom serialization</a>, caches, <a href="performance-reusable-code.html">object pools</a>, and packages that store Unity object identifiers in <code>int</code> fields.</p>
+
+<p>This guide is relevant for Unity object identity APIs. It doesn’t apply to <span class="tooltip" tabindex="0" ><strong>shader</strong><span class="tooltiptext">A program that runs on the GPU. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Shaders.html" href="Shaders.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#shader" aria-label="Go to glossary anchor for shader">Glossary</a></span></span></span> and GPU instancing identifiers such as <code>unity_InstanceID</code> or <code>SV_InstanceID</code>.</p>
+
+<h2>Prepare before you upgrade</h2>
+
+<p>Starting in Unity 6.5, obsolete <code>InstanceID</code> APIs cause compilation errors. Replace those APIs with the matching <code>EntityId</code> APIs.</p>
+
+<p>An <code>EntityId</code> is a 64-bit value. A 32-bit integer can’t represent it. Code that bypasses compiler errors (for example, by suppressing them or by calling the int-based APIs from a precompiled assembly) can silently truncate identifiers at runtime.</p>
+
+<p>Prepare the project before you open it in the target Unity version:</p>
+
+<ol>
+<li>Update Unity packages, <span class="tooltip" tabindex="0" ><strong>embedded packages</strong><span class="tooltiptext">An <em>embedded</em> package is a mutable package that you store under the <code>Packages</code> directory at the root of a Unity project. This differs from most packages which you download from a package server and are immutable. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about upm-concepts.html#Embedded" href="upm-concepts.html#Embedded">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#embeddedpackage" aria-label="Go to glossary anchor for embeddedpackage">Glossary</a></span></span></span>, and <span class="tooltip" tabindex="0" ><strong>Asset Store</strong><span class="tooltiptext">A growing library of free and commercial assets created by Unity and members of the community. Offers a wide variety of assets, from textures, models and animations to whole project examples, tutorials and Editor extensions. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about AssetStore.html" href="AssetStore.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#AssetStore" aria-label="Go to glossary anchor for AssetStore">Glossary</a></span></span></span> packages.</li>
+<li>Search your project and embedded packages for the following identifiers and patterns:
+
+<ul>
+<li>
+<code>GetInstanceID</code>, <code>InstanceID</code>, <code>instanceID</code>, <code>instanceIDs</code>.</li>
+<li>
+<code>FindObjectsSortMode</code>, <code>FindObjectsSortMode.InstanceID</code>.</li>
+<li>
+<code>FindFirstObjectByType</code>, <code>FindObjectOfType</code>.</li>
+<li>
+<code>GetHashCode</code> calls on <code>UnityEngine.Object</code> or <code>EntityId</code>.</li>
+<li>
+<code>objectInstanceId</code>, <code>objectReferenceInstanceIDValue</code>, and other field or property names that contain <code>InstanceID</code>.</li>
+<li>
+<code>int.Parse</code> or <code>int.TryParse</code> near identifier strings.</li>
+<li>
+<code>ToString</code> on an <code>EntityId</code> or <code>Object</code> that is then stored, parsed, or compared.</li>
+</ul>
+</li>
+<li>Fix the compilation errors.</li>
+<li>Inspect third-party package code if the package vendor hasn’t released a version compatible with <code>EntityId</code>. For more information, refer to <a href="#handle-third-party-packages">Handle third-party packages</a>.</li>
+</ol>
+
+<p>Consider migrating through intermediate Unity versions so you can fix deprecation warnings before they become errors.</p>
+
+<p>Unity’s <a href="APIUpdater.html">automatic script updater</a> doesn’t migrate the main <code>InstanceID</code> APIs such as <code>GetInstanceID</code> for you. Use compiler errors, IDE warnings, and a manual code search to find affected code, then update the surrounding data types manually.</p>
+
+<h2>Replace InstanceID APIs</h2>
+
+<p>Use <code>EntityId</code> APIs when the value represents Unity object identity. The following table lists common replacements.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;">Old API or pattern</th>
+	<th style="text-align:left;">Replacement</th>
+	<th style="text-align:left;">Check when you migrate</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><code>Object.GetInstanceID()</code></td>
+	<td style="text-align:left;"><a href="https://docs.unity3d.com/6000.5/Documentation/ScriptReference/Object.GetEntityId.html"><code>Object.GetEntityId()</code></a></td>
+	<td style="text-align:left;">Change the receiving type from <code>int</code> to <code>EntityId</code>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>Resources.InstanceIDToObject(int)</code></td>
+	<td style="text-align:left;"><a href="https://docs.unity3d.com/6000.5/Documentation/ScriptReference/Resources.EntityIdToObject.html"><code>Resources.EntityIdToObject(EntityId)</code></a></td>
+	<td style="text-align:left;">Pass an <code>EntityId</code>, not a truncated integer.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>Resources.InstanceIDIsValid(int)</code></td>
+	<td style="text-align:left;"><code>Resources.EntityIdIsValid(EntityId)</code></td>
+	<td style="text-align:left;">Keep validity checks typed as <code>EntityId</code>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>Resources.InstanceIDToObjectList(NativeArray&lt;int&gt;, List&lt;Object&gt;)</code></td>
+	<td style="text-align:left;"><a href="https://docs.unity3d.com/6000.5/Documentation/ScriptReference/Resources.EntityIdsToObjectList.html"><code>Resources.EntityIdsToObjectList(NativeArray&lt;EntityId&gt;, List&lt;Object&gt;)</code></a></td>
+	<td style="text-align:left;">Change the full array or list pipeline to <code>EntityId</code>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>Resources.InstanceIDsToValidArray(...)</code></td>
+	<td style="text-align:left;"><code>Resources.EntityIdsToValidArray(...)</code></td>
+	<td style="text-align:left;">Change both NativeArray and Span call sites to <code>EntityId</code>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<code>Selection.instanceIDs</code>, <code>Selection.activeInstanceID</code>, <code>Selection.Contains(int)</code>
+</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/6000.5/Documentation/ScriptReference/Selection-entityIds.html"><code>Selection.entityIds</code></a>, <a href="https://docs.unity3d.com/6000.5/Documentation/ScriptReference/Selection-activeEntityId.html"><code>Selection.activeEntityId</code></a>, <a href="https://docs.unity3d.com/6000.5/Documentation/ScriptReference/Selection.Contains.html"><code>Selection.Contains(EntityId)</code></a>
+</td>
+	<td style="text-align:left;">Change selection storage from <code>int[]</code> to <code>EntityId[]</code>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>EditorUtility.InstanceIDToObject(int)</code></td>
+	<td style="text-align:left;"><a href="https://docs.unity3d.com/6000.5/Documentation/ScriptReference/EditorUtility.EntityIdToObject.html"><code>EditorUtility.EntityIdToObject(EntityId)</code></a></td>
+	<td style="text-align:left;">This is an Editor API. Use runtime APIs for runtime code.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>SerializedProperty.objectReferenceInstanceIDValue</code></td>
+	<td style="text-align:left;"><a href="https://docs.unity3d.com/6000.5/Documentation/ScriptReference/SerializedProperty-objectReferenceEntityIdValue.html"><code>SerializedProperty.objectReferenceEntityIdValue</code></a></td>
+	<td style="text-align:left;">Update both reads and writes.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>EditorApplication.hierarchyWindowItemOnGUI</code></td>
+	<td style="text-align:left;"><a href="https://docs.unity3d.com/6000.5/Documentation/ScriptReference/EditorApplication-hierarchyWindowItemByEntityIdOnGUI.html"><code>EditorApplication.hierarchyWindowItemByEntityIdOnGUI</code></a></td>
+	<td style="text-align:left;">Change the callback parameter from <code>int</code> to <code>EntityId</code>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>ProjectWindowCallback.EndNameEditAction</code></td>
+	<td style="text-align:left;"><a href="https://docs.unity3d.com/6000.5/Documentation/ScriptReference/ProjectWindowCallback.AssetCreationEndAction.html"><code>ProjectWindowCallback.AssetCreationEndAction</code></a></td>
+	<td style="text-align:left;">Update overridden method signatures from <code>int</code> to <code>EntityId</code>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<code>[OnOpenAsset]</code> callback with <code>int</code> parameter</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/6000.5/Documentation/ScriptReference/Callbacks.OnOpenAssetAttribute.html"><code>[OnOpenAsset]</code></a> callback with <code>EntityId</code> parameter</td>
+	<td style="text-align:left;">Search your codebase explicitly because the IDE-side updater doesn’t migrate the <code>[OnOpenAsset]</code> signature for you.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>LazyLoadReference&lt;T&gt;.instanceID</code></td>
+	<td style="text-align:left;"><code>LazyLoadReference&lt;T&gt;.entityId</code></td>
+	<td style="text-align:left;">Check serialized data that stored the old integer value.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>Object.FindObjectsByType(..., FindObjectsSortMode)</code></td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/6000.5/Documentation/ScriptReference/Object.FindObjectsByType.html"><code>Object.FindObjectsByType(Type)</code></a> or <a href="https://docs.unity3d.com/6000.5/Documentation/ScriptReference/Object.FindObjectsByType.html"><code>Object.FindObjectsByType(Type, FindObjectsInactive)</code></a>
+</td>
+	<td style="text-align:left;">The <code>FindObjectsSortMode</code> enum is also obsolete. Use the no-sort overloads, then sort by a property if you need order.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>Object.FindFirstObjectByType</code></td>
+	<td style="text-align:left;"><a href="https://docs.unity3d.com/6000.5/Documentation/ScriptReference/Object.FindAnyObjectByType.html"><code>Object.FindAnyObjectByType</code></a></td>
+	<td style="text-align:left;">
+<code>FindFirstObjectByType</code> is obsolete because it relied on InstanceID ordering. Use explicit ordering after a batch lookup if you need a specific result.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>Object.FindObjectOfType</code></td>
+	<td style="text-align:left;"><a href="https://docs.unity3d.com/6000.5/Documentation/ScriptReference/Object.FindAnyObjectByType.html"><code>Object.FindAnyObjectByType</code></a></td>
+	<td style="text-align:left;">Same as above.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>EntityId.GetRawData()</code></td>
+	<td style="text-align:left;"><a href="https://docs.unity3d.com/6000.5/Documentation/ScriptReference/EntityId.ToULong.html"><code>EntityId.ToULong(target)</code></a></td>
+	<td style="text-align:left;">
+<code>GetRawData</code> was published in early Unity 6.4 builds and is now obsolete. Use the <code>ToULong</code> and <code>FromULong</code> pair.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<code>SessionState.GetULong</code>, <code>SetULong</code>, <code>EraseULong</code>, and the corresponding array APIs (when used to store object IDs)</td>
+	<td style="text-align:left;">
+<a href="https://docs.unity3d.com/6000.5/Documentation/ScriptReference/SessionState.GetEntityId.html"><code>SessionState.GetEntityId</code></a>, <a href="https://docs.unity3d.com/6000.5/Documentation/ScriptReference/SessionState.SetEntityId.html"><code>SetEntityId</code></a>, <a href="https://docs.unity3d.com/6000.5/Documentation/ScriptReference/SessionState.EraseEntityId.html"><code>EraseEntityId</code></a>, and the corresponding array APIs</td>
+	<td style="text-align:left;">The <code>ulong</code>-typed APIs were removed. Switch to the new <code>EntityId</code> family for object identity storage.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>Physics.BakeMesh(int, bool)</code></td>
+	<td style="text-align:left;"><code>Physics.BakeMesh(EntityId, bool)</code></td>
+	<td style="text-align:left;">Change any <span class="tooltip" tabindex="0" ><strong>mesh</strong><span class="tooltiptext">The main graphics primitive of Unity. Meshes make up a large part of your 3D worlds. Unity supports triangulated or Quadrangulated polygon meshes. Nurbs, Nurms, Subdiv surfaces must be converted to polygons. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about mesh.html" href="mesh.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Mesh" aria-label="Go to glossary anchor for Mesh">Glossary</a></span></span></span> ID arrays or pools that feed the call.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<code>TreeView</code>, <code>TreeViewItem</code>, <code>TreeViewState</code> with implicit <code>int</code> IDs</td>
+	<td style="text-align:left;">
+<code>TreeView&lt;TIdentifier&gt;</code>, <code>TreeViewItem&lt;TIdentifier&gt;</code>, <code>TreeViewState&lt;TIdentifier&gt;</code>
+</td>
+	<td style="text-align:left;">Use <code>EntityId</code> only when the tree item ID is a Unity object identity.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><code>HierarchyProperty</code></td>
+	<td style="text-align:left;">
+<code>HierarchyIterator</code> and <code>IHierarchyIterator</code>
+</td>
+	<td style="text-align:left;">For more information, refer to <a href="#migrate-hierarchy-iteration">Migrate hierarchy iteration</a>.</td>
+</tr>
+</tbody>
+</table>
+
+<p>The table isn’t exhaustive. Many other Unity APIs follow the same pattern. For example, <code>AssetDatabase</code>, <code>GlobalObjectId</code>, <code>ObjectChangeEvents</code> event arguments, <code>EditorUtility</code>, <code>InternalEditorUtility</code>, <code>EventMarker</code>, <code>Terrain</code>, and various <span class="tooltip" tabindex="0" ><strong>render pipeline</strong><span class="tooltiptext">A series of operations that take the contents of a Scene, and displays them on a screen. Unity lets you choose from pre-built render pipelines, or write your own. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about render-pipelines.html" href="render-pipelines.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#renderpipeline" aria-label="Go to glossary anchor for renderpipeline">Glossary</a></span></span></span> APIs add <code>EntityId</code>-typed overloads alongside the obsolete <code>int</code>-typed members. Any API that accepts, returns, stores, or compares an object <code>InstanceID</code> needs the same review.</p>
+
+<p>When you migrate, distinguish identifier <code>int</code> variables from common temporary <code>int</code> variables. An <code>int</code> that contains a <code>UnityEngine.Object</code> reference must become an <code>EntityId</code>. An <code>int</code> that stores a temporary local value unrelated to Unity object identity can stay as <code>int</code>.</p>
+
+<h2>Change identity data structures to EntityId</h2>
+
+<p>Don’t replace a Unity object identifier with an <code>int</code> hash. If the value identifies a Unity object, store the full <code>EntityId</code>.</p>
+
+<p>Before:</p>
+
+<pre><code class="lang-cs">Dictionary&lt;int, ObjectState&gt; states = new();
+
+int id = target.GetInstanceID();
+states[id] = state;
+</code></pre>
+
+<p>After:</p>
+
+<pre><code class="lang-cs">Dictionary&lt;EntityId, ObjectState&gt; states = new();
+
+EntityId id = target.GetEntityId();
+states[id] = state;
+</code></pre>
+
+<p>Use <code>HashSet&lt;EntityId&gt;</code> and <code>Dictionary&lt;EntityId, TValue&gt;</code> for identity maps and sets. These collections can use <code>EntityId.GetHashCode</code> internally while still comparing the full <code>EntityId</code> value for equality.</p>
+
+<p>Don’t use <code>EntityId.GetHashCode</code> or <code>Object.GetHashCode</code> as a stored identifier. The hash code is derived from only part of the <code>EntityId</code> value, so different objects can share the same hash code. It isn’t unique, it isn’t a stable serialized format, and it isn’t a replacement for the old <code>int</code> <code>InstanceID</code>.</p>
+
+<h2>Don’t convert EntityId to int</h2>
+
+<p>There is no general, unique, lossless <code>EntityId</code> to <code>int</code> conversion. Code that stores identifiers in <code>int</code> fields must usually change the field, parameter, property, or collection key type to <code>EntityId</code>.</p>
+
+<p>Don’t do the following:</p>
+
+<pre><code class="lang-cs">int id = (int)target.GetEntityId();
+int id = target.GetEntityId().GetHashCode();
+int id = (int)EntityId.ToULong(target.GetEntityId());
+</code></pre>
+
+<p>Use <code>EntityId</code> directly:</p>
+
+<pre><code class="lang-cs">EntityId id = target.GetEntityId();
+</code></pre>
+
+<p>Some unrelated Unity APIs still use <code>int</code> IDs. For example, an IMGUI control ID isn’t a Unity object identifier. Don’t pass an <code>EntityId</code> hash to those APIs unless the API needs only a temporary, non-persistent control ID and your code doesn’t depend on unique object identity.</p>
+
+<p>To check whether an <code>EntityId</code> is non-default, use the <code>EntityId.IsValid</code> instance method. To check whether the identified object is currently loaded, use <code>Resources.EntityIdIsValid</code>.</p>
+
+<p>If you encounter <code>EntityId.GetRawData</code> in legacy code, replace it with <code>EntityId.ToULong</code>. <code>GetRawData</code> was published in early Unity 6.4 builds and is now an obsolete-warning API. To convert the value and convert it back, use <code>EntityId.ToULong</code> and <code>EntityId.FromULong</code> together.</p>
+
+<h2>Don’t infer meaning from the numeric value</h2>
+
+<p>The old <code>InstanceID</code> value was an implementation detail, but some projects used its numeric value to infer object state. <code>EntityId</code> removes those assumptions.</p>
+
+<p>Don’t use <code>EntityId</code> values to infer:</p>
+
+<ul>
+<li>Creation order.</li>
+<li><span class="tooltip" tabindex="0" ><strong>Scene</strong><span class="tooltiptext">A Scene contains the environments and menus of your game. Think of each unique Scene file as a unique level. In each Scene, you place your environments, obstacles, and decorations, essentially designing and building your game in pieces. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CreatingScenes.html" href="CreatingScenes.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scene" aria-label="Go to glossary anchor for Scene">Glossary</a></span></span></span> hierarchy order.</li>
+<li>Load order.</li>
+<li>Runtime-created versus asset-loaded state.</li>
+<li><span class="tooltip" tabindex="0" ><strong>Prefab</strong><span class="tooltiptext">An asset type that allows you to store a GameObject complete with components and properties. The prefab acts as a template from which you can create new object instances in the scene. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Prefabs.html" href="Prefabs.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#prefab" aria-label="Go to glossary anchor for prefab">Glossary</a></span></span></span> instance state.</li>
+<li>Persistence.</li>
+</ul>
+
+<p>In particular, don’t check whether an ID is negative. Old code sometimes used <code>instanceID &lt; 0</code> to guess whether an object was created at runtime. That guess was never guaranteed behavior, and it doesn’t apply to <code>EntityId</code>. All <code>EntityId</code> values are positive.</p>
+
+<p>After Unity destroys an object, it can reuse that object’s <code>EntityId</code> value for a different object. Because of this reuse, two objects created one after another can have <code>EntityId</code> values in any order.</p>
+
+<p>For Editor code that needs to know whether an object is persistent, use the Editor-only API <code>EditorUtility.IsPersistent</code>. To perform similar checks in runtime code, use a project-specific data model instead of interpreting the identifier value.</p>
+
+<h2>Sort by the property you need</h2>
+
+<p>Don’t sort by <code>InstanceID</code> or <code>EntityId</code> to recover creation order. <code>EntityId</code> ordering is arbitrary. Comparison operators and <code>CompareTo</code> are useful only when a data structure needs a consistent ordering, such as a sorted collection or binary search.</p>
+
+<p>Before:</p>
+
+<pre><code class="lang-cs">var objectsInCreationOrder = objects.OrderBy(obj =&gt; obj.GetInstanceID());
+</code></pre>
+
+<p>After:</p>
+
+<pre><code class="lang-cs">var objectsByName = objects.OrderBy(obj =&gt; obj.name);
+</code></pre>
+
+<p>If your code needs creation order, record creation order explicitly:</p>
+
+<pre><code class="lang-cs">readonly List&lt;GameObject&gt; m_CreationOrder = new();
+
+public void Register(GameObject instance)
+{
+    m_CreationOrder.Add(instance);
+}
+</code></pre>
+
+<p>If your code needs hierarchy order, sort by hierarchy data such as sibling index, transform path, or another domain-specific key.</p>
+
+<h3>FindObjects APIs</h3>
+
+<p>Don’t rely on Unity preserving <code>InstanceID</code> ordering during migration. The following APIs are obsolete because they relied on <code>InstanceID</code> sort order:</p>
+
+<ul>
+<li>
+<code>Object.FindObjectsByType(..., FindObjectsSortMode)</code> and the generic equivalents.</li>
+<li>
+<code>Object.FindFirstObjectByType</code> and the generic equivalents.</li>
+<li>The <code>FindObjectsSortMode</code> enum itself.</li>
+</ul>
+
+<p>
+<code>InstanceID</code> sorting was also slow. The Unity engine team measured that the InstanceID sort accounted for around 93% of the time spent in <code>FindObjectsOfType</code>, depending on the project.</p>
+
+<p>Use overloads that don’t take <code>FindObjectsSortMode</code> when order doesn’t matter:</p>
+
+<pre><code class="lang-cs">var renderers = Object.FindObjectsByType&lt;MeshRenderer&gt;();
+</code></pre>
+
+<p>If order matters, sort the result by the property your code actually needs:</p>
+
+<pre><code class="lang-cs">var renderers = Object.FindObjectsByType&lt;MeshRenderer&gt;()
+    .OrderBy(renderer =&gt; renderer.transform.GetSiblingIndex())
+    .ToArray();
+</code></pre>
+
+<p>
+<code>FindAnyObjectByType</code> is the only single-result API that doesn’t depend on identifier ordering. Use it when any matching object is acceptable. If your code needs a specific result, do an explicit ordered lookup on a batch result rather than relying on <code>FindFirstObjectByType</code> returning the first object in a previous <code>InstanceID</code> ordering.</p>
+
+<h2>Update serialization and saved data</h2>
+
+<p>Audit any code that stores <code>InstanceID</code> values in serialized fields, save files, Editor preferences, caches, or custom asset formats. Examples include:</p>
+
+<ul>
+<li>
+<code>[SerializeField] int m_InstanceId</code>.</li>
+<li>
+<code>Dictionary&lt;int, TValue&gt;</code> serialized through a custom format.</li>
+<li>String data created from <code>instanceID.ToString</code>.</li>
+<li>Cache files that store object IDs as numbers.</li>
+<li>Public plugin APIs that expose object IDs as <code>int</code>.</li>
+</ul>
+
+<p>Changing an <code>int</code> field to <code>EntityId</code> changes the structure of serialized data. Unity can’t know that an arbitrary serialized <code>int</code> field contained an old <code>InstanceID</code>. Plan a data migration if the data must survive the upgrade.</p>
+
+<p>Don’t serialize <code>EntityId</code> with <code>ToString</code> and parse the result later. The <code>EntityId</code> string format has already changed between Unity versions, and Unity reserves the right to change it again. <code>ToString</code> is for display and debugging only.</p>
+
+<p>If you must convert the raw <code>EntityId</code> value to <code>ulong</code> and back, use <code>EntityId.ToULong</code> and <code>EntityId.FromULong</code> together, and treat the <code>ulong</code> as a raw value that you don’t read or interpret:</p>
+
+<pre><code class="lang-cs">EntityId id = target.GetEntityId();
+
+ulong raw = EntityId.ToULong(id);
+EntityId restored = EntityId.FromULong(raw);
+</code></pre>
+
+<p>Store the raw value as <code>ulong</code>, not <code>int</code>. Converting an <code>EntityId</code> through <code>int</code> silently truncates the high 32 bits, and <code>EntityId.FromULong</code> reconstructs a corrupted value with no way to detect the error.</p>
+
+<p>Don’t inspect the bits, sort by the raw value, store state in the raw value, convert it to <code>int</code>, or build long-lived external formats around the current bit layout. The raw layout is an implementation detail and can change between Unity versions.</p>
+
+<p>For save games, network protocols, <span class="tooltip" tabindex="0" ><strong>analytics</strong><span class="tooltiptext">Abbreviation of <strong>Unity Analytics</strong><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Analytics" aria-label="Go to glossary anchor for Analytics">Glossary</a></span></span></span>, or other durable external data, use your own stable identifier instead of a raw <code>EntityId</code>.</p>
+
+<h2>Update Editor callbacks</h2>
+
+<p>Editor callback APIs are a common source of migration work because the callback signature changes, not just the API name.</p>
+
+<p>For hierarchy GUI callbacks, replace <code>hierarchyWindowItemOnGUI</code> with <code>hierarchyWindowItemByEntityIdOnGUI</code>:</p>
+
+<pre><code class="lang-cs">using UnityEditor;
+using UnityEngine;
+
+[InitializeOnLoad]
+public static class CustomHierarchyStyling
+{
+    static CustomHierarchyStyling()
+    {
+        EditorApplication.hierarchyWindowItemByEntityIdOnGUI += OnHierarchyGUI;
+        EditorApplication.hierarchyChanged += EditorApplication.RepaintHierarchyWindow;
+    }
+
+    static void OnHierarchyGUI(EntityId entityId, Rect selectionRect)
+    {
+        GameObject obj = EditorUtility.EntityIdToObject(entityId) as GameObject;
+        if (obj == null || !obj.CompareTag(&quot;Special&quot;))
+            return;
+
+        Rect iconRect = new Rect(selectionRect.x - 20, selectionRect.y, 18, 18);
+        GUI.Label(iconRect, EditorGUIUtility.IconContent(&quot;d_Favorite&quot;));
+    }
+}
+</code></pre>
+
+<p>For project-window asset creation callbacks, replace <code>EndNameEditAction</code> with <code>AssetCreationEndAction</code> and update the overridden method signatures:</p>
+
+<pre><code class="lang-cs">using UnityEditor.ProjectWindowCallback;
+using UnityEngine;
+
+public class CreateAssetAction : AssetCreationEndAction
+{
+    public override void Action(EntityId entityId, string pathName, string resourceFile)
+    {
+        Object asset = UnityEditor.EditorUtility.EntityIdToObject(entityId);
+        Debug.Log($&quot;Created asset: {asset}&quot;);
+    }
+}
+</code></pre>
+
+<p>For asset-open callbacks, change the <code>[OnOpenAsset]</code> callback parameter from <code>int</code> to <code>EntityId</code>:</p>
+
+<pre><code class="lang-cs">using UnityEditor;
+using UnityEditor.Callbacks;
+using UnityEngine;
+
+public static class OpenAssetHandler
+{
+    [OnOpenAsset]
+    public static bool OnOpenAsset(EntityId entityId, int line)
+    {
+        Object asset = EditorUtility.EntityIdToObject(entityId);
+        // Custom open behavior.
+        return false;
+    }
+}
+</code></pre>
+
+<p>The <code>int</code>-parameter overload of <code>[OnOpenAsset]</code> is removed entirely in later Unity versions. Search your codebase explicitly because the IDE-side updater doesn’t migrate the <code>[OnOpenAsset]</code> signature for you.</p>
+
+<p>Some user-defined callback methods can’t be marked obsolete at the declaration site. Search for old callback signatures and fix analyzer warnings from your IDE or Unity tooling.</p>
+
+<h2>Update TreeView code</h2>
+
+<p>If your Editor extension uses IMGUI <a href="../ScriptReference/UIElements.TreeView.html"><code>TreeView</code></a> APIs, migrate the identifier type deliberately. The generic <code>TreeView</code> APIs let you choose the identifier type:</p>
+
+<pre><code class="lang-cs">using UnityEditor.IMGUI.Controls;
+using UnityEngine;
+
+class ObjectTreeView : TreeView&lt;EntityId&gt;
+{
+    public ObjectTreeView(TreeViewState&lt;EntityId&gt; state)
+        : base(state)
+    {
+    }
+
+    protected override TreeViewItem&lt;EntityId&gt; BuildRoot()
+    {
+        return new TreeViewItem&lt;EntityId&gt;
+        {
+            id = EntityId.None,
+            depth = -1,
+            displayName = &quot;Root&quot;
+        };
+    }
+}
+</code></pre>
+
+<p>Use <code>EntityId</code> as the <code>TIdentifier</code> only when the tree item represents a Unity object. If the tree item represents another concept, use a stable identifier that belongs to that concept.</p>
+
+<p>Unity’s automatic script updater applies the <code>using</code> alias upgrade for the non-generic <code>TreeView</code> types, so existing code that uses <code>TreeView</code>, <code>TreeViewItem</code>, and <code>TreeViewState</code> can keep compiling against the generic versions pinned to <code>&lt;int&gt;</code>. Use this as a temporary measure while you migrate the underlying identifier type.</p>
+
+<p>
+<code>using</code> aliases can reduce the number of edits in large files, but check for type-name <span class="tooltip" tabindex="0" ><strong>collisions</strong><span class="tooltiptext">A collision occurs when the physics engine detects that the colliders of two GameObjects make contact or overlap, when at least one has a Rigidbody component and is in motion. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CollidersOverview.html" href="CollidersOverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#collision" aria-label="Go to glossary anchor for collision">Glossary</a></span></span></span>. A short alias can hide whether a tree still uses <code>int</code> identifiers or has moved to <code>EntityId</code> identifiers.</p>
+
+<h2 id="migrate-hierarchy-iteration">Migrate hierarchy iteration</h2>
+
+<p>If your Editor code iterates the hierarchy with <code>HierarchyProperty</code>, migrate to <code>HierarchyIterator</code>. The class, the <code>IHierarchyIterator</code> interface, every method that takes or returns identifiers, and the expanded-set arrays change from <code>int</code> to <code>EntityId</code>:</p>
+
+<pre><code class="lang-cs">// Before
+var prop = new HierarchyProperty(HierarchyType.GameObjects);
+int[] expanded = Array.Empty&lt;int&gt;();
+while (prop.Next(expanded))
+{
+    int id = prop.instanceID;
+    Debug.Log($&quot;Object: {prop.name}, id={id}&quot;);
+}
+
+// After
+var iter = new HierarchyIterator(HierarchyType.GameObjects);
+EntityId[] expanded = Array.Empty&lt;EntityId&gt;();
+while (iter.Next(expanded))
+{
+    EntityId id = iter.entityId;
+    Debug.Log($&quot;Object: {iter.name}, id={id}&quot;);
+}
+</code></pre>
+
+<p>If your code stores expanded-state arrays as <code>int[]</code>, change the storage type to <code>EntityId[]</code>.</p>
+
+<p>For custom scene search engines, replace <code>ISceneSearchEngine</code> with <code>ISceneSearchEngineV2</code>, update the <code>Filter</code> method signature from <code>HierarchyProperty</code> to <code>HierarchyIterator</code>, and call the matching <code>SceneSearch.RegisterEngine</code> and <code>SceneSearch.UnregisterEngine</code> overloads. If your code reads <code>SceneSearchContext.rootProperty</code>, switch to <code>SceneSearchContext.rootIterator</code>. The related drag-and-drop helpers <code>InternalEditorUtility.HierarchyWindowDrag</code> and <code>InternalEditorUtility.ProjectWindowDrag</code> are also obsolete; use the <code>V2</code> versions, which take a <code>HierarchyIterator</code>.</p>
+
+<h2>Handle third-party packages</h2>
+
+<p>A package that still uses obsolete <code>InstanceID</code> APIs can prevent the whole project from compiling. If a package still uses obsolete <code>InstanceID</code> APIs:</p>
+
+<ul>
+<li>Update the package through Package Manager or the Asset Store.</li>
+<li>Check whether the package is embedded in the <code>Packages</code> folder or cached in <code>Library/PackageCache</code>.</li>
+<li>Remove the package if the project doesn’t use it.</li>
+<li>Contact the vendor for a version compatible with <code>EntityId</code>.</li>
+<li>Patch an embedded copy if you must keep using the package before the vendor ships an update.</li>
+</ul>
+
+<p>If you maintain code that must support multiple Unity versions, use version guards around the old and new API paths. Choose the version symbol for the first Unity version that contains the replacement API you call. Don’t assume one symbol covers every <code>EntityId</code> replacement.</p>
+
+<h2>Update automated tests</h2>
+
+<p>If your project or package includes automated tests, update tests that depend on <code>InstanceID</code> ordering, sign, or integer-size behavior.</p>
+
+<p>Tests that fail after the migration often rely on old accidental ordering. Don’t restore the old behavior by sorting on <code>EntityId</code>. Change the test to express the actual requirement.</p>
+
+<p>Use order-independent assertions when order isn’t part of the contract:</p>
+
+<pre><code class="lang-cs">CollectionAssert.AreEquivalent(expectedObjects, actualObjects);
+</code></pre>
+
+<p>Use explicit ordering when order is part of the contract:</p>
+
+<pre><code class="lang-cs">var actualObjects = Object.FindObjectsByType&lt;MyComponent&gt;()
+    .OrderBy(component =&gt; component.name)
+    .ToArray();
+</code></pre>
+
+<p>Test Editor extensions and package code after the project compiles. Callback migrations, serialized data migrations, and package patches can fail outside the initial compiler error list.</p>
+
+<h2>EntityId size and binary layout</h2>
+
+<p>Ensure that your code does not depend on the binary representation of <code>EntityId</code>.</p>
+
+<p>
+<code>EntityId</code> is 8 bytes. The struct doesn’t expose its internal fields, and the bit layout is an implementation detail that can change between Unity versions.</p>
+
+<p>The following table summarizes the differences between the old <code>int</code> <code>InstanceID</code> and the new <code>EntityId</code>:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;">Feature</th>
+	<th style="text-align:left;">
+<code>InstanceID</code> (<code>int</code>)</th>
+	<th style="text-align:left;">
+<code>EntityId</code> (struct)</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">Size</td>
+	<td style="text-align:left;">4 bytes</td>
+	<td style="text-align:left;">8 bytes</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Sign-bit meaning</td>
+	<td style="text-align:left;">Negative meant runtime-created, positive meant persistent.</td>
+	<td style="text-align:left;">No meaning; all values are positive.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Fits in a pointer-sized field</td>
+	<td style="text-align:left;">On all platforms.</td>
+	<td style="text-align:left;">On 64-bit platforms only.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Sort order</td>
+	<td style="text-align:left;">Coincidentally reflected creation order in some cases.</td>
+	<td style="text-align:left;">No meaningful order, Unity reuses values for different objects.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">Bit layout</td>
+	<td style="text-align:left;">Implementation detail.</td>
+	<td style="text-align:left;">Implementation detail; subject to change between Unity versions.</td>
+</tr>
+</tbody>
+</table>
+
+<h3>Don’t store identifiers in pointer-sized fields</h3>
+
+<p>
+<code>EntityId</code> is 8 bytes, so it fits in a pointer-sized field on 64-bit platforms, including the Unity Editor. It doesn’t fit in a pointer-sized field on 32-bit runtime platforms such as <span class="tooltip" tabindex="0" ><strong>WebGL</strong><span class="tooltiptext">A JavaScript API that renders 2D and 3D graphics in a web browser. The Unity Web build option allows Unity to publish content as JavaScript programs which use HTML5 technologies and the WebGL rendering API to run Unity content in a web browser. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about webgl.html" href="webgl.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#WebGL" aria-label="Go to glossary anchor for WebGL">Glossary</a></span></span></span> or 32-bit Android. Code that aliased the old 4-byte <code>InstanceID</code> with a pointer-sized field works by coincidence on 64-bit platforms and fails silently or corrupts data on 32-bit platforms.</p>
+
+<p>Store <code>EntityId</code> values in <code>EntityId</code>-typed fields, not in <code>IntPtr</code>, <code>void*</code>, <code>nint</code>, or <code>int</code> fields.</p>
+
+<h3>Don’t perform arithmetic on EntityId values</h3>
+
+<p>Don’t perform arithmetic, bitwise operations, or sign checks on <code>EntityId</code> values. The 64-bit raw value can’t be distinguished from invalid by inspection alone, and the bit layout is an implementation detail.</p>
+
+<p>Use the <code>EntityId</code> API for comparisons. Use <code>EntityId.IsValid</code> to check whether a value is non-default.</p>
+
+<h3>Truncated EntityIds are detected at runtime</h3>
+
+<p>If code passes a truncated <code>EntityId</code> value to an API such as <code>Resources.EntityIdToObject</code> (for example, a value whose high bits were lost through an <code>int</code> cast), Unity detects the truncation at runtime and reports an error rather than silently returning the wrong object. This protects against the most common int-truncation bugs but isn’t a substitute for migrating the underlying types.</p>
+
+<h3>Don’t compare raw bytes of containing structs</h3>
+
+<p>Avoid the following:</p>
+
+<ul>
+<li>Storing state in <code>EntityId</code> bits.</li>
+<li>Comparing raw bytes of structs that contain <code>EntityId</code> fields.</li>
+<li>Depending on padding around <code>EntityId</code> fields.</li>
+<li>Assuming <code>sizeof(EntityId) == 4</code>.</li>
+</ul>
+
+<p>Containing structs can have different padding or member offsets after the size change from 4 to 8 bytes. Compare struct fields explicitly rather than using raw byte comparisons. Compare <code>EntityId</code> values through the EntityId API.</p>
+
+<h2>Migration checklist</h2>
+
+<p>Use the following checklist to review your project:</p>
+
+<ul>
+<li>Replace <code>InstanceID</code> API calls with <code>EntityId API</code> calls.</li>
+<li>Change identity-bearing <code>int</code> fields, parameters, properties, arrays, and collection keys to <code>EntityId</code>.</li>
+<li>Replace <code>Selection.instanceIDs</code>, <code>Selection.activeInstanceID</code>, and <code>Selection.Contains</code> with the <code>EntityId</code> equivalents.</li>
+<li>Replace editor callbacks that pass <code>int</code> IDs with EntityId callback variants, including <code>[OnOpenAsset]</code>.</li>
+<li>Update <code>TreeView</code> code to use the correct generic identifier type.</li>
+<li>Migrate <code>HierarchyProperty</code> code to <code>HierarchyIterator</code>, including expanded-set arrays.</li>
+<li>Remove sign checks such as <code>id &lt; 0</code>.</li>
+<li>Don’t perform arithmetic or bitwise operations on <code>EntityId</code> values.</li>
+<li>Stop sorting by <code>InstanceID</code> or <code>EntityId</code> to recover creation order.</li>
+<li>Replace <code>FindObjectsByType</code> overloads with the no-sort overloads, plus explicit sorting when needed.</li>
+<li>Replace <code>FindFirstObjectByType</code> and <code>FindObjectOfType</code> with <code>FindAnyObjectByType</code> (or with explicit ordering after a batch lookup).</li>
+<li>Stop using <code>GetHashCode</code> as an object identifier.</li>
+<li>Stop using <code>ToString</code> plus integer parsing for serialization.</li>
+<li>Replace <code>EntityId.GetRawData</code> with <code>EntityId.ToULong</code>.</li>
+<li>Treat <code>EntityId.ToULong</code> values as raw data that you don’t interpret, and store them as <code>ulong</code>, not <code>int</code>.</li>
+<li>Switch <code>SessionState</code> storage of object IDs from the <code>ulong</code>-based APIs to the new <code>SessionState.GetEntityId</code> and <code>SetEntityId</code> family.</li>
+<li>Audit serialized data and save formats that used <code>InstanceID</code>.</li>
+<li>Audit code that stores identifiers in pointer-sized fields. On 32-bit runtime platforms such as WebGL and 32-bit Android, an 8-byte <code>EntityId</code> doesn’t fit in a pointer-sized field.</li>
+<li>Update or patch third-party packages that still use <code>InstanceID</code> APIs.</li>
+<li>Update automated tests that relied on old ordering, sign, or integer-size behavior.</li>
+</ul>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="https://docs.unity3d.com/6000.5/Documentation/ScriptReference/EntityId.html"><code>EntityId</code></a></li>
+<li><a href="https://docs.unity3d.com/6000.5/Documentation/ScriptReference/Object.GetEntityId.html"><code>Object.GetEntityId</code></a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="unity-attributes.html"></a></span><div class="tip">Unity attributes</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="managing-update-order.html"></a></span><div class="tip">Managing update and execution order</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

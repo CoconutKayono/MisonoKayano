@@ -1,0 +1,445 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Customizing the Player loop</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<meta property="relative-path-to-manual" content="">
+<meta property="version-switcher-versions-with-this-page" content="Versions with this page:">
+<meta property="version-switcher-versions-without-this-page" content="Versions without this page:">
+<meta property="version-switcher-supported" content="Supported">
+<meta property="version-switcher-legacy" content="Legacy">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/Manual/player-loop-customizing.html">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20260626"></script><script type="text/javascript" src="docdata/toc.js?ts=20260626"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20260626"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20260626">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20260626">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/player-loop-customizing.html">English</a></li>
+<li><a href="/cn/current/Manual/player-loop-customizing.html">中文</a></li>
+<li><a href="/ja/current/Manual/player-loop-customizing.html">日本語</a></li>
+<li><a href="/kr/current/Manual/player-loop-customizing.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: Unity 6.7 Beta</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/player-loop-customizing.html">English</a></li>
+<li><a href="/cn/current/Manual/player-loop-customizing.html">中文</a></li>
+<li><a href="/ja/current/Manual/player-loop-customizing.html">日本語</a></li>
+<li><a href="/kr/current/Manual/player-loop-customizing.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="scripting.html">Programming in Unity</a></li>
+<li><a href="managing-update-order.html">Managing update and execution order</a></li>
+<li>Customizing the Player loop</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="execution-order.html"></a></span><div class="tip">Event function execution order</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="events-per-frame-optimization.html"></a></span><div class="tip">Using a custom update manager</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Customizing the Player loop</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Unity runtime applications run in a continuous loop called the Player loop. During each iteration of the Player loop, Unity calls various systems to perform tasks such as rendering, physics simulation, and input handling.</p>
+
+<p>The various systems and subsystems updated during the Player loop are called in a defined default order. You can see and customize this order using the static methods from the <a href="../ScriptReference/LowLevel.PlayerLoop.html"><code>PlayerLoop</code></a> API. You can retrieve the default or current Player loop and insert your own own custom Player loop systems, or remove, reorder, or replace existing ones.</p>
+
+<p>There are several reasons you might want to customize the Player loop:</p>
+
+<ul>
+<li>Creating your own managed updates as part of a custom <a href="events-per-frame-optimization.html">update manager</a> can be a more performant alternative to Unity’s native event functions. For more information, refer to <a href="https://unity.com/blog/engine-platform/10000-update-calls">10000 Update calls</a> on the Unity blog.</li>
+<li>You might want to optimize the Player loop for a specific platform, for example by removing Physics, AI, and <span class="tooltip" tabindex="0" ><strong>XR</strong><span class="tooltiptext">An umbrella term encompassing Virtual Reality (VR), Augmented Reality (AR) and Mixed Reality (MR) applications. Devices supporting these forms of interactive applications can be referred to as XR devices. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about XR.html" href="XR.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#XR" aria-label="Go to glossary anchor for XR">Glossary</a></span></span></span> updates for a mobile game.</li>
+<li>You might want to create visualizations of the update loop in Edit mode or Play mode to help with debugging.</li>
+</ul>
+
+<h2>Accessing the Player loop</h2>
+
+<p>The Player loop consists of a series of nested Player loop systems, each of which is a <a href="../ScriptReference/LowLevel.PlayerLoopSystem.html"><code>PlayerLoopSystem</code></a> structure. The root or outermost Player loop system represents the full Player loop, under which other Player loop systems are nested.</p>
+
+<p>In this context, a Player loop system is just an abstract representation of anything that needs to update during the Player loop. The default systems are representations of native Unity systems such as Audio and Input, but you can also create your own custom systems from your C# code.</p>
+
+<p>To access Unity’s default Player loop, use <a href="../ScriptReference/LowLevel.PlayerLoop.GetDefaultPlayerLoop.html"><code>PlayerLoop.GetDefaultPlayerLoop</code></a>. To access the Player loop currently in effect, use <a href="../ScriptReference/LowLevel.PlayerLoop.GetCurrentPlayerLoop.html"><code>PlayerLoop.GetCurrentPlayerLoop</code></a>. The default and current Player loop will be the same unless you apply a new custom Player loop with <a href="../ScriptReference/LowLevel.PlayerLoop.SetPlayerLoop.html"><code>PlayerLoop.SetPlayerLoop</code></a>.</p>
+
+<p>Each system in the Player loop has a <a href="../ScriptReference/LowLevel.PlayerLoopSystem-type.html"><code>PlayerLoopSystem.type</code></a> property that identifies it. You can recursively iterate over a Player loop system structure and print the <a href="https://learn.microsoft.com/en-us/dotnet/api/system.reflection.memberinfo.name?view=net-9.0#system-reflection-memberinfo-name"><code>Name</code></a> of each <code>type</code> property to display the Player loop structure in the console. You can also use the <code>type</code> property, as shown in the following examples, to identify Player loop subsystems to add, remove, or replace. Valid types for default systems are available in the <code>UnityEngine.PlayerLoop</code> namespace.</p>
+
+<p>The API reference <a href="../ScriptReference/LowLevel.PlayerLoop.GetDefaultPlayerLoop.html"><code>PlayerLoop.GetDefaultPlayerLoop</code></a> includes an example of how to retrieve the default Player loop, iterate over the nested Player loop systems and print the <code>Name</code> of their <code>type</code> properties. The code produces the following console output:</p>
+
+<pre><code class="text">ROOT NODE
+    TimeUpdate
+        WaitForLastPresentationAndUpdateTime
+    Initialization
+        ProfilerStartFrame
+        UpdateCameraMotionVectors
+        DirectorSampleTime
+        AsyncUploadTimeSlicedUpdate
+        SynchronizeInputs
+        SynchronizeState
+        XREarlyUpdate
+    EarlyUpdate
+        PollPlayerConnection
+        GpuTimestamp
+        AnalyticsCoreStatsUpdate
+        UnityWebRequestUpdate
+        ExecuteMainThreadJobs
+        ProcessMouseInWindow
+        ClearIntermediateRenderers
+        ClearLines
+        PresentBeforeUpdate
+        ResetFrameStatsAfterPresent
+        UpdateAsyncInstantiate
+        UpdateAsyncReadbackManager
+        UpdateStreamingManager
+        UpdateTextureStreamingManager
+        UpdatePreloading
+        UpdateContentLoading
+        RendererNotifyInvisible
+        PlayerCleanupCachedData
+        UpdateMainGameViewRect
+        UpdateCanvasRectTransform
+        XRUpdate
+        UpdateInputManager
+        ProcessRemoteInput
+        ScriptRunDelayedStartupFrame
+        UpdateKinect
+        DeliverIosPlatformEvents
+        ARCoreUpdate
+        DispatchEventQueueEvents
+        Physics2DEarlyUpdate
+        PhysicsResetInterpolatedTransformPosition
+        SpriteAtlasManagerUpdate
+        PerformanceAnalyticsUpdate
+    FixedUpdate
+        ClearLines
+        NewInputFixedUpdate
+        DirectorFixedSampleTime
+        AudioFixedUpdate
+        ScriptRunBehaviourFixedUpdate
+        DirectorFixedUpdate
+        LegacyFixedAnimationUpdate
+        XRFixedUpdate
+        PhysicsFixedUpdate
+        Physics2DFixedUpdate
+        PhysicsClothFixedUpdate
+        DirectorFixedUpdatePostPhysics
+        ScriptRunDelayedFixedFrameRate
+    PreUpdate
+        PhysicsUpdate
+        Physics2DUpdate
+        PhysicsClothUpdate
+        CheckTexFieldInput
+        IMGUISendQueuedEvents
+        NewInputUpdate
+        InputForUIUpdate
+        SendMouseEvents
+        AIUpdate
+        WindUpdate
+        UpdateVideo
+    Update
+        ScriptRunBehaviourUpdate
+        ScriptRunDelayedDynamicFrameRate
+        ScriptRunDelayedTasks
+        DirectorUpdate
+    PreLateUpdate
+        AIUpdatePostScript
+        DirectorUpdateAnimationBegin
+        LegacyAnimationUpdate
+        DirectorUpdateAnimationEnd
+        DirectorDeferredEvaluate
+        AccessibilityUpdate
+        UIElementsUpdatePanels
+        EndGraphicsJobsAfterScriptUpdate
+        ConstraintManagerUpdate
+        ParticleSystemBeginUpdateAll
+        Physics2DLateUpdate
+        PhysicsLateUpdate
+        ScriptRunBehaviourLateUpdate
+    PostLateUpdate
+        PlayerSendFrameStarted
+        DirectorLateUpdate
+        ScriptRunDelayedDynamicFrameRate
+        PhysicsSkinnedClothBeginUpdate
+        UpdateRectTransform
+        PlayerUpdateCanvases
+        UIElementsRepaintPanels
+        UpdateAudio
+        VFXUpdate
+        ParticleSystemEndUpdateAll
+        EndGraphicsJobsAfterScriptLateUpdate
+        UpdateCustomRenderTextures
+        XRPostLateUpdate
+        UpdateAllRenderers
+        UpdateLightProbeProxyVolumes
+        EnlightenRuntimeUpdate
+        UpdateAllSkinnedMeshes
+        ProcessWebSendMessages
+        SortingGroupsUpdate
+        UpdateVideoTextures
+        UpdateVideo
+        DirectorRenderImage
+        PlayerEmitCanvasGeometry
+        UIElementsRenderBatchModeOffscreen
+        PhysicsSkinnedClothFinishUpdate
+        FinishFrameRendering
+        BatchModeUpdate
+        PlayerSendFrameComplete
+        UpdateCaptureScreenshot
+        PresentAfterDraw
+        ClearImmediateRenderers
+        PlayerSendFramePostPresent
+        UpdateResolution
+        InputEndFrame
+        TriggerEndOfFrameCallbacks
+        GUIClearEvents
+        ShaderHandleErrors
+        ResetInputAxis
+        ThreadedLoadingDebug
+        ProfilerSynchronizeStats
+        MemoryFrameMaintenance
+        ExecuteGameCenterCallbacks
+        XRPreEndFrame
+        ProfilerEndFrame
+        GraphicsWarmupPreloadedShaders
+        ObjectDispatcherPostLateUpdate
+</code></pre>
+
+<h2>Insert a custom update into the default Player loop</h2>
+
+<p>The recommended and lowest risk way to customize the Player loop is to insert a custom Player loop system into the default Player loop. This way, you can add your own custom update logic without disrupting any of Unity’s built-in systems.</p>
+
+<p>The code example in the <a href="../ScriptReference/LowLevel.PlayerLoop.SetPlayerLoop.html"><code>PlayerLoop.SetPlayerLoop</code></a> API reference shows how to insert a custom Player loop system into the default Player loop at a specified point. In that case, the behavior of the <code>CustomUpdate</code> method is defined in the <code>InsertSystem</code> class. But the following small modifications can make the <code>CustomUpdate</code> an event that your MonoBehaviour <span class="tooltip" tabindex="0" ><strong>scripts</strong><span class="tooltiptext">A piece of code that allows you to create your own Components, trigger game events, modify Component properties over time and respond to user input in any way you like. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about creating-scripts.html" href="creating-scripts.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scripts" aria-label="Go to glossary anchor for Scripts">Glossary</a></span></span></span> can subscribe to and provide their own update logic for:</p>
+
+<ul>
+<li>Declare an event as a public, static field of the <code>InsertSystem</code> class:</li>
+</ul>
+
+<pre><code class="lang-cs">public static event Action AddCustomUpdate;
+</code></pre>
+
+<ul>
+<li>Modify the definition of the <code>CustomUpdate</code> method to invoke this event:</li>
+</ul>
+
+<pre><code class="lang-cs">private static void CustomUpdate() =&gt; AddCustomUpdate?.Invoke();
+</code></pre>
+
+<p>You can then subscribe to the custom update from any MonoBehaviour script as follows:</p>
+
+<pre><code class="lang-cs">using UnityEngine;
+
+public class CustomUpdateFromEvent : MonoBehaviour
+{
+    private void OnEnable()
+    {
+        InsertSystem.AddCustomUpdate += MyCustomUpdate;
+    }
+
+    private void Update()
+    {
+        Debug.Log(&quot;Update&quot;);
+    }
+
+    private void LateUpdate()
+    {
+        Debug.Log(&quot;Late Update&quot;);
+    }
+
+    private void OnDisable()
+    {
+        InsertSystem.AddCustomUpdate -= MyCustomUpdate;
+    }
+
+    private void MyCustomUpdate()
+    {
+        Debug.Log(&quot;Custom update from an event that your MonoBehaviour scripts can subscribe to.&quot;);
+    }
+}
+</code></pre>
+
+<p>
+<strong>Note</strong>: The Player loop system you pass as a parameter to <a href="../ScriptReference/LowLevel.PlayerLoop.SetPlayerLoop.html"><code>PlayerLoop.SetPlayerLoop</code></a> overwrites the current Player loop. Therefore, make sure any loop you pass to this method contains all the systems you want to keep, including the ones you don’t replace. If you create a new Player loop system from scratch, you must explicitly add all the systems you want to keep to the new loop.</p>
+
+<h2>Replace a default system in the Player loop</h2>
+
+<p>The following example replaces a default system in the Player loop with a custom update. The example replaces the <code>PreUpdate.AIUpdate</code> system, but you can replace any system in the Player loop by specifying its <a href="../ScriptReference/LowLevel.PlayerLoopSystem-type.html">PlayerLoopSystem.type</a> identifier. Valid types for default systems can be obtained by iterating through the default Player loop, as shown in the previous section, or from the <code>UnityEngine.PlayerLoop</code> namespace.</p>
+
+<p>
+<strong>Important</strong>: Replacing a system in the Player loop can have unintended consequences, as it removes the default functionality of that system. Use this method with caution, and only if you’re sure you want to replace the default functionality with your own custom logic.</p>
+
+<pre><code class="lang-cs">using UnityEngine.LowLevel;
+using UnityEngine.PlayerLoop;
+using UnityEngine;
+
+// Replace an existing system in the Unity Player Loop with a custom update.
+
+public class MyReplacementCustomUpdate { } // Empty class to use as a type identifier for the custom update
+
+public class SystemReplacement
+{
+    //Run this method on runtime initialization
+    [RuntimeInitializeOnLoadMethod]
+    private static void AppStart()
+    {
+        // Retrieve the default Player loop system. Get the current loop instead if the default was already modified previously.
+        var defaultSystems = PlayerLoop.GetDefaultPlayerLoop();
+        // Create a custom update system to replace an existing one
+        var customUpdate = new PlayerLoopSystem()
+        {
+            updateDelegate = CustomUpdate,
+            type = typeof(MyReplacementCustomUpdate)
+        };
+        // Specify the system to replace as the type parameter, in this case PreUpdate.AIUpdate
+        ReplaceSystem&lt;PreUpdate.AIUpdate&gt;(ref defaultSystems, customUpdate);
+        PlayerLoop.SetPlayerLoop(defaultSystems);
+    }
+
+    // Custom update method that will be called in the Player Loop
+    private static void CustomUpdate()
+    {
+        Debug.Log(&quot;Custom update from a replacement system.&quot;);
+    }
+
+    //Recursively replace a system of type T with a replacement system in the Player Loop
+    private static bool ReplaceSystem&lt;T&gt;(ref PlayerLoopSystem system, PlayerLoopSystem replacement)
+    {
+        if (system.type == typeof(T))
+        {
+            system = replacement;
+            return true;
+        }
+        if (system.subSystemList != null)
+        {
+            for (var i = 0; i &lt; system.subSystemList.Length; i++)
+            {
+                if (ReplaceSystem&lt;T&gt;(ref system.subSystemList[i], replacement))
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+}
+</code></pre>
+
+<h2>Additional resources and examples</h2>
+<div class="res-examples">
+
+<ul>
+<li>
+<span aria-hidden="true">📚</span> <strong>Documentation</strong>: <a href="execution-order.html">Event function execution order</a>
+</li>
+<li>
+<span aria-hidden="true">📚</span> <strong>Documentation</strong>: <a href="../ScriptReference/LowLevel.PlayerLoop.html"><code>LowLevel.PlayerLoop</code> API reference</a>
+</li>
+<li>
+<span aria-hidden="true">📚</span> <strong>Documentation</strong>: <a href="https://unity.com/blog/engine-platform/10000-update-calls">10000 Update calls</a>
+</li>
+<li>
+<span aria-hidden="true">👥</span> <strong>Community</strong>: <a href="https://discussions.unity.com/search?expanded=true&amp;q=LowLevel.PlayerLoop%20order%3Alatest_topic"><code>LowLevel.PlayerLoop</code> topics at Unity Discussions</a>
+</li>
+</ul>
+</div>
+<div class="clear"></div>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="execution-order.html"></a></span><div class="tip">Event function execution order</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="events-per-frame-optimization.html"></a></span><div class="tip">Using a custom update manager</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

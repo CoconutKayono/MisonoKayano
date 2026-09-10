@@ -1,0 +1,407 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: CPU Usage Profiler module reference</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<meta property="relative-path-to-manual" content="">
+<meta property="version-switcher-versions-with-this-page" content="Versions with this page:">
+<meta property="version-switcher-versions-without-this-page" content="Versions without this page:">
+<meta property="version-switcher-supported" content="Supported">
+<meta property="version-switcher-legacy" content="Legacy">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/Manual/ProfilerCPU.html">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20260626"></script><script type="text/javascript" src="docdata/toc.js?ts=20260626"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20260626"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20260626">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20260626">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/ProfilerCPU.html">English</a></li>
+<li><a href="/cn/current/Manual/ProfilerCPU.html">中文</a></li>
+<li><a href="/ja/current/Manual/ProfilerCPU.html">日本語</a></li>
+<li><a href="/kr/current/Manual/ProfilerCPU.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: Unity 6.7 Beta</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/ProfilerCPU.html">English</a></li>
+<li><a href="/cn/current/Manual/ProfilerCPU.html">中文</a></li>
+<li><a href="/ja/current/Manual/ProfilerCPU.html">日本語</a></li>
+<li><a href="/kr/current/Manual/ProfilerCPU.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="analysis.html">Optimization</a></li>
+<li><a href="Profiler.html">Unity Profiler</a></li>
+<li><a href="profiler-visualizing-data.html">Profiler modules</a></li>
+<li><a href="profiler-cpu.html">CPU Usage Profiler module</a></li>
+<li>CPU Usage Profiler module reference</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="profiler-cpu-navigating.html"></a></span><div class="tip">Navigating the CPU Usage Profiler module</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="profiler-memory.html"></a></span><div class="tip">Memory performance data</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>CPU Usage Profiler module reference</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>The CPU Usage Profiler module is divided into charts in the top half of the <a href="ProfilerWindow.html">Profiler window</a>, and has timeline and hierarchy views in the details pane in the bottom half of the window.</p>
+
+<figure>
+<img src="../uploads/Main/profiler-cpu-module.png" alt="Profiler window with a frame in the CPU Usage Profiler module selected. The Timeline view is selected in the details pane.">
+<figcaption>Profiler window with a frame in the CPU Usage Profiler module selected. The Timeline view is selected in the details pane.</figcaption>
+</figure>
+
+<h2>Chart categories</h2>
+
+<p>The CPU Usage Profiler module’s chart tracks the time spent on the application’s main thread. </p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Chart</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Rendering</strong></td>
+	<td style="text-align:left;">How much time your application spends on rendering graphics.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><span class="tooltip" tabindex="0" ><strong>Scripts</strong><span class="tooltiptext">A piece of code that allows you to create your own Components, trigger game events, modify Component properties over time and respond to user input in any way you like. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about creating-scripts.html" href="creating-scripts.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Scripts" aria-label="Go to glossary anchor for Scripts">Glossary</a></span></span></span></strong></td>
+	<td style="text-align:left;">How much time your application spends on running scripts.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Physics</strong></td>
+	<td style="text-align:left;">How much time your application spends on the physics system.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Animation</strong></td>
+	<td style="text-align:left;">How much time your application spends on animating skinned <span class="tooltip" tabindex="0" ><strong>mesh</strong><span class="tooltiptext">The main graphics primitive of Unity. Meshes make up a large part of your 3D worlds. Unity supports triangulated or Quadrangulated polygon meshes. Nurbs, Nurms, Subdiv surfaces must be converted to polygons. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about mesh.html" href="mesh.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#Mesh" aria-label="Go to glossary anchor for Mesh">Glossary</a></span></span></span> Renderers, <span class="tooltip" tabindex="0" ><strong>GameObjects</strong><span class="tooltiptext">The fundamental object in Unity scenes, which can represent characters, props, scenery, cameras, waypoints, and more. A GameObject’s functionality is defined by the Components attached to it. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-GameObject.html" href="class-GameObject.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#GameObject" aria-label="Go to glossary anchor for GameObject">Glossary</a></span></span></span>, and other components in your application. This also includes the time spent on calculations for systems the Animation and <span class="tooltip" tabindex="0" ><strong>Animator components</strong><span class="tooltiptext">A component on a model that animates that model using the Animation system. The component has a reference to an Animator Controller asset that controls the animation. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about class-AnimatorController.html" href="class-AnimatorController.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#AnimatorComponent" aria-label="Go to glossary anchor for AnimatorComponent">Glossary</a></span></span></span> use.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>GarbageCollector</strong></td>
+	<td style="text-align:left;">How much time your application spends running the <a href="performance-garbage-collector.html">managed garbage collector</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><span class="tooltip" tabindex="0" ><strong>VSync</strong><span class="tooltiptext">Vertical synchronization (VSync) is a display setting that caps a game’s frame rate to match the refresh rate of a monitor, to prevent image tearing. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about https://en.wikipedia.org/wiki/Screen_tearing#V-sync" href="https://en.wikipedia.org/wiki/Screen_tearing#V-sync">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#VSync" aria-label="Go to glossary anchor for VSync">Glossary</a></span></span></span></strong></td>
+	<td style="text-align:left;">How much time your application spends per frame waiting for the <code>targetFrameRate</code> or the next <code>VBlank</code> to sync with. To determine the VSync value, Unity uses the <a href="../ScriptReference/QualitySettings-vSyncCount.html"><code>QualitySettings.vSyncCount</code></a> value, the target frame rate, or the default or enforced maximum VSync value of the platform your application is running on. For more information about VSync, refer to the <a href="profiler-markers.html">Profiler markers documentation</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong><span class="tooltip" tabindex="0" ><strong>Global Illumination</strong><span class="tooltiptext">A group of techniques that model both direct and indirect lighting to provide realistic lighting results.<br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#globalillumination" aria-label="Go to glossary anchor for globalillumination">Glossary</a></span></span></span></strong></td>
+	<td style="text-align:left;">How much time your application spends on lighting.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>UI</strong></td>
+	<td style="text-align:left;">How much time your application spends on displaying its UI.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Others</strong></td>
+	<td style="text-align:left;">How much time your application spends on code that doesn’t fall into any of the other categories. This includes areas like the entire EditorLoop, or the profiling overhead when you <a href="profiling-play-mode.html">profile in Play mode</a>. For more information refer to <a href="profiler-play-edit-samples.html">Play mode and Editor samples</a>.</td>
+</tr>
+</tbody>
+</table>
+
+<h2>Module details pane toolbar</h2>
+
+<p>When you select the CPU Usage module, the details pane displays a breakdown of where the application spent time in the selected frame. Use the <span class="tooltip" tabindex="0" ><strong>toolbar</strong><span class="tooltiptext">A row of buttons and basic controls at the top of the Unity Editor that allows you to interact with the Editor in various ways (e.g. scaling, translation). <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about Toolbar.html" href="Toolbar.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#toolbar" aria-label="Go to glossary anchor for toolbar">Glossary</a></span></span></span> at the top of the pane to navigate the views.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Property</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Timing data view dropdown</strong></td>
+	<td style="text-align:left;">Choose to display the timing data as either a timeline or a hierarchical table. To change the display, use the dropdown in the details pane (set to <strong>Timeline</strong> by default). The following views are available:<br><ul>
+<li>
+<strong>Timeline</strong>: Displays a breakdown of the timings for a particular frame alongside a time axis of the frame’s length.<br><br>This is the only view that you can use to view timings on all threads at once and at the times within the frame at which they happened, so that you can correlate timings across threads. For example, <a href="job-system.html">job system</a> worker threads starting up after a system on the main thread schedules them. For more information, refer to <a href="profiler-cpu-introduction.html#timeline-view">Timeline view</a>.</li>
+<li>
+<strong>Hierarchy</strong>: Groups the timing data by its internal hierarchical structure. This view displays the elements that your application called in a descending list format, ordered by the time spent by default. You can also order the information by the amount of scripting memory allocated, or the number of calls.</li>
+<li>
+<strong>Raw Hierarchy</strong>: Displays the timing data in a hierarchical structure that’s similar to the call stacks where the timing happened. Unity lists each call stack separately in this mode instead of merging them, as it does in Hierarchy view.</li>
+<li>
+<strong>Inverted Hierarchy</strong>: Groups samples by <span class="tooltip" tabindex="0" ><a href="profiler-markers.html">profiler marker</a><span class="tooltiptext">Placed in code to describe a CPU or GPU event that is then displayed in the Unity Profiler window. Added to Unity code by default, or you can use <a href="https://docs.unity3d.com/Packages/com.unity.profiling.core@latest/index.html?subfolder=/manual/profilermarker-guide.html">ProfilerMarker API</a> to add your own custom markers. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about profiler-markers.html" href="profiler-markers.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="Glossary.html#profilermarker" aria-label="Go to glossary anchor for profilermarker">Glossary</a></span></span></span> and displays them with inverted sample stacks. The first level of the hierarchy shows an item for each profiler marker.<br><br>Expand an item in the tree to display the markers that contain this one in their sample stack. This option helps to reveal larger performance issues caused by lots of instances of small performance impacts. These kinds of issues can be harder to spot in the Timeline or non-inverted hierarchy views. </li>
+</ul>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Live setting</strong></td>
+	<td style="text-align:left;">Displays data about the selected frame in real time in the module details pane when you record new data in Play mode or the Editor. By default, this setting is disabled, and the module details pane is blank when you record data. <br><br><strong>Note:</strong> This setting increases the overhead of the <code>EditorLoop</code> when the Profiler window is repainted.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<strong>Thread selector</strong> (Hierarchy views only)</td>
+	<td style="text-align:left;">Use the Thread dropdown to select a specific thread, like the Main Thread or Render Thread to inspect in these views.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">
+<strong>Details dropdown</strong> (Hierarchy views only)</td>
+	<td style="text-align:left;">Display information about where your application calls and uses profiled functions. Choose from the following options:<br><ul>
+<li>
+<strong>No Details</strong>: Doesn’t display any extra information</li>
+<li>
+<strong>Related data</strong>: Displays a list of <code>UnityEngine.Objects</code> that use a <a href="../ScriptReference/Unity.Profiling.ProfilerMarker.Begin.html"><code>Begin</code></a> overload which are associated with the Profiler sample.</li>
+<li>
+<strong>Calls</strong>: Displays where the selected sample is called from and what other functions it calls to.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+
+<h2>More (⋮) menu settings</h2>
+
+<p>The More (⋮) menu contains the following settings:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Setting</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Show Full Scripting Method Names</strong></td>
+	<td style="text-align:left;">Displays the fully qualified names for all scripting methods (<code>Assembly::Class::MethodName</code>).</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Show Flow events (Timeline view only)</strong></td>
+	<td style="text-align:left;">Displays the relationship between systems, jobs, and threads. When you enable this setting, the Profiler adds white event markers to the Profiler samples that schedule jobs, or wait on scheduled jobs to complete. It also darkens unrelated samples to make it easier to visualize the sample you select.<br><br>When you select a sample, the Profiler connects the relevant flow event markers together with lines. A thicker line highlights the particular flow line you select. For example, if a <code>begin</code> sample points to two other <code>next</code> samples, when you click one of the <code>next</code> samples, the Profiler draws a thicker line to it.<br><br>The Profiler adds the following arrow types to the samples:<br><ul>
+<li>
+<strong>Down arrow (▿)</strong>: Indicates the beginning of a flow, and that this sample scheduled some work.</li>
+<li>
+<strong>Right arrow (▹)</strong>: Indicates the next item in a flow, and that a different sample scheduled this.</li>
+<li>
+<strong>Up arrow (▵)</strong>: Indicates the end of a flow, and that the work ended or synchronized on this sample.</li>
+</ul>
+</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Collapse EditorOnly samples (Hierarchy views only)</strong></td>
+	<td style="text-align:left;">Displays <code>EditorOnly</code> samples in the view. By default, Unity collapses all <code>EditorOnly</code> samples in Hierarchy views. EditorOnly samples are samples in the player loop that only happen because of Editor-only safety checks. When the samples are collapsed, their <code>GC.Alloc</code> value doesn’t contribute to the <code>GC.Alloc</code> value of their enclosing sample. For more information, refer to <a href="profiler-play-edit-samples.html">Play mode and Editor samples</a>.</td>
+</tr>
+</tbody>
+</table>
+
+<h2>Timeline tooltips</h2>
+
+<p>When you select a sample in the Timeline view, the tooltip on the selected sample provides further details, such as the number of instances and the total time of this sample across all threads. You can select the text within the tooltip and copy it and use the buttons to interact with the sample further.</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Tooltip</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Copy</strong></td>
+	<td style="text-align:left;">Copy the call stack and the entire contents of the tooltip to your clipboard.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Show</strong></td>
+	<td style="text-align:left;">Select this dropdown to view the sample in different contexts:<br><ul>
+<li>
+<strong>Hierarchy</strong>: Change the selected sample’s view to <a href="profiler-cpu-introduction.html#views">Hierarchy</a> view.</li>
+<li>
+<strong>Raw Hierarchy</strong>: Change the selected sample’s view <a href="profiler-cpu-introduction.html#views">Raw Hierarchy</a> view.</li>
+<li>
+<strong>Inverted Hierarchy</strong>: Change the selected sample’s view <a href="profiler-cpu-introduction.html#views">Inverted Hierarchy</a> view.</li>
+<li>
+<strong>Full Details for Call Stacks</strong>: Enable this property to display the full list of method pointer addresses of the call stack.<br><br>Unity records call stacks as a list of method pointer addresses, which it uses to display the method name, file path, and line number of the stack. Whenever only the pointer address is present, Unity ignores it to conserve screen space for the actionable items that have further information available.</li>
+<li>
+<strong>Selected Sample Stack</strong>: View the details of the sample stack. Unity opens this information in a separate window. You can then copy the sample stack information to your clipboard.<br><br>The sample stack differs from a method’s call stack because Unity doesn’t tie every sample to a specific method, nor does it record every call as a sample. If you select a sample in a different frame and there isn’t a sample with the same sample stack in the displayed frame, this window shows both the sample stack of the original selection, and the approximate selection for this frame.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+
+<h2>Hierarchy columns</h2>
+
+<p>The hierarchy views display the following detailed information for each item:</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;">
+<col style="text-align:left;">
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"><strong>Column</strong></th>
+	<th style="text-align:left;"><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><strong>Total</strong></td>
+	<td style="text-align:left;">The total amount of time Unity spent in a particular sample, as a percentage of the total frame time.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Self</strong></td>
+	<td style="text-align:left;">The total amount of time Unity spent in a particular sample as a percentage of the total frame time, excluding the time from sub samples.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Calls</strong></td>
+	<td style="text-align:left;">The number of calls made to this sample in this frame. In the Raw Hierarchy view the values in this column are always <code>1</code> because the Profiler doesn’t merge the hierarchy of samples.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>GC Alloc</strong></td>
+	<td style="text-align:left;">How much scripting heap memory Unity has allocated in the current frame. The garbage collector manages the scripting heap memory.<br><br>For more details about the managed heap refer to the documentation on <a href="performance-managed-memory.html">Understanding Automatic Memory Management</a>.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Time ms</strong></td>
+	<td style="text-align:left;">The total amount of time Unity spent in a particular sample, in milliseconds.<br><br><strong>Note:</strong> If your application uses the <a href="job-system.html">job system</a> or multithreaded rendering, this information might be misleading, because it only contains the time Unity spent on the selected thread. To change the thread, select the <strong>Thread</strong> dropdown at the top of the Hierarchy pane.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Self ms</strong></td>
+	<td style="text-align:left;">The total amount of time Unity spent in a particular sample, in milliseconds, excluding the time Unity spends calling sub functions.</td>
+</tr>
+<tr>
+	<td style="text-align:left;"><strong>Warning (⚠)</strong></td>
+	<td style="text-align:left;">Displays how many times the application has triggered a warning during the current frame. For more information, refer to <a href="profiler-markers.html">Performance warnings</a>.</td>
+</tr>
+</tbody>
+</table>
+
+<h2>Additonal resources</h2>
+
+<ul>
+<li><a href="ProfilerWindow.html">Profiler window reference</a></li>
+<li><a href="performance-managed-memory.html">Understanding Automatic Memory Management</a></li>
+<li><a href="profiler-play-edit-samples.html">Play mode and Editor samples</a></li>
+<li><a href="profiling-play-mode.html">Collect performance data in Play mode</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="profiler-cpu-navigating.html"></a></span><div class="tip">Navigating the CPU Usage Profiler module</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="profiler-memory.html"></a></span><div class="tip">Memory performance data</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

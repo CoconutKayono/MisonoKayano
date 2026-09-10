@@ -1,0 +1,318 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Optimize for untethered XR devices in URP</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<meta property="relative-path-to-manual" content="">
+<meta property="version-switcher-versions-with-this-page" content="Versions with this page:">
+<meta property="version-switcher-versions-without-this-page" content="Versions without this page:">
+<meta property="version-switcher-supported" content="Supported">
+<meta property="version-switcher-legacy" content="Legacy">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/Manual/xr-untethered-device-optimization.html">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../StaticFilesManual/js/jquery.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/core.js?ts=20260626"></script><script type="text/javascript" src="../StaticFilesManual/js/image-comp.js?ts=20260626"></script><script type="text/javascript" src="docdata/toc.js?ts=20260626"></script><script type="text/javascript" src="docdata/global_toc.js?ts=20260626"></script><link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/core.css?ts=20260626">
+<link rel="stylesheet" type="text/css" href="../StaticFilesManual/css/icons.css?ts=20260626">
+<link rel="stylesheet" href="../StaticFilesManual/css/prism.css">
+<script src="../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="index.html" class="selected">Manual</a></li>
+<li><a href="../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/xr-untethered-device-optimization.html">English</a></li>
+<li><a href="/cn/current/Manual/xr-untethered-device-optimization.html">中文</a></li>
+<li><a href="/ja/current/Manual/xr-untethered-device-optimization.html">日本語</a></li>
+<li><a href="/kr/current/Manual/xr-untethered-device-optimization.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: Unity 6.7 Beta</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/xr-untethered-device-optimization.html">English</a></li>
+<li><a href="/cn/current/Manual/xr-untethered-device-optimization.html">中文</a></li>
+<li><a href="/ja/current/Manual/xr-untethered-device-optimization.html">日本語</a></li>
+<li><a href="/kr/current/Manual/xr-untethered-device-optimization.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="XR.html">XR</a></li>
+<li><a href="xr-graphics.html">XR graphics</a></li>
+<li>Optimize for untethered XR devices in URP</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="VRFrameTiming.html"></a></span><div class="tip">VR frame timing </div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="xr-graphics-resolution-scaling.html"></a></span><div class="tip">Resolution control in XR projects</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Optimize for untethered XR devices in URP</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>Understand the ways you can optimize your URP project for XR devices.</p>
+
+<p>This page describes the optimization techniques for universal render pipeline (URP) projects that target untethered extended reality (XR) devices. An untethered XR device is an XR device that aren’t connected to a desktop with a wire.</p>
+
+<p>Most untethered XR devices use tile-based GPUs. The guidelines on this page help you use this hardware architecture more efficiently and avoid using rendering techniques that are less efficient on those devices. To learn more about how tiled-based GPUs work, refer to the additional resources section.</p>
+
+<p>To optimize your XR project, consider the following:</p>
+
+<ul>
+<li><a href="#vulkan">Use Vulkan API</a></li>
+<li><a href="#openxr">Use OpenXR</a></li>
+<li><a href="#render-graph">Use the render graph system</a></li>
+<li><a href="#forward-rendering">Use Forward rendering</a></li>
+<li><a href="#post-processing">Use on-tile post-processing</a></li>
+<li><a href="#geometry-shaders">Avoid geometry shaders</a></li>
+<li><a href="#msaa">Use MSAA for anti-aliasing</a></li>
+<li><a href="#depth-priming">Disable depth priming</a></li>
+<li><a href="#textures">Disable Opaque texture and Depth texture properties</a></li>
+<li><a href="#ssao">Disable SSAO</a></li>
+<li><a href="#hdr">Disable HDR</a></li>
+<li><a href="#resolution-scaling">Implement resolution scaling</a></li>
+<li><a href="#meta-quest-build-profile-optimization">Meta Quest build profile shader optimization</a></li>
+<li><a href="#adaptive-performance">Use Adaptive Performance for OpenXR projects</a></li>
+</ul>
+
+<p>The following sections describe these methods in more detail.</p>
+
+<p><a id="vulkan" aria-hidden="true"></a></p>
+
+<h2>Use Vulkan API</h2>
+
+<p>Vulkan API is more stable and provides better performance compared to OpenGL ES API in URP projects targeting XR platforms. Many new OpenXR features are only available on Vulkan.</p>
+
+<p>Refer to <a href="configure-graphicsAPIs.html#override-default-gfxapi">Configure graphics APIs</a> for information on how to change the graphics API to Vulkan.</p>
+
+<p><a id="openxr" aria-hidden="true"></a></p>
+
+<h2>Use OpenXR Plugin</h2>
+
+<p>Use the <a href="https://docs.unity3d.com/Packages/com.unity.xr.openxr@1.17/">OpenXR Plugin</a> in projects that target XR platforms.</p>
+
+<p>Enable the following settings in your OpenXR project:</p>
+
+<ul>
+<li><a href="https://docs.unity3d.com/Packages/com.unity.xr.openxr@1.17/manual/project-configuration.html#set-the-render-mode">Multi-view \ Single pass rendering</a></li>
+<li><a href="https://docs.unity3d.com/Packages/com.unity.xr.openxr@1.17/manual/features/foveatedrendering.html">Foveated rendering</a></li>
+<li><a href="https://docs.unity3d.com/Packages/com.unity.xr.openxr@1.17/manual/features/multiviewrenderregions.html">Multiview render regions</a></li>
+</ul>
+
+<p>
+<strong>Tip:</strong> Consider whether <a href="https://docs.unity3d.com/Packages/com.unity.xr.openxr@1.17/manual/features/spacewarp.html">URP Application SpaceWarp</a> is appropriate for your project. Application SpaceWarp can improve frame rate significantly, but might cause visible artifacts for some content.</p>
+
+<p><a id="render-graph" aria-hidden="true"></a></p>
+
+<h2>Use render graph system</h2>
+
+<p>In Unity 6.0 and newer, new URP projects use the render graph system. Refer to <a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.core@17.0/manual/render-graph-benefits.html">Benefits of the render graph system</a> to understand the benefits of render graph.</p>
+
+<p><a id="forward-rendering" aria-hidden="true"></a></p>
+
+<h2>Use Forward rendering</h2>
+
+<p>In URP, Deferred rendering generates several render targets for the G-buffer. Unity performs multiple <a href="https://developer.qualcomm.com/software/snapdragon-profiler/app-notes/avoid-gmem-loads">graphics memory loads</a> (Qualcomm documentation) to access those render targets, which is slow on tile-based GPUs.</p>
+
+<p>Refer to <a href="urp/rendering/deferred-rendering-path-landing.html">Deferred rendering implementation details</a> for more information on the implementation of the G-buffer in URP.</p>
+
+<p>The <strong>Rendering Path</strong> settings is in the <a href="urp/urp-universal-renderer.html#rendering"><strong>Rendering</strong></a> section of the <a href="urp/urp-universal-renderer.html">Universal Renderer Asset</a>.</p>
+
+<p><a id="post-processing" aria-hidden="true"></a></p>
+
+<h2>Use on-tile post processing (Unity 6.3 and newer)</h2>
+
+<p>On XR devices, Unity recommends that you use on-tile post-processing. Post-processing techniques without on-tile post-processing enabled are expensive on untethered XR devices because post-processing adds intermediate textures.</p>
+
+<p>In Unity 6.3 and newer, you can use on-tile post-processing to enable certain URP post-processing effects on XR devices. Refer to <a href="on-tile-post-processing.html">On-tile post-processing</a> to learn more about on-tile post-processing and how to enable it in your XR project.</p>
+
+<p>In versions of Unity older than Unity 6.3, Unity recommends that you disable post-processing techniques because on-tile post-processing isn’t available.</p>
+
+<p><a id="geometry-shaders" aria-hidden="true"></a></p>
+
+<h2>Avoid geometry shaders</h2>
+
+<p>Avoid using geometry shaders on platforms with tile-based GPUs. Some devices don’t support geometry shaders.</p>
+
+<p>The generation of additional primitives and vertices breaks the tiled GPU flow because the division of primitives after the binning pass becomes invalid.</p>
+
+<p><a id="msaa" aria-hidden="true"></a></p>
+
+<h2>Use MSAA for anti-aliasing</h2>
+
+<p>Tile-based GPUs can store more samples in the same tile. This makes Multi-sample Anti-aliasing (MSAA) efficient on mobile and untethered XR platforms. 2X MSAA value provides a good balance between visual quality and performance.</p>
+
+<p>You can change the MSAA settings in the <strong>Quality</strong> section of the URP Asset. For more information on MSAA, refer to <a href="urp/anti-aliasing.html">Anti-aliasing in URP</a>.</p>
+
+<p><a id="depth-priming" aria-hidden="true"></a></p>
+
+<h2>Disable depth priming</h2>
+
+<p>Disable depth priming on XR platforms. XR devices have two views, which increases the performance impact from performing the depth pre-pass.</p>
+
+<p>For untethered XR devices there are no benefits of performing the depth priming. You can obtain similar results using hardware optimization features, such as Low-Resolution-Z (LRZ) or Hidden Surface Removal (HSR).</p>
+
+<p>For information on how to configure or disable depth priming, refer to the <a href="urp/urp-universal-renderer.html#rendering">Depth Priming Mode</a> property description.</p>
+
+<p><a id="textures" aria-hidden="true"></a></p>
+
+<h2>Disable Opaque texture and Depth texture properties</h2>
+
+<p>Disable the <strong>Opaque Texture</strong> and <strong>Depth Texture</strong> properties to improve performance. Enabling those options causes extra texture copy operations, which requires extra GMEM loads.</p>
+
+<p>Refer to <a href="urp/universalrp-asset.html#rendering">Rendering</a> for more information on these opaque and depth texture properties..</p>
+
+<p>To identify if your current configuration is using intermediate textures, use the <a href="urp/render-graph-view.html">Render Graph Viewer</a> window.</p>
+
+<p><a id="ssao" aria-hidden="true"></a></p>
+
+<h2>Disable SSAO</h2>
+
+<p>Screen Space Ambient Occlusion (SSAO) might have poor performance on mobile and untethered XR devices.</p>
+
+<p>SSAO in URP requires the depth priming pass, two blur passes to reduce the noise, and an additional blit pass to clean the image. Such passes require several GMEM loads which have a high performance impact on tile-based GPUs.</p>
+
+<p>Refer to <a href="urp/post-processing-ssao.html">SSAO</a> for more information.</p>
+
+<p><a id="hdr" aria-hidden="true"></a></p>
+
+<h2>Disable HDR</h2>
+
+<p>High Definition Rendering (HDR) has higher precision and improves graphics fidelity, but requires more bits per pixel to process. Disable HDR to reduce memory bandwidth and improve performance.</p>
+
+<p>Most untethered XR devices don’t support HDR rendering.</p>
+
+<p>To disable HDR:</p>
+
+<ol>
+<li>Select a URP Asset.</li>
+<li>In the <strong>Inspector</strong> window, in the <strong>Quality</strong> section, clear the <strong>HDR</strong> property.</li>
+</ol>
+
+<p>
+<strong>Note</strong>: some features, such as HDR light estimation require HDR. Check the requirements for the features your project uses to ensure HDR isn’t required.</p>
+
+<p><a id="resolution-scaling" aria-hidden="true"></a></p>
+
+<h2>Implement resolution scaling</h2>
+
+<p>Unity recommends that you implement resolution scaling to reduce GPU workload and maintain a stable frame rate.</p>
+
+<p>To learn more, refer to <a href="xr-graphics-resolution-scaling.html">Resolution control in XR projects</a>.</p>
+
+<p><a id="meta-quest-build-profile-optimization" aria-hidden="true"></a></p>
+
+<h2>Meta Quest build profile shader optimization</h2>
+
+<p>When you enable the <a href="xr-meta-quest-build-profile.html">Meta Quest build profile</a>, Unity enables some automatic shader optimizations to reduce GPU frame time. To learn more about these optimizations, refer to <a href="xr-meta-quest-graphics-optimization.html">Shader optimizations for Meta Quest</a>.</p>
+
+<p><a id="adaptive-performance" aria-hidden="true"></a></p>
+
+<h2>Use Adaptive Performance for OpenXR projects</h2>
+
+<p>In Unity 6.6 and newer, the <a href="adaptive-performance/adaptive-performance.html">Adaptive Performance</a> module supports OpenXR devices.</p>
+
+<p>Enable the Adaptive Performance <a href="adaptive-performance/basic-provider.html">Basic provider</a> in your OpenXR project to automatically adjust application quality based on device frame timing. Adaptive Performance helps maintain smoother performance and a more consistent user experience on XR devices.</p>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="xr-graphics-on-tile-rendering.html">Tile-based rendering in XR</a></li>
+<li>
+<a href="https://developer.arm.com/documentation/102662/0100/Overview">Tile-Based Rendering</a> (Arm)</li>
+</ul>
+
+<p><span class="notooltips"></span></p>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="VRFrameTiming.html"></a></span><div class="tip">VR frame timing </div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="xr-graphics-resolution-scaling.html"></a></span><div class="tip">Resolution control in XR projects</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>

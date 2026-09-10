@@ -1,0 +1,281 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-domain-script="6e91be4c-3145-4ea2-aa64-89d716064836" data-dLayer-ignore="true" data-document-language="true"></script><script type="text/javascript">function OptanonWrapper() {}</script><script>window.dataLayer = window.dataLayer || []; dataLayer.push({ event: 'dataLayer-initialized', user: { user_unity_id: undefined, user_logged_in: 'no' }, environment: { environment_locale: 'en-us', environment_currency: undefined }});</script><script>var offline=(location.href.indexOf('docs.unity3d.com')==-1)?true:false;if(!offline){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script','dataLayer','GTM-5V25JL6');}</script><link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unity - Manual: Write a render pass using the render graph system in URP</title>
+<meta property="og:image" content="https://unity3d.com/files/images/ogimg.jpg">
+<meta name="author" content="Unity Technologies">
+<meta property="relative-path-to-manual" content="../">
+<meta property="version-switcher-versions-with-this-page" content="Versions with this page:">
+<meta property="version-switcher-versions-without-this-page" content="Versions without this page:">
+<meta property="version-switcher-supported" content="Supported">
+<meta property="version-switcher-legacy" content="Legacy">
+<link rel="shortcut icon" href="https://unity.com/themes/contrib/unity_base/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" href="../../StaticFilesManual/images/favicons/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="../../StaticFilesManual/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../../StaticFilesManual/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="../../StaticFilesManual/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../../StaticFilesManual/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../../StaticFilesManual/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon-precomposed" href="../../StaticFilesManual/images/favicons/apple-touch-icon.png">
+<link rel="canonical" href="https://docs.unity3d.com/6000.7/Documentation/Manual/urp/render-graph-write-render-pass.html">
+<meta name="msapplication-TileColor" content="#222c37">
+<meta name="msapplication-TileImage" content="../../StaticFilesManual/images/favicons/tileicon-144x144.png">
+<script type="text/javascript" src="/StaticFilesConfig/UnityVersionsInfo.js"></script><script type="text/javascript" src="../../StaticFilesManual/js/jquery.js?ts=20260626"></script><script type="text/javascript" src="../../StaticFilesManual/js/core.js?ts=20260626"></script><script type="text/javascript" src="../../StaticFilesManual/js/image-comp.js?ts=20260626"></script><script type="text/javascript" src="../docdata/toc.js?ts=20260626"></script><script type="text/javascript" src="../docdata/global_toc.js?ts=20260626"></script><link rel="stylesheet" type="text/css" href="../../StaticFilesManual/css/core.css?ts=20260626">
+<link rel="stylesheet" type="text/css" href="../../StaticFilesManual/css/icons.css?ts=20260626">
+<link rel="stylesheet" href="../../StaticFilesManual/css/prism.css">
+<script src="../../StaticFilesManual/js/prism.js"></script><script src="/StaticFilesConfig/feedback/feedback.js"></script><script src="../../StaticFilesManual/js/jquery.sidebar.min.js"></script><link rel="stylesheet" href="../../StaticFilesManual/css/mobileoptimisation.css">
+<script src="../../StaticFilesManual/js/mobileoptimisation.js"></script>
+</head>
+<body>
+<div id="DocsAnalyticsData" data-area="none" data-pagetype="manual"></div>
+<div class="header-wrapper">
+<div id="header" class="header"><div class="content">
+<div class="spacer"><div class="menu">
+<div id="nav-open" for="nav-input"><span></span></div>
+<div class="logo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+<div class="search-form"><form action="../30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" class="submit">
+</form></div>
+<ul>
+<li><a href="../index.html" class="selected">Manual</a></li>
+<li><a href="../../ScriptReference/index.html">Scripting API</a></li>
+</ul>
+</div></div>
+<div class="more">
+<div class="filler"></div>
+<ul><li><a href="https://unity.com/">unity.com</a></li></ul>
+</div>
+</div></div>
+<div class="toolbar"><div class="content">
+<div class="toggle version-number" id="VersionNumber" data-target=".otherversionscontent">
+                                Version: <b>Unity 6.7 Beta</b> (6000.7)
+                                <div class="otherversionscontent" id="OtherVersionsContent" style="display: none;">
+<ul id="OtherVersionsContentUl"></ul>
+<div id="otherVersionsLegend"><ul>
+<li>
+<div id="supportedColour" class="legendBox"></div>Supported</li>
+<li>
+<div id="notFoundColour" class="legendBox"></div>Legacy</li>
+</ul></div>
+</div>
+<div id="VersionSwitcherArrow" class="arrow versionSwitcherArrow"></div>
+</div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/urp/render-graph-write-render-pass.html">English</a></li>
+<li><a href="/cn/current/Manual/urp/render-graph-write-render-pass.html">中文</a></li>
+<li><a href="/ja/current/Manual/urp/render-graph-write-render-pass.html">日本語</a></li>
+<li><a href="/kr/current/Manual/urp/render-graph-write-render-pass.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div>
+<div class="mobileLogo"><a aria-label="go to the homepage" href="https://docs.unity3d.com"></a></div>
+</div>
+<div id="master-wrapper" class="master-wrapper clear">
+<div id="sidebar" class="sidebar"><div class="sidebar-wrap"><div class="content"><div class="sidebar-menu"><div class="toc" id="customScrollbar">
+<h2>Unity Manual</h2>
+<div class="search-form sidebar-search-form"><form action="30_search.html" method="get" class="apisearch">
+<input type="text" name="q" aria-label="Search manual documentation" placeholder="Search manual..." autosave="Unity Reference" results="5" class="sbox field" id="q"><input type="submit" id="mobileSearchBtn" class="submit" value="Search">
+</form></div>
+<div class="toggle version-number sidebar-version-switcher" id="VersionNumber" data-target=".otherversionscontent"><form id="otherVersionsContentMobileForm"><div class="ui-field-contain">
+<label for="select-native-4">Version: Unity 6.7 Beta</label><select name="select-native-4" id="versionsSelectMobile"><option>Select a different version</option>
+<optgroup id="versionsWithThisPageMobile" label="Versions with this page"></optgroup>
+<optgroup id="versionsWithoutThisPageMobile" label="Versions without this page"></optgroup></select>
+</div></form></div>
+<div class="lang-switcher"><div class="current toggle" data-target=".lang-list">
+<div class="lbl">Language
+:                <span class="b">English</span>
+</div>
+<div class="arrow"></div>
+<div class="lang-list" style="display:none;"><ul>
+<li><a href="/Manual/urp/render-graph-write-render-pass.html">English</a></li>
+<li><a href="/cn/current/Manual/urp/render-graph-write-render-pass.html">中文</a></li>
+<li><a href="/ja/current/Manual/urp/render-graph-write-render-pass.html">日本語</a></li>
+<li><a href="/kr/current/Manual/urp/render-graph-write-render-pass.html">한국어</a></li>
+</ul></div>
+</div></div>
+</div></div></div></div></div>
+<div id="content-wrap" class="content-wrap"><div class="content-block"><div class="content">
+<div class="section">
+<div class="breadcrumbs clear"><ul>
+<li><a href="../render-pipelines.html">Render pipelines</a></li>
+<li><a href="../universal-render-pipeline.html">Using the Universal Render Pipeline</a></li>
+<li><a href="../urp/customizing-urp.html">Custom rendering and post-processing in URP</a></li>
+<li><a href="../urp/render-graph.html">Render graph system in URP</a></li>
+<li>Write a render pass using the render graph system in URP</li>
+</ul></div>
+<div class="mb20"><div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="../urp/render-graph-introduction.html"></a></span><div class="tip">Introduction to the render graph system in URP</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="../urp/render-graph-blit.html"></a></span><div class="tip">Blit using the render graph system in URP</div>
+</div>
+</div></div>
+<div id="_leavefeedback"></div>
+<h1>Write a render pass using the render graph system in URP</h1>
+<!--BeginSwitchLink--><!--EndSwitchLink-->
+<div class="clear"></div>
+
+<p>This page describes how to write a render pass using the render graph system.</p>
+
+<p>To illustrate the description, the page uses the example render pass that copies the <span class="tooltip" tabindex="0" ><strong>camera</strong><span class="tooltiptext">A component which creates an image of a particular viewpoint in your scene. The output is either drawn to the screen or captured as a texture. <a class="tooltipMoreInfoLink" aria-label="Navigate to more info about CamerasOverview.html" href="../CamerasOverview.html">More info</a><br/><span class="tooltipGlossaryLink">See in <a href="../Glossary.html#Camera" aria-label="Go to glossary anchor for Camera">Glossary</a></span></span></span>’s active color texture to a destination texture. To simplify the code, this example does not use the destination texture elsewhere in the frame. You can use the frame debugger to inspect its contents.</p>
+
+<h2>Declare a render pass</h2>
+
+<p>Declare a render pass as a class that inherits from the <a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.universal@latest/index.html?subfolder=/api/UnityEngine.Rendering.Universal.ScriptableRenderPass.html">ScriptableRenderPass</a> class.</p>
+
+<h2>Declare resources that a render pass uses</h2>
+
+<p>Inside the render pass, declare a class that contains the resources that the render pass uses.</p>
+
+<p>The resources can be regular C# variables and render graph resource references. The render graph system can access this data structure during the rendering code execution. Ensure that you declare only the variables that the render pass uses. Adding unnecessary variables can reduce performance.</p>
+
+<pre><code class="lang-cs">class PassData
+{
+    public TextureHandle copySourceTexture;
+}
+</code></pre>
+
+<p>The <a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.universal@latest/index.html?subfolder=/api/UnityEngine.Rendering.Universal.RenderObjectsPass.html#UnityEngine_Rendering_Universal_RenderObjectsPass_RecordRenderGraph_">RecordRenderGraph</a> method populates the data and the render graph passes it as a parameter to the rendering function.</p>
+
+<h2>
+<a name="recordrendergraph" aria-hidden="true"></a>Implement the RecordRenderGraph method</h2>
+
+<p>Use the <a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.universal@latest/index.html?subfolder=/api/UnityEngine.Rendering.Universal.RenderObjectsPass.html#UnityEngine_Rendering_Universal_RenderObjectsPass_RecordRenderGraph_">RecordRenderGraph</a> method to add and configure one or more render passes in the render graph system. </p>
+
+<p>Unity calls this method during the render graph configuration step and lets you register relevant passes and resources for the render graph execution. Use this method to implement custom rendering.</p>
+
+<p>In the <a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.universal@latest/index.html?subfolder=/api/UnityEngine.Rendering.Universal.RenderObjectsPass.html#UnityEngine_Rendering_Universal_RenderObjectsPass_RecordRenderGraph_">RecordRenderGraph</a> method you declare render pass inputs and outputs, but do not add commands to command buffers.</p>
+
+<p>The following section describes the main elements of the <a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.universal@latest/index.html?subfolder=/api/UnityEngine.Rendering.Universal.RenderObjectsPass.html#UnityEngine_Rendering_Universal_RenderObjectsPass_RecordRenderGraph_">RecordRenderGraph</a> method and provides an example implementation.</p>
+
+<h2>The render graph builder variable add frame resources</h2>
+
+<p>The <code>builder</code> variable is an instance of the <code>IRasterRenderGraphBuilder</code> interface. This variable is the entry point for configuring the information related to the render pass.</p>
+
+<p>The <a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.universal@latest/index.html?subfolder=/api/UnityEngine.Rendering.Universal.UniversalResourceData.html">UniversalResourceData</a> class contains all the texture resources used by URP, including the active color and depth textures of the camera.</p>
+
+<p>The <a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.universal@latest/index.html?subfolder=/api/UnityEngine.Rendering.Universal.UniversalCameraData.html">UniversalCameraData</a> class contains the data related to the currently active camera.</p>
+
+<p>For demonstrative purposes, this sample creates a temporary destination texture. The <code>builder.UseTexture</code> method declares that this render pass uses the source texture as a read-only input:</p>
+
+<pre><code class="lang-cs">builder.UseTexture(passData.copySourceTexture);
+</code></pre>
+
+<p>In this example, the <code>builder.SetRenderAttachment</code> method declares that this render pass uses the temporary destination texture as its color render target.</p>
+
+<h2>Declare a rendering function that generates the rendering commands for the render pass</h2>
+
+<p>Declare a rendering function that generates the rendering commands for the render pass.</p>
+
+<pre><code class="lang-cs">static void ExecutePass(PassData data, RasterGraphContext context)
+{
+    // Records a rendering command to copy, or blit, the contents of the source texture
+    // to the color render target of the render pass.
+    Blitter.BlitTexture(context.cmd, data.copySourceTexture,
+        new Vector4(1, 1, 0, 0), 0, false);
+}
+</code></pre>
+
+<p>The <code>SetRenderFunc</code> method in the <code>RecordRenderGraph</code> method sets the <code>ExecutePass</code> method as the rendering function that render graph calls when executing the render pass. Use a static method or a static lambda method.</p>
+
+<pre><code class="lang-cs">builder.SetRenderFunc(static (PassData data, RasterGraphContext context) =&gt; ExecutePass(data, context));
+</code></pre>
+
+<p>The complete example of the <a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.universal@latest/index.html?subfolder=/api/UnityEngine.Rendering.Universal.RenderObjectsPass.html#UnityEngine_Rendering_Universal_RenderObjectsPass_RecordRenderGraph_">RecordRenderGraph</a> method:</p>
+
+<pre><code class="lang-cs">// This method adds and configures one or more render passes in the render graph.
+// This process includes declaring their inputs and outputs,
+// but does not include adding commands to command buffers.
+public override void RecordRenderGraph(RenderGraph renderGraph, ContextContainer frameContext)
+{
+    string passName = &quot;Copy To Debug Texture&quot;;
+
+    // Add a raster render pass to the render graph. The PassData type parameter determines
+    // the type of the passData output variable.
+    using (var builder = renderGraph.AddRasterRenderPass&lt;PassData&gt;(passName,
+        out var passData))
+    {
+        // UniversalResourceData contains all the texture references used by URP,
+        // including the active color and depth textures of the camera.
+        UniversalResourceData frameData = frameContext.Get&lt;UniversalResourceData&gt;();
+
+        // Populate passData with the data needed by the rendering function
+        // of the render pass.
+        // Use the camera's active color texture
+        // as the source texture for the copy operation.
+        passData.copySourceTexture = frameData.activeColorTexture;
+
+        // Create a destination texture for the copy operation based on the settings,
+        // such as dimensions, of the textures that the camera uses.
+        // Set depthBufferBits to 0 to ensure that the CreateRenderGraphTexture method
+        // creates a color texture and not a depth texture.
+        TextureDesc desc = frameData.cameraDepthTexture.GetDescriptor(renderGraph);
+        desc.depthBufferBits = 0;
+        TextureHandle destination = renderGraph.CreateTexture(desc);
+
+        // Declare that this render pass uses the source texture as a read-only input.
+        builder.UseTexture(passData.copySourceTexture);
+
+        // Declare that this render pass uses the temporary destination texture
+        // as its color render target.
+        // This is similar to cmd.SetRenderTarget prior to the RenderGraph API.
+        builder.SetRenderAttachment(destination, 0);
+
+        // Make sure the render graph system keeps the render pass, even if it's not used in the final frame.
+        // Don't use this in production code, because it prevents the render graph system from removing the render pass if it's not needed. 
+        builder.AllowPassCulling(false);
+
+        // Set the ExecutePass method as the rendering function that render graph calls
+        // for the render pass. 
+        // This sample uses a lambda expression to avoid memory allocations.
+        builder.SetRenderFunc(static (PassData data, RasterGraphContext context)
+            =&gt; ExecutePass(data, context));
+    }
+}
+</code></pre>
+
+<h2>Inject the scriptable render pass instance into the renderer</h2>
+
+<p>To inject the scriptable render pass instance into the renderer, use the <code>AddRenderPasses</code> method from a Renderer Feature implementation. URP calls the <code>AddRenderPasses</code> method every frame, once for each Camera.</p>
+
+<pre><code class="lang-cs">public override void AddRenderPasses(ScriptableRenderer renderer, ref RenderingData renderingData)
+{
+    renderer.EnqueuePass(m_CopyRenderPass);
+}
+</code></pre>
+
+<h2>Additional resources</h2>
+
+<ul>
+<li><a href="customize/inject-render-pass-via-script.html">Inject a render pass using a Scriptable Renderer Feature</a></li>
+</ul>
+<div id="_content"></div>
+<div class="nextprev clear">
+<div class="icon tt left mr1" data-distance="-40|-30|top">
+<span class="prev"><a aria-label="go to the previous page" href="../urp/render-graph-introduction.html"></a></span><div class="tip">Introduction to the render graph system in URP</div>
+</div>
+<div class="icon tt right" data-distance="-40|-30|top">
+<span class="next"><a aria-label="go to the next page" href="../urp/render-graph-blit.html"></a></span><div class="tip">Blit using the render graph system in URP</div>
+</div>
+</div>
+</div>
+<div class="footer-wrapper"><div class="footer clear">
+<div class="copy">Copyright ©2005-2026 Unity Technologies. All rights reserved. Built from job ID 70640455. Built on: 2026-06-26.</div>
+<div class="menu">
+<a href="https://learn.unity.com/">Tutorials</a><a href="https://answers.unity3d.com">Community Answers</a><a href="https://support.unity3d.com/hc/en-us">Knowledge Base</a><a href="https://forum.unity3d.com">Forums</a><a href="https://unity3d.com/asset-store">Asset Store</a><a href="https://docs.unity3d.com/Manual/TermsOfUse.html">Terms of use</a><a href="https://unity.com/legal">Legal</a><a href="https://unity.com/legal/privacy-policy">Privacy Policy</a><a href="https://unity.com/legal/cookie-policy">Cookies</a><a href="https://unity.com/legal/do-not-sell-my-personal-information">Do Not Sell or Share My Personal Information</a><div id="ot-sdk-btn-container"><a id="ot-sdk-btn" class="ot-sdk-show-settings" href="javascript:void(0);">Your Privacy Choices (Cookie Settings)</a></div>
+</div>
+</div></div>
+</div></div></div>
+</div>
+</body>
+</html>
