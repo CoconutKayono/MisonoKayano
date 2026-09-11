@@ -1,0 +1,588 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>空间与矩阵实验室</title>
+<style>
+:root{font-family:"Microsoft YaHei",system-ui,sans-serif;color:#17324d;background:#f3f6fa;color-scheme:light}
+*{box-sizing:border-box}body{margin:0;padding:28px}main{max-width:1120px;margin:auto}h1{font-size:30px;margin:0 0 12px}h2{font-size:19px}
+p{line-height:1.8}header p{max-width:850px}a{color:#175ea1}.layout{display:grid;grid-template-columns:260px minmax(0,1fr);gap:24px}
+aside,.view{background:white;padding:22px;border:1px solid #d9e3ed;border-radius:12px}
+label{display:block;font-size:15px;margin:0 0 20px}select{width:100%;padding:10px;font:inherit;margin-top:8px}
+input[type=range]{display:block;width:100%;margin:10px 0}output{float:right;font-variant-numeric:tabular-nums}
+button{padding:9px 14px;background:#edf3f8;border:1px solid #acbfce;border-radius:5px;color:#17324d;font:inherit;cursor:pointer}
+svg{width:100%;height:auto;display:block}#math{font-family:Consolas,monospace;white-space:pre-wrap;line-height:1.7;font-size:15px;background:#f4f7fb;padding:15px;overflow-wrap:anywhere}
+#explain{min-height:80px}small,.note{color:#52677b}.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:14px}
+.legend span{white-space:nowrap}.red{color:#bd3b48}.green{color:#14856e}.blue{color:#316db5}.orange{color:#b65a08}
+[hidden]{display:none!important}@media(max-width:780px){body{padding:14px}.layout{grid-template-columns:1fr}.view{padding:12px}aside{padding:16px}.controls{display:grid;grid-template-columns:1fr 1fr;gap:0 18px}h1{font-size:25px}}
+.lab-nav{display:flex;gap:10px;margin:22px 0 14px}.lab-nav button{padding:12px 24px;font-weight:600}.lab-nav button[aria-pressed=true]{background:#173e61;color:white;border-color:#173e61}
+.lab-intro{margin:10px 0 14px}.recipes{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:20px}.recipes button{background:white;font-size:14px}
+.function-layout{display:grid;grid-template-columns:272px minmax(0,1fr);gap:22px}.function-view{background:#fff;padding:24px;border:1px solid #d9e3ed;border-radius:12px;min-width:0}
+.function-layout aside{align-self:start}.function-layout hr{border:0;border-top:1px solid #d9e3ed;margin:24px 0}
+.parameter{margin-bottom:18px}.parameter label{margin-bottom:8px}.parameter .param-line{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.parameter input[type=number]{width:88px;border:1px solid #b5c6d5;border-radius:4px;padding:5px 7px;font:inherit;color:#17324d;background:white}
+.parameter input[type=range]{margin:8px 0 0}.parameter.check label{display:flex;gap:8px;align-items:center;line-height:1.5}.parameter.check input{width:17px;height:17px}
+.fn-heading{display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap}.fn-heading h2{margin:4px 0 0;font-size:23px}.eyebrow{font-size:11px;letter-spacing:.1em;color:#60758b;margin:0}
+.probe-readout{font:600 15px Consolas,monospace;color:#9b4b00;background:#fff5e8;padding:9px 12px;border-radius:5px}
+#fnSummary{margin:12px 0;color:#425e76}#fnCurve{touch-action:none;cursor:crosshair;min-height:180px}
+.curve-key{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:12px;color:#52677b}.curve-key span:first-child{color:#226bad}.curve-key span:last-child{color:#ad5500}
+.micro{font-size:12px;line-height:1.7;color:#5a7085}.preview-pair{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:20px}
+figure{margin:0;min-width:0}figcaption{font-weight:600;font-size:14px;margin-bottom:8px}canvas{display:block;width:100%;height:auto;border-radius:5px;border:1px solid #b5c6d5;background:#eee}
+.fn-detail{margin-top:20px}.fn-detail h3,.learning h3{font-size:16px;margin:16px 0 8px}.fn-detail pre{font:13px/1.8 Consolas,monospace;background:#f3f7fb;padding:14px;white-space:pre-wrap;overflow-wrap:anywhere;border-radius:5px}
+#fnCalculation{font-size:14px;color:#805016;white-space:pre-line}.learning p{font-size:14px}.fn-sources{font-size:13px;margin-top:20px;color:#4c647a}.fn-sources summary{cursor:pointer}
+.error{color:#933621;background:#fff0e9;padding:12px;border-radius:5px}button:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible{outline:3px solid #e8a448;outline-offset:3px}
+@media(max-width:800px){.function-layout{grid-template-columns:1fr}.function-layout aside{padding:18px}.function-view{padding:16px}.fn-heading h2{font-size:20px}.lab-nav button{padding:10px 16px}.preview-pair{gap:10px}}
+</style>
+</head>
+<body>
+<main>
+<header><h1>空间与矩阵实验室</h1>
+<p>从数字到画面：探索 Shader 常用函数，也能切换到空间与矩阵。先预测结果，再拖动参数，观察输入如何改变输出。</p></header>
+<nav class="lab-nav" aria-label="实验类别">
+<button id="showFunctions" type="button" aria-pressed="true" aria-controls="functionSection">函数与灰度</button>
+<button id="showGeometry" type="button" aria-pressed="false" aria-controls="geometrySection">空间与矩阵</button>
+</nav>
+<section id="functionSection" aria-label="Shader 函数实验">
+<p class="lab-intro">把一个灰度值 x 交给函数，看看它怎样变成 y。左边调参数，右边对照曲线与图像；也可以在曲线上点击或拖动，追踪某个输入值。</p>
+<div class="recipes" aria-label="快速实验">
+<span>试一试：</span>
+<button type="button" data-recipe="contrast">拉开灰度对比</button>
+<button type="button" data-recipe="toon">卡通明暗分阶</button>
+<button type="button" data-recipe="circle">柔边圆形遮罩</button>
+<button type="button" data-recipe="rings">重复圆环</button>
+</div>
+<div class="function-layout">
+<aside>
+<label>基础操作<select id="fnOperation">
+<optgroup label="范围与混合">
+<option value="remap">Remap · 重新映射范围</option>
+<option value="clamp">Clamp / Saturate · 限幅</option>
+<option value="lerp">Lerp · 混合两个值</option>
+<option value="affine">Multiply + Add · 缩放与偏移</option>
+<option value="invert">One Minus · 反相</option>
+</optgroup>
+<optgroup label="阈值与分阶">
+<option value="step">Step · 硬阈值</option>
+<option value="smooth">Smoothstep · 柔边阈值</option>
+<option value="levels">分阶 · 严格 N 个灰阶</option>
+<option value="posterize">Posterize · Shader Graph 公式</option>
+<option value="floor">Floor · 向下取整</option>
+</optgroup>
+<optgroup label="形状与重复">
+<option value="frac">Frac · 重复锯齿</option>
+<option value="abs">Abs · 到中心的距离</option>
+<option value="power">Pow · 调整灰度分布</option>
+<option value="sine">Sin · 平滑周期</option>
+</optgroup>
+</select></label>
+<div id="fnParameters"></div>
+<button id="fnReset" type="button">重置当前操作</button>
+<hr>
+<label>输入图案<select id="fnField">
+<option value="ramp">水平渐变：左 0 → 右 1</option>
+<option value="radial">圆形渐变：中心 1 → 边缘 0</option>
+<option value="sphere">球面明暗：简化 N·L</option>
+<option value="waves">程序起伏：连续灰度图案</option>
+</select></label>
+<label>曲线的输入范围<select id="fnDomain"><option value="wide">−1 到 2：观察越界</option><option value="unit">0 到 1：集中看灰度</option></select></label>
+<label for="fnProbe">追踪输入 x <output id="fnProbeValue"></output></label>
+<input id="fnProbe" type="range" min="-1" max="2" step="0.001" value="0.5">
+<div class="parameter"><input id="fnProbeNumber" type="number" min="-1" max="2" step="0.001" value="0.5" aria-label="精确输入追踪值 x"></div>
+<p class="micro">追踪点只用于读数，不会改变图案。图案始终使用 0—1 的输入值。</p>
+</aside>
+<div class="function-view">
+<div class="fn-heading"><div><p class="eyebrow">INPUT → FUNCTION → OUTPUT</p><h2 id="fnTitle"></h2></div><div class="probe-readout" aria-live="polite"><span id="fnReadout"></span></div></div>
+<p id="fnSummary"></p>
+<p id="fnError" class="error" role="status" hidden></p>
+<svg id="fnCurve" viewBox="0 0 720 320" role="img" aria-label="函数曲线，横轴输入 x，纵轴输出 y"></svg>
+<div class="curve-key"><span>蓝色实线：y = f(x)</span><span>灰色虚线：y = x</span><span>橙点：当前输入</span></div>
+<p class="micro">跳变处不连斜线；空心点表示不取该值，实心点表示实际取值。纵轴随输出范围调整，以刻度为准。</p>
+<div class="preview-pair">
+<figure><figcaption>处理前 · 输入 x</figcaption><canvas id="fnBefore" width="400" height="220" role="img" aria-label="输入灰度图案"></canvas></figure>
+<figure><figcaption>处理后 · 输出 f(x)</figcaption><canvas id="fnAfter" width="400" height="220" role="img" aria-label="经过当前函数处理的灰度图案"></canvas></figure>
+</div>
+<p id="fnPreviewNote" class="micro"></p>
+<div class="fn-detail"><h3>这段 HLSL 在做什么</h3><pre id="fnCode"></pre><p id="fnCalculation"></p></div>
+<div class="learning"><h3>动手观察</h3><p id="fnTry"></p><h3>使用场景与容易混淆的地方</h3><p id="fnCaution"></p></div>
+<details class="fn-sources"><summary>公式约定与官方参考</summary><p>本演示以标量函数解释 Shader。灰度预览仅把数值线性映射为浏览器灰阶，不模拟 Unity 的灯光、色彩管理或后处理；曲线显示未裁切的实际函数输出。</p>
+<p><a href="https://docs.unity3d.com/Packages/com.unity.shadergraph@17.0/manual/Remap-Node.html">Shader Graph Remap</a> · <a href="https://docs.unity3d.com/Packages/com.unity.shadergraph@17.0/manual/Posterize-Node.html">Shader Graph Posterize</a> · <a href="https://learn.microsoft.com/en-us/windows/win32/direct3dhlsl/dx-graphics-hlsl-step">HLSL Step</a> · <a href="https://learn.microsoft.com/en-us/windows/win32/direct3dhlsl/dx-graphics-hlsl-smoothstep">HLSL Smoothstep</a></p></details>
+</div>
+</div>
+</section>
+<section id="geometrySection" hidden aria-label="空间与矩阵实验">
+<div class="layout">
+<aside>
+<label>观察内容<select id="mode">
+<option value="active">① 变换几何：点真的移动</option>
+<option value="passive">② 更换坐标：世界点固定</option>
+<option value="order">③ 对比顺序：TRS 与 SRT</option>
+<option value="perspective">④ 透视：深度与画面大小</option>
+</select></label>
+<div id="affineControls" class="controls">
+<label>旋转 θ <output id="angleOut"></output><input id="angle" type="range" min="-180" max="180" step="1" value="30"></label>
+<label>x 缩放 <output id="sxOut"></output><input id="sx" type="range" min="0.25" max="3" step="0.05" value="1.5"></label>
+<label>y 缩放 <output id="syOut"></output><input id="sy" type="range" min="0.25" max="3" step="0.05" value="1"></label>
+<label>x 平移 <output id="txOut"></output><input id="tx" type="range" min="-3" max="3" step="0.1" value="1"></label>
+<label>y 平移 <output id="tyOut"></output><input id="ty" type="range" min="-3" max="3" step="0.1" value="0.5"></label>
+</div>
+<div id="perspectiveControls" hidden>
+<label>物体深度 z <output id="depthOut"></output><input id="depth" type="range" min="1.2" max="8" step="0.1" value="4"></label>
+<p class="note">物体高 1，成像平面距离 f=1。教学模型向 +z 观察，焦距固定。</p>
+</div>
+<button id="reset" type="button">恢复初始参数</button>
+</aside>
+<section class="view" aria-label="变换图形与计算">
+<div class="legend"><span class="red">→ 局部 x 基向量</span><span class="green">→ 局部 y 基向量</span><span class="blue">蓝色：变换后几何</span><span class="orange">● 追踪点</span></div>
+<svg id="plot" viewBox="0 0 900 480" role="img" aria-label="当前变换图示"></svg>
+<pre id="math" aria-live="polite"></pre>
+<p id="explain"></p>
+</section>
+</div>
+<p class="note">这是几何教学演示，不是 Unity 渲染截图。缩放限制为正且非零，便于始终计算逆变换；镜像、错切和零缩放见正文。更换坐标模式固定视野；对比顺序时左右图采用相同比例尺。</p>
+</section>
+</main>
+<script>
+"use strict";
+const el=id=>document.getElementById(id);
+const ids=["angle","sx","sy","tx","ty","depth"];
+const colors={ink:"#17324d",muted:"#76899b",grid:"#e2e9f0",red:"#bd3b48",green:"#14856e",blue:"#316db5",orange:"#b65a08"};
+const fmt=n=>(Math.abs(n)<0.0005?0:n).toFixed(2);
+const vec=p=>"("+p.map(fmt).join(", ")+")";
+const apply=(m,p)=>[m[0]*p[0]+m[1]*p[1]+m[2],m[3]*p[0]+m[4]*p[1]+m[5]];
+function inversePoint(m,p){
+const det=m[0]*m[4]-m[1]*m[3],x=p[0]-m[2],y=p[1]-m[5];
+return [(m[4]*x-m[1]*y)/det,(-m[3]*x+m[0]*y)/det];
+}
+function matrices(a,sx,sy,tx,ty){
+const r=a*Math.PI/180,c=Math.cos(r),s=Math.sin(r);
+return {
+TRS:[c*sx,-s*sy,tx,s*sx,c*sy,ty],
+SRT:[sx*c,-sx*s,sx*(c*tx-s*ty),sy*s,sy*c,sy*(s*tx+c*ty)]
+};
+}
+function label(x,y,t,color=colors.ink,size=17){
+return '<text x="'+x+'" y="'+y+'" font-family="Microsoft YaHei, sans-serif" font-size="'+size+'" fill="'+color+'">'+t+'</text>';
+}
+function defs(){
+return '<defs>'+["red","green","blue","orange"].map(k=>'<marker id="arrow-'+k+'" markerWidth="7" markerHeight="7" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L6,3 Z" fill="'+colors[k]+'"/></marker>').join("")+'</defs>';
+}
+function panel(left,width,bound,title){
+const scale=Math.min((width-75)/(2*bound),350/(2*bound)),ox=left+width/2,oy=260;
+const p=q=>[ox+q[0]*scale,oy-q[1]*scale];
+let body=label(left+18,35,title);
+const line=(a,b,k="muted",dash=false,arrow=false,w=2)=>{
+a=p(a);b=p(b);
+return '<line x1="'+a[0]+'" y1="'+a[1]+'" x2="'+b[0]+'" y2="'+b[1]+'" stroke="'+colors[k]+'" stroke-width="'+w+'"'+(dash?' stroke-dasharray="6 4"':'')+(arrow?' marker-end="url(#arrow-'+k+')"':'')+'/>';
+};
+const tick=bound>9?2:1;
+for(let n=-Math.floor(bound);n<=bound;n+=tick){
+body+=line([n,-bound],[n,bound],"grid",false,false,1)+line([-bound,n],[bound,n],"grid",false,false,1);
+if(n!==0 && n%2===0)body+=label(p([n,0])[0]+3,oy+16,String(n),colors.muted,12);
+}
+body+=line([-bound,0],[bound,0])+line([0,-bound],[0,bound]);
+body+=label(p([bound,0])[0]-14,oy-10,"x",colors.muted,14)+label(ox+8,p([0,bound])[1]+12,"y",colors.muted,14);
+return {
+get:()=>body,add:s=>body+=s,line,p,
+dot:(q,k="orange")=>{const r=p(q);return '<circle cx="'+r[0]+'" cy="'+r[1]+'" r="5" fill="'+colors[k]+'"/>';},
+text:(q,t,k="ink",dx=9,dy=-10)=>{let r=p(q);return label(r[0]+dx,r[1]+dy,t,colors[k],15);},
+poly:(qs,dash=false)=>'<polygon points="'+qs.map(q=>p(q).join(",")).join(" ")+'" fill="'+(dash?"none":"#dcebf9")+'" stroke="'+(dash?colors.muted:colors.blue)+'" stroke-width="2"'+(dash?' stroke-dasharray="6 4"':'')+'/>'
+};
+}
+const triangle=[[0,0],[2,0],[0.5,1.5]];
+function frame(q,m){
+const o=apply(m,[0,0]),x=apply(m,[1,0]),y=apply(m,[0,1]);
+q.add(q.line(o,x,"red",false,true,3)+q.line(o,y,"green",false,true,3)+q.text(x,"x′","red")+q.text(y,"y′","green"));
+}
+function matrixText(m,name){
+return name+" =\n[ "+m.slice(0,3).map(fmt).join("  ")+" ]\n[ "+m.slice(3,6).map(fmt).join("  ")+" ]\n[ 0.00  0.00  1.00 ]";
+}
+function update(){
+const values=Object.fromEntries(ids.map(id=>[id,Number(el(id).value)]));
+ids.forEach(id=>el(id+"Out").textContent=fmt(values[id])+(id==="angle"?"°":""));
+const mode=el("mode").value,isP=mode==="perspective";
+el("affineControls").hidden=isP;el("perspectiveControls").hidden=!isP;
+let body=defs();
+if(isP){
+const z=values.depth,scale=86,ox=55,oy=325;
+const point=(d,h)=>[ox+d*scale,oy-h*scale];
+function ln(a,b,k,w=2,dash=false){
+a=point(...a);b=point(...b);
+return '<line x1="'+a[0]+'" y1="'+a[1]+'" x2="'+b[0]+'" y2="'+b[1]+'" stroke="'+colors[k]+'" stroke-width="'+w+'"'+(dash?' stroke-dasharray="6 4"':'')+'/>';
+}
+body+=label(24,42,"侧视图：物体高度不变，观察方向为 +z");
+body+=ln([0,0],[8.7,0],"muted")+ln([1,-0.4],[1,2],"muted",2,true);
+body+=ln([2,0],[2,1],"green",6)+ln([z,0],[z,1],"blue",6);
+body+=ln([0,0],[2,1],"green",2,true)+ln([0,0],[z,1],"blue",2,true);
+body+=ln([1,0],[1,1/z],"orange",5);
+body+=label(35,365,"相机")+label(point(1,0)[0]-30,110,"成像平面")+label(point(z,1)[0]-12,point(z,1)[1]-20,"z="+fmt(z),colors.blue);
+body+=label(350,110,"绿色参考：z=2，高=1",colors.green)+label(350,145,"蓝色物体：高=1，改变距离",colors.blue);
+body+=label(24,435,"橙色短线：蓝色物体在 z=1 平面上的投影",colors.orange);
+el("math").textContent="投影高度 = f × 高度 / z = 1 / "+fmt(z)+" = "+fmt(1/z)+"\n相对绿色参考的画面高度 = "+fmt(2/z)+" 倍";
+el("explain").textContent="物体的几何高度始终是 1。深度加倍，投影高度减半。这里用相似三角形解释透视；Unity 的完整投影还需处理视图轴向、视野、宽高比和裁剪深度。";
+}else{
+const {TRS,SRT}=matrices(values.angle,values.sx,values.sy,values.tx,values.ty);
+const world=[2,2];
+let all=[...triangle,...triangle.map(p=>apply(TRS,p)),[0,0],[1,0],[0,1],world];
+if(mode==="order")all=all.concat(triangle.map(p=>apply(SRT,p)));
+if(mode==="passive")all=all.concat([[-2,-2],[2,2],[-2,2],[2,-2]].map(p=>apply(TRS,p)));
+const bound=mode==="passive"?8:Math.max(3,Math.ceil(Math.max(...all.flat().map(Math.abs))+1));
+if(mode==="order"){
+for(const [i,m] of [TRS,SRT].entries()){
+const q=panel(i*450,450,bound,i===0?"TRS：缩放 → 旋转 → 平移":"SRT：平移 → 旋转 → 缩放");
+q.add(q.poly(triangle,true)+q.poly(triangle.map(p=>apply(m,p))));frame(q,m);
+const end=apply(m,[2,0]);q.add(q.dot(end)+q.text(end,"P′","orange"));
+body+=q.get();
+}
+el("math").textContent="追踪 P=(2,0)\nTRS · P = "+vec(apply(TRS,[2,0]))+"\nSRT · P = "+vec(apply(SRT,[2,0]));
+el("explain").textContent="两幅图使用相同比例尺。右图先平移，随后连平移产生的偏移也一起旋转、缩放。某些特殊参数会碰巧相同；可把角度设成 90°、x 平移设成 2 比较。虚线三角形是原始几何。";
+}else if(mode==="passive"){
+const q=panel(0,900,bound,"世界点 P 固定；拖动局部坐标框架");
+for(let i=-1;i<=1;i++){
+q.add(q.line(apply(TRS,[i,-1]),apply(TRS,[i,1]),"blue",true,false,1));
+q.add(q.line(apply(TRS,[-1,i]),apply(TRS,[1,i]),"blue",true,false,1));
+}
+frame(q,TRS);q.add(q.dot(world)+q.text(world,"P 固定在 (2,2)","orange"));
+body+=q.get();
+el("math").textContent=matrixText(TRS,"局部 → 世界")+"\n世界 P = (2.00, 2.00)\n局部 P = M⁻¹ · 世界 P = "+vec(inversePoint(TRS,world));
+el("explain").textContent="蓝色虚线表示局部坐标网格在世界中的位置。橙色点的世界坐标一直是 (2,2)，画面位置也保持固定，变化的是局部地址。你没有移动这个点，只是改变描述它的原点和尺子。";
+}else{
+const q=panel(0,900,bound,"固定世界坐标；变换三角形与两根基向量");
+q.add(q.poly(triangle,true)+q.poly(triangle.map(p=>apply(TRS,p))));frame(q,TRS);
+const end=apply(TRS,[2,0]);q.add(q.dot(end)+q.text(end,"P′","orange"));
+body+=q.get();
+el("math").textContent=matrixText(TRS,"M = TRS")+"\nP = (2.00, 0.00) → P′ = "+vec(end);
+el("explain").textContent="这里显示的是二维齐次矩阵：前两列是局部 x、y 单位步长的去向，最后一列是原点的去向。虚线是原始三角形，蓝色是变换结果。改变参数，相当于真的把几何摆到新位置。";
+}
+}
+el("plot").innerHTML=body;
+}
+ids.forEach(id=>el(id).addEventListener("input",update));
+el("mode").addEventListener("change",update);
+el("reset").addEventListener("click",()=>{
+const defaults={angle:30,sx:1.5,sy:1,tx:1,ty:0.5,depth:4};
+ids.forEach(id=>el(id).value=defaults[id]);update();
+});
+update();
+</script>
+<script>
+(() => {
+"use strict";
+const $=id=>document.getElementById(id);
+const sat=x=>Math.max(0,Math.min(1,x)), lerp=(a,b,t)=>a+(b-a)*t;
+const fnum=n=>Number.isFinite(n)?(Math.abs(n)<0.0000001?0:n).toFixed(3):"—";
+const range=(key,label,value,min=-1,max=2,step=0.01)=>({key,label,value,min,max,step});
+const check=(key,label,value=false)=>({key,label,value,check:true});
+const definitions={
+remap:{
+title:"Remap · 重新映射范围",
+summary:"先测量 x 在原范围中走了多少比例，再把同样的比例放到新范围。",
+params:[range("inA","输入起点 a",0.2),range("inB","输入终点 b",0.8),range("outA","输出起点 c",0),range("outB","输出终点 d",1),check("limit","先把中间比例 t 限制到 0—1")],
+valid:p=>Math.abs(p.inB-p.inA)<1e-8?"输入两端不能相等：b − a = 0，比例无定义。请调整任意一个输入端点。":"",
+eval:(x,p)=>lerp(p.outA,p.outB,p.limit?sat((x-p.inA)/(p.inB-p.inA)):(x-p.inA)/(p.inB-p.inA)),
+code:p=>"float t = (x - a) / (b - a); // a != b\n"+(p.limit?"t = saturate(t);\n":"")+"float y = lerp(c, d, t);",
+calc:(x,p,y)=>"t = ("+fnum(x)+" − "+fnum(p.inA)+") / ("+fnum(p.inB)+" − "+fnum(p.inA)+") = "+fnum((x-p.inA)/(p.inB-p.inA))+"\n"+(p.limit?"限制后的 t = "+fnum(sat((x-p.inA)/(p.inB-p.inA)))+"；":"")+"输出 y = "+fnum(y),
+try:"先保持输入 0.2—0.8、输出 0—1，追踪 x=0.5；再把 x 移到 0。勾选限幅，对照曲线两端。也可以把输出起点改为 1、终点改为 0，观察明暗反转。",
+caution:"用于把高度、噪声、距离重新映射为遮罩。Remap 本身不会自动限幅；本例的勾选项是额外的 saturate(t)。输入两端反向仍可定义映射，输入两端相等则不行。Remap 通常是组合公式或节点，不是 HLSL 标准内置函数。"
+},
+step:{
+title:"Step · 硬阈值",summary:"低于阈值输出 0；到达或超过阈值输出 1。",
+params:[range("edge","阈值 edge",0.5)],eval:(x,p)=>x>=p.edge?1:0,breaks:p=>[p.edge],
+code:()=>"float y = step(edge, x);\n// x < edge → 0；x >= edge → 1",
+calc:(x,p,y)=>fnum(x)+(x>=p.edge?" ≥ ":" < ")+fnum(p.edge)+" → "+fnum(y),
+try:"把阈值从 0.2 拖到 0.8，观察白色区域缩小。切换球面明暗，可看到亮面和暗面被切成两块。",
+caution:"适合硬遮罩与二值卡通明暗。参数是阈值在前、输入在后。输出 0 只是黑色；若要真的丢弃片元，还要使用 clip 或相应材质设置。"
+},
+smooth:{
+title:"Smoothstep · 柔边阈值",summary:"在 low 与 high 之间平滑地由 0 走向 1，两端斜率逐渐变平。",
+params:[range("low","过渡起点 low",0.3),range("high","过渡终点 high",0.7)],
+valid:p=>p.high<=p.low?"请保持 high > low。反向效果应使用 1 − smoothstep(low, high, x)，而不是倒置上下界。":"",
+eval:(x,p)=>{const t=sat((x-p.low)/(p.high-p.low));return t*t*(3-2*t);},
+code:()=>"float y = smoothstep(low, high, x);\n// t = saturate((x-low)/(high-low));\n// y = t*t*(3-2*t);",
+calc:(x,p,y)=>"归一化并限幅的 t = "+fnum(sat((x-p.low)/(p.high-p.low)))+"\n经过 S 形曲线，y = "+fnum(y),
+try:"切换圆形渐变，把 low 与 high 拉近，边缘更硬；拉远，边缘更柔。两端保持不同，不能用相等端点来代替 Step。",
+caution:"用于柔边溶解、距离遮罩与软过渡。它不是普通的线性 Remap；两者在中点可相同，但中点两侧的变化速度不同。"
+},
+levels:{
+title:"分阶 · 严格 N 个灰阶",summary:"把 0—1 的输入分为 N 个区间，输出 N 种亮度，包含纯黑与纯白。",
+params:[range("n","灰阶数 N",4,2,12,1)],
+eval:(x,p)=>Math.min(Math.floor(sat(x)*p.n),p.n-1)/(p.n-1),
+breaks:p=>Array.from({length:p.n-1},(_,i)=>(i+1)/p.n),
+code:()=>"float u = saturate(x);\nfloat y = min(floor(u * N), N - 1) / (N - 1);\n// N 为整数，N >= 2",
+calc:(x,p,y)=>"u = "+fnum(sat(x))+"；所在阶索引 = "+Math.min(Math.floor(sat(x)*p.n),p.n-1)+"\n输出灰阶："+Array.from({length:p.n},(_,i)=>fnum(i/(p.n-1))).join("、")+"\n当前 y = "+fnum(y),
+try:"选择球面明暗，把 N 从 2 增加到 6。亮度层次增加，但仍然是平坦色块；回到水平渐变数一数条带。",
+caution:"这是本实验定义的等宽输入分区算法，不是唯一的分阶写法。N 指实际灰阶数；使用 N−1 作输出分母，并封住 x=1 的索引，保证恰好 N 阶。"
+},
+posterize:{
+title:"Posterize · Shader Graph 公式",summary:"用 floor(x × Steps) / Steps 向下量化，对照“严格 N 阶”的端点差异。",
+params:[range("n","Steps",4,1,12,1)],
+eval:(x,p)=>Math.floor(x*p.n)/p.n,
+breaks:p=>Array.from({length:3*p.n+1},(_,i)=>(i-p.n)/p.n),
+code:()=>"float y = floor(x * Steps) / Steps;\n// 等价于 floor(x / (1 / Steps)) * (1 / Steps)",
+calc:(x,p,y)=>"floor("+fnum(x)+" × "+p.n+") / "+p.n+" = "+fnum(y),
+try:"Steps=4 时，把追踪输入设为 0.999，再设为 1。输出从 0.75 跳到 1；切换“严格 N 个灰阶”对比最亮色带。",
+caution:"Shader Graph Posterize 的常见公式不自带 saturate。输入在 [0,1) 时通常有 Steps 个输出值；包含精确端点 1 时会多出输出 1。不要直接把 Steps 当作闭区间中严格的灰阶总数。"
+},
+clamp:{
+title:"Clamp / Saturate · 限幅",summary:"范围内保持原值，超出下界或上界的部分停在边界。",
+params:[range("low","最小值 min",0),range("high","最大值 max",1)],
+valid:p=>p.high<p.low?"请保持 max >= min。": "",
+eval:(x,p)=>Math.max(p.low,Math.min(p.high,x)),
+code:p=>"float y = clamp(x, minValue, maxValue);"+(p.low===0&&p.high===1?"\n// 当前等价于 saturate(x)":""),
+calc:(x,p,y)=>"x = "+fnum(x)+"；限制到 ["+fnum(p.low)+", "+fnum(p.high)+"] → "+fnum(y),
+try:"把最小值设为 0.2、最大值设为 0.8。画面最暗和最亮都变灰，中间部分的斜率仍为 1。",
+caution:"Clamp 不会把 0.2—0.8 拉伸成 0—1；那是 Remap。Saturate 就是限制到 [0,1]。"
+},
+lerp:{
+title:"Lerp · 混合两个值",summary:"把 x 当作混合权重 t：0 选择 A，1 选择 B。",
+params:[range("a","端点 A",0.15),range("b","端点 B",0.85),check("limit","先限制权重到 0—1")],
+eval:(x,p)=>lerp(p.a,p.b,p.limit?sat(x):x),
+code:p=>"float t = "+(p.limit?"saturate(x)":"x")+";\nfloat y = lerp(A, B, t);",
+calc:(x,p,y)=>fnum(p.a)+" + ("+fnum(p.b)+" − "+fnum(p.a)+") × "+fnum(p.limit?sat(x):x)+" = "+fnum(y),
+try:"把 A=1、B=0，黑白会反转。关闭限幅并追踪 x=1.5，观察越过 B 的外插结果。",
+caution:"常用于两种颜色、材质和数值的混合。本页用灰度表示两个端点；HLSL 中也可对 float3 颜色做 lerp。Lerp 本身不限制权重。"
+},
+affine:{
+title:"Multiply + Add · 缩放与偏移",summary:"乘法改变曲线斜率，加法整体抬高或降低输出。",
+params:[range("gain","乘数 gain",1,-2,2),range("bias","偏移 bias",0)],
+eval:(x,p)=>x*p.gain+p.bias,
+code:()=>"float y = x * gain + bias;",
+calc:(x,p,y)=>fnum(x)+" × "+fnum(p.gain)+" + "+fnum(p.bias)+" = "+fnum(y),
+try:"先只改 gain，再只改 bias。设 gain=−1、bias=1，就得到 1−x。",
+caution:"适合调强度和偏移。灰度显示会截掉超出 0—1 的部分，但函数输出没有自动截断。"
+},
+invert:{
+title:"One Minus · 反相",summary:"用 1−x 把黑白关系翻转，中间灰 0.5 保持不变。",
+params:[],eval:x=>1-x,code:()=>"float y = 1.0 - x;",
+calc:(x,p,y)=>"1 − "+fnum(x)+" = "+fnum(y),
+try:"选择圆形渐变，中心从白变黑，外围从黑变白。追踪 x=1.5，结果为 −0.5。",
+caution:"反相不会自动限幅。若输入是带符号距离或 HDR 数值，不要默认反相后一定在 0—1。"
+},
+floor:{
+title:"Floor · 向下取整",summary:"取不大于 x 的最大整数，负数也向更小的整数走。",
+params:[],eval:x=>Math.floor(x),breaks:()=>[-1,0,1,2],
+code:()=>"float y = floor(x);",
+calc:(x,p,y)=>"floor("+fnum(x)+") = "+fnum(y),
+try:"追踪 x=−0.2，结果是 −1，不是 0。切到 0—1 输入范围，绝大多数输入会变为 0。",
+caution:"Floor 常用来确定格子索引和量化区间，本身不是一套完整的灰度分阶算法。"
+},
+frac:{
+title:"Frac · 重复锯齿",summary:"先计算周期坐标，再取小数部分，得到不断重置的 0—1 渐变。",
+params:[range("frequency","频率 frequency",3,1,8,1),range("phase","相位 phase",0,-1,1)],
+eval:(x,p)=>{const q=x*p.frequency+p.phase;return q-Math.floor(q);},
+breaks:p=>{const a=[];for(let i=-10;i<=20;i++)a.push((i-p.phase)/p.frequency);return a;},
+code:()=>"float q = x * frequency + phase;\nfloat y = frac(q); // q - floor(q)",
+calc:(x,p,y)=>"q = "+fnum(x*p.frequency+p.phase)+"；floor(q) = "+Math.floor(x*p.frequency+p.phase)+"\nfrac(q) = "+fnum(y),
+try:"选择圆形渐变，频率变大，圆环数增加；改变相位，条带移动。输入 −0.2 且频率为 1 时，小数部分是 0.8。",
+caution:"适合程序条纹与重复遮罩。跳变处接近 1 后直接回到 0。对纹理采样坐标手工 frac 可能影响导数，贴图重复通常先考虑采样器 Repeat。"
+},
+abs:{
+title:"Abs · 到中心的距离",summary:"取 x−center 的绝对值，把左右两侧折成同一方向。",
+params:[range("center","中心 center",0.5)],
+eval:(x,p)=>Math.abs(x-p.center),code:()=>"float y = abs(x - center);",
+calc:(x,p,y)=>"|"+fnum(x)+" − "+fnum(p.center)+"| = "+fnum(y),
+try:"拖动 center，曲线的 V 形尖端横向移动。可把距离再接 Smoothstep，形成带状遮罩。",
+caution:"这里是一维距离；二维圆形距离通常用 length(uv-center)，不是分别对 xy 取 abs 就能获得圆。"
+},
+power:{
+title:"Pow · 调整灰度分布",summary:"指数大于 1，0—1 中间灰变暗；指数小于 1，中间灰变亮。",
+params:[range("exponent","指数 exponent",2,0.25,4,0.05)],
+eval:(x,p)=>Math.pow(Math.max(x,0),p.exponent),
+code:()=>"float y = pow(max(x, 0.0), exponent);\n// 本例明确把负输入限制为 0；exponent > 0",
+calc:(x,p,y)=>fnum(Math.max(x,0))+" ^ "+fnum(p.exponent)+" = "+fnum(y),
+try:"指数依次设为 0.5、1、2，观察球面明暗。输入 0 与 1 的结果不变，变化集中在中间灰。",
+caution:"这是艺术灰度曲线，不等于完整 sRGB 转换。原始 pow 对负底数的非整数幂没有实数结果，本例显式使用 max(x,0)。"
+},
+sine:{
+title:"Sin · 平滑周期",summary:"用正弦往复变化，再把 −1—1 映射到 0—1。",
+params:[range("frequency","频率 frequency",2,1,8,1),range("phase","相位 phase",0,-1,1)],
+eval:(x,p)=>0.5+0.5*Math.sin(2*Math.PI*(x*p.frequency+p.phase)),
+code:()=>"float y = 0.5 + 0.5 * sin(6.2831853 * (x * frequency + phase));",
+calc:(x,p,y)=>"周期坐标 = "+fnum(x*p.frequency+p.phase)+"；正弦归一化后 y = "+fnum(y),
+try:"对比 Frac：正弦没有突然归零的断点。把相位不断向前拖动，可以想象把 _Time.y 接入相位后的流动。",
+caution:"适合呼吸亮度、波浪与柔和重复纹样。HLSL 的 sin 输入为弧度，此处乘 2π 把“周期数”变成弧度。"
+}
+};
+let current="remap",params={},probe=0.5;
+function defaults(key){return Object.fromEntries(definitions[key].params.map(p=>[p.key,p.value]));}
+function selectOperation(key){
+current=key;params=defaults(key);$("fnOperation").value=key;
+buildParameters();render();
+}
+function buildParameters(){
+$("fnParameters").replaceChildren();
+for(const p of definitions[current].params){
+const box=document.createElement("div");box.className="parameter"+(p.check?" check":"");
+if(p.check){
+const label=document.createElement("label"),input=document.createElement("input");
+input.id="fn-"+p.key;input.type="checkbox";input.checked=params[p.key];
+label.append(input,document.createTextNode(p.label));box.append(label);
+input.addEventListener("change",()=>{params[p.key]=input.checked;render();});
+}else{
+const line=document.createElement("div");line.className="param-line";
+const label=document.createElement("label");label.htmlFor="fn-"+p.key;label.textContent=p.label;
+const num=document.createElement("input"),slider=document.createElement("input");
+num.id="fn-"+p.key;num.type="number";slider.type="range";slider.id="fn-"+p.key+"-slider";slider.setAttribute("aria-label",p.label);
+for(const input of [num,slider]){input.min=p.min;input.max=p.max;input.step=p.step;input.value=params[p.key];}
+function changed(source){
+if(source.value==="")return;
+let value=Number(source.value);if(!Number.isFinite(value))return;
+value=Math.max(p.min,Math.min(p.max,value));if(p.step===1)value=Math.round(value);
+params[p.key]=value;num.value=value;slider.value=value;render();
+}
+num.addEventListener("input",()=>changed(num));slider.addEventListener("input",()=>changed(slider));
+line.append(label,num);box.append(line,slider);
+}
+$("fnParameters").append(box);
+}
+if(!definitions[current].params.length){
+const note=document.createElement("p");note.className="micro";note.textContent="这个操作不需要额外参数。试着移动追踪点或切换输入图案。";$("fnParameters").append(note);
+}
+}
+const svgNS="http://www.w3.org/2000/svg";
+function sNode(tag,attrs,text){
+const node=document.createElementNS(svgNS,tag);
+for(const [k,v] of Object.entries(attrs))node.setAttribute(k,v);
+if(text!==undefined)node.textContent=text;
+return node;
+}
+const domain=()=> $("fnDomain").value==="unit"?[0,1]:[-1,2];
+let chartMap={min:-1,max:2,left:60,right:696};
+function drawCurve(d,error){
+const svg=$("fnCurve");svg.replaceChildren();
+const [xmin,xmax]=domain();
+const chartWidth=Math.max(320,Math.min(720,svg.clientWidth||720));
+svg.setAttribute("viewBox","0 0 "+chartWidth+" 320");
+const left=60,right=chartWidth-24,top=28,bottom=272;
+chartMap={min:xmin,max:xmax,left,right};
+const add=(tag,attrs,text)=>svg.append(sNode(tag,attrs,text));
+if(error){add("text",{x:60,y:150,fill:"#933621","font-size":17},"参数无效：调整后恢复曲线与预览。");return;}
+const ev=x=>d.eval(x,params);
+const samples=Array.from({length:501},(_,i)=>ev(xmin+(xmax-xmin)*i/500));
+const dataMin=Math.min(0,...samples),dataMax=Math.max(1,...samples);
+const rawStep=(dataMax-dataMin)/4,power10=Math.pow(10,Math.floor(Math.log10(rawStep)));
+const tickStep=([1,2,2.5,5,10].find(n=>n*power10>=rawStep)||10)*power10;
+const tickMin=Math.floor(dataMin/tickStep)*tickStep,tickMax=Math.ceil(dataMax/tickStep)*tickStep;
+const pad=(tickMax-tickMin)*0.06,ymin=tickMin-pad,ymax=tickMax+pad;
+const X=x=>left+(x-xmin)/(xmax-xmin)*(right-left),Y=y=>bottom-(y-ymin)/(ymax-ymin)*(bottom-top);
+const text=(x,y,t,fill="#60758a",anchor="start")=>add("text",{x,y,fill,"font-size":13,"font-family":"system-ui","text-anchor":anchor},t);
+const xIntervals=xmin===0&&xmax===1?4:6;
+for(let i=0;i<=xIntervals;i++){
+const x=xmin+(xmax-xmin)*i/xIntervals,px=X(x);
+add("line",{x1:px,y1:top,x2:px,y2:bottom,stroke:"#e1e8ef"});
+text(px,bottom+23,(Math.abs(x)<1e-8?0:x).toFixed(2),"#60758a","middle");
+}
+for(let y=tickMin;y<=tickMax+tickStep*0.01;y+=tickStep){
+const py=Y(y);
+add("line",{x1:left,y1:py,x2:right,y2:py,stroke:"#e1e8ef"});
+text(left-9,py+4,fnum(y),"#60758a","end");
+}
+add("line",{x1:left,y1:Y(0),x2:right,y2:Y(0),stroke:"#889bad"});
+text(left,16,"输出 y");text(right,bottom+45,"输入 x","#60758a","end");
+const defs=sNode("defs",{}),clip=sNode("clipPath",{id:"fn-chart-clip"});clip.append(sNode("rect",{x:left,y:top,width:right-left,height:bottom-top}));defs.append(clip);svg.append(defs);
+add("line",{x1:X(xmin),y1:Y(xmin),x2:X(xmax),y2:Y(xmax),stroke:"#a1afbc","stroke-dasharray":"5 5","clip-path":"url(#fn-chart-clip)"});
+const breaks=(d.breaks?d.breaks(params):[]).filter(x=>x>xmin&&x<xmax).sort((a,b)=>a-b);
+const bounds=[xmin,...breaks,xmax];
+for(let i=0;i<bounds.length-1;i++){
+const a=bounds[i],b=bounds[i+1],eps=Math.min(1e-7,(b-a)*1e-5);
+const lo=i? a+eps:a,hi=(i<bounds.length-2 || (d.breaks&&d.breaks(params).some(x=>Math.abs(x-b)<1e-9)))?b-eps:b;
+let points=[];
+for(let j=0;j<=100;j++){const x=lo+(hi-lo)*j/100;points.push(X(x)+","+Y(ev(x)));}
+add("polyline",{points:points.join(" "),fill:"none",stroke:"#226bad","stroke-width":2.6,"stroke-linejoin":"round","clip-path":"url(#fn-chart-clip)"});
+}
+for(const x of [...breaks,...(d.breaks?d.breaks(params).filter(v=>Math.abs(v-xmax)<1e-9):[])]){
+const before=ev(x-1e-7),at=ev(x);
+if(Math.abs(before-at)>1e-5){
+add("circle",{cx:X(x),cy:Y(before),r:3.5,fill:"white",stroke:"#226bad","stroke-width":1.6});
+add("circle",{cx:X(x),cy:Y(at),r:3.5,fill:"#226bad"});
+}
+}
+const py=ev(probe);
+add("line",{x1:X(probe),y1:top,x2:X(probe),y2:bottom,stroke:"#bf650e","stroke-dasharray":"4 4"});
+add("circle",{cx:X(probe),cy:Y(py),r:5,fill:"#bf650e",stroke:"white","stroke-width":1.5});
+}
+function fieldValue(u,v,type,aspect){
+if(type==="ramp")return u;
+const x=(u-0.5)*2*aspect,y=(0.5-v)*2,r=Math.hypot(x,y);
+if(type==="radial")return sat(1-r);
+if(type==="sphere"){
+if(r>0.93)return null;
+const nx=x/0.93,ny=y/0.93,nz=Math.sqrt(Math.max(0,1-nx*nx-ny*ny));
+return sat(nx*(-0.4)+ny*0.4+nz*Math.sqrt(0.68));
+}
+return sat(0.5+0.22*Math.sin(u*15+Math.sin(v*12))+0.15*Math.sin(v*22-u*9));
+}
+function previews(d,error){
+let below=0,above=0,total=0;
+for(const [id,after]of [["fnBefore",false],["fnAfter",true]]){
+const canvas=$(id),ctx=canvas.getContext("2d"),w=canvas.width,h=canvas.height,img=ctx.createImageData(w,h);
+for(let j=0;j<h;j++)for(let i=0;i<w;i++){
+const value=fieldValue(i/(w-1),j/(h-1),$("fnField").value,w/h),k=(j*w+i)*4;
+let gray;
+if(value===null)gray=224;
+else if(after&&error)gray=((Math.floor(i/12)+Math.floor(j/12))%2)?224:240;
+else{
+const output=after?d.eval(value,params):value;
+if(after){below+=output<0?1:0;above+=output>1?1:0;total++;}
+gray=Math.round(sat(output)*255);
+}
+img.data[k]=img.data[k+1]=img.data[k+2]=gray;img.data[k+3]=255;
+}
+ctx.putImageData(img,0,0);
+}
+$("fnPreviewNote").textContent=error?"输出预览暂停；棋盘格不代表函数结果。":"灰度显示：0 为黑，1 为白。输出 "+(total?(below/total*100).toFixed(1):"0")+"% 低于 0，"+(total?(above/total*100).toFixed(1):"0")+"% 高于 1；显示时截为黑/白，实际值请看曲线。球外浅灰仅为背景。";
+}
+function render(){
+const d=definitions[current],error=d.valid?d.valid(params):"";
+$("fnTitle").textContent=d.title;$("fnSummary").textContent=d.summary;
+$("fnError").hidden=!error;$("fnError").textContent=error;
+$("fnCode").textContent=d.code(params);$("fnTry").textContent=d.try;$("fnCaution").textContent=d.caution;
+$("fnProbeValue").textContent=fnum(probe);
+const y=error?NaN:d.eval(probe,params);
+$("fnReadout").textContent="x "+fnum(probe)+" → y "+fnum(y);
+$("fnCalculation").textContent=error?error:d.calc(probe,params,y);
+drawCurve(d,error);previews(d,error);
+}
+function updateProbe(value){
+const [a,b]=domain();probe=Math.max(a,Math.min(b,value));$("fnProbe").value=probe;$("fnProbeNumber").value=Number(probe.toFixed(3));
+render();
+}
+function setTab(functions){
+$("functionSection").hidden=!functions;$("geometrySection").hidden=functions;
+$("showFunctions").setAttribute("aria-pressed",String(functions));$("showGeometry").setAttribute("aria-pressed",String(!functions));
+if(functions)render();
+}
+$("showFunctions").addEventListener("click",()=>setTab(true));
+$("showGeometry").addEventListener("click",()=>setTab(false));
+$("fnOperation").addEventListener("change",()=>selectOperation($("fnOperation").value));
+$("fnReset").addEventListener("click",()=>selectOperation(current));
+$("fnField").addEventListener("change",render);
+$("fnDomain").addEventListener("change",()=>{
+const [a,b]=domain();for(const id of ["fnProbe","fnProbeNumber"]){$(id).min=a;$(id).max=b;}updateProbe(probe);
+});
+$("fnProbe").addEventListener("input",()=>updateProbe(Number($("fnProbe").value)));
+$("fnProbeNumber").addEventListener("input",()=>{if($("fnProbeNumber").value!==""&&Number.isFinite(Number($("fnProbeNumber").value)))updateProbe(Number($("fnProbeNumber").value));});
+let dragging=false;
+function pointer(e){
+const svg=$("fnCurve"),point=svg.createSVGPoint();point.x=e.clientX;point.y=e.clientY;
+const local=point.matrixTransform(svg.getScreenCTM().inverse());
+updateProbe(chartMap.min+(local.x-chartMap.left)/(chartMap.right-chartMap.left)*(chartMap.max-chartMap.min));
+}
+$("fnCurve").addEventListener("pointerdown",e=>{dragging=true;$("fnCurve").setPointerCapture(e.pointerId);pointer(e);});
+$("fnCurve").addEventListener("pointermove",e=>{if(dragging)pointer(e);});
+$("fnCurve").addEventListener("pointerup",()=>{dragging=false;});
+$("fnCurve").addEventListener("pointercancel",()=>{dragging=false;});
+document.querySelectorAll("[data-recipe]").forEach(button=>button.addEventListener("click",()=>{
+const r=button.dataset.recipe;
+const recipes={contrast:["remap","ramp"],toon:["levels","sphere"],circle:["smooth","radial"],rings:["frac","radial"]};
+$("fnField").value=recipes[r][1];$("fnDomain").value="unit";probe=0.5;for(const id of ["fnProbe","fnProbeNumber"]){$(id).min=0;$(id).max=1;$(id).value=probe;}
+selectOperation(recipes[r][0]);
+if(r==="contrast"){params.limit=true;buildParameters();render();}
+}));
+window.FunctionLab={definitions,defaults,evaluate:(key,x,p=defaults(key))=>definitions[key].eval(x,p),fieldValue};
+window.addEventListener("resize",()=>{if(!$("functionSection").hidden)render();});
+selectOperation("remap");
+})();
+</script>
+</body>
+</html>

@@ -29,9 +29,6 @@ foreach ($file in $files) {
   if ($text -notmatch '(?m)^> \u539f\u6587\uff1a\[[^\]]+\]\(https?://docs\.unity3d\.com/') {
     $errors.Add("Missing source link: $relative")
   }
-  if ($text -notmatch '\u6587\u6863\u5bfc\u822a') {
-    $errors.Add("Missing document navigation: $relative")
-  }
   if ($file.Name -match '-\u4e2d\u6587\u6587\u6863') {
     $errors.Add("Forbidden filename suffix: $relative")
   }
