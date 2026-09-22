@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="从零开始，用图解和交互演示理解数组、链表、栈、队列、哈希表、树、堆与图。离线可用的数据结构入门教程。">
+<title>把数据放对地方 · 数据结构图解入门</title>
+<style>
+:root{--bg:#f6f5f0;--paper:#fffefa;--ink:#263832;--muted:#65726b;--line:#dce2d8;--green:#236349;--mint:#e6efe5;--orange:#b8552f;--peach:#fff0e4;--blue:#335f93;--lav:#eef0fa;--radius:16px}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:28px}body{margin:0;background:var(--bg);color:var(--ink);font-family:"Segoe UI","Microsoft YaHei",system-ui,sans-serif;font-size:16px;line-height:1.85}a{color:var(--green);text-underline-offset:4px}button,input,select{font:inherit}button{border:1px solid var(--green);border-radius:8px;background:var(--green);color:white;padding:8px 15px;cursor:pointer;line-height:1.5;min-height:42px}button:hover{filter:brightness(.93)}button.secondary{background:transparent;color:var(--green);border-color:#adbdad}button:disabled{opacity:.45;cursor:default}button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible{outline:3px solid #d58641;outline-offset:4px}input,select{border:1px solid #adbdad;border-radius:7px;background:white;padding:7px 10px;color:var(--ink);max-width:100%;min-height:42px}input[type=number]{width:90px}input[type=text]{width:145px}h1,h2,h3,h4,p{margin-top:0}h1{font-size:clamp(34px,5.2vw,66px);line-height:1.2;letter-spacing:-2px;margin-bottom:24px}h2{font-size:30px;line-height:1.4;letter-spacing:-.5px;margin-bottom:18px}h3{font-size:20px;margin:28px 0 12px}h4{font-size:17px;margin-bottom:8px}p{margin-bottom:16px}strong{font-weight:650}small,.small{font-size:13px;color:var(--muted)}code{font-family:Consolas,monospace;background:#edf0e8;padding:2px 5px;border-radius:4px;font-size:.92em}pre{overflow:auto;background:#24362f;color:#e5eedb;border-radius:12px;padding:22px;font-size:14px;line-height:1.75}pre code{background:none;color:inherit;padding:0}ul,ol{padding-left:24px}li+li{margin-top:6px}.page{max-width:1440px;margin:auto;display:grid;grid-template-columns:238px minmax(0,1fr)}aside{position:sticky;top:0;height:100vh;overflow-y:auto;padding:38px 20px 26px 30px;border-right:1px solid var(--line)}.brand{font-weight:750;letter-spacing:1px;font-size:15px}.brand span{display:block;color:var(--muted);font-size:11px;letter-spacing:2px;margin-top:3px}.nav-label{font-size:11px;color:var(--muted);letter-spacing:2px;margin:28px 0 10px}nav a{display:flex;gap:12px;padding:6px 10px;margin:3px -8px;text-decoration:none;color:var(--muted);font-size:14px;border-radius:7px}nav a b{font-weight:400;color:#8a968c;font-size:12px;min-width:20px}nav a.active{background:var(--mint);color:var(--green);font-weight:650}.reading{margin-top:24px;font-size:12px;color:var(--muted)}.progress{height:3px;background:var(--line);margin-top:8px}.progress i{display:block;height:100%;width:0;background:var(--green)}main{min-width:0;padding:0 64px 60px}.hero{padding:72px 0 42px;border-bottom:1px solid var(--line)}.eyebrow{font-size:12px;letter-spacing:2px;font-weight:650;color:var(--green);margin-bottom:24px}.lead{font-size:19px;max-width:670px;color:var(--muted)}.tags{display:flex;gap:10px;flex-wrap:wrap;margin-top:28px}.tag{font-size:12px;border:1px solid #cbd5c7;padding:3px 10px;border-radius:20px;color:var(--muted)}.hero-art{margin:32px 0 0;padding:25px;background:var(--mint);border-radius:var(--radius);display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px}.hero-art .caption{margin-top:14px}.mini-array{display:flex;gap:5px;align-items:center;height:90px}.mini-array span{background:var(--paper);border:1px solid #a3b69f;width:36px;height:36px;display:grid;place-items:center;border-radius:5px;font-family:Consolas,monospace}.mini-stack{height:90px;display:flex;flex-direction:column;gap:4px;align-items:center;justify-content:center}.mini-stack span{display:block;width:90px;height:23px;background:var(--paper);border:1px solid #a3b69f;border-radius:4px;text-align:center;font-size:12px;line-height:21px}.caption{font-size:13px;color:var(--muted)}.caption b{color:var(--ink);font-size:14px}.chapter{padding:52px 0;border-bottom:1px solid var(--line);scroll-margin-top:20px}.chapter-no{font-size:12px;font-weight:700;color:var(--orange);letter-spacing:2px;margin-bottom:10px}.intro{font-size:18px;color:#4e6056}.split{display:grid;grid-template-columns:1fr 1fr;gap:24px}.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:15px;margin:22px 0}.card{padding:22px;border:1px solid var(--line);border-radius:12px;background:var(--paper)}.card p:last-child{margin-bottom:0}.callout{padding:18px 22px;border-left:3px solid var(--green);background:var(--mint);border-radius:0 10px 10px 0;margin:22px 0}.callout.warn{background:var(--peach);border-color:var(--orange)}.callout p:last-child{margin-bottom:0}.lab{background:var(--paper);border:1px solid #cbd6c5;border-radius:var(--radius);padding:26px;margin:24px 0;overflow:hidden}.lab-head{display:flex;gap:12px;justify-content:space-between;align-items:baseline;flex-wrap:wrap;margin-bottom:18px}.lab-head h3{margin:0;font-size:18px}.lab-label{font-size:11px;color:var(--green);letter-spacing:1px}.controls{display:flex;align-items:center;flex-wrap:wrap;gap:10px;margin-top:20px}.controls label{display:flex;gap:7px;align-items:center;font-size:14px}.status{margin:16px 0 0;padding:12px 15px;background:var(--mint);border-radius:8px;font-size:14px;min-height:50px}.diagram{padding:25px 12px;background:#f4f6ee;border-radius:10px;margin:18px 0;text-align:center}.row{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:9px}.cell{min-width:46px;padding:10px 12px;border:1.5px solid #9aac92;border-radius:7px;background:white;position:relative;font-family:Consolas,monospace;font-size:18px;text-align:center;line-height:1.4}.cell small{display:block;margin-top:6px;font:11px "Segoe UI",sans-serif;color:var(--muted)}.cell.hot{border-color:var(--orange);background:var(--peach);box-shadow:0 0 0 2px #b8552f18}.cell.found{background:var(--mint);border-color:var(--green)}.arrow{font-size:22px;color:var(--muted)}.stack-well{border:2px solid #a4b39c;border-top:0;width:180px;min-height:220px;margin:16px auto 0;padding:10px;display:flex;flex-direction:column;justify-content:flex-end;gap:5px;border-radius:0 0 12px 12px}.stack-item{border:1px solid #b8c5ac;border-radius:5px;background:var(--mint);padding:4px 10px;display:flex;justify-content:space-between;font-family:Consolas,monospace}.stack-item:first-child{background:var(--peach);border-color:#d4a582}.stack-item small{font-family:inherit;color:var(--ink)}.queue-dir{display:flex;justify-content:space-between;gap:12px;font-size:13px;margin-bottom:15px;color:var(--green)}.empty{font-size:14px;color:var(--muted);padding:16px}.table-wrap{overflow-x:auto;margin:22px 0}table{border-collapse:collapse;width:100%;font-size:14px}th,td{padding:13px 14px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}th{font-weight:650;background:var(--mint);color:var(--green)}tr:last-child td{border-bottom:0}.wide-table{min-width:680px}.cost{white-space:nowrap;font-family:Consolas,monospace}.bucket{display:flex;gap:12px;align-items:center;margin:10px 0;min-height:42px;flex-wrap:wrap}.bucket-index{border-radius:6px;background:var(--mint);padding:5px 10px;font-family:Consolas,monospace;min-width:44px;text-align:center}.bucket .cell{font-size:14px;padding:8px 11px}.svg-wrap{max-width:680px;margin:0 auto}.tree-svg,.graph-svg{display:block;width:100%;height:auto;overflow:visible}.tree-svg line,.graph-svg line{stroke:#a0b49b;stroke-width:2}.tree-svg circle,.graph-svg circle{fill:#fffefa;stroke:#829c77;stroke-width:2}.tree-svg text,.graph-svg text{fill:var(--ink);font:16px Consolas,monospace;text-anchor:middle;dominant-baseline:middle}.tree-svg .hot circle,.graph-svg .hot circle{fill:var(--peach);stroke:var(--orange);stroke-width:3}.tree-svg .visited circle,.graph-svg .visited circle{fill:var(--mint);stroke:var(--green)}.tree-svg .node-label{font:11px "Microsoft YaHei",sans-serif;fill:var(--muted)}.legend{display:flex;gap:18px;flex-wrap:wrap;font-size:12px;color:var(--muted);margin-top:8px}.dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:5px;background:var(--peach);border:1px solid var(--orange)}.dot.green{background:var(--mint);border-color:var(--green)}details{border-bottom:1px solid var(--line);padding:16px 0}summary{cursor:pointer;font-weight:650;color:var(--green)}details p{margin:12px 0 0}.route{display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-size:14px;margin:20px 0}.route span{padding:6px 11px;border-radius:6px;background:var(--mint)}.quiz{margin:18px 0;padding:22px;background:var(--paper);border:1px solid var(--line);border-radius:12px}.quiz p{font-weight:650}.quiz button{margin:4px 6px 4px 0}.answer{font-size:14px;margin-top:12px}.keyline{font-size:18px;color:var(--green);border-top:1px solid var(--line);padding-top:22px;margin-top:26px}.footer{padding-top:40px;color:var(--muted);font-size:13px}.complex-bars{display:grid;grid-template-columns:75px 1fr 65px;align-items:center;gap:12px;margin-top:20px;font-size:13px}.bar-track{height:16px;background:#e8ece2;border-radius:4px;overflow:hidden}.bar-fill{height:100%;background:var(--green);min-width:3px;border-radius:4px}.bar-fill.slow{background:var(--orange)}.memory{display:flex;flex-direction:column;gap:9px}.memory-line{border:1px solid var(--line);border-radius:7px;padding:9px 13px;display:flex;gap:12px;align-items:center;background:white}.memory-line b{min-width:58px;color:var(--blue)}.mini-trie{text-align:left;font-family:Consolas,monospace;white-space:pre;line-height:1.9;overflow:auto}.to-top{display:inline-block;margin-top:20px}.skip{position:absolute;left:16px;top:-80px;background:white;padding:8px;z-index:10}.skip:focus{top:10px}.mobile-nav{display:none}.print-only{display:none}
+@media(min-width:1500px){main{padding-left:80px;padding-right:80px}}
+@media(max-width:1080px){.page{grid-template-columns:205px minmax(0,1fr)}aside{padding-left:22px}main{padding:0 34px 40px}.cards{grid-template-columns:1fr}.hero{padding-top:48px}.split{gap:18px}}
+@media(max-width:760px){.page{display:block}aside{display:none}main{padding:0 20px 40px}.hero{padding:32px 0}h1{letter-spacing:-1px;font-size:38px}h2{font-size:26px}.lead{font-size:17px}.hero-art{padding:18px 10px;gap:8px}.mini-array{gap:3px}.mini-array span{width:26px;height:29px;font-size:13px}.hero-art .caption{font-size:11px}.hero-art .caption b{font-size:12px}.split{grid-template-columns:1fr}.chapter{padding:36px 0}.lab{padding:18px 14px}.cell{min-width:39px;padding:8px}.row{gap:6px}.mobile-nav{display:block;padding:15px 0;border-bottom:1px solid var(--line)}.mobile-nav select{width:100%;font-size:14px}.controls{gap:8px}.controls button{font-size:14px;padding:9px 11px}.svg-wrap{min-width:0}.card{padding:18px}.complex-bars{grid-template-columns:67px 1fr 50px;gap:8px}.tree-svg text,.graph-svg text{font-size:19px}.tree-svg .node-label{font-size:14px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+@media print{body{background:white;font-size:11pt}.page{display:block}aside,.mobile-nav,.controls,.to-top,.tags,.quiz button{display:none}main{padding:0}.hero{padding:0 0 20px}h1{font-size:32pt}.chapter{padding:24px 0;break-before:auto}h2,h3{break-after:avoid}.lab,.card,.callout,pre,.quiz{break-inside:avoid}.hero-art{print-color-adjust:exact}.lab,.diagram{background:#f5f7f0;print-color-adjust:exact}.split{grid-template-columns:1fr 1fr}.print-only{display:block}.table-wrap{overflow:visible}.wide-table{min-width:0}details>*{display:block}a{text-decoration:none;color:inherit}.status{min-height:0}}
+</style>
+</head>
+<body>
+<a class="skip" href="#start">跳到正文</a>
+<div class="page">
+<aside aria-label="学习目录">
+<div class="brand">数据结构 / 图解笔记<span>A VISUAL FIELD GUIDE</span></div>
+<div class="nav-label">从概念，到亲手操作</div>
+<nav id="toc">
+<a href="#start"><b>00</b>先建立直觉</a><a href="#cost"><b>01</b>读懂时间复杂度</a><a href="#array"><b>02</b>数组：按位置找</a><a href="#linked"><b>03</b>链表：顺着线找</a><a href="#stack"><b>04</b>栈：后来先走</a><a href="#queue"><b>05</b>队列：先来先走</a><a href="#hash"><b>06</b>哈希表：按名字找</a><a href="#tree"><b>07</b>树：分层与分支</a><a href="#heap"><b>08</b>堆：先取最重要的</a><a href="#graph"><b>09</b>图：连接成网络</a><a href="#advanced"><b>10</b>再认识几位朋友</a><a href="#choose"><b>11</b>怎么选，怎么记</a><a href="#practice"><b>12</b>试着自己判断</a>
+</nav>
+<div class="reading">阅读进度 <span id="progress-text">0%</span><div class="progress"><i id="progress-bar"></i></div></div>
+<p class="small" style="margin-top:22px">单文件 · 离线可用<br>建议分 3 次阅读，每次 20 分钟</p>
+</aside>
+<main>
+<header class="hero" id="top">
+<div class="eyebrow">零基础 / 图解 / 交互实验</div>
+<h1>把数据<br>放对地方。</h1>
+<p class="lead">一本可以动手的<strong>数据结构入门指南</strong>。<br>先看懂数据怎么摆，再理解为什么这样摆。</p>
+<div class="tags"><span class="tag">不需要编程基础</span><span class="tag">13 节循序渐进</span><span class="tag">图解 + 操作 + 小测</span></div>
+<div class="hero-art" aria-label="数据可以排成一行、叠成一摞、连接成树">
+<div><div class="mini-array"><span>12</span><span>7</span><span>24</span><span>9</span></div><div class="caption"><b>排成一行</b><br>数组 · 链表 · 队列</div></div>
+<div><div class="mini-stack"><span>最后放入</span><span>中间</span><span>最先放入</span></div><div class="caption"><b>叠成一摞</b><br>栈 · 后进先出</div></div>
+<div><svg viewBox="0 0 160 90" height="90" width="100%" aria-hidden="true"><g stroke="#77966e" stroke-width="2"><path d="M80 20L40 65M80 20L120 65"/></g><g fill="#fffefa" stroke="#77966e"><circle cx="80" cy="20" r="15"/><circle cx="40" cy="65" r="15"/><circle cx="120" cy="65" r="15"/></g></svg><div class="caption"><b>长出分支</b><br>树 · 堆 · 搜索</div></div>
+</div>
+</header>
+<div class="mobile-nav"><label for="jump" class="small">跳转到章节</label><select id="jump"></select></div>
+
+<section class="chapter" id="start">
+<div class="chapter-no">00 / 先建立直觉</div><h2>数据结构，就是组织数据的方法</h2>
+<p class="intro">同样是 1,000 本书，随手堆在地上、按编号摆上书架、按主题分柜，找书的方式和速度会完全不同。</p>
+<p>计算机也会遇到这个问题。姓名、分数、聊天记录、地图地点都是<strong>数据</strong>；怎样摆放它们、怎样表示它们之间的关系，就是<strong>数据结构</strong>。在这种组织方式上执行的操作步骤，叫作<strong>算法</strong>。</p>
+<div class="cards"><div class="card"><h4>数据</h4><p>书本上的信息。<br>例如：<code>书名 = 小王子</code>。</p></div><div class="card"><h4>数据结构</h4><p>书怎么组织。<br>例如：按编号连续摆放。</p></div><div class="card"><h4>算法</h4><p>具体怎么做。<br>例如：从左到右逐本查找。</p></div></div>
+<h3>所有结构，都在回答四类问题</h3>
+<div class="route"><span>访问：取第几个？</span><span>查找：它在哪里？</span><span>插入：新数据放哪？</span><span>删除：拿走后怎么办？</span></div>
+<p>“取第 3 个数”和“找到数字 3”是两件事：前者已经知道位置，后者只知道内容。许多速度差异就来自这里。</p>
+<div class="callout"><strong>没有全能的最好结构，只有更适合某种操作的结构。</strong><p>经常按位置读取？经常在中间修改？总要取最小值？先明确你要做什么，再选择怎么存。</p></div>
+<h3>先看整张地图</h3>
+<div class="table-wrap"><table><thead><tr><th>关系长什么样</th><th>代表结构</th><th>日常比喻</th></tr></thead><tbody><tr><td>一条线</td><td>数组、链表、栈、队列</td><td>座位、寻宝线索、盘子、排队</td></tr><tr><td>一层层分支</td><td>树、二叉搜索树、堆</td><td>文件目录、逐层筛选</td></tr><tr><td>任意相连的网络</td><td>图</td><td>地铁线路、好友关系</td></tr><tr><td>从名字直接定位</td><td>哈希表</td><td>用姓名查通讯录</td></tr></tbody></table></div>
+<p class="small">这里按直觉分组，不是互斥的严格分类。栈、队列首先描述操作规则，底层可以由数组或链表实现。</p>
+</section>
+
+<section class="chapter" id="cost">
+<div class="chapter-no">01 / 一把比较效率的尺子</div><h2>复杂度，看数据变多以后会怎样</h2>
+<p>用 <code>n</code> 表示数据数量。我们通常关心：<strong>n 变大时，操作所需的工作量怎样增长？</strong>大 O 记号描述增长的上界，入门时可以先把它看成“工作量的增长级别”。它不是精确秒数，也不天然表示最坏情况；需要同时说明是在讨论平均、最坏还是均摊。</p>
+<div class="table-wrap"><table><thead><tr><th>写法</th><th>直觉</th><th>常见例子</th></tr></thead><tbody><tr><td class="cost">O(1)</td><td>数据再多，也只做固定几步</td><td>数组按下标读取</td></tr><tr><td class="cost">O(log n)</td><td>每一步把问题规模缩小一大截</td><td>有序数组的二分查找</td></tr><tr><td class="cost">O(n)</td><td>可能看完全部数据</td><td>逐个查找一个值</td></tr><tr><td class="cost">O(n log n)</td><td>约 log n 层，每层处理 n 份工作</td><td>归并排序</td></tr><tr><td class="cost">O(n²)</td><td>两层遍历，数据翻倍，工作量约四倍</td><td>检查所有有序元素对</td></tr></tbody></table></div>
+<div class="lab"><div class="lab-head"><h3>改变 n，感受增长差距</h3><span class="lab-label">动手 01</span></div><label for="cost-n">数据数量 n：<strong id="cost-n-label">16</strong></label><input id="cost-n" type="range" min="2" max="100" value="16" style="width:100%"><div id="cost-bars"></div><p class="small" style="margin-top:16px">条形使用同一线性比例，数值为示意公式的计算结果，不是实际运行时间；此处 log 取底数 2。短条保留最小可见宽度，请以右侧数值为准。</p></div>
+<div class="split"><div><h3>空间复杂度</h3><p>关注额外需要多少存储空间。复制 n 个数通常需要 <code>O(n)</code> 额外空间；只用几个临时变量通常是 <code>O(1)</code>。递归调用本身也会占用调用栈空间。</p></div><div><h3>均摊是什么意思？</h3><p>动态数组偶尔扩容，要搬走全部元素，单次是 <code>O(n)</code>；采用合理的成倍扩容策略时，把成本分摊到一长串末尾追加操作，每次平均承担 <code>O(1)</code>。这叫<strong>均摊</strong>，不是随机输入的“平均情况”。</p></div></div>
+<div class="callout warn"><strong>复杂度不是全部。</strong> 小规模数据下，常数开销、内存布局、实现方式也很重要。先理解增长趋势，不必为几个小数据过度优化。</div>
+</section>
+
+<section class="chapter" id="array">
+<div class="chapter-no">02 / ARRAY</div><h2>数组：一排有编号的格子</h2>
+<p class="intro">像电影院座位。知道座位号，就能直接定位。</p>
+<p>经典数组把同类元素放在连续的存储位置上。每个位置有一个编号，叫<strong>下标（index）</strong>，通常从 <code>0</code> 开始。长度为 5 的数组，下标是 0、1、2、3、4。</p>
+<div class="lab"><div class="lab-head"><h3>访问很快，插入需要腾位置</h3><span class="lab-label">动手 02</span></div><div class="diagram"><div class="row" id="array-view"></div></div><div class="controls"><label>下标 <input type="number" id="array-index" value="2" min="0" max="8"></label><label>值 <input type="number" id="array-value" value="99" min="-999" max="999"></label><button id="array-get">读取</button><button id="array-insert">在此插入</button><button id="array-delete" class="secondary">删除此项</button><button id="array-reset" class="secondary">重置</button></div><p class="status" id="array-status" aria-live="polite">试着读取下标 2，再在下标 2 插入 99，观察后面元素的编号。</p></div>
+<p>为什么能直接定位？因为地址可以算出来：<code>首地址 + 下标 × 每格大小</code>。不必从头检查前面的格子。实际语言可能存放对象的引用，但按下标访问仍然可以很快。</p>
+<ul><li><strong>按下标访问：</strong><code>O(1)</code>。</li><li><strong>在未排序数组中按值查找：</strong>最坏 <code>O(n)</code>。</li><li><strong>在中间插入或删除并保持顺序：</strong>后面元素要移动，最坏 <code>O(n)</code>。</li><li><strong>动态数组末尾追加：</strong>通常均摊 <code>O(1)</code>，扩容那一次可能是 <code>O(n)</code>。</li></ul>
+<div class="callout"><strong>用在哪里：</strong>学生成绩列表、像素数据、需要频繁按位置读取的序列。固定长度数组不能随意变长；演示展示的是可以增减元素的动态数组。</div>
+<details><summary>进一步：为什么有序数组可以二分查找？</summary><p>像猜 1～100 之间的数：每次看中间位置，根据目标更大还是更小，舍弃一半候选。前提是<strong>数据已按同一规则排序</strong>，并且能快速访问中间位置。先排序也有成本，不能忽略。</p></details>
+</section>
+
+<section class="chapter" id="linked">
+<div class="chapter-no">03 / LINKED LIST</div><h2>链表：每个节点，留下下一站的地址</h2>
+<p class="intro">像寻宝游戏。第一张纸条告诉你第二张在哪里，第二张再指向第三张。</p>
+<p>链表由一个个<strong>节点（node）</strong>组成。每个节点保存数据，以及指向下一个节点的<strong>引用或指针</strong>。节点不必在内存里挨在一起。<code>head</code> 指向第一个节点，<code>null</code> 表示后面没有节点了。</p>
+<div class="lab"><div class="lab-head"><h3>在已知节点后插入，只需改连接</h3><span class="lab-label">动手 03</span></div><div class="diagram"><div class="row" id="linked-view"></div></div><div class="controls"><button id="linked-step">下一步</button><button id="linked-reset" class="secondary">重置</button></div><p class="status" id="linked-status" aria-live="polite"></p></div>
+<div class="split"><div><h3>为什么查找慢？</h3><p>知道“第 8 个节点”还不够，因为它的地址算不出来。要从头顺着连接走过去，所以按位置访问和按值查找通常是 <code>O(n)</code>。</p></div><div><h3>为什么修改连接快？</h3><p>如果已经拿到前驱节点，插入或移除它后面的一个节点只需改少量引用，是 <code>O(1)</code>。<strong>如果先要找到位置，总成本通常仍是 O(n)。</strong></p></div></div>
+<div class="table-wrap"><table><thead><tr><th>变体</th><th>连接方式</th><th>带来的变化</th></tr></thead><tbody><tr><td>单向链表</td><td>只记住 next</td><td>只能向后走；删除通常需要前驱</td></tr><tr><td>双向链表</td><td>记住 prev 和 next</td><td>能前后走；已知节点时更方便删除，但多占空间</td></tr><tr><td>循环链表</td><td>尾节点重新指回头节点</td><td>适合循环访问；遍历必须设置停止条件</td></tr></tbody></table></div>
+<div class="callout warn"><strong>别背成“链表插入永远比数组快”。</strong> 寻找位置也要时间，指针也占空间。数组的连续布局通常更利于 CPU 批量读取。</div>
+<p><strong>用在哪里：</strong>频繁移动已知节点的场景。例如 LRU 缓存常把<strong>哈希表与双向链表组合</strong>：哈希表定位节点，链表维护最近使用顺序。</p>
+</section>
+
+<section class="chapter" id="stack">
+<div class="chapter-no">04 / STACK</div><h2>栈：后来放上去的，先拿走</h2>
+<p class="intro">想象一摞盘子。放盘子和拿盘子，都从最上面进行。</p>
+<p>这种规则叫<strong>后进先出（LIFO，Last In, First Out）</strong>。允许操作的一端叫<strong>栈顶</strong>。放入叫 <code>push</code>（入栈），取出叫 <code>pop</code>（出栈），只看最上面叫 <code>peek</code>。</p>
+<div class="lab"><div class="lab-head"><h3>亲手叠起一摞数据</h3><span class="lab-label">动手 04</span></div><div class="stack-well" id="stack-view"></div><div class="controls"><label>放入的值 <input type="number" id="stack-value" value="40" min="-999" max="999"></label><button id="stack-push">入栈 push</button><button id="stack-pop">出栈 pop</button><button id="stack-peek" class="secondary">看栈顶</button><button id="stack-reset" class="secondary">重置</button></div><p class="status" id="stack-status" aria-live="polite">10 → 20 → 30 依次入栈，所以现在先取出的是 30。</p></div>
+<h3>撤销操作为什么适合用栈？</h3>
+<div class="route"><span>输入「你」</span>→<span>输入「好」</span>→<span>加粗</span>→<span>撤销：先取消加粗</span></div>
+<p>最近发生的动作最先撤销，正好符合栈的规则。浏览器返回、括号匹配、函数调用和递归也都能用栈来理解。完整的撤销/重做系统常使用两个栈。</p>
+<pre><code>栈 = 空
+push(10)     // [10]，右边是栈顶
+push(20)     // [10, 20]
+pop()        // 返回 20，栈变成 [10]
+peek()       // 返回 10，栈仍是 [10]</code></pre>
+<p><strong>效率：</strong>链表实现的入栈、出栈、看栈顶可为 <code>O(1)</code>；动态数组实现的入栈通常为均摊 <code>O(1)</code>。栈不提供任意中间位置的直接访问操作。</p>
+<div class="callout warn"><strong>两个“栈”有关联，但别混为一谈。</strong> 这里讲的是数据结构；程序的“调用栈”是利用这种后进先出规则管理函数调用的机制。空栈继续出栈需要处理，不能凭空取出元素。</div>
+</section>
+
+<section class="chapter" id="queue">
+<div class="chapter-no">05 / QUEUE</div><h2>队列：先排进来的，先被处理</h2>
+<p class="intro">像在便利店结账。新顾客排到队尾，队头顾客先离开。</p>
+<p>这种规则叫<strong>先进先出（FIFO，First In, First Out）</strong>。从队尾放入叫 <code>enqueue</code>（入队），从队头取出叫 <code>dequeue</code>（出队）。</p>
+<div class="lab"><div class="lab-head"><h3>模拟一个待处理任务队列</h3><span class="lab-label">动手 05</span></div><div class="diagram"><div class="queue-dir"><span>← 队头：从这里取出</span><span>队尾：从这里加入 ←</span></div><div class="row" id="queue-view"></div></div><div class="controls"><button id="queue-add">新任务入队</button><button id="queue-remove">处理队头</button><button id="queue-reset" class="secondary">重置</button></div><p class="status" id="queue-status" aria-live="polite">任务 A 最先到达，也会最先被处理。</p></div>
+<h3>怎样做到出队 O(1)？</h3>
+<p>如果每取走数组的第一个元素，就把后面所有元素往前挪，会花 <code>O(n)</code>。更合适的实现是带头尾指针的链表，或<strong>循环数组</strong>：移动队头编号，让已经空出来的格子之后再次被利用。</p>
+<div class="diagram"><div class="row"><span class="cell">E<small>格 0 · 队尾元素</small></span><span class="cell">空<small>格 1</small></span><span class="cell hot">C<small>格 2 · 队头</small></span><span class="cell">D<small>格 3</small></span></div><p class="caption" style="margin:16px 0 0">逻辑顺序是 C → D → E。走到格 3 后，绕回格 0；空/满可用计数等方式区分。</p></div>
+<div class="split"><div><h3>双端队列 deque</h3><p>两头都能插入和删除。适合需要灵活操作两端的任务，例如滑动窗口算法。它也可以只使用其中一部分操作来充当栈或普通队列。</p></div><div><h3>优先队列 priority queue</h3><p>按“优先级”取出元素，不保证先来先走。例如总先处理最紧急任务。它描述的是操作规则，常用后面要学的<strong>堆</strong>实现。</p></div></div>
+<p><strong>用在哪里：</strong>打印任务、请求缓冲、按层搜索。正确实现的普通队列入队和出队可以达到 <code>O(1)</code>；动态扩容实现可能涉及均摊成本。</p>
+</section>
+
+<section class="chapter" id="hash">
+<div class="chapter-no">06 / HASH TABLE</div><h2>哈希表：从一个名字，算出存放位置</h2>
+<p class="intro">把“编号找座位”升级为“给出姓名，就能查到对应资料”。</p>
+<p>哈希表存储<strong>键值对（key → value）</strong>。例如 <code>"小林" → "138…"</code>，姓名是键，电话号码是值。<strong>哈希函数</strong>把键转换成一个数，再映射到存放位置，通常称作<strong>桶（bucket）</strong>。</p>
+<div class="route"><span>键 key</span>→<span>哈希函数 hash(key)</span>→<span>桶编号</span>→<span>核对键，取得 value</span></div>
+<div class="lab"><div class="lab-head"><h3>两个键，也可能算出同一个桶</h3><span class="lab-label">动手 06</span></div><p class="small">为了看清原理，这里只接受小写英文字母：把字母编码相加，再对 5 取余。这是教学用的简单函数，不适合实际系统。</p><div id="hash-view"></div><div class="controls"><label>键 <input type="text" id="hash-key" value="ab" maxlength="8" pattern="[a-z]+"></label><label>值 <input type="text" id="hash-value" value="新朋友" maxlength="12"></label><button id="hash-put">存入 / 更新</button><button id="hash-get" class="secondary">查找键</button><button id="hash-reset" class="secondary">重置</button></div><p class="status" id="hash-status" aria-live="polite">ab 与 ba 都映射到桶 0，但它们是不同的键。点击查找，观察桶内仍需核对键。</p></div>
+<h3>同一个桶，不代表同一个键</h3>
+<p>不同的键映射到同一位置叫<strong>哈希冲突</strong>。不能直接覆盖旧数据！一种解决方法是在桶里放一个列表，逐个核对真正的键，称为<strong>链地址法</strong>。另一种是继续寻找其他空槽位，称为<strong>开放寻址</strong>。</p>
+<ul><li><strong>查找、插入、删除：</strong>哈希分布良好且负载受控时，通常平均或期望 <code>O(1)</code>；大量冲突时，某些实现最坏可退化为 <code>O(n)</code>。</li><li><strong>负载因子：</strong>元素数量 ÷ 桶数量。太拥挤时需要扩容、重新分配数据；一次重建可能需要 <code>O(n)</code>。</li><li><strong>键相同：</strong>通常更新这个键的值。键不同但哈希相同，仍需分别保存。</li></ul>
+<div class="callout"><strong>Map 与 Set：</strong>Map（映射/字典）存“键 → 值”；Set（集合）只关心“某个元素在不在”，且不重复。它们是抽象功能，可以由哈希表实现，也可以由有序树实现。哈希表本身不保证按键排序。</div>
+<p><strong>用在哪里：</strong>词频统计、查用户资料、去重、缓存、判断某个 ID 是否存在。遍历 n 项仍然需要 <code>O(n)</code>，不会因为查找快就变成一步完成。</p>
+</section>
+
+<section class="chapter" id="tree">
+<div class="chapter-no">07 / TREE</div><h2>树：让关系长出层次</h2>
+<p class="intro">从一个入口，沿分支向下。文件夹、组织结构、网页元素都常呈现树形关系。</p>
+<p>在一棵有根树里，最上面的节点叫<strong>根</strong>；下一层是它的<strong>孩子</strong>；反过来叫<strong>父节点</strong>；没有孩子的节点叫<strong>叶子</strong>。除了根之外，每个节点恰好有一个父节点，不会绕圈回到自身。</p>
+<div class="diagram"><div class="svg-wrap"><svg class="tree-svg" viewBox="0 0 540 210" role="img" aria-label="根节点8，孩子3和10；3的孩子1和6，10的右孩子14。叶子是1、6、14。"><g><line x1="270" y1="35" x2="150" y2="100"/><line x1="270" y1="35" x2="390" y2="100"/><line x1="150" y1="100" x2="85" y2="170"/><line x1="150" y1="100" x2="215" y2="170"/><line x1="390" y1="100" x2="455" y2="170"/></g><g><circle cx="270" cy="35" r="23"/><text x="270" y="35">8</text><circle cx="150" cy="100" r="23"/><text x="150" y="100">3</text><circle cx="390" cy="100" r="23"/><text x="390" y="100">10</text><circle cx="85" cy="170" r="23"/><text x="85" y="170">1</text><circle cx="215" cy="170" r="23"/><text x="215" y="170">6</text><circle cx="455" cy="170" r="23"/><text x="455" y="170">14</text></g></svg></div><p class="caption" style="margin-bottom:0">根：8　/　8 的孩子：3、10　/　叶子：1、6、14</p></div>
+<h3>二叉树 ≠ 二叉搜索树</h3>
+<p><strong>二叉树</strong>只要求每个节点最多有两个孩子，区分左、右。<strong>二叉搜索树（BST）</strong>还要求：对每个节点，左子树所有值都更小，右子树所有值都更大。这里假设键不重复；允许重复时，需要另外约定规则。</p>
+<div class="lab"><div class="lab-head"><h3>在二叉搜索树中寻找一个值</h3><span class="lab-label">动手 07</span></div><div class="svg-wrap" id="bst-view"></div><div class="controls"><label>目标 <input type="number" id="bst-value" value="6" min="-999" max="999"></label><button id="bst-search">开始查找</button><button id="bst-next" class="secondary" disabled>下一步</button><button id="bst-reset" class="secondary">重置</button></div><p class="status" id="bst-status" aria-live="polite">寻找 6：先与根 8 比较。每次沿左或右分支继续，不必遍历另一侧。</p><div class="legend"><span><i class="dot"></i>当前比较</span><span><i class="dot green"></i>已走过 / 已找到</span></div></div>
+<p>查找、插入、删除的成本取决于树高 <code>h</code>，一般为 <code>O(h)</code>。如果结构保持平衡，高度约为 <code>log n</code>；如果依次插入 1、2、3、4 而不做平衡，可能长成一条链，高度变成 <code>n</code>。</p>
+<div class="callout warn"><strong>“树查找都是 O(log n)”不对。</strong> 普通树没有排序规则，查找可能要遍历全部节点；普通 BST 也可能退化。AVL 树、红黑树等通过维护平衡，保证搜索、插入、删除为 <code>O(log n)</code>。</div>
+<h3>遍历：按照某个顺序，把每个节点看一遍</h3>
+<p>对上方这棵树，下列规则会得到不同顺序。“序”指根节点在左、右子树之前、中间还是之后被访问；规则在每棵子树中重复使用。</p>
+<div class="table-wrap"><table><thead><tr><th>方法</th><th>规则</th><th>本例结果</th></tr></thead><tbody><tr><td>前序</td><td>根 → 左 → 右</td><td>8, 3, 1, 6, 10, 14</td></tr><tr><td>中序</td><td>左 → 根 → 右</td><td>1, 3, 6, 8, 10, 14</td></tr><tr><td>后序</td><td>左 → 右 → 根</td><td>1, 6, 3, 14, 10, 8</td></tr><tr><td>层序</td><td>从上到下逐层访问，用队列维护待访问节点</td><td>8, 3, 10, 1, 6, 14</td></tr></tbody></table></div>
+<p class="keyline">只有满足搜索树规则，中序遍历才会得到有序结果；普通二叉树不保证这一点。</p>
+</section>
+
+<section class="chapter" id="heap">
+<div class="chapter-no">08 / BINARY HEAP</div><h2>堆：让最该被取出的元素站到最上面</h2>
+<p class="intro">不必把所有任务完整排序，只要随时知道下一项最优先处理谁。</p>
+<p>这里讲<strong>二叉堆</strong>。它是一棵<strong>完全二叉树</strong>：除了最后一层，其他层都填满；最后一层从左往右连续填。它还满足一种局部大小关系：</p>
+<div class="split"><div class="card"><h4>最小堆</h4><p>每个父节点 ≤ 它的孩子。<br>因此，根节点一定是全局最小值。</p></div><div class="card"><h4>最大堆</h4><p>每个父节点 ≥ 它的孩子。<br>因此，根节点一定是全局最大值。</p></div></div>
+<div class="lab"><div class="lab-head"><h3>最小堆：看一次“上浮”和“下沉”</h3><span class="lab-label">动手 08 · 分步演示</span></div><div class="svg-wrap" id="heap-view"></div><p class="small" style="margin-bottom:8px">同一棵堆的数组表示（按层、从左到右）：</p><div class="row" id="heap-array"></div><div class="controls"><label>插入值 <input type="number" id="heap-value" value="2" min="-99" max="999"></label><button id="heap-add">插入并演示</button><button id="heap-pop">取出最小值</button><button id="heap-next" class="secondary" disabled>下一步</button><button id="heap-reset" class="secondary">重置</button></div><p class="status" id="heap-status" aria-live="polite">当前最小值是根节点 3。试着插入 2，看它如何与父节点比较、交换。</p></div>
+<ol><li><strong>插入：</strong>先加到最后一个位置，保持完全二叉树形状；如果比父节点小，就交换，继续<strong>上浮</strong>。</li><li><strong>取出最小值：</strong>移走根，把最后一个元素补到根；与较小的孩子比较，必要时交换，继续<strong>下沉</strong>。</li></ol>
+<p>完全二叉树的高度是 <code>O(log n)</code>，因此只沿一条路径调整，就能恢复规则。看最小值 <code>O(1)</code>，插入和取出最小值 <code>O(log n)</code>（通常不计底层数组偶发扩容成本）。</p>
+<div class="callout warn"><strong>堆不是已经排好序的数组，也不是二叉搜索树。</strong><p>堆只约束父节点与孩子，不约束左右兄弟谁更小。最小值易取，但寻找任意一个值最坏仍是 <code>O(n)</code>。反复取出最小值，才会逐个得到递增序列。</p></div>
+<details><summary>为什么堆通常直接存进数组？</summary><p>完全二叉树没有中间空位，可以按层存进数组。下标从 0 开始时，节点 i 的左孩子在 <code>2i + 1</code>，右孩子在 <code>2i + 2</code>，父节点在 <code>floor((i - 1) / 2)</code>（仅 i &gt; 0）。不需要为每个节点额外保存指针。</p></details>
+<details><summary>进阶：建堆与 Top K</summary><p>逐个插入 n 个数建堆是 <code>O(n log n)</code> 上界；自底向上“下沉”的建堆方法可以做到 <code>O(n)</code>。要保留最大的 K 个数，可维护大小为 K 的最小堆：新数比堆顶大才替换堆顶，让堆顶充当入选门槛，整体通常为 <code>O(n log K)</code>（K ≥ 2）。</p></details>
+<p><strong>用在哪里：</strong>优先任务调度、Top K、合并多个有序序列。数据结构里的“堆”与程序内存管理中的“堆内存”是不同概念。</p>
+</section>
+
+<section class="chapter" id="graph">
+<div class="chapter-no">09 / GRAPH</div><h2>图：关系不再只是“一层一层”</h2>
+<p class="intro">地铁站可以交汇，朋友之间可以互相认识。这样的关系会形成网络。</p>
+<p>图由<strong>顶点（vertex）</strong>和<strong>边（edge）</strong>组成。边可以有方向，也可以无方向；还可以带上距离、费用等<strong>权重</strong>。树是图的一种特殊情况：从无向图角度看，它连通且没有环。</p>
+<div class="lab"><div class="lab-head"><h3>从 A 出发：广度优先 vs 深度优先</h3><span class="lab-label">动手 09</span></div><div class="svg-wrap" id="graph-view"></div><div class="controls"><label>方法 <select id="graph-mode"><option value="bfs">BFS 广度优先</option><option value="dfs">DFS 深度优先</option></select></label><button id="graph-next">访问下一个节点</button><button id="graph-reset" class="secondary">重置</button></div><p class="status" id="graph-status" aria-live="polite"></p><p class="small" style="margin:12px 0 0">这是无向、无权图。从 A 出发，邻居按字母顺序考虑；BFS 入队时标记，DFS 采用迭代栈、弹出时检查是否已访问，逆序压栈以优先访问字母较小的邻居。</p></div>
+<div class="split"><div><h3>BFS：先看附近，再向外扩</h3><p>使用<strong>队列</strong>。先访问距离起点 1 条边的顶点，再访问 2 条边的顶点……在无权图，或所有边权相等时，能找到按边数计算的最短路径。</p></div><div><h3>DFS：先沿一条路走到底</h3><p>使用<strong>栈或递归</strong>。沿分支持续深入，走不通再返回，探索其他分支。适合遍历、探索连通关系，也是许多回溯方法的基础；不保证最短路径。</p></div></div>
+<div class="callout warn"><strong>图可能绕圈，所以要记住“访问过谁”。</strong> 否则沿 A → B → D → C → A 就可能一直重复。如果图不连通，从 A 出发只会访问 A 所在的连通部分。</div>
+<h3>图在内存里怎么存？</h3>
+<div class="split"><div class="card"><h4>邻接表</h4><p>每个顶点列出它的邻居：</p><code>A: [B, C]</code><br><code>B: [A, D, E]</code><br><code>C: [A, D]</code><p class="small" style="margin-top:10px">其余顶点同理。空间 O(V + E)，适合边较少的稀疏图。</p></div><div class="card"><h4>邻接矩阵</h4><p>做一张 V × V 的表。第 i 行、第 j 列记录 i 到 j 有没有边，或记录权重。</p><p class="small">空间 O(V²)，可 O(1) 判断两点是否直接相连；适合顶点不多或图比较稠密的情况。</p></div></div>
+<p style="margin-top:22px">这里 <code>V</code> 是顶点数，<code>E</code> 是边数。用邻接表遍历图时，BFS 和 DFS 的时间通常是 <code>O(V + E)</code>；用邻接矩阵遍历通常是 <code>O(V²)</code>。</p>
+<p><strong>用在哪里：</strong>道路导航、社交关系、课程先修关系、任务依赖。带权最短路径需要选择合适算法，例如非负权图可使用 Dijkstra；普通 BFS 不能直接处理不同代价的边。</p>
+</section>
+
+<section class="chapter" id="advanced">
+<div class="chapter-no">10 / 扩展视野</div><h2>还有几位，各有擅长</h2>
+<p>掌握前面的结构后，再看这些会容易很多。第一次阅读，记住它们解决什么问题即可。</p>
+<h3>字典树 Trie：共享单词前缀</h3>
+<div class="split"><div><p>把字符串按字符拆开，共同的开头走同一条路。例如 <code>cat</code> 和 <code>car</code> 共用 <code>c → a</code>，最后才分叉。</p><p>适合前缀匹配、自动补全。若每层能 O(1) 查找字符分支，查一个长度为 L 的词需要 <code>O(L)</code>。它可能用较多空间；自动补全列出所有结果还要计入输出成本。</p></div><div class="diagram mini-trie" role="img" aria-label="根分出c和d，c后是a，a分成r和t，分别组成car和cat；d后是o和g，组成dog。">根
+├─ c ─ a ─┬─ r ● car
+│         └─ t ● cat
+└─ d ─ o ─── g ● dog
+
+● 表示一个完整单词结束</div></div>
+<h3>并查集：这些元素，属于同一组吗？</h3>
+<div class="diagram"><div class="row"><span class="cell">{ A, B }</span><span class="cell">{ C, D }</span><span class="arrow">→ 合并 →</span><span class="cell found">{ A, B, C, D }</span></div><p class="caption" style="margin:15px 0 0">连接 B 和 C 后，两组变成一组。再次问 A 与 D 是否同组，答案就是“是”。</p></div>
+<p><strong>find</strong> 找到元素所属组的代表，<strong>union</strong> 合并两组。配合路径压缩与按秩/大小合并时，操作均摊为 <code>O(α(n))</code>，实际中非常接近常数。常用于动态连通性、最小生成树；它不负责告诉你两点之间的具体路线，也不擅长一般的拆组操作。</p>
+<h3>区间查询结构：一次问一段，而不是一个</h3>
+<div class="diagram"><div class="row"><span class="cell">2</span><span class="cell hot">4</span><span class="cell hot">1</span><span class="cell hot">7</span><span class="cell">3</span></div><p class="caption" style="margin:15px 0 0">查询下标 1～3 的和：4 + 1 + 7 = 12</p></div>
+<p>数据不变时，可以先计算<strong>前缀和</strong>，用两个前缀之差 O(1) 回答区间和；但数据频繁变化时，维护前缀和可能较慢。<strong>树状数组（Fenwick Tree）</strong>常以 O(log n) 支持单点增加、前缀求和；<strong>线段树</strong>把区间递归分段，可用 O(log n) 完成常见的单点更新与区间查询，代价是实现和空间更复杂。</p>
+<h3>B 树 / B+ 树：一层放更多键，减少外部存储访问</h3>
+<p>当数据多到需要放在磁盘或按页面管理时，一次访问往往比一次内存比较更昂贵。B 树家族采用<strong>多路、平衡</strong>的结构，降低树高。B+ 树的叶子通常相互连接，方便范围扫描，因此经常出现在数据库与文件系统索引中。具体布局和用途依实现而定。</p>
+<div class="callout"><strong>学习顺序建议：</strong>先熟悉数组、链表、栈、队列 → 理解哈希、树、堆 → 会用 BFS / DFS → 再按需求学习这些进阶结构。</div>
+</section>
+
+<section class="chapter" id="choose">
+<div class="chapter-no">11 / 把知识连起来</div><h2>选择结构，先把需求说清楚</h2>
+<div class="table-wrap"><table><thead><tr><th>你真正想做什么</th><th>优先考虑</th><th>理由</th></tr></thead><tbody><tr><td>经常取第 i 个元素</td><td>数组</td><td>按下标直接定位</td></tr><tr><td>频繁移动已经定位的节点</td><td>双向链表</td><td>只改附近连接</td></tr><tr><td>撤销最近一次动作</td><td>栈</td><td>后进先出</td></tr><tr><td>按到达顺序处理任务</td><td>队列</td><td>先进先出</td></tr><tr><td>按 ID 查资料、统计频率、去重</td><td>哈希映射 / 哈希集合</td><td>按键查找通常很快</td></tr><tr><td>维护有序键，查询一个范围</td><td>平衡搜索树</td><td>保留可利用的大小关系</td></tr><tr><td>反复取最小或最大元素</td><td>堆</td><td>高效维护优先项</td></tr><tr><td>表示路径、连接、依赖</td><td>图</td><td>描述任意连接关系</td></tr><tr><td>搜索相同开头的字符串</td><td>Trie</td><td>共享前缀</td></tr><tr><td>不断合并组，判断是否同组</td><td>并查集</td><td>维护集合代表</td></tr></tbody></table></div>
+<h3>常见复杂度速查</h3>
+<p class="small">下表是常见实现下的时间复杂度；“最坏”除明确写平均/均摊外适用。n 表示元素个数，不包含存储介质、对象比较等额外成本。</p>
+<div class="table-wrap"><table class="wide-table"><thead><tr><th>结构</th><th>访问 / 查找</th><th>插入</th><th>删除 / 取出</th><th>关键条件</th></tr></thead><tbody><tr><td>动态数组</td><td>下标 O(1)<br>无序按值 O(n)</td><td>中间 O(n)<br>末尾均摊 O(1)</td><td>中间 O(n)<br>末尾通常 O(1)</td><td>保持顺序；扩容/缩容可能搬移</td></tr><tr><td>单向链表</td><td>O(n)</td><td>已知前驱 O(1)</td><td>已知前驱 O(1)</td><td>找前驱另计；头部操作另行处理</td></tr><tr><td>栈</td><td>看栈顶 O(1)</td><td>O(1)</td><td>O(1)</td><td>链表实现；动态数组入栈常为均摊</td></tr><tr><td>队列</td><td>看队头 O(1)</td><td>O(1)</td><td>O(1)</td><td>带头尾指针链表或适当循环数组</td></tr><tr><td>哈希表</td><td>平均 O(1)</td><td>平均/均摊 O(1)</td><td>平均 O(1)</td><td>良好散列与负载控制；可能退化</td></tr><tr><td>平衡 BST</td><td>O(log n)</td><td>O(log n)</td><td>O(log n)</td><td>持续维护平衡</td></tr><tr><td>二叉最小堆</td><td>最小值 O(1)<br>任意值 O(n)</td><td>O(log n)</td><td>取最小 O(log n)</td><td>数组容量管理成本另计</td></tr></tbody></table></div>
+<h3>真实程序通常把它们组合起来</h3>
+<div class="memory"><div class="memory-line"><b>音乐应用</b><span>数组存歌单；队列管理待播放歌曲；哈希表按歌曲 ID 查详情。</span></div><div class="memory-line"><b>导航应用</b><span>图表示路网；哈希表查地点；某些最短路径算法用堆挑选下一候选。</span></div><div class="memory-line"><b>文本编辑器</b><span>栈记录撤销与重做；字典树支持前缀提示；文本本身可以采用更专门的结构。</span></div></div>
+</section>
+
+<section class="chapter" id="practice">
+<div class="chapter-no">12 / 检查一下你的直觉</div><h2>不用背定义，试着解释给别人听</h2>
+<div class="quiz" data-correct="1" data-explanation="栈是后进先出。A、B、C 依次入栈后，栈顶是 C，第一次 pop 会取出 C。"><p>1. A、B、C 依次入栈，第一次出栈得到谁？</p><button class="secondary" data-answer="0">A</button><button class="secondary" data-answer="1">C</button><button class="secondary" data-answer="2">无法确定</button><div class="answer" aria-live="polite"></div></div>
+<div class="quiz" data-correct="2" data-explanation="最小堆只保证父节点不大于孩子，兄弟和不同子树之间不保证有序。根节点必定最小，但整个数组不一定有序。"><p>2. 最小堆中，哪句话一定正确？</p><button class="secondary" data-answer="0">左孩子小于右孩子</button><button class="secondary" data-answer="1">数组已经递增排列</button><button class="secondary" data-answer="2">根节点是最小值</button><div class="answer" aria-live="polite"></div></div>
+<div class="quiz" data-correct="0" data-explanation="要先顺着链找到第 500 个节点，定位成本为 O(n)；找到前驱后，修改连接本身才是 O(1)。总成本不能只算后半段。"><p>3. 从单向链表头开始，找到第 500 个节点并删除，需要考虑什么？</p><button class="secondary" data-answer="0">查找位置也要花时间</button><button class="secondary" data-answer="1">删除永远只要 O(1)</button><div class="answer" aria-live="polite"></div></div>
+<div class="quiz" data-correct="1" data-explanation="无权图中，每条边的代价相同。BFS 按距离起点的层数扩展，能找到边数最少的路径。DFS 不保证最短。"><p>4. 在无权迷宫中找“走步数最少”的路线，优先考虑什么？</p><button class="secondary" data-answer="0">DFS 深度优先</button><button class="secondary" data-answer="1">BFS 广度优先</button><div class="answer" aria-live="polite"></div></div>
+<div class="quiz" data-correct="0" data-explanation="发生冲突的两个键仍可能不同，需要核对原始键，并用链地址法或开放寻址等方法分别保存；只有键相同时才更新对应值。"><p>5. 两个不同键算出同一个桶，应该怎么办？</p><button class="secondary" data-answer="0">处理冲突，分别保存</button><button class="secondary" data-answer="1">直接覆盖旧数据</button><div class="answer" aria-live="polite"></div></div>
+<h3>三轮学习，形成自己的理解</h3>
+<ol><li><strong>第一轮 · 认形状：</strong>看 00～05 节，亲手操作数组、链表、栈、队列，用一句话描述取数据的规则。</li><li><strong>第二轮 · 懂取舍：</strong>看 06～09 节，说出哈希表、BST、堆各自擅长查什么，以及需要满足什么条件。</li><li><strong>第三轮 · 能选择：</strong>看速查表，完成小测。挑一个生活场景，解释为什么用这个结构。</li></ol>
+<details><summary>想继续编程练习？从这四个小任务开始</summary><p>① 用数组维护购物清单，支持增删查。② 用栈判断括号是否正确配对。③ 用哈希表统计一段文字中每个词出现的次数。④ 用队列做 BFS，在小方格迷宫里求最少步数。实现后至少检查空输入、单元素、重复值和不存在的目标。</p></details>
+<p class="keyline">先问“我要频繁做什么操作”，再问“哪种组织方式让这个操作更容易”。这就是数据结构的核心思路。</p>
+</section>
+<footer class="footer"><p>数据结构图解入门 · 所有图解与演示内置，无需联网。<br>演示设置了少量元素上限以保持清晰；上限不代表数据结构本身的容量限制。示例中的代码是语言无关的伪代码。</p><button class="secondary" id="print">打印 / 另存为 PDF</button> <a class="to-top" href="#top">回到顶部 ↑</a></footer>
+</main></div>
+<script>
+'use strict';
+const $=id=>document.getElementById(id);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function say(id,t){$(id).textContent=t;}
+function numberInput(id,min=-999,max=999){const raw=$(id).value.trim(),v=Number(raw);return raw!==''&&Number.isInteger(v)&&v>=min&&v<=max?v:null;}
+function cell(v,i,hot=false){return `<span class="cell${hot?' hot':''}">${esc(v)}${i===undefined?'':`<small>下标 ${i}</small>`}</span>`;}
+const tocLinks=[...document.querySelectorAll('#toc a')];$('jump').innerHTML='<option value="top">导读 · 把数据放对地方</option>'+tocLinks.map(a=>`<option value="${a.hash.slice(1)}">${a.textContent}</option>`).join('');$('jump').onchange=()=>{$($( 'jump').value).scrollIntoView();};
+function progress(){const max=document.documentElement.scrollHeight-innerHeight,p=max>0?Math.round(scrollY/max*100):100;$('progress-bar').style.width=p+'%';say('progress-text',p+'%');let active='';document.querySelectorAll('.chapter').forEach(s=>{if(s.getBoundingClientRect().top<innerHeight*.35)active=s.id;});tocLinks.forEach(a=>a.classList.toggle('active',a.hash==='#'+active));}
+addEventListener('scroll',progress,{passive:true});addEventListener('resize',progress);$('print').onclick=()=>window.print();
+function renderCost(){let n=+$('cost-n').value;say('cost-n-label',n);const vals=[['O(1)',1],['O(log n)',Math.log2(n)],['O(n)',n],['O(n log n)',n*Math.log2(n)],['O(n²)',n*n]];$('cost-bars').innerHTML=vals.map(([s,v],i)=>`<div class="complex-bars"><span>${s}</span><div class="bar-track"><div class="bar-fill ${i===4?'slow':''}" style="width:${v/(n*n)*100}%"></div></div><span>${v.toLocaleString('zh-CN',{maximumFractionDigits:1})}</span></div>`).join('');}$('cost-n').oninput=renderCost;renderCost();
+let arr=[12,7,24,9,18];function renderArray(h=-1){$('array-view').innerHTML=arr.length?arr.map((v,i)=>cell(v,i,h===i)).join(''):'<span class="empty">数组为空，试着在下标 0 插入</span>';}
+$('array-get').onclick=()=>{const i=numberInput('array-index',0,arr.length-1);if(i===null)return say('array-status','请输入现有元素的合法下标。');renderArray(i);say('array-status',`直接定位下标 ${i}，读到 ${arr[i]}，不需要经过前面的格子：O(1)。`);};
+$('array-insert').onclick=()=>{const i=numberInput('array-index',0,arr.length),v=numberInput('array-value');if(i===null||v===null)return say('array-status',`插入下标应为 0～${arr.length}，值应为 -999～999 的整数。`);if(arr.length>=8)return say('array-status','演示最多放 8 个元素，请先删除一个。');let moved=arr.length-i;arr.splice(i,0,v);renderArray(i);say('array-status',`在下标 ${i} 插入 ${v}，原位置及后面的 ${moved} 个元素右移一格。此演示未额外展示扩容。`);};
+$('array-delete').onclick=()=>{const i=numberInput('array-index',0,arr.length-1);if(i===null)return say('array-status','请输入要删除的现有下标；空数组不能删除。');let moved=arr.length-i-1,v=arr.splice(i,1)[0];renderArray();say('array-status',`删除了 ${v}，后面的 ${moved} 个元素向左补位。`);};$('array-reset').onclick=()=>{arr=[12,7,24,9,18];renderArray();say('array-status','已重置。下标从 0 开始，读取下标 2 会得到 24。');};renderArray();
+let linkStep=0;const linkMessages=['起点：head → A → B → C → null。我们已拿到 B 的引用，准备在 B 后插入 X。','① 创建新节点 X，原链仍然是 A → B → C。','② 先令 X.next = C，把 B 原来指向的后续链保存下来。','③ 再令 B.next = X。现在 A → B → X → C → null，插入完成。'];function renderLink(){let items=linkStep===3?['head','A','B','X','C','null']:['head','A','B','C','null'];$('linked-view').innerHTML=items.map((v,i)=>`${i?'<span class="arrow">→</span>':''}${cell(v,undefined,v==='X')}`).join('')+(linkStep===1?'<div style="flex-basis:100%">新建：<span class="cell hot">X → null</span></div>':'')+(linkStep===2?'<div style="flex-basis:100%">另一条连接：<span class="cell hot">X → C</span></div>':'');say('linked-status',linkMessages[linkStep]);$('linked-step').disabled=linkStep===3;}$('linked-step').onclick=()=>{linkStep++;renderLink();};$('linked-reset').onclick=()=>{linkStep=0;renderLink();};renderLink();
+let stack=[10,20,30];function renderStack(){$('stack-view').innerHTML=stack.length?[...stack].reverse().map((v,i)=>`<div class="stack-item"><span>${v}</span><small>${i===0?'← 栈顶':i===stack.length-1?'栈底':''}</small></div>`).join(''):'<span class="empty">空栈</span>';}
+$('stack-push').onclick=()=>{let v=numberInput('stack-value');if(v===null)return say('stack-status','请输入 -999～999 的整数。');if(stack.length>=6)return say('stack-status','演示最多叠 6 个元素，请先出栈。');stack.push(v);renderStack();say('stack-status',`${v} 已入栈，成为新栈顶。下一次出栈将先取出 ${v}。`);};$('stack-pop').onclick=()=>{if(!stack.length)return say('stack-status','栈已空，不能继续出栈。');let v=stack.pop();renderStack();say('stack-status',`取出了 ${v}。${stack.length?'新栈顶是 '+stack.at(-1)+'。':'现在栈为空。'}`);};$('stack-peek').onclick=()=>say('stack-status',stack.length?`栈顶是 ${stack.at(-1)}，只查看，未移除。`:'空栈没有栈顶元素。');$('stack-reset').onclick=()=>{stack=[10,20,30];renderStack();say('stack-status','已重置：10、20、30 依次入栈，30 是栈顶。');};renderStack();
+let queue=['A','B','C'],qid=3;function renderQueue(){$('queue-view').innerHTML=queue.length?queue.map((v,i)=>cell('任务 '+v,undefined,i===0)).join('<span class="arrow">←</span>'):'<span class="empty">队列为空，等待新任务</span>';}
+$('queue-add').onclick=()=>{if(queue.length>=6)return say('queue-status','演示最多显示 6 个任务，请先处理队头。');const v=qid<26?String.fromCharCode(65+qid):String(qid+1);qid++;queue.push(v);renderQueue();say('queue-status',`任务 ${v} 加到队尾。下一项应处理任务 ${queue[0]}。`);};$('queue-remove').onclick=()=>{if(!queue.length)return say('queue-status','队列已空，没有待处理任务。');let v=queue.shift();renderQueue();say('queue-status',`任务 ${v} 已从队头取出。${queue.length?'下一项是任务 '+queue[0]+'。':'全部处理完毕。'}`);};$('queue-reset').onclick=()=>{queue=['A','B','C'];qid=3;renderQueue();say('queue-status','已重置。顺序是 A → B → C，A 先被处理。');};renderQueue();
+let hashEntries=[['ab','小安'],['ba','小白'],['cat','小猫']];const hash=k=>[...k].reduce((s,c)=>s+c.charCodeAt(0),0)%5;function renderHash(target=''){$('hash-view').innerHTML=Array.from({length:5},(_,i)=>{const list=hashEntries.filter(([k])=>hash(k)===i);return `<div class="bucket"><span class="bucket-index">${i}</span><span class="arrow">→</span>${list.length?list.map(([k,v])=>`<span class="cell${k===target?' hot':''}">${esc(k)} : ${esc(v)}</span>`).join('<span class="arrow">→</span>'):'<span class="small">空桶</span>'}</div>`;}).join('');}
+function hashKey(){const k=$('hash-key').value.trim();if(!/^[a-z]{1,8}$/.test(k)){say('hash-status','键请输入 1～8 个小写英文字母。');return null;}return k;}
+$('hash-put').onclick=()=>{let k=hashKey();if(k===null)return;let v=$('hash-value').value.trim();if(!v)return say('hash-status','请填入一个值。');let old=hashEntries.find(e=>e[0]===k);if(!old&&hashEntries.length>=8)return say('hash-status','演示最多存 8 个键，请重置后继续。');if(old)old[1]=v;else hashEntries.push([k,v]);renderHash(k);say('hash-status',`hash(${k}) = ${[...k].map(c=>c.charCodeAt(0)).join(' + ')}，对 5 取余为 ${hash(k)}。${old?'找到相同的键，已更新对应值。':'已加入这个桶；不同键即使同桶，也不会互相覆盖。'}`);};$('hash-get').onclick=()=>{let k=hashKey();if(k===null)return;const list=hashEntries.filter(([key])=>hash(key)===hash(k)),pos=list.findIndex(([key])=>key===k);renderHash(k);say('hash-status',pos>=0?`定位桶 ${hash(k)}，核对 ${pos+1} 个键后找到 ${k} → ${list[pos][1]}。`:`定位桶 ${hash(k)}，核对 ${list.length} 个键后，确认不存在 ${k}。`);};$('hash-reset').onclick=()=>{hashEntries=[['ab','小安'],['ba','小白'],['cat','小猫']];renderHash();say('hash-status','已重置。ab 和 ba 同在桶 0，需要通过真正的键区分。');};renderHash();
+const bstNodes=[{v:8,x:270,y:35,l:1,r:2},{v:3,x:150,y:100,l:3,r:4},{v:10,x:390,y:100,l:null,r:5},{v:1,x:85,y:170,l:null,r:null},{v:6,x:215,y:170,l:null,r:null},{v:14,x:455,y:170,l:null,r:null}];
+function treeSvg(values,positions,edges,hot=[],visited=[],label='树形图'){return `<svg class="tree-svg" viewBox="0 0 540 ${Math.max(210,...positions.map(p=>p.y+40))}" role="img" aria-label="${esc(label)}"><title>${esc(label)}</title>${edges.map(([a,b])=>`<line x1="${positions[a].x}" y1="${positions[a].y}" x2="${positions[b].x}" y2="${positions[b].y}"/>`).join('')}${values.map((v,i)=>`<g class="${hot.includes(i)?'hot':visited.includes(i)?'visited':''}"><circle cx="${positions[i].x}" cy="${positions[i].y}" r="23"/><text x="${positions[i].x}" y="${positions[i].y}">${esc(v)}</text></g>`).join('')}</svg>`;}
+let bstCurrent=null,bstVisited=[],bstTarget=6,bstDone=false;function renderBST(){const edges=[];bstNodes.forEach((n,i)=>[n.l,n.r].forEach(j=>{if(j!==null)edges.push([i,j]);}));$('bst-view').innerHTML=treeSvg(bstNodes.map(n=>n.v),bstNodes,edges,bstCurrent!==null&&!bstDone?[bstCurrent]:[],bstVisited,'二叉搜索树：8 的孩子是 3 与 10；3 的孩子是 1 与 6；10 的右孩子是 14');}
+function bstCompare(){const n=bstNodes[bstCurrent];if(bstTarget===n.v){bstDone=true;bstVisited.push(bstCurrent);$('bst-next').disabled=true;say('bst-status',`比较 ${bstVisited.length} 个节点后找到 ${bstTarget}。路径：${bstVisited.map(i=>bstNodes[i].v).join(' → ')}。`);}else say('bst-status',`当前比较 ${n.v}：目标 ${bstTarget} ${bstTarget<n.v?'小于':'大于'} ${n.v}，下一步走${bstTarget<n.v?'左':'右'}子树。`);renderBST();}
+$('bst-search').onclick=()=>{const v=numberInput('bst-value');if(v===null)return say('bst-status','请输入 -999～999 的整数。');bstTarget=v;bstCurrent=0;bstVisited=[];bstDone=false;$('bst-next').disabled=false;bstCompare();};$('bst-next').onclick=()=>{if(bstCurrent===null||bstDone)return;bstVisited.push(bstCurrent);const n=bstNodes[bstCurrent];bstCurrent=bstTarget<n.v?n.l:n.r;if(bstCurrent===null){bstDone=true;$('bst-next').disabled=true;say('bst-status',`走到了空分支，树中没有 ${bstTarget}。已检查：${bstVisited.map(i=>bstNodes[i].v).join(' → ')}。`);renderBST();}else bstCompare();};$('bst-reset').onclick=()=>{bstCurrent=null;bstVisited=[];bstDone=false;$('bst-next').disabled=true;say('bst-status','已重置。输入目标后点击“开始查找”。');renderBST();};renderBST();
+let heap=[3,8,5,14,10,7],heapSteps=[],heapFinal=null;function heapPositions(n){return Array.from({length:n},(_,i)=>{const level=Math.floor(Math.log2(i+1)),first=2**level-1,count=2**level;return {x:(i-first+.5)*540/count,y:35+level*72};});}
+function renderHeap(a=heap,hot=[]){if(!a.length)$('heap-view').innerHTML='<p class="empty" style="text-align:center">堆为空</p>';else $('heap-view').innerHTML=treeSvg(a,heapPositions(a.length),a.map((_,i)=>[Math.floor((i-1)/2),i]).slice(1),hot,[],`二叉最小堆调整示意，按层排列：${a.join('、')}`);$('heap-array').innerHTML=a.map((v,i)=>cell(v,i,hot.includes(i))).join('');}
+function heapLock(b){$('heap-add').disabled=b;$('heap-pop').disabled=b;$('heap-next').disabled=!b;}
+function heapFrame(){if(!heapSteps.length)return;const f=heapSteps.shift();renderHeap(f.a,f.hot);say('heap-status',f.text);if(!heapSteps.length){heap=heapFinal.slice();heapFinal=null;heapLock(false);}}
+function planHeap(mode,value){let a=heap.slice(),steps=[];const frame=(text,hot=[])=>steps.push({a:a.slice(),text,hot});if(mode==='add'){a.push(value);let i=a.length-1;frame(`① 把 ${value} 放到最后一个位置（下标 ${i}），接下来比较它与父节点。`,[i]);while(i>0){let p=Math.floor((i-1)/2);if(a[p]<=a[i]){frame(`父节点 ${a[p]} ≤ 当前值 ${a[i]}，无需再交换。`,[p,i]);break;}let child=a[i],parent=a[p];[a[p],a[i]]=[a[i],a[p]];frame(`${child} < ${parent}，与父节点交换，向上移动一层。`,[p,i]);i=p;}frame(`插入完成。每个父节点都不大于孩子；最小值是 ${a[0]}。`);}else{const min=a[0],last=a.pop();if(a.length){a[0]=last;frame(`① 取出根 ${min}，把末尾元素 ${last} 补到根。接下来比较孩子，恢复堆规则。`,[0]);let i=0;while(2*i+1<a.length){let l=2*i+1,r=l+1,j=r<a.length&&a[r]<a[l]?r:l;if(a[i]<=a[j]){frame(`${a[i]} ≤ 较小的孩子 ${a[j]}，无需继续下沉。`,[i,j]);break;}const parent=a[i],child=a[j];[a[i],a[j]]=[a[j],a[i]];frame(`选择较小的孩子 ${child}，与 ${parent} 交换，向下移动一层。`,[i,j]);i=j;}frame(`调整完成。取出了 ${min}，现在最小值是 ${a[0]}。`);}else frame(`取出了最后一个元素 ${min}，堆现在为空。`);}heapSteps=steps;heapFinal=a.slice();heapLock(true);heapFrame();}
+$('heap-add').onclick=()=>{const v=numberInput('heap-value',-99,999);if(v===null)return say('heap-status','请输入 -99～999 的整数。');if(heap.length>=7)return say('heap-status','演示最多放 7 个节点，请先取出最小值。');planHeap('add',v);};$('heap-pop').onclick=()=>{if(!heap.length)return say('heap-status','堆为空，不能取出最小值。');planHeap('pop');};$('heap-next').onclick=heapFrame;$('heap-reset').onclick=()=>{heap=[3,8,5,14,10,7];heapSteps=[];heapFinal=null;heapLock(false);renderHeap();say('heap-status','已重置。试着插入 2，或取出根节点 3，逐步观察调整过程。');};renderHeap();
+const graphNodes=[{v:'A',x:70,y:108},{v:'B',x:200,y:42},{v:'C',x:200,y:178},{v:'D',x:340,y:108},{v:'E',x:465,y:42},{v:'F',x:465,y:178}],graphEdges=[[0,1],[0,2],[1,3],[1,4],[2,3],[3,5],[4,5]],adj={A:['B','C'],B:['A','D','E'],C:['A','D'],D:['B','C','F'],E:['B','F'],F:['D','E']};let gFront=['A'],gVisited=[],gDiscovered=new Set(['A']);
+function renderGraph(current=''){let svg=treeSvg(graphNodes.map(n=>n.v),graphNodes,graphEdges,graphNodes.map((n,i)=>n.v===current?i:-1).filter(i=>i>=0),graphNodes.map((n,i)=>gVisited.includes(n.v)?i:-1).filter(i=>i>=0),'无向图：边为 A-B、A-C、B-D、B-E、C-D、D-F、E-F');$('graph-view').innerHTML=svg.replace('tree-svg','graph-svg');}
+function graphReset(){gFront=['A'];gVisited=[];gDiscovered=new Set(['A']);$('graph-next').disabled=false;renderGraph();say('graph-status',`尚未访问。从 A 开始；${$('graph-mode').value==='bfs'?'队列（左为队头）':'栈（右为栈顶）'}：[A]。`);}
+$('graph-next').onclick=()=>{let bfs=$('graph-mode').value==='bfs',v;do{v=bfs?gFront.shift():gFront.pop();}while(v!==undefined&&gVisited.includes(v));if(v===undefined){$('graph-next').disabled=true;return say('graph-status',`遍历完成：${gVisited.join(' → ')}。`);}gVisited.push(v);if(bfs){adj[v].forEach(x=>{if(!gDiscovered.has(x)){gDiscovered.add(x);gFront.push(x);}});}else [...adj[v]].reverse().forEach(x=>{if(!gVisited.includes(x))gFront.push(x);});const done=gVisited.length===graphNodes.length;$('graph-next').disabled=done;renderGraph(v);say('graph-status',`${done?'遍历完成':'刚访问 '+v}。访问顺序：${gVisited.join(' → ')}。${done?'所有节点已访问，栈中如有重复候选会被跳过。':`${bfs?'队列（左为队头）':'栈（右为栈顶）'}：[${gFront.join(', ')}]。`}`);};$('graph-mode').onchange=graphReset;$('graph-reset').onclick=graphReset;graphReset();
+document.querySelectorAll('.quiz').forEach(q=>q.querySelectorAll('button').forEach(b=>b.onclick=()=>{q.querySelectorAll('button').forEach(x=>{x.setAttribute('aria-pressed',x===b?'true':'false');});q.querySelector('.answer').textContent=(b.dataset.answer===q.dataset.correct?'✓ 答对了。':'再想一想：')+q.dataset.explanation;}));
+progress();
+</script>
+</body>
+</html>

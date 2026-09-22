@@ -1,0 +1,546 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="面向初学者的 Unity 游戏算法图解教程：向量、插值、寻路、状态机、随机、噪声、对象池，配互动实验与 C# 代码。"><title>看得见的游戏算法 · Unity 从零入门</title><style>:root{color-scheme:light;--bg:#f5f4ee;--paper:#fffefa;--ink:#21332e;--muted:#61716a;--line:#d9dfd5;--soft:#ecf0e7;--accent:#176652;--on-accent:#fff;--blue:#227c9d;--orange:#b56625;--purple:#8553a4;--code:#1e2d29;--code-ink:#e2ede1;--mud:#dcc8a3;--open:#dcecd4;--closed:#cadce2;--wall:#44554f}
+html[data-theme=dark]{color-scheme:dark;--bg:#141e1a;--paper:#1c2923;--ink:#e0e9df;--muted:#abbcad;--line:#3a4c40;--soft:#27382e;--accent:#9fd7b7;--on-accent:#10281d;--blue:#80c7df;--orange:#eab27d;--purple:#c1a0e1;--code:#101914;--code-ink:#e2ede1;--mud:#65533b;--open:#395a39;--closed:#364d58;--wall:#8f9c92}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:28px}body{margin:0;background:var(--bg);color:var(--ink);font-family:"Segoe UI","Microsoft YaHei","PingFang SC",sans-serif;font-size:16px;line-height:1.85}a{color:var(--accent);text-decoration-thickness:1px;text-underline-offset:4px}button,input,select{font:inherit;color:inherit}button,select{cursor:pointer}button{background:var(--paper);border:1px solid var(--line);border-radius:7px;padding:8px 13px;font-size:13px;line-height:1.5;transition:background .15s}button:hover{background:var(--soft)}button:disabled{opacity:.45;cursor:default}button.primary{background:var(--accent);color:var(--on-accent);border-color:var(--accent)}button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible{outline:3px solid var(--orange);outline-offset:3px}.skip{position:fixed;left:10px;top:-100px;z-index:20;background:var(--paper);padding:8px 16px}.skip:focus{top:10px}#reading-progress{position:fixed;top:0;left:0;height:3px;background:var(--accent);z-index:15;width:0;pointer-events:none}.sidebar{position:fixed;left:0;top:0;bottom:0;width:246px;border-right:1px solid var(--line);padding:32px 22px 16px;background:var(--bg);display:flex;flex-direction:column;z-index:5}.brand{display:flex;align-items:center;gap:13px;font-size:15px;line-height:1.5;text-decoration:none;color:var(--ink)}.brand strong{font-size:19px;letter-spacing:2px}.brand-mark{display:grid;place-items:center;width:45px;height:45px;border:1px solid var(--accent);font-family:Georgia,serif;font-size:21px;transform:rotate(-4deg)}.side-kicker{font:11px/1.5 Consolas,monospace;letter-spacing:2px;margin:20px 0}.toc-search{font-size:12px;color:var(--muted)}.toc-search input{width:100%;padding:9px 11px;margin:5px 0 18px;font-size:12px;background:var(--paper);border:1px solid var(--line);border-radius:6px}#toc{overflow-y:auto;flex:1;scrollbar-width:thin;padding-right:3px}#toc a{display:flex;gap:11px;align-items:baseline;padding:6px 8px;text-decoration:none;color:var(--muted);font-size:12px;line-height:1.7;border-radius:4px;margin:2px 0}#toc a span{font:11px Consolas,monospace;opacity:.65}#toc a.active{background:var(--soft);color:var(--accent);font-weight:650}#toc a:hover{color:var(--accent)}.side-bottom{display:flex;justify-content:space-between;gap:8px;border-top:1px solid var(--line);padding-top:14px;margin-top:16px;font-size:10px;color:var(--muted)}main{margin-left:246px;padding:0 48px;max-width:1390px}.topbar{display:flex;align-items:center;justify-content:space-between;gap:16px;border-bottom:1px solid var(--line);padding:20px 0;color:var(--muted);font-size:12px}.topbar>div{display:flex;gap:8px}.topbar button{font-size:11px;padding:6px 10px;background:transparent}.hero{display:grid;grid-template-columns:1.2fr 1fr;gap:30px;padding:72px 0 52px;align-items:center}.eyebrow{font:11px/1.6 Consolas,"Microsoft YaHei",monospace;color:var(--accent);letter-spacing:1.8px;margin:0 0 17px}.hero h1{font-size:clamp(40px,5vw,69px);font-weight:700;letter-spacing:-2px;line-height:1.2;margin:16px 0 22px}.hero h1 em{color:var(--accent);font-style:normal}.hero-sub{font-size:15px;color:var(--muted);line-height:2}.hero-tags{display:flex;flex-wrap:wrap;gap:8px 13px;margin:26px 0;font-size:10px;color:var(--muted)}.hero-tags span:before{content:"·";padding-right:6px;color:var(--accent)}.start-link{display:inline-flex;gap:48px;align-items:center;background:var(--accent);color:var(--on-accent);text-decoration:none;padding:12px 20px;font-size:13px;border-radius:4px}.start-link span{font-size:21px}.hero-art{background:var(--soft);border:1px solid var(--line);padding:20px 18px 10px;border-radius:10px;transform:rotate(2deg);max-width:390px}.art-top,.art-bottom{display:flex;justify-content:space-between;gap:12px;font-size:10px;color:var(--muted)}.art-top span,.art-bottom span:first-child{font-family:Consolas,monospace}.hero-art svg{width:100%;height:auto;display:block}.art-bottom{border-top:1px solid var(--line);padding:10px 0 0}.roadmap{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin-bottom:20px}.roadmap a{display:block;padding:20px 18px;text-decoration:none;font-size:13px;color:var(--ink)}.roadmap a+a{border-left:1px solid var(--line)}.roadmap a small{display:block;font-size:10px;color:var(--muted);margin-bottom:5px;letter-spacing:1px}.chapter{padding:66px 0 52px;border-bottom:1px solid var(--line);scroll-margin-top:24px}.chapter-head{margin-bottom:32px}.chapter-head h2{font-size:27px;line-height:1.45;letter-spacing:-.6px;margin:0 0 15px;display:flex;gap:17px;align-items:baseline}.chapter-head h2>span{font:24px/1 Georgia,serif;color:var(--accent);flex:none}.lead{color:var(--muted);font-size:17px;line-height:1.9;margin:0}.chapter p{margin:16px 0}.chapter h3{font-size:19px;line-height:1.6;margin:35px 0 13px}.chapter h4{font-size:16px;margin:9px 0}strong{font-weight:650}.chapter>p,.chapter>ul,.chapter>ol{max-width:900px}code{font-family:Consolas,"Cascadia Code",monospace;background:var(--soft);padding:2px 5px;border-radius:4px;font-size:.88em;overflow-wrap:anywhere}pre{margin:0;padding:22px;overflow:auto;line-height:1.75;tab-size:4}pre code{padding:0;background:none;color:var(--code-ink);font-size:12px;white-space:pre;overflow-wrap:normal}.code{margin:24px 0;background:var(--paper);border:1px solid var(--line);border-radius:8px;overflow:hidden}.code summary{padding:12px 16px;color:var(--accent);font-size:13px;cursor:pointer}.code[open] summary{border-bottom:1px solid var(--line)}.code pre{background:var(--code)}.codebar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:8px 16px;background:var(--code);color:var(--code-ink);font-size:10px}.codebar button{background:transparent;color:var(--code-ink);border-color:#627369;font-size:11px;padding:5px 10px}.flow{display:flex;align-items:stretch;gap:10px;margin:25px 0}.flow>div{flex:1;background:var(--soft);padding:16px 13px;border-radius:5px;font-size:13px;line-height:1.8}.flow small{display:block;font-size:10px;color:var(--muted);margin-bottom:6px}.arrow{align-self:center;color:var(--muted);font-size:18px}.formula{padding:22px 26px;background:var(--soft);border-left:3px solid var(--accent);font:17px/1.9 Consolas,"Microsoft YaHei",monospace;margin:25px 0;overflow-wrap:anywhere}.formula small{font:12px/1.9 "Segoe UI","Microsoft YaHei",sans-serif;color:var(--muted)}.note{background:var(--soft);padding:17px 21px;border-left:3px solid var(--orange);margin:24px 0;font-size:13px}.note>strong{color:var(--orange);font-size:12px}.note p{margin:6px 0 0}.callout{border:1px solid var(--line);padding:20px 24px;margin:25px 0;border-radius:7px;font-size:14px;background:var(--paper)}.callout p{margin:8px 0 0}.takeaway{color:var(--accent);font-weight:600;font-size:14px}.tablewrap{overflow:auto;border:1px solid var(--line);border-radius:7px;margin:20px 0}table{border-collapse:collapse;width:100%;font-size:13px;text-align:left}th{background:var(--soft);font-weight:600;color:var(--muted);font-size:11px}th,td{padding:13px 15px;border-bottom:1px solid var(--line);vertical-align:top}tr:last-child td{border-bottom:0}td:first-child{min-width:125px;font-weight:600}.quiz{border-bottom:1px dashed var(--line);padding:13px 0;margin:20px 0;font-size:14px}.quiz summary{cursor:pointer;color:var(--accent)}.quiz p{padding:12px 17px;background:var(--soft);font-size:13px}.source{font-size:11px!important;color:var(--muted);overflow-wrap:anywhere}.lab{margin:30px 0;border:1px solid var(--line);border-radius:10px;background:var(--paper);padding:24px;overflow:hidden}.labhead .eyebrow{font-size:10px;letter-spacing:2px;margin:0}.labhead h3{margin:5px 0 22px;font-size:19px}.controls{display:flex;align-items:end;flex-wrap:wrap;gap:14px 24px;margin:12px 0 22px}.controls>label{flex:1 1 165px;font-size:12px;color:var(--muted);line-height:1.6;min-width:0}.controls output{font-family:Consolas,monospace;color:var(--ink);float:right;margin-left:10px}.controls input[type=range]{display:block;width:100%;accent-color:var(--accent);margin:12px 0 0;height:22px;cursor:ew-resize}.controls select{display:block;width:100%;font-size:13px;background:var(--bg);border:1px solid var(--line);padding:9px 10px;margin-top:8px;border-radius:5px}.lab canvas{display:block;width:100%;max-width:100%;height:280px}.lab .readout{font:12px/1.9 Consolas,"Microsoft YaHei",monospace;background:var(--soft);border-radius:4px;padding:10px 13px;margin:15px 0 12px;min-height:43px}.lab figcaption{font-size:11px;color:var(--muted);line-height:1.8}.actions{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px}.path-grid{display:grid;grid-template-columns:repeat(13,minmax(36px,1fr));gap:3px;overflow-x:auto;padding:3px 3px 12px}.path-cell{aspect-ratio:1;min-height:36px;border:0;border-radius:3px;background:var(--soft);padding:0;font:12px/1 Consolas,monospace;position:relative}.path-cell:hover{outline:2px solid var(--orange);outline-offset:-2px}.path-cell.wall{background:var(--wall);color:var(--paper)}.path-cell.mud{background:var(--mud)}.path-cell.open{background:var(--open)}.path-cell.closed{background:var(--closed)}.path-cell.route{background:var(--accent);color:var(--on-accent)}.path-cell.start,.path-cell.goal{background:var(--orange);color:var(--bg);font-weight:700}.legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:10px;color:var(--muted);margin-top:10px}.legend span{display:flex;align-items:center;gap:5px}.legend i{width:10px;height:10px;border-radius:2px}.lg-wall{background:var(--wall)}.lg-mud{background:var(--mud)}.lg-open{background:var(--open)}.lg-closed{background:var(--closed)}.lg-route{background:var(--accent)}.tri{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;margin:25px 0}.tri>div{border-top:2px solid var(--accent);padding-top:16px}.tri p{font-size:13px;color:var(--muted)}.num{font:12px Consolas,"Microsoft YaHei",monospace;color:var(--accent)}li{margin:9px 0}ol,ul{padding-left:25px}.project-steps li{padding:10px 0 15px 9px;border-bottom:1px solid var(--line);font-size:14px}.project-steps strong{display:block;font-size:16px;margin-bottom:5px}.glossary{display:grid;grid-template-columns:185px 1fr;font-size:13px;gap:0;margin:25px 0}.glossary dt,.glossary dd{margin:0;padding:13px 0;border-bottom:1px solid var(--line)}.glossary dt{font-weight:600}.glossary dd{color:var(--muted)}.ending{margin:55px 0 10px;padding:35px;background:var(--soft);text-align:center}.ending p{font-size:13px;color:var(--muted)}.ending strong{font-size:20px}.ending a{display:block;font-size:12px;margin-top:25px}footer{display:flex;justify-content:space-between;gap:20px;color:var(--muted);font-size:10px;padding:30px 0 50px}footer span{font-family:Consolas,monospace;white-space:nowrap}[hidden]{display:none!important}
+.path-grid{max-width:780px;margin-left:auto;margin-right:auto}
+@media(min-width:1650px){main{margin-left:calc(246px + (100vw - 1560px)/2);max-width:1240px}.sidebar{width:calc(246px + (100vw - 1560px)/2);padding-left:calc(22px + (100vw - 1560px)/2)}}
+@media(max-width:1100px){.sidebar{width:212px;padding:26px 15px}main{margin-left:212px;padding:0 30px}.hero{gap:20px;padding:55px 0 40px}.hero h1{font-size:48px}.hero-art{padding:15px 12px}.hero-tags{display:block}.hero-tags span{display:block}.flow{gap:6px}.flow>div{padding:12px 10px;font-size:12px}.chapter-head h2{font-size:24px}}
+@media(max-width:800px){body{font-size:15px}.sidebar{position:static;width:auto;padding:20px;border-right:0;border-bottom:1px solid var(--line);display:block}.brand{font-size:12px}.brand strong{font-size:17px}.brand-mark{width:38px;height:38px;font-size:17px}.side-kicker,.side-bottom,.toc-search,#toc-empty{display:none!important}#toc{display:flex;gap:7px;overflow:auto;margin-top:18px;padding-bottom:6px}#toc a{flex:none;padding:5px 9px;border:1px solid var(--line);white-space:nowrap;font-size:11px}main{margin:0;padding:0 24px}.topbar{padding:15px 0}.hero{padding:42px 0;gap:25px}.hero h1{font-size:48px}.hero-sub{font-size:13px}.hero-art{max-width:280px}.hero-tags{margin:20px 0}.chapter{padding:48px 0 35px}.lab{padding:20px}.chapter-head{margin-bottom:25px}.chapter-head h2{font-size:24px}.tri{gap:16px}.lead{font-size:15px}}
+@media(max-width:540px){main{padding:0 18px}.topbar{align-items:flex-start;gap:10px}.topbar>span{max-width:100px;font-size:10px}.topbar>div{gap:5px}.topbar button{font-size:10px;padding:6px 8px}.hero{grid-template-columns:1fr;padding:34px 0}.hero h1{font-size:51px;line-height:1.15}.hero .eyebrow{font-size:9px;letter-spacing:1.2px}.hero-sub{font-size:14px}.hero-tags{display:flex;font-size:10px;gap:6px 12px;margin:20px 0}.hero-art{display:none}.start-link{font-size:12px;padding:9px 18px;gap:55px}.roadmap{grid-template-columns:1fr}.roadmap a{padding:11px 7px;display:flex;justify-content:space-between;gap:12px;font-size:12px}.roadmap a small{font-size:9px;margin:0;align-self:center}.roadmap a+a{border-left:0;border-top:1px solid var(--line)}.chapter-head h2{font-size:23px;gap:11px}.chapter-head h2>span{font-size:20px}.chapter-head .eyebrow{font-size:10px}.lead{font-size:14px}.chapter h3{font-size:17px;margin-top:28px}.flow{flex-direction:column;gap:5px}.flow .arrow{transform:rotate(90deg);line-height:1.2}.flow>div{font-size:13px;padding:11px 15px;flex:auto}.flow small{display:inline;margin-right:15px}.formula{font-size:14px;padding:17px}.formula small{font-size:11px}.lab{padding:16px 12px;margin:25px 0}.labhead h3{font-size:17px}.lab .readout{font-size:11px;padding:9px 10px}.controls{gap:12px;margin-bottom:14px}.controls>label{flex-basis:100%;font-size:12px}.controls input[type=range]{margin-top:7px}.actions{gap:6px}.actions button{font-size:11px;padding:8px 9px}.tri{grid-template-columns:1fr;gap:16px}.tri p{margin:7px 0}.tri h4{margin:5px 0}.glossary{grid-template-columns:1fr}.glossary dt{border:0;padding-bottom:0}.glossary dd{padding-top:4px}.ending{padding:24px 18px}.ending strong{font-size:17px}.note{padding:15px;font-size:12px}.callout{padding:17px;font-size:13px}th,td{padding:10px 12px;min-width:110px}.tablewrap table{min-width:500px}pre{padding:16px}pre code{font-size:11px}.code summary{font-size:12px;padding:11px 13px}.codebar{font-size:9px;padding:8px 12px}.codebar button{font-size:10px}.project-steps li{font-size:13px}.project-steps strong{font-size:15px}footer{font-size:9px}}
+@media(pointer:coarse){button{min-height:40px}.topbar button{min-height:36px}.path-cell{min-height:40px}.path-grid{grid-template-columns:repeat(13,minmax(40px,1fr))}input[type=range]{min-height:30px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
+@media print{html,html[data-theme=dark]{color-scheme:light;--bg:#fff;--paper:#fff;--ink:#16221c;--muted:#46564b;--soft:#f0f3ec;--line:#ccc;--accent:#176652;--orange:#925016;--code:#f3f3f3;--code-ink:#16221c}body{font-size:11px}.sidebar,.topbar,#reading-progress,.skip,.controls,.actions,.copy,.start-link{display:none!important}main{margin:0;max-width:none;padding:0}.hero{padding:20px 0}.hero h1{font-size:45px}.hero-art{max-width:230px}.hero-tags{display:flex}.roadmap{margin-bottom:20px}.chapter{padding:25px 0;break-before:auto}.chapter-head{break-after:avoid}.chapter-head h2{font-size:21px}.lab,.note,.callout,.formula,.tri{break-inside:avoid}.lab{padding:15px;margin:20px 0}.code pre{white-space:pre-wrap}.code pre code{white-space:pre-wrap;font-size:9px;overflow-wrap:anywhere}.codebar{display:none}.code{break-inside:auto}.code summary{font-size:10px}.tablewrap{overflow:visible}table{font-size:10px}.tablewrap table{min-width:0}td,th{padding:7px}.source{font-size:9px!important}.source a:after{content:" (" attr(href) ")";font-size:8px}.path-grid{grid-template-columns:repeat(13,1fr);overflow:visible}.path-cell{min-height:25px;font-size:9px}.ending a{display:none}*{-webkit-print-color-adjust:exact;print-color-adjust:exact}footer{padding:20px 0}}
+</style></head><body>
+<a class="skip" href="#main">跳到正文</a><div id="reading-progress" aria-hidden="true"></div>
+<aside class="sidebar"><a class="brand" href="#top"><span class="brand-mark">G/A</span><span>看得见的<br><strong>游戏算法</strong></span></a><p class="side-kicker">UNITY · 从零入门</p><label class="toc-search">查找章节<input type="search" id="toc-search" placeholder="例如：寻路、随机、向量"></label><nav id="toc" aria-label="教程目录"><a href="#start"><span>00</span>先把“算法”想简单一点</a><a href="#cost"><span>01</span>循环、容器与复杂度</a><a href="#vector"><span>02</span>向量、距离与归一化</a><a href="#time"><span>03</span>每帧移动与 deltaTime</a><a href="#lerp"><span>04</span>插值、缓动与平滑跟随</a><a href="#vision"><span>05</span>点积、视野与转向</a><a href="#projectile"><span>06</span>抛物线与数值积分</a><a href="#bezier"><span>07</span>贝塞尔曲线</a><a href="#collision"><span>08</span>碰撞检测</a><a href="#fsm"><span>09</span>有限状态机</a><a href="#steering"><span>10</span>转向行为</a><a href="#bfs"><span>11</span>BFS</a><a href="#dijkstra"><span>12</span>Dijkstra</a><a href="#astar"><span>13</span>A*</a><a href="#random"><span>14</span>加权随机与洗牌</a><a href="#noise"><span>15</span>噪声与程序化地形</a><a href="#spatial"><span>16</span>空间网格</a><a href="#pool"><span>17</span>对象池</a><a href="#timer"><span>18</span>冷却、调度与帧预算</a><a href="#practice"><span>19</span>把算法拼成一个小型守卫游戏</a><a href="#reference"><span>20</span>选型速查与复习路线</a></nav><p id="toc-empty" hidden>没有匹配的章节</p><div class="side-bottom"><span>单文件 · 可离线阅读</span><a href="#reference">选型速查 ↗</a></div></aside>
+<main id="main"><header class="topbar" id="top"><span>一本可以动手的算法入门书</span><div><button id="theme-toggle" type="button">切换深色</button><button id="print" type="button">打印 / 保存 PDF</button></div></header>
+<div class="hero"><div class="hero-copy"><p class="eyebrow">LEARN BY SEEING, THEN BY DOING.</p><h1>看得见的<br><em>游戏算法</em></h1><p class="hero-sub">从“让方块动起来”到“让敌人找到你”。<br>给 Unity 初学者的一份图解学习手册。</p><div class="hero-tags"><span>21 个循序渐进章节</span><span>13 个互动实验</span><span>Unity C# 示例</span></div><a class="start-link" href="#start">从第 00 章开始 <span>↗</span></a></div><div class="hero-art" aria-label="游戏算法示意：起点通过格子路线走向终点"><div class="art-top">一个目标，多种解法<span>01 → 21</span></div><svg viewBox="0 0 320 310" role="img" aria-label="示意路径围绕障碍物，从S走到G"><defs><pattern id="hero-grid" width="38" height="38" patternUnits="userSpaceOnUse"><path d="M38 0H0V38" fill="none" stroke="currentColor" stroke-opacity=".15"/></pattern></defs><rect x="8" y="12" width="304" height="266" fill="url(#hero-grid)"/><g fill="currentColor" opacity=".16"><rect x="122" y="88" width="38" height="114" rx="3"/><rect x="160" y="88" width="76" height="38" rx="3"/></g><path d="M65 240V164H103V50H255V202" stroke="var(--accent)" stroke-width="6" stroke-linejoin="round" fill="none"/><g fill="var(--accent)"><circle cx="65" cy="240" r="17"/><circle cx="255" cy="202" r="17"/></g><g fill="var(--on-accent)" font-size="14" text-anchor="middle" font-family="monospace"><text x="65" y="245">S</text><text x="255" y="207">G</text></g><circle cx="179" cy="50" r="8" fill="var(--orange)"/><text x="170" y="300" fill="currentColor" font-size="12" text-anchor="middle">观察 → 推理 → 实现</text></svg><div class="art-bottom"><span>f(n) = g(n) + h(n)</span><span>从问题出发</span></div></div></div>
+<div class="roadmap"><a href="#vector"><small>01 / 理解运动</small>方向 · 时间 · 插值</a><a href="#fsm"><small>02 / 做出行为</small>感知 · 决策 · 寻路</a><a href="#noise"><small>03 / 构建世界</small>随机 · 生成 · 优化</a></div>
+<noscript><p class="note">JavaScript 已禁用。正文和代码仍可阅读，互动实验需要启用 JavaScript。</p></noscript><section class="chapter" id="start"><header class="chapter-head"><p class="eyebrow">起步 / CHAPTER 00</p><h2><span>00</span>先把“算法”想简单一点</h2><p class="lead">算法就是：给定一些信息，按照明确的步骤，算出一个结果。</p></header>
+<p>想象你在做一个“守卫追玩家”的小游戏。守卫需要知道玩家在哪、离自己多远、该不该追、怎么绕过墙、每帧向哪边走。这些问题各自对应一小段算法。你不必先学完高等数学，才能让游戏动起来。</p>
+<div class="flow"><div><small>输入</small>守卫位置、玩家位置</div><span class="arrow" aria-hidden="true">→</span><div><small>规则</small>距离小于 6 就追击</div><span class="arrow" aria-hidden="true">→</span><div><small>输出</small>本帧的新位置</div></div>
+<h3>先认识 Unity 中的几个词</h3><div class="tablewrap"><table><thead><tr><th>词语</th><th>白话解释</th><th>你会怎么用</th></tr></thead><tbody>
+<tr><td>GameObject</td><td>场景里的一个对象</td><td>玩家、子弹、摄像机</td></tr><tr><td>Component</td><td>对象身上的一种能力</td><td>渲染、碰撞、你写的脚本</td></tr><tr><td>Transform</td><td>位置、旋转、缩放</td><td><code>transform.position</code> 读取世界位置</td></tr><tr><td>MonoBehaviour</td><td>让脚本接入 Unity 生命周期的基类</td><td>使用 <code>Start</code>、<code>Update</code></td></tr><tr><td>Inspector</td><td>在编辑器里配置组件的面板</td><td>填速度、拖入目标对象</td></tr></tbody></table></div>
+<h3>一段 C# 到底在说什么？</h3><details class="code"><summary>C# 片段 · 最小的读码练习</summary><div class="codebar"><span>放入现有脚本；留意下方说明</span><button class="copy" type="button">复制代码</button></div><pre><code>float speed = 3f;           // 小数：每秒移动 3 个单位，f 表示 float
+Vector3 direction = Vector3.right; // 三维箭头：向世界右侧
+bool canMove = true;        // 布尔值：是 / 否
+if (canMove)               // 满足条件才执行花括号里的语句
+{
+    transform.position += direction * speed * Time.deltaTime;
+    // += 表示“在原来的值上再加一点”
+}</code></pre></details><p><code>Vector3</code> 存 3 个数，通常写作 (x, y, z)。<code>public</code> 字段通常可在 Inspector 中配置；<code>void</code> 表示这个方法不返回结果；<code>return</code> 可以结束方法。先能跟着注释看懂，再慢慢熟悉语法。</p>
+<div class="callout"><strong>如何阅读这份教程</strong><p>每章先读白话解释，再动手改参数，最后展开 C#。标为“片段”的代码需要放进已有类或方法；标为“完整脚本”的代码可以按文件名保存并挂到对象上。图中长度采用演示单位，不等于屏幕像素；多数平面图可以理解为 Unity 的 XZ 俯视平面。</p></div>
+<p>本文以 Unity 6.0 的基础 API 为参考，不依赖某个输入系统。浏览器里的互动演示用 JavaScript 重现核心思想，<strong>不是 Unity 物理引擎</strong>。代码经过逻辑核对，但没有在 Unity 编辑器中编译运行。</p>
+</section><section class="chapter" id="cost"><header class="chapter-head"><p class="eyebrow">起步 / CHAPTER 01</p><h2><span>01</span>循环、容器与复杂度</h2><p class="lead">当敌人从 10 个变成 10,000 个，你的算法还能跑得动吗？</p></header>
+<p>寻找最近的敌人，最直观的方法是从头到尾比较一遍。敌人数量翻倍，比较次数也大约翻倍，这叫 <strong>O(n)</strong>。如果让每个敌人都与每个其他敌人比较，工作量会接近平方增长，叫 <strong>O(n²)</strong>。</p>
+<figure class="lab" id="lab-cost"><div class="labhead"><span class="eyebrow">动手实验</span><h3>同样的数量，不同的工作量</h3></div><div class="controls"><label>对象数量 n <output id="count-value">100</output><input type="range" id="count" min="10" max="1000" value="100" step="10"></label></div><canvas id="viz-cost" role="img" aria-label="同样的数量，不同的工作量">柱长使用对数尺度，标签是实际次数。这里只比较数量级，不是设备耗时测试。</canvas><p class="readout" id="cost-out" aria-live="polite"></p><figcaption>柱长使用对数尺度，标签是实际次数。这里只比较数量级，不是设备耗时测试。</figcaption></figure>
+<div class="tablewrap"><table><thead><tr><th>工具 / 思路</th><th>适合什么</th><th>常见代价</th></tr></thead><tbody>
+<tr><td>数组 / List</td><td>按顺序遍历敌人、通过索引取元素</td><td>索引 O(1)，查找 O(n)；List 中间移除通常 O(n)</td></tr><tr><td>Dictionary / HashSet</td><td>按 ID 查对象、判断是否访问过</td><td>查找平均 O(1)，不是绝对保证</td></tr><tr><td>Queue 队列</td><td>先来的先处理，BFS 用它</td><td>入队 / 出队摊销 O(1)</td></tr><tr><td>Stack 栈</td><td>后来的先处理，回溯 / 对象复用</td><td>入栈 / 出栈摊销 O(1)</td></tr><tr><td>最小堆</td><td>持续取出代价最低的候选项</td><td>入堆 / 出堆 O(log n)</td></tr></tbody></table></div>
+<h3>只想找最近的敌人，不必先把所有敌人排序</h3><details class="code"><summary>C# 片段 · 一次遍历找最近目标</summary><div class="codebar"><span>放入现有脚本；留意下方说明</span><button class="copy" type="button">复制代码</button></div><pre><code>// 放在 MonoBehaviour 类中。需要 using UnityEngine;
+Transform FindNearest(Transform[] enemies)
+{
+    Transform best = null;
+    float bestSqr = float.PositiveInfinity;
+    foreach (Transform enemy in enemies)
+    {
+        if (enemy == null) continue; // 跳过已销毁或未赋值的对象
+        float d2 = (enemy.position - transform.position).sqrMagnitude;
+        if (d2 &lt; bestSqr)
+        {
+            bestSqr = d2;
+            best = enemy;
+        }
+    }
+    return best; // 数组里没有有效目标时返回 null
+}</code></pre></details><p>这里比较“距离的平方”，能得到相同的远近顺序，而且省去平方根。假设距离非负，3 &lt; 5 与 9 &lt; 25 的结论一致。完整排序通常是 O(n log n)，只取最近一个时没有必要。</p>
+<h3>二分查找：每次排除一半</h3><div class="flow"><div>有序数列：2, 5, 9, 14, 20, 31, 42</div><span class="arrow" aria-hidden="true">→</span><div>找 20，先看中间的 14</div><span class="arrow" aria-hidden="true">→</span><div>只看右半边，再逐次缩小</div></div><p>二分查找要求数据已经按同一规则排序。搜索是 O(log n)，但为了每次查一次就重新排序，可能比直接遍历更贵。后面的“掉落表前缀和”可以复用这个思路。</p><details class="quiz"><summary>想一想：100 个单位两两检查，每对只查一次，需要几次？</summary><p>100 × 99 ÷ 2 = 4,950 次。避免自己与自己比较，并且避免把 A-B 与 B-A 重复检查。</p></details><p class="takeaway">本章记住：先选合适的数据结构，再讨论微小优化；O 记号描述增长趋势，不直接代表毫秒。</p></section><section class="chapter" id="vector"><header class="chapter-head"><p class="eyebrow">基础 / CHAPTER 02</p><h2><span>02</span>向量、距离与归一化</h2><p class="lead">位置告诉你“在哪里”，向量告诉你“往哪走、走多远”。</p></header>
+<p>玩家在 A=(1,1)，目标在 B=(4,3)。从 A 指向 B 的箭头是 <strong>B−A=(3,2)</strong>，意思是横向走 3、纵向走 2。它的长度为 √(3²+2²)=√13≈3.61。</p>
+<p><strong>归一化</strong>就是把箭头缩放到长度 1，保留方向。之后再乘速度，你就能独立控制“去哪边”和“走多快”。</p>
+<figure class="lab" id="lab-vector"><div class="labhead"><span class="eyebrow">动手实验</span><h3>拖动目标坐标，观察方向与长度</h3></div><div class="controls"><label>目标 x <output id="vx-value">3</output><input type="range" id="vx" min="-4" max="4" value="3" step="0.1"></label><label>目标 z <output id="vy-value">2</output><input type="range" id="vy" min="-3" max="3" value="2" step="0.1"></label></div><canvas id="viz-vector" role="img" aria-label="拖动目标坐标，观察方向与长度">蓝色长箭头表示位移，橙色短箭头表示单位方向。原点 A 固定为 (0,0)，图为 XZ 平面。</canvas><p class="readout" id="vector-out" aria-live="polite"></p><figcaption>蓝色长箭头表示位移，橙色短箭头表示单位方向。原点 A 固定为 (0,0)，图为 XZ 平面。</figcaption></figure><details class="code"><summary>C# 片段 · 从方向变成位移</summary><div class="codebar"><span>放入现有脚本；留意下方说明</span><button class="copy" type="button">复制代码</button></div><pre><code>Vector3 delta = target.position - transform.position;
+Vector3 direction = delta.normalized;
+float distance = delta.magnitude;
+// 概念演示：朝目标方向走，不负责避免越过目标。
+transform.position += direction * speed * Time.deltaTime;
+// 需要可靠停在终点时，使用下一章的 MoveTowards。</code></pre></details><h3>一个常见问题：为什么斜着走更快？</h3><p>右移输入 (1,0) 的长度是 1，同时右移和前进得到 (1,1)，长度是 √2≈1.414。如果直接乘速度，斜向就快了约 41%。对输入使用 <code>Vector3.ClampMagnitude(input, 1f)</code> 可以限制最大长度，同时保留摇杆的轻推力度；无条件归一化会丢掉轻推的大小。</p><aside class="note"><strong>容易踩的坑</strong><p>零向量没有方向。Unity 的 normalized 对过小向量返回零；手写除以长度时要先判断长度是否接近 0。不要混用世界坐标 position 与相对父对象的 localPosition。</p></aside><details class="quiz"><summary>想一想：目标就在当前位置，delta 是多少？</summary><p>是 (0,0,0)。这时应该停止移动，也不要把零向量交给 LookRotation 作为朝向。</p></details></section><section class="chapter" id="time"><header class="chapter-head"><p class="eyebrow">基础 / CHAPTER 03</p><h2><span>03</span>每帧移动与 deltaTime</h2><p class="lead">速度的单位是“每秒多少距离”，不是“每帧多少距离”。</p></header>
+<p>如果每帧移动 0.1 个单位，30 FPS 时每秒移动 3 个单位，120 FPS 时每秒移动 12 个单位。同一款游戏在不同电脑上会像开了不同倍速。</p><div class="formula">本帧位移 = 速度 × 本帧经过的秒数<br><small>Δp = v × Δt；3 单位/秒 × 1/60 秒 = 0.05 单位</small></div>
+<div class="flow"><div>Update 每帧调用</div><span class="arrow" aria-hidden="true">→</span><div>读取 Time.deltaTime</div><span class="arrow" aria-hidden="true">→</span><div>计算小步位移</div><span class="arrow" aria-hidden="true">→</span><div>写回位置</div></div>
+<p><code>Update</code> 适合一般逻辑；<code>FixedUpdate</code> 按固定时间步处理物理相关更新，一帧可能调用 0 次或多次；<code>LateUpdate</code> 常用于在角色更新之后跟随的摄像机。固定步长不是“保证每帧都执行一次”。</p>
+<details class="code"><summary>完整脚本 · ChaseTarget.cs</summary><div class="codebar"><span>按标题文件名保存</span><button class="copy" type="button">复制代码</button></div><pre><code>using UnityEngine;
+
+public class ChaseTarget : MonoBehaviour
+{
+    public Transform target; // 把另一个对象拖到这里
+    [Min(0f)] public float speed = 3f;
+
+    void Update()
+    {
+        if (target == null) return;
+        transform.position = Vector3.MoveTowards(
+            transform.position, target.position,
+            Mathf.Max(0f, speed) * Time.deltaTime);
+    }
+}</code></pre></details><ol><li>新建一个 Cube 和一个 Sphere，拉开它们的距离。</li><li>创建 <code>ChaseTarget.cs</code>，粘贴完整代码，挂到 Cube 上。</li><li>把 Sphere 拖进 Cube 脚本组件的 Target 字段，点击 Play。</li><li>在 Scene 窗口移动 Sphere，观察 Cube 追过去并停住。</li></ol>
+<aside class="note"><strong>容易踩的坑</strong><p>这段脚本直接控制 Transform，适合无物理约束的演示。需要动态刚体碰撞时，用 Rigidbody 的物理移动或力，别让 Transform 与物理系统争夺同一物体。乘 deltaTime 也不自动解决高速穿墙或不稳定数值积分。</p></aside><p class="source">API 核对：<a href="https://docs.unity3d.com/6000.0/Documentation/Manual/time-per-frame-updates.html" target="_blank" rel="noopener">帧更新与时间 ↗</a></p><p class="source">API 核对：<a href="https://docs.unity.com/en-us/engine/6000.0/script-reference/unityengine/vector3/movetowards" target="_blank" rel="noopener">Vector3.MoveTowards ↗</a></p></section><section class="chapter" id="lerp"><header class="chapter-head"><p class="eyebrow">基础 / CHAPTER 04</p><h2><span>04</span>插值、缓动与平滑跟随</h2><p class="lead">都叫“平滑移动”，但你想控制的可能是速度、时长，或跟随手感。</p></header>
+<p>插值是在两个值之间取一个中间值。<strong>Lerp(a,b,t)=a+(b−a)×t</strong>。从 0 到 10，t=0.3 就得到 3。这里的 t 是比例，不是速度；Unity 的 Lerp 会把它限制到 0～1。</p>
+<figure class="lab" id="lab-lerp"><div class="labhead"><span class="eyebrow">动手实验</span><h3>同一个时间，三种运动方式</h3></div><div class="controls"><label>经过时间（秒） <output id="lt-value">1</output><input type="range" id="lt" min="0" max="4" value="1" step="0.02"></label></div><canvas id="viz-lerp" role="img" aria-label="同一个时间，三种运动方式">起点 0，终点 10。上：2 秒线性到达；中：2 秒 Smoothstep 缓入缓出；下：k=2 的指数靠近。拖到 2 秒比较终点。</canvas><p class="readout" id="lerp-out" aria-live="polite"></p><figcaption>起点 0，终点 10。上：2 秒线性到达；中：2 秒 Smoothstep 缓入缓出；下：k=2 的指数靠近。拖到 2 秒比较终点。</figcaption></figure>
+<div class="tablewrap"><table><thead><tr><th>需求</th><th>推荐思路</th><th>你设置什么</th></tr></thead><tbody><tr><td>恒定速度追目标</td><td>MoveTowards</td><td>每秒的速度</td></tr><tr><td>固定 2 秒播完</td><td>Lerp(固定起点, 终点, elapsed / duration)</td><td>总时长</td></tr><tr><td>开头与结尾都柔和</td><td>先对 t 做 Smoothstep</td><td>缓动曲线</td></tr><tr><td>持续追随的柔顺感</td><td>指数平滑 / SmoothDamp</td><td>响应强度 / 平滑时间</td></tr></tbody></table></div>
+<details class="code"><summary>C# 片段 · 固定时长与指数跟随</summary><div class="codebar"><span>放入现有脚本；留意下方说明</span><button class="copy" type="button">复制代码</button></div><pre><code>// 方案 A：字段 start、end 是固定的 Vector3；duration &gt; 0。
+// 开始新移动时，只记录一次 start，并把 elapsed 设为 0。
+elapsed += Time.deltaTime;
+float t = Mathf.Clamp01(elapsed / duration);
+float eased = t * t * (3f - 2f * t); // Smoothstep，先慢后快再慢
+transform.position = Vector3.Lerp(start, end, eased);
+
+// 方案 B：独立使用，不要和方案 A 同时写同一个位置。
+// k &gt; 0，单位约为 1/秒；静止目标下误差按 exp(-k*t) 衰减。
+float alpha = 1f - Mathf.Exp(-k * Time.deltaTime);
+transform.position = Vector3.Lerp(transform.position, target.position, alpha);</code></pre></details><p>每帧用当前坐标当 Lerp 的起点，会反复取“剩余距离的一部分”，于是越接近越慢。它不等于固定时长动画。指数公式在目标固定、k 固定时，可使不同帧率下的时间响应一致；目标帧间变化时仍受采样影响。</p><details class="code"><summary>完整脚本 · SmoothFollow.cs</summary><div class="codebar"><span>按标题文件名保存</span><button class="copy" type="button">复制代码</button></div><pre><code>using UnityEngine;
+
+public class SmoothFollow : MonoBehaviour
+{
+    public Transform target;
+    public Vector3 offset = new Vector3(0f, 4f, -6f);
+    [Min(0.01f)] public float smoothTime = 0.3f;
+    private Vector3 velocity; // 必须跨帧保存，不要每帧清零
+
+    void LateUpdate()
+    {
+        if (target == null || Time.deltaTime &lt;= 0f) return;
+        transform.position = Vector3.SmoothDamp(
+            transform.position, target.position + offset,
+            ref velocity, Mathf.Max(0.01f, smoothTime));
+    }
+}</code></pre></details><p>将此脚本挂到 Camera，把角色拖进 Target。它只跟随位置，摄像机朝向请在编辑器里设置。<code>ref velocity</code> 表示函数会更新这份速度状态，下一帧继续使用；<code>smoothTime</code> 不是严格的到达截止时间。瞬移后可清零 velocity，避免沿用旧的跟随速度。</p><p class="source">API 核对：<a href="https://docs.unity3d.com/6000.0/Documentation/ScriptReference/Vector3.Lerp.html" target="_blank" rel="noopener">Vector3.Lerp ↗</a></p><p class="source">API 核对：<a href="https://docs.unity.com/en-us/engine/6000.6/script-reference/unityengine/vector3/smoothdamp" target="_blank" rel="noopener">Vector3.SmoothDamp ↗</a></p><details class="quiz"><summary>想一想：想让 UI 进度条 0.5 秒填满，可以每帧 Lerp(current, 1, 0.1) 吗？</summary><p>这会不断取剩余差值的 10%，并依赖帧数。应记录开始值，累积时间，用 elapsed / 0.5 作为比例。</p></details></section><section class="chapter" id="vision"><header class="chapter-head"><p class="eyebrow">基础 / CHAPTER 05</p><h2><span>05</span>点积、视野与转向</h2><p class="lead">敌人不仅要知道你离它多远，还要知道你是不是在它面前。</p></header>
+<p>两个<strong>单位向量</strong>的点积等于夹角的余弦。完全同向是 1，垂直是 0，反向是 −1。你可以把它当成“两个方向有多一致”的数值。</p><div class="formula">dot = ax × bx + ay × by + az × bz<br><small>归一化以后：dot = cos(夹角)</small></div>
+<figure class="lab" id="lab-vision"><div class="labhead"><span class="eyebrow">动手实验</span><h3>守卫的 90° 视野</h3></div><div class="controls"><label>目标偏离正前方的角度（°） <output id="angle-value">30</output><input type="range" id="angle" min="-180" max="180" value="30" step="1"></label></div><canvas id="viz-vision" role="img" aria-label="守卫的 90° 视野">扇形是总视角 90°，左右各 45°。目标进入扇形只代表方向满足条件，还要检查距离和墙壁遮挡。</canvas><p class="readout" id="vision-out" aria-live="polite"></p><figcaption>扇形是总视角 90°，左右各 45°。目标进入扇形只代表方向满足条件，还要检查距离和墙壁遮挡。</figcaption></figure><details class="code"><summary>C# 片段 · 前方、距离与遮挡分别检查</summary><div class="codebar"><span>放入现有脚本；留意下方说明</span><button class="copy" type="button">复制代码</button></div><pre><code>// 片段放在方法中。eye 是观察点 Transform，target 是目标 Transform。
+Vector3 toTarget = target.position - eye.position;
+float distance = toTarget.magnitude;
+bool inRange = distance &gt; 0.001f &amp;&amp; distance &lt;= viewRange;
+float threshold = Mathf.Cos(viewAngle * 0.5f * Mathf.Deg2Rad);
+bool inCone = inRange &amp;&amp;
+    Vector3.Dot(eye.forward, toTarget / distance) &gt;= threshold;
+// obstacleMask 仅包含墙等遮挡层，不包括观察者和目标自身。
+bool blocked = inCone &amp;&amp; Physics.Raycast(
+    eye.position, toTarget.normalized, distance,
+    obstacleMask, QueryTriggerInteraction.Ignore);
+bool visible = inCone &amp;&amp; !blocked;</code></pre></details><h3>转身：先求想要的朝向，再逐步转过去</h3><p><code>Quaternion</code> 是 Unity 保存旋转的方式。入门时先把它当成一种“朝向值”，不必手算四个分量。让模型沿本地 +Z 为正前方，使用 <code>LookRotation</code> 生成目标朝向，<code>RotateTowards</code> 控制每秒最多转多少度。</p><details class="code"><summary>C# 片段 · 平面转向；放在 Update 中</summary><div class="codebar"><span>放入现有脚本；留意下方说明</span><button class="copy" type="button">复制代码</button></div><pre><code>Vector3 direction = target.position - transform.position;
+direction.y = 0f; // 只在 XZ 地面上转身
+if (direction.sqrMagnitude &gt; 0.000001f)
+{
+    Quaternion desired = Quaternion.LookRotation(direction, Vector3.up);
+    transform.rotation = Quaternion.RotateTowards(
+        transform.rotation, desired, turnSpeed * Time.deltaTime);
+}</code></pre></details><p><strong>叉积</strong>会产生同时垂直于两个输入向量的方向，可用于求平面法线、侧向方向。Unity 中 <code>Vector3.Cross(Vector3.up, Vector3.forward)</code> 得到 right；交换输入顺序会反向。想判断目标在左右哪边，也可以用 <code>Vector3.SignedAngle</code>，并明确旋转轴。</p><aside class="note"><strong>容易踩的坑</strong><p>总视角 90° 对应的阈值是 cos(45°)，不是 cos(90°)。Mathf.Cos 用弧度，所以要乘 Deg2Rad。三维锥形视野与忽略高度的水平扇形视野是两种模型，代码与游戏设计要一致。</p></aside><p class="source">API 核对：<a href="https://docs.unity3d.com/6000.0/Documentation/ScriptReference/Quaternion.RotateTowards.html" target="_blank" rel="noopener">Quaternion.RotateTowards ↗</a></p><p class="source">API 核对：<a href="https://docs.unity3d.com/6000.0/Documentation/ScriptReference/Physics.Raycast.html" target="_blank" rel="noopener">Physics.Raycast ↗</a></p></section><section class="chapter" id="projectile"><header class="chapter-head"><p class="eyebrow">基础 / CHAPTER 06</p><h2><span>06</span>抛物线与数值积分</h2><p class="lead">弓箭向前飞，同时不断被重力向下拉。</p></header>
+<p>先忽略空气阻力，并假设重力不变。水平方向保持速度，竖直方向的速度不断减小。这两个运动叠加，就得到抛物线。不要先被符号吓到：p 是位置，v 是速度，g 是重力加速度，t 是经过的秒数。</p><div class="formula">p(t) = p₀ + v₀t + ½gt²<br><small>二维展开：x = x₀ + vx·t；y = y₀ + vy·t − ½·9.81·t²</small></div>
+<figure class="lab" id="lab-projectile"><div class="labhead"><span class="eyebrow">动手实验</span><h3>调整角度与初速度</h3></div><div class="controls"><label>发射角（°） <output id="pa-value">45</output><input type="range" id="pa" min="10" max="80" value="45" step="1"></label><label>初速度（单位/秒） <output id="pv-value">12</output><input type="range" id="pv" min="5" max="20" value="12" step="1"></label></div><canvas id="viz-projectile" role="img" aria-label="调整角度与初速度">从地面发射并落回同一高度，无阻力，g=9.81。点列每隔 0.1 秒采样一次，坐标轴单位为距离。</canvas><p class="readout" id="projectile-out" aria-live="polite"></p><figcaption>从地面发射并落回同一高度，无阻力，g=9.81。点列每隔 0.1 秒采样一次，坐标轴单位为距离。</figcaption></figure><p>初速度大小为 speed，角度为 θ 时：vx=speed×cosθ，vy=speed×sinθ。落回同一高度的飞行时间是 2vy/9.81，水平射程为 vx×飞行时间。45° 最大射程只成立于无阻力、相同发射和落点高度等条件下。</p><details class="code"><summary>C# 片段 · 解析轨迹与半隐式欧拉；两种方案择一</summary><div class="codebar"><span>放入现有脚本；留意下方说明</span><button class="copy" type="button">复制代码</button></div><pre><code>// 方案 A：已记录 origin、initialVelocity，经过时间 elapsed。
+// 适合预览落点；不自动处理碰撞。
+Vector3 p = origin + initialVelocity * elapsed
+          + 0.5f * Physics.gravity * elapsed * elapsed;
+
+// 方案 B：每个固定步更新，velocity 是跨帧保存的字段。
+// 放在 FixedUpdate 中；这是手写积分演示，不要同时启用刚体重力。
+float dt = Time.fixedDeltaTime;
+velocity += Physics.gravity * dt;
+position += velocity * dt;</code></pre></details><p><strong>数值积分</strong>就是把连续变化拆成很多小步。先更新速度再更新位置称为半隐式欧拉法；它与直接算公式会有误差，时间步越大通常误差越明显。遇到碰撞、摩擦和弹跳等复杂情况，优先交给 Rigidbody 及物理系统处理。</p><aside class="note"><strong>容易踩的坑</strong><p>高速子弹可能一帧从墙前跳到墙后，两个端点都没重叠。可以检查上一位置到新位置的线段，带半径的弹体用 SphereCast 等扫掠检测；物理刚体也可考虑合适的连续碰撞检测模式。</p></aside><details class="quiz"><summary>想一想：重力是每帧都把位置减去 9.81 吗？</summary><p>不是。9.81 是每秒速度改变多少的加速度。先乘时间步改变速度，再根据速度与时间改变位置；或者直接代入带 t² 的解析公式。</p></details></section><section class="chapter" id="bezier"><header class="chapter-head"><p class="eyebrow">基础 / CHAPTER 07</p><h2><span>07</span>贝塞尔曲线：用控制点塑造路线</h2><p class="lead">金币飞向 UI、摄像机绕场、技能轨迹，都可以先画一条曲线。</p></header>
+<p>两点 Lerp 给你直线。再加一个“拉弯路线”的控制点 P1，就能得到二次贝塞尔曲线：先在 P0→P1 和 P1→P2 上各取一个相同比例的点，再在这两个点之间插值一次。这叫 de Casteljau 思路。</p>
+<figure class="lab" id="lab-bezier"><div class="labhead"><span class="eyebrow">动手实验</span><h3>看见“插值的插值”</h3></div><div class="controls"><label>曲线进度 t <output id="bt-value">0.5</output><input type="range" id="bt" min="0" max="1" value="0.5" step="0.01"></label><label>控制点高度 <output id="bh-value">3</output><input type="range" id="bh" min="0" max="4" value="3" step="0.1"></label></div><canvas id="viz-bezier" role="img" aria-label="看见“插值的插值”">端点 P0、P2 固定。浅色折线连接控制点；两个中间点沿两条边移动，它们连线上的 Q 就是曲线上的点。</canvas><p class="readout" id="bezier-out" aria-live="polite"></p><figcaption>端点 P0、P2 固定。浅色折线连接控制点；两个中间点沿两条边移动，它们连线上的 Q 就是曲线上的点。</figcaption></figure><div class="formula">B(t) = (1−t)²P0 + 2(1−t)tP1 + t²P2</div><details class="code"><summary>C# 片段 · 二次贝塞尔位置计算；类内方法</summary><div class="codebar"><span>放入现有脚本；留意下方说明</span><button class="copy" type="button">复制代码</button></div><pre><code>Vector3 QuadraticBezier(Vector3 p0, Vector3 p1, Vector3 p2, float t)
+{
+    t = Mathf.Clamp01(t);
+    Vector3 a = Vector3.Lerp(p0, p1, t);
+    Vector3 b = Vector3.Lerp(p1, p2, t);
+    return Vector3.Lerp(a, b, t);
+}</code></pre></details><p>四个控制点会得到三次贝塞尔曲线，可以分别控制出发与到达时的切线方向。Catmull–Rom 样条则适合需要穿过给定路点的路线；贝塞尔的中间控制点通常<strong>不在曲线上</strong>。</p><aside class="note"><strong>容易踩的坑</strong><p>t 匀速增长不代表沿曲线移动的实际速度恒定。如果要求匀速，先采样曲线并累计相邻点的距离，得到“距离→t”查找表；运行时按路程查找 t（可二分），再算位置。</p></aside><details class="quiz"><summary>想一想：t=0.5，物体一定走过了一半路程吗？</summary><p>不一定。它只走过一半参数范围；弯曲程度和控制点分布会影响实际路程。</p></details></section><section class="chapter" id="collision"><header class="chapter-head"><p class="eyebrow">实践 / CHAPTER 08</p><h2><span>08</span>碰撞检测：先问“重叠了吗”</h2><p class="lead">碰撞检测判断是否相交；碰撞响应才决定弹开、停止，还是扣血。</p></header>
+<p>最简单的二维碰撞模型是两个圆：只要圆心距离不大于半径之和，就相交。三维中把圆换成球，公式完全一样。我们通常比较平方距离，省去开根号。</p><div class="formula">重叠条件：|B−A|² ≤ (rA+rB)²</div>
+<figure class="lab" id="lab-collision"><div class="labhead"><span class="eyebrow">动手实验</span><h3>两个圆什么时候碰到？</h3></div><div class="controls"><label>圆心距离 <output id="cd-value">3</output><input type="range" id="cd" min="0" max="6" value="3" step="0.05"></label><label>第二个圆的半径 <output id="cr-value">1</output><input type="range" id="cr" min="0.3" max="2" value="1" step="0.1"></label></div><canvas id="viz-collision" role="img" aria-label="两个圆什么时候碰到？">左圆半径固定为 1，右圆沿水平轴移动。演示把刚好相切也算作命中。</canvas><p class="readout" id="collision-out" aria-live="polite"></p><figcaption>左圆半径固定为 1，右圆沿水平轴移动。演示把刚好相切也算作命中。</figcaption></figure><details class="code"><summary>C# 片段 · 球与 AABB；类内方法</summary><div class="codebar"><span>放入现有脚本；留意下方说明</span><button class="copy" type="button">复制代码</button></div><pre><code>bool SpheresOverlap(Vector3 a, float ra, Vector3 b, float rb)
+{
+    float sum = ra + rb; // 调用者应保证半径非负
+    return (b - a).sqrMagnitude &lt;= sum * sum;
+}
+
+bool BoxesOverlap(Bounds a, Bounds b)
+{
+    return a.min.x &lt;= b.max.x &amp;&amp; a.max.x &gt;= b.min.x
+        &amp;&amp; a.min.y &lt;= b.max.y &amp;&amp; a.max.y &gt;= b.min.y
+        &amp;&amp; a.min.z &lt;= b.max.z &amp;&amp; a.max.z &gt;= b.min.z;
+}</code></pre></details><h3>AABB：各条轴上的区间都重叠，就相交</h3><p>AABB 是“与坐标轴对齐的包围盒”。想象把两个盒子的影子分别投到 x、y、z 轴上：只要有任意一条轴的区间分开，盒子就没有相交。物体旋转后，其世界 AABB 会变大，可能出现包围盒重叠但模型没有接触的情况。</p>
+<div class="flow"><div>粗检测：AABB / 网格筛选</div><span class="arrow" aria-hidden="true">→</span><div>精检测：形状是否相交</div><span class="arrow" aria-hidden="true">→</span><div>响应：停止 / 弹开 / 触发效果</div></div><p>更进一步，<strong>SAT 分离轴定理</strong>用“是否存在一条投影不重叠的轴”判断凸形状分离。二维凸多边形可检查各边法线；三维凸多面体还要考虑两物体边方向的叉积等候选轴。入门先会用碰撞体，不必立即手写通用物理引擎。</p><aside class="note"><strong>容易踩的坑</strong><p>Raycast 是一条无厚度射线，不能代表整个角色的体积。3D 用 Physics，2D 用 Physics2D；对应的碰撞体与刚体系统也要一致。Overlap 查询只是找重叠对象，不会自动推开它们。</p></aside></section><section class="chapter" id="fsm"><header class="chapter-head"><p class="eyebrow">实践 / CHAPTER 09</p><h2><span>09</span>有限状态机：让敌人有条理地做决定</h2><p class="lead">先问“我现在在做什么”，再问“满足什么条件才切换”。</p></header>
+<p>一个守卫可以有巡逻、追击、攻击三种状态。每一时刻只处于其中一种，状态里执行对应行为，转换条件负责切换。这样比在一大段 Update 里塞几十个互相打架的 if 更容易理解。</p>
+<figure class="lab" id="lab-fsm"><div class="labhead"><span class="eyebrow">动手实验</span><h3>把玩家拉近，再拉远</h3></div><div class="controls"><label>玩家距离 <output id="fd-value">10</output><input type="range" id="fd" min="0" max="12" value="10" step="0.1"></label><button id="fsm-reset" type="button">回到巡逻</button></div><canvas id="viz-fsm" role="img" aria-label="把玩家拉近，再拉远">巡逻在距离≤6时追击；追击在距离≥8时脱离。攻击进入阈值≤1.5，离开阈值>2。操作历史会影响当前状态。</canvas><p class="readout" id="fsm-out" aria-live="polite"></p><figcaption>巡逻在距离≤6时追击；追击在距离≥8时脱离。攻击进入阈值≤1.5，离开阈值>2。操作历史会影响当前状态。</figcaption></figure><h3>为什么进入和离开的距离不一样？</h3><p>如果在 6 内追击、6 外巡逻，玩家站在边界抖动时，状态会频繁切换。使用不同的进入与离开阈值叫<strong>滞回</strong>，它给状态留了一点稳定空间。演示里的 6～8 区间并不唯一决定状态：要看守卫之前在巡逻还是追击。</p><details class="code"><summary>C# 片段 · 状态转移骨架；放在 MonoBehaviour 类内</summary><div class="codebar"><span>放入现有脚本；留意下方说明</span><button class="copy" type="button">复制代码</button></div><pre><code>enum State { Patrol, Chase, Attack }
+State state = State.Patrol;
+public Transform target;
+
+void Update()
+{
+    if (target == null) { state = State.Patrol; return; }
+    float d = Vector3.Distance(transform.position, target.position);
+    switch (state)
+    {
+        case State.Patrol:
+            if (d &lt;= 6f) state = State.Chase;
+            break;
+        case State.Chase:
+            if (d &gt;= 8f) state = State.Patrol;
+            else if (d &lt;= 1.5f) state = State.Attack;
+            break;
+        case State.Attack:
+            if (d &gt;= 8f) state = State.Patrol;
+            else if (d &gt; 2f) state = State.Chase;
+            break;
+    }
+    // 转移完成后，再按 state 执行巡逻、移动或冷却攻击。
+    // 此骨架只示范状态转移，不会自行移动或造成伤害。
+}</code></pre></details><p>真正的项目还可以加入 <code>Enter</code>（进入时播动画）、<code>Tick</code>（持续行为）、<code>Exit</code>（离开时清理）三个阶段。攻击伤害应由动画事件或明确的攻击时机触发，不能每帧重复扣血。</p>
+<h3>行为树与效用 AI：什么时候升级？</h3><p><strong>行为树</strong>把决策拆成树形任务。Selector 依次尝试候选分支，遇到成功或运行中就停；Sequence 依次执行步骤，遇到失败或运行中就停。任务通常返回成功、失败、运行中三种结果。<strong>效用 AI</strong>则给行为打分，例如饥饿越高，“吃东西”的得分越高，最后选择高分行为。状态很少先用 FSM，复杂的组合行为再考虑这些方法。</p><details class="quiz"><summary>想一想：为什么把距离从 10 一次拖到 1，会进入攻击？</summary><p>实验会继续求解已满足的状态转移，等价于若干次逻辑更新。骨架代码每次 Update 只走一次转移，所以通常先追击，再在下一次 Update 进入攻击。</p></details></section><section class="chapter" id="steering"><header class="chapter-head"><p class="eyebrow">实践 / CHAPTER 10</p><h2><span>10</span>转向行为：追逐、减速与群体移动</h2><p class="lead">寻路给你一条路线，转向行为决定眼前这一小步怎么走。</p></header>
+<p>最简单的 <strong>Seek（趋近）</strong>会生成“朝目标的期望速度”。当前速度与期望速度的差，是需要修正的部分。如果立刻把速度替换为期望速度，转弯会很硬；限制每秒速度的改变量，就得到更柔和的加速与转向。</p>
+<div class="flow"><div>目标位置 − 当前位置</div><span class="arrow" aria-hidden="true">→</span><div>归一化 × 期望速度</div><span class="arrow" aria-hidden="true">→</span><div>与当前速度比较</div><span class="arrow" aria-hidden="true">→</span><div>限制加速度，更新速度与位置</div></div><details class="code"><summary>C# 片段 · Arrive：靠近目标时减速</summary><div class="codebar"><span>放入现有脚本；留意下方说明</span><button class="copy" type="button">复制代码</button></div><pre><code>// velocity 是 Vector3 字段；speed、acceleration &gt;= 0，slowRadius &gt; 0。
+// 在 Update 中执行。stopRadius 是一个很小的到达容差。
+Vector3 offset = target.position - transform.position;
+float d = offset.magnitude;
+if (d &lt;= stopRadius)
+{
+    velocity = Vector3.zero;
+}
+else
+{
+    float desiredSpeed = speed * Mathf.Clamp01(d / slowRadius);
+    Vector3 desired = offset.normalized * desiredSpeed;
+    velocity = Vector3.MoveTowards(velocity, desired,
+        acceleration * Time.deltaTime);
+    transform.position += velocity * Time.deltaTime;
+}</code></pre></details><p>这个简单的 Arrive 模型适合入门；速度很大或减速半径太小时仍可能越过目标。可以参考刹车距离 <strong>v²/(2a)</strong> 提前减速，或在适合的场景做最终位置约束。</p>
+<h3>Boids：三条局部规则组成群体</h3><div class="tri"><div><span class="num">01</span><h4>分离 Separation</h4><p>太近就远离邻居。贡献方向可取差向量除以距离平方，并处理零距离。</p></div><div><span class="num">02</span><h4>对齐 Alignment</h4><p>参考附近同伴的平均速度，让运动方向逐渐一致。</p></div><div><span class="num">03</span><h4>聚合 Cohesion</h4><p>朝邻居平均位置靠近，避免整个群体散开。</p></div></div><p>把三种修正乘权重后相加，再限制总加速度。分离权重高会更疏散，聚合权重高会更抱团。计算邻居时排除自己，最好基于这一帧的同一份状态快照计算所有单位，避免更新顺序造成偏差。</p><aside class="note"><strong>容易踩的坑</strong><p>Boids 是局部群体行为，不保证绕出迷宫，也不保证绝对不相撞。它可与全局寻路结合。每只鸟遍历全部鸟是 O(n²)，第 16 章的空间网格可减少邻居候选。</p></aside></section><section class="chapter" id="bfs"><header class="chapter-head"><p class="eyebrow">寻路 / CHAPTER 11</p><h2><span>11</span>BFS：像水波一样找到最少步数</h2><p class="lead">先把地图变成格子，再从起点一圈一圈向外探索。</p></header>
+<p>地图里的可走格子叫<strong>节点</strong>，两格之间允许移动的关系叫<strong>边</strong>。本文先只允许上、下、左、右四方向移动，墙不能进入。每步成本相同时，BFS（广度优先搜索）能找到步数最少的路线。</p>
+<div class="flow"><div>起点入队并标记</div><span class="arrow" aria-hidden="true">→</span><div>队首取出一个格子</div><span class="arrow" aria-hidden="true">→</span><div>未访问的邻居入队</div><span class="arrow" aria-hidden="true">→</span><div>记录邻居从哪里来</div></div>
+<p>Queue 是排队：先进先出。起点旁边的格子先被探索，再轮到它们的邻居。因此 BFS 按 0 步、1 步、2 步……向外推进。<strong>格子入队时就标记访问</strong>，否则多个邻居可能把同一个格子重复塞进队列。</p>
+<h3>找到终点以后，路线从哪来？</h3><div class="flow"><div>发现 B 时，记 parent[B]=A</div><span class="arrow" aria-hidden="true">→</span><div>发现 C 时，记 parent[C]=B</div><span class="arrow" aria-hidden="true">→</span><div>终点 C → B → A</div><span class="arrow" aria-hidden="true">→</span><div>反转得到 A → B → C</div></div>
+<p>parent 是“这个格子第一次由谁发现”的记录。回溯终点的 parent，直到起点，反转列表就得到路径。起点等于终点时，路径只有一个点；队列空了仍没到终点，说明没有路径。</p>
+<div class="formula">BFS：时间 O(V+E)，空间 O(V)<br><small>V 是可访问节点数量，E 是边数量；四方向网格的 E 与 V 同阶。</small></div>
+<p><strong>适用：</strong>无权重迷宫、回合制移动范围、洪水填充、连通区域检测。<strong>不适用：</strong>当泥地走一步要 5 点体力、道路只要 1 点时，最少步数不一定最省体力。下一章解决这个问题。</p><details class="quiz"><summary>想一想：DFS 深度优先搜索也能到终点，为什么不用它找最短路？</summary><p>DFS 往一个方向走到深处再回退，首次找到终点的路线可能绕很远。它适合探索、回溯和某些迷宫生成，但一般不保证首次得到最短路径。</p></details><p class="takeaway">本章记住：BFS 用队列，按层推进；最短路保证依赖每条边成本相同。</p></section><section class="chapter" id="dijkstra"><header class="chapter-head"><p class="eyebrow">寻路 / CHAPTER 12</p><h2><span>12</span>Dijkstra：找到总代价最低的路线</h2><p class="lead">最短的路，未必是走起来最便宜的路。</p></header>
+<p>现在把普通格子的进入成本设为 1，泥地设为 5。BFS 只数格子数量；Dijkstra 会记住到达每个格子目前已知的最低代价 g，并优先展开 g 最小的候选格。</p>
+<div class="formula">候选代价 = g(当前格) + 进入邻居的成本<br><small>若候选代价更低：更新 g(邻居)，并把 parent(邻居) 改为当前格。</small></div>
+<p>这个“发现更便宜的路线就更新”的步骤叫<strong>松弛</strong>。例如第一次走到某格花费 10，后来找到另一条只花 7 的路线，就把记录改成 7。不能简单把“第一次发现”当成“最优路线”。</p>
+<div class="flow"><div>候选 A：g=4</div><span class="arrow" aria-hidden="true">→</span><div>候选 B：g=7</div><span class="arrow" aria-hidden="true">→</span><div>先展开 A</div><span class="arrow" aria-hidden="true">→</span><div>更新受影响的邻居</div></div>
+<p>要不断取出最小 g，常用最小堆实现优先队列。使用合适的二叉堆实现时，典型复杂度是 O((V+E) log V)，搜索记录空间 O(V)；允许重复堆条目的实现可能使用更多空间。</p><aside class="note"><strong>容易踩的坑</strong><p>Dijkstra 要求边权非负。目标刚被发现时不一定已经最优；当它作为最低代价候选被取出时，才可以结束。堆里如果保留了旧条目，要跳过已经过期的代价记录。</p></aside><details class="quiz"><summary>想一想：只有普通地面时，Dijkstra 与 BFS 的路径一定逐格相同吗？</summary><p>都能找到相同步数的最短路线，但存在多条同价路线时，邻居顺序和并列项处理可能让路线形状不同。</p></details></section><section class="chapter" id="astar"><header class="chapter-head"><p class="eyebrow">寻路 / CHAPTER 13</p><h2><span>13</span>A*：在最优搜索里加入方向感</h2><p class="lead">已经走了多远，加上估计还要走多远。</p></header>
+<p>Dijkstra 会向四周扩张；A* 再增加一个“离终点还有多远”的估计 h，让搜索更有方向感。它优先展开 <strong>f=g+h</strong> 最小的候选格。这个估计函数叫<strong>启发式</strong>。</p>
+<div class="formula">四方向网格：h = (|x−目标x| + |y−目标y|) × 最小单步成本<br><small>这叫曼哈顿距离：忽略墙壁，横着与竖着至少要走多少步。</small></div>
+<p>像估计开车还有几分钟：可以低估，不能为了“聪明”而乱高估。可采纳启发式不高估真实剩余成本；使用不重新打开已关闭节点的图搜索实现时，还需要<strong>一致性</strong>等条件。本文每格成本至少为 1，四方向曼哈顿距离满足这些条件。</p>
+<figure class="lab" id="lab-path"><div class="labhead"><span class="eyebrow">动手实验</span><h3>在同一张地图上比较三种搜索</h3></div>
+<div class="controls"><label>搜索算法<select id="path-algo"><option value="bfs">BFS · 最少步数</option><option value="dijkstra">Dijkstra · 最低成本</option><option value="astar" selected>A* · 估计 + 成本</option></select></label><label>编辑格子<select id="path-tool"><option value="wall">切换墙壁</option><option value="mud">切换泥地 ×5</option><option value="erase">恢复普通地面</option></select></label></div>
+<div class="actions"><button id="path-step" type="button">展开一步</button><button id="path-run" class="primary" type="button">自动演示</button><button id="path-end" type="button">直接看结果</button><button id="path-reset" type="button">重置搜索</button><button id="path-map" type="button">还原地图</button></div>
+<div id="path-grid" class="path-grid" role="group" aria-label="寻路地图，每格可用键盘或鼠标编辑"></div>
+<div class="legend"><span><i class="lg-wall"></i>墙 #</span><span><i class="lg-mud"></i>泥地 5</span><span><i class="lg-open"></i>待探索 ·</span><span><i class="lg-closed"></i>已展开 ×</span><span><i class="lg-route"></i>路线 ●</span></div>
+<p class="readout" id="path-out" aria-live="polite"></p><figcaption>固定 S 起点、G 终点；点击其他格子编辑，自动重新开始搜索。只允许四方向移动，起点不计费，每次进入普通格花 1、泥地花 5。桌面也可用 Tab 到格子后按 Enter；手机上可横向滑动地图。</figcaption></figure>
+<h3>这样玩，最容易看出差别</h3><ol><li>先保留默认地图，选择 BFS，点击“直接看结果”。它会取中间那条少步数但经过泥地的路线。</li><li>改选 Dijkstra，再看结果：它愿意绕一点路，避开昂贵的泥地。</li><li>改选 A*，观察最低成本与展开格数。它保证的是这里条件下的最优成本，不是保证每张地图都比 Dijkstra 快。</li><li>用墙把终点围住，检查“无路可达”；点“还原地图”恢复。</li></ol>
+<p>“待探索”是已经发现、但还没处理完的候选格；“已展开”是已经检查过邻居的格子。A* 的动态说明会显示当前格的 g、h、f。路线形状可能受并列 f 的处理顺序影响。</p>
+<details class="code"><summary>完整脚本 · GridPathfinding.cs · 可复用的 A* 核心</summary><div class="codebar"><span>按标题文件名保存</span><button class="copy" type="button">复制代码</button></div><pre><code>using System.Collections.Generic;
+using UnityEngine;
+
+// 普通 C# 工具类，不挂到 GameObject。cost[x,y] &gt;= 1 表示可走，&lt;= 0 为墙。
+// 仅四方向移动；起点不计费。返回路径包含起点与终点；无路返回 null。
+public static class GridPathfinding
+{
+    static readonly Vector2Int[] Dirs = {
+        Vector2Int.right, Vector2Int.up, Vector2Int.left, Vector2Int.down
+    };
+
+    static int H(Vector2Int a, Vector2Int b)
+    {
+        return Mathf.Abs(a.x - b.x) + Mathf.Abs(a.y - b.y);
+    }
+
+    static bool Valid(int[,] cost, Vector2Int p)
+    {
+        return p.x &gt;= 0 &amp;&amp; p.y &gt;= 0 &amp;&amp; p.x &lt; cost.GetLength(0)
+            &amp;&amp; p.y &lt; cost.GetLength(1) &amp;&amp; cost[p.x, p.y] &gt;= 1;
+    }
+
+    public static List&lt;Vector2Int&gt; Find(int[,] cost, Vector2Int start,
+                                       Vector2Int goal)
+    {
+        if (cost == null || !Valid(cost, start) || !Valid(cost, goal))
+            return null;
+        var open = new List&lt;Vector2Int&gt; { start };
+        var closed = new HashSet&lt;Vector2Int&gt;();
+        var parent = new Dictionary&lt;Vector2Int, Vector2Int&gt;();
+        var g = new Dictionary&lt;Vector2Int, float&gt; { [start] = 0f };
+
+        while (open.Count &gt; 0)
+        {
+            // 为了容易读，直接扫描最低 f。大地图建议换成最小堆。
+            int best = 0;
+            for (int i = 1; i &lt; open.Count; i++)
+                if (g[open[i]] + H(open[i], goal) &lt;
+                    g[open[best]] + H(open[best], goal)) best = i;
+            Vector2Int current = open[best];
+            open.RemoveAt(best);
+
+            if (current == goal)
+            {
+                var path = new List&lt;Vector2Int&gt; { current };
+                while (parent.TryGetValue(current, out Vector2Int previous))
+                {
+                    current = previous;
+                    path.Add(current);
+                }
+                path.Reverse();
+                return path;
+            }
+            closed.Add(current);
+            foreach (Vector2Int dir in Dirs)
+            {
+                Vector2Int next = current + dir;
+                if (!Valid(cost, next) || closed.Contains(next)) continue;
+                float candidate = g[current] + cost[next.x, next.y];
+                if (!g.TryGetValue(next, out float old) || candidate &lt; old)
+                {
+                    parent[next] = current;
+                    g[next] = candidate;
+                    if (!open.Contains(next)) open.Add(next);
+                }
+            }
+        }
+        return null;
+    }
+}</code></pre></details><p>例如 <code>int[,] map = {{1,1,1},{1,0,1},{1,1,1}};</code>，再调用 <code>GridPathfinding.Find(map, new Vector2Int(0,0), new Vector2Int(2,2))</code>。把路径节点映射成世界坐标 <code>(x*cellSize, groundY, y*cellSize)</code>，随后用 MoveTowards 逐个走过。小心数组第二维在这里代表地面的 z。</p>
+<p>为了便于逐行读懂，以上代码与网页加权搜索演示用 List 扫描候选，最坏可达 O(V²+E)；不要把它的效率与最小堆版本混为一谈。大地图可换优先队列、分帧搜索，或做分层寻路。</p>
+<h3>Unity 自带导航怎么选？</h3><p>普通 3D 地面导航可以使用 AI Navigation 包：构建 NavMesh，给角色配置 NavMeshAgent，设置目标点。格子战棋、特殊移动规则则更适合自定义图。NavMesh 是可走区域的多边形表示；A* 是搜索策略，这两个概念不是同一个层次。</p><p class="source">API 核对：<a href="https://docs.unity3d.com/Packages/com.unity.ai.navigation@2.0/manual/index.html" target="_blank" rel="noopener">AI Navigation 2.0 ↗</a></p><aside class="note"><strong>容易踩的坑</strong><p>允许斜向移动后，要重新定义边成本、启发式和禁止穿角的规则。斜向成本为 √2 时不能照搬四方向曼哈顿距离。角色有体积，还要给墙预留净空；格子中心可走不代表整个角色能挤过去。</p></aside></section><section class="chapter" id="random"><header class="chapter-head"><p class="eyebrow">实践 / CHAPTER 14</p><h2><span>14</span>加权随机与洗牌</h2><p class="lead">“随机”不一定是等概率，也不代表短期结果必定平均。</p></header>
+<p>掉落表里普通、稀有、传说的权重为 60、30、10。把它们接成一条总长 100 的线：取一个 0～99 的随机整数，落在哪段就选择哪种掉落。概率等于“该项权重 ÷ 总权重”。</p>
+<figure class="lab" id="lab-random"><div class="labhead"><span class="eyebrow">动手实验</span><h3>权重是一把可调的概率尺</h3></div><div class="controls"><label>传说权重（普通60、稀有30固定） <output id="rw-value">10</output><input type="range" id="rw" min="0" max="60" value="10" step="1"></label><button id="roll" type="button">抽取 1 次</button><button id="roll-many" type="button">抽取 1000 次</button><button id="roll-clear" type="button">清空统计</button></div><canvas id="viz-random" role="img" aria-label="权重是一把可调的概率尺">上方是理论概率，下面是实际抽样比例。调整权重会清空旧统计，避免混合两种不同分布。</canvas><p class="readout" id="random-out" aria-live="polite"></p><figcaption>上方是理论概率，下面是实际抽样比例。调整权重会清空旧统计，避免混合两种不同分布。</figcaption></figure><details class="code"><summary>C# 片段 · 整数权重选择与 Fisher–Yates 洗牌</summary><div class="codebar"><span>放入现有脚本；留意下方说明</span><button class="copy" type="button">复制代码</button></div><pre><code>// 类内方法。需要 using System; using System.Collections.Generic;
+int WeightedPick(int[] weights)
+{
+    if (weights == null) throw new ArgumentNullException(nameof(weights));
+    int total = 0;
+    foreach (int w in weights)
+    {
+        if (w &lt; 0) throw new ArgumentException(&quot;权重不能为负&quot;);
+        total = checked(total + w); // 总和过大则报错，避免整数溢出
+    }
+    if (total == 0) throw new ArgumentException(&quot;至少一项权重必须大于0&quot;);
+    int r = UnityEngine.Random.Range(0, total); // int 上界不包含
+    for (int i = 0; i &lt; weights.Length; i++)
+    {
+        if (r &lt; weights[i]) return i;
+        r -= weights[i];
+    }
+    throw new InvalidOperationException();
+}
+
+void Shuffle&lt;T&gt;(IList&lt;T&gt; list)
+{
+    for (int i = list.Count - 1; i &gt; 0; i--)
+    {
+        int j = UnityEngine.Random.Range(0, i + 1); // j 可以等于 i
+        T temp = list[i]; list[i] = list[j]; list[j] = temp;
+    }
+}</code></pre></details><p>单次加权选择是 O(n)。固定掉落表需要频繁抽取时，可以预先计算前缀和，随机后用二分查找第一个大于 r 的前缀，单次变成 O(log n)。Fisher–Yates 则从尾到头，每次和尚未确定位置的任意元素交换；在随机索引均匀的前提下，得到均匀排列，时间 O(n)。</p><aside class="note"><strong>容易踩的坑</strong><p>Unity Random.Range 的 int 版本不包含上界，float 版本包含上界，别混淆。传说概率 10% 不意味着每 10 次必出；“保底”需要额外记录连续未出的次数并明确定义规则。</p></aside><p class="source">API 核对：<a href="https://docs.unity3d.com/6000.0/Documentation/ScriptReference/Random.Range.html" target="_blank" rel="noopener">Random.Range ↗</a></p><details class="quiz"><summary>想一想：把传说权重从 10 改到 20，概率是 20% 吗？</summary><p>不是。新的总权重是 60+30+20=110，所以传说概率为 20/110≈18.18%。</p></details></section><section class="chapter" id="noise"><header class="chapter-head"><p class="eyebrow">进阶 / CHAPTER 15</p><h2><span>15</span>噪声与程序化地形</h2><p class="lead">纯随机像锯齿；连续噪声像连绵的山丘。</p></header>
+<p>如果每个地块独立随机高度，相邻格子就可能一个在山顶、一个在谷底。噪声函数让相邻采样点的数值有联系，因此变化更连贯。采样坐标乘以 frequency（频率），控制山丘的疏密；结果乘以 amplitude（振幅），控制高低。</p>
+<figure class="lab" id="lab-noise"><div class="labhead"><span class="eyebrow">动手实验</span><h3>同一份种子，换一种地形尺度</h3></div><div class="controls"><label>频率 <output id="nf-value">4</output><input type="range" id="nf" min="1" max="12" value="4" step="0.5"></label><label>高度倍率 <output id="na-value">3</output><input type="range" id="na" min="1" max="5" value="3" step="0.1"></label><label>种子 <output id="ns-value">42</output><input type="range" id="ns" min="1" max="99" value="42" step="1"></label></div><canvas id="viz-noise" role="img" aria-label="同一份种子，换一种地形尺度">虚线是独立随机采样，实线是平滑的一维 value noise（值噪声）。本实验用于解释连续性，并非 Unity Mathf.PerlinNoise 的精确复现；横轴为采样位置，纵轴为高度。</canvas><p class="readout" id="noise-out" aria-live="polite"></p><figcaption>虚线是独立随机采样，实线是平滑的一维 value noise（值噪声）。本实验用于解释连续性，并非 Unity Mathf.PerlinNoise 的精确复现；横轴为采样位置，纵轴为高度。</figcaption></figure><details class="code"><summary>C# 片段 · Unity 中的二维噪声采样</summary><div class="codebar"><span>放入现有脚本；留意下方说明</span><button class="copy" type="button">复制代码</button></div><pre><code>// 放在方法中；x、z 为采样坐标，frequency &gt; 0，amplitude &gt;= 0。
+// offsetX、offsetZ 是保存的采样偏移，改变它们可以得到不同地形区域。
+float sample = Mathf.PerlinNoise(
+    (x + offsetX) * frequency,
+    (z + offsetZ) * frequency);
+float height = Mathf.Clamp01(sample) * amplitude;
+// 可将 height 写入网格顶点的 y；或换算为 Terrain 需要的归一化高度。</code></pre></details><h3>多层噪声：大山上再叠小山</h3><p>叠加多层（octave）噪声：第一层频率低、振幅大，决定整体山形；后面频率逐渐升高、振幅逐渐减小，添加细节。例如频率每层乘 2，振幅每层乘 0.5。把加权总和除以振幅总和，可以保持相近的数值范围。这类构造常称为 fBm。</p>
+<h3>生成洞穴与地牢的其他常见算法</h3><ul><li><strong>细胞自动机：</strong>先随机填墙，然后根据周围 8 格的墙数更新自己。每轮读旧网格、写新网格；最后用 BFS 检查连通性，避免生成孤岛。</li><li><strong>BSP 分割：</strong>把矩形区域递归切成子区域，在叶子区域放房间，再用走廊连接，适合规则地牢。</li><li><strong>Poisson Disk 采样：</strong>放置点时保持最小间距，适合树木、石头和刷怪点；通常配合网格加速邻居检查。</li></ul><aside class="note"><strong>容易踩的坑</strong><p>固定种子还需要固定随机数算法、调用顺序与参数，才便于复现。Mathf.PerlinNoise 本身没有 seed 参数，可保存采样偏移；不要每帧给整个游戏重新 InitState。需要跨版本严格一致时，应保存生成结果或控制完整算法。</p></aside><p class="source">API 核对：<a href="https://docs.unity3d.com/6000.0/Documentation/ScriptReference/Mathf.PerlinNoise.html" target="_blank" rel="noopener">Mathf.PerlinNoise；范围可能略超出 0～1，必要时 Clamp ↗</a></p></section><section class="chapter" id="spatial"><header class="chapter-head"><p class="eyebrow">进阶 / CHAPTER 16</p><h2><span>16</span>空间网格：只检查附近的对象</h2><p class="lead">先把世界装进小格子，再去相关格子里找邻居。</p></header>
+<p>假设有 1,000 个敌人，每个敌人都遍历全部敌人查邻居，大约要做百万级检查。很多对象其实离得很远，根本不值得比较。均匀网格把世界划分成小区域，字典记录“格子坐标→这个格子里的对象”。</p><div class="formula">cellX = floor(worldX / cellSize)<br>cellZ = floor(worldZ / cellSize)</div>
+<figure class="lab" id="lab-spatial"><div class="labhead"><span class="eyebrow">动手实验</span><h3>检查整张图，还是只查附近几格？</h3></div><div class="controls"><label>查询中心 x <output id="sx-value">10</output><input type="range" id="sx" min="0" max="20" value="10" step="0.1"></label><label>查询半径 <output id="sr-value">2</output><input type="range" id="sr" min="0.5" max="5" value="2" step="0.1"></label></div><canvas id="viz-spatial" role="img" aria-label="检查整张图，还是只查附近几格？">图中固定 180 个点，格子边长 2。着色格子是候选区域，橙色空心点是候选，蓝色实心点才是真正落在半径内的邻居；黑色十字为查询中心。</canvas><p class="readout" id="spatial-out" aria-live="polite"></p><figcaption>图中固定 180 个点，格子边长 2。着色格子是候选区域，橙色空心点是候选，蓝色实心点才是真正落在半径内的邻居；黑色十字为查询中心。</figcaption></figure>
+<p>查询半径为 r 时，先找到覆盖查询圆的包围盒所跨越的格子：从 floor((x−r)/cellSize) 到 floor((x+r)/cellSize)，z 也同理。只遍历这些格子里的对象，最后再做<strong>精确平方距离检查</strong>。候选格子的边角可能在圆外，所以“同格或附近格”不等于“在半径内”。</p><details class="code"><summary>C# 片段 · 把位置映射成网格键</summary><div class="codebar"><span>放入现有脚本；留意下方说明</span><button class="copy" type="button">复制代码</button></div><pre><code>// 需要 using System.Collections.Generic; using UnityEngine;
+// 这些字段与方法放在类内，cellSize 必须 &gt; 0。
+float cellSize = 2f;
+Dictionary&lt;Vector2Int, List&lt;Transform&gt;&gt; cells =
+    new Dictionary&lt;Vector2Int, List&lt;Transform&gt;&gt;();
+
+Vector2Int CellOf(Vector3 p)
+{
+    return new Vector2Int(Mathf.FloorToInt(p.x / cellSize),
+                          Mathf.FloorToInt(p.z / cellSize));
+}</code></pre></details><p>静态物体可建立一次索引。移动物体跨格时，需要从旧格移除、加入新格；也可以按逻辑帧重新填充网格，但要复用列表，控制垃圾分配。二维空间可用四叉树，三维可用八叉树；这些结构在对象分布不均匀时更有弹性，但维护也更复杂。</p><aside class="note"><strong>容易踩的坑</strong><p>负坐标要用 floor 向下取整。例如 −0.1 / 2 应属于 −1 格，直接转 int 会变成 0。网格只能减少候选数量，最坏所有对象挤在一格时仍可能退化；格子太小或太大都有额外代价。</p></aside><details class="quiz"><summary>想一想：查询半径超过格子边长时，只看周围 3×3 格够吗？</summary><p>不一定。必须按实际半径计算跨越的格子范围，否则会漏掉仍在查询半径内的对象。</p></details></section><section class="chapter" id="pool"><header class="chapter-head"><p class="eyebrow">进阶 / CHAPTER 17</p><h2><span>17</span>对象池：让子弹循环上岗</h2><p class="lead">对象池是复用对象的管理模式，解决反复创建与销毁的问题。</p></header>
+<p>想象餐厅的盘子：用完洗干净，放回架子，下次再拿。每次射击都创建子弹、命中就销毁，会带来对象生命周期和分配成本。对象池保留不用的对象，下一次优先取出复用。</p>
+<figure class="lab" id="lab-pool"><div class="labhead"><span class="eyebrow">动手实验</span><h3>给每颗“子弹”一个可复用的编号</h3></div><div class="controls"><button id="pool-get" class="primary" type="button">发射一颗</button><button id="pool-release" type="button">回收最早一颗</button><button id="pool-reset" type="button">重置实验</button></div><canvas id="viz-pool" role="img" aria-label="给每颗“子弹”一个可复用的编号">实验预热 4 个对象，教学上限为 10 个。发射后回收，再发射，观察是否用了同一个编号，以及累计创建数量是否增加。</canvas><p class="readout" id="pool-out" aria-live="polite"></p><figcaption>实验预热 4 个对象，教学上限为 10 个。发射后回收，再发射，观察是否用了同一个编号，以及累计创建数量是否增加。</figcaption></figure><details class="code"><summary>完整脚本 · SimpleBulletPool.cs</summary><div class="codebar"><span>按标题文件名保存</span><button class="copy" type="button">复制代码</button></div><pre><code>using System.Collections.Generic;
+using UnityEngine;
+
+// 挂到一个空 GameObject 上；Prefab 应是专用、初始非激活的子弹预制体。
+public class SimpleBulletPool : MonoBehaviour
+{
+    public GameObject prefab;
+    [Min(0)] public int prewarm = 8;
+    readonly Stack&lt;GameObject&gt; idle = new Stack&lt;GameObject&gt;();
+    readonly HashSet&lt;GameObject&gt; active = new HashSet&lt;GameObject&gt;();
+
+    void Awake()
+    {
+        if (prefab == null) { enabled = false; return; }
+        for (int i = 0; i &lt; prewarm; i++) idle.Push(Create());
+    }
+
+    GameObject Create()
+    {
+        GameObject obj = Instantiate(prefab, transform);
+        obj.SetActive(false);
+        return obj;
+    }
+
+    public GameObject Rent(Vector3 position, Quaternion rotation)
+    {
+        if (prefab == null) return null;
+        GameObject obj = idle.Count &gt; 0 ? idle.Pop() : Create();
+        obj.transform.SetPositionAndRotation(position, rotation);
+        active.Add(obj);
+        // 在激活前重置该子弹的速度、伤害来源、寿命等自定义状态。
+        obj.SetActive(true);
+        return obj;
+    }
+
+    public void Return(GameObject obj)
+    {
+        // 防止重复回收或把不属于本池的对象放进池里。
+        if (obj == null || !active.Remove(obj)) return;
+        obj.SetActive(false);
+        idle.Push(obj);
+    }
+}</code></pre></details><p>这是最小管理骨架，不包含发射、碰撞与自动回收：你的发射逻辑调用 <code>Rent</code>，子弹命中或超时后调用所属池的 <code>Return</code>。池拥有这些对象，使用期间不要另外 Destroy 它们；池的父对象应保持固定且无意外缩放。</p><p>实际使用时先补齐状态重置：刚体速度、粒子、拖尾、计时器、事件订阅和协程都可能留下上次使用的状态。需要有容量上限的池时，要明确耗尽后扩容、拒绝，还是复用最旧对象。上面的 C# 骨架会按需扩容，与网页实验的 10 个教学上限不同。</p>
+<p>Unity 也提供 <code>UnityEngine.Pool.ObjectPool&lt;T&gt;</code>，可以通过获取、归还和销毁回调管理生命周期。池化不会让子弹飞行与碰撞计算消失，它主要减少反复创建、销毁的成本。</p><p class="source">API 核对：<a href="https://docs.unity3d.com/6000.0/Documentation/ScriptReference/Pool.ObjectPool_1.html" target="_blank" rel="noopener">ObjectPool&lt;T&gt; ↗</a></p><details class="quiz"><summary>想一想：只把子弹 SetActive(false) 就等于回池了吗？</summary><p>不一定。还需要把对象放回池的空闲集合、从活跃集合移除，并保证下一次取出时状态被重置。</p></details></section><section class="chapter" id="timer"><header class="chapter-head"><p class="eyebrow">进阶 / CHAPTER 18</p><h2><span>18</span>冷却、调度与帧预算</h2><p class="lead">游戏中很多“算法问题”，其实是“什么时候执行、执行多少次”。</p></header>
+<p>技能每 0.5 秒发动一次，不应该用“30 帧一次”实现。记录下次允许执行的时刻，或累计经过的时间，才能避免帧率改变冷却速度。还要明确：卡顿后是补齐漏掉的次数，还是只触发一次？这是游戏规则的一部分。</p><details class="code"><summary>C# 片段 · 两种不同的冷却语义</summary><div class="codebar"><span>放入现有脚本；留意下方说明</span><button class="copy" type="button">复制代码</button></div><pre><code>// 方案 A：放在输入被触发的分支中。冷却内的按键不排队。
+// nextAllowed 是 float 字段，初值 0；cooldown &gt; 0。
+if (Time.time &gt;= nextAllowed)
+{
+    CastSkill(); // 你实现的技能方法
+    nextAllowed = Time.time + cooldown;
+}
+
+// 方案 B：放在 Update 中。自动持续触发，允许补帧但限制单帧工作。
+// accumulator 为 float 字段；interval &gt; 0；Spawn 为自定义方法。
+accumulator += Time.deltaTime;
+int workThisFrame = 0;
+while (accumulator &gt;= interval &amp;&amp; workThisFrame &lt; 4)
+{
+    accumulator -= interval;
+    Spawn();
+    workThisFrame++;
+}
+// 这里保留剩余欠账，后续帧继续消化；长期过载时需要丢弃或限流策略。</code></pre></details><p>菜单和真实时间倒计时可用 <code>Time.unscaledDeltaTime</code> 或相应未缩放时钟；受游戏暂停和慢动作影响的技能通常用缩放时间。对联网权威计时，还需要服务器时间与同步策略，不能依赖客户端本地冷却保证规则。</p>
+<h3>分帧处理：把大任务切成小块</h3><div class="flow"><div>第1帧：更新敌人 0～24</div><span class="arrow" aria-hidden="true">→</span><div>第2帧：更新敌人 25～49</div><span class="arrow" aria-hidden="true">→</span><div>第3帧：更新敌人 50～74</div></div><p>远处敌人可能不需要每帧重新寻路，可以每 0.2 秒评估一次，且错开不同敌人的开始时间。把一次大搜索保存成可继续的状态，每帧只展开一部分节点，就能控制峰值；代价是结果稍晚出现。</p><aside class="note"><strong>容易踩的坑</strong><p>协程不自动在后台线程运行，重计算仍可能卡住主线程。先用 Unity Profiler 找真正耗时点，再决定降低频率、减少分配、改算法或使用 Jobs/Burst；不要仅凭感觉优化。</p></aside></section><section class="chapter" id="practice"><header class="chapter-head"><p class="eyebrow">实战 / CHAPTER 19</p><h2><span>19</span>把算法拼成一个小型守卫游戏</h2><p class="lead">让“感知 → 决策 → 寻路 → 移动 → 攻击”各司其职。</p></header>
+<p>现在回到最开始的守卫。你已经不需要一个巨大而神秘的“AI 算法”，而是把能解释清楚的小模块连接起来。建议按下面顺序做，每一步能独立观察效果，再进入下一步。</p>
+<div class="flow"><div>感知：距离、点积、射线</div><span class="arrow" aria-hidden="true">→</span><div>决策：FSM</div><span class="arrow" aria-hidden="true">→</span><div>计划：A* / NavMesh</div><span class="arrow" aria-hidden="true">→</span><div>执行：移动、转向、冷却</div></div>
+<ol class="project-steps"><li><strong>先让它移动。</strong>摆好 Cube 守卫与 Sphere 玩家，用第 03 章的 ChaseTarget 追踪。验收：更改速度能改变追逐速度，到达后不来回越过目标。</li><li><strong>让它只在附近追。</strong>接上第 09 章的状态转移，只有 Chase 状态才移动。验收：距离在 6～8 之间时，状态不因轻微抖动反复跳转。</li><li><strong>让它真的“看见”。</strong>用点积、距离和遮挡射线计算 visible，代替单纯距离条件。验收：玩家在背后或墙后时不被直接发现；如需记忆，保存最后可见位置与时间。</li><li><strong>让它绕墙。</strong>选择网格 A* 或 NavMesh。A* 返回路径后，保存路点下标并逐个移动；到达阈值内切换下一个节点。验收：有路能绕行、无路能停下，目标变化后可以重新规划。</li><li><strong>让攻击有节奏。</strong>Attack 状态下停止追逐，用计时器约束攻击频率；从池里租子弹，命中或超时后归还。验收：暂停/恢复符合设计，不重复扣血，不重复回池。</li><li><strong>最后才增加数量。</strong>从 1 个守卫加到 100 个，用 Profiler 检查感知、寻路、物理和分配；按瓶颈引入空间网格、降低决策频率或分帧搜索。</li></ol>
+<div class="callout"><strong>同一个位置，只交给一个模块写</strong><p>如果你同时用 ChaseTarget、NavMeshAgent、Rigidbody 和自写路径移动修改守卫位置，它们可能互相覆盖。组合时由状态机决定意图，由一个运动模块统一执行，替换旧移动脚本而不是全部叠加。</p></div>
+<h3>排查问题时，先把中间结果画出来</h3><p>用 <code>Debug.DrawLine</code> 或 Gizmos 画视线、方向、路径和检测半径；在 Inspector 或屏幕上显示状态、当前路点、下一次攻击时间。不要只看最终“没追上”，要能看到是哪一个环节没有满足条件。</p>
+<div class="tablewrap"><table><thead><tr><th>症状</th><th>先检查</th></tr></thead><tbody><tr><td>越靠近越慢</td><td>是否每帧 Lerp(current,target,常数)，而你的需求其实是匀速？</td></tr><tr><td>摄像机抖动</td><td>目标更新与相机更新顺序、刚体插值设置、是否多个脚本争夺位置</td></tr><tr><td>寻路穿墙角</td><td>斜向规则、角色体积、网格坐标到世界坐标映射</td></tr><tr><td>掉落比例怪异</td><td>权重总和、上下界、零权重、抽样次数是否足够</td></tr><tr><td>回收后子弹立刻消失</td><td>上一次寿命计时、旧协程、粒子或重复回收回调是否清理</td></tr></tbody></table></div>
+</section><section class="chapter" id="reference"><header class="chapter-head"><p class="eyebrow">附录 / CHAPTER 20</p><h2><span>20</span>选型速查与复习路线</h2><p class="lead">先能解释“为什么”，再追求“写得快”。</p></header>
+<div class="tablewrap"><table><thead><tr><th>你要实现</th><th>优先想到</th><th>适用前提 / 提醒</th></tr></thead><tbody>
+<tr><td>朝目标匀速移动</td><td>MoveTowards</td><td>速度乘 deltaTime；另行处理碰撞</td></tr><tr><td>固定时长动画</td><td>Lerp + 累计时间</td><td>固定起点；duration > 0</td></tr><tr><td>相机平滑追踪</td><td>SmoothDamp</td><td>保存速度状态；选择合适更新时机</td></tr><tr><td>扇形攻击 / 视野</td><td>距离 + 点积</td><td>方向归一化，再加遮挡检测</td></tr><tr><td>抛射预览</td><td>运动公式 / 积分</td><td>匹配重力与阻力模型</td></tr><tr><td>弯曲路径</td><td>贝塞尔 / 样条</td><td>参数匀速不等于路程匀速</td></tr><tr><td>无权重最短路</td><td>BFS</td><td>所有边成本相同</td></tr><tr><td>非负权重最短路</td><td>Dijkstra</td><td>正确松弛；取出终点才结束</td></tr><tr><td>有目标的最短路</td><td>A*</td><td>启发式与移动规则匹配</td></tr><tr><td>复杂地面导航</td><td>NavMesh</td><td>正确构建可走区域并配置 Agent</td></tr><tr><td>少量敌人行为</td><td>FSM</td><td>给边界条件加滞回 / 冷却</td></tr><tr><td>鱼群 / 鸟群</td><td>Boids</td><td>局部规则；需要邻居查询加速</td></tr><tr><td>掉落 / 抽牌</td><td>加权随机 / Fisher–Yates</td><td>概率与不放回抽取要区分</td></tr><tr><td>山地 / 洞穴 / 地牢</td><td>噪声 / 细胞自动机 / BSP</td><td>生成后验证连通性与可玩性</td></tr><tr><td>大量邻居检测</td><td>均匀网格 / 空间树</td><td>粗筛后仍要精确判断</td></tr><tr><td>大量重复物体</td><td>对象池</td><td>每次复用重置状态</td></tr></tbody></table></div>
+<h3>三轮学习，比一次背完更有效</h3><div class="tri"><div><span class="num">第一轮</span><h4>会让物体动</h4><p>00～07 章：向量、时间、插值、转向、抛物线和曲线。每个实验改两个参数，说出结果为什么变化。</p></div><div><span class="num">第二轮</span><h4>会做一个敌人</h4><p>08～14 章：碰撞、状态、转向、寻路和随机。完成守卫游戏的前五步。</p></div><div><span class="num">第三轮</span><h4>会生成与优化</h4><p>15～19 章：程序化地图、空间索引、对象池与调度。先测量瓶颈，再改方案。</p></div></div>
+<h3>遇到这些词，可以回来查</h3><dl class="glossary"><dt>归一化 Normalize</dt><dd>把非零向量调整为长度 1，保留方向。</dd><dt>插值 Interpolation</dt><dd>按比例在已知值之间求中间值。</dd><dt>启发式 Heuristic</dt><dd>用容易计算的规则估计离目标还差多远。</dd><dt>松弛 Relaxation</dt><dd>发现更低的路线代价，更新记录。</dd><dt>滞回 Hysteresis</dt><dd>使用不同的进入与离开阈值，减少边界抖动。</dd><dt>确定性 Determinism</dt><dd>相同的起始条件与输入产生相同结果。</dd><dt>GC</dt><dd>托管垃圾回收；频繁产生临时对象可能增加回收压力。</dd><dt>粗检测 / 精检测</dt><dd>先便宜地缩小候选范围，再做精确判断。</dd></dl>
+<p class="source">资料说明：本文解释、示意图与教学示例为独立编写；Unity API 语义参考各章附带的官方文档链接。主要参考 Unity 6.0，SmoothDamp 链接为 6.6 文档。核对日期：2026-09-22。浏览器演示与 C# 示例的差异已在相应章节注明。</p>
+<div class="ending"><p>算法不是一串要背下来的名字。</p><strong>先描述问题，再画出过程，最后把步骤写成代码。</strong><a href="#start">回到起点 ↑</a></div>
+</section><footer>看得见的游戏算法 · 为理解而画，为实践而写。<span>END / 2026</span></footer></main><script>'use strict';
+(() => {
+  const $ = id => document.getElementById(id);
+  const charts = [];
+  const get = id => Number($(id).value);
+  const fmt = (x, digits=2) => Number(x).toFixed(digits);
+  const clamp = (x,a,b) => Math.max(a,Math.min(b,x));
+  function colors(){const s=getComputedStyle(document.documentElement);const c={};['bg','paper','ink','muted','line','soft','accent','on-accent','blue','orange','purple','mud','wall'].forEach(k=>c[k]=s.getPropertyValue('--'+k).trim());return c;}
+  function text(ctx,str,x,y,color,align='left',size=12){ctx.fillStyle=color;ctx.font=`${size}px "Segoe UI","Microsoft YaHei",sans-serif`;ctx.textAlign=align;ctx.textBaseline='middle';ctx.fillText(str,x,y);}
+  function line(ctx,x1,y1,x2,y2,color,width=1,dash=[]){ctx.strokeStyle=color;ctx.lineWidth=width;ctx.setLineDash(dash);ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.stroke();ctx.setLineDash([]);}
+  function circle(ctx,x,y,r,color,fill=true){ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);if(fill){ctx.fillStyle=color;ctx.fill();}else{ctx.strokeStyle=color;ctx.lineWidth=2;ctx.stroke();}}
+  function arrow(ctx,x1,y1,x2,y2,color,width=2){if(Math.hypot(x2-x1,y2-y1)<1)return;line(ctx,x1,y1,x2,y2,color,width);const a=Math.atan2(y2-y1,x2-x1),n=7;ctx.beginPath();ctx.moveTo(x2,y2);ctx.lineTo(x2-n*Math.cos(a-.45),y2-n*Math.sin(a-.45));ctx.lineTo(x2-n*Math.cos(a+.45),y2-n*Math.sin(a+.45));ctx.closePath();ctx.fillStyle=color;ctx.fill();}
+  function path(ctx,pts,color,width=2,dash=[]){ctx.strokeStyle=color;ctx.lineWidth=width;ctx.setLineDash(dash);ctx.beginPath();pts.forEach((p,i)=>i?ctx.lineTo(...p):ctx.moveTo(...p));ctx.stroke();ctx.setLineDash([]);}
+  function chart(id,height,draw){const canvas=$("viz-"+id),ctx=canvas.getContext('2d');const item={id,canvas,draw:()=>{const w=Math.max(200,canvas.getBoundingClientRect().width),h=typeof height==='function'?height(w):height,dpr=Math.min(window.devicePixelRatio||1,2);canvas.style.height=h+'px';canvas.width=Math.round(w*dpr);canvas.height=Math.round(h*dpr);ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,w,h);draw(ctx,w,h,colors());}};charts.push(item);item.draw();return item.draw;}
+  function bind(ids,draw){ids.forEach(id=>{$(id).addEventListener('input',()=>{const out=$(id+'-value');if(out)out.value=$(id).value;draw();});});}
+  function grid(ctx,w,h,c,pad=30,step=40){for(let x=pad;x<w-pad;x+=step)line(ctx,x,pad,x,h-pad,c.line);for(let y=pad;y<h-pad;y+=step)line(ctx,pad,y,w-pad,y,c.line);}
+  function axes(ctx,w,h,c,xMax,yMax){const l=43,r=w-17,t=20,b=h-38;line(ctx,l,b,r,b,c.muted);line(ctx,l,t,l,b,c.muted);for(let i=0;i<=4;i++){let x=l+(r-l)*i/4,y=b-(b-t)*i/4;text(ctx,fmt(xMax*i/4,1),x,b+15,c.muted,'center',10);text(ctx,fmt(yMax*i/4,1),l-7,y,c.muted,'right',10);if(i)line(ctx,l,y,r,y,c.line);}text(ctx,'x',r,b+30,c.muted,'right',11);text(ctx,'y',l-17,t-9,c.muted,'center',11);return {x:v=>l+(r-l)*v/xMax,y:v=>b-(b-t)*v/yMax,l,r,t,b};}
+
+  // 阅读界面：页面本身没有远程依赖。
+  try{const theme=localStorage.getItem('unity-algorithms-theme');if(theme==='dark')document.documentElement.dataset.theme='dark';}catch(e){}
+  function themeLabel(){$('theme-toggle').textContent=document.documentElement.dataset.theme==='dark'?'切换浅色':'切换深色';}
+  themeLabel();
+  $('theme-toggle').addEventListener('click',()=>{const dark=document.documentElement.dataset.theme!=='dark';document.documentElement.dataset.theme=dark?'dark':'light';try{localStorage.setItem('unity-algorithms-theme',dark?'dark':'light');}catch(e){}themeLabel();charts.forEach(c=>c.draw());});
+  $('toc-search').addEventListener('input',()=>{const q=$('toc-search').value.trim().toLowerCase();let n=0;document.querySelectorAll('#toc a').forEach(a=>{const target=$(a.hash.slice(1));a.hidden=!(a.textContent+target.querySelector('header').textContent).toLowerCase().includes(q);if(!a.hidden)n++;});$('toc-empty').hidden=n>0;});
+  const sections=[...document.querySelectorAll('.chapter')],navs=[...document.querySelectorAll('#toc a')];
+  let ticking=false;
+  function progress(){ticking=false;const max=document.documentElement.scrollHeight-innerHeight;$('reading-progress').style.width=(max>0?scrollY/max*100:0)+'%';let active=sections[0].id;for(const s of sections){if(s.getBoundingClientRect().top<innerHeight*.3)active=s.id;else break;}navs.forEach(a=>{const yes=a.hash==='#'+active;a.classList.toggle('active',yes);if(yes)a.setAttribute('aria-current','location');else a.removeAttribute('aria-current');});}
+  addEventListener('scroll',()=>{if(!ticking){ticking=true;requestAnimationFrame(progress);}},{passive:true});progress();
+  let printDetails=[];
+  addEventListener('beforeprint',()=>{printDetails=[...document.querySelectorAll('details')].map(d=>[d,d.open]);printDetails.forEach(([d])=>d.open=true);charts.forEach(c=>c.draw());});
+  addEventListener('afterprint',()=>{printDetails.forEach(([d,open])=>d.open=open);charts.forEach(c=>c.draw());});
+  $('print').addEventListener('click',()=>window.print());
+  document.querySelectorAll('.copy').forEach(button=>button.addEventListener('click',async()=>{const value=button.closest('details').querySelector('pre code').textContent;let ok=false;try{await navigator.clipboard.writeText(value);ok=true;}catch(e){const area=document.createElement('textarea');area.value=value;area.style.position='fixed';area.style.left='-9999px';document.body.append(area);area.select();try{ok=document.execCommand('copy');}catch(e){}area.remove();button.focus();}button.textContent=ok?'已复制':'请选中代码复制';setTimeout(()=>button.textContent='复制代码',1600);}));
+
+  const drawCost=chart('cost',265,(ctx,w,h,c)=>{const n=get('count'),rows=[['O(1)',1,c.accent],['O(log₂ n)',Math.ceil(Math.log2(n)),c.blue],['O(n)',n,c.orange],['O(n²)',n*n,c.purple]],left=77,right=w-62,scale=v=>(right-left)*Math.log10(Math.max(v,1))/6;rows.forEach(([label,value,col],i)=>{const y=30+i*50;text(ctx,label,2,y+8,c.ink,'left',12);ctx.fillStyle=c.soft;ctx.fillRect(left,y,right-left,16);ctx.fillStyle=col;ctx.fillRect(left,y,Math.max(3,scale(value)),16);text(ctx,value.toLocaleString(),right+8,y+8,c.ink,'left',11);});text(ctx,'对数尺度：每段增长代表 ×10',left,244,c.muted,'left',11);$('cost-out').textContent=`n = ${n} ｜ 全量遍历 ${n.toLocaleString()} 次；平方规模 ${(n*n).toLocaleString()} 次（示意）`;});bind(['count'],drawCost);
+
+  const drawVector=chart('vector',300,(ctx,w,h,c)=>{const vx=get('vx'),vy=get('vy'),len=Math.hypot(vx,vy),cx=w/2,cy=h/2,s=Math.min((w-62)/9,(h-55)/7),x=cx+vx*s,y=cy-vy*s;for(let i=-4;i<=4;i++){line(ctx,cx+i*s,cy-3*s,cx+i*s,cy+3*s,c.line);if(i)text(ctx,String(i),cx+i*s,cy+15,c.muted,'center',10);}for(let j=-3;j<=3;j++)line(ctx,cx-4*s,cy+j*s,cx+4*s,cy+j*s,c.line);arrow(ctx,cx-4.3*s,cy,cx+4.4*s,cy,c.muted,1);arrow(ctx,cx,cy+3.1*s,cx,cy-3.3*s,c.muted,1);text(ctx,'x',cx+4.4*s,cy+18,c.muted,'center',11);text(ctx,'z',cx+12,cy-3.3*s,c.muted,'left',11);arrow(ctx,cx,cy,x,y,c.blue,4);if(len>0)arrow(ctx,cx,cy,cx+vx/len*s,cy-vy/len*s,c.orange,3);circle(ctx,cx,cy,4,c.ink);circle(ctx,x,y,5,c.blue);text(ctx,'A',cx-10,cy+20,c.ink,'right',12);text(ctx,`B (${fmt(vx,1)}, ${fmt(vy,1)})`,clamp(x,55,w-55),y<35?y+22:y-18,c.blue,'center',12);$('vector-out').textContent=`位移 (${fmt(vx,1)}, ${fmt(vy,1)}) ｜ 长度 ${fmt(len)} ｜ 单位方向 ${len>1e-8?'('+fmt(vx/len)+', '+fmt(vy/len)+')':'不存在：零向量'}`;});bind(['vx','vy'],drawVector);
+
+  const drawLerp=chart('lerp',285,(ctx,w,h,c)=>{const seconds=get('lt'),t=clamp(seconds/2,0,1),vals=[t,t*t*(3-2*t),1-Math.exp(-2*seconds)],names=['线性 · 2 秒到达','缓动 · 2 秒到达','指数 · 渐近目标'],cols=[c.blue,c.accent,c.orange],left=18,right=w-20;vals.forEach((v,i)=>{const y=50+i*85;text(ctx,names[i],left,y-25,c.ink,'left',12);text(ctx,fmt(v*10),right,y-25,cols[i],'right',12);line(ctx,left,y,right,y,c.line,5);for(let j=0;j<=4;j++)line(ctx,left+(right-left)*j/4,y-5,left+(right-left)*j/4,y+5,c.line);circle(ctx,left+(right-left)*v,y,8,cols[i]);text(ctx,'0',left,y+20,c.muted,'left',10);text(ctx,'10',right,y+20,c.muted,'right',10);});$('lerp-out').textContent=`经过 ${fmt(seconds)} 秒 ｜ 线性进度 ${fmt(t*100,0)}% ｜ 指数剩余距离 ${fmt(10*(1-vals[2]),3)}`;});bind(['lt'],drawLerp);
+
+  const drawVision=chart('vision',285,(ctx,w,h,c)=>{const a=get('angle')*Math.PI/180,ox=w/2,oy=h/2,r=Math.min(w*.38,106),dot=Math.cos(a),inside=Math.abs(get('angle'))<=45;grid(ctx,w,h,c,18,34);ctx.beginPath();ctx.moveTo(ox,oy);ctx.arc(ox,oy,r,-Math.PI/4,Math.PI/4);ctx.closePath();ctx.fillStyle=c.soft;ctx.fill();line(ctx,ox,oy,ox+r*Math.cos(-Math.PI/4),oy+r*Math.sin(-Math.PI/4),c.accent);line(ctx,ox,oy,ox+r*Math.cos(Math.PI/4),oy+r*Math.sin(Math.PI/4),c.accent);arrow(ctx,ox,oy,ox+r+8,oy,c.accent,3);const x=ox+Math.cos(a)*r,y=oy-Math.sin(a)*r;line(ctx,ox,oy,x,y,c.orange,2,[4,4]);circle(ctx,ox,oy,8,c.ink);circle(ctx,x,y,9,inside?c.accent:c.orange);text(ctx,'守卫',ox,oy+24,c.ink,'center',12);text(ctx,'前方',Math.min(w-18,ox+r),oy+24,c.accent,'right',11);text(ctx,inside?'角度满足 ✓':'角度不满足',clamp(x,57,w-57),y<30?y+23:y-20,c.ink,'center',12);$('vision-out').textContent=`dot = ${fmt(dot,3)} ｜ 阈值 cos(45°) ≈ 0.707 ｜ ${inside?'在方向视野内':'在方向视野外'}（本图无墙）`;});bind(['angle'],drawVision);
+
+  const drawProjectile=chart('projectile',300,(ctx,w,h,c)=>{const angle=get('pa')*Math.PI/180,v=get('pv'),vx=v*Math.cos(angle),vy=v*Math.sin(angle),T=2*vy/9.81,range=vx*T,peak=vy*vy/(2*9.81),a=axes(ctx,w,h,c,Math.max(8,Math.ceil(range*1.15)),Math.max(3,Math.ceil(peak*1.25))),pts=[];for(let i=0;i<=140;i++){const t=T*i/140;pts.push([a.x(vx*t),a.y(vy*t-.5*9.81*t*t)]);}path(ctx,pts,c.accent,2.5);for(let t=0;t<T;t+=.1)circle(ctx,a.x(vx*t),a.y(vy*t-.5*9.81*t*t),2,c.blue);circle(ctx,a.x(range),a.y(0),5,c.orange);text(ctx,`最高 ${fmt(peak)} 单位`,clamp(a.x(range/2),80,w-80),a.y(peak)-15,c.ink,'center',11);$('projectile-out').textContent=`飞行 ${fmt(T)} 秒 ｜ 射程 ${fmt(range)} ｜ 初速度分量 (${fmt(vx)}, ${fmt(vy)})`;});bind(['pa','pv'],drawProjectile);
+
+  const drawBezier=chart('bezier',290,(ctx,w,h,c)=>{const t=get('bt'),height=get('bh'),p0=[30,245],p2=[w-30,245],p1=[w*.38,235-height*48],lerp=(a,b,t)=>[a[0]+(b[0]-a[0])*t,a[1]+(b[1]-a[1])*t],a=lerp(p0,p1,t),b=lerp(p1,p2,t),q=lerp(a,b,t),points=[];grid(ctx,w,h,c,20,35);path(ctx,[p0,p1,p2],c.line,2);for(let i=0;i<=120;i++)points.push(lerp(lerp(p0,p1,i/120),lerp(p1,p2,i/120),i/120));path(ctx,points,c.accent,3);line(ctx,...a,...b,c.orange,2);[p0,p1,p2].forEach((p,i)=>{circle(ctx,...p,5,c.ink);text(ctx,'P'+i,p[0],p[1]+(i===1?-17:20),c.ink,'center',11);});circle(ctx,...a,5,c.orange);circle(ctx,...b,5,c.orange);circle(ctx,...q,8,c.blue);text(ctx,'Q',q[0],q[1]-18,c.blue,'center',12);$('bezier-out').textContent=`t = ${fmt(t)} ｜ 先算 A=Lerp(P0,P1,t)，B=Lerp(P1,P2,t)，再算 Q=Lerp(A,B,t)`;});bind(['bt','bh'],drawBezier);
+
+  const drawCollision=chart('collision',250,(ctx,w,h,c)=>{const d=get('cd'),r=get('cr'),s=Math.min((w-34)/9.4,31),x=20+s,y=123,x2=x+d*s,hit=d<=1+r;line(ctx,12,y,w-10,y,c.line);ctx.globalAlpha=.12;circle(ctx,x,y,s,c.blue);circle(ctx,x2,y,r*s,hit?c.accent:c.orange);ctx.globalAlpha=1;circle(ctx,x,y,s,c.blue,false);circle(ctx,x2,y,r*s,hit?c.accent:c.orange,false);circle(ctx,x,y,3,c.blue);circle(ctx,x2,y,3,c.orange);line(ctx,x,205,x2,205,c.muted,1);line(ctx,x,199,x,211,c.muted);line(ctx,x2,199,x2,211,c.muted);text(ctx,'rA = 1',x,43,c.blue,'center',11);text(ctx,`rB = ${fmt(r,1)}`,clamp(x2,52,w-52),64,c.orange,'center',11);text(ctx,`圆心距离 ${fmt(d)}`,(x+x2)/2,226,c.ink,'center',11);$('collision-out').textContent=`d² = ${fmt(d*d)} ｜ (rA+rB)² = ${fmt((1+r)**2)} ｜ ${hit?'相交 / 相切 ✓':'没有相交'}`;});bind(['cd','cr'],drawCollision);
+
+  let fsmState='Patrol';
+  function settleFSM(d){for(let i=0;i<3;i++){const old=fsmState;if(fsmState==='Patrol'&&d<=6)fsmState='Chase';else if(fsmState==='Chase'){if(d>=8)fsmState='Patrol';else if(d<=1.5)fsmState='Attack';}else if(fsmState==='Attack'){if(d>=8)fsmState='Patrol';else if(d>2)fsmState='Chase';}if(old===fsmState)break;}}
+  const drawFSM=chart('fsm',240,(ctx,w,h,c)=>{const names=['Patrol','Chase','Attack'],cn=['巡逻','追击','攻击'],bw=Math.min(135,(w-32)/3),y=83;names.forEach((name,i)=>{const x=w*(i+.5)/3;ctx.fillStyle=fsmState===name?c.accent:c.soft;ctx.fillRect(x-bw/2,y,bw,56);text(ctx,cn[i],x,y+19,fsmState===name?c['on-accent']:c.ink,'center',14);text(ctx,name,x,y+40,fsmState===name?c['on-accent']:c.muted,'center',10);if(i<2){const next=w*(i+1.5)/3;arrow(ctx,x+bw/2+1,y+17,next-bw/2-1,y+17,c.muted,1);arrow(ctx,next-bw/2-1,y+39,x+bw/2+1,y+39,c.muted,1);}});text(ctx,'≤ 6 追击 / ≥ 8 脱离',w/3,39,c.muted,'center',w<340?10:11);text(ctx,'≤ 1.5 攻击 / > 2 退出',w*2/3,175,c.muted,'center',w<340?10:11);text(ctx,'状态由“当前距离 + 上一个状态”共同决定',w/2,215,c.ink,'center',w<340?10:12);$('fsm-out').textContent=`距离 ${fmt(get('fd'),1)} ｜ 当前状态：${cn[names.indexOf(fsmState)]} ｜ 滞回区间保留先前状态`;});$('fd').addEventListener('input',()=>{$('fd-value').value=$('fd').value;settleFSM(get('fd'));drawFSM();});$('fsm-reset').addEventListener('click',()=>{fsmState='Patrol';$('fd').value=10;$('fd-value').value=10;drawFSM();});
+
+  // 所有算法共用同一种网格模型，便于比较；每条边按进入目标格计费。
+  function createSearch(weights,w,h,start,goal,algo){
+    const s={weights,w,h,start,goal,algo,status:'ready',open:[start],closed:new Set(),parent:Array(w*h).fill(-1),g:Array(w*h).fill(Infinity),path:[],last:null,steps:0,cost:0};s.g[start]=0;
+    const H=p=>Math.abs(p%w-goal%w)+Math.abs(Math.floor(p/w)-Math.floor(goal/w));
+    function step(){if(s.status==='found'||s.status==='none')return s;if(!s.open.length){s.status='none';return s;}s.status='searching';let best=0;
+      if(algo!=='bfs')for(let i=1;i<s.open.length;i++){const p=s.open[i],q=s.open[best],fp=s.g[p]+(algo==='astar'?H(p):0),fq=s.g[q]+(algo==='astar'?H(q):0);if(fp<fq||(fp===fq&&algo==='astar'&&H(p)<H(q)))best=i;}
+      const current=s.open.splice(best,1)[0];s.closed.add(current);s.last={p:current,g:s.g[current],h:algo==='astar'?H(current):0};s.steps++;
+      if(current===goal){let p=current;s.path=[p];while(s.parent[p]!==-1){p=s.parent[p];s.path.push(p);}s.path.reverse();s.cost=s.path.slice(1).reduce((sum,p)=>sum+weights[p],0);s.status='found';return s;}
+      const x=current%w,y=Math.floor(current/w),neighbors=[[x+1,y],[x,y-1],[x-1,y],[x,y+1]];
+      for(const [nx,ny] of neighbors){if(nx<0||ny<0||nx>=w||ny>=h)continue;const next=ny*w+nx;if(weights[next]<=0||s.closed.has(next))continue;const tentative=s.g[current]+(algo==='bfs'?1:weights[next]);if(tentative<s.g[next]){s.parent[next]=current;s.g[next]=tentative;if(!s.open.includes(next))s.open.push(next);}}
+      if(!s.open.length)s.status='none';return s;
+    }
+    function run(){let guard=w*h+1;while(s.status!=='found'&&s.status!=='none'&&guard-->0)step();return s;}
+    return {state:s,step,run};
+  }
+  const W=13,H=9,S=4*W+1,G=4*W+11;let weights,search,timer=null;
+  function defaultMap(){const arr=Array(W*H).fill(1);for(let x=3;x<=9;x++)arr[4*W+x]=5;for(let x=4;x<=8;x++){arr[2*W+x]=-1;arr[6*W+x]=-1;}return arr;}
+  function stopSearch(){if(timer!==null){clearInterval(timer);timer=null;}$('path-run').textContent='自动演示';}
+  function paintSearch(){const s=search.state,route=new Set(s.path),open=new Set(s.open);[...$('path-grid').children].forEach((b,p)=>{let cls='path-cell',symbol='';if(weights[p]<0){cls+=' wall';symbol='#';}else if(weights[p]===5){cls+=' mud';symbol='5';}if(open.has(p)){cls+=' open';symbol=weights[p]===5?'5·':'·';}if(s.closed.has(p)){cls+=' closed';symbol=weights[p]===5?'5×':'×';}if(route.has(p)){cls+=' route';symbol='●';}if(p===S){cls+=' start';symbol='S';}if(p===G){cls+=' goal';symbol='G';}b.className=cls;b.textContent=symbol;const role=p===S?'起点':p===G?'终点':weights[p]<0?'墙':weights[p]===5?'泥地成本5':'普通成本1';b.setAttribute('aria-label',`第${Math.floor(p/W)+1}行第${p%W+1}列，${role}${route.has(p)?'，路线':s.closed.has(p)?'，已展开':open.has(p)?'，待探索':''}`);});
+    let msg=`已展开 ${s.closed.size} 格 ｜ 待探索 ${s.open.length} 格`;
+    if(s.status==='found')msg+=` ｜ 路线 ${s.path.length-1} 步，总代价 ${s.cost} ✓`;
+    else if(s.status==='none')msg+=' ｜ 无路可达：候选格已耗尽';
+    else if(s.last){const last=s.last;msg+=` ｜ 当前 (${last.p%W},${Math.floor(last.p/W)})：g=${last.g}`;if(s.algo==='astar')msg+=` + h=${last.h} → f=${last.g+last.h}`;}
+    else msg+=' ｜ 点击“展开一步”开始';
+    $('path-out').textContent=msg;const done=['found','none'].includes(s.status);$('path-step').disabled=done;$('path-run').disabled=done;$('path-end').disabled=done;if(done)stopSearch();
+  }
+  function resetSearch(){stopSearch();search=createSearch(weights,W,H,S,G,$('path-algo').value);paintSearch();}
+  weights=defaultMap();
+  for(let p=0;p<W*H;p++){const b=document.createElement('button');b.type='button';b.className='path-cell';b.addEventListener('click',()=>{if(p===S||p===G)return;const tool=$('path-tool').value;weights[p]=tool==='wall'?(weights[p]<0?1:-1):tool==='mud'?(weights[p]===5?1:5):1;resetSearch();});$('path-grid').append(b);}
+  $('path-step').addEventListener('click',()=>{stopSearch();search.step();paintSearch();});$('path-end').addEventListener('click',()=>{stopSearch();search.run();paintSearch();});$('path-reset').addEventListener('click',resetSearch);$('path-map').addEventListener('click',()=>{weights=defaultMap();resetSearch();});$('path-algo').addEventListener('change',resetSearch);
+  $('path-run').addEventListener('click',()=>{if(timer!==null){stopSearch();return;}$('path-run').textContent='暂停演示';timer=setInterval(()=>{search.step();paintSearch();},140);});resetSearch();
+  document.addEventListener('visibilitychange',()=>{if(document.hidden)stopSearch();});
+
+  let rolls=[0,0,0],lastRoll='尚未抽取';
+  const drawRandom=chart('random',280,(ctx,w,h,c)=>{const weight=[60,30,get('rw')],total=weight.reduce((a,b)=>a+b),n=rolls.reduce((a,b)=>a+b),cols=[c.accent,c.blue,c.orange],names=['普通','稀有','传说'],left=8,width=w-16;let x=left;text(ctx,'理论概率',left,20,c.ink,'left',12);weight.forEach((v,i)=>{ctx.fillStyle=cols[i];ctx.fillRect(x,39,width*v/total,25);x+=width*v/total;});names.forEach((name,i)=>{const y=101+i*56,prob=weight[i]/total,actual=n?rolls[i]/n:0;text(ctx,`${name} · 理论 ${fmt(prob*100,1)}%`,left,y-8,c.ink,'left',11);text(ctx,`${rolls[i]} 次 / ${fmt(actual*100,1)}%`,w-8,y-8,c.ink,'right',11);ctx.fillStyle=c.soft;ctx.fillRect(left,y+6,width,10);ctx.fillStyle=cols[i];ctx.fillRect(left,y+6,width*actual,10);line(ctx,left+width*prob,y+2,left+width*prob,y+21,c.ink,2);});text(ctx,'短竖线：理论值；细条：实际比例',left,265,c.muted,'left',10);$('random-out').textContent=`已抽取 ${n.toLocaleString()} 次 ｜ ${lastRoll} ｜ 独立抽取，不含保底`;});
+  function roll(n){const weights=[60,30,get('rw')],total=weights.reduce((a,b)=>a+b);for(let k=0;k<n;k++){let r=Math.floor(Math.random()*total),i=0;while(i<weights.length-1&&r>=weights[i])r-=weights[i++];rolls[i]++;lastRoll='最近一次：'+['普通','稀有','传说'][i];}drawRandom();}
+  $('roll').addEventListener('click',()=>roll(1));$('roll-many').addEventListener('click',()=>roll(1000));$('roll-clear').addEventListener('click',()=>{rolls=[0,0,0];lastRoll='尚未抽取';drawRandom();});$('rw').addEventListener('input',()=>{$('rw-value').value=$('rw').value;rolls=[0,0,0];lastRoll='权重已改变，统计已清空';drawRandom();});
+
+  function hash(n,seed){let x=(Math.imul(n+1,374761393)^Math.imul(seed,668265263))|0;x=Math.imul(x^(x>>>13),1274126177);return ((x^(x>>>16))>>>0)/4294967296;}
+  function noise(x,seed){const i=Math.floor(x),t=x-i,u=t*t*(3-2*t);return hash(i,seed)*(1-u)+hash(i+1,seed)*u;}
+  const drawNoise=chart('noise',295,(ctx,w,h,c)=>{const f=get('nf'),amp=get('na'),seed=get('ns'),a=axes(ctx,w,h,c,1,5),smooth=[],rough=[];for(let i=0;i<=250;i++)smooth.push([a.x(i/250),a.y(noise(i/250*f,seed)*amp)]);for(let i=0;i<=35;i++)rough.push([a.x(i/35),a.y(hash(i,seed)*amp)]);path(ctx,rough,c.orange,1,[4,4]);path(ctx,smooth,c.accent,3);text(ctx,'实线：平滑值噪声',a.l+8,31,c.accent,'left',11);text(ctx,'虚线：独立随机',a.l+8,48,c.orange,'left',11);$('noise-out').textContent=`种子 ${seed} ｜ 频率 ${fmt(f,1)} ｜ 高度倍率 ${fmt(amp,1)} ｜ 相同参数可复现本实验地形`;});bind(['nf','na','ns'],drawNoise);
+
+  const objects=Array.from({length:180},(_,i)=>({x:hash(i,53)*20,z:hash(i,79)*12}));
+  const buckets=new Map();
+  for(const object of objects){const key=Math.floor(object.x/2)+','+Math.floor(object.z/2);if(!buckets.has(key))buckets.set(key,[]);buckets.get(key).push(object);}
+  function neighbors(x,z,r){const minX=Math.floor((x-r)/2),maxX=Math.floor((x+r)/2),minZ=Math.floor((z-r)/2),maxZ=Math.floor((z+r)/2),candidates=[];for(let gx=minX;gx<=maxX;gx++)for(let gz=minZ;gz<=maxZ;gz++){const bucket=buckets.get(gx+','+gz);if(bucket)candidates.push(...bucket);}const found=candidates.filter(o=>(o.x-x)**2+(o.z-z)**2<=r*r);return{minX,maxX,minZ,maxZ,candidates,found};}
+  const drawSpatial=chart('spatial',w=>Math.min(350,w*.65+35),(ctx,w,h,c)=>{const x=get('sx'),z=6,r=get('sr'),s=Math.min((w-32)/20,(h-32)/12),left=(w-20*s)/2,top=(h-12*s)/2,q=neighbors(x,z,r),pos=o=>[left+o.x*s,top+(12-o.z)*s],candidateSet=new Set(q.candidates),foundSet=new Set(q.found);ctx.save();ctx.beginPath();ctx.rect(left,top,20*s,12*s);ctx.clip();ctx.fillStyle=c.soft;ctx.fillRect(left+q.minX*2*s,top+(12-(q.maxZ+1)*2)*s,(q.maxX-q.minX+1)*2*s,(q.maxZ-q.minZ+1)*2*s);for(let i=0;i<=10;i++)line(ctx,left+i*2*s,top,left+i*2*s,top+12*s,c.line);for(let j=0;j<=6;j++)line(ctx,left,top+j*2*s,left+20*s,top+j*2*s,c.line);objects.forEach(o=>{const p=pos(o);circle(ctx,...p,foundSet.has(o)?4:candidateSet.has(o)?3.5:2,foundSet.has(o)?c.blue:candidateSet.has(o)?c.orange:c.muted,!candidateSet.has(o)||foundSet.has(o));});const [cx,cy]=pos({x,z});circle(ctx,cx,cy,r*s,c.accent,false);line(ctx,cx-6,cy,cx+6,cy,c.ink,2);line(ctx,cx,cy-6,cx,cy+6,c.ink,2);ctx.restore();text(ctx,'0',left,top+12*s+11,c.muted,'left',10);text(ctx,'x = 20',left+20*s,top+12*s+11,c.muted,'right',10);$('spatial-out').textContent=`全图 ${objects.length} 个对象 → 候选 ${q.candidates.length} 个 → 半径内 ${q.found.length} 个 ｜ 中心 (${fmt(x,1)}, 6)`;});bind(['sx','sr'],drawSpatial);
+
+  let poolIdle=[1,2,3,4],poolActive=[],poolCreated=4,poolMessage='已预热 4 个对象';
+  const drawPool=chart('pool',w=>w<380?340:280,(ctx,w,h,c)=>{const cols=Math.max(3,Math.floor((w-10)/53)),size=Math.min(43,(w-14)/cols-7),gap=8;
+    function row(ids,y,col,label){text(ctx,label,4,y,c.ink,'left',12);ids.forEach((id,i)=>{const x=4+(i%cols)*(size+gap),yy=y+23+Math.floor(i/cols)*47;ctx.fillStyle=col;ctx.fillRect(x,yy,size,32);text(ctx,'#'+id,x+size/2,yy+16,col===c.accent?c['on-accent']:c.ink,'center',12);});if(!ids.length)text(ctx,'（空）',4,y+39,c.muted,'left',12);}
+    row(poolActive,15,c.accent,'场上使用中');row(poolIdle,Math.max(115,65+Math.ceil(poolActive.length/cols)*47),c.soft,'池中等待复用');$('pool-out').textContent=`累计创建 ${poolCreated} ｜ 活跃 ${poolActive.length} ｜ 空闲 ${poolIdle.length} ｜ ${poolMessage}`;$('pool-get').disabled=poolActive.length>=10;$('pool-release').disabled=!poolActive.length;});
+  $('pool-get').addEventListener('click',()=>{let id;if(poolIdle.length){id=poolIdle.pop();poolMessage=`复用 #${id}`;}else if(poolCreated<10){id=++poolCreated;poolMessage=`新建 #${id}`;}else return;poolActive.push(id);drawPool();});$('pool-release').addEventListener('click',()=>{if(!poolActive.length)return;const id=poolActive.shift();poolIdle.push(id);poolMessage=`#${id} 已回池`;drawPool();});$('pool-reset').addEventListener('click',()=>{poolIdle=[1,2,3,4];poolActive=[];poolCreated=4;poolMessage='已预热 4 个对象';drawPool();});
+
+  const observer=new ResizeObserver(entries=>{for(const entry of entries){const item=charts.find(c=>c.canvas===entry.target);if(item)item.draw();}});charts.forEach(c=>observer.observe(c.canvas));
+  window.AlgorithmLab={createSearch,defaultMap,noise,hash,neighbors,objects,settleFSM,getFSM:()=>fsmState,getSearch:()=>search.state,getPool:()=>({idle:[...poolIdle],active:[...poolActive],created:poolCreated})};
+})();
+
+
+</script></body></html>

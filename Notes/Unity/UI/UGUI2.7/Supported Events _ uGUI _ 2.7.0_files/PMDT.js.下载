@@ -1,0 +1,883 @@
+// Unity-specific package manager doctool scripts
+
+////////////////////////////////////////////////////////////////////////////
+// Finds images above a threshold and adds zoom functionality to them.
+// In this implementation, zoom functionality is a magnifier cursor and a link that opens the image
+// in a new tab.
+function addZoomToLargeImages()
+{
+    const threshold = $("meta[property='unity:image-zoom-threshold']").attr("content");
+
+   //If the image threshold is greater than 0, then apply zoom treatment to images larger than threshold
+    if(threshold > 0){ 
+        const images = document.querySelectorAll("article :not(a):not(canvas) > img");
+        for (let i = 0; i < images.length; i++) {
+            let image = images[i];
+            if (image.naturalWidth > threshold) {
+                image.style.cursor = "zoom-in";
+                const a_link = document.createElement("a");
+                const altText = image.getAttribute("alt");
+                a_link.setAttribute(
+                  "aria-label",
+                  `Zoom-in ${altText || "image"}`
+                );
+                a_link.href = image.getAttribute("src");
+                a_link.target = "zoomed-images";
+                image.parentNode.insertBefore(a_link, image);
+                a_link.appendChild(image);
+            }
+        }
+    }
+}
+
+
+////////////////////////////////////////////////////////////////////////////
+// Open links to a different host in a new window/tab.
+ function renderLinks() {
+  const unityManualRegex = /docs\.unity3d\.com\/(?:[\d.]+\/Documentation\/)*Manual/;
+  const unityScriptRefRegex = /docs\.unity3d\.com\/(?:[\d.]+\/Documentation\/)*ScriptReference/;
+  const packageRegex = /docs\.unity3d\.com\/Packages\/([^@/]+)/;
+
+  //Limiting the number of links as a failsafe to keep pages from becoming unresponsive
+  if ($("meta[property='docfx:newtab']").attr("content") === "true" && $(document.links).length < 5000) {
+    let currentPackage = "";
+    if(packageRegex.test(window.location.href)) {
+      currentPackage = window.location.href.match(packageRegex)[1];
+    }
+    for(let i = 0; i < $(document.links).length; i++){
+      let link = $(document.links)[i];
+      let href = link.href;
+      if(link.hostname !== window.location.hostname) // to other host
+      {
+        link.target = link.hostname;
+      } 
+      else if(unityScriptRefRegex.test(href)) { // to core Script ref
+        link.target = 'unity_api';
+      }
+      else if(unityManualRegex.test(href)) { // to core Manual
+        link.target = 'unity_manual';
+      }
+      else if(packageRegex.test(href)) { // to other package
+        let match = link.href.match(packageRegex);
+        if(match[1] != currentPackage){
+          link.target = match[1];
+        }
+      }
+    }
+  }
+}
+
+////////////////////////////////////////////////////////////////////////////
+// Looks for Canvas elements of class image-comparison and sets them up to
+// compare the two images with a slider.
+
+// Contains the data for managing image comparison canvases
+class ImageComparer {
+    constructor(canvas, img1, img2, lbl1 = "", lbl2 = "", percent = .5) {
+        this.canvas = canvas;
+        this.img1 = img1;
+        this.img2 = img2;
+        this.lbl1 = lbl1;
+        this.lbl2 = lbl2;
+        this.percent = percent;
+        this.thumbHeight = .5;
+    }
+}
+
+// Finds canvases with the image-comparison class and sets them up
+function setupImageComparers() {
+    let canvases = document.querySelectorAll('.image-comparison');
+
+    canvases.forEach(function (canvas, currentIndex, listObj) {
+        let images = canvas.querySelectorAll('img');
+        let imgComp = null;
+
+        if(images.length <= 1)
+            return;
+
+        if(images.length >= 2){
+            imgComp = new ImageComparer(canvas, images[0], images[1], images[0].title, images[1].title);
+            imgComp.canvas.style.cursor = 'col-resize';
+            imgComp.canvas.tabIndex = 0;
+        }
+
+        imgComp.canvas.width = Math.min(canvas.parentElement.clientWidth, imgComp.img1.naturalWidth);
+        imgComp.canvas.height = imgComp.img1.naturalHeight * imgComp.canvas.width/imgComp.img1.naturalWidth;
+        imgComp.canvas.style.touchAction = "none";
+        drawImageCompare(imgComp);
+
+        function onMove(e) {
+            if(e.pointerType == "mouse" && e.buttons != 1)
+                return;
+
+            e.preventDefault();
+            imgComp.percent = e.offsetX / canvas.width;
+            imgComp.thumbHeight = e.offsetY / canvas.height;
+            drawImageCompare(imgComp);
+        }
+
+        function onDown(e) {
+            if(e.pointerType == "mouse" && e.buttons != 1)
+                return;
+
+            e.preventDefault();
+            imgComp.canvas.focus();
+            imgComp.canvas.setPointerCapture(e.pointerId);
+            imgComp.percent = e.offsetX / canvas.width;
+            imgComp.thumbHeight = e.offsetY / canvas.height;
+            drawImageCompare(imgComp);
+        }
+
+        function onUp(e){
+            imgComp.canvas.releasePointerCapture(e.pointerId);
+        }
+
+        function onResize(e) {
+            imgComp.canvas.width = Math.min(canvas.parentElement.clientWidth, imgComp.img1.naturalWidth);
+            imgComp.canvas.height = imgComp.canvas.width * imgComp.img1.naturalHeight/imgComp.img1.naturalWidth;
+            drawImageCompare(imgComp);
+        }
+
+        function onFocusIn(e){
+            imgComp.canvas.addEventListener('keydown', onKeydown, false);
+        }
+
+        function onFocusOut(e){
+            imgComp.canvas.removeEventListener('keydown', onKeydown, false);
+        }
+
+        function onKeydown(e){
+            if(e.key == "ArrowLeft" || e.key == "ArrowRight"){
+                e.preventDefault();
+                let step = e.shiftKey ? .1 : .01;
+                imgComp.percent += e.key == "ArrowLeft" ? -step : step;
+                imgComp.percent = Math.max(0, imgComp.percent);
+                imgComp.percent = Math.min(1, imgComp.percent);
+                drawImageCompare(imgComp);
+            }
+        }
+
+        imgComp.canvas.addEventListener('pointermove', onMove, false);
+        imgComp.canvas.addEventListener('pointerdown', onDown, false);
+        imgComp.canvas.addEventListener('pointerup',   onUp,   false);    
+        imgComp.canvas.addEventListener('focusin', onFocusIn, false);
+        imgComp.canvas.addEventListener('focusout', onFocusOut, false);
+        window.addEventListener('resize', onResize);
+    });
+};
+
+// Draws the two images to be compared to the canvas with a draggable line.
+function drawImageCompare(imgComp) {
+    if(imgComp == null)
+        return;
+
+    let d = Math.max(0, imgComp.percent);
+        d = Math.min(1, d);
+    let ctx = imgComp.canvas.getContext('2d');
+    let w = imgComp.canvas.width;
+    let h = imgComp.canvas.height;
+    let nw = imgComp.img1.naturalWidth;
+    let nh = imgComp.img1.naturalHeight;
+
+    ctx.clearRect(0, 0, imgComp.canvas.width, imgComp.canvas.height); 
+    ctx.globalCompositeOperation = 'source-over';
+
+    // Draw left image and label
+    ctx.save();
+        ctx.beginPath();
+        ctx.rect( 0, 0, w * d, h);
+        ctx.clip();
+        ctx.drawImage(imgComp.img1, 0, 0, w, h);
+        if(imgComp.lbl1)
+            drawCanvasLabel(ctx, imgComp.lbl1, 10, h - 10, "left");
+     ctx.restore(); // Clear the clipping area
+    
+
+    if(imgComp.img2 != null){ //Only draw the rest if there is a second image
+        ctx.save(); //Clip the top image based on percentage d
+            ctx.beginPath();
+            ctx.rect( d * w, 0, w - w * d, h);
+            ctx.clip();
+
+            ctx.drawImage(imgComp.img2,  0, 0, w, h);
+            if(imgComp.lbl2)
+                drawCanvasLabel(ctx, imgComp.lbl2, w - 10, h - 10, "right");
+        ctx.restore(); // Clear the clipping area to draw drag line
+
+        // draw the draggable line and triangles
+        ctx.save();
+            ctx.shadowColor = 'black';
+            ctx.shadowBlur = 4;
+
+            ctx.fillStyle = 'white';
+            ctx.fillRect(w * d - 1, 0, 2, h);
+
+            // Position slider arrows at mouse yOffset, but not off canvas
+            let th = imgComp.thumbHeight * h;
+            th = Math.max(th, 15);
+            th = Math.min(th, h - 15);
+            // Draw left triangle
+            ctx.beginPath();
+            ctx.moveTo(w * d - 5, th - 10);
+            ctx.lineTo(w * d - 15, th);
+            ctx.lineTo(w * d - 5, th + 10);
+            ctx.closePath();
+            ctx.fill();
+
+            // Draw right triangle
+            ctx.beginPath();
+            ctx.moveTo(w * d + 5, th - 10);
+            ctx.lineTo(w * d + 15, th);
+            ctx.lineTo(w * d + 5, th + 10);
+            ctx.closePath();
+            ctx.fill();
+        ctx.restore();
+    }
+}
+
+//Draw the labels from the image title attributes
+function drawCanvasLabel(context, text, x, y, alignment = "left")
+{
+    context.font = "20px 'Roboto', sans-serif";
+    let textMetrics = context.measureText(text);
+    context.fillStyle = 'rgba(10, 10, 10, .6)';
+    context.beginPath();
+    if(alignment == "right")
+        context.roundRect(x - textMetrics.width - 4, y - 20, textMetrics.width + 8, 28, [5]);
+    else
+        context.roundRect(x - 4, y - 20, textMetrics.width + 8, 28, [5]);
+    context.closePath();
+    context.fill();
+
+    context.fillStyle = "white";
+    context.textAlign = alignment;
+    context.fillText(text, x, y);
+}
+
+////////////////////////////////////////////////////////////////////////////
+// Add "Install this version" links to Changelog entries
+function addInstallLinks(){
+    if(!window.location.pathname.includes("/CHANGELOG.html"))
+        return;
+    
+    // Pattern = digits.digits.digits followed by an optional - plus a sequence of any characters 
+    // except `]`, all enclosed in `[]` 
+    let versionPattern = /\[(\d+\.\d+\.\d+-*[^\]]*)\]/; 
+    const packageID = $("meta[property='unity:packageID']").attr("content");
+    const versionTitles = document.querySelectorAll("h2");
+
+    for(let i = 0; i < versionTitles.length; i++){
+        let versionText = versionTitles[i].textContent;
+        let versionMatches = versionText.match(versionPattern);
+
+        // There should never be more than one match, but this is JavaScript, so the "result" 
+        // array has 2 members in this case.
+        if(versionMatches != null && versionMatches.length == 2) 
+        {
+            let version = versionMatches[1];
+            let link = document.createElement("a");
+            link.innerText = "Add version " + version + " by name.";
+            link.href = getKharmaHref(packageID, version);
+            link.setAttribute("title", "Only available and compatible versions can be installed.");
+            versionTitles[i].insertAdjacentElement("afterend", link);
+        }
+    }
+}
+
+////////////////////////////////////////////////////////////////////////////
+// Hide object elements from assistive technologies in changelog entries
+function fixChangelogObjectAccessibility(){
+    if(!window.location.pathname.includes("/CHANGELOG.html"))
+        return;
+    
+    const objectElements = document.querySelectorAll("object");
+    
+    for(let objectEl of objectElements) {
+        // Hide from assistive technologies to avoid accessibility issues
+        objectEl.setAttribute('aria-hidden', 'true');
+    }
+}
+
+function getKharmaHref(packageID, packageFullVersion){
+    return `com.unity3d.kharma:upmpackage/${packageID}@${packageFullVersion}`;
+}
+
+////////////////////////////////////////////////////////////////////////////
+// Replace <a class="kharma"/> with the proper link for this package (as a convenience)
+// using the package metadata.
+function updateKharamInstallLinks(){
+    const kharmaElements = document.querySelectorAll("a.kharma");
+    for(let i = 0; i < kharmaElements.length; i++){
+        kharmaElements[i].href = getKharmaHref(thisPackageMetaData["name"], thisPackageMetaData["version"]);
+        kharmaElements[i].innerText = `${thisPackageMetaData["name"]}@${thisPackageMetaData["version"]}`;
+    }  
+}
+
+////////////////////////////////////////////////////////////////////////////
+// Adds UID copy feature: prints xref an ALT + double-clicked HTML element to console and copies it to the clipboard.
+// This avoids the cumbersome task of searching the xrefmap.yml file (or finding the source repo in Github).
+//
+// Includes an anchor link if the element clicked needs one.
+function copyUID(evt){
+    if(evt.altKey){
+        var targetElement = evt.target;
+        var UID = getUID(targetElement);
+        var uidSource = "API";
+        var anchorID = "";
+        
+        if(UID == ""){ // Otherwise, use the page UID always assigned to the article element       
+            UID = document.getElementById('_content').getAttribute("data-uid");
+            anchorID = findClosestID(targetElement);
+            uidSource = "page";
+        }
+        if(UID == "") { // Still no UID
+            alert("Page has no UID assigned. Encourage package owners to assign UIDs to their manual pages.");
+        }
+        else {
+            var xref = "xref:" + UID + (anchorID ? "#" + anchorID : '');
+            if(confirm("Copy " + uidSource + " xref:\n" + xref)){
+                navigator.clipboard.writeText(xref);
+                console.log("UID is: " + UID + "\nxref is: " + xref);
+            }
+        }
+    }
+}
+
+// Finds the geopgraphically closest id or name above the element if it doesn't have its own id or name assigned
+// Searches siblings first and then goes to parents. The search never descends into the children of an element
+// so an id in a child of a sibling of the element's own parent wouldn't be found.
+// This function is a convenience, so best effort is acceptable.
+function findClosestID(el){
+        while (el && el.parentElement){
+            //DocFX structural ids we would never want to link to
+            if(el.id == "_content") return "";
+            if(el.id == "wrapper") return "";
+            if(el.id == "affix") return "";
+            if(el.id == "sidetoc") return "";
+            if(el.id == "navbar") return "";
+            if(el.id == "autocollapse") return "";
+            
+            if(el.name) return el.name;
+            if(el.id){
+                // If an anchor name or id was manually assigned, use that.
+                // These anchors are placed in a P element above the heading.
+                // (The id assigned to a heading is automatically created based on
+                // the current heading text, and changes if someone edits the heading text.)
+                if(el.previousElementSibling && el.previousElementSibling.tagName == 'P'){
+                    var anchors = el.previousElementSibling.getElementsByTagName('A');
+                    for(var i = anchors.length - 1; i >= 0; i--){
+                        if(anchors[i].name) return anchors[i].name;
+                        if(anchors[i].id) return anchors[i].id;    
+                    }
+                }
+            }
+                
+                 return el.id;
+            
+            if(el.previousElementSibling){
+                el = el.previousElementSibling;
+            } else {
+                el = el.parentElement;
+            }
+        }
+        return "";
+}
+
+// If the clicked element doesn't have a data-uid, this function
+// searches above it for one, but doesn't look too far.
+function getUID(el){
+    while (el && el.parentElement && !el.classList.contains('article')){
+        if(el.getAttribute("data-uid"))
+            return el.getAttribute("data-uid");
+        
+        if(['H2', 'H3', 'H4'].includes(el.tagName))
+            return "";
+        
+        if(el.previousElementSibling){
+            el = el.previousElementSibling;
+        } else {
+            el = el.parentElement;
+        }
+    }
+    return "";
+}
+
+function checkAndEnableXrefCopy(){
+    const uidUtil = 'xrefs';
+    let params = new URLSearchParams(window.location.search);
+
+    if(params.has(uidUtil)){
+        localStorage.setItem(uidUtil, params.get(uidUtil));
+    }
+
+    if(['on', '1', 'true', 'yes'].includes(localStorage.getItem(uidUtil))){
+        document.addEventListener("dblclick", copyUID);
+    } else {
+        document.removeEventListener("dblclick", copyUID);
+    }  
+}
+
+////////////////////////////////////////////////////////////////////////////
+// Replace package version numbers with the current metadata written to page 
+// header at doc generation time. This lets us use 
+// <code class="long_version">X.Y.Z</code> 
+// <code class="short_version">X.Y</code> 
+// to replace a default string with the actual version.
+// This works for any html elment and replaces the existing contents of that element.
+function updatePackageVersions(){
+    const longVersions = document.querySelectorAll(".long_version");
+    for(let i = 0; i < longVersions.length; i++){
+        longVersions[i].innerText = thisPackageMetaData["version"];
+    }
+
+    const shortVersions = document.querySelectorAll(".short_version");
+    const versionSegments = thisPackageMetaData["version"].split('.');
+    const shortVersion = `${versionSegments[0]}.${versionSegments[1]}`;
+    for(let i = 0; i < shortVersions.length; i++){
+        shortVersions[i].innerText = shortVersion;
+    }
+}
+
+////////////////////////////////////////////////////////////////////////////
+// Rewrite DOM for Github-style mermaid diagrams, which use a fenced code block
+// by removing the code block, assigning it to parent pre tag and setting the 
+// pre tag class to "mermaid",
+function githubFlavoredMermaid(){
+    const githubMermaids = document.querySelectorAll("code.lang-mermaid");
+    for(let i = 0; i < githubMermaids.length; i++){
+        let diagram = githubMermaids[i].innerHTML;
+        let parentEl = githubMermaids[i].parentElement;
+        parentEl.innerHTML = diagram;
+        parentEl.setAttribute("class", "mermaid") 
+    }
+}
+
+////////////////////////////////////////////////////////////////////////////
+// Add a Copy button to code examples
+function addCopyButtonsToCodeBlocks() {
+    // Find all CODE elements that are children of PRE elements and don't 
+    // have the "syntax" class
+    const codeBlocks = document.querySelectorAll('pre > code');
+    const copyIcon = $("meta[property='unity:copyIcon']").attr("content"); //Copy icon in UnityIcons.woff font
+    const copyConfirmIcon = $("meta[property='unity:copyConfirmIcon']").attr("content"); //Copy confirmation icon in UnityIcons.woff font
+    const copyButtonTitle = $("meta[property='unity:copyTitle']").attr("content"); //Title text for copy button
+    const copyConfirmMessage = $("meta[property='unity:copyConfirmMessage']").attr("content"); //Text shown after button is used
+    
+    codeBlocks.forEach(codeBlock => {
+        let code = codeBlock.parentElement; // the parent PRE or DIV element
+        
+        // Don't add button to declaration blocks on API pages
+        if(code.classList.contains("syntax"))
+            return;
+        
+        // Ensure code block has a position for relative button placement
+        if (getComputedStyle(code).position === 'static') {
+            code.style.position = 'relative';
+        }
+        
+        // Add code block container to tab order
+        code.tabIndex = 0;
+        
+        // Create copy button
+        const copyButton = document.createElement('button');
+        copyButton.classList.add("copy-code");
+        copyButton.classList.add("icon");
+        copyButton.innerHTML = copyIcon; 
+        copyButton.title = copyButtonTitle;
+        copyButton.setAttribute("type", "button");
+        
+        // Copy notification for screen reader
+        const notification = document.createElement('div');
+        notification.setAttribute("aria-live", "polite");
+        notification.classList.add('sr-only'); //Bootstrap screen-reader only css class
+
+        // Add elements to code block
+        code.appendChild(copyButton);
+        code.appendChild(notification);
+        
+        /////// Event handling /////// 
+        // Show/hide button on hover
+        code.addEventListener('mouseenter', () => {
+            copyButton.style.opacity = '1';
+        });
+        code.addEventListener('mouseleave', () => {
+            copyButton.style.opacity = '0';
+        });
+        // Show/hide button on focus/blur of both pre block or button itself
+        // to support keyboard tab navigation
+        code.addEventListener('focus', () => {
+            copyButton.style.opacity = '1';
+        });
+        code.addEventListener('blur', () => {
+                copyButton.style.opacity = '0';
+        });
+        copyButton.addEventListener('focus', () => {
+                copyButton.style.opacity = '1';
+        });     
+        copyButton.addEventListener('blur', () => {
+                copyButton.style.opacity = '0';
+        });
+        
+        // Copy inner text (removes html markup of syntax highlights and links)
+        copyButton.addEventListener('click', async () => {
+            try {
+                await navigator.clipboard.writeText(codeBlock.innerText);
+
+                copyButton.innerHTML = copyConfirmIcon; // Set to check mark icon
+                notification.textContent = copyConfirmMessage;
+
+                setTimeout(() => {
+                    copyButton.innerHTML = copyIcon; //Restore copy icon
+                    notification.textContent = "";
+                }, 500);
+            } catch (err) {
+                console.error('Failed to copy text:', err);
+            }
+        });
+        // Support keyboard activation of copy
+        copyButton.addEventListener("keypress", function(event) {
+            if (event.key === "Enter") {
+                event.preventDefault();
+                copyButton.click();
+            }
+        });
+    });
+}
+
+////////////////////////////////////////////////////////////////////////////
+// Fix namespace links on Type pages
+// DocFX separates the components in a namespace and assigns a link to each.
+// However, no pages exist for the any of these except the last, full namespace 
+// entry. This function replaces the individual namespace links with a single one
+// that uses the last, full URL
+function fixNamespaceLinks(){
+    const namespaceElement = document.getElementById("namespace");
+    if (!namespaceElement) // No such element on this page
+      return;
+
+    const links = Array.from(namespaceElement.querySelectorAll("a"));
+    if (links.length <= 1) // No links to consolidate
+      return; 
+    
+    const combinedText = links.map(link => link.textContent).join(".");
+    const lastHref = links[links.length - 1].href;
+
+    const newLink = document.createElement("a");
+    newLink.href = lastHref;
+    newLink.textContent = combinedText;
+    newLink.className = "xref text-break"; // Keep original classes if needed
+
+    // Contains localized label for "Namespace"
+    const strongTag = namespaceElement.querySelector("strong");
+
+    // Clear the existing links and other elements after the strong tag:
+    while (strongTag.nextSibling) {
+      strongTag.nextSibling.remove();
+    }
+
+    namespaceElement.insertBefore(document.createTextNode(": "), strongTag.nextSibling);
+    namespaceElement.insertBefore(newLink, strongTag.nextSibling.nextSibling); // Insert the new link.
+ }
+
+////////////////////////////////////////////////////////////////////////////
+// Make tab-group divs into tabbed sections
+//
+// Note that same code is used for core manual 
+ function transformTabbedDivs() {
+     let tabbedDivs = document.querySelectorAll('div.tab-group');
+     let tabGroupCounter = 1; // Assign a unique number for each group
+
+     // Set up buttons and divs for each group in document
+     tabbedDivs.forEach(tabbedDiv => {
+         let tabButtons = document.createElement('div');
+         tabButtons.classList.add('tab-buttons');
+         tabButtons.id = `group-${tabGroupCounter}`;
+        
+         let directChildElement = tabbedDiv.firstElementChild;
+         let childCount = 0;
+         while(directChildElement){
+             if(directChildElement.firstElementChild.matches("pre code")){
+                 let classList = directChildElement.firstElementChild.classList; // The prog-lang class is on the code element
+                 let lang = "Unknown Language";
+                 for (let c = 0; c < classList.length; c++) {
+                     let cls = classList.item(c);
+                     lang = getLanguageFromClassName(cls);
+                     if (lang !== cls) break; //found language
+                 }
+                 createTab(tabButtons, directChildElement, lang, tabGroupCounter, childCount);
+                
+             } else{
+                 let title = directChildElement.getAttribute('title') || "Untitled Tab"; // Get title or default
+                 createTab(tabButtons, directChildElement, title, tabGroupCounter, childCount);
+                
+             }
+             directChildElement = directChildElement.nextElementSibling;
+             childCount += 1;
+         }
+         tabbedDiv.setAttribute("data-tabgroup", tabGroupCounter);
+         tabbedDiv.insertBefore(tabButtons, tabbedDiv.firstChild);
+
+
+         tabGroupCounter++;
+     });
+
+     // Now activate first tab or saved tab for each group
+     tabbedDivs.forEach(tabbedDiv => {
+         let tabToActivate = getSavedTabId(tabbedDiv.getAttribute('data-tabgroup'));
+         changeActiveTab(document.getElementById(tabToActivate));
+     });
+ }
+
+ function getSavedTabId(tabGroupNumber){
+     let UID = document.getElementById('_content').getAttribute("data-uid");
+     let savedTabId = sessionStorage.getItem(`selectedTab-${UID}-${tabGroupNumber}`);
+     if(savedTabId)
+         return savedTabId;
+
+     // Return first tab button's ID if none saved
+     return `tabbutton-${tabGroupNumber}-1`;
+ }
+ 
+ function createTab(tabButtons, tabContentElement, title, tabGroupCounter, index) {
+     let tabId = `section-${tabGroupCounter}-${index + 1}`;
+     let tabButtonId = `tabbutton-${tabGroupCounter}-${index + 1}`;
+     let tabButton = document.createElement('button');
+     tabButton.classList.add('tab-links');
+     tabButton.textContent = title;
+     tabButton.id = tabButtonId;
+     tabButton.setAttribute("data-tabcontent", tabId);
+     tabButton.setAttribute("data-tabgroup", `${tabGroupCounter}`);
+     tabButton.onclick = function(event) { openTab(event, tabId); };
+     tabButtons.appendChild(tabButton);
+     tabContentElement.id = tabId;
+     tabContentElement.classList.add('tab-content');
+ }
+
+ // Called when a tab button is clicked
+ function openTab(evt) {
+     let tabButton = evt.currentTarget;
+     changeActiveTab(tabButton);
+    
+     // Save selected tab to sessionStorage
+     let UID = document.getElementById('_content').getAttribute("data-uid");
+     sessionStorage.setItem(`selectedTab-${UID}-${tabButton.getAttribute('data-tabgroup')}`, tabButton.id);
+ }
+
+ function changeActiveTab(tabButton)
+ {
+     // Update tab button state
+     let allButtons = tabButton.parentNode.getElementsByClassName("tab-links");
+     for (i = 0; i < allButtons.length; i++) {
+         allButtons[i].classList.remove("active");
+     }
+     tabButton.classList.add("active");  
+    
+     // Update tabbed content display state
+     let activateId = tabButton.getAttribute("data-tabcontent");
+     let tabcontent = tabButton.parentNode.parentNode.querySelectorAll(":scope > .tab-content");
+     for (i = 0; i < tabcontent.length; i++) {
+         if(tabcontent[i].id == activateId)
+             tabcontent[i].style.display = "block";
+         else
+             tabcontent[i].style.display = "none";
+     }
+ }
+
+ // Provides default titles for tabbed buttons
+ function getLanguageFromClassName(className) {
+     const languageLookup = {
+     'cs': 'C#',
+     'csharp': 'C#',
+     'c#': 'C#',
+     'hlsl': 'HLSL',
+     'cpp': 'C++',
+     'c': 'C',
+     'objc': 'Objective-C',
+     'swift': 'Swift',
+     'js': 'JavaScript',
+     'javascript': 'JavaScript',
+     'java': 'Java',
+     'xml': 'XML',
+     'html': 'HTML',
+     'css': 'CSS',
+     'yml': 'YAML',
+     'yaml': 'YAML',
+     'json': 'JSON',
+     'md': 'Markdown',
+     'markdown': 'Markdown',
+     'plain': 'Plain Text',
+     'plaintext': 'Plain Text',
+     'text': 'Plain Text',
+     'gradle': 'Gradle',
+     'apacheconf': 'Apache Conf',
+     'apache': 'Apache',
+     'nginx': 'Nginx',
+     'shell': 'Shell',
+     'bash': 'Bash',
+     'powershell': 'PowerShell',
+     'toml': 'TOML',
+     'registry': 'Registry',
+     'mermaid': 'Mermaid',        
+     // ... add more as needed
+     };
+
+     if(className in languageLookup)
+         return languageLookup[className];
+    
+     let match = className.match(/^(language-|lang-)(.*)$/);
+     if(match && (match[2].toLowerCase() in languageLookup))
+         return languageLookup[match[2]];
+
+     // Fallback to raw language code if not found in lookup table
+     return match ? match[2] : className;
+ }
+ 
+ // Detect language from URL and set HTML lang attribute
+// Supports URLs like /ja/Packages/...
+function detectAndSetLanguageFromURL() {
+  const pathSegments = window.location.pathname
+    .split("/")
+    .filter(Boolean);
+
+  // Look for language code patterns in URL segments
+  for (let i = 0; i < pathSegments.length; i++) {
+    const segment = pathSegments[i];
+
+    // Match language codes: 2 letters, optionally followed by dash and 2-4 more letters
+    // Examples: ja, en, en-US, zh-CN, pt-BR
+    const langMatch = segment.match(/^([a-z]{2}(-[a-z]{2,4})?)$/i);
+
+    if (langMatch) {
+      const langCode = langMatch[1].toLowerCase();
+
+      // Set language on HTML element
+      document.documentElement.setAttribute("lang", langCode);
+      break;
+    }
+  }
+}
+
+////////////////////////////////////////////////////////////////////////////
+// Enhance xref links with better accessible names for screen readers
+// Uses href destination to ensure unique accessible names
+function enhanceXrefAccessibility() {
+    const xrefLinks = document.querySelectorAll('a.xref:not([aria-label])');
+    if (xrefLinks.length === 0) return;
+    
+    // Batch process in chunks to avoid blocking the main thread
+    const CHUNK_SIZE = 300;
+    let currentIndex = 0;
+    
+    function processChunk() {
+        const endIndex = Math.min(currentIndex + CHUNK_SIZE, xrefLinks.length);
+        
+        for (let i = currentIndex; i < endIndex; i++) {
+            const link = xrefLinks[i];
+            const linkText = link.textContent.trim();
+            const href = link.getAttribute('href') || '';
+
+            // Always include href for uniqueness
+            const ariaLabel = href ? `${linkText} (Link to ${href})` : linkText;
+            link.setAttribute('aria-label', ariaLabel);
+        }
+        
+        currentIndex = endIndex;
+        
+        // Continue processing if there are more links
+        if (currentIndex < xrefLinks.length) {
+            requestAnimationFrame(processChunk);
+        }
+    }
+    
+    // Start processing
+    requestAnimationFrame(processChunk);
+}
+
+////////////////////////////////////////////////////////////////////////////
+// Enhance anchor links with better accessible names for screen readers
+function enhanceAnchorAccessibility() {
+    document.querySelectorAll('a.anchorjs-link').forEach(function(anchor) {
+        const headingText = anchor.parentElement.textContent.trim();
+        
+        // Create unique aria-label based on heading content
+        anchor.setAttribute('aria-label', 'Anchor link to section: ' + headingText);
+    });
+}
+
+////////////////////////////////////////////////////////////////////////////
+// Enhance breadcrumb links with better accessible names for screen readers
+function enhanceBreadcrumbAccessibility() {
+    // Check if breadcrumb container exists and has content
+    $('#unity_breadcrumb_placeholder a').each(function(index, link) {
+        var linkText = $(link).text().trim();
+        var ariaLabel = linkText;
+        
+        if (index === 0) {
+            ariaLabel += ' (breadcrumb root)';
+        } else if (index === $('#unity_breadcrumb_placeholder a').length - 1) {
+            ariaLabel += ' (current page)';
+        } else {
+            ariaLabel += ' (breadcrumb level ' + (index + 1) + ')';
+        }
+        
+        $(link).attr('aria-label', ariaLabel);
+    });
+}
+
+////////////////////////////////////////////////////////////////////////////
+// Alter the DOM order of these elements for proper tab navigation
+function placeClearAfterInput() {
+    const clear = document.getElementById('toc_filter_clear');
+    const input = document.getElementById('toc_filter_input');
+    if (!clear || !input) return;
+
+    const parent = clear.parentNode;
+    if (parent !== input.parentNode) return;
+
+    parent.insertBefore(clear, input.nextSibling); // clear now comes after input
+}
+
+
+////////////////////////////////////////////////////////////////////////////
+// Add tabindex property to toc filter clear button
+function enhanceTocFilterClearAccessibility() {
+    placeClearAfterInput();
+
+    const $tocFilterClear = $('#toc_filter_clear');
+    $tocFilterClear.attr('tabindex', '0');
+    $tocFilterClear.attr('role', 'button');
+    // Optional: keyboard activation
+    $tocFilterClear.on('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            $(this).click();
+        }
+    });
+}
+
+////////////////////////////////////////////////////////////////////////////
+// Process web page to add functionality
+function enhancePage() {
+  enhanceTocFilterClearAccessibility();
+  enhanceXrefAccessibility();
+  enhanceAnchorAccessibility();
+  enhanceBreadcrumbAccessibility();
+  detectAndSetLanguageFromURL();
+  addZoomToLargeImages();
+  renderLinks();
+  setupImageComparers();
+  addInstallLinks();
+  fixChangelogObjectAccessibility();
+  checkAndEnableXrefCopy();
+  updatePackageVersions();
+  updateKharamInstallLinks();
+  githubFlavoredMermaid();
+  addCopyButtonsToCodeBlocks();
+  fixNamespaceLinks();
+  transformTabbedDivs();
+}
+
+////////////////////////////////////////////////////////////////////////////
+// Calls the page enhancement functions when the page is loaded
+window.addEventListener('load', enhancePage);
+
