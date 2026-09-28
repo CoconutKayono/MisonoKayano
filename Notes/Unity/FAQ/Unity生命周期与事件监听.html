@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Unity 生命周期：每个阶段写什么，以及事件监听的边界情况</title>
+<style>
+:root{color-scheme:light;--ink:#202733;--muted:#596579;--line:#dbe2ea;--blue:#245b9e;--pale:#eef5fc;--warm:#fff6df;--green:#eaf7f0;--code:#18212d}
+*{box-sizing:border-box}body{margin:0;background:#f5f7fa;color:var(--ink);font:16px/1.72 "Segoe UI","Microsoft YaHei",sans-serif}main{max-width:1040px;margin:32px auto;padding:48px 58px;background:#fff;box-shadow:0 8px 36px #13223a12}h1{font-size:2.25rem;line-height:1.25;margin:.2em 0 .5em}h2{font-size:1.55rem;margin:2.2em 0 .7em;padding-bottom:.35em;border-bottom:1px solid var(--line)}h3{margin:1.5em 0 .35em;font-size:1.15rem}p{margin:.7em 0}a{color:var(--blue);overflow-wrap:anywhere}.lead{font-size:1.1rem;color:#3e4a5c}.meta{color:var(--muted);font-size:.9rem}.callout{padding:16px 20px;margin:18px 0;border-left:4px solid var(--blue);background:var(--pale);border-radius:4px}.warn{border-color:#bf8611;background:var(--warm)}.good{border-color:#31805a;background:var(--green)}table{width:100%;border-collapse:collapse;margin:16px 0 22px;font-size:.95rem}th,td{padding:10px 12px;border:1px solid var(--line);vertical-align:top;text-align:left}th{background:#f0f4f8}code{font-family:Consolas,"Cascadia Code",monospace;background:#edf1f5;padding:.1em .32em;border-radius:3px;font-size:.92em}pre{overflow:auto;padding:18px;background:var(--code);color:#edf3fa;border-radius:7px;font-size:.91rem;line-height:1.55}pre code{background:transparent;padding:0;color:inherit}.toc{background:#f7f9fb;border:1px solid var(--line);padding:14px 22px;border-radius:8px}.toc ul{columns:2;margin:.3em 0}.small{font-size:.9rem;color:var(--muted)}.pill{display:inline-block;padding:2px 8px;border-radius:99px;background:#e8eef6;font-size:.8rem}.sources li{margin:.45em 0}footer{margin-top:3em;padding-top:1em;border-top:1px solid var(--line);font-size:.88rem;color:var(--muted)}@media(max-width:700px){main{margin:0;padding:26px 20px}h1{font-size:1.8rem}.toc ul{columns:1}table{display:block;overflow-x:auto}}
+</style>
+</head>
+<body><main>
+<p class="meta">Unity / C# · 生命周期与事件管理参考</p>
+<h1>Unity 生命周期：每个阶段写什么，以及事件监听的边界情况</h1>
+<p class="lead">先记住这条：<strong>Unity 生命周期回调由 Unity 根据组件和 GameObject 的启用状态调度；C# 委托和 UnityEvent 则是你注册到事件源上的回调关系，不会因为接收者隐藏或禁用就自动取消。</strong>所以“对象不活跃了”不等于“任何方法都不可能再被调用”。</p>
+<div class="callout good"><strong>快速结论：</strong>界面打开时才需要监听按钮或全局事件，通常在 <code>OnEnable</code> 订阅，在 <code>OnDisable</code> 取消订阅。只在这个组件整个生命周期内都需要的一次性初始化，可以放 <code>Start</code>。若放 <code>Start</code> 注册后再把界面设为 inactive，监听仍可能留在按钮/事件源上，重新打开界面还可能重复注册。</div>
+<nav class="toc"><strong>本文导航</strong><ul>
+<li><a href="#mental">先分清三种状态</a></li><li><a href="#quick">生命周期速查</a></li><li><a href="#button">UGUI 按钮监听</a></li><li><a href="#cs">普通 C# 事件</a></li><li><a href="#cases">边界情况</a></li><li><a href="#patterns">推荐代码模式</a></li><li><a href="#rules">选择阶段的规则</a></li><li><a href="#sources">官方资料</a></li></ul></nav>
+
+<h2 id="mental">1. 先分清三种状态</h2>
+<table><thead><tr><th>状态</th><th>Unity 表达</th><th>对脚本的影响</th></tr></thead><tbody>
+<tr><td>GameObject 自己的 active 标记</td><td><code>gameObject.activeSelf</code></td><td>只表示对象自己的开关。父物体 inactive 时，子物体即使 <code>activeSelf == true</code> 也还不可用。</td></tr>
+<tr><td>层级中最终是否 active</td><td><code>gameObject.activeInHierarchy</code></td><td>只有它为 true，物体才真正处于活动层级；父级 inactive 会让整支子层级暂停 Unity 回调。</td></tr>
+<tr><td>Behaviour/MonoBehaviour 组件开关</td><td><code>component.enabled</code></td><td>关闭这个脚本组件会停止 Unity 对该脚本调用常规回调，但不等于销毁组件，也不等于清空其他对象持有的 C# 委托。</td></tr>
+</tbody></table>
+<p><code>SetActive(false)</code> 只改变 GameObject 的本地开关；当它导致 <code>activeInHierarchy</code> 状态变化时，Unity 会对相关组件调用 <code>OnDisable</code>，并停止 <code>Update</code> 等 Unity 驱动的回调，也会停止挂在该 GameObject 上的协程。父物体关闭也会造成层级失活。重新生效时，已启用脚本会收到 <code>OnEnable</code>。</p>
+<div class="callout warn"><strong>措词校正：</strong>“对象被 Active 设置为 false”更准确地说是“GameObject 被设为 inactive（<code>SetActive(false)</code>）”。如果你只关了脚本 checkbox，则是“禁用了 MonoBehaviour（<code>enabled = false</code>）”。两者都可触发监听清理所需的 <code>OnDisable</code>，但操作对象不同。</div>
+
+<h2 id="quick">2. 生命周期速查：什么阶段写什么</h2>
+<table><thead><tr><th>回调</th><th>何时 / 次数</th><th>适合放什么</th><th>主要注意点</th></tr></thead><tbody>
+<tr><td><code>Awake</code></td><td>实例首次加载/创建时调用一次。场景起始为 inactive 的对象，Awake 会等到它首次激活时才调用。</td><td>本组件内部、无需依赖其他对象已初始化的字段准备；缓存同物体组件；建立自身不变量。</td><td>不要假设所有其他对象的 Awake 已先执行。用 Inspector 引用通常比到处 Find 更可靠。</td></tr>
+<tr><td><code>OnEnable</code></td><td>组件处于启用且 GameObject 在层级中 active 时调用；每次从禁用变为启用都会再调用。</td><td>订阅临时事件、开启仅在显示期间的输入/监听；激活时刷新状态。</td><td>会重复调用，必须设计为可重复且配对清理。首次进入时在 Awake 之后、Start 之前。</td></tr>
+<tr><td><code>Start</code></td><td>该脚本第一次启用后、首次 Update 前调用一次；对象/脚本尚未启用时会延后。</td><td>一次性启动逻辑；可依赖场景中其他对象的 Awake 已运行后再做的初始化。</td><td>重新启用不会再次调用 Start。不要用它订阅需要随界面开关的事件。</td></tr>
+<tr><td><code>FixedUpdate</code></td><td>按物理时间步调用，0 次、1 次或多次都可能发生于一个渲染帧。</td><td>与 Rigidbody 物理模拟相关的固定步逻辑、施加力等。</td><td>不要把它当作每帧一次；输入通常在 Update 采样，再缓存给 FixedUpdate 使用。</td></tr>
+<tr><td><code>Update</code></td><td>启用中的脚本每渲染帧调用一次。</td><td>逐帧输入轮询、非物理游戏逻辑、计时和状态推进。</td><td>执行顺序不应依赖其他对象同名回调的先后，除非显式配置/设计。</td></tr>
+<tr><td><code>LateUpdate</code></td><td>Update 之后每帧调用。</td><td>跟随摄像机、在角色本帧移动后再校正的位置/朝向。</td><td>只保证相对 Update 阶段，不代表对所有系统都自动排序。</td></tr>
+<tr><td><code>OnDisable</code></td><td>Behaviour 被禁用、所属 GameObject/父级失活、对象销毁、场景卸载或脚本重载等情况下调用。</td><td>取消事件订阅、停止外部注册、清理只在激活期间使用的资源。</td><td>同一个回调可能因多种原因进入；清理操作应安全、幂等。</td></tr>
+<tr><td><code>OnDestroy</code></td><td>对象销毁时调用。</td><td>最终清理只属于对象生存期的资源。</td><td>不是禁用回调；对象仅仅 inactive 不会因此销毁。只对曾经 active 的对象有可靠保证。</td></tr>
+<tr><td><code>OnValidate</code></td><td>主要在 Editor 中加载脚本/检查器值变化等阶段触发，可能频繁。</td><td>轻量验证、夹取序列化字段。</td><td>不是运行时初始化入口；不要在其中创建对象或调用要求主线程的复杂 Unity API。</td></tr>
+</tbody></table>
+<p class="small">常见首轮顺序可记为 <code>Awake → OnEnable → Start → FixedUpdate/Update → LateUpdate</code>。实际项目还包含渲染、动画、协程、物理等阶段；需要精确时序时查 Player Loop / 对应系统文档，而不要把简化顺序当作所有回调的完整排序表。</p>
+
+<h2 id="button">3. UGUI Button：监听注册在哪个阶段？</h2>
+<p>这里把“按钮能否接收点击”和“回调目标脚本是否启用”分开看。</p>
+<table><thead><tr><th>对象/组件状态</th><th>结果</th></tr></thead><tbody>
+<tr><td>Button 所在 GameObject inactive，或父 Canvas/层级 inactive</td><td>它不参与正常 UI 输入，用户无法通过该按钮完成点击。</td></tr>
+<tr><td>Button 组件 disabled，或 Button 不可交互（<code>interactable = false</code>）</td><td>正常用户输入不会触发按钮点击。</td></tr>
+<tr><td>按钮仍可点，但回调目标 MonoBehaviour 的 GameObject inactive / 脚本 disabled</td><td>若事件源仍持有已注册的回调，UnityEvent/委托调用本质上是调用目标方法，不会替你根据 <code>enabled</code> 自动取消订阅。目标对象尚未销毁时，回调方法仍可能执行。</td></tr>
+<tr><td>回调目标已 Destroy</td><td>Unity 对象销毁后行为和普通 C# 对象不同；UnityEvent 对被销毁 UnityEngine.Object 目标不会调用。普通 C# 委托若仍持有目标也可能造成引用滞留/生命周期问题，应该及时退订。</td></tr>
+</tbody></table>
+<p>因此，你的想法“UGUI 按钮监听通常放 OnEnable”是对的，前提是你希望监听只在这个脚本/面板启用时存在。若在 <code>Start</code> 加一次监听，面板后来关闭时监听不会自动移除：按钮本身若也随面板一起 inactive，就暂时无法由用户点击；但按钮若在别处仍 active、代码主动调用 <code>onClick.Invoke()</code>，或事件源继续发出事件，回调目标仍可能被调用。面板重新打开后 <code>Start</code> 不会重跑，因此这条监听仍是原来那条；若你又在每次打开逻辑中额外 AddListener，就会累积重复回调。</p>
+<h3>推荐模式：面板启用时订阅，禁用时退订</h3>
+<pre><code>using UnityEngine;
+using UnityEngine.UI;
+
+public sealed class SettingsPanel : MonoBehaviour
+{
+    [SerializeField] private Button closeButton;
+
+    private void OnEnable()
+    {
+        // 每次面板显示时注册一次
+        closeButton.onClick.AddListener(Close);
+    }
+
+    private void OnDisable()
+    {
+        // 面板隐藏、脚本关闭或对象销毁时都清理
+        closeButton.onClick.RemoveListener(Close);
+    }
+
+    private void Close()
+    {
+        gameObject.SetActive(false);
+    }
+}</code></pre>
+<p class="small">前提：<code>closeButton</code> 引用已经通过 Inspector 或在更早的初始化阶段准备好。OnEnable 可能早于 Start，所以不要依赖 Start 才赋值的字段。</p>
+<h3>如果按钮和监听脚本在同一块生命周期固定的对象上</h3>
+<p>也可以在 <code>Awake</code> 或 <code>Start</code> 注册一次、在 <code>OnDestroy</code> 移除，但通常只有在“订阅对象整个存活期间都有效、不会按启用状态临时停用”时才选这个设计。若回调目标脚本禁用后仍不应响应，仍应在 OnDisable 退订。</p>
+
+<h2 id="cs">4. 自己写的 C# 事件又是什么情况？</h2>
+<p>普通 C# event/delegate、静态事件、事件总线不会知道 Unity 的 active/enabled 状态。订阅操作会让事件源保存目标对象和方法引用。事件触发时，若没有取消订阅，调用方就会尝试执行处理函数——即使这个 MonoBehaviour 已经 inactive 或 <code>enabled == false</code>。被 Unity 销毁后也不要依赖“它会自动从普通 C# 事件中消失”；尤其静态事件可长期持有它。</p>
+<pre><code>public sealed class HealthPanel : MonoBehaviour
+{
+    private void OnEnable()
+    {
+        PlayerHealth.HealthChanged += Refresh;
+    }
+
+    private void OnDisable()
+    {
+        PlayerHealth.HealthChanged -= Refresh;
+    }
+
+    private void Refresh(int current, int max)
+    {
+        // 只在面板活跃期间更新 UI
+    }
+}</code></pre>
+<div class="callout"><strong>适用原则：</strong>谁注册，谁负责在其监听生命周期结束时退订；Unity 的 <code>OnDisable</code> 是 MonoBehaviour 最方便的清理边界。对于 static event、全局总线、单例等长寿命事件源，这尤其重要。</div>
+
+<h2 id="cases">5. 常见边界情况</h2>
+<h3>5.1 对象一开始就是 inactive</h3>
+<p>场景加载时处于 inactive 的 GameObject，其 MonoBehaviour 不会立刻走完整初始化流程；Awake / OnEnable 会在它首次激活时发生，Start 也会等脚本第一次启用、首次 Update 前执行。因此不要在别的对象 Awake 中假设 inactive 对象的 Awake 已经运行。若要初始化一个始终不激活的对象，应由一个活跃的管理器负责，或重新考虑生命周期结构。</p>
+<h3>5.2 关闭父物体 vs 关闭子物体</h3>
+<p>子物体的 <code>activeSelf</code> 可能仍是 true，但父物体 inactive 导致 <code>activeInHierarchy</code> 为 false。切父物体会令子对象收到 OnDisable；父物体恢复后会再次 OnEnable。对子对象直接 SetActive(true) 并不能绕过 inactive 父对象。</p>
+<h3>5.3 只把 MonoBehaviour.enabled 设为 false</h3>
+<p>只停掉这个脚本组件对应的 Unity 回调，不会自动停同一 GameObject 上的其他组件，也不会销毁它。它会收到 OnDisable；再次设为 true 且 GameObject active 时收到 OnEnable。外部委托若未退订仍可直接调用它的方法。</p>
+<h3>5.4 在 OnEnable 注册、OnDisable 退订是否会重复？</h3>
+<p>正常配对时，同一个对象每次重新启用会先清理旧注册，再建立新注册，不累积。如果事件可能被多个代码路径注册，或清理/注册不成对，重复仍可能出现。C# event 的重复 += 通常会造成处理函数被调用多次；UnityEvent 的 AddListener 文档注明同一 listener 被多次添加时触发一次，并且 RemoveListener 会移除其所有运行时匹配项，但最好仍维持清晰的一对一管理。</p>
+<h3>5.5 Lambda / 匿名函数的 RemoveListener 陷阱</h3>
+<p>下面两个 lambda 是不同的委托实例，通常无法互相移除。需要移除时保存委托实例，或使用具名方法：</p>
+<pre><code>// 不推荐：移除时重新写一个 lambda 不等于之前注册的那个
+button.onClick.AddListener(() =&gt; SelectItem(id));
+button.onClick.RemoveListener(() =&gt; SelectItem(id));
+
+// 推荐：具名方法，Add/Remove 可对应
+button.onClick.AddListener(HandleClick);
+button.onClick.RemoveListener(HandleClick);</code></pre>
+<h3>5.6 动态创建/销毁 UI 和对象池</h3>
+<p>Prefab 实例化后可能先 active 再由初始化代码填依赖；如果 OnEnable 需要这些依赖，先 Instantiate inactive prefab（或先禁用组件），填引用/数据，再启用。对象池反复取出归还时，OnEnable/OnDisable 会反复调用，正适合管理每次使用期间的订阅；不要把只该执行一次的初始化放在 OnEnable。</p>
+<h3>5.7 事件回调里关闭自己</h3>
+<p>UnityEvent 正在执行回调时，回调可以调用 <code>SetActive(false)</code>，这会同步触发 OnDisable 并退订。已进入此次 Invoke 调用序列的其他监听器是否仍继续，受具体事件调用实现和修改监听列表的时机影响；不要依赖“关闭面板就能中止这一轮所有回调”。若顺序和中断语义重要，自己定义明确的事件分发规则。</p>
+<h3>5.8 场景卸载、Domain Reload 与静态事件</h3>
+<p>场景卸载时活动对象会进入清理回调，OnDisable 是退订的好位置。编辑器禁用 Domain Reload（Enter Play Mode Options）时，静态字段/静态事件可能跨 Play Mode 保留；不能只依赖传统域重载把它们重置。用明确的静态初始化/清理策略，并避免静态事件持有上一局游戏的对象。</p>
+<h3>5.9 协程和异步工作</h3>
+<p>GameObject 被 SetActive(false) 时，挂在该对象上的协程会停止；仅禁用 MonoBehaviour 组件并不等价于关闭 GameObject，不能把两者混为一谈。Task、外部异步回调、网络回调或全局事件不会自动遵循 Unity 的启用状态；结果返回时要检查 <code>this == null</code> / 生命周期 token，或在 OnDisable 取消订阅/取消任务，避免更新已隐藏或已销毁对象。</p>
+<h3>5.10 Script Execution Order 不是对象间万能排序</h3>
+<p>Unity 保证一些阶段关系，例如初始场景对象的 Awake/OnEnable 在 Start 之前；但同一类回调在不同 GameObject 实例之间的顺序通常不应假定。需要依赖时，用显式初始化入口、依赖注入、协调器，或在确有必要时配置 Script Execution Order。</p>
+
+<h2 id="patterns">6. 两种可以直接套用的模式</h2>
+<h3>UI / 临时监听：随启用状态订阅</h3>
+<pre><code>private void OnEnable()
+{
+    source.Changed += OnChanged;
+    button.onClick.AddListener(OnClicked);
+}
+
+private void OnDisable()
+{
+    source.Changed -= OnChanged;
+    button.onClick.RemoveListener(OnClicked);
+}</code></pre>
+<h3>对象生命周期内一次性设置：只注册一次，销毁时清理</h3>
+<pre><code>private void Start()
+{
+    longLivedService.Changed += OnChanged;
+}
+
+private void OnDestroy()
+{
+    longLivedService.Changed -= OnChanged;
+}</code></pre>
+<p class="small">第二种模式意味着即使这个组件禁用/面板隐藏，它仍继续接收事件。若这不是你要的行为，改用第一种模式。若目标可能因场景卸载/父级隐藏而提前停止工作，优先用 OnDisable 管理订阅。</p>
+
+<h2 id="rules">7. 选择阶段的简明规则</h2>
+<table><thead><tr><th>要做的事</th><th>优先考虑</th></tr></thead><tbody>
+<tr><td>缓存同物体组件，准备本对象内部状态</td><td><code>Awake</code></td></tr>
+<tr><td>每次显示/启用时注册监听、每次隐藏/禁用时注销</td><td><code>OnEnable</code> + <code>OnDisable</code></td></tr>
+<tr><td>依赖其他对象 Awake 已完成后的一次性启动</td><td><code>Start</code></td></tr>
+<tr><td>刚体物理固定步计算</td><td><code>FixedUpdate</code></td></tr>
+<tr><td>每渲染帧轮询/游戏逻辑</td><td><code>Update</code></td></tr>
+<tr><td>跟随本帧 Update 结果做相机/后处理位置校正</td><td><code>LateUpdate</code></td></tr>
+<tr><td>撤销注册、停掉仅在启用期有效的资源</td><td><code>OnDisable</code></td></tr>
+<tr><td>最终释放只属于对象生存期的资源</td><td><code>OnDestroy</code></td></tr>
+</tbody></table>
+<div class="callout good"><strong>一句话决策：</strong>问自己“这个监听在对象隐藏时还应该有效吗？”如果答案是否，就用 OnEnable/OnDisable；如果答案是“只要对象还存在就有效”，才考虑 Start/OnDestroy，并确认 inactive 期间收到事件是安全且有意的。</div>
+
+<h2 id="sources">官方资料</h2>
+<p>以下链接以 Unity 6 文档为主。生命周期的基本规则在多个 Unity 版本长期保持一致；若项目使用旧版 Unity、旧版 UI 包或自定义输入系统，仍应对照项目版本确认 API 差异。</p>
+<ul class="sources">
+<li><a href="https://docs.unity3d.com/Manual/execution-order.html">Unity Manual — Event function execution order</a></li>
+<li><a href="https://docs.unity3d.com/6000.0/Documentation/ScriptReference/MonoBehaviour.Start.html">Unity Scripting API — MonoBehaviour.Start</a></li>
+<li><a href="https://docs.unity3d.com/6000.0/Documentation/ScriptReference/MonoBehaviour.OnEnable.html">Unity Scripting API — MonoBehaviour.OnEnable</a></li>
+<li><a href="https://docs.unity3d.com/6000.0/Documentation/ScriptReference/MonoBehaviour.OnDisable.html">Unity Scripting API — MonoBehaviour.OnDisable</a></li>
+<li><a href="https://docs.unity3d.com/6000.0/Documentation/ScriptReference/GameObject.SetActive.html">Unity Scripting API — GameObject.SetActive</a></li>
+<li><a href="https://docs.unity3d.com/6000.0/Documentation/ScriptReference/UI.Button-onClick.html">Unity Scripting API — Button.onClick</a></li>
+<li><a href="https://docs.unity3d.com/Manual/unity-events.html">Unity Manual — Inspector-configurable custom events / UnityEvent</a></li>
+</ul>
+<footer>整理重点：生命周期负责“Unity 何时调用组件”；事件订阅负责“哪个事件源何时调用哪个方法”。把这两套机制分开思考，Active、enabled、按钮输入和自定义事件这些边界就容易判断。</footer>
+</main></body></html>
