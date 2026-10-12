@@ -1,0 +1,397 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="GAMES101 第十九讲：相机、透镜与光场的中文详细学习讲解，含公式推导、交互实验、渲染器实现与练习。">
+<title>GAMES101 · 第十九讲｜相机、透镜与光场详解</title>
+<style>
+:root{--bg:#f5f4ef;--paper:#fffefb;--ink:#232e37;--muted:#65716f;--line:#dce1d9;--accent:#177568;--soft:#e9f3ed;--orange:#bc642e;--blue:#4879aa;--shadow:0 12px 32px #243e3210;--text-size:17px;color-scheme:light}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:76px}body{margin:0;background:var(--bg);color:var(--ink);font-family:"Segoe UI","Microsoft YaHei","PingFang SC",sans-serif;font-size:var(--text-size);line-height:1.95}body.dark{--bg:#141e24;--paper:#1c2930;--ink:#e6eae8;--muted:#a9b8b8;--line:#34484e;--accent:#74cfb4;--soft:#253f3e;--orange:#eea26d;--blue:#86b8e4;color-scheme:dark}a{color:var(--accent);text-underline-offset:4px}button,input,select{font:inherit}button{cursor:pointer}button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible{outline:3px solid var(--orange);outline-offset:4px}.skip{position:absolute;left:15px;top:-80px;z-index:100;background:var(--paper);padding:10px}.skip:focus{top:10px}.topbar{height:60px;position:sticky;top:0;z-index:30;background:var(--paper);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 28px;font-size:13px}.brand{font-weight:800;letter-spacing:1.5px}.brand span{color:var(--accent)}.tools{display:flex;gap:8px}.tools button{border:1px solid var(--line);background:var(--paper);color:var(--ink);padding:5px 11px;border-radius:6px;font-size:13px}.progress{position:fixed;top:59px;left:0;height:3px;width:0;background:var(--accent);z-index:40}.layout{max-width:1440px;margin:auto;display:grid;grid-template-columns:230px minmax(0,930px);gap:55px;padding:35px 35px 70px}.sidebar{position:sticky;top:86px;align-self:start;max-height:calc(100vh - 110px);overflow:auto;font-size:13px;line-height:1.6;padding:15px 5px 25px}.sidebar .label{font-size:11px;letter-spacing:2px;color:var(--muted);margin-bottom:15px}.sidebar a{display:block;text-decoration:none;color:var(--muted);padding:7px 12px;margin:3px 0;border-left:2px solid transparent;border-radius:0 6px 6px 0}.sidebar a:hover,.sidebar a.active{color:var(--accent);border-left-color:var(--accent);background:var(--soft)}.sidebar small{display:block;margin:25px 12px;color:var(--muted)}main{min-width:0}.hero{position:relative;padding:32px 0 35px;border-bottom:1px solid var(--line);margin-bottom:32px}.eyebrow{font-size:12px;letter-spacing:3px;color:var(--accent);font-weight:700}.hero h1{font-size:clamp(36px,5vw,61px);line-height:1.25;letter-spacing:-1.8px;margin:20px 0}.hero h1 span{display:block;color:var(--accent)}.hero .lead{font-size:19px;max-width:750px;color:var(--muted)}.meta{display:flex;gap:9px;flex-wrap:wrap;margin:25px 0}.pill{border:1px solid var(--line);border-radius:30px;padding:3px 13px;font-size:12px;color:var(--muted)}.hero-art{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:18px;margin-top:30px}.hero-art svg{width:100%;height:auto;display:block}.hero-art figcaption{margin-top:7px;text-align:center;font-size:12px;color:var(--muted)}.notice{background:var(--soft);border-left:3px solid var(--accent);padding:17px 22px;border-radius:0 8px 8px 0;margin:25px 0;font-size:15px}.notice strong{color:var(--accent)}.warn{border-left-color:var(--orange);background:color-mix(in srgb,var(--orange) 9%,var(--paper))}.warn strong{color:var(--orange)}.chapter{padding-top:30px;margin-bottom:35px}.chapter-head{display:flex;align-items:baseline;gap:15px;border-bottom:1px solid var(--line);margin-bottom:25px;padding-bottom:15px}.chapter-num{font-family:Georgia,serif;color:var(--accent);font-size:36px;line-height:1}.chapter h2{font-size:29px;line-height:1.5;letter-spacing:-.4px;margin:0}.chapter h3{font-size:22px;margin:33px 0 12px}.chapter h4{font-size:18px;margin:22px 0 8px}.sub{font-size:12px;color:var(--muted);letter-spacing:1px;margin-top:8px}p{margin:15px 0}strong{font-weight:700}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}.card{padding:20px 23px;border:1px solid var(--line);background:var(--paper);border-radius:10px;box-shadow:var(--shadow)}.card h3,.card h4{margin:0 0 8px}.card p{font-size:15px;margin:8px 0}.formula{margin:22px 0;background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:20px 25px;text-align:center;overflow:auto;font-family:"Cambria Math",Cambria,Georgia,serif;font-size:23px;line-height:1.8;white-space:normal}.formula .desc{font-family:"Segoe UI","Microsoft YaHei",sans-serif;font-size:13px;color:var(--muted);margin-top:9px}.formula .line{display:block;margin:8px 0}.frac{display:inline-flex;vertical-align:middle;flex-direction:column;text-align:center;line-height:1.35;margin:0 .15em;font-size:.9em}.frac>span:first-child{border-bottom:1px solid currentColor;padding:0 .15em 2px}.frac>span:last-child{padding:2px .15em 0}.formula i{font-style:italic}.source{font-size:12px;color:var(--muted);margin-top:18px}.source a{color:var(--muted)}.table-wrap{overflow:auto;margin:20px 0;border:1px solid var(--line);border-radius:8px}table{width:100%;border-collapse:collapse;background:var(--paper);font-size:14px;line-height:1.7}th,td{text-align:left;padding:13px 16px;vertical-align:top;border-bottom:1px solid var(--line)}th{background:var(--soft);font-size:13px;font-weight:700}tr:last-child td{border-bottom:0}ul,ol{padding-left:25px}li{margin:8px 0}.steps{counter-reset:step;list-style:none;padding:0}.steps li{position:relative;padding:0 0 16px 47px;counter-increment:step;border-left:1px solid var(--line);margin-left:15px}.steps li:before{content:counter(step);position:absolute;left:-16px;top:0;width:31px;height:31px;border-radius:50%;background:var(--accent);color:var(--paper);font-weight:800;text-align:center;line-height:31px;font-size:13px}.example{padding:20px 24px;margin:22px 0;border:1px dashed var(--accent);border-radius:8px;background:var(--paper)}.example .tag{color:var(--accent);font-size:12px;letter-spacing:1px;font-weight:800}.example p{margin:10px 0}.lab{background:var(--paper);border:1px solid var(--line);border-radius:12px;margin:25px 0;overflow:hidden;box-shadow:var(--shadow)}.lab-head{padding:18px 24px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:10px}.lab-head strong{font-size:16px}.lab-head span{color:var(--accent);font-size:11px;letter-spacing:1.3px}.lab-body{padding:22px 24px}.controls{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px 25px;margin-bottom:20px}.control label{display:flex;justify-content:space-between;gap:10px;font-size:13px;font-weight:600}.control input[type=range]{width:100%;accent-color:var(--accent);margin:12px 0 0}.control select{width:100%;border:1px solid var(--line);border-radius:5px;background:var(--bg);color:var(--ink);padding:7px;font-size:13px;margin-top:7px}.readouts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:15px 0}.readout{background:var(--soft);border-radius:7px;padding:11px 12px}.readout b{font-size:21px;color:var(--accent);display:block;font-family:Cambria,serif}.readout span{font-size:11px;color:var(--muted)}canvas{display:block;width:100%;height:auto;border:1px solid var(--line);border-radius:7px;background:#f5f7f4}.lab-note{font-size:12px;color:var(--muted);line-height:1.8;margin-bottom:0}.diagram{padding:18px;background:var(--paper);border:1px solid var(--line);border-radius:10px;margin:24px 0}.diagram svg{width:100%;height:auto;display:block}.diagram figcaption{font-size:12px;color:var(--muted);margin-top:14px;line-height:1.7}.diagram svg text,.hero-art svg text{font-family:"Microsoft YaHei",sans-serif;fill:var(--muted);font-size:14px}.diagram svg .axis{stroke:var(--muted);stroke-width:1.3;stroke-dasharray:6 6}.diagram svg .lens{stroke:var(--accent);stroke-width:3;fill:var(--soft)}pre{background:#1f2d35;color:#dce5e7;padding:22px 24px;overflow:auto;border-radius:8px;font-size:13px;line-height:1.8;tab-size:4}code{font-family:Consolas,"Courier New",monospace}p code,li code,td code{font-size:.88em;padding:2px 5px;background:var(--soft);border-radius:4px}details{border:1px solid var(--line);border-radius:8px;margin:14px 0;background:var(--paper);padding:15px 20px}summary{cursor:pointer;font-weight:700;font-size:16px}details p{font-size:15px}.answer{border-top:1px solid var(--line);margin-top:15px;padding-top:5px}.badge{display:inline-block;background:var(--soft);color:var(--accent);padding:2px 8px;border-radius:5px;font-size:11px;margin-left:8px;vertical-align:middle}.checklist{padding:20px 24px;background:var(--soft);border-radius:10px}.checklist li{font-size:15px}.references li{font-size:14px;margin:16px 0}.references small{display:block;color:var(--muted);font-size:12px}.footer{margin-top:45px;border-top:1px solid var(--line);padding-top:25px;font-size:12px;color:var(--muted)}.backtop{position:fixed;bottom:22px;right:24px;border:1px solid var(--line);border-radius:8px;padding:7px 13px;background:var(--paper);font-size:13px;z-index:20;text-decoration:none}.mobile-nav{display:none}noscript p{padding:15px;background:var(--soft)}
+@media(max-width:1050px){.layout{grid-template-columns:185px minmax(0,1fr);gap:28px;padding:25px}.sidebar{font-size:12px}.chapter h2{font-size:26px}.formula{font-size:21px}}
+@media(max-width:760px){.topbar{padding:0 15px}.brand{font-size:11px;letter-spacing:1px}.tools{gap:4px}.tools button{font-size:11px;padding:4px 7px}.layout{display:block;padding:20px 18px 50px}.sidebar{display:none}.hero{padding-top:15px}.hero .lead{font-size:16px}.hero h1{font-size:38px}.grid{grid-template-columns:1fr}.chapter-head{gap:11px}.chapter h2{font-size:24px}.chapter h3{font-size:20px}.chapter-num{font-size:30px}.controls{grid-template-columns:1fr}.lab-body{padding:18px 15px}.lab-head{padding:15px}.readouts{gap:6px}.readout{padding:9px}.readout b{font-size:17px}.formula{padding:17px 12px;font-size:20px}.mobile-nav{display:block;margin:15px 0}.mobile-nav select{width:100%;padding:11px;background:var(--paper);color:var(--ink);border:1px solid var(--line);border-radius:8px;font-size:14px}.backtop{bottom:12px;right:12px}th,td{padding:10px;font-size:13px}.notice{padding:15px}.meta{gap:6px}.pill{font-size:11px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+@media print{body,body.dark{--bg:#fff;--paper:#fff;--ink:#111;--muted:#444;--line:#ccc;--accent:#165d4f;--soft:#f1f5f3;font-size:11pt;background:#fff}.topbar,.sidebar,.progress,.tools,.backtop,.mobile-nav{display:none}.layout{display:block;max-width:none;padding:0}main{width:100%}.hero h1{font-size:35pt}.hero-art{max-width:650px}.chapter{padding-top:15px}.chapter h2{font-size:21pt}.chapter h3{font-size:16pt}.lab,.card,.example,.diagram,.formula,details{break-inside:avoid;box-shadow:none}.chapter-head{break-after:avoid}h3,h4{break-after:avoid}.lab .controls{display:none}.lab-head span::after{content:" · 纸面显示当前参数"}.formula{font-size:17pt}.readout b{font-size:16pt}pre{white-space:pre-wrap;font-size:9pt;background:#f6f6f6;color:#111}a{color:inherit;text-decoration:none}details>summary{list-style:none}.hero,.footer{margin:0}.grid{gap:12px}p{orphans:3;widows:3}}
+.canvas-scroll{max-width:100%;overflow:auto;border-radius:7px}.canvas-scroll:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+@media(max-width:760px){.canvas-scroll canvas{min-width:680px}.canvas-scroll::after{content:'← 左右滑动查看完整图示 →';display:block;font-size:11px;color:var(--muted);padding:5px 2px;position:sticky;left:0}.readout b{font-size:15px}.diagram{overflow:auto}.diagram svg{min-width:600px}.hero-art{margin-left:0;margin-right:0}.backtop{opacity:.9}}
+@media print{.canvas-scroll{overflow:visible}.canvas-scroll canvas{min-width:0}.canvas-scroll::after{display:none}.diagram svg{min-width:0}}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">跳到正文</a>
+<header class="topbar"><div class="brand">GAMES<span>101</span> / STUDY NOTES</div><div class="tools"><button id="fontDown" aria-label="减小字号">A−</button><button id="fontUp" aria-label="增大字号">A+</button><button id="theme" aria-label="切换深色模式">深色</button><button id="print">打印 / PDF</button></div></header>
+<div class="progress" id="progress" aria-hidden="true"></div>
+<div class="layout">
+<nav class="sidebar" aria-label="章节目录"><div class="label">LECTURE 19 · CONTENTS</div><div id="toc"></div><small>先理解光线如何汇聚，<br>再理解图像为什么模糊。<br><br>四个实验均可离线使用。<br>公式中的长度须统一单位。</small></nav>
+<main id="main">
+<section class="hero" id="top"><div class="eyebrow">现代计算机图形学入门 · 第十九讲</div><h1>从一束光，<span>到一张照片。</span></h1><p class="lead">相机、透镜与光场的详细中文讲解：把成像几何、曝光积分、离焦与景深串成一条完整的知识链，再把它们变成渲染器中的代码。</p><div class="meta"><span class="pill">相机与透镜 · 主线</span><span class="pill">光场 · 第二十讲衔接</span><span class="pill">4 个交互实验</span><span class="pill">推导 / 算例 / 练习</span><span class="pill">单文件 · 离线阅读</span></div>
+<figure class="hero-art"><svg viewBox="0 0 880 220" role="img" aria-label="光线从物体经过透镜，在传感器上汇聚的示意图"><defs><linearGradient id="beam"><stop stop-color="#177568" stop-opacity=".02"/><stop offset=".55" stop-color="#177568" stop-opacity=".12"/><stop offset="1" stop-color="#177568" stop-opacity=".02"/></linearGradient></defs><path d="M105 55 L420 35 L715 164 L420 180 Z" fill="url(#beam)"/><path d="M105 55 L420 35 L715 164 M105 55 L420 180 L715 164 M105 55 L715 164" fill="none" stroke="#177568" stroke-width="2"/><path d="M70 115 H790" stroke="#a4b5aa" stroke-dasharray="5 7"/><path d="M420 30 Q447 110 420 190 Q393 110 420 30" fill="#d4e8dd" stroke="#177568" stroke-width="2"/><path d="M105 115 V55 M99 64 L105 55 L111 64" stroke="#bc642e" stroke-width="4" fill="none"/><path d="M715 35 V190" stroke="#4879aa" stroke-width="5"/><circle cx="715" cy="164" r="5" fill="#bc642e"/><text x="74" y="210">物体 / 场景</text><text x="386" y="210">透镜 / 光圈</text><text x="681" y="210">传感器 / 成像</text><text x="165" y="33">光携带场景信息</text><text x="490" y="33">几何映射 + 能量积累</text></svg><figcaption>本页所有光路图与示意场景均为原创绘制。它们用于解释模型，不是实拍照片。</figcaption></figure>
+<div class="notice"><strong>课程范围说明。</strong>官方第十九讲 PDF 共 63 页，标题含 “Light Fields”，内容主要讲相机、曝光、薄透镜与景深；课程主页把下一讲列为“光场、颜色与感知”。本页第 01—10 章展开第十九讲知识，第 11 章补充光场衔接，第 12—14 章用于复习与实践。这里是独立撰写的学习讲解，不是课堂逐字稿或课件逐页翻译。 <a href="https://sites.cs.ucsb.edu/~lingqi/teaching/games101.html" target="_blank" rel="noopener">核对官方安排 ↗</a></div>
+<div class="mobile-nav"><label for="mobileToc" class="sub">跳转到章节</label><select id="mobileToc"></select></div>
+</section>
+<noscript><p>正文、公式和图示仍可阅读；启用 JavaScript 后，滑块实验、阅读进度与工具栏才能工作。</p></noscript>
+
+<section class="chapter" id="roadmap" data-title="学习地图与前置知识"><div class="chapter-head"><span class="chapter-num">01</span><div><h2>这一讲究竟解决什么问题？</h2><div class="sub">LEARNING MAP</div></div></div>
+<p>在光栅化里，你已经用投影矩阵把三维位置映射到屏幕；在光线追踪里，你已经从像素发出一条射线，与场景求交。到这里，一个关键假设一直被隐藏着：<strong>相机究竟如何选择光线，又如何把光线变成像素值？</strong>本讲把这个假设拆开。</p>
+<div class="grid"><div class="card"><h4>几何问题：看到了什么？</h4><p>相机的位置与朝向决定观察方向，传感器尺寸和焦距决定视场；透镜与对焦设置决定不同深度的点是否汇聚到传感器上。</p></div><div class="card"><h4>能量问题：记录了多少？</h4><p>光圈控制能进入相机的光束范围，快门控制积分时间，传感器把到达的能量转换为信号；ISO 与后续处理影响输出亮度。</p></div></div>
+<p>你可以把相机理解为一种<strong>对光在空间、方向与时间上进行筛选和积分的装置</strong>。一个像素不必只对应一条射线：真实相机中的一个像素，通常对应一片光圈、一个时间区间和一个有限像素面积。</p>
+<ol class="steps"><li><strong>针孔与视场：</strong>建立“一个像素对应一个方向”的基本几何。</li><li><strong>曝光与快门：</strong>理解像素值为什么与进入的能量和积分时间有关。</li><li><strong>薄透镜与对焦：</strong>理解“很多条射线还能汇聚成一点”的条件。</li><li><strong>弥散圆与景深：</strong>把“看起来清楚”变成一个可计算的阈值。</li><li><strong>光线追踪与光场：</strong>一边模拟相机的积分，一边思考能否保留积分前的方向信息。</li></ol>
+<h3>读懂推导需要哪些基础？</h3><p>相似三角形、反正切、面积与直径的关系已经足够支撑核心推导。实现章节还会用到向量归一化、射线方程和蒙特卡洛平均。涉及辐射度量学时，记住这两个量即可：<strong>radiance（辐亮度）描述某一方向上的光，irradiance（辐照度）描述单位表面积接收到的光功率。</strong></p>
+<div class="table-wrap"><table><thead><tr><th>本页符号</th><th>含义</th><th>注意事项</th></tr></thead><tbody><tr><td><i>f</i></td><td>透镜焦距</td><td>与“对焦距离”不是同一个量。</td></tr><tr><td><i>z<sub>o</sub>, z<sub>i</sub></i></td><td>物距、该物点的理想像距</td><td>本页主要讨论凸透镜、真实物体与实像，物距大于焦距。</td></tr><tr><td><i>s, z<sub>s</sub></i></td><td>相机设定的对焦物距、实际传感器距离</td><td>有 1/f = 1/s + 1/z<sub>s</sub>。</td></tr><tr><td><i>D, N</i></td><td>有效光圈直径、f-number</td><td>N = f/D；本页 D 是直径，不是面积。</td></tr><tr><td><i>c, c<sub>0</sub></i></td><td>实际弥散圆直径、允许的最大直径</td><td>不能把直径与半径混用。</td></tr><tr><td><i>T, E, H<sub>e</sub></i></td><td>曝光时间、辐照度、辐射曝光量</td><td>H<sub>e</sub> 与后文超焦距 H 是不同的量。</td></tr></tbody></table></div>
+</section>
+
+<section class="chapter" id="camera" data-title="相机为何能够成像"><div class="chapter-head"><span class="chapter-num">02</span><div><h2>相机不是一块直接接光的屏幕</h2><div class="sub">IMAGE FORMATION & PINHOLE CAMERA</div></div></div>
+<h3>2.1 先理解没有镜头时会丢失什么</h3><p>想象把一块裸露的传感器放到桌上。桌面、窗户、墙壁和灯都会向它发光。传感器上的某个感光点通常不能回答“这份能量来自窗户还是墙壁”，它只把允许进入的方向上的光加在一起。</p>
+<div class="formula">E(x) = ∫<sub>Ω⁺</sub> L<sub>i</sub>(x, ω) cos θ dω<div class="desc">不考虑光谱时，表面点 x 的辐照度是入射半球上的辐亮度积分；cos θ 是投影因子。</div></div>
+<p>如果相邻感光点接收的方向集合几乎相同，它们得到的值也可能很接近，于是很难形成清楚的物体轮廓。这不是说裸传感器永远得到完全一致的数值，而是说<strong>直接积分没有建立足够明确的“场景位置 → 像素位置”的映射</strong>。针孔、透镜或计算成像中的编码结构，都在解决这个信息混合问题。</p>
+<h3>2.2 针孔：用遮挡选择方向</h3><p>在不透光的盒子前方开一个很小的孔，后方放传感器。对于某个物体点，能通过孔的光线只会落到传感器上的特定位置。上方物点的光经小孔后继续直线传播，会落在后方较低的位置，因此真实传感器上的图像倒置。</p>
+<figure class="diagram"><svg viewBox="0 0 800 245" role="img" aria-label="针孔相机的倒置成像与虚拟成像平面"><line class="axis" x1="35" y1="120" x2="770" y2="120"/><path d="M350 25 V112 M350 128 V215" stroke="#65716f" stroke-width="7"/><path d="M100 120 V50" stroke="#bc642e" stroke-width="5"/><path d="M95 60 L100 50 L105 60" stroke="#bc642e" stroke-width="3" fill="none"/><line x1="600" y1="30" x2="600" y2="212" stroke="#4879aa" stroke-width="4"/><line x1="250" y1="35" x2="250" y2="205" stroke="#177568" stroke-width="2" stroke-dasharray="5 4"/><line x1="100" y1="50" x2="600" y2="190" stroke="#bc642e" stroke-width="2"/><line x1="100" y1="180" x2="600" y2="60" stroke="#4879aa" stroke-width="2"/><circle cx="350" cy="120" r="4" fill="#177568"/><text x="70" y="230">物体</text><text x="215" y="20">虚拟像平面</text><text x="326" y="230">小孔</text><text x="573" y="230">真实传感器</text><text x="620" y="190">上方 → 下方</text></svg><figcaption>实线表示实际穿孔传播的光线；前方的虚拟像平面只是数学表示，不是另一块真实传感器。</figcaption></figure>
+<p>渲染器常把一个<strong>虚拟成像平面放在相机前面</strong>，从相机中心穿过它向场景发射射线。这样像素坐标直观、图像不必倒置。它与后方真实传感器的射线方向对应，只是几何约定发生了变化。</p>
+<div class="formula">x<sub>image</sub> = −d · <span class="frac"><span>X</span><span>Z</span></span>，&nbsp; y<sub>image</sub> = −d · <span class="frac"><span>Y</span><span>Z</span></span><div class="desc">针孔位于原点，物体在前方 Z &gt; 0，真实像平面位于 Z = −d；虚拟前方平面则使用正号。</div></div>
+<p>关键不是正负号，而是<strong>除以深度 Z</strong>：越远的同尺寸物体投影越小。透视投影矩阵最终的齐次除法，正是在编码这一规律。</p>
+<h3>2.3 理想针孔清楚，为什么实际还需要透镜？</h3><p>零尺寸针孔的几何模型没有有限光圈导致的离焦模糊，前后景都能投影为点。但孔的面积趋于零，能通过的光也趋于零。真实针孔有尺寸，变大后会引入几何模糊；缩得过小，又会出现衍射带来的限制。透镜允许更多光通过，同时把特定深度的光重新汇聚。</p>
+<div class="notice warn"><strong>避免一句话误导：</strong>“针孔相机没有景深问题”只适用于理想几何模型；实际针孔并不具备无限分辨率。本页后续的离焦公式也采用几何光学，不包含衍射与像差。</div>
+</section>
+
+<section class="chapter" id="fov" data-title="焦距、视场与等效焦距"><div class="chapter-head"><span class="chapter-num">03</span><div><h2>焦距与视场：画面能装下多大范围？</h2><div class="sub">FIELD OF VIEW</div></div></div>
+<h3>3.1 从半个直角三角形开始</h3><p>设传感器某一维的长度为 h，它距投影中心的距离为 d。连接投影中心与传感器两端，会得到一个视角；从中间切开，每边是一个直角三角形。半视角的对边为 h/2，邻边为 d。</p>
+<div class="formula">tan(θ/2) = <span class="frac"><span>h/2</span><span>d</span></span> &nbsp;⇒&nbsp; θ = 2 arctan <span class="frac"><span>h</span><span>2d</span></span><div class="desc">针孔几何使用孔到像平面的距离 d；理想薄透镜对焦无穷远时，d = f。</div></div>
+<p>因此常见的摄影公式写成 <strong>FOV = 2 arctan(h / 2f)</strong>，它对远处场景和理想透镜非常方便。近距离对焦时，像距不再等于焦距，严格的主光线几何应使用实际像距 z<sub>s</sub>；真实镜头还可能发生呼吸效应等变化。本节交互实验采用无穷远对焦的近似。</p>
+<p>你不能只说“这个相机的 FOV 是 60°”却不说明是哪一维。h 是宽度时算出水平视场，h 是高度时算出垂直视场，h 是对角线时算出对角视场。</p>
+<div class="table-wrap"><table><thead><tr><th>全画幅 36 × 24 mm</th><th>水平视场</th><th>垂直视场</th><th>对角视场</th></tr></thead><tbody><tr><td>24 mm</td><td>约 73.74°</td><td>约 53.13°</td><td>约 84.06°</td></tr><tr><td>50 mm</td><td>约 39.60°</td><td>约 26.99°</td><td>约 46.79°</td></tr><tr><td>100 mm</td><td>约 20.41°</td><td>约 13.69°</td><td>约 24.41°</td></tr></tbody></table></div>
+<p>例如“50 mm 的视场约 47°”常指全画幅的<strong>对角视场</strong>。如果你按 36 mm 宽度算出约 40°，公式没有错，选择的维度不同。</p>
+<h3>3.2 焦距、传感器尺寸和裁切</h3><p>固定传感器，增大焦距会缩小视场。同一位置拍摄时，相同物体在画面中占比增大。固定镜头，换成更小的传感器，相当于只取原来像面中央的一部分，视场也会缩小。</p>
+<p>如果希望更小的传感器保留同样的视场，就要保持 h/f 的比值：<strong>传感器线性尺寸缩小多少，焦距就同比例缩短多少。</strong>这里是长度比例，不是面积比例。</p>
+<div class="formula">k = <span class="frac"><span>参考画幅对角线</span><span>实际画幅对角线</span></span>，&nbsp; f<sub>equiv</sub> = k f<sub>actual</sub><div class="desc">用对角线定义裁切系数。长宽比不同时，对角视场匹配不保证水平、垂直视场同时匹配。</div></div>
+<div class="example"><div class="tag">原创算例 · 等效焦距</div><p>一个假想传感器尺寸为 12 × 8 mm，与 36 × 24 mm 的长宽比相同，线性尺寸是它的 1/3。装上 8 mm 镜头时，视场与全画幅 24 mm 相同：两者水平 h/f 都等于 1.5。于是“24 mm 等效”描述的是视场，实际焦距仍然是 8 mm。</p></div>
+<div class="lab" id="lab-fov"><div class="lab-head"><strong>实验 ① · 把视场展开</strong><span>INTERACTIVE / FOV</span></div><div class="lab-body"><div class="controls"><div class="control"><label for="fovF">焦距 <output id="fovFVal">50 mm</output></label><input id="fovF" type="range" min="6" max="200" value="50" step="1"></div><div class="control"><label for="fovSensor">传感器尺寸</label><select id="fovSensor"><option value="36,24">全画幅 · 36 × 24 mm</option><option value="23.5,15.7">APS-C 示例 · 23.5 × 15.7 mm</option><option value="17.3,13">4/3 示例 · 17.3 × 13 mm</option><option value="12,8">假想小传感器 · 12 × 8 mm</option></select></div></div><div class="readouts"><div class="readout"><b id="fovH">39.60°</b><span>水平 FOV</span></div><div class="readout"><b id="fovV">26.99°</b><span>垂直 FOV</span></div><div class="readout"><b id="fovD">46.79°</b><span>对角 FOV</span></div></div><canvas id="fovCanvas" width="850" height="280" role="img" aria-label="可调焦距与画幅的水平视场示意图"></canvas><p id="fovExplain" class="lab-note"></p><p class="lab-note">试试：比较全画幅 24 mm 与假想小传感器 8 mm 的水平视场，它们应当相同。图中画的是水平视场，光路按真实后方传感器表示。</p></div></div>
+<h3>3.3 广角与长焦：透视究竟由谁决定？</h3><p>常听到“长焦压缩空间，广角夸张透视”。更准确的理解是：<strong>在同一机位，改变焦距主要改变构图范围；改变机位才改变不同深度物体之间的透视比例。</strong>为了让主体保持同样大小，使用长焦时往往后退，使用广角时往往靠近，这个移动才带来明显的透视变化。</p>
+<p>两根同样高的柱子分别距相机 Z<sub>1</sub> 和 Z<sub>2</sub>。它们的投影高度之比是 Z<sub>2</sub>/Z<sub>1</sub>，焦距在比值中约掉了。相机后退后，两个距离之比更接近 1，于是前后柱子的大小差异减弱。这是一个可以直接用投影公式验证的事实。</p>
+<p class="source">课程主题定位：<a href="https://sites.cs.ucsb.edu/~lingqi/teaching/resources/GAMES101_Lecture_19.pdf#page=14" target="_blank" rel="noopener">第十九讲课件，第 14—19 页</a>。本节数值表与算例按公式独立计算。</p>
+</section>
+
+<section class="chapter" id="exposure" data-title="曝光、光圈与 ISO"><div class="chapter-head"><span class="chapter-num">04</span><div><h2>曝光：亮度背后的积分</h2><div class="sub">EXPOSURE / APERTURE / SHUTTER / ISO</div></div></div>
+<h3>4.1 曝光量不是某个瞬间的亮度</h3><p>把传感器想成一只接雨的桶：辐照度对应降雨强度，曝光时间对应接雨时长，累积的能量对应桶里的水。对于一个像素位置，如果辐照度随时间变化，必须做时间积分：</p>
+<div class="formula">H<sub>e</sub>(x) = ∫<sub>0</sub><sup>T</sup> E(x,t) dt<div class="line">E 不随时间变时：&nbsp;H<sub>e</sub> = E · T</div><div class="desc">E 的单位为 W/m²，T 为 s，辐射曝光量 H<sub>e</sub> 为 J/m²。它不是屏幕上的 RGB 数字。</div></div>
+<p>快门决定某个像素在什么时候开始、什么时候停止积累。传感器接着把到达的光转成电信号；相机可能再进行增益、去马赛克、白平衡、色彩变换、降噪与色调映射。因此“照片看起来更亮”不一定等于“传感器收到了更多光”。</p>
+<h3>4.2 光圈为什么写成 f/2、f/4？</h3><p>有效光圈直径为 D，焦距为 f，定义 <strong>N = f/D</strong>。N 越小，直径越大。这解释了一个看似反直觉的说法：f/2 比 f/8 是“更大的光圈”。它不是在比较数值 2 和 8，而是在比较 f/2 与 f/8 这两个直径。</p>
+<div class="formula">N = <span class="frac"><span>f</span><span>D</span></span>，&nbsp; D = <span class="frac"><span>f</span><span>N</span></span>，&nbsp; A<sub>aperture</sub> = π(D/2)²<div class="desc">真实镜头通常以入瞳直径定义 f-number；薄透镜模型把它视为有效光圈直径。</div></div>
+<p>圆形光圈的面积与 D² 成正比。在其他条件相同、远摄且忽略透过率差异的近轴近似下，传感器辐照度随 1/N² 变化。于是曝光量近似满足：</p>
+<div class="formula">E ∝ <span class="frac"><span>1</span><span>N²</span></span>，&nbsp; H<sub>e</sub> ∝ <span class="frac"><span>T</span><span>N²</span></span><div class="desc">用于相对比较；场景辐亮度、透过率、暗角与近摄修正等保持相同或被忽略。</div></div>
+<p>f/2 到 f/4，直径减半，面积变成 1/4，因此光少两档。若只减少一档，要让 N 乘 √2：f/2 → f/2.828…，摄影刻度通常写成 f/2.8。</p>
+<div class="table-wrap"><table><thead><tr><th>常见整档刻度</th><th>f/1.4</th><th>f/2</th><th>f/2.8</th><th>f/4</th><th>f/5.6</th><th>f/8</th></tr></thead><tbody><tr><td>每向右一格</td><td colspan="6">N 约乘 √2 → 面积约减半 → 光约减少一档</td></tr></tbody></table></div>
+<div class="example"><div class="tag">原创算例 · 保持相同的物理曝光量</div><p>原设置为 f/4、1/250 s、ISO 100。改成 f/2 后，光圈面积增大 4 倍，需要把快门时间缩短到 1/1000 s，才能保持同样的曝光量；改成 f/8 后，面积缩小到 1/4，快门应延长到 1/62.5 s，常见相机刻度近似取 1/60 s。</p><p>在等曝光条件下，光圈和快门仍会产生不同视觉结果：大光圈更容易形成明显离焦，长曝光更容易留下运动轨迹。</p></div>
+<h3>4.3 ISO：放大信号，不增加已收集的光子</h3><p>在简化的线性模型中，把 ISO 100 改到 ISO 200，可以把输出信号放大约 2 倍。但如果镜头、光圈和曝光时间都没有变，传感器接收到的光子数量并没有因此翻倍。</p>
+<p>图像中的噪声来自多个环节。光子到达本身具有随机性，若平均收到 n 个光子，典型的散粒噪声量级约为 √n，信噪比量级约为 √n。增益会同时影响信号与某些噪声成分；真实相机中模拟增益、读出噪声和增益切换还会使关系更复杂。</p>
+<p>所以，“高 ISO 必然凭空制造全部噪声”并不精确。常见高 ISO 照片更吵，重要原因是为了快门速度而减少了实际曝光，获得的光子更少，再把较弱的信号放大。<strong>提高 ISO 不能恢复没被采集到的细节，也不能修复饱和造成的信息丢失。</strong></p>
+<div class="formula">输出线性信号 S ∝ <span class="frac"><span>T</span><span>N²</span></span> · <span class="frac"><span>ISO</span><span>100</span></span><div class="desc">这是演示用增益近似，不是相机 RAW 标定公式；ISO 不包含在物理曝光量 H<sub>e</sub> 的定义中。</div></div>
+<div class="lab" id="lab-exposure"><div class="lab-head"><strong>实验 ② · 等亮度，不同光学结果</strong><span>INTERACTIVE / EXPOSURE</span></div><div class="lab-body"><div class="controls"><div class="control"><label for="expN">光圈 <output id="expNVal">f/4</output></label><select id="expN"><option value="1.41421356237">f/1.4（精确 √2）</option><option value="2">f/2</option><option value="2.82842712475">f/2.8（精确 √8）</option><option value="4" selected>f/4</option><option value="5.65685424949">f/5.6（精确 √32）</option><option value="8">f/8</option><option value="11.313708499">f/11（精确 √128）</option><option value="16">f/16</option></select></div><div class="control"><label for="expT">曝光时间</label><select id="expT"><option value="0.001">1/1000 s</option><option value="0.002">1/500 s</option><option value="0.004" selected>1/250 s</option><option value="0.008">1/125 s</option><option value="0.016">1/62.5 s</option><option value="0.032">1/31.25 s</option><option value="0.064">1/15.625 s</option><option value="0.125">1/8 s</option></select></div><div class="control"><label for="expISO">ISO</label><select id="expISO"><option>100</option><option>200</option><option>400</option><option>800</option><option>1600</option></select></div><div class="control"><label for="expSpeed">像面运动速度 <output id="expSpeedVal">500 px/s</output></label><input id="expSpeed" type="range" min="0" max="1600" value="500" step="20"></div></div><div class="readouts"><div class="readout"><b id="expPhysical">1.00×</b><span>实际曝光量 / 基准</span></div><div class="readout"><b id="expSignal">1.00×</b><span>增益后信号 / 基准</span></div><div class="readout"><b id="expMotion">2.00 px</b><span>运动轨迹长度 vT</span></div></div><canvas id="expCanvas" width="850" height="230" role="img" aria-label="光圈大小与曝光时间导致的运动轨迹示意图"></canvas><p class="lab-note">基准：50 mm、f/4、1/250 s、ISO 100。左边圆孔按有效直径缩放，右边光点按均匀线性运动的时间积分绘制。显示亮度经过压缩便于观察；噪声、衍射、离焦、真实色调映射与场景遮挡未模拟。数值中的信号倍数在截断前计算。</p></div></div>
+<p class="source">课程主题定位：<a href="https://sites.cs.ucsb.edu/~lingqi/teaching/resources/GAMES101_Lecture_19.pdf#page=21" target="_blank" rel="noopener">第十九讲课件，第 21—31 页</a>。下文对积分、噪声与模型条件的说明是学习补充。</p>
+</section>
+
+<section class="chapter" id="shutter" data-title="运动模糊与滚动快门"><div class="chapter-head"><span class="chapter-num">05</span><div><h2>快门记录的是一段时间</h2><div class="sub">MOTION BLUR & ROLLING SHUTTER</div></div></div>
+<h3>5.1 运动模糊是一种时间积分结果</h3><p>一个亮点在曝光期间从左向右移动。它在不同时间落到不同像素，每个经过的位置都收到一部分能量，最后照片里留下线段。如果其像面速度为 v，单位为 px/s，曝光时间为 T，则在匀速且无遮挡的理想条件下，轨迹长度为：</p>
+<div class="formula">b<sub>motion</sub> = |v| T<div class="desc">运动方向不变时是线段；加速、旋转、相机抖动时，轨迹可能是曲线。</div></div>
+<p>这是为什么同样的主体在 1/1000 s 下可以冻结，在 1/15 s 下可能留下长轨迹。判断是否模糊，还取决于主体的像面速度、焦距、拍摄距离、相机运动，以及最终图像的放大程度。</p>
+<p>运动模糊未必是缺陷。连续运动被低帧率采样时，极短快门容易产生跳跃和频闪的感觉；适当的时间积分可以缓和某些时间混叠。不过，模糊本身也会损失细节，并不是所有时间混叠都能靠它解决。</p>
+<h3>5.2 高速摄影与长曝光</h3><p>短快门缩小积分区间，同时减少光子积累。要获得足够亮的信号，通常需要更强的照明、更大的光圈，或更高的增益。使用闪光灯时，若环境光影响很小，冻结动作的有效时间还可能主要由闪光持续时间决定，而不只是相机快门标称时间。</p>
+<p>长曝光把时间过程压缩成一张图：光源运动形成光轨，流动的水被平均成平滑外观，星体相对于相机的运动留下轨迹。在渲染器中，若场景只在一个固定时间求值，无论渲染多少条射线，都不会自然得到这种时间模糊。</p>
+<h3>5.3 滚动快门与运动模糊不是同一件事</h3><p>全局快门理想化地让所有像素在同一时间区间曝光。滚动快门让不同行的曝光区间沿时间错开。即使每一行的曝光都很短，第一行和最后一行也可能对应明显不同的场景状态，于是直杆变斜、快速旋转的扇叶变形。</p>
+<div class="formula">t<sub>start</sub>(y) = t<sub>0</sub> + <span class="frac"><span>y</span><span>h−1</span></span> T<sub>readout</sub><div class="line">第 y 行积分区间： [t<sub>start</sub>(y), t<sub>start</sub>(y) + T]</div><div class="desc">简化的逐行扫描模型；h 是图像行数，T<sub>readout</sub> 是首行到末行的开始时间差。</div></div>
+<div class="grid"><div class="card"><h4>运动模糊</h4><p>同一个像素在自己的曝光区间内积累多个状态。主要由每个像素的曝光时长引起。</p></div><div class="card"><h4>滚动快门形变</h4><p>不同像素行记录不同时间段。主要由各行的时间偏移引起；它可以与运动模糊同时出现。</p></div></div>
+<p>如果一根竖直杆以恒定水平速度 v 移动，曝光开始时间按行线性增加，那么第 y 行看到的水平位置近似为 x(y) = x<sub>0</sub> + v t<sub>start</sub>(y)。因此本来竖直的轮廓变成倾斜线。这与“一个点被拖成一条长痕”是两种不同机制。</p>
+</section>
+
+<section class="chapter" id="thinlens" data-title="薄透镜与对焦推导"><div class="chapter-head"><span class="chapter-num">06</span><div><h2>薄透镜：把一束光重新汇聚</h2><div class="sub">THIN LENS EQUATION</div></div></div>
+<h3>6.1 为什么真实镜头能用一个模型解释？</h3><p>真实摄影镜头常由多片透镜、不同玻璃与光阑组成，要处理球差、色差、畸变等问题。入门时我们用<strong>理想薄透镜</strong>替代复杂镜头：忽略厚度，在近轴条件下把折射视为发生在同一个平面，并假设来自同一物点的允许光线可以准确汇聚。</p>
+<p>沿主光轴入射的平行光会汇聚到后方焦点；通过前方焦点的光折射后沿轴平行；穿过理想薄透镜中心的光在该近似中方向不变。对于与轴成角度的平行光束，汇聚的是<strong>焦平面上的另一个点</strong>，不应误解为所有方向的平行光都落在同一个轴上焦点。</p>
+<h3>6.2 高斯光路：选三条容易追踪的射线</h3><p>从一个位于主轴上方的物点出发，画三条典型射线：一条平行主轴，折射后经过后焦点；一条穿过透镜中心；一条经过前焦点，折射后变为平行主轴。理想情况下它们在同一点相交。画图是为了找到几何约束，不是说真实物点只发出三条光线。</p>
+<figure class="diagram"><svg viewBox="0 0 800 330" role="img" aria-label="三条主光线构成薄透镜实像，物距三倍焦距，像距一点五倍焦距"><line class="axis" x1="25" y1="160" x2="775" y2="160"/><path class="lens" d="M400 35 Q428 160 400 285 Q372 160 400 35"/><path d="M100 160 V80 M94 90 L100 80 L106 90" stroke="#bc642e" stroke-width="4" fill="none"/><path d="M550 160 V200 M544 190 L550 200 L556 190" stroke="#bc642e" stroke-width="4" fill="none"/><path d="M100 80 H400 L650 280" stroke="#177568" stroke-width="2" fill="none"/><path d="M100 80 L700 240" stroke="#bc642e" stroke-width="2" fill="none"/><path d="M100 80 L400 200 H710" stroke="#4879aa" stroke-width="2" fill="none"/><circle cx="300" cy="160" r="4" fill="#65716f"/><circle cx="500" cy="160" r="4" fill="#65716f"/><circle cx="550" cy="200" r="5" fill="#bc642e"/><text x="287" y="187">F</text><text x="485" y="187">F′</text><text x="65" y="65">物点 hₒ</text><text x="564" y="221">像点 hᵢ</text><text x="260" y="59">平行 → 过后焦点</text><text x="567" y="99" fill="#bc642e">过光心 → 直行</text><text x="583" y="189">过前焦点 → 平行</text><path d="M100 290 H400 M100 284 V296 M400 284 V296 M400 311 H550 M550 305 V317" stroke="#a4b5aa" fill="none"/><text x="234" y="281">zₒ = 3f</text><text x="438" y="303">zᵢ = 1.5f</text></svg><figcaption>图中轴向尺寸与 3f、1.5f 对应。三条射线会在同一个倒置像点相交；不同颜色只用于区分光路。</figcaption></figure>
+<h3>6.3 不跳步推导 1/f = 1/z<sub>o</sub> + 1/z<sub>i</sub></h3><p>取物体高度 h<sub>o</sub> &gt; 0，倒立实像高度的绝对值为 |h<sub>i</sub>|。经过光心的直线给出一组相似三角形：</p>
+<div class="formula"><span class="frac"><span>|h<sub>i</sub>|</span><span>h<sub>o</sub></span></span> = <span class="frac"><span>z<sub>i</sub></span><span>z<sub>o</sub></span></span></div>
+<p>平行主轴入射的射线，在透镜平面处高度仍为 h<sub>o</sub>，折射后经过距离为 f 的后焦点。比较透镜到焦点，以及焦点到像点的两个三角形：</p>
+<div class="formula"><span class="frac"><span>|h<sub>i</sub>|</span><span>h<sub>o</sub></span></span> = <span class="frac"><span>z<sub>i</sub> − f</span><span>f</span></span></div>
+<p>两个式子的左边一样，令右边相等，再整理：</p>
+<div class="formula"><span class="line"><span class="frac"><span>z<sub>i</sub></span><span>z<sub>o</sub></span></span> = <span class="frac"><span>z<sub>i</sub> − f</span><span>f</span></span></span><span class="line">f z<sub>i</sub> = z<sub>o</sub>z<sub>i</sub> − f z<sub>o</sub></span><span class="line">f(z<sub>o</sub> + z<sub>i</sub>) = z<sub>o</sub>z<sub>i</sub></span><span class="line"><span class="frac"><span>1</span><span>f</span></span> = <span class="frac"><span>1</span><span>z<sub>o</sub></span></span> + <span class="frac"><span>1</span><span>z<sub>i</sub></span></span></span><div class="desc">最后一步将等式两边除以 f z<sub>o</sub>z<sub>i</sub>。</div></div>
+<p>也可以把它改写为牛顿形式：(z<sub>o</sub>−f)(z<sub>i</sub>−f)=f²。前一种用相对透镜的距离，后一种用相对焦点的距离；二者是同一约束。</p>
+<h3>6.4 这个式子告诉我们什么？</h3><div class="formula">z<sub>i</sub> = <span class="frac"><span>f z<sub>o</sub></span><span>z<sub>o</sub> − f</span></span>，&nbsp; m = <span class="frac"><span>h<sub>i</sub></span><span>h<sub>o</sub></span></span> = −<span class="frac"><span>z<sub>i</sub></span><span>z<sub>o</sub></span></span><div class="desc">m 是有符号的横向放大率；负号表示倒立。本页默认 f &gt; 0、z<sub>o</sub> &gt; f。</div></div>
+<ul><li><strong>物体极远：</strong>z<sub>o</sub> → ∞，所以 z<sub>i</sub> → f。这是“无穷远对焦时传感器位于焦平面”的来源。</li><li><strong>物体靠近：</strong>在 z<sub>o</sub> &gt; f 范围内，物距减小会让像距增大。理想固定焦距透镜要把传感器放远一点才能对焦。</li><li><strong>物体在 2f：</strong>像距也是 2f，放大率为 −1，形成等大的倒立实像。</li><li><strong>物体逼近 f：</strong>像距趋于无穷远。若物距小于 f，得到虚像，不能沿本页的实像传感器配置直接拍成清楚照片。</li></ul>
+<div class="example"><div class="tag">原创算例 · 50 mm 镜头对焦到 2 m</div><p>统一单位，令 f = 50 mm，z<sub>o</sub> = 2000 mm。像距 z<sub>i</sub> = 50×2000 / (2000−50) ≈ 51.282 mm。若物体移到 1 m，清楚成像的位置变成 52.632 mm。只差约 1.350 mm，也足以让原传感器位置产生离焦。</p></div>
+<div class="notice"><strong>三个容易混淆的“焦”。</strong>焦距 f 是透镜的光学参数；对焦距离 s 是你想让哪个物体深度清楚；像距 z<sub>s</sub> 是这个对焦设置对应的传感器位置。“对焦 2 m”并不表示镜头焦距是 2 m。</div>
+<p class="source">薄透镜关系与符号惯例可交叉参考：<a href="https://openstax.org/books/university-physics-volume-3/pages/2-4-thin-lenses" target="_blank" rel="noopener">OpenStax · Thin Lenses</a>。课程对应：<a href="https://sites.cs.ucsb.edu/~lingqi/teaching/resources/GAMES101_Lecture_19.pdf#page=41" target="_blank" rel="noopener">第十九讲课件，第 41—46 页</a>。</p>
+</section>
+
+<section class="chapter" id="defocus" data-title="弥散圆与离焦模糊"><div class="chapter-head"><span class="chapter-num">07</span><div><h2>离焦：传感器切到了光锥的截面</h2><div class="sub">CIRCLE OF CONFUSION</div></div></div>
+<h3>7.1 为什么一个点会变成一块斑？</h3><p>相机对焦距离为 s，则传感器固定在 z<sub>s</sub> = fs/(s−f)。另一物体的距离为 z<sub>o</sub>，它自己的光线应该在 z<sub>i</sub> = fz<sub>o</sub>/(z<sub>o</sub>−f) 汇聚。若 z<sub>s</sub> ≠ z<sub>i</sub>，传感器就没有放在这束光最细的地方。</p>
+<p>圆形光圈边缘的光线构成一个锥体；在汇聚点之前截取，它还在收缩；在汇聚点之后截取，它已经重新张开。传感器截出的光斑叫<strong>弥散圆或模糊圆（Circle of Confusion，CoC）</strong>。本页用 c 表示它的直径。</p>
+<h3>7.2 利用相似三角形求 c</h3><p>光锥在透镜平面的直径为 D，汇聚点距透镜 z<sub>i</sub>；传感器距汇聚点的轴向偏移量为 |z<sub>s</sub>−z<sub>i</sub>|。大三角形与小三角形的底边和高度成比例：</p>
+<div class="formula"><span class="frac"><span>c</span><span>D</span></span> = <span class="frac"><span>|z<sub>s</sub> − z<sub>i</sub>|</span><span>z<sub>i</sub></span></span><span class="line">c = D · <span class="frac"><span>|z<sub>s</sub> − z<sub>i</sub>|</span><span>z<sub>i</sub></span></span> = <span class="frac"><span>f</span><span>N</span></span> · <span class="frac"><span>|z<sub>s</sub> − z<sub>i</sub>|</span><span>z<sub>i</sub></span></span></span></div>
+<p>式子立刻给出三个检验：准确对焦时 c = 0；同一离焦位置，D 加倍，c 加倍；固定焦距时，N 加倍，c 减半。第三条是“缩小光圈能扩大清楚范围”的几何根源。</p>
+<h3>7.3 直接用物距表示，观察深度关系</h3><p>把两个像距代入上式，可以消掉中间变量：</p>
+<div class="formula"><span class="line"><span class="frac"><span>|z<sub>s</sub>−z<sub>i</sub>|</span><span>z<sub>i</sub></span></span> = <span class="frac"><span>f |z<sub>o</sub>−s|</span><span>z<sub>o</sub>(s−f)</span></span></span><span class="line">c(z<sub>o</sub>) = <span class="frac"><span>f² |z<sub>o</sub>−s|</span><span>N z<sub>o</sub>(s−f)</span></span></span><div class="desc">所有长度必须使用同一单位；不能把 f 的 mm 与 s 的 m 直接混在一起。</div></div>
+<p>这说明模糊不是简单与 |z<sub>o</sub>−s| 成正比，因为分母还有 z<sub>o</sub>。例如对焦到 2 m，1 m 和 3 m 虽然都与焦平面相差 1 m，前方物体的弥散圆却更大。用“到焦平面的距离”直接做线性模糊，会漏掉透视关系。</p>
+<div class="example"><div class="tag">原创算例 · 为什么前景更容易显著离焦</div><p>取 f = 50 mm、N = 2、s = 2000 mm，光圈直径 D = 25 mm。物体在 1000 mm 时，c ≈ 0.6410 mm；物体在 3000 mm 时，c ≈ 0.2137 mm。两个深度都距对焦平面 1 m，但前者的光斑约是后者的 3 倍。</p><p>如果假想像素间距为 0.005 mm（5 μm），相应的弥散圆直径约为 128.2 px 和 42.7 px。它们都远大于一个像素，因此几何离焦很明显。像素换算用“直径 ÷ 像素间距”，不是半径。</p></div>
+<h3>7.4 散景为什么不总是圆？</h3><p>在简化模型中，离焦点扩散的形状会反映有效光圈的形状：圆孔对应近似圆斑，多边形光阑可能对应多边形亮斑。但真实散景还会受到像差、遮挡、口径蚀、离轴位置与光阑设计影响，不能仅用“一个均匀圆盘”解释所有照片。</p>
+<p>离焦和运动模糊也不能相互替代。前者在空间上对光圈积分，即使场景静止也会出现；后者在时间上积分，即使准确对焦也可能出现。两者同时存在时，图像中的点扩散会更复杂。</p>
+<p class="source">课程定位：<a href="https://sites.cs.ucsb.edu/~lingqi/teaching/resources/GAMES101_Lecture_19.pdf#page=49" target="_blank" rel="noopener">第十九讲课件，第 49—53 页</a>。上述物距形式与算例从薄透镜几何独立展开。</p>
+</section>
+
+<section class="chapter" id="dof" data-title="景深边界与超焦距"><div class="chapter-head"><span class="chapter-num">08</span><div><h2>景深：“足够清楚”是一个阈值</h2><div class="sub">DEPTH OF FIELD</div></div></div>
+<h3>8.1 只有对焦平面最清楚，为什么还有一段清晰范围？</h3><p>理想薄透镜模型里，在既定传感器位置只有一个物方深度准确汇聚为点。但一个极小光斑在最终观看条件下可能无法与一个点区分。因此定义允许弥散圆直径 c<sub>0</sub>：只要 c(z<sub>o</sub>) ≤ c<sub>0</sub>，就认为该深度“可接受地清楚”。</p>
+<p><strong>景深是物方距离范围，而不是传感器后方的范围。</strong>像方容许传感器偏移的范围叫焦深（depth of focus）。二者有关联，但所处空间不同。本讲讨论的主体是景深。</p>
+<p>c<sub>0</sub> 没有放之四海皆准的唯一数值，它依赖图像输出尺寸、观看距离、视觉要求等。你可以用像素尺寸设定严格的像素级阈值，也可以用面向最终印刷尺寸的阈值；这些标准未必相同。</p>
+<h3>8.2 从弥散圆不等式推导近界和远界</h3><p>为简化代数，令 q = f²/(N c<sub>0</sub>)，它具有长度单位。把上一章的 c ≤ c<sub>0</sub> 改写为：</p>
+<div class="formula"><span class="frac"><span>|z<sub>o</sub>−s|</span><span>z<sub>o</sub></span></span> ≤ <span class="frac"><span>s−f</span><span>q</span></span>，&nbsp; q = <span class="frac"><span>f²</span><span>N c<sub>0</sub></span></span></div>
+<p>在近侧 z<sub>o</sub> &lt; s，边界满足 (s−z<sub>o</sub>)/z<sub>o</sub> = (s−f)/q，移项后得到近界 d<sub>near</sub>。在远侧 z<sub>o</sub> &gt; s，边界满足 (z<sub>o</sub>−s)/z<sub>o</sub> = (s−f)/q，同样得到远界：</p>
+<div class="formula"><span class="line">d<sub>near</sub> = <span class="frac"><span>s q</span><span>q + s − f</span></span> = <span class="frac"><span>s f²</span><span>f² + N c<sub>0</sub>(s−f)</span></span></span><span class="line">d<sub>far</sub> = <span class="frac"><span>s q</span><span>q − s + f</span></span> = <span class="frac"><span>s f²</span><span>f² − N c<sub>0</sub>(s−f)</span></span></span><div class="desc">远界公式仅在分母 &gt; 0 时使用；分母 ≤ 0 时，远侧所有有限距离都在阈值内，远界取 ∞。</div></div>
+<p>不要把负分母产生的“负远界”当作一个负距离。它说明条件已经满足到无穷远，需按模型的区间意义处理。景深宽度为 d<sub>far</sub>−d<sub>near</sub>；远界为无穷远时，景深在远侧无界。</p>
+<h3>8.3 超焦距：无穷远恰好达到阈值</h3><p>当物体趋于无穷远，上一章的弥散圆公式变为 c(∞) = f²/[N(s−f)]。令它恰等于 c<sub>0</sub>，得到对焦距离 H：</p>
+<div class="formula">H = <span class="frac"><span>f²</span><span>N c<sub>0</sub></span></span> + f = q + f<div class="desc">H 是本页定义的超焦距。对焦到 H 时，近界为 H/2，远界为 ∞，均在本页的理想模型与阈值下成立。</div></div>
+<p>有些资料在 H 远大于 f 时省略末尾的 +f，或将某些景深公式中的 q 近似替换成 H。阅读时要区分精确代数形式与摄影中的近似。本页计算器统一使用上面直接从 c 推导的公式。</p>
+<div class="example"><div class="tag">原创算例 · 50 mm，f/2，对焦 2 m</div><p>设 c<sub>0</sub> = 0.03 mm，仅作为本例的观看阈值。q = 2500/(2×0.03) ≈ 41666.667 mm，H ≈ 41.717 m。近界 ≈ 1.9106 m，远界 ≈ 2.0982 m，景深宽度约 0.1876 m。</p><p>改成 f/8，其他参数相同，近界约 1.6846 m，远界约 2.4606 m。缩小光圈扩大了阈值内的范围；但为保持同一曝光量，需要把曝光时间延长 16 倍，或调整其他条件。</p></div>
+<div class="lab" id="lab-dof"><div class="lab-head"><strong>实验 ③ · 观察光锥与景深边界</strong><span>INTERACTIVE / DEFOCUS</span></div><div class="lab-body"><div class="controls"><div class="control"><label for="dofF">焦距 <output id="dofFVal">50 mm</output></label><input id="dofF" type="range" min="20" max="135" value="50" step="1"></div><div class="control"><label for="dofN">光圈 <output id="dofNVal">f/2</output></label><input id="dofN" type="range" min="1.4" max="16" value="2" step="0.1"></div><div class="control"><label for="dofS">对焦距离 s <output id="dofSVal">2.00 m</output></label><input id="dofS" type="range" min="0.3" max="15" value="2" step="0.05"></div><div class="control"><label for="dofZ">测试物体距离 zₒ <output id="dofZVal">1.00 m</output></label><input id="dofZ" type="range" min="0.3" max="20" value="1" step="0.05"></div><div class="control"><label for="dofC">允许弥散圆 c₀ <output id="dofCVal">0.030 mm</output></label><input id="dofC" type="range" min="0.005" max="0.06" value="0.03" step="0.001"></div><div class="control"><label for="dofP">假想像素间距 <output id="dofPVal">5.0 μm</output></label><input id="dofP" type="range" min="2" max="10" value="5" step="0.5"></div></div><div class="readouts"><div class="readout"><b id="dofCoC">0.6410 mm</b><span>实际弥散圆直径 c</span></div><div class="readout"><b id="dofPx">128.21 px</b><span>对应像素直径</span></div><div class="readout"><b id="dofStatus">阈值之外</b><span>测试物体的清晰判断</span></div></div><canvas id="dofCanvas" width="850" height="335" role="img" aria-label="离焦光锥、传感器位置和弥散圆截面的交互示意图"></canvas><div class="readouts"><div class="readout"><b id="dofNear">1.911 m</b><span>景深近界</span></div><div class="readout"><b id="dofFar">2.098 m</b><span>景深远界</span></div><div class="readout"><b id="dofHyper">41.717 m</b><span>超焦距 H</span></div></div><p id="dofInfo" class="lab-note"></p><p class="lab-note">上图只画轴上物点的透镜后方光锥。为看清毫米级偏移，轴向与径向分别缩放，画面不是实物等比例图；光斑也有显示放大。判断以数值为准。实验只含几何离焦，不含像差、衍射与运动。</p></div></div>
+<h3>8.4 哪些因素让景深变大？</h3><p>在其余条件固定时，增大 N（缩小光圈）会增大景深；对焦到较远距离，通常会扩大清楚范围；缩短焦距也往往扩大景深。但“其余条件固定”非常重要：如果改变焦距后又移动相机来保持主体占比，就已经同时改变了对焦距离，不能用一句单变量结论代替完整计算。</p>
+<p>比较不同画幅也一样：相同机位、相同视场、相同 f-number，需要不同实际焦距；相同观看尺寸还可能采用不同 c<sub>0</sub>。这时不能只看传感器大小就下结论，应把实际 f、N、s、c<sub>0</sub> 都写出来。</p>
+<h3>8.5 光圈越小就越清楚吗？</h3><p>在这个几何模型里，D 变小会缩小离焦光斑。但真实光通过有限孔径时会衍射。圆孔的理想艾里斑第一暗环直径，在近轴、远距离对焦条件下可近似写为 2.44 λN，例如 λ = 550 nm、N = 16 时约为 21.5 μm。因此真实镜头的最佳锐度是离焦、像差、衍射等因素共同作用的结果。<a href="https://www.edmundoptics.com/knowledge-center/application-notes/imaging/limitations-on-resolution-and-contrast-the-airy-disk/" target="_blank" rel="noopener">衍射公式参考 ↗</a></p>
+<div class="notice warn"><strong>计算器里的“清晰”是阈值判断。</strong>它表示 c ≤ c<sub>0</sub>，不是保证真实照片绝对锐利；把光圈缩到很小，现实中也会损失细节。衍射公式属于扩展知识，不是这个几何计算器的一部分。</div>
+<p class="source">课程定位：<a href="https://sites.cs.ucsb.edu/~lingqi/teaching/resources/GAMES101_Lecture_19.pdf#page=59" target="_blank" rel="noopener">第十九讲课件，第 59—62 页</a>。</p>
+</section>
+
+<section class="chapter" id="raytrace" data-title="在光线追踪中模拟镜头"><div class="chapter-head"><span class="chapter-num">09</span><div><h2>渲染器怎样“拍出”景深？</h2><div class="sub">THIN LENS RAY GENERATION</div></div></div>
+<h3>9.1 为什么每像素一条针孔射线不够？</h3><p>针孔射线全部从同一相机中心出发。同一像素的所有样本如果只改变像素内部位置，模拟的是像素面积采样，可以帮助抗锯齿；它们没有改变光圈上的出发位置，因此不会自动模拟有限光圈导致的离焦。</p>
+<p>薄透镜相机需要对<strong>光圈位置</strong>采样。对同一像素，先确定对焦平面上的目标点，然后从光圈的不同位置指向这个同一目标。对焦平面上的点在不同样本中保持一致，其他深度上的交点则随光圈位置变化。</p>
+<h3>9.2 用前方虚拟像平面组织实现</h3><p>以下采用相机坐标系：相机中心在 O = (0,0,0)，向 +Z 看，右向 +X，上向 +Y，薄透镜平面为 Z = 0，对焦平面为 Z = s。这里的<strong>虚拟像平面距离 d 只是射线参数</strong>：若希望精确匹配本页物理传感器尺寸，取 d = z<sub>s</sub>；若用远景 FOV 的简化约定，可取 d = f。已有渲染器直接给定 FOV 时，也可通过 tan(FOV/2) 构造射线。</p>
+<ol class="steps"><li><strong>在像素内随机取样。</strong>对列 i、行 j 取 ξ<sub>x</sub>, ξ<sub>y</sub> ∈ [0,1)。根据传感器宽 w、高 h，将它转换为虚拟像平面上的点 P。</li><li><strong>先求针孔方向。</strong>r<sub>0</sub> = normalize(P−O)。找到该射线与 Z = s 的交点 Q = O + [s/(r<sub>0</sub>)<sub>z</sub>] r<sub>0</sub>。</li><li><strong>在光圈圆盘上均匀采样。</strong>取二维点 A = (a<sub>x</sub>, a<sub>y</sub>, 0)，圆盘半径 R = D/2。</li><li><strong>发出透镜射线。</strong>起点为 A，方向为 normalize(Q−A)。所有这个像素的光圈样本都瞄准同一个对焦点 Q。</li><li><strong>把射线变换到世界空间。</strong>使用相机的右、上、前基向量和位置，起点按点变换，方向按向量变换；然后追踪场景。</li></ol>
+<div class="formula">P = ((u−½)w, (½−v)h, d)，&nbsp; u = (i+ξ<sub>x</sub>)/W，v = (j+ξ<sub>y</sub>)/H<sub>px</sub><div class="desc">W、H<sub>px</sub> 是像素分辨率；w、h 是传感器物理尺寸。v 的符号翻转用于让屏幕上方对应 +Y。</div></div>
+<h3>9.3 圆盘采样里的平方根不能漏</h3><p>直接取 r = R ξ、θ = 2π η，会让点在圆心附近过于密集。半径更大的环面积更大，需要更高的落点概率。均匀面积采样应满足累计面积比例 r²/R² = ξ，因此：</p>
+<div class="formula">r = R√ξ，&nbsp; θ = 2πη，&nbsp; a<sub>x</sub> = r cos θ，&nbsp; a<sub>y</sub> = r sin θ<div class="desc">ξ 与 η 独立且均匀分布于 [0,1)。均匀圆盘采样的面积概率密度 p<sub>A</sub> = 1/(πR²)。</div></div>
+<p>也可以采用方形到圆盘的同心映射来改善分层样本的分布；这里的极坐标公式容易理解且已经满足均匀面积采样。</p>
+<h3>9.4 一份能落地的伪代码</h3>
+<pre><code>// 约定：相机朝 +Z；长度使用同一单位；focusDistance &gt; focalLength
+sensorDistance = focalLength * focusDistance
+               / (focusDistance - focalLength)
+apertureRadius = focalLength / (2 * fNumber)
+
+function generateCameraRay(i, j, sample):
+    u = (i + sample.pixelX) / imageWidth
+    v = (j + sample.pixelY) / imageHeight
+    P = vec3((u - 0.5) * sensorWidth,
+             (0.5 - v) * sensorHeight,
+             sensorDistance)
+
+    pinholeDir = normalize(P)
+    Q = pinholeDir * (focusDistance / pinholeDir.z)
+
+    radius = apertureRadius * sqrt(sample.lensU)
+    angle  = 2 * PI * sample.lensV
+    A = vec3(radius * cos(angle), radius * sin(angle), 0)
+    dirCamera = normalize(Q - A)
+
+    // 时间采样只在场景按时间更新时才会产生运动模糊
+    time = shutterOpen + sample.time * (shutterClose - shutterOpen)
+    return Ray(cameraToWorld.point(A),
+               normalize(cameraToWorld.vector(dirCamera)), time)
+
+// 学习用：归一化图像估计，假定理想均匀光圈且曝光由外部处理
+for each pixel:
+    sum = 0
+    for k in 0 .. samplesPerPixel-1:
+        ray = generateCameraRay(i, j, nextSample())
+        sum += traceSceneRadiance(ray)
+    image[i, j] = sum / samplesPerPixel</code></pre>
+<h3>9.5 “取平均”与“积分求曝光量”要分清</h3><p>上面最后一段是学习用的<strong>归一化辐亮度平均</strong>，目的是让景深改变时画面亮度可保持稳定。如果你要模拟物理曝光，则相机积分应包括像素滤波、光圈面积、时间区间、透镜透过率与几何权重，不能只把每条射线返回的值平均一下就宣称得到了 J/m²。</p>
+<div class="formula">I = ∫<sub>t₀</sub><sup>t₁</sup> ∫<sub>A</sub> F(a,t) da dt &nbsp;≈&nbsp; <span class="frac"><span>1</span><span>M</span></span> Σ<sub>k=1</sub><sup>M</sup> <span class="frac"><span>F(a<sub>k</sub>,t<sub>k</sub>)</span><span>p<sub>A</sub>(a<sub>k</sub>) p<sub>t</sub>(t<sub>k</sub>)</span></span><div class="desc">示意的蒙特卡洛积分。均匀采样时，1/(p<sub>A</sub>p<sub>t</sub>) = 光圈面积 × 曝光时间；F 包含具体相机模型所需的权重。</div></div>
+<p>实际引擎可能通过独立曝光参数控制亮度，而仅用 aperture 参数控制景深。这是一种产品与计算上的选择，不是物理曝光规律失效。实现时要明确自己使用的是“摄影曝光模型”还是“艺术控制参数”。</p>
+<h3>9.6 如何判断你的实现是否正确？</h3><ul><li>把光圈半径设为 0，所有起点应退化到同一相机中心，结果回到针孔相机。</li><li>放一张垂直于相机前向的平面在对焦距离 s，改变光圈大小，它仍应保持几何清楚。</li><li>把同样的细线图案放到 s 前方与后方，离焦应随光圈增大而增大。</li><li>保持传感器与物体位置不变，光圈直径减半，轴上弥散圆直径应约减半。</li><li>只增加像素内部抖动、却不改变光圈位置，不应被当作景深实现。</li><li>采样不足通常表现为颗粒或噪点；增加样本应降低噪声，而不是把真实离焦模糊消掉。</li></ul>
+<p class="source">实现对照：<a href="https://www.pbr-book.org/4ed/Cameras_and_Film/Projective_Camera_Models" target="_blank" rel="noopener">PBRT 第四版 · Projective Camera Models</a>。本节伪代码独立编写，坐标与参数约定已在正文中说明。</p>
+</section>
+
+<section class="chapter" id="integral" data-title="把相机统一成积分模型"><div class="chapter-head"><span class="chapter-num">10</span><div><h2>一个像素，其实是几种积分叠在一起</h2><div class="sub">A UNIFIED CAMERA MODEL</div></div></div>
+<p>现在可以把前面的知识拼起来。场景里的光先经过方向选择和折射，然后在有限面积、有限光圈、有限时间以及一定光谱响应上被累计，最终转成图像信号。</p>
+<div class="table-wrap"><table><thead><tr><th>积分或采样维度</th><th>作用</th><th>常见视觉现象</th><th>渲染器里的变量</th></tr></thead><tbody><tr><td>像素面积</td><td>有限空间覆盖与重建滤波</td><td>边缘抗锯齿、子像素细节</td><td>像素内的二维位置</td></tr><tr><td>光圈面积</td><td>允许一束方向略有差别的光线进入</td><td>离焦、景深、散景形状</td><td>镜头圆盘或光阑上的二维位置</td></tr><tr><td>曝光时间</td><td>累积时间过程</td><td>运动模糊、光轨</td><td>射线时间</td></tr><tr><td>光谱</td><td>不同波长经响应曲线转成通道值</td><td>颜色响应、色差等</td><td>波长或光谱表示；本讲不展开</td></tr></tbody></table></div>
+<p>这些积分也解释了“像素值是什么”：它通常不是某一条理想射线的颜色，而是某个采样窗口内光信息的汇总。很多入门渲染器只模拟其中一部分，后来加入景深和运动模糊，就是把被省略的采样维度逐步补回来。</p>
+<h3>用三个问题定位模糊原因</h3><ol><li><strong>场景完全静止，延长快门是否仍然变模糊？</strong>如果没有相机运动，单纯延长曝光不应产生几何运动模糊；若画面更糊，需要检查其他机制。</li><li><strong>保持快门不变，缩小光圈后前后景是否变清楚？</strong>这通常与离焦和景深有关，但真实照片还需考虑衍射与像差。</li><li><strong>同一深度平面所有点都清楚，但不同深度变化明显？</strong>先检查对焦距离；若只有某些边缘糊或分色，还可能与镜头像差、滤波或像素处理有关。</li></ol>
+<div class="notice"><strong>这一讲与渲染方程的联系：</strong>渲染方程负责描述场景表面的光如何传播与反射；相机模型负责描述最终哪些光被采样、以什么权重变成图像。改变镜头不会改变物体的 BRDF，但会改变记录光的方式。</div>
+</section>
+
+<section class="chapter" id="lightfield" data-title="衔接：光场与重聚焦"><div class="chapter-head"><span class="chapter-num">11</span><div><h2>光场：如果不急着把方向信息加掉</h2><div class="sub">BRIDGE TO LECTURE 20 <span class="badge">衔接与扩展</span></div></div></div>
+<p>普通照片把许多方向的光积累为像素值。看完照片后，你知道这个像素多亮，却不知道每个方向分别贡献了多少。如果在拍摄时保留更多方向信息，就能在之后重新选择积分方式，这便是理解光场成像的入口。</p>
+<div class="notice"><strong>本章范围：</strong>光场的系统讲解位于官方第二十讲开头。本章为理解第十九讲标题和相机积分提供衔接，不把颜色与感知的后续内容混入本讲。参考：<a href="https://sites.cs.ucsb.edu/~lingqi/teaching/resources/GAMES101_Lecture_20.pdf" target="_blank" rel="noopener">第二十讲官方课件 ↗</a>。</div>
+<h3>11.1 全光函数：在何处、朝何方向、什么时间、什么波长？</h3><p>把空间里的光描述得足够完整，可以用位置的三个变量、方向的两个变量、波长以及时间来参数化：</p>
+<div class="formula">P(x, y, z, θ, φ, λ, t)<div class="desc">3 个空间维度 + 2 个方向维度 + 1 个波长维度 + 1 个时间维度 = 7 维。</div></div>
+<p>“七维”不是说世界有七个空间方向，而是说要查询一份光信息，需要指定七个自变量。例如：在窗前某个位置，朝天花板方向看，在某个时间点测量绿色波段的辐亮度。</p>
+<p>若先固定时间与波长，剩下的是位置三维加方向二维，共五维。在均匀、非参与介质的无遮挡区域里，同一条定向直线上的辐亮度保持不变，因此沿光线移动的一个位置自由度是冗余的，可以约化为四维光场。这里的条件重要：若光路遇到遮挡、吸收、散射，不能随意把任意两处的光视为相同。</p>
+<h3>11.2 两平面参数化：用两个交点描述一条光线</h3><p>选两个不重合的平面。光线与第一平面的交点为 (u,v)，与第二平面的交点为 (x,y)，则写成 L(u,v,x,y)。四个数确定两点，也就确定一条穿过这两个平面的有向光线，前提是约定好传播方向。</p>
+<figure class="diagram"><svg viewBox="0 0 800 260" role="img" aria-label="两平面参数化光场：每条射线由两个平面的交点决定"><path d="M160 35 L275 70 L275 215 L160 180 Z" fill="#e9f3ed" stroke="#177568" stroke-width="2"/><path d="M525 35 L640 70 L640 215 L525 180 Z" fill="#edf1f7" stroke="#4879aa" stroke-width="2"/><path d="M65 215 L705 65" fill="none" stroke="#bc642e" stroke-width="3"/><path d="M70 45 L708 220" fill="none" stroke="#177568" stroke-width="2" stroke-dasharray="5 5"/><circle cx="218" cy="179" r="5" fill="#bc642e"/><circle cx="581" cy="94" r="5" fill="#bc642e"/><text x="160" y="240">平面 A · (u,v)</text><text x="530" y="240">平面 B · (x,y)</text><text x="255" y="180">交点 1</text><text x="605" y="97">交点 2</text><text x="317" y="37">L(u,v,x,y)</text></svg><figcaption>只覆盖能与两平面相交的光线集合；近平行于平面的方向需要其他参数化或分区。不同文献对两组字母的顺序有不同约定。</figcaption></figure>
+<p>如果把 (u,v) 看成相机在阵列中的位置，那么固定 (u,v)，扫描 (x,y)，会得到某个视角的一张二维图像。整个光场可以想成“按相机位置排列的一组照片”。但它本质上是<strong>对光线的采样</strong>，不要求用某一种固定硬件采集。</p>
+<h3>11.3 普通相机为什么不能轻易拍完再对焦？</h3><p>同一个像素可能收到光圈左侧、中央、右侧传来的不同光线。普通相机把这些贡献合并。对于不同物体深度，这些光线应该在不同成像位置相加；一旦方向成分已混在一个数里，通常无法唯一拆回去。</p>
+<p>光场相机尝试保留这组方向差异。经典的微透镜阵列方案在主镜头与传感器之间布置很多微透镜，让传感器上微透镜下方的不同像素采样不同方向。在常见的 plenoptic 1.0 理想解释中，每个微透镜对应一个空间采样区域，它下面的微图像提供角度采样。其他架构的对应关系会不同，不能把它当成所有光场相机的统一硬件图纸。</p>
+<p>在固定传感器像素总数下，拿更多像素区分方向，通常就减少了可以独立区分的空间位置。比如一个理想的 4000 × 3000 传感器，若每组 10 × 10 像素用于一个空间位置的角度采样，粗略的空间网格只有 400 × 300；这仅用于说明预算分配，不是实际产品的分辨率承诺。</p>
+<h3>11.4 重聚焦：先按深度对齐，再求和</h3><p>考虑由多个相邻视点拍摄的同一静止场景。同一个物体在各视点中有视差，近处的视差通常大于远处。若按某一目标深度把多张照片平移对齐，再平均，该深度的结构会叠合，其他深度则不能叠合，形成模糊。</p>
+<div class="formula">I<sub>α</sub>(x,y) ≈ <span class="frac"><span>1</span><span>M</span></span> Σ<sub>k=1</sub><sup>M</sup> I<sub>k</sub>(x + αu<sub>k</sub>, y + αv<sub>k</sub>)<div class="desc">平行校准视角、朗伯场景等简化条件下的 shift-and-sum 示意。α 是本参数化下的对齐量，符号与缩放由坐标约定决定，不直接等于物距。</div></div>
+<p>从四维函数看，重聚焦相当于先改变采样切面的倾斜或剪切方式，再对视角变量积分。普通照片只有一次积分结果；光场保存了更多积分前的样本，因此可以计算另一种结果。</p>
+<div class="lab" id="lab-lf"><div class="lab-head"><strong>实验 ④ · 用同一组视角重新选择焦点</strong><span>INTERACTIVE / LIGHT FIELD</span></div><div class="lab-body"><div class="controls"><div class="control"><label for="lfFocus">对齐视差 α <output id="lfFocusVal">1.20</output></label><input id="lfFocus" type="range" min="0.15" max="1.5" value="1.2" step="0.01"></div><div class="control"><label for="lfViews">合成孔径范围</label><select id="lfViews"><option value="1">中央 1 个视角 · 无合成离焦</option><option value="5">中央 5 个视角</option><option value="9" selected>全部 9 个视角</option></select></div></div><canvas id="lfCanvas" width="850" height="360" role="img" aria-label="九个固定合成视角按视差平移并平均后重聚焦的示意图"></canvas><p id="lfExplain" class="lab-note"></p><p class="lab-note">这是可核对算法的二维教学模拟：初次加载生成 9 张固定视图，拖动滑块只对已有视图平移并求平均。近层视差参数为 1.20，远层为 0.35；α 无单位。视角阵列只沿水平方向，因此离焦也主要横向展开；它不是完整光学相机，不模拟遮挡边界、真实景深或任意视点。</p></div></div>
+<h3>11.5 光场能做什么，又有什么限制？</h3><ul><li><strong>计算重聚焦：</strong>在采样范围内重新合成不同焦平面；有限角度与空间采样限制可恢复的细节。</li><li><strong>合成孔径：</strong>选择更大的视角集合可增加某些离焦效果，选择更小集合可减弱它；它与真实孔径不在所有情况下完全等价。</li><li><strong>有限视点变化：</strong>从已采集光线里选择新的射线组合；可用视点取决于覆盖范围，不能凭空看到原来完全被遮挡的内容。</li><li><strong>深度估计：</strong>利用多视角视差或重聚焦响应推断深度；纹理不足、反射和遮挡会让估计困难。</li></ul>
+<p>因此，光场不是“拍一次就无限清晰、随意绕物体看”的魔法。它把原来被合并的一些信息留下来，再通过计算重新组合；保留多少、覆盖哪些方向、噪声多大，都决定最终能力。</p>
+<p class="source">四维光场与两平面表示：<a href="https://graphics.stanford.edu/papers/light/" target="_blank" rel="noopener">Levoy 与 Hanrahan · Light Field Rendering（1996）</a>。微透镜采集与计算重聚焦：<a href="https://graphics.stanford.edu/papers/lfcamera/lfcamera-150dpi.pdf" target="_blank" rel="noopener">Ng 等 · Light Field Photography with a Hand-Held Plenoptic Camera（2005）</a>。本页实验采用独立编写的平移求和模型。</p>
+</section>
+
+<section class="chapter" id="mistakes" data-title="易错点与公式速查"><div class="chapter-head"><span class="chapter-num">12</span><div><h2>最容易混淆的十件事</h2><div class="sub">PITFALLS & QUICK REFERENCE</div></div></div>
+<div class="table-wrap"><table><thead><tr><th>容易误记</th><th>正确理解</th></tr></thead><tbody><tr><td>焦距就是相机到物体的距离</td><td>焦距 f 属于透镜；对焦距离 s 属于物方设置；像距 z<sub>s</sub> 在像方。</td></tr><tr><td>FOV 只由焦距决定</td><td>必须同时给定传感器尺寸和测量维度，并明确对焦或投影约定。</td></tr><tr><td>50 mm 对应唯一的 47°</td><td>约 47° 常指全画幅对角视场，水平约 39.6°。</td></tr><tr><td>f-number 越大，光圈越大</td><td>D = f/N，固定焦距时 N 越大，孔径越小。</td></tr><tr><td>f/2 到 f/4 少一档光</td><td>直径减半，面积降为 1/4，少两档。</td></tr><tr><td>ISO 翻倍等于收集的光翻倍</td><td>同样光圈和快门下，物理曝光不变；输出增益变化。</td></tr><tr><td>物体距焦平面相同，模糊就相同</td><td>c 还含物距的倒数关系，近侧和远侧通常不对称。</td></tr><tr><td>景深范围里的点都严格汇聚</td><td>只有对焦平面严格汇聚；其他位置满足“允许弥散圆”标准。</td></tr><tr><td>增加采样数会把景深模糊消除</td><td>增加采样降低蒙特卡洛噪声，但应保留相机模型产生的真实模糊。</td></tr><tr><td>光场是场景的完整三维模型</td><td>光场记录光线样本，可以用于新视图或重聚焦，并不自动等于几何模型。</td></tr></tbody></table></div>
+<h3>把核心公式放在一张表中</h3><div class="table-wrap"><table><thead><tr><th>要解决的问题</th><th>公式</th><th>适用条件</th></tr></thead><tbody><tr><td>视场</td><td>θ = 2 arctan[h/(2d)]</td><td>针孔或主光线几何；远处对焦时 d ≈ f。</td></tr><tr><td>辐射曝光量</td><td>H<sub>e</sub> = ∫ E(t)dt，恒定时 E·T</td><td>单位为 J/m²，和输出 RGB 不是同一个量。</td></tr><tr><td>光圈大小</td><td>D = f/N</td><td>D 是有效直径。</td></tr><tr><td>相对曝光比较</td><td>H<sub>e</sub> ∝ T/N²</td><td>同场景、透过率相同，远摄、近轴近似。</td></tr><tr><td>薄透镜</td><td>1/f = 1/z<sub>o</sub> + 1/z<sub>i</sub></td><td>本页主线：凸透镜、z<sub>o</sub> &gt; f、实像。</td></tr><tr><td>离焦弥散圆</td><td>c = (f/N)|z<sub>s</sub>−z<sub>i</sub>|/z<sub>i</sub></td><td>理想圆形光圈、几何光学。</td></tr><tr><td>物距形式</td><td>c = f²|z<sub>o</sub>−s| / [N z<sub>o</sub>(s−f)]</td><td>统一长度单位。</td></tr><tr><td>景深近、远界</td><td>d<sub>near</sub> = sq/(q+s−f)<br>d<sub>far</sub> = sq/(q−s+f)</td><td>q = f²/(Nc<sub>0</sub>)；远界分母 ≤ 0 则取 ∞。</td></tr><tr><td>超焦距</td><td>H = f²/(Nc<sub>0</sub>) + f</td><td>阈值 c<sub>0</sub> 与观看条件关联。</td></tr><tr><td>匀速运动轨迹</td><td>b = |v|T</td><td>v 是像面速度；无遮挡、匀速。</td></tr></tbody></table></div>
+<h3>数量级检查能发现很多错误</h3><p>把 f = 50 mm 和 s = 2 m 直接代入同一个长度公式，可能得到明显错误的结果；先统一成 50 mm、2000 mm。另一个常见错误是把 apertureRadius 当作 D：若直径错用成半径，CoC 将差一倍，光圈面积将差四倍。</p>
+<p>你也可以检查极限：s → ∞ 时 z<sub>s</sub> → f；z<sub>o</sub> = s 时 c = 0；N → ∞ 时几何离焦趋于零；T → 0 时物理曝光量与匀速运动轨迹都趋于零。任何与这些趋势矛盾的实现都值得重新检查。</p>
+</section>
+
+<section class="chapter" id="exercises" data-title="练习与逐步答案"><div class="chapter-head"><span class="chapter-num">13</span><div><h2>用八道题检查是否真正理解</h2><div class="sub">PRACTICE / CLICK TO REVEAL</div></div></div>
+<p>先独立思考，再展开答案。这里的数值题均采用正文中的理想模型。</p>
+<details><summary>题 1 · 36 × 24 mm 传感器，35 mm 焦距，水平 FOV 是多少？</summary><div class="answer"><p>水平维度取 h = 36 mm。θ = 2 arctan[36/(2×35)] ≈ <strong>54.43°</strong>。若误用对角线 √(36²+24²)，会得到约 63.44°，那是对角视场。</p></div></details>
+<details><summary>题 2 · f/2、1/500 s 改为 f/4，保持同一物理曝光量，快门应是多少？</summary><div class="answer"><p>N 翻倍使辐照度变成 1/4，必须把 T 乘 4。1/500 × 4 = <strong>1/125 s</strong>。若改成 ISO 400 而保留 1/500 s，在简化增益模型中输出可以同样亮，但物理曝光量仍是原来的 1/4。</p></div></details>
+<details><summary>题 3 · 50 mm 镜头对焦到 1 m，传感器应该位于哪里？</summary><div class="answer"><p>1 m = 1000 mm。z<sub>s</sub> = fs/(s−f) = 50×1000/950 ≈ <strong>52.632 mm</strong>。不是 50 mm；50 mm 对应无穷远对焦。</p></div></details>
+<details><summary>题 4 · f = 50 mm、N = 4、s = 2 m，1 m 处的弥散圆直径是多少？</summary><div class="answer"><p>D = 50/4 = 12.5 mm。z<sub>s</sub> ≈ 51.282 mm，z<sub>i</sub> ≈ 52.632 mm。c = 12.5×|51.282−52.632|/52.632 ≈ <strong>0.3205 mm</strong>。也可直接用物距形式核对。5 μm 像素对应约 64.10 px 直径。</p></div></details>
+<details><summary>题 5 · 对焦 2 m，1 m 与 3 m 处的物体，哪一个更模糊？</summary><div class="answer"><p>其他条件相同，由 c ∝ |z<sub>o</sub>−s|/z<sub>o</sub>，两个分子相同而分母分别为 1 m 与 3 m，所以 <strong>1 m 处的弥散圆直径是 3 m 处的 3 倍</strong>。按与焦平面的距离做对称模糊会算错。</p></div></details>
+<details><summary>题 6 · 24 mm、f/8、c₀ = 0.03 mm，超焦距是多少？</summary><div class="answer"><p>H = 24²/(8×0.03)+24 = 2400+24 = <strong>2424 mm = 2.424 m</strong>。对焦到这个距离时，在本模型下近界为 1.212 m，远界为无穷远。</p></div></details>
+<details><summary>题 7 · 对同一像素只随机抖动方向、所有射线仍从中心出发，能模拟薄透镜景深吗？</summary><div class="answer"><p><strong>不能按正确薄透镜模型模拟。</strong>像素内部抖动可以完成像素采样与抗锯齿，但没有光圈采样。必须改变透镜平面上的射线起点，并让同一像素的光圈样本瞄准对焦平面上的同一目标。</p></div></details>
+<details><summary>题 8 · 普通照片为什么通常不能像光场数据那样任意重聚焦？</summary><div class="answer"><p>普通传感器把许多方向的贡献合并为像素信号，<strong>方向分量通常不可唯一恢复</strong>。光场采样保留了更多位置与方向组合，可针对另一焦平面重新对齐、求和。但有限采样和遮挡仍限制可实现的重聚焦范围与质量。</p></div></details>
+<h3>建议自己做的小实验</h3><div class="checklist"><ul><li>在实验 ① 固定焦距，切换画幅，再固定画幅改焦距，用 h/f 解释每次视场变化。</li><li>在实验 ② 找两组实际曝光量一样但轨迹长度不同的参数；再只改 ISO，观察哪一项数值没有改变。</li><li>在实验 ③ 把测试物距设为对焦距离，确认 c = 0；再把 N 从 2 改为 4，检查 c 是否减半。</li><li>在实验 ③ 增大对焦距离，找到远界变为 ∞ 的临界附近，核对是否接近 H。</li><li>在实验 ④ 分别把 α 设为 1.20、0.35，再改为单视角，解释为什么单视角没有合成离焦。</li><li>如果有自己的光线追踪器，放三块带细条纹的平面在不同深度，只改变光圈半径，观察焦平面是否始终清楚。</li></ul></div>
+</section>
+
+<section class="chapter" id="sources" data-title="学习路线与原始资料"><div class="chapter-head"><span class="chapter-num">14</span><div><h2>读完之后，把知识变成可验证的模型</h2><div class="sub">NEXT STEPS & PRIMARY SOURCES</div></div></div>
+<p>如果你只记住三个连接，就能把本讲重新推出来：<strong>相似三角形连接焦距与视场；薄透镜关系连接物距与像距；光锥截面连接离焦与景深。</strong>曝光部分则用面积与时间积分连接“相机参数”和“积累能量”。</p>
+<p>建议先回到课件检查每个符号，再自己复算一个 FOV、一个等曝光组合、一个 CoC 和一组景深边界。最后实现薄透镜射线生成。能把极限情况和实际算例同时验证，通常比单独背公式更可靠。</p>
+<ol class="references"><li><a href="https://sites.cs.ucsb.edu/~lingqi/teaching/games101.html" target="_blank" rel="noopener">GAMES101 官方课程主页</a><small>核对讲次安排、教师与课件链接。本页范围说明依据该主页。</small></li><li><a href="https://sites.cs.ucsb.edu/~lingqi/teaching/resources/GAMES101_Lecture_19.pdf" target="_blank" rel="noopener">第十九讲官方课件 · Cameras, Lenses and Light Fields</a><small>主题索引：相机 4—12 页；视场 14—19 页；曝光与快门 21—37 页；薄透镜 39—47 页；离焦 49—53 页；薄透镜光追 55—57 页；景深 59—62 页。页数均指 PDF 从 1 开始计数。</small></li><li><a href="https://www.bilibili.com/video/BV1X7411F744/?p=19" target="_blank" rel="noopener">GAMES101 课程录像 · 第 19 集</a><small>课堂讲解由闫令琪主讲；本页没有声称逐分钟核对视频，内容范围以官方课件为主要定位。</small></li><li><a href="https://sites.cs.ucsb.edu/~lingqi/teaching/resources/GAMES101_Lecture_20.pdf" target="_blank" rel="noopener">第二十讲官方课件 · 光场、颜色与感知</a><small>本页光场章节用于衔接；颜色与感知不在本文展开。</small></li><li><a href="https://www.pbr-book.org/4ed/Cameras_and_Film/Projective_Camera_Models" target="_blank" rel="noopener">Physically Based Rendering，第 4 版 · Projective Camera Models</a><small>用于继续学习投影相机、有限光圈射线生成，以及相机与渲染器的接口。</small></li><li><a href="https://openstax.org/books/university-physics-volume-3/pages/2-4-thin-lenses" target="_blank" rel="noopener">OpenStax · University Physics Vol. 3 · Thin Lenses</a><small>对照薄透镜公式、实像/虚像与有符号放大率；本页没有转载其示例或插图。</small></li><li><a href="https://graphics.stanford.edu/papers/light/" target="_blank" rel="noopener">Marc Levoy 与 Pat Hanrahan · Light Field Rendering，1996</a><small>光场的四维表示、两平面参数化和从光线采样生成新视图。</small></li><li><a href="https://graphics.stanford.edu/papers/lfcamera/lfcamera-150dpi.pdf" target="_blank" rel="noopener">Ren Ng 等 · Light Field Photography with a Hand-Held Plenoptic Camera，2005</a><small>经典微透镜光场采集与拍摄后的计算重聚焦。</small></li></ol>
+<div class="notice"><strong>离线与打印：</strong>此文件的样式、图示与脚本全部内嵌，不依赖 CDN、字体下载或外部图片。参考资料链接需要联网访问。点击工具栏“打印 / PDF”可以通过浏览器保存为 PDF；打印时会展开练习答案，并显示四个实验的当前参数。</div>
+<div class="footer">GAMES101 第十九讲 · 中文学习讲解｜核对日期：2026-10-12<br>原课程与原始资料归各自作者所有。本页文字、算例、SVG 示意与交互代码为学习目的独立编写。实验用于说明理想模型，其适用条件均在邻近正文注明。</div>
+</section>
+</main>
+</div>
+<a class="backtop" href="#top">↑ 回到开头</a>
+<script>
+(()=>{
+  'use strict';
+  const $ = id => document.getElementById(id);
+  const put = (id,text) => { $(id).textContent=text; };
+  const number = id => Number($(id).value);
+  const clamp = (x,a,b) => Math.max(a,Math.min(b,x));
+  const colors={ink:'#263b43',muted:'#60746f',green:'#177568',orange:'#bc642e',blue:'#4879aa',pale:'#e8f1eb',line:'#bdcec3'};
+  document.querySelectorAll('.lab canvas').forEach(c=>{const wrap=document.createElement('div');wrap.className='canvas-scroll';wrap.tabIndex=0;wrap.setAttribute('role','region');wrap.setAttribute('aria-label','交互实验图示，窄屏可左右滚动');c.before(wrap);wrap.append(c);});
+  function clear(id){const c=$(id),g=c.getContext('2d');g.clearRect(0,0,c.width,c.height);g.fillStyle='#f5f7f4';g.fillRect(0,0,c.width,c.height);return g;}
+  function line(g,x1,y1,x2,y2,color,width=2,dash=[]){g.beginPath();g.strokeStyle=color;g.lineWidth=width;g.setLineDash(dash);g.moveTo(x1,y1);g.lineTo(x2,y2);g.stroke();g.setLineDash([]);}
+  function text(g,t,x,y,color=colors.muted,size=15,align='left'){g.fillStyle=color;g.font=`${size}px "Microsoft YaHei", "Segoe UI", sans-serif`;g.textAlign=align;g.fillText(t,x,y);g.textAlign='left';}
+  function circle(g,x,y,r,color,stroke){g.beginPath();g.arc(x,y,Math.max(0,r),0,Math.PI*2);g.fillStyle=color;g.fill();if(stroke){g.strokeStyle=stroke;g.lineWidth=2;g.stroke();}}
+  function fovUpdate(){
+    const f=number('fovF'),[w,h]=$('fovSensor').value.split(',').map(Number);
+    const deg=x=>2*Math.atan(x/(2*f))*180/Math.PI;
+    put('fovFVal',`${f} mm`);put('fovH',`${deg(w).toFixed(2)}°`);put('fovV',`${deg(h).toFixed(2)}°`);put('fovD',`${deg(Math.hypot(w,h)).toFixed(2)}°`);
+    const crop=Math.hypot(36,24)/Math.hypot(w,h);
+    put('fovExplain',`水平比值 w/f = ${(w/f).toFixed(3)}；裁切系数约 ${crop.toFixed(3)}，对角视场对应全画幅等效焦距约 ${(f*crop).toFixed(1)} mm。固定焦距时，较小传感器会截取较窄的角度范围。`);
+    const g=clear('fovCanvas'),cx=385,cy=130,k=Math.min(4,215/f,95/(w/2)),d=f*k,half=w*k/2,sd=Math.min(265,98/(w/(2*f))),sx=cx-sd;
+    line(g,35,cy,815,cy,colors.line,1,[5,6]);
+    g.fillStyle='#d5e9df';g.beginPath();g.moveTo(cx,cy);g.lineTo(sx,cy-sd*w/(2*f));g.lineTo(sx,cy+sd*w/(2*f));g.closePath();g.fill();
+    line(g,sx,cy-sd*w/(2*f),cx+d,cy+half,colors.green,2);line(g,sx,cy+sd*w/(2*f),cx+d,cy-half,colors.green,2);
+    line(g,cx,33,cx,123,colors.ink,4);line(g,cx,137,cx,225,colors.ink,4);circle(g,cx,cy,4,colors.green);
+    line(g,cx+d,cy-half,cx+d,cy+half,colors.blue,5);
+    const theta=Math.atan(w/(2*f));g.beginPath();g.strokeStyle=colors.orange;g.lineWidth=2;g.arc(cx,cy,42,Math.PI-theta,Math.PI+theta);g.stroke();
+    text(g,'场景侧',65,40,colors.muted,14);text(g,'投影中心',cx,254,colors.ink,14,'center');text(g,`传感器宽 ${w} mm`,cx+d+18,cy-5,colors.blue,14);text(g,`f = ${f} mm`,cx+d/2,231,colors.muted,14,'center');
+    text(g,`水平 FOV ${deg(w).toFixed(2)}°`,35,260,colors.green,18);
+  }
+  function exposureUpdate(){
+    const n=number('expN'),T=number('expT'),iso=number('expISO'),v=number('expSpeed');
+    const physical=T/.004*(4/n)**2,signal=physical*iso/100,b=v*T;
+    put('expNVal',`f/${n.toFixed(1).replace(/\.0$/,'')}`);put('expSpeedVal',`${v} px/s`);put('expPhysical',`${physical.toFixed(2)}×`);put('expSignal',`${signal.toFixed(2)}×`);put('expMotion',`${b.toFixed(2)} px`);
+    const g=clear('expCanvas'),cx=110,cy=105,R=50/(2*n)*4;
+    circle(g,cx,cy,79,'#dce4df',colors.line);circle(g,cx,cy,R,'#294742');text(g,`D = ${(50/n).toFixed(2)} mm`,cx,211,colors.green,16,'center');
+    line(g,220,28,220,210,colors.line,1);text(g,'匀速运动光点 · 曝光时间积分',250,35,colors.ink,16);
+    g.fillStyle='#1e3037';g.fillRect(248,55,575,113);
+    const length=clamp(b,0,530),left=420-length/2,right=420+length/2,samples=100,alpha=clamp(signal,0,16)*.022;
+    g.save();g.globalCompositeOperation='lighter';g.globalAlpha=Math.min(1,alpha);for(let i=0;i<samples;i++)circle(g,left+length*i/(samples-1),111,7,'#ade6c9');g.restore();
+    line(g,left,183,right,183,colors.orange,2);line(g,left,178,left,189,colors.orange,2);line(g,right,178,right,189,colors.orange,2);
+    text(g,`轨迹 ${b.toFixed(2)} px · 光子积累比例 ${physical.toFixed(2)}`,250,211,colors.muted,14);
+    if(signal>16)text(g,'显示亮度已压缩',807,155,'#d5ddd9',11,'right');
+  }
+  function dofValues(f,n,s,z,c0,p){
+    const zs=f*s/(s-f),zi=f*z/(z-f),D=f/n,c=D*Math.abs(zs-zi)/zi,q=f*f/(n*c0),near=s*q/(q+s-f),far=q-s+f>0?s*q/(q-s+f):Infinity;
+    return {zs,zi,D,c,q,near,far,hyper:q+f,px:c/(p/1000)};
+  }
+  function dofUpdate(){
+    const f=number('dofF'),n=number('dofN'),s=number('dofS')*1000,z=number('dofZ')*1000,c0=number('dofC'),p=number('dofP'),v=dofValues(f,n,s,z,c0,p);
+    put('dofFVal',`${f} mm`);put('dofNVal',`f/${n.toFixed(1).replace(/\.0$/,'')}`);put('dofSVal',`${(s/1000).toFixed(2)} m`);put('dofZVal',`${(z/1000).toFixed(2)} m`);put('dofCVal',`${c0.toFixed(3)} mm`);put('dofPVal',`${p.toFixed(1)} μm`);
+    put('dofCoC',`${v.c.toFixed(4)} mm`);put('dofPx',`${v.px.toFixed(2)} px`);put('dofStatus',v.c<=c0+1e-12?'阈值之内':'阈值之外');put('dofNear',`${(v.near/1000).toFixed(3)} m`);put('dofFar',Number.isFinite(v.far)?`${(v.far/1000).toFixed(3)} m`:'∞');put('dofHyper',`${(v.hyper/1000).toFixed(3)} m`);
+    put('dofInfo',`光圈直径 D = ${v.D.toFixed(3)} mm；实际传感器位置 zₛ = ${v.zs.toFixed(3)} mm；测试物体理想像距 zᵢ = ${v.zi.toFixed(3)} mm。${Number.isFinite(v.far)?`景深宽度 = ${((v.far-v.near)/1000).toFixed(3)} m。`:'远界达到无穷远。'}${Math.abs(z-s)<1e-8?'测试物体位于对焦平面，几何弥散圆为零。':''}`);
+    const g=clear('dofCanvas'),lensX=70,axisY=120,endX=560,k=360/Math.max(v.zi,v.zs),imageX=lensX+v.zi*k,sensorX=lensX+v.zs*k,r=v.D*1.25;
+    line(g,32,axisY,610,axisY,colors.line,1,[5,6]);line(g,lensX,axisY-r,lensX,axisY+r,colors.green,5);
+    const yEnd=r*(1-(endX-lensX)/(v.zi*k));
+    g.fillStyle='#17756812';g.beginPath();g.moveTo(lensX,axisY-r);g.lineTo(imageX,axisY);g.lineTo(lensX,axisY+r);g.closePath();g.fill();
+    line(g,lensX,axisY-r,endX,axisY-yEnd,colors.green,2);line(g,lensX,axisY+r,endX,axisY+yEnd,colors.green,2);circle(g,imageX,axisY,4,colors.orange);
+    line(g,sensorX,34,sensorX,204,colors.blue,3,[5,4]);
+    const cut=1.25*v.c/2;line(g,sensorX,axisY-cut,sensorX,axisY+cut,colors.orange,5);
+    text(g,'透镜平面',lensX,226,colors.green,13,'center');text(g,`汇聚点 zᵢ = ${v.zi.toFixed(3)} mm`,imageX,26,colors.orange,13,'center');text(g,`传感器 zₛ = ${v.zs.toFixed(3)} mm`,sensorX,247,colors.blue,13,'center');
+    line(g,626,30,626,259,colors.line,1);text(g,'像面光斑（显示放大）',734,34,colors.ink,13,'center');
+    const shownR=clamp(v.c*70,0,83),allowedR=clamp(c0*70,0,83);circle(g,734,128,shownR,'#bc642e33',v.c>1e-9?colors.orange:undefined);if(v.c<=1e-9)circle(g,734,128,2,colors.green);
+    g.beginPath();g.strokeStyle=colors.green;g.lineWidth=2;g.setLineDash([3,3]);g.arc(734,128,Math.max(allowedR,1),0,Math.PI*2);g.stroke();g.setLineDash([]);
+    text(g,`实线 c = ${v.c.toFixed(4)} mm`,644,228,colors.orange,12);text(g,`虚线 c₀ = ${c0.toFixed(3)} mm`,644,250,colors.green,12);if(v.c*70>83)text(g,'光斑显示已缩限，见数值',734,195,colors.muted,11,'center');
+    const barX=60,barW=725,maxDepth=20000,map=t=>barX+clamp(t/maxDepth,0,1)*barW;
+    line(g,barX,294,barX+barW,294,colors.line,9);line(g,map(v.near),294,map(v.far),294,colors.green,9);circle(g,map(s),294,6,colors.blue);circle(g,map(z),294,5,colors.orange);
+    text(g,'0 m',barX,321,colors.muted,11);text(g,'20 m（仅显示此段）',barX+barW,321,colors.muted,11,'right');text(g,'绿：景深 / 蓝：对焦 / 橙：测试物体',410,321,colors.muted,12,'center');
+  }
+  // A fixed, horizontally sampled light field. View images are created only once.
+  const viewWidth=1000,viewHeight=230,step=14;
+  function layer(g,offset,near){
+    g.save();g.translate(offset,0);
+    if(near){
+      g.fillStyle='#bc642e';g.fillRect(110,100,130,85);g.fillStyle='#f8e0ca';g.font='bold 25px "Microsoft YaHei"';g.fillText('近景',138,144);
+      g.strokeStyle='#bc642e';g.lineWidth=4;for(let x=120;x<236;x+=14){g.beginPath();g.moveTo(x,65);g.lineTo(x,94);g.stroke();}
+      g.fillStyle='#bc642e';g.beginPath();g.moveTo(470,196);g.lineTo(526,102);g.lineTo(580,196);g.closePath();g.fill();
+      g.strokeStyle='#ffcf9a';g.lineWidth=3;for(let x=501;x<559;x+=9){g.beginPath();g.moveTo(x,157);g.lineTo(x,190);g.stroke();}
+    }else{
+      g.fillStyle='#4879aa';g.fillRect(300,46,180,57);g.fillStyle='#e7f0fb';g.font='bold 25px "Microsoft YaHei"';g.fillText('远景',350,84);
+      g.strokeStyle='#4879aa';g.lineWidth=3;for(let x=315;x<474;x+=11){g.beginPath();g.moveTo(x,112);g.lineTo(x,155);g.stroke();}
+      g.strokeStyle='#4879aa';g.lineWidth=4;g.strokeRect(644,43,117,94);g.beginPath();g.moveTo(644,43);g.lineTo(761,137);g.moveTo(761,43);g.lineTo(644,137);g.stroke();
+    }
+    g.restore();
+  }
+  const lfViews=[];
+  for(let u=-4;u<=4;u++){
+    const c=document.createElement('canvas');c.width=viewWidth;c.height=viewHeight;const g=c.getContext('2d');g.fillStyle='#eff4ee';g.fillRect(0,0,viewWidth,viewHeight);
+    g.save();g.translate(100,0);layer(g,step*u*.35,false);layer(g,step*u*1.2,true);g.restore();lfViews.push({u,canvas:c});
+  }
+  function lfUpdate(){
+    const a=number('lfFocus'),count=number('lfViews'),g=clear('lfCanvas'),half=(count-1)/2,selected=lfViews.filter(v=>Math.abs(v.u)<=half);
+    put('lfFocusVal',a.toFixed(2));
+    text(g,'固定输入：9 张视图的缩略图',20,25,colors.ink,14);
+    lfViews.forEach((v,i)=>{const x=20+i*91;g.drawImage(v.canvas,100,15,800,200,x,40,82,48);g.strokeStyle=Math.abs(v.u)<=half?colors.green:colors.line;g.lineWidth=Math.abs(v.u)<=half?2:1;g.strokeRect(x,40,82,48);text(g,`u=${v.u}`,x+41,105,colors.muted,11,'center');});
+    text(g,'下方：平移对齐后平均（没有重新绘制输入场景）',20,132,colors.ink,14);
+    g.fillStyle='#eff4ee';g.fillRect(20,145,810,195);g.save();g.beginPath();g.rect(20,145,810,195);g.clip();g.globalAlpha=1/selected.length;
+    // Copy the average using additive composition so weights sum to 1.
+    g.globalCompositeOperation='source-over';g.fillStyle='#000';g.globalAlpha=1;g.fillRect(20,145,810,195);g.globalCompositeOperation='lighter';g.globalAlpha=1/selected.length;
+    selected.forEach(v=>g.drawImage(v.canvas,100+step*a*v.u,10,810,195,20,145,810,195));g.restore();
+    const target=Math.abs(a-1.2)<.04?'近景对齐':Math.abs(a-.35)<.04?'远景对齐':'两层均未完全对齐';
+    put('lfExplain',`α = ${a.toFixed(2)}，参与合成 ${selected.length} 个固定视角。${count===1?'只有中央视角，滑块改变不会产生效果，因为没有跨视角积分。':`${target}；近层剩余视差系数 ${(1.2-a).toFixed(2)}，远层 ${(0.35-a).toFixed(2)}。更多视角会让未对齐结构在更宽范围内叠加。`}`);
+  }
+  const sections=[...document.querySelectorAll('.chapter')];
+  sections.forEach((section,index)=>{
+    const a=document.createElement('a');a.href='#'+section.id;a.textContent=`${String(index+1).padStart(2,'0')}  ${section.dataset.title}`;$('toc').append(a);
+    const o=document.createElement('option');o.value=section.id;o.textContent=a.textContent;$('mobileToc').append(o);
+  });
+  $('mobileToc').addEventListener('change',()=>document.getElementById($('mobileToc').value).scrollIntoView({behavior:'smooth'}));
+  const labs=[{ids:['fovF','fovSensor'],update:fovUpdate},{ids:['expN','expT','expISO','expSpeed'],update:exposureUpdate},{ids:['dofF','dofN','dofS','dofZ','dofC','dofP'],update:dofUpdate},{ids:['lfFocus','lfViews'],update:lfUpdate}];
+  labs.forEach(l=>{l.ids.forEach(id=>$(id).addEventListener('input',l.update));l.update();});
+  let fontSize=17;function changeFont(delta){fontSize=clamp(fontSize+delta,15,22);document.documentElement.style.setProperty('--text-size',fontSize+'px');}
+  $('fontDown').addEventListener('click',()=>changeFont(-1));$('fontUp').addEventListener('click',()=>changeFont(1));
+  $('theme').addEventListener('click',()=>{const dark=document.body.classList.toggle('dark');$('theme').textContent=dark?'浅色':'深色';$('theme').setAttribute('aria-label',dark?'切换浅色模式':'切换深色模式');});
+  $('print').addEventListener('click',()=>window.print());
+  let previousDetails=null;
+  window.addEventListener('beforeprint',()=>{if(previousDetails===null)previousDetails=[...document.querySelectorAll('details')].map(d=>[d,d.open]);previousDetails.forEach(([d])=>d.open=true);});
+  window.addEventListener('afterprint',()=>{if(previousDetails){previousDetails.forEach(([d,open])=>d.open=open);previousDetails=null;}});
+  let ticking=false;
+  function scrollUpdate(){
+    const height=document.documentElement.scrollHeight-innerHeight;const ratio=height>0?clamp(scrollY/height,0,1):0;$('progress').style.width=ratio*100+'%';
+    let current=null;for(const section of sections){if(section.getBoundingClientRect().top<140)current=section;else break;}
+    document.querySelectorAll('#toc a').forEach(a=>{const active=current&&a.hash==='#'+current.id;a.classList.toggle('active',!!active);if(active)a.setAttribute('aria-current','location');else a.removeAttribute('aria-current');});
+    if(current)$('mobileToc').value=current.id;ticking=false;
+  }
+  window.addEventListener('scroll',()=>{if(!ticking){requestAnimationFrame(scrollUpdate);ticking=true;}},{passive:true});window.addEventListener('resize',scrollUpdate);scrollUpdate();
+})();
+</script>
+</body>
+</html>
