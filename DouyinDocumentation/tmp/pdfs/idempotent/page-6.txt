@@ -1,0 +1,52 @@
+Making retries safe with idempotent APIs 
+5 
+ 
+                "Code": 0,                                                                                                                                                                                                                                                       
+                "Name": "pending"                                                                                                                                                                                                                                                
+            },                                                                                                                                                                                                                                                                   
+            "InstanceId": "i-xxxxxxxxxxxxxxxxx",                                                                                                                                                                                                                                 
+            "ImageId": "ami-04fcd96153cb57194", 
+            …                                                                                                                                                                                                                                  
+            "ClientToken": "eb3c3141-a229-4ca0-b005-eb922e2cabdc",                                                                                                                                                                                                               
+            …  
+ 
+In many AWS API operations, the unique client request identifier is modeled by the ClientToken 
+field. Not e that we didn’t  provide a unique client request identifier in our request. The 
+ClientToken property in the response is echoed back by the remote service. This is because the 
+AWS CLI will generate a unique ID for the request if an identifier is not provided, which allows 
+retries to happen “under the hood”  in the event of a transient upstream service fault . An 
+example of what a retried request/response might look like can be simulated by waiting a few 
+minutes and then making another request using the AWS CLI and the same ClientToken  that 
+was returned in the previous request. It’s important to note that the response returned is very 
+similar but not identical to the first response: 
+ 
+$ aws ec2 run -instances --image-id ami- 04fcd96153cb57194 --instance-type t2.micro -- client-token 
+eb3c3141-a229-4ca0-b005-eb922e2cabdc 
+{                                                                                                                                                                                                                                                                                
+    "Instances": [                                                                                                                                                                                                                                                               
+        {                                                                                                                                                                                                                                                                        
+            "Monitoring": {                                                                                                                                                                                                                                                      
+                "State": "disabled"                                                                                                                                                                                                                                              
+            },                                                                                                                                                                                                                                                                   
+            "StateReason": { 
+                "Message": "running",  Now running 
+                "Code": "running"   Now running 
+            },  
+            "State": { 
+                "Code": 16,   Now running status code 
+                "Name": "running"   Now running 
+            }, 
+            "InstanceId": "i-xxxxxxxxxxxxxxxxx",                                                                                                                                                                                                                                 
+            "ImageId": "ami-04fcd96153cb57194", 
+            …                                                                                                                                                                                                                                  
+            "ClientToken": "eb3c3141-a229-4ca0-b005-eb922e2cabdc",                                                                                                                                                                                                               
+            …  
+ 
+The AWS SDK and AWS CLI leverage this behavior whenever it ’s available to simplify the 
+experience of the customer using these tools. Our SDK and CLI are aware of which operations 
+support an idempotent contract, and they will generate a unique client request identifier and 
+add it to the request if one is not provided by the caller. This generated identifier is then reused 
+in the event of a retry, thus ensuring we meet the “at most once” commitment for the request. 
+Because the response (even on a retry) is semantically equivalent, the calling client code can be 
+completely unaware of any retries that happen within the SDK code and simply deal with the 
+response when it is received.  

@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="从键值映射、哈希与碰撞，到字符串缓存、复杂度、Lua 和 C# 用法的一篇中文字典教程。">
+<title>字典详解 · 哈希、字符串与查找成本</title>
+<style>
+:root{color-scheme:light dark;--bg:#f6f7f3;--paper:#fff;--ink:#202f2c;--muted:#52665f;--line:#d9e1da;--accent:#185b45;--soft:#edf5ed;--code:#172e27;--code-ink:#edf5ed;--warm:#fcf3df;--warm-ink:#70521b;--active:#dbecd9}
+@media(prefers-color-scheme:dark){:root{--bg:#151e1b;--paper:#1c2924;--ink:#e5eee7;--muted:#afc4b8;--line:#3b5045;--accent:#a1d7ae;--soft:#273b2d;--code:#102019;--code-ink:#edf5ed;--warm:#3a3121;--warm-ink:#e4cca0;--active:#3a553d}}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:24px}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.85 "Segoe UI","Microsoft YaHei","PingFang SC",sans-serif}a{color:var(--accent);text-underline-offset:4px}a:hover{text-decoration-thickness:2px}button,input,select{font:inherit}button{cursor:pointer}button:disabled{cursor:default;opacity:.5}button:focus-visible,input:focus-visible,select:focus-visible,a:focus-visible,summary:focus-visible{outline:3px solid var(--accent);outline-offset:4px}code,kbd{font-family:Consolas,"Cascadia Code",monospace;font-size:.92em}p code,li code,td code{padding:.1em .3em;background:var(--soft);border-radius:3px;overflow-wrap:anywhere}h1,h2,h3{line-height:1.35;letter-spacing:-.02em}h1{font-size:clamp(34px,4.8vw,52px);margin:12px 0 18px}h2{font-size:27px;margin:0 0 20px}h3{font-size:20px;margin:26px 0 10px}p{margin:12px 0}ul,ol{padding-left:24px}li{margin:6px 0}strong{font-weight:650}.page{max-width:1200px;margin:auto;padding:0 36px}.masthead{padding:48px 0 38px;border-bottom:1px solid var(--line)}.eyebrow{font-size:12px;letter-spacing:.15em;font-weight:650;color:var(--accent)}.dek{max-width:820px;font-size:19px;color:var(--muted)}.meta{display:flex;gap:16px;flex-wrap:wrap;align-items:center;color:var(--muted);font-size:13px;margin-top:24px}.print{margin-left:auto;border:1px solid var(--line);background:var(--paper);color:var(--ink);padding:7px 15px;border-radius:6px}.layout{display:grid;grid-template-columns:210px minmax(0,1fr);gap:44px;padding-top:36px}.toc{position:sticky;top:24px;align-self:start;font-size:14px}.toc-title{font-weight:650;margin:0 0 12px}.toc a{display:block;padding:6px 9px;text-decoration:none;color:var(--muted);border-left:2px solid transparent}.toc a:hover,.toc a.current{background:var(--soft);color:var(--accent);border-left-color:var(--accent)}.toc small{display:block;color:var(--muted);padding:20px 9px 0}.article{min-width:0;background:var(--paper);padding:34px 40px 42px;border-radius:10px}.section{padding-bottom:38px;margin-bottom:38px;border-bottom:1px solid var(--line);scroll-margin-top:24px}.section:last-child{border:0;margin-bottom:0;padding-bottom:0}.section-number{font-size:12px;color:var(--muted);letter-spacing:.12em;margin-bottom:8px}.note{margin:22px 0;padding:16px 20px;background:var(--soft);border-left:3px solid var(--accent);border-radius:0 5px 5px 0}.note p:first-child{margin-top:0}.note p:last-child{margin-bottom:0}.note.warm{background:var(--warm);border-color:var(--warm-ink);color:var(--warm-ink)}.small,.source{font-size:13px;color:var(--muted)}.source a{margin-right:12px}.table-wrap{overflow-x:auto;margin:20px 0}table{width:100%;border-collapse:collapse;font-size:14px}th,td{padding:12px 13px;vertical-align:top;border-bottom:1px solid var(--line);text-align:left}th{background:var(--soft);font-weight:650}td:first-child{font-weight:550}.codebox{margin:18px 0}.code-label{font-size:12px;letter-spacing:.07em;color:var(--muted);margin-bottom:5px}pre{margin:0;background:var(--code);color:var(--code-ink);padding:18px 21px;border-radius:7px;overflow:auto;line-height:1.7;font-size:13px;tab-size:4}pre code{font-size:inherit;white-space:pre}.formula{padding:18px;background:var(--soft);font:15px/1.8 Consolas,"Microsoft YaHei",monospace;overflow-wrap:anywhere;border-radius:6px}.flow{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px;margin:22px 0}.flow div{background:var(--soft);padding:14px 12px;border-radius:5px}.flow b{display:block;color:var(--accent);font-size:13px}.flow span{font-size:13px}.split{display:grid;grid-template-columns:1fr 1fr;gap:20px}.split h3{margin-top:0}.demo{margin:24px 0;padding:22px;border:1px solid var(--line);border-radius:8px}.demo h3{margin-top:0}.controls{display:flex;gap:12px;flex-wrap:wrap;align-items:flex-end;margin:16px 0}.controls label{display:flex;flex-direction:column;gap:4px;font-size:13px;flex:1 1 130px}.controls input,.controls select{min-width:0;width:100%;padding:8px 10px;border:1px solid var(--line);border-radius:5px;background:var(--paper);color:var(--ink);font-size:16px}.controls button{border:1px solid var(--line);padding:8px 14px;min-height:43px;border-radius:5px;background:var(--paper);color:var(--ink)}.controls button.primary{background:var(--accent);color:var(--paper);border-color:var(--accent)}.demo-status{min-height:98px;background:var(--soft);padding:14px;border-radius:5px;margin:14px 0}.demo-status b{display:block}.demo-status p{margin:5px 0 0;overflow-wrap:anywhere}.demo-stats{display:flex;gap:20px;flex-wrap:wrap;font-size:13px;color:var(--muted);margin-top:10px}.buckets{table-layout:fixed}.buckets th:first-child{width:68px}.buckets td{padding:9px 8px}.buckets tr.selected td{background:var(--active)}.chain{display:flex;flex-wrap:wrap;gap:6px;align-items:center}.entry{border:1px solid var(--line);border-radius:4px;padding:4px 7px;background:var(--paper);font-size:12px;overflow-wrap:anywhere}.entry.checked{outline:2px solid var(--accent);outline-offset:1px}.entry.matched{background:var(--active);font-weight:650}.empty{font-size:13px;color:var(--muted)}details{margin:12px 0;padding:13px 16px;border:1px solid var(--line);border-radius:6px}summary{cursor:pointer;font-weight:550}details p{margin-bottom:4px}.references li{padding-bottom:9px;overflow-wrap:anywhere}.page-footer{padding:24px 0 40px;font-size:13px;color:var(--muted)}.skip{position:absolute;left:12px;top:-100px;background:var(--paper);padding:10px;z-index:10}.skip:focus{top:12px}
+@media(max-width:1000px){.page{padding:0 24px}.layout{grid-template-columns:175px minmax(0,1fr);gap:24px}.article{padding:28px}.toc{font-size:13px}}
+@media(max-width:760px){.page{padding:0 16px}.masthead{padding-top:28px}.layout{display:block;padding-top:22px}.toc{position:static;margin:0 0 24px}.toc nav{display:grid;grid-template-columns:1fr 1fr}.toc small{display:none}.article{padding:24px 18px}.flow{grid-template-columns:1fr 1fr}.split{display:block}.split>div+div{margin-top:24px}.demo{padding:15px}.print{margin-left:0}.section{padding-bottom:30px;margin-bottom:30px}.dek{font-size:17px}h2{font-size:23px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+@media print{:root{--bg:#fff;--paper:#fff;--ink:#111;--muted:#444;--line:#ccc;--accent:#164932;--soft:#f2f5f2;--code:#f4f4f4;--code-ink:#111;--warm:#f6f3ed;--warm-ink:#444;--active:#eaf0e9}.page{max-width:none;padding:0}.masthead{padding:0 0 18px}.layout{display:block;padding-top:20px}.toc,.print,.skip,.controls{display:none}.article{padding:0;border-radius:0}.section{margin-bottom:22px;padding-bottom:22px}.section h2,.section h3{break-after:avoid}pre,.note,.flow,.demo-status{break-inside:avoid}pre{white-space:pre-wrap;overflow:visible}pre code{white-space:pre-wrap;overflow-wrap:anywhere}.table-wrap{overflow:visible}th,td{padding:8px}a{color:inherit}h1{font-size:32px}body{font-size:11pt;line-height:1.65}.page-footer{padding-bottom:0}@page{size:A4;margin:16mm}}
+</style>
+</head>
+<body>
+<a href="#content" class="skip">跳到正文</a>
+<div class="page">
+<header class="masthead">
+  <div class="eyebrow">数据结构学习笔记 / DICTIONARY</div>
+  <h1>字典详解</h1>
+  <p class="dek">理解一个 key 如何找到 value，再判断字符串哈希、缓存与 O(1) 到底意味着什么。以 Lua 和 C# 为例，结合 GetSys 的实际写法。</p>
+  <div class="meta"><span>适合：已能阅读基础 Lua / C# 代码</span><span>核对日期：2026-10-14</span><button class="print" type="button" id="print-button">打印 / 保存为 PDF</button></div>
+</header>
+<div class="layout">
+<aside class="toc" aria-label="文章目录"><p class="toc-title">阅读路线</p><nav>
+  <a href="#meaning">01　字典是什么</a><a href="#lookup">02　查找如何发生</a><a href="#collision">03　亲手观察碰撞</a><a href="#complexity">04　O(1) 的前提</a><a href="#strings">05　字符串哈希缓存</a><a href="#capacity">06　扩容与内存</a><a href="#keys">07　怎样选择 key</a><a href="#usage">08　Lua / C# 用法</a><a href="#getsys">09　GetSys 与缓存</a><a href="#measure">10　怎样验证性能</a><a href="#questions">11　理解检查</a><a href="#references">12　原始资料</a>
+</nav><small>正文和示例均可离线使用。资料链接需要联网。</small></aside>
+<main class="article" id="content">
+<section class="section" id="meaning"><div class="section-number">01 / 概念</div><h2>字典是“键 → 值”的映射</h2>
+<p>字典用一个 <strong>key（键）</strong>找到对应的 <strong>value（值）</strong>。例如系统名称对应系统实例、玩家 ID 对应玩家数据、物品 ID 对应配置行。键的用途是标识条目；值才是你要保存和取得的内容。</p>
+<div class="table-wrap"><table><thead><tr><th>key</th><th>value</th><th>表达的关系</th></tr></thead><tbody><tr><td><code>"UISystem"</code></td><td>UI 系统实例</td><td>按名称取得系统</td></tr><tr><td><code>1000</code></td><td>成就配置行</td><td>按 ID 取得配置</td></tr><tr><td><code>"player-17"</code></td><td>玩家档案</td><td>按玩家标识取得数据</td></tr></tbody></table></div>
+<p><strong>字典是一种映射能力，哈希表是一种实现方式。</strong>也可以用树实现映射；例如 C# 的 <code>Dictionary&lt;TKey,TValue&gt;</code> 和 <code>SortedDictionary&lt;TKey,TValue&gt;</code> 都提供键值映射，但底层结构、排序行为和成本不同。本文重点讲哈希表。</p>
+<p>数组通常按位置访问：第 0 个、第 1 个。字典按标识访问：ID 为 1000 的条目。选择哪种结构，先看你的操作是“按位置读取”，还是“按标识查找”。</p>
+<div class="note"><p><strong>“键唯一”由相等规则决定。</strong>如果大小写不敏感，<code>"UI"</code> 和 <code>"ui"</code> 可以是同一个键；大小写敏感时，它们是两个键。两个不同键可以存同一个 value。</p></div>
+<p class="source">资料：<a href="https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.dictionary-2?view=net-10.0">.NET Dictionary</a> · <a href="https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.sorteddictionary-2?view=net-10.0">SortedDictionary</a></p>
+</section>
+<section class="section" id="lookup"><div class="section-number">02 / 原理</div><h2>一次哈希表查找分成几步</h2>
+<div class="flow" aria-label="哈希表查询流程"><div><b>① 取得哈希</b><span>从 key 计算或读取 hash</span></div><div><b>② 定位桶</b><span>用 hash 找到候选区域</span></div><div><b>③ 检查候选</b><span>比较哈希及键是否相等</span></div><div><b>④ 返回结果</b><span>找到 value，或报告不存在</span></div></div>
+<p>哈希函数把键映射成一个整数。它的作用是让数据分布到不同位置，从而缩小查找范围。哈希值不是键的唯一编号，也不是把原字符串修改成了一个整数。</p>
+<p>如果有 8 个桶，教学示例可以使用 <code>bucket = hash % 8</code>。真实实现可能使用取模、位运算或优化过的计算方式。桶里还需要保留键或能够比较键的信息，因为位置相同不代表键相同。</p>
+<div class="note warm"><p><strong>同一个 key 必须产生兼容的哈希；不同 key 可以产生相同哈希。</strong>如果两个对象按比较器被认为相等，它们的哈希也必须相等。反过来，相同哈希不保证两个对象相等。</p></div>
+<p>所谓<strong>碰撞</strong>包括：两个哈希值完全相同，或者两个不同哈希值最终定位到同一个桶。处理方式可以是沿候选链继续检查，也可以是在表内继续探测其他位置。碰撞处理和负载情况，决定了需要检查多少候选条目。</p>
+<p class="source">实现参考：<a href="https://www.lua.org/source/5.3/ltable.c.html">Lua 5.3 table</a> · <a href="https://github.com/dotnet/runtime/blob/main/src/libraries/System.Private.CoreLib/src/System/Collections/Generic/Dictionary.cs">.NET Dictionary 源码</a></p>
+</section>
+<section class="section" id="collision"><div class="section-number">03 / 交互实验</div><h2>碰撞之后，为什么还要比较 key？</h2>
+<p>下面使用一个容易理解、也容易碰撞的教学哈希：把字符串的 UTF-16 代码单元数值相加。<code>AB</code> 和 <code>BA</code> 都得到 <code>65 + 66 = 131</code>，因此必须继续比较原来的键。</p>
+<div class="demo" id="dictionary-demo"><h3>逐步查找一个键</h3>
+<p class="small">教学模型：链式候选列表、区分大小写；不模拟真实 Lua / .NET 的哈希算法、布局或运行速度。每次演示查询都计算哈希；条目中的哈希在构建示例时保存。</p>
+<div class="controls"><label for="query-key">查询 key<input id="query-key" type="text" value="BA" maxlength="48" spellcheck="false"></label><label for="bucket-count">桶数量<select id="bucket-count"><option value="4">4 个桶</option><option value="8" selected>8 个桶</option><option value="16">16 个桶</option></select></label><button class="primary" id="lookup-start" type="button">开始查找</button><button id="lookup-next" type="button">下一步</button></div>
+<div class="demo-status" aria-live="polite" aria-atomic="true"><b id="step-title">准备查找</b><p id="step-description">选择一个键，再观察候选条目的检查过程。</p><div class="demo-stats"><span id="capacity-stat"></span><span id="check-stat"></span></div></div>
+<table class="buckets" aria-label="教学哈希表"><thead><tr><th>桶编号</th><th>候选条目：key / 已保存的 hash</th></tr></thead><tbody id="bucket-rows"></tbody></table>
+<p class="small">尝试 <code>BA</code>、<code>AB</code>、<code>UISystem</code>，或不存在的 <code>CC</code>。改变桶数量会重新分配条目位置；<code>AB</code> 和 <code>BA</code> 的哈希完全相同，所以仍会在同一个桶。</p>
+<noscript><p>浏览器未启用 JavaScript。示例关系仍然成立：AB 和 BA 的哈希都是 131，查找时需要比较字符串内容。</p></noscript>
+</div>
+<p>一个桶中有多个条目，并不意味着一定要对所有条目逐字符比较。实现通常会先用保存的哈希排除部分候选；只有哈希等条件匹配时，才调用相等比较。具体顺序由实现决定。</p>
+</section>
+<section class="section" id="complexity"><div class="section-number">04 / 成本模型</div><h2>“平均 O(1)”究竟固定了什么？</h2>
+<p>先定义三个量：<strong>n</strong> 是字典条目数量，<strong>L</strong> 是查询字符串长度，<strong>c</strong> 是本次查询检查的候选数量。不要把 n 和 L 混成同一个规模。</p>
+<div class="formula">T(query) = T(hash, L) + T(bucket) + Σ T(compare, candidate)<br>候选数量分布良好，且哈希与比较视为常数时：期望查询成本 O(1)</div>
+<div class="table-wrap"><table><thead><tr><th>分析范围</th><th>常见结论</th><th>前提</th></tr></thead><tbody><tr><td>只考虑 n 的增长</td><td>平均 / 期望 O(1)</td><td>哈希分布良好，键处理成本固定</td></tr><tr><td>普通字符串每次完整计算哈希</td><td>平均总成本 O(L)</td><td>候选数量期望为常数；计入字符处理</td></tr><tr><td>已有哈希，键也能常数时间判等</td><td>平均总成本 O(1)</td><td>例如复用已驻留的短字符串对象</td></tr><tr><td>大量条目碰撞</td><td>候选检查可退化为 O(n)</td><td>一次查询可能检查许多条目</td></tr></tbody></table></div>
+<p>已有哈希不等于整个查询一定与 L 无关。两个不同的长字符串对象即使内容相同，判断内容相等仍可能检查 O(L) 个字符。若候选很多且每次比较也昂贵，成本还会组合增长。</p>
+<p>对于固定键 <code>"UISystem"</code>，L 始终为 8。相对于 n，把它看成常数是合理的。因此“平均 O(1)”和“字符串哈希要处理字符”可以同时成立。</p>
+<div class="note"><p><strong>O(1) 描述增长趋势，不描述多少纳秒。</strong>函数调用、哈希计算、访问内存、分支和比较，即使都按常数计算，也各有实际成本。两段 O(1) 的代码可能相差很大。</p></div>
+<p>“平均”和“摊销”也有区别：平均查找关注候选分布；摊销插入则把偶尔出现的扩容成本，分配到一串操作中。它们都不能保证每一次操作耗时相同。</p>
+</section>
+<section class="section" id="strings"><div class="section-number">05 / Lua 与 C#</div><h2>字符串哈希是每次算，还是第一次算？</h2>
+<p>这由运行时、字符串对象和比较器决定。字符串不可变，意味着缓存哈希在逻辑上可行；它不意味着所有实现都会缓存。以下对照标准 Lua 5.3 与当前 .NET 源码，不把某个实现当成语言规范。</p>
+<h3>Lua 5.3：缓存保存在字符串对象上</h3>
+<p>短字符串在驻留时计算并保存哈希，相同内容可以复用同一个对象。table 查询已有短字符串时使用保存的哈希，并可用对象身份判等。长字符串通常在首次需要哈希时计算，然后保存结果。</p>
+<p>反复执行同一段代码中的 <code>GetSys("UISystem")</code>，会复用已有的字符串常量。动态拼接或外部传入数据则不同：构造 / 驻留过程仍可能计算哈希或比较内容。缓存针对对象，不能理解成“相同文字在所有路径上只处理一次”。</p>
+<p class="source"><a href="https://www.lua.org/source/5.3/lstring.c.html">lstring.c：驻留与哈希缓存</a><a href="https://www.lua.org/source/5.3/ltable.c.html">ltable.c：查询路径</a></p>
+<div class="note warm"><p><strong>版本细节不能省略。</strong>标准 Lua 5.3 的长字符串哈希采用抽样，不能笼统断言其首次哈希一定扫描全部 L 个字节；Lua 5.4 的实现不同。创建长字符串和比较不同对象的内容仍可能与长度有关。</p><p class="source"><a href="https://www.lua.org/source/5.3/lstring.c.html">Lua 5.3 哈希循环</a><a href="https://www.lua.org/source/5.4/lstring.c.html">Lua 5.4 哈希循环</a></p></div>
+<h3>.NET：存储条目的哈希，不等于缓存查询字符串的哈希</h3>
+<p>当前 .NET 的普通字符串 Dictionary 查询通常会调用比较器，为传入的 key 计算哈希。条目自身保存的 <code>hashCode</code> 用于候选筛选；它不能直接替代对任意查询 key 的处理。</p>
+<p>普通字符串哈希路径通常仍读取字符，即使传入的是同一个字符串对象。字符串驻留、字典条目保存哈希、缓存查询结果，是三件不同的事。自定义比较器可以有不同策略；Unity 的 Mono / IL2CPP 还应以目标运行时为准。</p>
+<p class="source"><a href="https://github.com/dotnet/runtime/blob/main/src/libraries/System.Private.CoreLib/src/System/Collections/Generic/Dictionary.cs">Dictionary 的查询路径</a><a href="https://github.com/dotnet/runtime/blob/main/src/libraries/System.Private.CoreLib/src/System/String.Comparison.cs">String 的哈希实现</a></p>
+<div class="table-wrap"><table><thead><tr><th>机制</th><th>它保存什么？</th><th>它能省掉什么？</th></tr></thead><tbody><tr><td>字符串驻留</td><td>复用相同内容的字符串对象</td><td>部分重复对象及判等成本</td></tr><tr><td>字符串对象缓存哈希</td><td>该对象已计算的哈希</td><td>复用对象时的重复哈希计算</td></tr><tr><td>字典条目保存哈希</td><td>存入条目的哈希</td><td>候选筛选时重新处理存入键的部分成本</td></tr><tr><td>业务代码缓存 value</td><td>查询得到的值或实例引用</td><td>后续相同依赖的整次字典查询</td></tr></tbody></table></div>
+</section>
+<section class="section" id="capacity"><div class="section-number">06 / 空间与写入</div><h2>字典为什么比“只存键和值”更占空间？</h2>
+<p>哈希表还要保存定位信息：桶、条目、哈希、冲突关联，以及尚未使用的容量。预留空间有助于减少频繁扩容，但会占用更多内存。查询更快与内存更省，并不总是同一个目标。</p>
+<p><strong>负载因子</strong>通常表示条目数量与桶数量的比值。它用来描述表有多拥挤，但“达到 0.75 就扩容”不是所有字典都遵循的规则。链式结构和开放寻址对负载的要求也不同。</p>
+<p>扩容通常要分配更大的存储，并把已有条目重新安排到新位置。位置变了，不一定要重新计算每个字符串的哈希；有的实现可以使用保存的哈希。也有因切换哈希策略而重新计算的情况。</p>
+<p>在键处理视为常数、容量按几何增长的模型下，单次触发扩容的插入可达到 O(n)，一串插入的摊销成本仍可为 O(1)。这解释了为什么连续写入大批数据时，会出现某一次操作比其他次慢很多。</p>
+<div class="codebox"><div class="code-label">C# · 已知大致数量时，在构造时指定容量</div><pre><code>var players = new Dictionary&lt;int, PlayerData&gt;(capacity: 1000);
+
+// capacity 是预留能力，不表示已经有 1000 条数据。
+// 此时 players.Count 仍然是 0。</code></pre></div>
+<p>目标框架支持时，也可以使用 <code>EnsureCapacity</code>。在 Unity 工程中先检查 API Compatibility Level 和实际可用 API，不直接照搬最新版 .NET 的所有方法。</p>
+<p class="source"><a href="https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.dictionary-2.ensurecapacity?view=net-10.0">EnsureCapacity 的含义</a></p>
+</section>
+<section class="section" id="keys"><div class="section-number">07 / 键设计</div><h2>什么样的 key 更适合查找？</h2>
+<div class="table-wrap"><table><thead><tr><th>场景</th><th>常见选择</th><th>要明确的规则</th></tr></thead><tbody><tr><td>物品、成就配置</td><td>稳定的整数 ID</td><td>是否允许 ID 复用；数字与字符串 ID 是否混用</td></tr><tr><td>IOC 系统注册</td><td>固定的短名称</td><td>拼写、大小写、是否有重名</td></tr><tr><td>玩家档案</td><td>平台提供的稳定标识</td><td>不要用可修改昵称当身份标识</td></tr><tr><td>多个维度共同标识</td><td>明确的组合键</td><td>字段边界和相等规则必须明确</td></tr></tbody></table></div>
+<p>整数键的处理成本通常较小，但“把所有字符串换成整数”不是必然值得做的优化。若转换本身还需要查另一张字典，你可能只是增加了一层查找。</p>
+<h3>相等规则和哈希规则必须一起设计</h3>
+<p>自定义键的哈希可以碰撞，但相等的键必须有一致的哈希。对象存入字典后，参与哈希和相等判断的字段应保持稳定；修改这些字段，可能让对象被存入的位置与后续查询位置不一致。</p>
+<div class="codebox"><div class="code-label">C# · 系统名称明确使用大小写敏感的序数比较</div><pre><code>var systems = new Dictionary&lt;string, object&gt;(StringComparer.Ordinal);
+
+// 如果业务确实要求 "UI" 与 "ui" 表示同一个键：
+var names = new Dictionary&lt;string, int&gt;(StringComparer.OrdinalIgnoreCase);</code></pre></div>
+<p>组合字符串要避免拼接歧义，例如 <code>1 .. 23</code> 与 <code>12 .. 3</code> 都会变成 <code>"123"</code>。整数维度可以采用有明确分隔符的 <code>"1:23"</code>；任意文本则需要处理转义，或使用结构化组合键。</p>
+<p class="source"><a href="https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.dictionary-2.comparer?view=net-10.0">Dictionary.Comparer</a><a href="https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.iequalitycomparer-1.gethashcode?view=net-10.0">相等与哈希契约</a></p>
+</section>
+<section class="section" id="usage"><div class="section-number">08 / 基本操作</div><h2>Lua 和 C# 的使用差异</h2>
+<div class="split"><div><h3>Lua：table 提供映射能力</h3><div class="codebox"><div class="code-label">LUA</div><pre><code>local counts = {}
+
+counts[1000] = 3        -- 写入
+local count = counts[1000] -- 读取
+counts[1000] = 4        -- 覆盖
+counts[1000] = nil      -- 删除
+
+local flags = { done = false }
+print(flags.done ~= nil) -- true：键存在</code></pre></div></div><div><h3>C#：使用明确的字典类型</h3><div class="codebox"><div class="code-label">C#</div><pre><code>var counts = new Dictionary&lt;int, int&gt;();
+
+counts.Add(1000, 3);    // 重复 key 会抛异常
+if (counts.TryGetValue(1000, out int count))
+{
+    Console.WriteLine(count);
+}
+counts[1000] = 4;       // 写入或覆盖
+counts.Remove(1000);    // 删除</code></pre></div></div></div>
+<p>Lua 普通 table 中，值为 <code>nil</code> 就表示这个键没有条目；<code>false</code> 是可以保存的值。如果要判断“是否存在”，用 <code>value ~= nil</code>，不能只用 <code>if value then</code>。使用了元表 <code>__index</code> 的 table，普通读取还可能执行额外逻辑。</p>
+<p>Lua 的 <code>1000</code> 和 <code>"1000"</code> 是不同键。普通 table 的稠密整数键可以使用数组部分，其他键使用哈希部分；并不是所有 table 访问都走同一条路径。不要用 <code>#table</code> 当任意字典的条目总数，也不要依赖 <code>pairs</code> 的遍历顺序。</p>
+<p class="source"><a href="https://www.lua.org/manual/5.3/manual.html#2.1">Lua 的值与 table</a><a href="https://www.lua.org/manual/5.3/manual.html#3.4.7">长度运算符</a><a href="https://www.lua.org/source/5.3/ltable.c.html">数组 / 哈希两部分</a></p>
+<h3>C#：需要 value 时，优先一次 TryGetValue</h3>
+<div class="codebox"><div class="code-label">C# · 避免 ContainsKey 后再索引造成两次查询</div><pre><code>// 两次查询。
+if (counts.ContainsKey(1000))
+{
+    Use(counts[1000]);
+}
+
+// 一次查询，明确处理不存在。
+if (counts.TryGetValue(1000, out int count))
+{
+    Use(count);
+}</code></pre></div>
+<p>不存在的键通过索引器读取会抛异常。<code>TryGetValue</code> 返回是否找到，并把结果放入输出参数；不存在时输出的是 TValue 的默认值。因此应检查返回的 bool，而不是仅凭输出值是否为 0 / null 判断是否找到。</p>
+<p>示例里的 <code>PlayerData</code>、<code>Use</code> 代表你的业务类型和方法，不是 .NET 内置 API。</p>
+<p class="source"><a href="https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.dictionary-2.trygetvalue?view=net-10.0">TryGetValue 官方说明</a></p>
+</section>
+<section class="section" id="getsys"><div class="section-number">09 / 回到工程</div><h2>把 ui 放到函数外，省掉了什么？</h2>
+<p>在这次工程中，<code>GetSys("UISystem")</code> 最终读取的是 Lua table：<code>_systems[systemName]</code>。因此，C# Dictionary 的字符串哈希行为，不能直接用来解释这一次查询。</p>
+<div class="codebox"><div class="code-label">A · 仅保存本次调用的查询结果</div><pre><code>function AchievementSystem:CloseView()
+    local ui = GetSys("UISystem")
+    if ui then ui:CloseUI("UI_AchievementView") end
+end</code></pre></div>
+<div class="codebox"><div class="code-label">B · 变量移到外面，但每次依旧查询</div><pre><code>local ui = nil
+
+function AchievementSystem:CloseView()
+    ui = GetSys("UISystem")
+    if ui then ui:CloseUI("UI_AchievementView") end
+end</code></pre></div>
+<p>A 和 B 每次都调用 GetSys。无论字符串哈希是否缓存，它们都没有减少这次 table 查询。区别是 A 用函数局部变量保存引用；B 用被函数捕获的外部局部变量，也就是 upvalue，保存引用。</p>
+<p><code>local ui</code> 不表示每次在堆上新建一个 UISystem 对象。它只是保存已有对象的引用，函数局部槽位由调用机制管理。B 会跨调用保留引用，并在模块内共享；是否更快必须结合编译器与运行时测量，不能用“少声明一个 local”直接推断。</p>
+<div class="codebox"><div class="code-label">C · 真正减少重复查询：仅在尚未缓存时查找</div><pre><code>function AchievementSystem:GetUI()
+    if self.ui == nil then
+        self.ui = GetSys("UISystem")
+    end
+    return self.ui
+end</code></pre></div>
+<p>C 是一种缓存示意。首次取得对象后，后续可以绕过 IOC 查找，但仍有方法调用和字段访问成本。如果 UISystem 会被移除或替换，就需要清除旧引用；如果首次查询返回 nil，后续会再次尝试。</p>
+<div class="note"><p><strong>先确认调用频率，再决定缓存。</strong>偶尔关闭一次界面，代码简洁通常更重要。如果每帧有大量重复依赖查询，再测量查找成本，考虑在明确的初始化阶段取得依赖。</p></div>
+<p class="small">这一节是对给定代码的成本分析，没有宣称 A、B 或 C 在所有 Lua / xLua 环境下都有固定的速度排名。局部变量与 upvalue 的作用域规则见 <a href="https://www.lua.org/manual/5.3/manual.html#3.5">Lua 手册</a>。</p>
+</section>
+<section class="section" id="measure"><div class="section-number">10 / 工程验证</div><h2>怎样测量，才不会比较错东西？</h2>
+<p>先明确要测的层级：是纯字典查找，还是包含 GetSys 包装调用，或包含整个 UI 关闭过程？如果把 UI 操作放在循环里，测到的很可能主要是 UI 生命周期，而非字符串哈希。</p>
+<ol><li><strong>控制 key 的来源。</strong>分别测试固定常量、复用已有字符串、每次动态生成字符串。动态生成的分配与构造成本应单独报告。</li><li><strong>区分命中与未命中。</strong>两种路径不一定检查相同数量的候选。固定 n 后，再改变 L，避免只测一种很短的键。</li><li><strong>把扩容和查询分开。</strong>先构建字典，再测查找；若要测写入，另测预留容量和扩容阶段。</li><li><strong>固定运行条件。</strong>使用目标运行时和目标构建方式；JIT 环境需要预热，多轮比较，记录波动和分配，而非仅凭一次耗时。</li><li><strong>避免测量代码干扰。</strong>循环内部不要打印、拼接日志或创建无关对象；使用或累积查询结果，避免把无用计算当成真实业务。</li></ol>
+<p>Unity 中应区分 Editor、Mono 和 IL2CPP 构建。标准 .NET 的微基准结果可以帮助理解，但不能直接当成 Unity 目标设备上的性能结论。本文交互实验显示的是操作步骤，不是实测性能数据。</p>
+<p>优化的收益还要乘上调用频率：一次差异很小的查找，每帧执行数万次可能值得关注；每天只执行几次，则未必值得增加缓存与生命周期管理。</p>
+</section>
+<section class="section" id="questions"><div class="section-number">11 / 理解检查</div><h2>用这几个问题检查自己是否理解</h2>
+<details><summary>相同 hashCode 是否意味着相同 key？</summary><p>不意味着。哈希会碰撞；还需要根据比较器判断 key 是否相等。相等的 key 必须有兼容哈希，但反方向不成立。</p></details>
+<details><summary>Dictionary 已保存条目哈希，为什么还要处理查询 key？</summary><p>调用者可以传入任何键。查找必须先知道它应去哪个桶；条目哈希只在已经找到候选区域后帮助筛选候选。查询字符串自身是否缓存哈希，是另一项机制。</p></details>
+<details><summary>字符串哈希需要 O(L)，为什么字典仍被称为平均 O(1)？</summary><p>常见描述是相对于条目数量 n，并把键处理成本固定。L 可变且需要完整处理时，应把字符串成本也计入；固定键的长度则可以视为常数。</p></details>
+<details><summary>把 ui 声明在函数外，就等于缓存 GetSys 的结果吗？</summary><p>只有后续跳过 GetSys、直接复用之前结果时，才减少了查询。每次仍执行 <code>ui = GetSys(...)</code>，就仍有同样的查找。</p></details>
+<details><summary>Lua 中 value 为 false，是否表示这个 key 不存在？</summary><p>不表示。false 是可保存的值；普通 table 中用 <code>value ~= nil</code> 判断存在。带元表的读取还要考虑 __index。</p></details>
+<details><summary>扩容后，是否必然重新计算所有字符串哈希？</summary><p>不必然。条目的桶位置需要重新安排，但有的实现可以利用已保存的哈希；是否重算取决于实现和是否更换哈希策略。</p></details>
+</section>
+<section class="section references" id="references"><div class="section-number">12 / 继续阅读</div><h2>原始资料与版本范围</h2>
+<p>来源核对日期为 2026-10-14。Lua 部分对照标准 5.3 源码；长字符串哈希的版本差异另对照 5.4。.NET 源码链接指向当前实现，其细节可能随版本变化。项目附带 xLua 报告 Lua 5.3，并不证明它的所有细节与标准源码完全相同。</p>
+<ol><li><a href="https://www.lua.org/manual/5.3/manual.html">Lua 5.3 Reference Manual</a>：值、table、长度、词法作用域与 upvalue。</li><li><a href="https://www.lua.org/source/5.3/lstring.c.html">Lua 5.3 lstring.c</a>：字符串驻留、哈希计算、长字符串缓存。</li><li><a href="https://www.lua.org/source/5.3/ltable.c.html">Lua 5.3 ltable.c</a>：数组 / 哈希部分、候选查询与碰撞处理。</li><li><a href="https://www.lua.org/source/5.4/lstring.c.html">Lua 5.4 lstring.c</a>：与 5.3 对照长字符串哈希实现。</li><li><a href="https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.dictionary-2?view=net-10.0">Microsoft Learn：Dictionary&lt;TKey,TValue&gt;</a>：映射能力与基本使用。</li><li><a href="https://github.com/dotnet/runtime/blob/main/src/libraries/System.Private.CoreLib/src/System/Collections/Generic/Dictionary.cs">.NET Dictionary.cs</a>：FindValue、哈希获取、候选筛选、插入和扩容。</li><li><a href="https://github.com/dotnet/runtime/blob/main/src/libraries/System.Private.CoreLib/src/System/String.Comparison.cs">.NET String.Comparison.cs</a>：字符串哈希与比较实现。</li><li><a href="https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.dictionary-2.trygetvalue?view=net-10.0">Microsoft Learn：TryGetValue</a>：返回结果和未命中处理。</li><li><a href="https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.dictionary-2.ensurecapacity?view=net-10.0">Microsoft Learn：EnsureCapacity</a>：容量预留。</li><li><a href="https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.dictionary-2.comparer?view=net-10.0">Microsoft Learn：Dictionary.Comparer</a>：键的相等比较器。</li><li><a href="https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.iequalitycomparer-1.gethashcode?view=net-10.0">Microsoft Learn：IEqualityComparer.GetHashCode</a>：相等与哈希的一致性契约。</li><li><a href="https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.sorteddictionary-2?view=net-10.0">Microsoft Learn：SortedDictionary</a>：树实现的有序映射。</li></ol>
+</section>
+</main>
+</div>
+<footer class="page-footer">独立 HTML 文档 · 不加载外部脚本、字体或图片 · 支持离线阅读、键盘操作与打印</footer>
+</div>
+<script>
+(() => {
+  'use strict';
+  document.getElementById('print-button').addEventListener('click', () => window.print());
+  const input = document.getElementById('query-key');
+  const capacitySelect = document.getElementById('bucket-count');
+  const rows = document.getElementById('bucket-rows');
+  const title = document.getElementById('step-title');
+  const description = document.getElementById('step-description');
+  const nextButton = document.getElementById('lookup-next');
+  const capacityStat = document.getElementById('capacity-stat');
+  const checkStat = document.getElementById('check-stat');
+  function hash(key) { let value = 0; for (let i = 0; i < key.length; i++) value = (value + key.charCodeAt(i)) >>> 0; return value; }
+  const entries = [
+    ['UISystem', '界面系统'], ['AchievementSystem', '成就系统'], ['AB', '示例 A'], ['BA', '示例 B']
+  ].map(([key, value]) => ({ key, value, hash: hash(key) }));
+  let steps = [], stepIndex = 0, capacity = 8;
+  function renderBuckets(selectedBucket = -1, checkedKey = null, matched = false) {
+    rows.replaceChildren();
+    for (let bucket = 0; bucket < capacity; bucket++) {
+      const row = document.createElement('tr');
+      if (bucket === selectedBucket) row.classList.add('selected');
+      const index = document.createElement('td'); index.textContent = String(bucket); row.append(index);
+      const cell = document.createElement('td'); const chain = document.createElement('div'); chain.className = 'chain';
+      const candidates = entries.filter(entry => entry.hash % capacity === bucket);
+      if (!candidates.length) { const empty = document.createElement('span'); empty.className = 'empty'; empty.textContent = '空'; chain.append(empty); }
+      candidates.forEach((entry, i) => {
+        if (i) { const arrow = document.createElement('span'); arrow.textContent = '→'; arrow.setAttribute('aria-hidden', 'true'); chain.append(arrow); }
+        const chip = document.createElement('span'); chip.className = 'entry'; chip.textContent = entry.key + ' / ' + entry.hash;
+        if (entry.key === checkedKey) chip.classList.add(matched ? 'matched' : 'checked');
+        chain.append(chip);
+      });
+      cell.append(chain); row.append(cell); rows.append(row);
+    }
+    capacityStat.textContent = '4 个条目 / ' + capacity + ' 个桶 · 负载因子 ' + (entries.length / capacity).toFixed(2);
+  }
+  function showStep() {
+    const step = steps[stepIndex];
+    title.textContent = '第 ' + (stepIndex + 1) + ' / ' + steps.length + ' 步 · ' + step.title;
+    description.textContent = step.description;
+    checkStat.textContent = '已检查候选：' + step.checks + ' · 已比较键内容：' + step.comparisons;
+    renderBuckets(step.bucket, step.key, step.matched);
+    nextButton.disabled = stepIndex >= steps.length - 1;
+  }
+  function startLookup() {
+    capacity = Number(capacitySelect.value);
+    const query = input.value; const queryHash = hash(query); const bucket = queryHash % capacity;
+    steps = [
+      { title: '计算查询 key 的哈希', description: JSON.stringify(query) + ' 的代码单元求和为 ' + queryHash + '。这是教学哈希，不是 Lua 或 C# 的真实算法。', checks: 0, comparisons: 0, bucket: -1 },
+      { title: '定位候选桶', description: queryHash + ' % ' + capacity + ' = ' + bucket + '，继续检查这个桶中的条目。', checks: 0, comparisons: 0, bucket }
+    ];
+    let checks = 0, comparisons = 0, found = null;
+    for (const entry of entries.filter(entry => entry.hash % capacity === bucket)) {
+      checks++;
+      const hashMatches = entry.hash === queryHash;
+      if (hashMatches) comparisons++;
+      const matches = hashMatches && entry.key === query;
+      steps.push({ title: '检查候选 ' + checks, description: !hashMatches
+        ? entry.key + ' 的已保存哈希是 ' + entry.hash + '，与查询哈希 ' + queryHash + ' 不同，跳过键内容比较。'
+        : matches ? entry.key + ' 的哈希相同，键内容也相同，找到对应值。'
+        : entry.key + ' 的哈希相同，但键内容与 ' + JSON.stringify(query) + ' 不同，继续检查下一个条目。', checks, comparisons, bucket, key: entry.key, matched: matches });
+      if (matches) { found = entry; break; }
+    }
+    steps.push({ title: found ? '返回 value' : '返回未找到', description: found
+      ? JSON.stringify(query) + ' → ' + found.value + '。共检查 ' + checks + ' 个候选，比较键内容 ' + comparisons + ' 次。'
+      : JSON.stringify(query) + ' 不在字典中。定位到桶不代表这个键一定存在。', checks, comparisons, bucket, key: found && found.key, matched: Boolean(found) });
+    stepIndex = 0; showStep();
+  }
+  document.getElementById('lookup-start').addEventListener('click', startLookup);
+  nextButton.addEventListener('click', () => { if (stepIndex < steps.length - 1) { stepIndex++; showStep(); } });
+  capacitySelect.addEventListener('change', startLookup);
+  input.addEventListener('input', () => {
+    nextButton.disabled = true; steps = [];
+    title.textContent = '查询 key 已更改'; description.textContent = '点击“开始查找”，按新的 key 重新演示。';
+    checkStat.textContent = ''; renderBuckets();
+  });
+  input.addEventListener('keydown', event => { if (event.key === 'Enter') startLookup(); });
+  startLookup();
+  const links = [...document.querySelectorAll('.toc nav a')];
+  const sections = [...document.querySelectorAll('.section')];
+  let navigationPending = false;
+  function updateNavigation() {
+    let current = sections[0];
+    for (const section of sections) {
+      if (section.getBoundingClientRect().top <= 160) current = section;
+      else break;
+    }
+    links.forEach(link => link.classList.toggle('current', link.getAttribute('href') === '#' + current.id));
+    navigationPending = false;
+  }
+  function scheduleNavigation() {
+    if (!navigationPending) { navigationPending = true; requestAnimationFrame(updateNavigation); }
+  }
+  window.addEventListener('scroll', scheduleNavigation, { passive: true });
+  window.addEventListener('resize', scheduleNavigation);
+  updateNavigation();
+  let detailStates = [];
+  window.addEventListener('beforeprint', () => {
+    detailStates = [...document.querySelectorAll('details')].map(element => ({ element, open: element.open }));
+    detailStates.forEach(item => { item.element.open = true; });
+  });
+  window.addEventListener('afterprint', () => detailStates.forEach(item => { item.element.open = item.open; }));
+})();
+</script>
+</body>
+</html>

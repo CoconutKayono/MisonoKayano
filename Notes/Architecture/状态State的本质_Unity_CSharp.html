@@ -1,0 +1,320 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light"><meta name="description" content="从 What、Why、How 理解状态的本质：必要的过去、合法的转换、Unity C# 生命值示例，以及状态与状态机的区别。"><title>状态 State 的本质 · Unity C# 笔记</title><style>
+:root{--paper:#f7f8fa;--ink:#202a36;--muted:#697581;--line:#e1e6ec;--blue:#2862b7;--nav:#152330;--nav-muted:#aebdca;--code:#172433;--side:272px}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:32px}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.85 "Segoe UI","Microsoft YaHei","PingFang SC",sans-serif;text-rendering:optimizeLegibility}button,a{-webkit-tap-highlight-color:transparent}a{color:var(--blue);text-decoration-thickness:1px;text-underline-offset:4px}a:hover{color:#153f7c}button{font:inherit;cursor:pointer}button:focus-visible,a:focus-visible,pre:focus-visible,.table-scroll:focus-visible{outline:3px solid #74a9ee;outline-offset:4px}.skip-link{position:fixed;left:20px;top:-90px;z-index:100;background:white;padding:12px 20px}.skip-link:focus{top:16px}.progress{position:fixed;left:var(--side);right:0;top:0;height:3px;background:transparent;z-index:30}.progress i{display:block;height:100%;width:0;background:#609bdd}
+.sidebar{position:fixed;inset:0 auto 0 0;width:var(--side);background:var(--nav);color:#fff;padding:36px 23px 22px;display:flex;flex-direction:column;z-index:25}.brand{display:flex;gap:12px;align-items:center;margin:0 7px 32px}.brand-mark{display:grid;place-items:center;width:39px;height:39px;border:1px solid #607689;border-radius:10px;font:bold 14px/1 monospace;letter-spacing:-1px;color:#d1e5f8}.brand b{display:block;font-size:15px;letter-spacing:.6px}.brand small{display:block;font-size:11px;color:var(--nav-muted);letter-spacing:1.3px;margin-top:2px}.toc-title{margin:0 12px 12px;color:#9eafbe;font-size:11px;font-weight:600;letter-spacing:2px}.toc{overflow:auto;scrollbar-width:thin;scrollbar-color:#425464 transparent}.toc a{display:flex;gap:12px;align-items:baseline;text-decoration:none;color:#c5d1dc;font-size:13px;line-height:1.6;border-radius:6px;padding:10px 11px;margin:3px 0}.toc a span{font:11px/1.6 monospace;color:#9caebe;flex:0 0 16px}.toc a:hover,.toc a.active{color:#fff;background:#283e51}.toc a.active{box-shadow:inset 2px 0 #8cb7e5}.sidebar-footer{margin-top:auto;padding:23px 10px 0;font-size:11px;color:#aebdca;line-height:1.7}.sidebar-footer strong{color:#dbe6ef;font-weight:500}.page{margin-left:var(--side);padding:0 48px 64px}.page-inner{max-width:1010px;margin:auto}.topbar{display:flex;align-items:center;justify-content:space-between;padding:27px 0 25px;border-bottom:1px solid var(--line);gap:12px;font-size:12px;color:var(--muted)}.topbar .crumb{letter-spacing:1px}.topbar .tools{display:flex;align-items:center;gap:16px}.print-button{padding:5px 12px;border:1px solid #ccd6e1;background:transparent;border-radius:5px;font-size:12px;color:#526477}.mobile-menu{display:none}.hero{padding:54px 0 36px}.eyebrow{font:600 12px/1.4 "Segoe UI",sans-serif;letter-spacing:2.5px;color:var(--blue);margin:0 0 20px}.hero h1{font-size:clamp(34px,4.6vw,55px);font-weight:750;line-height:1.2;letter-spacing:-2px;margin:0 0 16px}.hero h1 span{font-weight:400;color:#76818e}.hero-sub{font-size:19px;color:#687888;margin:0 0 27px;letter-spacing:.25px}.hero-tags{display:flex;flex-wrap:wrap;gap:9px}.hero-tags span{font-size:11px;padding:3px 10px;border:1px solid #d9e0e7;border-radius:4px;color:#60717f;background:#fff}.essence{margin:0 0 40px;padding:25px 27px;background:#fff;border:1px solid var(--line);border-left:3px solid var(--blue);border-radius:0 9px 9px 0}.essence p{font-size:18px;line-height:1.85;margin:0}.role-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:20px}.role{border-top:1px solid var(--line);padding-top:14px}.role b{font-size:13px;color:#355b87}.role span{display:block;font-size:12px;margin-top:3px;color:var(--muted)}
+article{font-size:15px;line-height:1.95}article>p:first-child{color:var(--muted);font-size:12px}article p{margin:14px 0}article>h2{font-size:25px;line-height:1.55;margin:58px 0 21px;padding-top:25px;border-top:1px solid var(--line);letter-spacing:-.5px;display:flex;align-items:baseline;gap:12px}.chapter-number{font:12px/1.4 monospace;color:#8695a4;letter-spacing:1px;flex:0 0 24px}article h3{font-size:18px;line-height:1.6;margin:30px 0 12px}article strong{font-weight:650}article ul,article ol{padding-left:24px;margin:14px 0}article li{padding-left:3px;margin:7px 0}article blockquote{margin:24px 0;background:#edf3fb;border-left:3px solid #5d86bd;padding:14px 23px;border-radius:0 6px 6px 0;color:#27466b}article blockquote p{margin:0}article p code,article li code,article td code{padding:2px 5px;background:#eaf0f6;border-radius:4px;color:#2b537f;font:12.5px/1.65 Consolas,"Cascadia Code",monospace;overflow-wrap:anywhere}.table-scroll{overflow-x:auto;margin:22px 0;border:1px solid var(--line);border-radius:8px;background:#fff}table{border-collapse:collapse;width:100%;font-size:13px;line-height:1.8}th{text-align:left;font-weight:650;background:#edf1f6;color:#334c67;white-space:nowrap}td,th{padding:13px 16px;vertical-align:top;border-bottom:1px solid var(--line)}tr:last-child td{border-bottom:0}td:first-child{font-weight:500;min-width:120px}pre{white-space:pre;overflow-x:auto;tab-size:4;font:12.5px/1.8 Consolas,"Cascadia Code","Microsoft YaHei",monospace}.flow-block{padding:22px 24px;border:1px solid #d8e0e9;background:#eef2f7;border-radius:8px;color:#36516c;margin:22px 0;line-height:2}.code-card{margin:23px 0 20px;background:var(--code);color:#e2e9f1;border:1px solid #26394b;border-radius:9px;overflow:hidden}.code-toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 18px;background:#203043;border-bottom:1px solid #344557}.code-toolbar strong{font:12px/1.6 Consolas,"Cascadia Code",monospace;letter-spacing:.2px;display:block;color:#e9f1fa}.code-toolbar small{font-size:10px;color:#b4c3d2;display:block;margin-top:1px}.code-actions{display:flex;gap:7px;flex-shrink:0}.code-actions button{font-size:11px;line-height:1.5;border:1px solid #5b6f83;border-radius:4px;background:transparent;color:#d7e6f6;padding:4px 9px}.code-actions button:hover{background:#3a536c;color:white}.code-card pre{padding:20px 23px;margin:0;scrollbar-color:#647c95 transparent}.tok-keyword{color:#a8c8ff}.tok-string{color:#b9dba7}.tok-comment{color:#a8b8c9}.tok-number{color:#efc79b}.end-note{margin-top:54px;padding-top:20px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:16px;font-size:11px;color:var(--muted)}.end-note a{color:#6a7f94}.toast{position:fixed;left:calc(50% + var(--side)/2);bottom:24px;transform:translateX(-50%);background:#20384e;color:#fff;padding:10px 19px;border-radius:7px;font-size:13px;box-shadow:0 4px 18px #0002;opacity:0;transition:opacity .16s;pointer-events:none;z-index:100}.toast.show{opacity:1}
+@media(min-width:1550px){.page{padding-left:80px;padding-right:80px}.hero{padding-top:65px}}
+@media(max-width:1150px){:root{--side:234px}.sidebar{padding-left:15px;padding-right:15px}.toc a{font-size:12px}.page{padding-left:30px;padding-right:30px}.hero h1{font-size:40px}}
+@media(max-width:820px){:root{--side:0px}html{scroll-padding-top:20px}.sidebar{display:none;width:260px}.sidebar.open{display:flex;box-shadow:10px 0 40px #0003}.page{margin-left:0;padding:0 23px 36px}.progress{left:0}.topbar{padding-top:17px;padding-bottom:16px}.topbar .crumb{font-size:11px}.topbar .tools{gap:9px}.mobile-menu{display:inline-block;padding:5px 9px;border:1px solid #ccd6e1;background:white;border-radius:5px;font-size:12px;color:#526477}.hero{padding-top:37px}.hero h1{font-size:37px;letter-spacing:-1px}.hero-sub{font-size:16px}.hero-tags span{font-size:10px}.essence{padding:20px}.essence p{font-size:16px}.role-grid{gap:10px}.role b{font-size:12px}.role span{font-size:11px}article{font-size:14px}article>h2{font-size:22px;margin-top:40px}article h3{font-size:17px}.code-toolbar{padding:11px 12px}.code-card pre{padding:17px 14px;font-size:11.5px}.toast{left:50%}}
+@media(max-width:420px){.page{padding-left:16px;padding-right:16px}.topbar .crumb{letter-spacing:0}.print-button{padding-left:8px;padding-right:8px}.hero h1{font-size:33px}.role-grid{grid-template-columns:1fr}.role{padding-top:8px}.role span{display:inline;margin-left:8px}.code-toolbar{align-items:flex-start}.code-actions{flex-direction:column;gap:5px}.code-actions button{padding:3px 6px}.flow-block{padding:17px 14px;font-size:11px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.toast{transition:none}}
+@media print{@page{margin:16mm}body{background:#fff;font-size:11pt}.sidebar,.topbar,.progress,.code-actions,.toast,.hero-tags,.end-note{display:none!important}.page{margin:0;padding:0}.page-inner{max-width:none}.hero{padding:0 0 16px}.hero h1{font-size:30pt}.hero-sub{font-size:14pt}.essence{margin-bottom:20px;padding:14px 18px}.essence p{font-size:12pt}article{font-size:10pt;line-height:1.65}article>h2{margin-top:26px;padding-top:15px;font-size:17pt;break-after:avoid}article h3{font-size:12pt;break-after:avoid}pre{white-space:pre-wrap;overflow:visible;overflow-wrap:anywhere;font-size:8pt!important}.code-card{background:#f7f8fa;color:#202a36;border-color:#ccd4dc}.code-toolbar{background:#edf1f6;border-color:#ccd4dc}.code-toolbar strong,.code-toolbar small{color:#34495e}.tok-keyword{color:#23558b}.tok-string{color:#3b6133}.tok-comment{color:#657566}.tok-number{color:#8a4b25}.table-scroll{overflow:visible}th,td{padding:8px 9px}.role-grid{grid-template-columns:repeat(3,1fr)}a{color:inherit;text-decoration:none}.flow-block{background:#f4f6f8;color:#30465d}}
+
+.hero h1{letter-spacing:-1.8px}.hero-sub{max-width:720px}.equation{display:block;margin:25px 0;padding:24px 20px;text-align:center;border:1px solid #d7e2ee;border-radius:8px;background:#edf3fa;font:500 23px/1.65 "Cambria Math",Cambria,"Microsoft YaHei",serif;color:#264d79;overflow-wrap:anywhere}.equation sub{font-size:60%;margin-right:3px}.equation-final{font:600 20px/1.7 "Segoe UI","Microsoft YaHei",sans-serif}var{font-family:Cambria,"Times New Roman",serif}.demo{border:1px solid #d6e1ed;border-radius:10px;margin:25px 0;padding:24px;background:#fff}.demo-heading{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;margin-bottom:20px}.demo-heading h3{margin:5px 0 0;font-size:16px;line-height:1.7}.demo-kicker{font-size:10px;color:#6c84a0;letter-spacing:1.3px;font-weight:600}.demo-chip{white-space:nowrap;font-size:10px;background:#edf3fb;color:#43668c;padding:4px 9px;border-radius:4px;align-self:flex-start}.door-layout{display:grid;grid-template-columns:180px 1fr;gap:27px;align-items:center}.door-scene{height:184px;position:relative;display:grid;place-items:center;background:#f0f4f8;border-radius:8px}.door-frame{height:136px;width:88px;border:7px solid #65798b;border-bottom:0;background:#20394a;perspective:400px;z-index:1}.door-leaf{height:100%;background:#c59767;border:3px solid #a2774f;position:relative;transform-origin:left;transition:transform .35s,background .25s}.door-leaf::before{content:"";position:absolute;inset:8px;border:2px solid #a67a50}.door-leaf i{position:absolute;width:7px;height:7px;border-radius:50%;background:#f8df9d;top:58%;right:8px;box-shadow:0 0 0 1px #8c642a}.door-leaf.is-open{transform:rotateY(-65deg)}.door-leaf.is-locked{background:#8b98a3;border-color:#647685}.door-leaf.is-locked::before{border-color:#647685}.door-leaf.is-locked::after{content:"锁";position:absolute;left:23px;top:42px;padding:2px 5px;color:#e9edf2;background:#425564;border-radius:3px;font-size:12px}.door-ground{position:absolute;bottom:22px;width:118px;height:5px;background:#c6d2dd;border-radius:50%}.door-controls label{font-size:12px;color:#60768b;display:block;margin-bottom:5px}.door-controls select{font:13px/1.5 inherit;padding:9px 32px 9px 12px;border:1px solid #becedf;border-radius:5px;background:#fff;color:#344d67;margin-right:7px;margin-bottom:10px;max-width:100%}.action-button,.secondary-button{font-size:12px;padding:9px 14px;border:1px solid #2c609f;border-radius:5px;line-height:1.5;background:#2c609f;color:white}.secondary-button{color:#3e5c7b;background:#f4f7fa;border-color:#cfdae6}.action-button:hover{background:#1f4a7e}.secondary-button:hover{background:#e7eff7}.demo p.demo-result{font-size:13px;line-height:1.85;color:#325675;margin:10px 0 0}.demo-caption{font-size:11.5px!important;color:#708092!important;line-height:1.85!important;margin:16px 0 0!important}.hp-display{display:flex;align-items:baseline;gap:9px}.hp-display output{font:600 48px/1.1 "Segoe UI",sans-serif;letter-spacing:-2px;color:#315d8f}.hp-display span{font-size:14px;color:#8190a0}progress{display:block;width:100%;height:13px;margin:18px 0 22px;accent-color:#3b7baf;border:0;border-radius:5px;overflow:hidden;background:#e9eff6}progress::-webkit-progress-bar{background:#e9eff6;border-radius:5px}progress::-webkit-progress-value{background:#4e85b5;border-radius:5px;transition:width .2s}progress::-moz-progress-bar{background:#4e85b5}.demo-buttons{display:flex;flex-wrap:wrap;gap:8px}.fsm-figure{margin:25px 0}.fsm-states{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.fsm-states>div{padding:16px 12px;border-radius:7px;background:#edf3f9;border:1px solid #d7e3ee;text-align:center}.fsm-states b{display:block;font:600 13px/1.7 Consolas,monospace;color:#375d85}.fsm-states span{font-size:12px;color:#708195}.fsm-states .dead-state{background:#f4eeed;border-color:#e8d8d4}.fsm-states .dead-state b{color:#8a5d52}.editor-note{background:#fff;border:1px solid var(--line);border-radius:8px;padding:20px 24px;margin-top:46px;font-size:12px;color:#657488}.editor-note h3{font-size:14px;margin:0 0 8px}.editor-note p{margin:8px 0}.editor-note summary{cursor:pointer;color:#3f648c;margin-top:12px}.editor-note ul{padding-left:19px}.editor-note a{overflow-wrap:anywhere}.mobile-menu{flex-shrink:0}
+@media(max-width:600px){.hero h1{font-size:34px}.hero-sub{font-size:15px}.door-layout{grid-template-columns:1fr}.door-scene{height:170px}.door-controls{margin-top:-10px}.demo{padding:18px}.demo-heading h3{font-size:15px}.demo-chip{font-size:9px}.equation{font-size:19px;padding:20px 12px}.equation-final{font-size:16px}.fsm-states{grid-template-columns:repeat(2,1fr)}}
+@media(prefers-reduced-motion:reduce){.door-leaf,progress::-webkit-progress-value{transition:none}}
+@media print{.demo{break-inside:avoid;padding:15px}.demo-buttons,.door-controls select,.door-controls label,.door-controls button{display:none}.door-layout{grid-template-columns:130px 1fr}.door-scene{height:160px}.hp-display output{font-size:26pt}.demo-heading h3{font-size:11pt}.equation{font-size:15pt;padding:15px}.fsm-states{grid-template-columns:repeat(4,1fr)}.editor-note{font-size:9pt}.equation-final{font-size:13pt}}</style></head><body>
+<a class="skip-link" href="#content">跳到正文</a><div class="progress" aria-hidden="true"><i id="reading-progress"></i></div>
+<aside class="sidebar" id="sidebar" aria-label="文档目录"><div class="brand"><div class="brand-mark" aria-hidden="true">S→S′</div><div><b>概念笔记</b><small>STATE · UNITY · C#</small></div></div><div class="toc-title">阅读导航 / CONTENTS</div><nav class="toc"><a href="#chapter-1"><span>01</span>What：什么是状态？</a>
+<a href="#chapter-2"><span>02</span>Why：为什么需要状态？</a>
+<a href="#chapter-3"><span>03</span>How：程序中如何设计状态？</a>
+<a href="#chapter-4"><span>04</span>State 和 State Machine 有什么区别？</a>
+<a href="#chapter-5"><span>05</span>更深入：怎么判断什么东西应该成为状态？</a>
+<a href="#chapter-6"><span>06</span>最终回到本质</a></nav><div class="sidebar-footer"><strong>单文件 · 可离线阅读</strong><br>2026.10.16 · 根据粘贴原文整理<br>公式、演示、C# 示例均在本地</div></aside>
+<div class="page"><div class="page-inner"><header class="topbar"><div class="crumb">CONCEPT NOTES / 02</div><div class="tools"><button type="button" class="mobile-menu" id="menu-button" aria-controls="sidebar" aria-expanded="false">目录</button><button type="button" class="print-button" id="print-button">打印 / 保存 PDF</button></div></header>
+<section class="hero" aria-labelledby="page-title"><p class="eyebrow">WHAT / WHY / HOW</p><h1 id="page-title">状态的本质<span>。</span></h1><p class="hero-sub">系统为了决定接下来该如何行动，而必须记住的过去。</p><div class="hero-tags"><span>State 第一性原理</span><span>6 个主题</span><span>Unity C# 示例</span><span>本地 HTML</span></div></section>
+<section class="essence" aria-label="核心观点"><p>过去不必全部留下。<br><strong>状态，保留的是对未来仍有影响的信息。</strong></p><div class="role-grid"><div class="role"><b>STATE / 当前状态</b><span>现在保留什么信息</span></div><div class="role"><b>INPUT / 新的输入</b><span>这一次发生什么</span></div><div class="role"><b>TRANSITION / 转换</b><span>依照规则计算下一步</span></div></div></section>
+<main><article id="content"><p>更严格地说：</p>
+<blockquote>
+<p>状态是系统在某一时刻所保留的信息。这些信息与新的输入一起，决定系统接下来如何变化、如何响应。</p>
+</blockquote>
+<p>我们按照 What → Why → How，从第一性原理理解它。</p>
+<h2 id="chapter-1"><span class="chapter-number">01</span>What：什么是状态？</h2>
+<p>先不要把状态理解成 <code>enum</code>、<code>bool</code> 或者某个类的字段。这些只是状态的表达方式，不是状态的本质。</p>
+<p>想象游戏里有一扇门。</p>
+<section class="demo door-demo" aria-labelledby="door-demo-title">
+<div class="demo-heading"><div><span class="demo-kicker">交互示意 01</span><h3 id="door-demo-title">同一个 OpenDoor，不同的响应</h3></div><span class="demo-chip">输入 × 当前状态</span></div>
+<div class="door-layout"><div class="door-scene" aria-hidden="true"><div class="door-frame"><div class="door-leaf" id="door-leaf"><i></i></div></div><div class="door-ground"></div></div>
+<div class="door-controls"><label for="door-state">设定当前状态</label><select id="door-state"><option value="closed">门已关闭</option><option value="open">门已打开</option><option value="locked">门被锁住</option></select><button class="action-button" type="button" id="open-door">发送 OpenDoor</button><p class="demo-result" id="door-feedback" role="status" aria-live="polite">当前状态：门已关闭。发送指令，观察响应。</p></div></div>
+<p class="demo-caption">同样是“打开门”的请求，是否执行、是否拒绝，需要结合当前状态判断。</p></section>
+<p>假设玩家发出一个指令：</p>
+<p><code>OpenDoor</code></p>
+<p>同样的输入，为什么系统可能有不同的反应？</p>
+<ul>
+<li>门是关闭的：执行开门。</li>
+<li>门已经打开：不需要再次开门。</li>
+<li>门被锁住：拒绝打开。</li>
+</ul>
+<p>因为系统除了知道玩家想做什么，还必须知道门现在是什么情况。</p>
+<p>这个“现在的情况”，就是状态。</p>
+<h3 id="section">1. 状态是一种对过去的记忆</h3>
+<p>门为什么是打开的？因为过去发生过开门操作。</p>
+<p>但是系统通常不必记住每一次开门动作，只需要记住：</p>
+<div class="code-card" data-filename="代码片段1"><div class="code-toolbar"><div><strong>状态表示片段</strong><small>C# · 概念片段，需置于相应上下文</small></div><div class="code-actions"><button type="button" data-action="copy" aria-label="复制 状态表示片段">复制代码</button></div></div><pre tabindex="0"><code class="language-csharp"><span class="tok-keyword">bool</span> isOpen = <span class="tok-keyword">true</span>;
+</code></pre></div>
+<p>过去发生的事情，被压缩成了当前的信息。</p>
+<p>所以可以这样理解：</p>
+<p>状态 = 过去发生的事情，对当前和未来仍然有影响的那部分信息。</p>
+<p>这也引出了非常重要的区分：</p>
+<div class="table-scroll" tabindex="0"><table>
+<thead>
+<tr>
+<th>概念</th>
+<th>回答的问题</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>状态 State</td>
+<td>现在是什么情况？</td>
+<td>门已打开</td>
+</tr>
+<tr>
+<td>事件 Event</td>
+<td>发生了什么？</td>
+<td>玩家打开了门</td>
+</tr>
+<tr>
+<td>输入 Input</td>
+<td>希望系统做什么？</td>
+<td>请求打开门</td>
+</tr>
+<tr>
+<td>行为 Behavior</td>
+<td>系统能做什么？</td>
+<td>打开、关闭、上锁</td>
+</tr>
+<tr>
+<td>状态转换 Transition</td>
+<td>状态如何变化？</td>
+<td>关闭 → 打开</td>
+</tr>
+</tbody>
+</table></div>
+<p>它们相互关联，但并不是一回事。</p>
+<h2 id="chapter-2"><span class="chapter-number">02</span>Why：为什么需要状态？</h2>
+<p>从最简单的程序开始。</p>
+<h3 id="section-1">1. 没有状态的程序</h3>
+<p>一个加法函数：</p>
+<div class="code-card" data-filename="代码片段2"><div class="code-toolbar"><div><strong>无状态函数 · Add</strong><small>C# · 概念片段，需置于相应上下文</small></div><div class="code-actions"><button type="button" data-action="copy" aria-label="复制 无状态函数 · Add">复制代码</button></div></div><pre tabindex="0"><code class="language-csharp"><span class="tok-keyword">int</span> Add(<span class="tok-keyword">int</span> a, <span class="tok-keyword">int</span> b)
+{
+    <span class="tok-keyword">return</span> a + b;
+}
+</code></pre></div>
+<p>只要输入相同，输出就相同。</p>
+<p>数学上可以写成：</p>
+<div class="equation" role="math" aria-label="y 等于 f 括号 x"><var>y</var> = <var>f</var>(<var>x</var>)</div>
+<p>系统不必记住之前调用过几次 <code>Add</code>。</p>
+<h3 id="section-2">2. 有状态的程序</h3>
+<p>再看游戏中玩家受到伤害：</p>
+<div class="code-card" data-filename="代码片段3"><div class="code-toolbar"><div><strong>有状态函数 · TakeDamage</strong><small>C# · 概念片段，需置于相应上下文</small></div><div class="code-actions"><button type="button" data-action="copy" aria-label="复制 有状态函数 · TakeDamage">复制代码</button></div></div><pre tabindex="0"><code class="language-csharp"><span class="tok-keyword">int</span> health = <span class="tok-number">100</span>;
+
+<span class="tok-keyword">void</span> TakeDamage(<span class="tok-keyword">int</span> damage)
+{
+    health -= damage;
+}
+</code></pre></div>
+<p>第一次受到 20 点伤害，生命值从 100 变成 80。</p>
+<p>第二次受到 20 点伤害，生命值从 80 变成 60。</p>
+<section class="demo health-demo" aria-labelledby="health-demo-title"><div class="demo-heading"><div><span class="demo-kicker">交互示意 02</span><h3 id="health-demo-title">同样受到 20 点伤害，结果依赖当前 HP</h3></div><span class="demo-chip" id="health-state">存活</span></div>
+<div class="hp-display"><output id="hp-value" aria-label="当前生命值">100</output><span>/ 100</span></div><progress id="hp-meter" value="100" max="100" aria-label="生命值">100 / 100</progress>
+<div class="demo-buttons"><button class="action-button" type="button" id="damage-button">受到 20 点伤害</button><button class="secondary-button" type="button" id="heal-button">恢复 20 点生命</button><button class="secondary-button" type="button" id="reset-health">重置演示</button></div>
+<p class="demo-result" id="health-feedback" role="status" aria-live="polite">当前 HP = 100；输入伤害后，将基于这一次的状态计算。</p><p class="demo-caption">遵循下文 Health 的规则：HP 不低于 0、不超过上限；死亡后普通治疗无效。“重置演示”表示重新创建一个初始生命值为 100 的对象。</p></section>
+<p>为什么两次相同的输入会得到不同结果？</p>
+<p>因为这次计算需要使用上一次计算之后留下的状态。</p>
+<p>数学表达是：</p>
+<div class="equation" role="math" aria-label="下一时刻状态等于转换规则作用于当前状态和当前输入"><var>S</var><sub>t+1</sub> = <var>T</var>(<var>S</var><sub>t</sub>, <var>I</var><sub>t</sub>)</div>
+<p>其中：</p>
+<ul>
+<li><var>S<sub>t</sub></var>：系统当前的状态。</li>
+<li><var>I<sub>t</sub></var>：当前输入。</li>
+<li><var>T</var>：状态转换规则。</li>
+<li><var>S<sub>t+1</sub></var>：处理输入之后的新状态。</li>
+</ul>
+<p>对于生命值系统：</p>
+<div class="equation" role="math" aria-label="下一个生命值等于零与当前生命值减伤害两者中的较大值">HP<sub>next</sub> = max(0, HP<sub>current</sub> − Damage)</div>
+<p>这就是有状态系统的核心。</p>
+<blockquote>
+<p>阅读提示：这里示意确定性的转换。如果随机数、时间或网络结果影响响应，也需要把它们纳入输入、外部条件或相应状态，才能讨论相同条件下的一致响应。</p>
+</blockquote>
+<p>过去影响未来，而状态就是连接过去与未来的桥梁。</p>
+<p>如果没有状态，每次请求都只能依赖当前输入。你就无法仅凭一个“受到 20 点伤害”的指令，知道玩家最终还剩多少生命。</p>
+<h2 id="chapter-3"><span class="chapter-number">03</span>How：程序中如何设计状态？</h2>
+<p>本质上只需要三个部分：</p>
+<p>当前状态（State）</p>
+<p>例如 HP = 80</p>
+<p>输入 + 转换规则（Input + Transition）</p>
+<p>受到 20 点伤害，HP 不小于 0</p>
+<p>新状态（Next State）</p>
+<p>HP = 60</p>
+<p>我们用 Unity C# 写一个简单但合理的生命值系统。</p>
+<div class="code-card" data-filename="Health.cs"><div class="code-toolbar"><div><strong>Health.cs</strong><small>C# · 完整类型定义</small></div><div class="code-actions"><button type="button" data-action="copy" aria-label="复制 Health.cs">复制代码</button><button type="button" data-action="download" aria-label="下载 Health.cs">下载 .cs</button></div></div><pre tabindex="0"><code class="language-csharp">
+<span class="tok-keyword">using</span> System;
+
+<span class="tok-keyword">public</span> <span class="tok-keyword">sealed</span> <span class="tok-keyword">class</span> Health
+{
+    <span class="tok-keyword">public</span> <span class="tok-keyword">int</span> MaxHP { <span class="tok-keyword">get</span>; }
+    <span class="tok-keyword">public</span> <span class="tok-keyword">int</span> CurrentHP { <span class="tok-keyword">get</span>; <span class="tok-keyword">private</span> <span class="tok-keyword">set</span>; }
+
+    <span class="tok-comment">// 通过现有状态推导，不需要额外存储</span>
+    <span class="tok-keyword">public</span> <span class="tok-keyword">bool</span> IsDead =&gt; CurrentHP == <span class="tok-number">0</span>;
+
+    <span class="tok-keyword">public</span> Health(<span class="tok-keyword">int</span> maxHP)
+    {
+        <span class="tok-keyword">if</span> (maxHP &lt;= <span class="tok-number">0</span>)
+            <span class="tok-keyword">throw</span> <span class="tok-keyword">new</span> ArgumentOutOfRangeException(nameof(maxHP));
+
+        MaxHP = maxHP;
+        CurrentHP = maxHP;
+    }
+
+    <span class="tok-keyword">public</span> <span class="tok-keyword">void</span> TakeDamage(<span class="tok-keyword">int</span> damage)
+    {
+        <span class="tok-keyword">if</span> (damage &lt;= <span class="tok-number">0</span> || IsDead)
+            <span class="tok-keyword">return</span>;
+
+        CurrentHP = Math.Max(<span class="tok-number">0</span>, CurrentHP - damage);
+    }
+
+    <span class="tok-keyword">public</span> <span class="tok-keyword">void</span> Heal(<span class="tok-keyword">int</span> amount)
+    {
+        <span class="tok-keyword">if</span> (amount &lt;= <span class="tok-number">0</span> || IsDead)
+            <span class="tok-keyword">return</span>;
+
+        CurrentHP += Math.Min(amount, MaxHP - CurrentHP);
+    }
+}
+
+</code></pre></div>
+<p>注意这里的三个重要设计思想。</p>
+<p>第一，状态需要被表达。</p>
+<p><code>CurrentHP</code> 保存当前生命值。</p>
+<p>第二，状态的改变需要遵循规则。</p>
+<p>外部不能随便修改 <code>CurrentHP</code>，而是通过 <code>TakeDamage</code> 和 <code>Heal</code> 进行修改，保证生命值不会小于 0 或超过上限。</p>
+<p>第三，不是所有状态相关信息都需要独立存储。</p>
+<p>例如：</p>
+<div class="code-card" data-filename="代码片段5"><div class="code-toolbar"><div><strong>派生状态 · IsDead</strong><small>C# · 概念片段，需置于相应上下文</small></div><div class="code-actions"><button type="button" data-action="copy" aria-label="复制 派生状态 · IsDead">复制代码</button></div></div><pre tabindex="0"><code class="language-csharp"><span class="tok-keyword">public</span> <span class="tok-keyword">bool</span> IsDead =&gt; CurrentHP == <span class="tok-number">0</span>;
+</code></pre></div>
+<p>既然通过 <code>CurrentHP</code> 就能推导出是否死亡，那么通常不必再保存一个独立的 <code>isDead</code> 字段。</p>
+<p>否则就有可能出现：</p>
+<div class="code-card" data-filename="代码片段6"><div class="code-toolbar"><div><strong>矛盾状态反例</strong><small>C# · 概念片段，需置于相应上下文</small></div><div class="code-actions"><button type="button" data-action="copy" aria-label="复制 矛盾状态反例">复制代码</button></div></div><pre tabindex="0"><code class="language-csharp">CurrentHP = <span class="tok-number">0</span>;
+isDead = <span class="tok-keyword">false</span>;
+</code></pre></div>
+<p>同一个玩家出现了互相矛盾的信息。</p>
+<p>这引出了实际开发中很有价值的原则：</p>
+<p>优先保存必要的原始状态，能够可靠推导的信息就尽量推导。</p>
+<h2 id="chapter-4"><span class="chapter-number">04</span>State 和 State Machine 有什么区别？</h2>
+<p>这是一个很容易混淆的地方。</p>
+<p>State（状态）是信息；State Machine（状态机）是组织状态及其转换规则的一种模型。</p>
+<p>例如角色可以处于：</p>
+<div class="code-card" data-filename="CharacterState.cs"><div class="code-toolbar"><div><strong>CharacterState.cs</strong><small>C# · 完整类型定义</small></div><div class="code-actions"><button type="button" data-action="copy" aria-label="复制 CharacterState.cs">复制代码</button><button type="button" data-action="download" aria-label="下载 CharacterState.cs">下载 .cs</button></div></div><pre tabindex="0"><code class="language-csharp"><span class="tok-keyword">public</span> <span class="tok-keyword">enum</span> CharacterState
+{
+    Idle,
+    Running,
+    Jumping,
+    Dead
+}
+</code></pre></div>
+<p>状态机进一步规定：</p>
+<div class="fsm-figure" role="group" aria-label="简化角色状态机及允许的转换"><div class="fsm-states"><div><b>Idle</b><span>待机</span></div><div><b>Running</b><span>奔跑</span></div><div><b>Jumping</b><span>跳跃</span></div><div class="dead-state"><b>Dead</b><span>死亡</span></div></div>
+<div class="table-scroll"><table><thead><tr><th>当前状态 → 新状态</th><th>转换条件</th></tr></thead><tbody><tr><td>Idle → Running / Running → Idle</td><td>开始移动 / 停止移动</td></tr><tr><td>Idle 或 Running → Jumping</td><td>满足起跳条件并收到跳跃输入</td></tr><tr><td>Jumping → Idle 或 Running</td><td>落地后，根据是否继续移动决定</td></tr><tr><td>任一存活状态 → Dead</td><td>生命值变为 0</td></tr></tbody></table></div><p class="demo-caption">这是教学用的简化模型。此处没有定义复活；实际项目也可把生命、移动和动作拆成独立的状态维度。</p></div>
+<p>但不要因此认为所有状态都需要状态机。</p>
+<p>角色的生命值、金币数量、背包道具数量都是状态。它们不一定适合用有限状态枚举来描述。</p>
+<ul>
+<li>数值状态：<code>HP = 80</code></li>
+<li>布尔状态：<code>isOpen = true</code></li>
+<li>离散状态：<code>MovementState = Jumping</code></li>
+<li>复合状态：角色的 HP、位置、装备、当前动作等共同组成角色状态</li>
+</ul>
+<p>状态机特别适合管理具有明确阶段、转换条件和行为约束的系统。</p>
+<h2 id="chapter-5"><span class="chapter-number">05</span>更深入：怎么判断什么东西应该成为状态？</h2>
+<p>这里可以使用一个非常本质的判断标准：</p>
+<blockquote>
+<p>如果两个系统拥有完全相同的当前信息，接下来接收到相同的输入，在相同外部条件下，能不能做出正确且一致的响应？</p>
+</blockquote>
+<p>如果不能，说明你描述的状态可能不够完整。</p>
+<p>例如游戏背包：</p>
+<p>你记录了当前拥有 5 个苹果。</p>
+<p>但游戏有一个成就：“累计获得 100 个苹果”。</p>
+<p>那么仅仅记住现在有 5 个苹果就不够。</p>
+<p>玩家 A 可能累计获得过 10 个，玩家 B 可能累计获得过 150 个，他们虽然有相同的背包状态，但成就系统应该做出不同的判断。</p>
+<p>所以如果需要支持这个成就，就还必须保留累计获得数量，或者保存足以可靠计算这个数量的历史记录。</p>
+<p>这也说明：</p>
+<p>状态的边界取决于系统未来需要回答什么问题、执行什么行为。</p>
+<p>另外，状态还有几个经常被混淆的概念：</p>
+<div class="table-scroll" tabindex="0"><table>
+<thead>
+<tr>
+<th>概念</th>
+<th>本质</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>State</td>
+<td>系统当前保留的信息</td>
+</tr>
+<tr>
+<td>Data</td>
+<td>对信息的泛称，可能是状态、常量、历史记录等</td>
+</tr>
+<tr>
+<td>Event</td>
+<td>某个时间点发生的事实</td>
+</tr>
+<tr>
+<td>Persistence</td>
+<td>将信息持久化，以便系统重启后恢复</td>
+</tr>
+<tr>
+<td>State Machine</td>
+<td>对状态及其转换规则的建模方式</td>
+</tr>
+</tbody>
+</table></div>
+<p>尤其要记住：状态不等于存档。</p>
+<p>一个玩家的当前血量在内存中，也是状态；写进数据库后，它成为持久化的状态。持久化解决的是如何跨越进程重启保存或恢复信息，而状态本身解决的是系统需要记住什么。</p>
+<h2 id="chapter-6"><span class="chapter-number">06</span>最终回到本质</h2>
+<p>从三个层面总结：</p>
+<p>What：状态是什么？</p>
+<p>状态是系统当前保留的、对后续行为有影响的信息。它可以看作与未来有关的过去的摘要。</p>
+<p>Why：为什么需要状态？</p>
+<p>因为系统的行为往往不能仅由当前输入决定，还取决于之前发生过什么。</p>
+<p>How：如何实现状态？</p>
+<p>定义需要保留的信息，并规定输入如何触发合法的状态转换；必要时使用状态机、事件、持久化等机制进行组织。</p>
+<p>最终，你可以用这个公式理解大量软件系统：</p>
+<div class="equation equation-final" role="math" aria-label="新状态等于转换规则作用于当前状态和输入">新状态 = 转换规则(当前状态, 输入)</div>
+<p>甚至可以进一步思考：</p>
+<p>程序的大量工作，本质上就是读取状态、根据规则计算、更新状态，再把结果呈现出来。</p>
+<p>MVC、状态机、响应式 UI、游戏实体系统、数据库事务，都从不同角度处理状态的组织、转换、观察或一致性问题。</p>
+<p>理解了这一点，学习这些架构时，就不必只记它们的形式，而能开始追问：它们到底在解决状态的哪个问题？</p>
+</article>
+<aside class="editor-note" aria-label="整理说明"><h3>整理说明</h3><p>本文依据你粘贴的完整原文整理，保留 What / Why / How、状态与状态机、状态完整性及存档区别等内容。原文中失去布局的交互区域已整理为离线演示；公式使用原生 HTML，无需加载在线库。</p><p>C# 完整类补充了 <code>using System;</code>，治疗计算改为先取“治疗量”与“缺失生命值”的较小值，再相加，避免超大整数导致溢出，正常情况下的业务含义保持一致。其他概念代码明确标注为片段。</p><p>门的演示和角色转换表为原文概念的可视化示意；生命值演示遵循示例中的边界与死亡约束。示例中的 Health 是普通 C# 对象，可从 Unity 脚本中使用，不依赖 MonoBehaviour。</p><details><summary>原文配图链接（需要联网）</summary><ul><li><a href="https://images.openai.com/static-rsc-4/peEeo8RAcVkb8Ew_Cc0KVdTrtF2xV5oQNcYNWlQklrg-MmpJkzp9ssBD6H6KTmU8kMR76ejFixoHec1Jox0ygukbGdAj-9zCBKFKPOBm9uMHxGtACRDfYauPWG3tvL_MGKHNKm1vP2HPeISR8CPlx6TNaICxCr15cvc5vCTRbV8?purpose=inline" target="_blank" rel="noopener noreferrer">Ancient wooden door — 原文中的图片链接</a></li><li><a href="https://images.openai.com/static-rsc-4/6AuiEg5sZHkQhIyp1X9RIM6ORrCaxLQH5hvRxlIMe6OfWoapCdfecNBBrjfEm629fg0S3wd7AI9dMlxOhnQnyJlQhwNgwnQh2C5SavidOHhHb83yw3Myd_l1lfk-t8V8EFegre4veu3P-xPFOkGgB33xo5InqCGlCKzueeWf68M?purpose=inline" target="_blank" rel="noopener noreferrer">Castle Gate — 原文中的图片链接</a></li></ul></details></aside></main>
+<footer class="end-note"><span>状态 State 的本质 · Unity C# 笔记</span><a href="#page-title">回到开头 ↑</a></footer></div></div><div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script>
+(function(){
+  'use strict';
+  const toast=document.getElementById('toast');let timer;
+  function notify(message){toast.textContent=message;toast.classList.add('show');clearTimeout(timer);timer=setTimeout(()=>toast.classList.remove('show'),2300);}
+  async function copyText(text){if(navigator.clipboard&&window.isSecureContext){try{await navigator.clipboard.writeText(text);return;}catch(error){}}const area=document.createElement('textarea');area.value=text;area.style.cssText='position:fixed;left:-9999px;top:0';document.body.appendChild(area);area.select();try{if(!document.execCommand('copy'))throw new Error('copy failed');}finally{area.remove();}}
+  document.querySelectorAll('.code-card').forEach(card=>{card.querySelector('[data-action="copy"]').addEventListener('click',async()=>{try{await copyText(card.querySelector('code').textContent);notify('代码已复制');}catch(error){notify('请在代码框内手动选择并复制。');}});const button=card.querySelector('[data-action="download"]');if(button)button.addEventListener('click',()=>{const blob=new Blob(['\ufeff'+card.querySelector('code').textContent],{type:'text/plain;charset=utf-8'});const url=URL.createObjectURL(blob);const link=document.createElement('a');link.href=url;link.download=card.dataset.filename;document.body.appendChild(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);notify('已准备下载 '+card.dataset.filename);});});
+  document.getElementById('print-button').addEventListener('click',()=>window.print());
+  const menu=document.getElementById('sidebar');const menuButton=document.getElementById('menu-button');
+  function closeMenu(){menu.classList.remove('open');menuButton.setAttribute('aria-expanded','false');}
+  menuButton.addEventListener('click',()=>menuButton.setAttribute('aria-expanded',String(menu.classList.toggle('open'))));menu.querySelectorAll('a').forEach(a=>a.addEventListener('click',closeMenu));document.addEventListener('keydown',e=>{if(e.key==='Escape')closeMenu();});document.addEventListener('click',e=>{if(menu.classList.contains('open')&&!menu.contains(e.target)&&!menuButton.contains(e.target))closeMenu();});
+  const headings=Array.from(document.querySelectorAll('article>h2'));const links=Array.from(menu.querySelectorAll('a'));
+  function updateReading(){const total=document.documentElement.scrollHeight-window.innerHeight;document.getElementById('reading-progress').style.width=(total>0?window.scrollY/total*100:0)+'%';let current=headings[0];for(const h of headings){if(h.getBoundingClientRect().top<180)current=h;}links.forEach(link=>{const active=current&&link.getAttribute('href')==='#'+current.id;link.classList.toggle('active',!!active);if(active)link.setAttribute('aria-current','location');else link.removeAttribute('aria-current');});}
+  window.addEventListener('scroll',updateReading,{passive:true});window.addEventListener('resize',updateReading);updateReading();
+  let doorState='closed';const doorSelect=document.getElementById('door-state');const doorLeaf=document.getElementById('door-leaf');const doorFeedback=document.getElementById('door-feedback');
+  function drawDoor(){doorLeaf.classList.toggle('is-open',doorState==='open');doorLeaf.classList.toggle('is-locked',doorState==='locked');}
+  doorSelect.addEventListener('change',()=>{doorState=doorSelect.value;drawDoor();doorFeedback.textContent='当前状态：'+{closed:'门已关闭',open:'门已打开',locked:'门被锁住'}[doorState]+'。发送相同的 OpenDoor，观察响应。';});
+  document.getElementById('open-door').addEventListener('click',()=>{if(doorState==='locked'){doorFeedback.textContent='输入 OpenDoor → 拒绝打开；状态保持“锁定”。';}else if(doorState==='open'){doorFeedback.textContent='输入 OpenDoor → 无需重复开门；状态保持“打开”。';}else{doorState='open';doorSelect.value='open';doorFeedback.textContent='输入 OpenDoor → 执行开门；状态由“关闭”变为“打开”。';}drawDoor();});
+  let hp=100;const hpValue=document.getElementById('hp-value');const hpMeter=document.getElementById('hp-meter');const hpState=document.getElementById('health-state');const hpFeedback=document.getElementById('health-feedback');
+  function drawHealth(){hpValue.textContent=String(hp);hpMeter.value=hp;hpMeter.textContent=hp+' / 100';hpState.textContent=hp===0?'死亡':'存活';}
+  document.getElementById('damage-button').addEventListener('click',()=>{const old=hp;if(hp>0)hp=Math.max(0,hp-20);drawHealth();hpFeedback.textContent=old===0?'当前已经死亡；再次输入伤害 20，状态仍为 HP = 0。':'当前 HP '+old+' + 输入伤害 20 → 新状态 HP '+hp+'。';});
+  document.getElementById('heal-button').addEventListener('click',()=>{const old=hp;if(hp>0)hp+=Math.min(20,100-hp);drawHealth();hpFeedback.textContent=old===0?'当前已经死亡；依照本例规则，普通治疗无效，HP 仍为 0。':'当前 HP '+old+' + 输入治疗 20 → 新状态 HP '+hp+'（上限 100）。';});
+  document.getElementById('reset-health').addEventListener('click',()=>{hp=100;drawHealth();hpFeedback.textContent='已重置演示：重新创建初始 HP = 100 的对象。';});
+})();
+</script></body></html>

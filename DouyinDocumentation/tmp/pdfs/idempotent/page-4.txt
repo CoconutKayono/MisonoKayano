@@ -1,0 +1,34 @@
+Making retries safe with idempotent APIs 
+3 
+ 
+ 
+At Amazon, o ur preferred approach is to incorporate a unique caller- provided client request 
+identifier into our API contract. Requests from the same caller with the same client request 
+identifier can be considered duplicate requests and can be dealt with accordingly. By allowing 
+customers to clearly express intent through API semantics we want to reduce the potential for 
+unexpected outcomes for the customer. A unique caller-provided client request identifier for 
+idempotent operations meets this need.  It also has the benefit of  making that intent readily 
+auditable because the unique identifier is present in logs like AWS CloudTrail. Furthermore, by 
+labeling the created resource with the unique client request identifier , customers are able to 
+identify resources created by any given request. A concrete example of this can be seen in the 
+Amazon EC2 DescribeInstances response, which shows the unique identifier used to create the 
+EC2 instance . (In the Amazon  EC2 API the unique client request identifier is called the 
+ClientToken).  
+ 
+The following diagram shows a sample request/response flow that uses a unique client request 
+identifier in an idempotent retry scenario: 
+ 
+ 
+ 
+In this example, a customer requests the creation of a resource that presents a unique client 
+request identifier. On receiving the request,  the service first checks to see if it has seen this 
+identifier before. If it has not, it starts to process the request. It creates an idempotent “session” 
+for this request keyed off the customer identifier and their unique client request identifier. If a 
+subsequent request is received from the same customer with the same unique client request 
+identifier then the service knows it has already seen this request and can take appropriate 
+action. An important consideration is that the process that combines recording the idempotent 
+token and all mutating operations related to servicing the request must meet the properties 
+for an  atomic, consistent, isolated, and durable  (ACID)  oper ation. An ACID  server-side 
+operation needs to be an “ all or nothing ” or atomic process. This ensures that we avoid 
+situations where we could potentially record the idempotent token and fail to create some 
+resources or, alternatively, create the resources and fail to record the idempotent token. 

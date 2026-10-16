@@ -1,0 +1,51 @@
+Making retries safe with idempotent APIs 
+7 
+ 
+            "InstanceId": "i-xxxxxxxxxxxxxxxxx",                                                                                                                                                                                                                                 
+            "CurrentState": {                                                                                                                                                                                                                                                    
+                "Code": 32,                                                                                                                                                                                                                                                      
+                "Name": "shutting-down"                                                                                                                                                                                                                                          
+            },                                                                                                                                                                                                                                                                   
+            "PreviousState": {                                                                                                                                                                                                                                                   
+                "Code": 16,                                                                                                                                                                                                                                                      
+                "Name": "running"                                                                                                                                                                                                                                                
+            }                                                                                                                                                                                                                                                                    
+        }                                                                                                                                                                                                                                                                        
+    ]                                                                                                                                                                                                                                                                            
+} 
+                                                                                                                                                                                                                                                                                
+If we follow this with a simulated “late arriving” retry of the RunInstances API request with the 
+same parameters and unique request identifier, we will get a semantically equivalent response. 
+However, as the following example shows, the instance is now terminated: 
+ 
+$ aws ec2 run -instances --image-id ami- 04fcd96153cb57194 --instance-type t2.micro -- client-token 
+eb3c3141-a229-4ca0-b005-eb922e2cabdc 
+{                                                                                                                                                                                                                                                                                
+    "Instances": [                                                                                                                                                                                                                                                               
+        {                                                                                                                                                                                                                                                                        
+            "Monitoring": {                                                                                                                                                                                                                                                      
+                "State": "disabled"                                                                                                                                                                                                                                              
+            },                                                                                                                                                                                                                                                                   
+            "StateReason": { 
+                "Message": "terminated",  Now terminated 
+                "Code": "terminated"   Now terminated 
+            },  
+            "State": { 
+                "Code": 48,   Terminated status code 
+                "Name": "terminated"   Now terminated 
+            }, 
+            "InstanceId": "i-xxxxxxxxxxxxxxxxx",                                                                                                                                                                                                                                 
+            "ImageId": "ami-04fcd96153cb57194", 
+            …                                                                                                                                                                                                                                  
+            "ClientToken": "eb3c3141-a229-4ca0-b005-eb922e2cabdc",                                                                                                                                                                                                               
+            …  
+ 
+To support this behavior we need to retain knowledge of the initial idempotent request in our 
+service. However, it’s impractical to r etain that knowledge indefinitely . Indefinite retention 
+could also have an undesirable impact on the customer experience if some future request 
+identifier collides with one used much earlier. Requirements for retention vary across services 
+and service resources. We have found that, for EC2 instances, it works to limit the time period 
+to the lifetime of the resource, plus an interval after which it is reasonable to assume that any 
+late arriving requests would either have arrived or would no longer be valid.  
+ 
+ 
