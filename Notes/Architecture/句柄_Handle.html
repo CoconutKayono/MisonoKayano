@@ -1,0 +1,436 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>句柄 Handle · What / Why / How</title>
+<style>
+:root{--bg:#f5f5f0;--paper:#fff;--ink:#253334;--muted:#657575;--line:#dfe6e1;--accent:#176956;--soft:#edf6f1;--code:#17282d;--codeink:#e0ece8;--warn:#fff5df;--warnline:#c49336}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:24px}body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;font-size:16px;line-height:1.95}a{color:var(--accent);text-underline-offset:4px}button{font:inherit;cursor:pointer}.layout{max-width:1320px;margin:auto;display:grid;grid-template-columns:238px minmax(0,1fr);gap:38px;padding:42px 30px 80px}aside{position:sticky;top:26px;align-self:start;max-height:calc(100vh - 52px);overflow:auto}.brand{font-size:12px;letter-spacing:.15em;color:var(--muted);margin:5px 0 22px;font-weight:700}.nav a{display:block;text-decoration:none;padding:8px 12px;border-left:2px solid var(--line);color:var(--muted);font-size:14px;line-height:1.6}.nav a:hover,.nav a:focus{color:var(--accent);border-color:var(--accent);background:var(--soft)}.tools{display:flex;gap:8px;margin-top:23px;flex-wrap:wrap}.tools button{border:1px solid var(--line);border-radius:7px;padding:5px 11px;background:var(--paper);color:var(--muted);font-size:12px}main{min-width:0;background:var(--paper);border:1px solid var(--line);border-radius:16px;overflow:hidden}.hero{padding:55px 56px 38px;border-bottom:1px solid var(--line);background:linear-gradient(140deg,var(--soft),var(--paper) 80%)}.eyebrow{color:var(--accent);font-size:12px;letter-spacing:.16em;font-weight:700}.hero h1{font-size:48px;line-height:1.25;margin:13px 0 20px;letter-spacing:-.04em}.hero h1 span{font-size:30px;font-weight:400;color:var(--muted);margin-left:12px}.lead{font-size:20px;line-height:1.8;max-width:700px}.tags{display:flex;gap:9px;flex-wrap:wrap;margin-top:22px}.tags span{font-size:12px;border:1px solid var(--line);border-radius:20px;padding:2px 11px;color:var(--muted)}.content{padding:0 56px 45px}section{padding-top:40px}h2{font-size:27px;line-height:1.5;border-bottom:1px solid var(--line);padding-bottom:13px;margin:0 0 23px;letter-spacing:-.025em}h2 small{display:block;color:var(--accent);font-size:12px;letter-spacing:.12em;margin-bottom:6px}h3{font-size:20px;line-height:1.6;margin:31px 0 12px}h4{font-size:16px;margin:25px 0 9px}p{margin:13px 0}ul,ol{padding-left:1.6em;margin:13px 0}li{margin:5px 0}strong{font-weight:700}blockquote,.callout{margin:23px 0;padding:17px 22px;background:var(--soft);border-left:4px solid var(--accent);border-radius:0 8px 8px 0}blockquote p,.callout p{margin:4px 0}.warning{background:var(--warn);border-left-color:var(--warnline)}.caption{font-size:13px;color:var(--muted);line-height:1.8}.table-wrap{overflow-x:auto;margin:21px 0;border:1px solid var(--line);border-radius:8px}table{border-collapse:collapse;width:100%;font-size:14px;line-height:1.8;min-width:500px}th,td{text-align:left;vertical-align:top;padding:12px 15px;border-bottom:1px solid var(--line)}th{background:var(--soft);font-weight:700}tr:last-child td{border-bottom:0}code{font-family:Consolas,"Cascadia Code",monospace;font-size:.89em;padding:.15em .38em;border-radius:4px;background:var(--soft);overflow-wrap:anywhere}.code-label{font-size:12px;color:var(--muted);margin:23px 0 6px;letter-spacing:.02em}.code-wrap{position:relative}pre{background:var(--code);color:var(--codeink);padding:23px 22px;border-radius:9px;overflow:auto;font-size:14px;line-height:1.8;tab-size:4;margin:10px 0 22px}pre code{background:none;padding:0;font-size:inherit;overflow-wrap:normal}button.copy{position:absolute;right:9px;top:9px;background:#2c4248;color:#e0ece8;border:1px solid #4f656b;border-radius:5px;padding:3px 9px;font-size:11px}.formula{padding:19px;text-align:center;border:1px solid var(--line);border-radius:8px;font-family:Georgia,"Microsoft YaHei",serif;font-size:18px;overflow-x:auto;background:var(--soft);margin:20px 0}.figure{padding:20px 10px 5px;border:1px solid var(--line);border-radius:9px;margin:23px 0}.figure svg{width:100%;height:auto;display:block}.figure figcaption{padding:8px 12px;color:var(--muted);font-size:13px;line-height:1.8}.compare{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:20px 0}.card{border:1px solid var(--line);border-radius:9px;padding:18px;background:var(--paper)}.card h4{margin:0 0 9px}.status{display:inline-block;font-size:12px;border-radius:15px;padding:1px 10px;background:var(--soft);color:var(--accent)}.bad{background:var(--warn);color:#9b671d}footer{border-top:1px solid var(--line);padding:22px 56px;color:var(--muted);font-size:12px}.endnote{font-size:14px;color:var(--muted)}
+html[data-theme="dark"]{--bg:#111b1e;--paper:#182629;--ink:#deebe6;--muted:#a1b7ae;--line:#334845;--accent:#83d2b5;--soft:#213a33;--warn:#3d3524;--warnline:#c49336}
+@media(prefers-color-scheme:dark){html:not([data-theme="light"]){--bg:#111b1e;--paper:#182629;--ink:#deebe6;--muted:#a1b7ae;--line:#334845;--accent:#83d2b5;--soft:#213a33;--warn:#3d3524;--warnline:#c49336}}
+@media(max-width:1050px){.layout{grid-template-columns:190px minmax(0,1fr);gap:22px;padding:25px 18px}.hero{padding:38px 30px}.content{padding:0 30px 35px}footer{padding:20px 30px}}
+@media(max-width:760px){.layout{display:block;padding:14px 12px 40px}aside{position:static;max-height:none;margin:0 0 18px}.brand{margin:4px 0 10px}.nav{display:flex;flex-wrap:wrap;gap:5px}.nav a{border:1px solid var(--line);border-radius:5px;padding:5px 9px;font-size:12px}.tools{margin-top:10px}.hero{padding:31px 23px}.hero h1{font-size:37px}.hero h1 span{font-size:25px}.lead{font-size:18px}.content{padding:0 23px 30px}h2{font-size:23px}h3{font-size:19px}section{padding-top:33px}pre{font-size:12px;padding:19px 14px}.compare{grid-template-columns:1fr}footer{padding:18px 23px}.formula{font-size:15px}}
+@media print{html,html[data-theme]{--bg:#fff;--paper:#fff;--ink:#111;--muted:#444;--line:#ccc;--accent:#175b49;--soft:#f2f6f3;--warn:#fff7e6}body{font-size:10.5pt;background:#fff}.layout{display:block;padding:0;max-width:none}aside,.copy{display:none!important}main{border:0;border-radius:0}.hero{padding:20px 0;background:#fff}.hero h1{font-size:32pt}.content{padding:0}section{padding-top:22px}h2,h3,h4{break-after:avoid}pre{white-space:pre-wrap;overflow:visible;font-size:8.5pt;background:#f4f5f5;color:#111;border:1px solid #ddd}pre code{color:#111}.table-wrap{overflow:visible}table{min-width:0;font-size:9pt}tr,.card,.figure{break-inside:avoid}a{color:inherit}footer{padding:15px 0}.hero,.callout,th{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
+</style>
+</head>
+<body>
+<div class="layout">
+<aside aria-label="文档导航">
+<div class="brand">CONCEPT NOTES / 概念笔记</div>
+<nav class="nav">
+<a href="#what">01 · What：什么是句柄</a>
+<a href="#why">02 · Why：为什么需要</a>
+<a href="#how">03 · How：如何工作</a>
+<a href="#compare">04 · 指针、引用与 ID</a>
+<a href="#lifetime">05 · 所有权与生命周期</a>
+<a href="#examples">06 · 系统与图形 API</a>
+<a href="#when">07 · 什么时候使用</a>
+<a href="#essence">08 · 回到本质</a>
+<a href="#references">延伸阅读</a>
+</nav>
+<div class="tools"><button type="button" id="theme">切换明暗</button><button type="button" onclick="window.print()">打印 / PDF</button></div>
+</aside>
+<main>
+<header class="hero">
+<div class="eyebrow">WHAT · WHY · HOW</div>
+<h1>句柄 <span>Handle</span></h1>
+<p class="lead">从间接访问出发，理解资源身份、访问契约与生命周期管理。</p>
+<blockquote><p><strong>句柄是由某个管理系统提供的、用于标识或访问其所管理资源的凭据。</strong>它的意义来自管理系统如何解释它，而不取决于它恰好是整数、结构体还是指针状的值。</p></blockquote>
+<div class="tags"><span>资源管理</span><span>代际句柄</span><span>C# 示例</span><span>生命周期</span><span>图形 API</span></div>
+</header>
+<div class="content">
+<section aria-label="阅读导引">
+<p>句柄是操作系统、图形学、游戏引擎、资源管理系统中非常重要的概念。理解句柄，会帮助你回答：</p>
+<ul><li>为什么程序可以通过一个整数操作文件、纹理、窗口或对象？</li><li>为什么资源已经被释放，旧句柄却可能指向另一个资源？</li><li>句柄与指针、引用、ID 有什么区别？</li><li>为什么句柄能够参与生命周期管理，却不等于资源所有权？</li><li>为什么引擎和操作系统经常使用句柄，而不直接暴露对象？</li></ul>
+</section>
+<section id="what">
+<h2><small>01 / WHAT</small>什么是句柄？</h2>
+<h3>1. 从三个角色理解句柄</h3>
+<p><strong>资源（Resource）</strong>是我们真正希望访问或操作的对象；<strong>句柄（Handle）</strong>是我们持有的、代表某个资源访问入口的值；<strong>管理系统（Manager）</strong>负责解释句柄，并执行相应操作。</p>
+<p>例如，操作系统负责管理文件。程序希望读取文件，不必知道文件在操作系统内部的数据结构，也不需要直接访问它的内存地址。程序获得文件句柄，再把它交给操作系统。</p>
+<figure class="figure">
+<svg viewBox="0 0 710 222" role="img" aria-label="程序将句柄5交给资源管理器，管理器通过映射找到文件A">
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="#6e9387"/></marker></defs>
+<rect x="20" y="25" width="164" height="80" rx="10" fill="var(--soft)" stroke="var(--line)"/><text x="102" y="55" text-anchor="middle" fill="var(--ink)" font-size="18">程序</text><text x="102" y="81" text-anchor="middle" fill="var(--muted)" font-size="15">Handle = 5</text>
+<path d="M184 65H262" stroke="#6e9387" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="272" y="25" width="166" height="80" rx="10" fill="var(--soft)" stroke="#6e9387"/><text x="355" y="55" text-anchor="middle" fill="var(--ink)" font-size="18">资源管理器</text><text x="355" y="81" text-anchor="middle" fill="var(--muted)" font-size="15">解释并验证句柄</text>
+<path d="M438 65H516" stroke="#6e9387" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="526" y="25" width="164" height="80" rx="10" fill="var(--soft)" stroke="var(--line)"/><text x="608" y="55" text-anchor="middle" fill="var(--ink)" font-size="18">资源</text><text x="608" y="81" text-anchor="middle" fill="var(--muted)" font-size="15">文件 A</text>
+<path d="M355 105V145" stroke="#6e9387" stroke-dasharray="5 4" stroke-width="2"/>
+<rect x="237" y="146" width="236" height="57" rx="8" fill="var(--soft)" stroke="var(--line)"/><text x="355" y="169" text-anchor="middle" fill="var(--muted)" font-size="13">概念上的句柄映射</text><text x="355" y="191" text-anchor="middle" fill="var(--ink)" font-size="15">5 → 文件 A</text>
+</svg>
+<figcaption>程序持有句柄，管理系统负责解释句柄并定位资源。并非所有句柄都通过显式句柄表实现。</figcaption>
+</figure>
+<p>在这个例子中：<code>5</code> 是句柄，文件 A 是资源，操作系统是管理者。操作系统内部维护句柄与资源之间的关系。</p>
+<div class="code-label">C · 概念调用，省略错误处理</div>
+<pre><code>read(5, buffer, 100);</code></pre>
+<p>可以理解为：“请操作系统读取句柄 5 所代表的已打开文件中的数据。”在 Linux 中，文件描述符（File Descriptor）就是一种典型的句柄式机制：<code>open()</code> 返回一个非负整数，供后续 <code>read()</code>、<code>write()</code> 等系统调用使用。</p>
+<h3>2. 句柄的真正本质</h3>
+<p>“句柄就是指向资源的索引”是一种常见说法，但不够全面。句柄的底层表示可能是：</p>
+<ul><li>整数索引。</li><li>包含索引与版本号的结构体。</li><li>某种指针或指针状的值。</li><li>操作系统或图形 API 定义的不透明标识。</li></ul>
+<p><strong>索引是句柄的一种实现，不是句柄的本质。</strong></p>
+<blockquote><p>句柄的本质，是资源使用者与资源管理者之间约定的一种间接访问机制。使用者凭借句柄请求操作资源，而不必掌握资源的内部表示。</p></blockquote>
+<p>关键在于：<strong>这个值由谁解释，以及通过什么规则解释。</strong></p>
+<h3>3. 句柄不等于资源</h3>
+<pre><code>int textureHandle = 42;</code></pre>
+<p><code>42</code> 不包含纹理的像素、宽高、采样格式，也不必包含内存地址。只有管理这个句柄的系统，才能按照约定把它解释为特定资源。</p>
+<pre><code>int anotherHandle = textureHandle;</code></pre>
+<p>这里复制的是句柄数值，而不是纹理资源。这通常不会创建新纹理，也不会自动增加资源引用计数。</p>
+<div class="callout"><p><strong>复制句柄、复制资源、创建新的资源访问权，是三个不同的操作。</strong>是否保活资源、是否产生独立权益，必须查看对应 API 的契约。</p></div>
+</section>
+<section id="why">
+<h2><small>02 / WHY</small>为什么需要句柄？</h2>
+<h3>1. 为什么不直接持有对象？</h3>
+<pre><code>class Texture
+{
+    public int Width;
+    public int Height;
+    public byte[] Pixels;
+}
+
+Texture texture = new Texture();</code></pre>
+<p>直接引用当然可以工作。引入句柄，相当于在访问路径中增加管理机制：</p>
+<div class="table-wrap"><table><thead><tr><th>方式</th><th>访问路径</th></tr></thead><tbody><tr><td>直接访问</td><td>使用者 → 对象</td></tr><tr><td>间接访问</td><td>使用者携带句柄 → 管理机制 → 对象</td></tr></tbody></table></div>
+<p>这层复杂度是否值得，取决于我们是否需要以下能力。</p>
+<h3>2. 隐藏资源内部结构</h3>
+<p>如果直接暴露 <code>Pixels</code>，客户端就可能依赖“纹理是一个可直接修改的字节数组”。将来管理器希望把数据迁移到 GPU 显存时，这种依赖可能阻碍实现调整。</p>
+<pre><code>textureManager.Upload(handle, pixelData);
+textureManager.Release(handle);</code></pre>
+<p>调用方不必知道数据是否已上传 GPU、底层内存布局、缓存策略、内部是否发生重新分配，只需要遵守公开 API 的契约。</p>
+<blockquote><p><strong>使用者知道可以做什么，而不必知道资源在内部怎样实现。</strong></p></blockquote>
+<p>Windows 的对象与句柄机制也体现了这一点：公开接口可以保持稳定，同时允许内部实现演进。</p>
+<h3>3. 控制访问权限</h3>
+<p>某些系统中的句柄还能代表被授予的访问权限。同一个对象可以关联不同权限的句柄：</p>
+<div class="table-wrap"><table><thead><tr><th>句柄</th><th>关联资源</th><th>允许操作</th></tr></thead><tbody><tr><td>Handle A</td><td>文件 X</td><td>读取</td></tr><tr><td>Handle B</td><td>文件 X</td><td>读取和写入</td></tr></tbody></table></div>
+<p>Windows 内核对象句柄支持这样的权限管理，也可以为同一个对象创建多个句柄。</p>
+<div class="callout warning"><p>不是所有句柄都天然具备安全控制能力。访问控制需要管理者提供相应机制，<strong>单纯使用整数作为句柄不会自动产生安全隔离。</strong></p></div>
+<h3>4. 分离资源的物理位置与外部身份</h3>
+<p>在支持重定位的自定义句柄表中，资源可能从内存地址 <code>0x1000</code> 搬迁到 <code>0x9000</code>，但外部句柄仍为 <code>7</code>。</p>
+<div class="table-wrap"><table><thead><tr><th>阶段</th><th>外部句柄</th><th>管理器映射</th></tr></thead><tbody><tr><td>整理前</td><td>7</td><td>槽位 7 → 0x1000</td></tr><tr><td>整理后</td><td>7</td><td>槽位 7 → 0x9000</td></tr></tbody></table></div>
+<p>管理器更新映射后，调用方仍可使用原句柄。<strong>资源的访问身份，不一定要与实际内存位置绑定。</strong>这是特定句柄表设计能够提供的能力，不意味着所有句柄系统都自动支持资源搬迁。</p>
+<h3>5. 集中管理资源生命周期</h3>
+<p>假设渲染系统、战斗系统、任务系统都保存了同一个敌人的直接引用。敌人已经死亡，但普通托管对象仍可能因为强引用而留在内存中；其他系统也可能继续使用它。</p>
+<p>如果它们持有句柄，并通过敌人管理器访问，管理器可以在敌人死亡时将记录标记为失效。后续操作得到明确的失败结果，从而阻止通过该句柄继续操作已经结束逻辑生命周期的敌人。</p>
+<div class="callout"><p><strong>句柄失效不代表资源已经从内存中释放。</strong>失效的是通过该句柄访问资源的资格；资源是否销毁、何时回收，取决于管理器和实际所有权规则。</p></div>
+<p>句柄也不会自动保证生命周期安全。如果管理器不验证句柄、不处理旧句柄复用，或者把原始引用暴露给外部长期保存，仍然可能发生过期访问。</p>
+</section>
+<section id="how">
+<h2><small>03 / HOW</small>句柄是如何工作的？</h2>
+<h3>1. 最基础的实现：句柄表</h3>
+<p>先不讨论具体操作系统。我们可以自己维护一张资源表，以数组索引作为句柄：</p>
+<div class="table-wrap"><table><thead><tr><th>句柄 / 索引</th><th>对应资源</th></tr></thead><tbody><tr><td>0</td><td>Texture A</td></tr><tr><td>1</td><td>Texture B</td></tr><tr><td>2</td><td>Mesh C</td></tr><tr><td>3</td><td>Audio D</td></tr></tbody></table></div>
+<div class="code-label">C# · 示意片段，需放入相应上下文；未包含有效性检查</div>
+<pre><code>var resources = new List&lt;object&gt;();
+
+int Create(object resource)
+{
+    int handle = resources.Count;
+    resources.Add(resource);
+    return handle;
+}
+
+object Get(int handle)
+{
+    return resources[handle];
+}
+
+int handle = Create(new Texture());
+Texture texture = (Texture)Get(handle);</code></pre>
+<ol><li>管理器创建或接收资源。</li><li>把资源放入内部表。</li><li>返回一个代表该位置的句柄。</li><li>客户端保存句柄，需要访问时再请求管理器解析。</li></ol>
+<div class="formula">Resolve(h) = R</div>
+<p><code>h</code> 是句柄，<code>R</code> 是对应资源，<code>Resolve</code> 是管理器的解析操作。这个模型简单，却会遇到槽位复用的问题。</p>
+<h3>2. 旧句柄为什么危险？</h3>
+<p>假设客户端持有 <code>handle = 1</code>，原本对应 Texture B。之后 B 被删除，管理器把槽位 1 交给新创建的 Texture D。</p>
+<div class="table-wrap"><table><thead><tr><th>时刻</th><th>槽位 1 的内容</th><th>旧代码仍持有</th><th>访问结果</th></tr></thead><tbody><tr><td>初始</td><td>Texture B</td><td>1</td><td>访问 B</td></tr><tr><td>删除 B</td><td>空</td><td>1</td><td>应当失败</td></tr><tr><td>创建 D</td><td>Texture D</td><td>1</td><td>错误地访问 D</td></tr></tbody></table></div>
+<p>这就是<strong>陈旧句柄（Stale Handle）</strong>导致的错误访问：数值看起来仍然有效，但它所代表的资源身份已经改变。它与悬空引用、ABA 问题有相似之处，但不是所有这些问题都能简单画等号。</p>
+<blockquote><p><strong>槽位身份不等于资源实例身份。</strong>槽位可以复用，但旧资源与新资源不应该因此被认为是同一个资源。</p></blockquote>
+<h3>3. 代际句柄：索引 + 代数</h3>
+<p>给每个槽位增加一个版本号，通常称为 <strong>Generation（代数、代际编号）</strong>。句柄由一个索引变成一个二元组：</p>
+<div class="formula">Handle = (Index, Generation)</div>
+<p><code>(1, 4)</code> 表示“访问槽位 1 中第 4 代对应的资源”。资源被注销后，将槽位代数递增；下一次复用得到 <code>(1, 5)</code>。</p>
+<div class="compare"><div class="card"><h4>旧句柄 (1, 4)</h4><p>槽位 1 当前代数：5</p><span class="status bad">代数不匹配 · 验证失败</span></div><div class="card"><h4>新句柄 (1, 5)</h4><p>槽位 1 当前代数：5，且存活</p><span class="status">代数匹配 · 验证通过</span></div></div>
+<p>设句柄 <code>h = (i, g)</code>；管理器槽位保存 <code>Sᵢ = (Rᵢ, gᵢ, Aliveᵢ)</code>。在同一个管理器的命名空间内，有效条件为：</p>
+<div class="formula">Valid(h) = InRange(i) ∧ Aliveᵢ ∧ (g = gᵢ)</div>
+<p>索引越界、槽位不存活、代数不匹配，任何一个条件不满足，句柄就无效。</p>
+<div class="callout warning"><p>代数是有限宽度的整数，不能忽略溢出循环。严格系统还需要考虑代数耗尽、管理器身份、复用策略和并发同步。</p></div>
+<h3>4. 一个可学习的 C# 实现</h3>
+<p>下面的实现展示索引复用、代数校验和旧句柄失效。它是<strong>单线程教学实现</strong>，不包含资源销毁策略。</p>
+<div class="code-label">C# · ResourceHandle 与 ResourceManager&lt;T&gt;</div>
+<pre><code>using System;
+using System.Collections.Generic;
+
+// 句柄只负责描述身份。
+public readonly struct ResourceHandle
+{
+    public int Index { get; }
+    public ulong Generation { get; }
+
+    internal ResourceHandle(int index, ulong generation)
+    {
+        Index = index;
+        Generation = generation;
+    }
+}
+
+public sealed class ResourceManager&lt;T&gt; where T : class
+{
+    private sealed class Slot
+    {
+        public T Value;
+        public ulong Generation = 1;
+        public bool Alive;
+    }
+
+    private readonly List&lt;Slot&gt; slots = new();
+    private readonly Stack&lt;int&gt; freeIndices = new();
+
+    // 注册资源并返回句柄。
+    public ResourceHandle Add(T resource)
+    {
+        if (resource == null)
+            throw new ArgumentNullException(nameof(resource));
+
+        int index;
+        Slot slot;
+
+        if (freeIndices.Count &gt; 0)
+        {
+            index = freeIndices.Pop();
+            slot = slots[index];
+        }
+        else
+        {
+            index = slots.Count;
+            slot = new Slot();
+            slots.Add(slot);
+        }
+
+        slot.Value = resource;
+        slot.Alive = true;
+
+        return new ResourceHandle(index, slot.Generation);
+    }
+
+    // 通过句柄尝试访问资源。
+    public bool TryGet(ResourceHandle handle, out T resource)
+    {
+        resource = null;
+
+        if (handle.Index &lt; 0 || handle.Index &gt;= slots.Count)
+            return false;
+
+        Slot slot = slots[handle.Index];
+
+        if (!slot.Alive ||
+            slot.Generation != handle.Generation)
+            return false;
+
+        resource = slot.Value;
+        return true;
+    }
+
+    // 注销句柄，不负责销毁资源。
+    public bool Remove(ResourceHandle handle)
+    {
+        if (handle.Index &lt; 0 || handle.Index &gt;= slots.Count)
+            return false;
+
+        Slot slot = slots[handle.Index];
+
+        if (!slot.Alive ||
+            slot.Generation != handle.Generation)
+            return false;
+
+        // 禁止代数循环复用。
+        if (slot.Generation == ulong.MaxValue)
+            throw new InvalidOperationException("Generation exhausted.");
+
+        slot.Value = null;
+        slot.Alive = false;
+        slot.Generation++;
+
+        freeIndices.Push(handle.Index);
+        return true;
+    }
+}</code></pre>
+<div class="code-label">C# · 使用方式；Texture 为前文的普通示例类</div>
+<pre><code>var manager = new ResourceManager&lt;Texture&gt;();
+
+// 注册资源 A。
+var oldHandle = manager.Add(new Texture());
+
+// 注销其句柄。
+manager.Remove(oldHandle);
+
+// 注册资源 B，复用刚才的槽位。
+var newHandle = manager.Add(new Texture());
+
+bool oldValid = manager.TryGet(oldHandle, out _);
+bool newValid = manager.TryGet(newHandle, out _);
+
+// oldValid == false
+// newValid == true</code></pre>
+<h4>这个实现提供了什么？</h4>
+<p>旧句柄与新句柄可以具有相同的 <code>Index</code>，但只有代数匹配且存活的记录才能通过验证。默认结构体的代数为 0，而新槽位从 1 开始，因此 <code>default(ResourceHandle)</code> 不会匹配初始资源。</p>
+<h4>它还有哪些明确边界？</h4>
+<ul><li><strong>注销不等于销毁：</strong><code>Remove()</code> 只清除管理器引用并使句柄失效，不自动调用 <code>Dispose()</code>，也不会调用 Unity 的 <code>Destroy()</code>。</li><li><strong>原始引用仍可逸出：</strong><code>TryGet()</code> 返回实际对象引用，调用方可以保存它，并在句柄失效后继续使用。需要严格控制访问时，可以让管理器直接提供操作接口。</li><li><strong>句柄限于原管理器：</strong>示例未编码管理器身份，也未使用按资源类型区分的句柄。将 A 管理器的句柄交给 B 管理器，可能错误匹配相同的索引与代数。应在 API 契约中禁止，或增加管理器标识、类型隔离等机制。</li><li><strong>代数耗尽会抛异常：</strong>当前检查发生在注销前，达到上限时该槽位仍保持原状态。更完整的系统可以允许注销，并永久停用耗尽的槽位。</li><li><strong>没有并发保证：</strong>多线程或回调重入下的访问与注销，需要另行设计同步和使用期间的保活规则。</li></ul>
+<p class="caption">示例保留讲解用的基本结构；若项目启用 C# 可空引用类型，需要给可能为 null 的字段与输出参数添加相应注解。</p>
+</section>
+<section id="compare">
+<h2><small>04 / COMPARISON</small>句柄、指针、引用与 ID</h2>
+<p>这些概念容易混淆，因为它们都可能帮助我们定位某个对象，但强调的语义不同。</p>
+<div class="table-wrap"><table><thead><tr><th>概念</th><th>本质</th><th>如何访问对象</th></tr></thead><tbody><tr><td>Pointer / 指针</td><td>表示内存地址的值</td><td>通过相应内存模型的寻址规则访问</td></tr><tr><td>Reference / 引用</td><td>语言提供的对象引用关系</td><td>由语言与运行时处理</td></tr><tr><td>ID / 标识符</td><td>用于区分实体的标识</td><td>按应用定义的规则查找</td></tr><tr><td>Handle / 句柄</td><td>管理系统接受的资源访问凭据</td><td>交给相应管理系统解释</td></tr></tbody></table></div>
+<h3>1. ID 强调身份，Handle 强调受管理的访问</h3>
+<pre><code>int playerId = 1001;        // 可能只是数据库中的玩家编号。
+PlayerHandle playerHandle; // 通常意味着存在对应的访问管理机制。</code></pre>
+<p>两者没有绝对的表示形式分界。一个 ID 完全可以同时充当句柄。区别在于它承担的职责和 API 契约，而不在于变量名称。</p>
+<h3>2. 指针与句柄不能直接画等号</h3>
+<p>指针强调“这个值按照相应内存模型表示一个地址”；句柄强调“这个值必须按照指定管理系统的规则解释”。两者即使底层表示相似，也不具有相同的使用许可。</p>
+<div class="code-label">C++ · 语义对比</div>
+<pre><code>// 普通指针在满足类型、生命周期等条件时可以解引用。
+Resource* pointer = /* 指向有效 Resource 对象 */ nullptr;
+// auto value = *pointer; // 只有 pointer 确实有效时才允许。
+
+// 不透明句柄必须交给对应 API 使用。
+// 不可以擅自把它当作 Resource 的内存地址：
+// auto value = *reinterpret_cast&lt;Resource*&gt;(handle);</code></pre>
+<p>即使某种句柄以指针形式表示，也不意味着调用方可以自行解引用。Direct3D 12 的描述符句柄就是典型例子：它们类似指针，但应用必须通过 API 使用，而不能自行解引用。</p>
+<h3>3. C# 引用通常参与对象可达性管理</h3>
+<pre><code>Enemy enemy = new Enemy();
+Enemy another = enemy;</code></pre>
+<p><code>enemy</code> 与 <code>another</code> 引用同一个普通托管对象。只要该对象仍通过存活的强引用保持可达，GC 就不会把它作为不可达垃圾回收。这里的“存活”以运行时实际可达性为准，并非单纯看变量的词法作用域。</p>
+<pre><code>EnemyHandle oldHandle = handle;</code></pre>
+<p>如果 <code>EnemyHandle</code> 只是索引和代数，那么保存它本身不意味着敌人必须继续存活。保活可能来自管理器中的强引用，或其他机制。</p>
+<div class="callout"><p><strong>引用通常参与对象可达性管理，而普通数值句柄本身不保证资源存活。</strong>不同句柄可以有自己的保活契约，例如 <code>GCHandle</code>。</p></div>
+</section>
+<section id="lifetime">
+<h2><small>05 / LIFETIME &amp; OWNERSHIP</small>句柄与所有权、生命周期</h2>
+<p>必须区分以下四个问题：</p>
+<div class="table-wrap"><table><thead><tr><th>概念</th><th>回答的问题</th></tr></thead><tbody><tr><td>Handle Validity / 句柄有效性</td><td>现在还能通过这个句柄访问资源吗？</td></tr><tr><td>Resource Lifetime / 资源生命周期</td><td>底层资源实际存在多久？</td></tr><tr><td>Logical Lifetime / 逻辑生命周期</td><td>业务上何时认为这个对象有效？</td></tr><tr><td>Ownership / 所有权</td><td>谁有责任决定或执行资源释放？</td></tr></tbody></table></div>
+<h3>1. 持有句柄，就拥有资源吗？</h3>
+<pre><code>ResourceHandle handle = manager.Add(texture);</code></pre>
+<p>仅从这一行代码，不能推断调用方是否拥有资源、管理器是否拥有资源、谁有权释放、复制句柄是否增加引用计数，以及句柄失效是否立刻销毁资源。这些必须由系统契约定义。</p>
+<p>例如，Windows 中同一个内核对象可能有多个句柄。关闭其中一个句柄，不一定销毁底层对象；其他句柄可能依然有效。</p>
+<h3>2. 三种常见契约</h3>
+<div class="table-wrap"><table><thead><tr><th>契约</th><th>句柄使用方式</th><th>资源释放规则</th></tr></thead><tbody><tr><td>非拥有句柄</td><td>借用资源访问资格</td><td>所有者负责释放</td></tr><tr><td>拥有句柄</td><td>持有按契约必须释放的句柄权益</td><td>按契约关闭或释放；未必直接销毁底层对象</td></tr><tr><td>引用计数句柄</td><td>持有计数化的访问权益</td><td>达到释放条件时回收</td></tr></tbody></table></div>
+<p>这些是帮助理解的语义分类，并非互斥的底层实现类别；引用计数句柄也可以承担拥有语义。</p>
+<p>在对象池系统中，外部可能只持有敌人的非拥有句柄：</p>
+<pre><code>EnemyHandle enemyHandle;
+enemyManager.TryApplyDamage(enemyHandle, 10);</code></pre>
+<p>调用方可以请求施加伤害，但不能因此决定敌人的内存何时释放。对象池或实体管理器负责资源生命周期。敌人被回收并用于下一个逻辑敌人时，原句柄应当失效。</p>
+<blockquote><p><strong>资源实例能够被复用，不代表前一个逻辑对象的身份也能够被复用。</strong></p></blockquote>
+<h3>3. 检查有效，不等于使用期间一直安全</h3>
+<div class="table-wrap"><table><thead><tr><th>顺序</th><th>线程 A</th><th>线程 B</th></tr></thead><tbody><tr><td>1</td><td>检查句柄：有效</td><td></td></tr><tr><td>2</td><td></td><td>释放资源</td></tr><tr><td>3</td><td>使用资源：可能已失效</td><td></td></tr></tbody></table></div>
+<div class="formula">Valid(h, t₁) ⇏ Valid(h, t₂)</div>
+<p>在 <code>t₁</code> 有效，不代表在 <code>t₂</code> 仍有效。并发安全使用可能需要互斥锁、引用计数、租约、延迟回收等机制，并确保这些机制覆盖实际使用期间。</p>
+<div class="callout warning"><p><strong>代际句柄解决资源身份复用问题，不自动解决并发资源释放问题。</strong></p></div>
+</section>
+<section id="examples">
+<h2><small>06 / IN PRACTICE</small>操作系统、C# 与图形 API</h2>
+<h3>1. 操作系统文件句柄</h3>
+<div class="code-label">C · Linux 示意，省略头文件与错误处理</div>
+<pre><code>int fd = open("data.txt", O_RDONLY);
+// 假设返回 fd == 3。
+
+read(fd, buffer, 100);
+close(fd);</code></pre>
+<p><code>open()</code> 获得访问入口，<code>read()</code> 使用它访问资源，<code>close()</code> 关闭当前文件描述符。关闭后，整数值可能重新分配给另一个打开的文件，因此不能继续使用旧的 <code>fd</code>。</p>
+<h3>2. C# 的 SafeHandle</h3>
+<p>操作系统文件句柄属于非托管资源，其释放时机不等同于普通托管对象内存被 GC 回收的时机。</p>
+<p><code>System.Runtime.InteropServices.SafeHandle</code> 用于安全包装非托管句柄，并提供释放及相应的生命周期保护。通常我们直接使用已经封装好的类型：</p>
+<pre><code>using System.IO;
+
+using (var stream = File.OpenRead("data.txt"))
+{
+    // 读取文件。
+}</code></pre>
+<p><code>FileStream</code> 提供托管文件访问接口，并负责管理底层资源。<code>using</code> 在正常离开作用域或异常展开时调用 <code>Dispose()</code>；这与托管对象内存何时由 GC 回收是两件事。</p>
+<h3>3. C# 的 GCHandle</h3>
+<p><code>System.Runtime.InteropServices.GCHandle</code> 为托管对象建立特殊的 GC 句柄，常用于托管与非托管代码互操作。它并非专门管理操作系统文件句柄。</p>
+<pre><code>using System.Runtime.InteropServices;
+
+object resource = new object();
+
+GCHandle handle = GCHandle.Alloc(
+    resource,
+    GCHandleType.Normal
+);
+
+try
+{
+    object target = handle.Target;
+}
+finally
+{
+    handle.Free();
+}</code></pre>
+<p><code>Normal</code> 类型的 <code>GCHandle</code> 会让目标对象保持可达，直到句柄释放；<code>Pinned</code> 类型还可防止符合条件的对象被 GC 移动。其他类型如弱句柄具有不同语义，不能把所有 <code>GCHandle</code> 都理解为强保活。</p>
+<div class="table-wrap"><table><thead><tr><th>机制</th><th>主要目的</th></tr></thead><tbody><tr><td>自定义 ResourceHandle</td><td>标识和查找受管理的资源</td></tr><tr><td>SafeHandle</td><td>安全管理特定非托管句柄</td></tr><tr><td>GCHandle</td><td>控制托管对象的 GC 可达性或固定行为</td></tr></tbody></table></div>
+<p>同样叫 Handle，对生命周期提供的保证却不相同。复制 <code>GCHandle</code> 结构体也不会自动创建独立的新 GC 句柄，不应把副本当作可分别释放的所有者。</p>
+<h3>4. Direct3D 12 描述符句柄</h3>
+<pre><code>D3D12_CPU_DESCRIPTOR_HANDLE
+D3D12_GPU_DESCRIPTOR_HANDLE</code></pre>
+<p>它们定位描述符堆中的特定描述符，<strong>不直接代表纹理或缓冲区对象本身</strong>。描述符按其内容描述资源视图或其他绑定信息。</p>
+<p>这类句柄必须按照图形 API 的约定使用，应用不能擅自解引用其内部位模式。API 允许的偏移计算也应使用设备提供的描述符增量等规则。</p>
+<p>GPU 还有异步执行：CPU 提交命令后，GPU 可能尚未执行。GPU 仍会访问的描述符及其依赖资源，必须按照同步规则保持有效，不能仅因 CPU 已提交命令就立即复用或释放。具体期限依描述符类型与 API 契约而定。</p>
+<h3>5. Unity 与游戏对象</h3>
+<p>Unity 也有对象身份标识机制。提供 <code>Object.GetInstanceID()</code> 的版本中，实例 ID 用于标识内存中的对象实例，不能作为跨运行会话的稳定存档 ID。具体接口应以项目使用的 Unity 版本文档为准。</p>
+<p>拿到对象实例标识，不等于获得对象所有权。还需要区分：</p>
+<ul><li><code>Destroy</code> 是对 Unity 对象生命周期执行操作。</li><li>托管引用存在，不代表相应的原生 Unity 对象仍有效。</li><li>对象池自定义的句柄，应按对象池自己的有效性规则判断。</li></ul>
+<p><strong>Unity 对象引用、实例 ID、自定义实体句柄，是不同的机制。</strong></p>
+</section>
+<section id="when">
+<h2><small>07 / TRADE-OFFS</small>什么时候应该使用句柄？</h2>
+<p>句柄是一种手段，并非所有对象都需要它。</p>
+<div class="table-wrap"><table><thead><tr><th>场景</th><th>适用性</th><th>原因</th></tr></thead><tbody><tr><td>简单 C# 业务对象</td><td>通常不需要</td><td>普通引用更直接</td></tr><tr><td>对象池中的可复用实体</td><td>很适合</td><td>识别旧身份并控制访问</td></tr><tr><td>游戏 ECS 实体</td><td>很适合</td><td>通过索引与代数区分实体</td></tr><tr><td>跨语言、原生 API 调用</td><td>很适合</td><td>隐藏资源内部表示</td></tr><tr><td>GPU 资源、描述符管理</td><td>很适合</td><td>符合底层 API 的访问抽象</td></tr><tr><td>只需要稳定存档身份的对象</td><td>不一定</td><td>可能更需要持久化 ID</td></tr><tr><td>频繁直接修改的临时局部对象</td><td>不一定</td><td>额外查找可能增加复杂度</td></tr></tbody></table></div>
+<p>直接引用往往能避免额外的句柄解析。句柄表虽然可以非常高效，仍需要考虑查询、有效性验证、间接访问和缓存局部性等成本；实际性能取决于数据布局与访问方式。</p>
+<p>当你需要<strong>稳定的访问接口、受控的资源身份和集中生命周期管理</strong>时，句柄才体现出它的价值。</p>
+</section>
+<section id="essence">
+<h2><small>08 / ESSENCE</small>重新回到句柄的本质</h2>
+<h3>第一层：标识</h3><p>句柄是代表某个资源访问入口的值，而不是资源本身。</p>
+<h3>第二层：间接访问</h3><p>使用者把句柄交给管理系统，由管理系统解释它，进行查找、验证和操作。</p>
+<h3>第三层：契约</h3><p>句柄是否有效、拥有什么权限、如何复制、谁负责释放，以及是否保活资源，都由所属系统的契约决定。</p>
+<div class="formula">Handle + Manager Contract → Controlled Resource Access</div>
+<p style="text-align:center;color:var(--muted)">句柄 + 管理系统契约 → 受控制的资源访问</p>
+<blockquote><p><strong>句柄把资源的使用者与资源的实际管理方式分离开来，使管理者能够在明确的规则下控制资源的访问、身份与生命周期。</strong></p></blockquote>
+<p>值得继续深入的相邻主题：</p>
+<ul><li><strong>代际句柄与 ABA 问题：</strong>如何避免误认复用后的对象。</li><li><strong>所有权语义与借用安全：</strong>谁负责释放，使用期间如何保持有效。</li><li><strong>句柄表、对象池与 ECS：</strong>如何在游戏系统中落地。</li></ul>
+</section>
+<section id="references">
+<h2><small>REFERENCE LINKS</small>延伸阅读</h2>
+<p class="endnote">以下为相关概念的官方文档或手册入口。API 细节应以目标平台和项目版本为准。</p>
+<ul class="endnote">
+<li><a href="https://man7.org/linux/man-pages/man2/open.2.html" target="_blank" rel="noopener noreferrer">Linux：open(2)</a> · <a href="https://man7.org/linux/man-pages/man2/close.2.html" target="_blank" rel="noopener noreferrer">close(2)</a></li>
+<li><a href="https://learn.microsoft.com/en-us/windows/win32/sysinfo/object-handles" target="_blank" rel="noopener noreferrer">Windows：Object Handles</a></li>
+<li><a href="https://learn.microsoft.com/en-us/dotnet/api/system.runtime.interopservices.safehandle" target="_blank" rel="noopener noreferrer">.NET：SafeHandle</a> · <a href="https://learn.microsoft.com/en-us/dotnet/api/system.runtime.interopservices.gchandle" target="_blank" rel="noopener noreferrer">GCHandle</a></li>
+<li><a href="https://learn.microsoft.com/en-us/windows/win32/direct3d12/creating-descriptor-heaps" target="_blank" rel="noopener noreferrer">Direct3D 12：Creating Descriptor Heaps</a></li>
+<li><a href="https://docs.unity3d.com/ScriptReference/Object.GetInstanceID.html" target="_blank" rel="noopener noreferrer">Unity：Object.GetInstanceID</a> · <a href="https://docs.unity3d.com/ScriptReference/Object.Destroy.html" target="_blank" rel="noopener noreferrer">Object.Destroy</a></li>
+</ul>
+</section>
+</div>
+<footer>句柄 Handle · 概念学习笔记 ｜ 可离线阅读 · 支持窄屏与打印 ｜ C# 示例为教学用途</footer>
+</main>
+</div>
+<script>
+document.getElementById('theme').addEventListener('click',function(){
+ const current=document.documentElement.dataset.theme;
+ const dark=current?current==='dark':window.matchMedia('(prefers-color-scheme: dark)').matches;
+ document.documentElement.dataset.theme=dark?'light':'dark';
+});
+document.querySelectorAll('pre').forEach(function(pre){
+ const wrapper=document.createElement('div');wrapper.className='code-wrap';
+ pre.parentNode.insertBefore(wrapper,pre);wrapper.appendChild(pre);
+ const button=document.createElement('button');button.type='button';button.className='copy';button.textContent='复制';button.setAttribute('aria-label','复制代码');
+ button.addEventListener('click',async function(){
+  const value=pre.textContent;
+  try{if(navigator.clipboard&&window.isSecureContext){await navigator.clipboard.writeText(value);}else{const area=document.createElement('textarea');area.value=value;area.style.position='fixed';area.style.opacity='0';document.body.appendChild(area);area.select();const ok=document.execCommand('copy');area.remove();if(!ok)throw new Error('copy');}button.textContent='已复制';}
+  catch(e){button.textContent='请手动选择复制';}
+  setTimeout(function(){button.textContent='复制';},1800);
+ });wrapper.appendChild(button);
+});
+</script>
+</body>
+</html>

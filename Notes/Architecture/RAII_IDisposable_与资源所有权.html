@@ -1,0 +1,194 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="从 What、Why、How 深入理解 RAII、IDisposable、资源所有权及 C# 与 Unity 的生命周期管理。"><title>RAII、IDisposable 与资源所有权</title><style>
+:root{--bg:#f3f5f8;--paper:#fff;--ink:#202c3b;--muted:#66748a;--line:#dfe5ee;--accent:#087c80;--soft:#edf8f6;--code:#142336;--codeink:#e7eef7;color-scheme:light}*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:26px}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.9 "Microsoft YaHei","PingFang SC",system-ui,sans-serif}a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}button{font:inherit;line-height:1.4;cursor:pointer;border:1px solid var(--line);border-radius:6px;padding:6px 12px;background:var(--paper);color:var(--ink)}button:hover{border-color:var(--accent)}.shell{max-width:1400px;margin:auto;display:grid;grid-template-columns:246px minmax(0,1fr);gap:36px;padding:40px 30px}.sidebar{align-self:start;position:sticky;top:28px}.brand{font-size:12px;letter-spacing:2px;color:var(--muted);margin:0 0 18px}.sidebar nav{display:grid;gap:3px}.sidebar nav a{color:var(--muted);font-size:14px;padding:8px 10px;border-left:2px solid var(--line)}.sidebar nav a:hover{color:var(--accent);border-color:var(--accent);background:var(--soft);text-decoration:none}.tools{display:flex;gap:8px;flex-wrap:wrap;margin-top:22px}main{min-width:0;max-width:1000px}.hero{padding:46px 46px 38px;background:var(--code);color:#fff;border-radius:18px;margin-bottom:24px}.hero .eyebrow{color:#7eddd1}.hero h1{font-size:clamp(29px,3.2vw,44px);line-height:1.35;letter-spacing:-.7px;margin:15px 0 22px}.hero p{color:#c7d5e5;margin-bottom:0}.hero strong{color:#fff}.hero .lead{font-size:19px}.eyebrow{font-size:12px;font-weight:700;letter-spacing:1.6px;color:var(--accent)}section{border:1px solid var(--line);border-radius:14px;background:var(--paper);padding:36px 42px;margin-bottom:22px;scroll-margin-top:26px}h2{font-size:25px;line-height:1.5;margin:9px 0 30px}h2>span{color:var(--accent);font-size:16px;margin-right:14px;font-variant-numeric:tabular-nums}h3{font-size:19px;margin:32px 0 12px}p{margin:12px 0}strong{font-weight:700}li{padding:3px 0}ul,ol{padding-left:26px}code{font-family:Consolas,"SFMono-Regular",monospace;font-size:.9em;overflow-wrap:anywhere}p code,td code,li code{background:var(--soft);border-radius:4px;padding:2px 5px;color:var(--accent)}.callout{border-left:4px solid var(--accent);border-radius:0 8px 8px 0;padding:17px 22px;margin:24px 0;background:var(--soft)}.formula{font-size:19px;text-align:center;padding:23px 12px;margin:22px 0;background:var(--soft);border:1px solid var(--line);border-radius:10px;line-height:1.8}.formula small{font-size:14px;color:var(--muted)}.codebox{margin:19px 0;border-radius:10px;overflow:hidden;background:var(--code);color:var(--codeink)}.codebar{display:flex;justify-content:space-between;align-items:center;padding:8px 16px;background:#1c3048;font-size:12px;color:#b8cbe1}.codebar button{font-size:12px;background:transparent;border-color:#506279;color:#e7eef7;padding:3px 9px}pre{margin:0;padding:18px 20px 22px;overflow:auto;line-height:1.7;tab-size:4}pre code{font-size:13.5px;overflow-wrap:normal;white-space:pre}.table-wrap{overflow:auto;margin:22px 0;border:1px solid var(--line);border-radius:9px}table{width:100%;border-collapse:collapse;font-size:14px;text-align:left}th{background:var(--soft);color:var(--accent);font-weight:700}td,th{padding:12px 15px;border-bottom:1px solid var(--line);vertical-align:top;min-width:125px}tr:last-child td{border-bottom:0}.layers,.lease{padding:22px;border:1px solid var(--line);border-radius:10px;margin:22px auto;max-width:590px;background:var(--bg);text-align:center}.layers>div:not(.relation),.lease>div{padding:16px 20px;background:var(--paper);border:1px solid var(--line);border-radius:8px;display:grid;gap:3px}.layers small{color:var(--accent)}.layers span,.lease span{font-size:13px;color:var(--muted)}.relation,.lease p{color:var(--muted);font-size:13px;padding:10px}.check-head{display:flex;align-items:center;gap:14px;padding:14px 0}.check-head #count{margin-left:auto;color:var(--accent);white-space:nowrap}.checklist{border:1px solid var(--line);border-radius:10px;overflow:hidden}.checklist label{display:flex;align-items:flex-start;gap:14px;padding:18px;cursor:pointer;border-bottom:1px solid var(--line)}.checklist label:last-child{border:0}.checklist input{margin-top:8px;width:18px;height:18px;accent-color:var(--accent);flex-shrink:0}.checklist strong{display:block}.checklist label:has(input:checked){background:var(--soft)}footer{color:var(--muted);font-size:13px;padding:8px 8px 30px}body.dark{--bg:#101820;--paper:#182430;--ink:#dce6f0;--muted:#a1b1c1;--line:#334354;--accent:#6ed4c4;--soft:#203b3d;color-scheme:dark}button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid var(--accent);outline-offset:3px}@media(max-width:950px){.shell{grid-template-columns:1fr;padding:22px 18px;gap:24px}.sidebar{position:static}.sidebar nav{grid-template-columns:repeat(3,minmax(0,1fr))}.brand{margin-bottom:10px}.tools{margin-top:12px}main{max-width:none}.hero,section{padding:29px 26px}}@media(max-width:560px){body{font-size:15px}.shell{padding:14px 10px}.sidebar nav{grid-template-columns:repeat(2,minmax(0,1fr))}.sidebar nav a{font-size:12px}.hero,section{padding:25px 19px}.hero .lead{font-size:17px}h2{font-size:22px}h3{font-size:18px}pre{padding:15px}td,th{padding:10px}section{border-radius:10px}.check-head{flex-wrap:wrap;font-size:14px}}@media print{body{background:#fff;color:#111;font-size:11pt}.shell{display:block;padding:0}.sidebar,.tools,.copy,#reset{display:none}main{max-width:none}.hero{background:#fff;color:#111;padding:12px 0;border-bottom:2px solid #087c80;border-radius:0}.hero p,.hero strong{color:#111}.hero .eyebrow{color:#087c80}.hero h1{font-size:27pt}section{padding:18px 0;border:0;border-bottom:1px solid #aaa;border-radius:0;break-inside:auto}h2,h3{break-after:avoid}.codebox{background:#f3f5f8;color:#111;break-inside:avoid}.codebar{background:#e8edf2;color:#111}pre code{white-space:pre-wrap;overflow-wrap:anywhere;font-size:9pt}.table-wrap{overflow:visible}table{font-size:9pt}td,th{min-width:0;padding:7px}tr{break-inside:avoid}.layers,.lease,.callout,.checklist label{break-inside:avoid}a{color:inherit}footer{font-size:9pt}}
+</style></head><body><div class="shell"><aside class="sidebar"><p class="brand">RESOURCE LIFETIME · 学习笔记</p><nav aria-label="文档目录"><a href="#s1">01 · What：概念与所有权</a><a href="#s2">02 · Why：GC 的管理边界</a><a href="#s3">03 · How：建立生命周期</a><a href="#s4">04 · 数据库连接与租约</a><a href="#s5">05 · Unity 资源管理</a><a href="#s6">06 · Dispose、终结器与 GC</a><a href="#s7">07 · 资源生命周期对照</a><a href="#s8">08 · 所有权判断清单</a><a href="#s9">09 · 共同的设计原则</a></nav><div class="tools"><button id="theme" type="button" aria-pressed="false">深色阅读</button><button id="print" type="button">打印 / 存为 PDF</button></div></aside><main><header class="hero"><div class="eyebrow">WHAT · WHY · HOW</div><h1>RAII、IDisposable<br>与资源所有权</h1><p class="lead">为什么 C# 中的内存、文件、连接与 Unity 对象，需要不同的生命周期管理？</p><p><strong>对象是操作资源的方式，但对象本身不一定就是资源。</strong><br>真正的问题是：谁负责让资源在正确的时间获得、使用与释放？</p></header><section id="s1"><div class="eyebrow">概念 · 对象、资源与责任</div><h2><span>01</span>What：它们究竟是什么？</h2><h3>1.1 什么是资源（Resource）？</h3><p>资源是程序为了完成工作，需要获取、占用、使用，并在适当时候归还或释放的东西。资源可能由 .NET 托管运行时、操作系统、数据库连接池、Unity 引擎或自定义对象池管理。</p><div class="table-wrap"><table><thead><tr><th>资源</th><th>获取方式</th><th>使用完之后</th></tr></thead><tbody><tr><td>托管内存</td><td><code>new Player()</code></td><td>GC 回收不可达对象占用的内存</td></tr><tr><td>文件句柄</td><td><code>File.OpenRead()</code></td><td><code>Dispose()</code> 关闭文件</td></tr><tr><td>数据库连接</td><td><code>SqlConnection.Open()</code></td><td>关闭或归还连接</td></tr><tr><td>网络 Socket</td><td>创建并连接 Socket</td><td>关闭 Socket</td></tr><tr><td>互斥锁</td><td><code>Monitor.Enter()</code></td><td><code>Monitor.Exit()</code></td></tr><tr><td>Unity GameObject</td><td><code>Instantiate()</code></td><td><code>Destroy()</code> 或交还对象池</td></tr><tr><td>Unity NativeArray</td><td><code>new NativeArray&lt;T&gt;()</code></td><td><code>Dispose()</code></td></tr><tr><td>Addressables 资源</td><td><code>LoadAssetAsync()</code></td><td><code>Addressables.Release()</code></td></tr></tbody></table></div><p>释放操作不同，是因为资源由不同的系统管理，并且具有不同的使用契约。</p><h3>1.2 对象与资源不是同一个概念</h3><div class="codebox"><div class="codebar"><span>C#</span><button class="copy" type="button">复制代码</button></div><pre><code>var player = new Player();
+var stream = File.OpenRead(&quot;save.dat&quot;);</code></pre></div><p>第一行主要创建一个普通托管对象。第二行通常同时涉及一个 C# 的 <code>FileStream</code> 托管对象，以及与之关联的操作系统文件句柄。</p><div class="layers"><div><small>.NET 托管堆</small><strong>FileStream 托管对象</strong><span>GC 管理对象内存</span></div><div class="relation">持有并管理文件句柄 ↓</div><div><small>操作系统</small><strong>文件句柄</strong><span>需要按契约及时关闭</span></div></div><p>GC 不负责理解每一种外部资源的关闭协议。.NET 文件类通常通过 <code>SafeHandle</code> 等机制提供遗忘释放时的后备清理，但这不意味着文件会在离开作用域时立即关闭。仍应显式释放文件。</p><div class="callout"><strong>内存回收 ≠ 资源释放。</strong><br>前者关注不可达托管对象占用的内存；后者关注文件、连接、锁、原生内存等资源的使用权何时结束。</div><h3>1.3 什么是资源所有权（Resource Ownership）？</h3><p>所有权意味着：<strong>谁有责任决定资源何时结束使用，并执行相应的释放操作。</strong>它不等于“谁能访问这个资源”。</p><div class="codebox"><div class="codebar"><span>C#</span><button class="copy" type="button">复制代码</button></div><pre><code>var stream = File.OpenRead(&quot;save.dat&quot;);
+var a = stream;
+var b = stream;
+
+a.Dispose();
+// b 仍引用同一个托管对象，但不能继续正常使用已释放的流。</code></pre></div><p>三个变量没有产生三个独立的文件句柄，也不代表三份独立的释放责任。释放影响的是引用指向的资源，而不是仅影响某个变量。</p><ul><li><strong>过早释放：</strong>一个使用者还在使用，另一个就释放了。</li><li><strong>重复释放：</strong>多个使用者各自认为自己应该释放。</li><li><strong>资源泄漏：</strong>所有使用者都认为应该由别人释放。</li></ul><h3>1.4 什么是 RAII？</h3><p><strong>RAII = Resource Acquisition Is Initialization，资源获取即初始化。</strong>它起源于 C++，把资源生命周期与管理对象的生命周期绑定。</p><ol><li>管理对象初始化时获取资源。</li><li>管理对象有效期间，维持其所承诺的资源有效性。</li><li>管理对象生命周期结束时，析构函数释放其拥有的资源。</li></ol><div class="codebox"><div class="codebar"><span>C++</span><button class="copy" type="button">复制代码</button></div><pre><code>void ReadFile()
+{
+    std::ifstream file(&quot;save.dat&quot;);
+    // 使用文件
+} // file 在这里析构，关闭文件</code></pre></div><p>对于这种局部 RAII 对象，即使作用域因为异常退出，正常栈展开也会调用已构造对象的析构函数。“自动”来自 C++ 的对象生命周期与析构规则，而不是 GC。</p><p>RAII 的目的，是让程序员不必在每一条退出路径上都依赖自己记得写释放代码。RAII 不仅限于栈对象：堆资源也可以由 <code>std::unique_ptr</code> 等 RAII 对象持有，释放时机由拥有者的生命周期决定。</p><h3>1.5 什么是 IDisposable？</h3><div class="codebox"><div class="codebar"><span>C#</span><button class="copy" type="button">复制代码</button></div><pre><code>public interface IDisposable
+{
+    void Dispose();
+}</code></pre></div><p><code>IDisposable</code> 定义显式结束资源使用的操作。<code>using</code> 则将这一操作绑定到指定作用域的结束，包括正常的异常展开。</p><div class="codebox"><div class="codebar"><span>C#</span><button class="copy" type="button">复制代码</button></div><pre><code>using (var stream = File.OpenRead(&quot;save.dat&quot;))
+{
+    // 使用文件
+} // 自动调用 Dispose()</code></pre></div><div class="table-wrap"><table><thead><tr><th>比较项</th><th>C++ RAII</th><th>C# IDisposable + using</th></tr></thead><tbody><tr><td>获取资源</td><td>通常由构造或工厂负责</td><td>构造、工厂、Open 等</td></tr><tr><td>释放资源</td><td>析构函数</td><td>Dispose()</td></tr><tr><td>离开作用域</td><td>局部 RAII 对象自动析构</td><td>using 自动调用 Dispose()</td></tr><tr><td>普通堆对象</td><td>由明确的拥有者管理</td><td>托管内存由 GC 回收</td></tr><tr><td>确定性释放</td><td>根据管理对象生命周期实现</td><td>通过 Dispose、using 等机制实现</td></tr></tbody></table></div><div class="callout"><strong>IDisposable 是释放协议，using 是作用域清理机制。</strong><br>C# 普通托管对象不会因为局部变量离开作用域就确定性析构。</div></section><section id="s2"><div class="eyebrow">动机 · 可达性不等于使用期限</div><h2><span>02</span>Why：为什么不能统一使用 GC？</h2><h3>2.1 GC 解决托管内存的可达性问题</h3><div class="codebox"><div class="codebar"><span>C#</span><button class="copy" type="button">复制代码</button></div><pre><code>void Test()
+{
+    Player player = new Player();
+}</code></pre></div><p>假设 <code>Player</code> 是不持有额外资源的普通类。当对象不能再从 GC 根访问到时，它就有资格被 GC 回收。<strong>有资格回收，不等于立即回收。</strong>局部变量的词法作用域，也不等同于 GC 追踪到的实际存活区间。</p><div class="formula">不可达 ⇒ 有资格被 GC 回收<br>离开作用域 ⇏ 立即释放内存</div><p>对普通托管对象，这通常可以接受：运行时根据内存压力选择回收时机。但外部资源的紧缺程度，未必体现为托管堆的内存压力。</p><h3>2.2 文件、连接等资源需要及时释放</h3><p>文件流的托管对象可能很小，却占用一个操作系统句柄。数据库连接对象也可能很小，却占用数据库、网络和连接池资源。连接池借出额度用尽时，新操作可能等待到超时，即使托管堆仍然有很多空闲内存。</p><div class="callout">资源应当结束使用的时间，不能仅由“托管堆是否需要回收内存”来决定。</div><p>设 <code>T_lastUse</code> 是最后一次合法使用的时间，<code>T_release</code> 是实际释放或归还的时间。对于最终释放，应满足：</p><div class="formula">T_release ≥ T_lastUse<br><small>并让两者之间的延迟处于合理范围</small></div><p>过早释放破坏仍在进行的使用；过晚释放浪费有限资源。RAII 和显式释放协议帮助我们控制这个时序；GC 主要负责托管内存。对于共享资源，这里的“最后一次使用”是所有合法使用者的最后一次使用。</p><h3>2.3 为什么 Unity 对象更特殊？</h3><p>Unity 同时涉及托管内存、非托管内存，以及由 Unity C++ 引擎维护的对象和资源。后两者在内存性质上都属于非托管范畴，但所遵循的管理 API 不同。</p><div class="layers"><div><small>C# 托管世界</small><strong>GameObject 托管包装对象</strong><span>持有引擎对象的关联信息</span></div><div class="relation">关联 ↓</div><div><small>Unity C++ 引擎世界</small><strong>原生对象及引擎数据</strong><span>遵循 Unity 引擎生命周期</span></div></div><div class="codebox"><div class="codebar"><span>C#</span><button class="copy" type="button">复制代码</button></div><pre><code>GameObject enemy = Instantiate(enemyPrefab);
+enemy = null; // 只清除这个变量的引用，不等于销毁实例。</code></pre></div><p>显式销毁实例应使用 <code>Destroy(enemy)</code>，并且应在仍持有有效引用时调用。<code>Destroy</code> 是销毁请求；通常实际销毁延迟到当前更新循环之后、渲染之前。</p><div class="codebox"><div class="codebar"><span>C#</span><button class="copy" type="button">复制代码</button></div><pre><code>GameObject enemy = Instantiate(enemyPrefab);
+Destroy(enemy); // 请求 Unity 销毁原生对象
+enemy = null;   // 可再清除当前变量的引用</code></pre></div><p>原生对象销毁后，C# 包装对象可能仍存在。Unity 为 <code>UnityEngine.Object</code> 重载了空值比较，因此对象可能满足 <code>obj == null</code>，但 <code>ReferenceEquals(obj, null)</code> 仍为 <code>false</code>。</p><p><code>?.</code> 和 <code>??</code> 检查的是托管空引用，不会使用 Unity 的重载相等运算符；不能依赖它们判断原生对象是否已销毁。</p><div class="callout"><strong>Unity 生命周期的特殊性，来自托管运行时与原生引擎之间的管理边界。</strong></div></section><section id="s3"><div class="eyebrow">方法 · 先确定所有权</div><h2><span>03</span>How：如何建立正确的资源生命周期？</h2><h3>3.1 先确定责任，再选择释放 API</h3><ul><li>谁创建或获取了资源？</li><li>谁可以使用资源？</li><li>谁负责结束使用？</li><li>什么事件代表资源不再需要？</li></ul><div class="table-wrap"><table><thead><tr><th>关系</th><th>使用权与释放责任</th><th>典型约定</th></tr></thead><tbody><tr><td>独占所有权</td><td>一个明确主体负责释放</td><td>其他使用者只能借用</td></tr><tr><td>借用</td><td>临时访问，不擅自释放</td><td>不得超出约定生命周期使用</td></tr><tr><td>共享所有权</td><td>多个使用者共同需要资源有效</td><td>共享管理者协调，最后一份使用权结束后清理</td></tr><tr><td>所有权转移</td><td>释放责任从一方交给另一方</td><td>工厂返回资源，调用者负责释放</td></tr></tbody></table></div><p>C# 普通引用并不具备类似 <code>std::unique_ptr</code> 的唯一所有权约束。这些关系通常依靠 API 契约、封装、命名与代码规范表达。创建者常常是初始拥有者，但也可以立即转移所有权。</p><h3>3.2 文件：用 using 绑定使用范围</h3><div class="codebox"><div class="codebar"><span>C#</span><button class="copy" type="button">复制代码</button></div><pre><code>void ReadSave()
+{
+    using var stream = File.OpenRead(&quot;save.dat&quot;);
+    // 读取存档
+} // 当前块作用域结束时 Dispose</code></pre></div><p>其核心语义可以理解为 <code>try/finally</code>。下面针对成功获取到的非空文件流展示等价思路：</p><div class="codebox"><div class="codebar"><span>C#</span><button class="copy" type="button">复制代码</button></div><pre><code>var stream = File.OpenRead(&quot;save.dat&quot;);
+try
+{
+    // 读取存档
+}
+finally
+{
+    stream.Dispose();
+}</code></pre></div><p><code>using var</code> 在声明所在块结束时释放；<code>using (...) { }</code> 可以用更小的代码块精确限定使用范围。</p><div class="codebox"><div class="codebar"><span>C#</span><button class="copy" type="button">复制代码</button></div><pre><code>void Example()
+{
+    using (var stream = File.OpenRead(&quot;save.dat&quot;))
+    {
+        // 只在这个代码块内使用
+    }
+    // 此处已调用 Dispose
+}</code></pre></div><div class="callout">让资源的使用范围尽可能小，让释放边界通过代码结构自然表达。</div><p>正常异常展开会执行 <code>finally</code>；强制终止进程等情况可能来不及运行清理代码，不能把 using 当成进程异常终止时的绝对保证。</p><h3>3.3 自己开发持有资源的类</h3><p>日志类自己创建文件写入器，并承担释放责任。以下为单线程使用的简单封装，展示幂等释放与已释放状态检查：</p><div class="codebox"><div class="codebar"><span>C#</span><button class="copy" type="button">复制代码</button></div><pre><code>using System;
+using System.IO;
+
+public sealed class LogWriter : IDisposable
+{
+    private StreamWriter _writer;
+
+    public LogWriter(string path)
+    {
+        _writer = new StreamWriter(path);
+    }
+
+    public void Write(string message)
+    {
+        if (_writer == null)
+            throw new ObjectDisposedException(nameof(LogWriter));
+
+        _writer.WriteLine(message);
+    }
+
+    public void Dispose()
+    {
+        if (_writer == null)
+            return;
+
+        StreamWriter writer = _writer;
+        _writer = null;
+        writer.Dispose();
+    }
+}</code></pre></div><p>若项目启用可空引用类型，应将该字段声明为 <code>StreamWriter?</code>。示例未处理并发写入和并发释放。</p><div class="codebox"><div class="codebar"><span>C#</span><button class="copy" type="button">复制代码</button></div><pre><code>using (var logger = new LogWriter(&quot;game.log&quot;))
+{
+    logger.Write(&quot;Game Started&quot;);
+    logger.Write(&quot;Player Joined&quot;);
+}</code></pre></div><p>这是级联释放：<code>LogWriter.Dispose()</code> 调用 <code>StreamWriter.Dispose()</code>，进而关闭它拥有的底层流并释放文件句柄。每一层管理者负责自己拥有的资源。</p><p>只持有托管的可释放对象时，通常不需要为此额外编写终结器。<code>Dispose()</code> 应尽量具备幂等性：重复调用不会造成额外破坏。幂等不代表线程安全。</p><div class="callout">持有 IDisposable 字段，不自动等于拥有该字段。只有拥有它，才应承担相应的级联释放责任。</div><h3>3.4 不要擅自释放借来的资源</h3><div class="codebox"><div class="codebar"><span>C#</span><button class="copy" type="button">复制代码</button></div><pre><code>public void ReadData(Stream stream)
+{
+    using var reader = new StreamReader(stream);
+    // 默认情况下，reader.Dispose() 也会关闭底层 stream。
+}</code></pre></div><p>如果参数流只供临时借用，默认关闭底层流可能破坏调用者后续的操作。可以使用 <code>leaveOpen</code> 明确表达约定：</p><div class="codebox"><div class="codebar"><span>C#</span><button class="copy" type="button">复制代码</button></div><pre><code>public void ReadData(Stream stream)
+{
+    using var reader = new StreamReader(
+        stream,
+        System.Text.Encoding.UTF8,
+        detectEncodingFromByteOrderMarks: true,
+        bufferSize: 1024,
+        leaveOpen: true
+    );
+
+    // 读取数据；reader 被释放后，stream 保持打开。
+}</code></pre></div><div class="callout"><strong>借用获得使用权，不自动获得销毁权。</strong><br>参数传入本身不决定所有权，最终仍以 API 的明确契约为准。</div></section><section id="s4"><div class="eyebrow">连接池 · 结束使用不等于销毁实体</div><h2><span>04</span>Why & How：数据库连接为什么像租来的资源？</h2><div class="codebox"><div class="codebar"><span>C#</span><button class="copy" type="button">复制代码</button></div><pre><code>using Microsoft.Data.SqlClient;
+
+using var connection = new SqlConnection(connectionString);
+connection.Open();
+// 数据库操作</code></pre></div><p>对于启用了连接池的 SQL Server 客户端，<code>Dispose()</code> 通常结束当前逻辑连接的使用，将可复用的底层物理连接归还连接池，而不是每次都真正断开网络连接。失效连接等情况可能被丢弃。</p><div class="lease"><div><strong>应用程序</strong><span>SqlConnection 持有本次使用权</span></div><p>Open 获取使用权 · Dispose 结束并归还</p><div><strong>连接池</strong><span>管理可复用的物理连接</span></div></div><p>这与对象池的思想相通：使用者结束一次使用，并不意味着底层实体必须结束其整个生命周期。</p><div class="table-wrap"><table><thead><tr><th>资源</th><th>结束本次使用的含义</th></tr></thead><tbody><tr><td>文件句柄</td><td>关闭句柄，结束文件访问</td></tr><tr><td>池化数据库连接</td><td>归还连接池</td></tr><tr><td>池化游戏对象</td><td>归还游戏对象池</td></tr><tr><td>原生内存</td><td>释放对应分配</td></tr><tr><td>Unity 实例</td><td>请求引擎销毁对象</td></tr></tbody></table></div><div class="callout">正确的释放语义由获取方式与所有权契约决定，不能统一理解为 free 或 Destroy。</div><p>数据库事务的 <code>Commit()</code> 决定事务是否提交；连接的 <code>Dispose()</code> 决定连接使用权何时结束。释放连接不等于提交事务。</p></section><section id="s5"><div class="eyebrow">实践 · 根据来源匹配清理操作</div><h2><span>05</span>How：Unity 中应该如何管理对象？</h2><h3>5.1 Instantiate 创建的 GameObject</h3><div class="codebox"><div class="codebar"><span>C#</span><button class="copy" type="button">复制代码</button></div><pre><code>GameObject enemy = Instantiate(enemyPrefab);
+// 当前系统若拥有这个实例，在适当时候：
+Destroy(enemy);</code></pre></div><p>若实例由对象池管理，应按池的契约归还。普通场景对象也可能由场景卸载统一销毁。需要回答的是“谁管理这个实例的生命周期”，而不只是“它是不是 GameObject”。</p><h3>5.2 运行时创建的 Material 和 Texture</h3><div class="codebox"><div class="codebar"><span>C#</span><button class="copy" type="button">复制代码</button></div><pre><code>using UnityEngine;
+
+public class MaterialOwner : MonoBehaviour
+{
+    [SerializeField] private Material sourceMaterial;
+    private Material runtimeMaterial;
+
+    private void Awake()
+    {
+        runtimeMaterial = new Material(sourceMaterial);
+        GetComponent&lt;Renderer&gt;().sharedMaterial = runtimeMaterial;
+    }
+
+    private void OnDestroy()
+    {
+        if (runtimeMaterial != null)
+        {
+            Destroy(runtimeMaterial);
+            runtimeMaterial = null;
+        }
+    }
+}</code></pre></div><p><code>sourceMaterial</code> 是外部提供的引用，当前组件不自动拥有它。<code>runtimeMaterial</code> 是当前组件创建的独立实例，由当前组件负责销毁。示例假设对象上存在 Renderer 且已指定来源材质。</p><p>随意销毁共享的来源材质，会影响其他使用者。这里同时隐含一项生命周期约定：其他使用者不得在拥有者销毁之后，继续依赖这个运行时材质。</p><h3>5.3 OnDisable 和 OnDestroy 的职责不同</h3><div class="table-wrap"><table><thead><tr><th>回调</th><th>生命周期边界</th><th>典型职责</th></tr></thead><tbody><tr><td>Awake</td><td>组件初始化</td><td>建立组件级依赖、创建长期资源</td></tr><tr><td>OnEnable</td><td>启用区间开始</td><td>注册启用期间需要的事件</td></tr><tr><td>OnDisable</td><td>启用区间结束</td><td>取消对应事件订阅</td></tr><tr><td>OnDestroy</td><td>组件或 GameObject 销毁</td><td>清理组件拥有的长期资源</td></tr></tbody></table></div><div class="codebox"><div class="codebar"><span>C#</span><button class="copy" type="button">复制代码</button></div><pre><code>private void OnEnable()
+{
+    GameEvents.OnGameOver += HandleGameOver;
+}
+
+private void OnDisable()
+{
+    GameEvents.OnGameOver -= HandleGameOver;
+}</code></pre></div><p>这是示意片段：<code>GameEvents</code> 与 <code>HandleGameOver</code> 由项目定义。订阅范围是“组件启用期间”，因此用 <code>OnDisable</code> 配对清理。如果资源在 <code>Awake</code> 创建并供组件整个生命周期使用，通常不应仅因禁用就销毁，除非重新启用时会重新获取。</p><p><code>OnDestroy</code> 只会对曾激活过的 GameObject 调用；操作系统强制终止应用时也可能来不及执行。它不构成业务数据持久化的绝对保证。</p><h3>5.4 NativeArray&lt;T&gt; 为什么使用 Dispose？</h3><div class="codebox"><div class="codebar"><span>C#</span><button class="copy" type="button">复制代码</button></div><pre><code>using Unity.Collections;
+using UnityEngine;
+
+public class NativeMemoryExample : MonoBehaviour
+{
+    private NativeArray&lt;int&gt; _numbers;
+
+    private void Awake()
+    {
+        _numbers = new NativeArray&lt;int&gt;(1024, Allocator.Persistent);
+    }
+
+    private void OnDestroy()
+    {
+        if (_numbers.IsCreated)
+            _numbers.Dispose();
+    }
+}</code></pre></div><p>虽然 NativeArray 在 C# 中是结构体，但底层数据位于非 GC 管理的内存中，必须按分配器和使用契约释放。示例假设销毁时没有 Job 继续使用该数组。</p><div class="codebox"><div class="codebar"><span>C#</span><button class="copy" type="button">复制代码</button></div><pre><code>using var numbers = new NativeArray&lt;int&gt;(1024, Allocator.TempJob);
+// 在当前作用域内使用；离开前确保相关 Job 已完成。</code></pre></div><ul><li><code>Allocator.TempJob</code> 分配通常要求在四帧内释放。</li><li>有 Job 使用数组时，必须等待相应依赖完成，或使用带 Job 依赖的释放安排。</li><li>复制 NativeArray 结构体可能形成指向同一底层分配的别名，不会自动获得独立数据或独立释放权。</li><li>某个副本的 <code>IsCreated</code> 不能普遍证明其他别名未释放底层内存。</li></ul><div class="callout">值类型还是引用类型，不能直接决定是否需要显式释放。</div><h3>5.5 Addressables 为什么使用 Release？</h3><div class="codebox"><div class="codebar"><span>C#</span><button class="copy" type="button">复制代码</button></div><pre><code>var handle = Addressables.LoadAssetAsync&lt;GameObject&gt;(&quot;Enemy&quot;);
+// 等待加载完成、处理结果，并在所有相关使用结束后：
+Addressables.Release(handle);</code></pre></div><p>这是生命周期示意片段，省略了加载完成与失败处理。Addressables 使用引用计数管理加载操作及依赖。对获取的有效句柄，应按其契约配对释放；复制句柄不自动增加一次引用计数。</p><p>通过 <code>Addressables.InstantiateAsync()</code> 创建的实例，通常用 <code>Addressables.ReleaseInstance()</code> 结束其生命周期。若手动对 <code>LoadAssetAsync</code> 的结果调用普通 <code>Instantiate</code>，需自行确保源资源的加载句柄在相关实例使用期间保持有效。</p><p>计数归零并不一定意味着内存立刻归还，还涉及依赖和 AssetBundle 的卸载时机。<code>Release()</code>、<code>Destroy()</code> 与 <code>GC.Collect()</code> 处理的层次不同，不能互相替代。</p><h3>5.6 临时 RenderTexture 为什么用 ReleaseTemporary？</h3><div class="codebox"><div class="codebar"><span>C#</span><button class="copy" type="button">复制代码</button></div><pre><code>RenderTexture temporary =
+    RenderTexture.GetTemporary(512, 512, 0);
+
+try
+{
+    // 使用临时 RenderTexture
+}
+finally
+{
+    RenderTexture.ReleaseTemporary(temporary);
+}</code></pre></div><p>Unity 内部维护临时 RenderTexture 池。<code>ReleaseTemporary()</code> 结束本次租用，使资源可以复用；它不表示每次都必须立即销毁底层纹理。不能只看见类型是 RenderTexture，就忽略来源而统一调用 Destroy。</p></section><section id="s6"><div class="eyebrow">边界 · 三种不同的机制</div><h2><span>06</span>深入：Dispose、终结器与 GC 的关系</h2><h3>6.1 Dispose 不等于回收托管对象内存</h3><div class="codebox"><div class="codebar"><span>C#</span><button class="copy" type="button">复制代码</button></div><pre><code>var writer = new LogWriter(&quot;game.log&quot;);
+writer.Dispose();
+// writer 仍可能引用这个托管对象；文件资源已按契约清理。</code></pre></div><p>Dispose 结束相关资源的有效使用；托管对象的内存仍由 GC 在合适时机回收。调用 Dispose 不会自动将所有指向对象的变量设为 null，也不会直接将该对象的托管内存交还给 GC。</p><div class="formula">Dispose ≠ GC 回收</div><h3>6.2 C# 的析构函数语法实际是终结器</h3><div class="codebox"><div class="codebar"><span>C#</span><button class="copy" type="button">复制代码</button></div><pre><code>class Example
+{
+    ~Example()
+    {
+        // 终结器：不是 C++ 的确定性析构函数。
+    }
+}</code></pre></div><p>终结器由运行时终结机制管理，调用时间不确定，也不能保证在进程异常终止时执行。不应依赖它完成及时释放。直接管理非托管句柄时，优先考虑 <code>SafeHandle</code>，避免自行实现复杂且脆弱的终结器。</p><h3>6.3 为什么不是所有类都实现 IDisposable？</h3><div class="codebox"><div class="codebar"><span>C#</span><button class="copy" type="button">复制代码</button></div><pre><code>public class PlayerData
+{
+    public int Level;
+    public int Experience;
+    public string Name;
+}</code></pre></div><p>普通数据类若没有需要显式结束的资源使用，就不必实现 IDisposable。为所有类增加 Dispose，不能自动让 GC 更高效，只会增加额外的生命周期状态与管理负担。</p><p>应区分“需要回收的托管对象”和“需要显式终止使用的资源”。一个类型可以同时涉及二者，但不一定同时涉及。</p><h3>6.4 IAsyncDisposable 是什么？</h3><div class="codebox"><div class="codebar"><span>C#</span><button class="copy" type="button">复制代码</button></div><pre><code>public interface IAsyncDisposable
+{
+    ValueTask DisposeAsync();
+}</code></pre></div><p>当清理操作需要异步等待时，可以使用异步释放协议。在支持相应 API 的 .NET 环境中，例如：</p><div class="codebox"><div class="codebar"><span>C#</span><button class="copy" type="button">复制代码</button></div><pre><code>await using var stream = new FileStream(
+    &quot;save.dat&quot;,
+    FileMode.Create,
+    FileAccess.Write,
+    FileShare.None,
+    bufferSize: 4096,
+    useAsync: true
+);
+// 在此异步写入文件。</code></pre></div><p>作用域结束时会等待 <code>DisposeAsync()</code>。区别在于清理过程允许异步等待，例如完成缓冲写入或异步关闭；不是“异步释放就由 GC 接管”。Unity 中能否采用，应根据实际版本、运行时和所用 API 的支持情况判断。</p></section><section id="s7"><div class="eyebrow">对照 · 管理者、使用权与结束方式</div><h2><span>07</span>一张表理解资源生命周期</h2><div class="table-wrap"><table><thead><tr><th>资源类型</th><th>主要管理者</th><th>你持有的是什么</th><th>典型结束方式</th></tr></thead><tbody><tr><td>普通 C# 对象</td><td>GC</td><td>托管引用</td><td>不可达后由 GC 回收</td></tr><tr><td>文件流</td><td>.NET + 操作系统</td><td>文件访问的使用权</td><td>Dispose()</td></tr><tr><td>Socket</td><td>.NET + 操作系统</td><td>网络资源使用权</td><td>Dispose() / Close()</td></tr><tr><td>池化数据库连接</td><td>连接池</td><td>本次连接租约</td><td>Dispose() 归还</td></tr><tr><td>Unity GameObject 实例</td><td>引擎 / 场景 / 对象池</td><td>实例引用与约定的管理责任</td><td>Destroy / 场景卸载 / 归还池</td></tr><tr><td>运行时 Material</td><td>Unity 引擎</td><td>资源实例引用</td><td>由拥有者 Destroy()</td></tr><tr><td>NativeArray</td><td>Unity 非托管内存机制</td><td>底层分配的访问与释放责任</td><td>Dispose() 或依赖释放</td></tr><tr><td>Addressables 资源</td><td>Addressables</td><td>加载操作所获使用权</td><td>Release()</td></tr><tr><td>Addressables 实例</td><td>Addressables</td><td>受跟踪实例的使用权</td><td>ReleaseInstance()</td></tr><tr><td>临时 RenderTexture</td><td>Unity 临时纹理池</td><td>临时纹理租约</td><td>ReleaseTemporary()</td></tr></tbody></table></div><div class="callout"><strong>释放操作必须与资源的获取方式、管理者和所有权契约相匹配。</strong></div></section><section id="s8"><div class="eyebrow">实践清单 · 从来源追到边界</div><h2><span>08</span>如何判断资源应该由谁释放？</h2><p>遇到新的 API，可以按以下顺序检查。点击清单可标记当前阅读进度；勾选状态仅保留在本次页面中。</p><div class="check-head"><strong>资源所有权判断清单</strong><span id="count" aria-live="polite">0 / 5</span><button id="reset" type="button">重置检查</button></div><div class="checklist">
+<label><input type="checkbox"><span><strong>1. 确认资源来源</strong>它由 new、Open、Instantiate、Load，还是从池中获取？是否同时产生底层资源？</span></label>
+<label><input type="checkbox"><span><strong>2. 确认所有权约定</strong>当前代码是拥有者、借用者，还是共享使用者？是否发生责任转移？</span></label>
+<label><input type="checkbox"><span><strong>3. 确认合法使用区间</strong>谁还在使用？是否存在别名、异步任务、Job 或仍存活的实例？</span></label>
+<label><input type="checkbox"><span><strong>4. 匹配清理边界与 API</strong>应在代码块结束、组件禁用、对象销毁，还是租约结束时清理？调用 Dispose、Destroy、Release，还是归还池？</span></label>
+<label><input type="checkbox"><span><strong>5. 检查所有退出路径</strong>正常返回和异常路径是否都会清理？是否有过早释放、重复释放或无人负责的路径？</span></label></div><p>这套方法比单纯背诵 API 名称更重要，也能用于对象池、数据库、网络、事件订阅与任务调度。</p></section><section id="s9"><div class="eyebrow">本质 · 明确所有者，控制合法使用期</div><h2><span>09</span>将所有概念归结为一个原则</h2><div class="formula">获取资源 → 合法使用 → 结束使用</div><ol><li><strong>使用有效性：</strong>合法使用期间，资源必须保持有效。</li><li><strong>释放责任：</strong>必须存在明确、有效的清理机制，避免无人负责而永久泄漏。</li><li><strong>生命周期一致性：</strong>最终释放不能早于合法使用结束，也不能无理由地无限延后。</li></ol><div class="table-wrap"><table><thead><tr><th>概念</th><th>负责什么</th></tr></thead><tbody><tr><td>RAII</td><td>将资源管理绑定到管理对象的生命周期</td></tr><tr><td>IDisposable</td><td>提供标准的显式结束操作</td></tr><tr><td>using</td><td>将 Dispose 绑定到指定代码作用域</td></tr><tr><td>GC</td><td>管理不可达托管对象占用的内存</td></tr><tr><td>Unity 生命周期与资源系统</td><td>管理引擎对象、原生分配、加载引用与租约</td></tr></tbody></table></div><div class="callout"><strong>资源的生命周期应由明确的所有者控制；在最后一次合法使用之后，按照其管理系统的契约释放或归还。</strong></div><p>继续深入时，可以研究 Ownership（所有权）、Borrowing（借用）、Lifetime（生命周期）与 Aliasing（别名）的关系。它们共同解释了：为什么“我还有一个引用”，并不能证明“这个资源仍然可用”。</p></section><footer>依据本次讲解整理 · 保留概念、动机、示例与权衡，补全所有权检查清单。<br>代码包含独立类型与示意片段，使用时请放入相应项目上下文；文档不依赖外部字体、脚本或网络资源。</footer></main></div><script>
+document.getElementById('theme').addEventListener('click',function(){const dark=document.body.classList.toggle('dark');this.textContent=dark?'浅色阅读':'深色阅读';this.setAttribute('aria-pressed',String(dark));});
+document.getElementById('print').addEventListener('click',()=>window.print());
+const checks=[...document.querySelectorAll('.checklist input')];
+function update(){document.getElementById('count').textContent=checks.filter(x=>x.checked).length+' / 5';}
+checks.forEach(x=>x.addEventListener('change',update));
+document.getElementById('reset').addEventListener('click',()=>{checks.forEach(x=>x.checked=false);update();});
+document.querySelectorAll('.copy').forEach(button=>button.addEventListener('click',async()=>{const text=button.closest('.codebox').querySelector('code').textContent;try{if(navigator.clipboard&&window.isSecureContext){await navigator.clipboard.writeText(text);}else{const ta=document.createElement('textarea');ta.value=text;ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.select();const ok=document.execCommand('copy');ta.remove();if(!ok)throw Error('copy');}button.textContent='已复制';}catch(e){button.textContent='请选中代码复制';}setTimeout(()=>button.textContent='复制代码',1800);}));
+</script></body></html>

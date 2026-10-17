@@ -1,0 +1,332 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="以 What、Why、How 理解契约式设计与霍尔逻辑，含 C# 示例、证明规则及最弱前置条件交互演示。">
+<title>契约式设计与霍尔逻辑 · What / Why / How</title>
+<style>
+:root{--paper:#f7f7f2;--card:#fff;--ink:#232d2b;--muted:#64716b;--line:#dce2da;--green:#246755;--soft:#eaf1e9;--gold:#a27738;--code:#182621;--codeink:#e0ece5;--radius:15px;color-scheme:light}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:32px}body{margin:0;background:var(--paper);color:var(--ink);font:17px/1.95 -apple-system,BlinkMacSystemFont,"Segoe UI","Microsoft YaHei","PingFang SC",sans-serif}a{color:var(--green);text-underline-offset:4px}button,input{font:inherit}button{cursor:pointer}::selection{background:#cce4cf}.layout{max-width:1370px;margin:auto;display:grid;grid-template-columns:248px minmax(0,1fr);gap:64px;padding:56px 48px 88px}.sidebar{position:sticky;top:32px;align-self:start;font-size:13px}.brand{font-size:12px;letter-spacing:.16em;font-weight:750;color:var(--green);margin-bottom:22px}.side-title{font-size:20px;line-height:1.5;font-weight:700;margin-bottom:24px}.sidebar nav{border-top:1px solid var(--line);padding-top:15px}.sidebar nav a{display:block;text-decoration:none;color:var(--muted);padding:7px 0;line-height:1.6}.sidebar nav a:hover,.sidebar nav a[aria-current]{color:var(--green);font-weight:700}.sidebar nav span{display:inline-block;color:var(--gold);font-size:11px;width:27px}.side-note{color:var(--muted);margin-top:26px;font-size:12px;line-height:1.8}.print-btn{border:1px solid var(--line);border-radius:8px;background:transparent;padding:6px 12px;color:var(--green);font-size:12px;margin-top:14px}.main{min-width:0;max-width:900px}.eyebrow{text-transform:uppercase;letter-spacing:.15em;color:var(--green);font-size:12px;font-weight:750;margin-bottom:18px}h1{font-size:clamp(32px,3.5vw,49px);line-height:1.3;letter-spacing:-.035em;margin:0 0 13px}h1 small{display:block;font-size:clamp(17px,2vw,22px);font-weight:450;letter-spacing:0;color:var(--muted);margin-top:14px}.lead{font-size:19px;line-height:1.9;margin:28px 0 24px}.meta{display:flex;gap:10px;flex-wrap:wrap;margin:24px 0 30px}.tag{font-size:12px;color:var(--green);border:1px solid #cfdbcd;border-radius:99px;padding:3px 12px}.thesis{background:var(--green);color:white;border-radius:var(--radius);padding:26px 30px;margin:28px 0 46px}.thesis p{margin:0}.thesis .kicker{font-size:11px;letter-spacing:.14em;opacity:.75;margin-bottom:10px}.thesis strong{font-size:21px;font-weight:650;line-height:1.7;display:block}section{border-top:1px solid var(--line);padding-top:36px;margin-top:42px}h2{font-size:27px;line-height:1.5;margin:0 0 25px;letter-spacing:-.025em}.secnum{font:12px/1.5 ui-monospace,monospace;color:var(--gold);display:block;margin-bottom:10px;letter-spacing:.08em}h3{font-size:21px;line-height:1.65;margin:30px 0 13px}h4{font-size:17px;margin:23px 0 8px}p{margin:12px 0 18px}strong{font-weight:700}ul,ol{padding-left:1.5em;margin:12px 0 22px}li{margin:5px 0}li::marker{color:var(--green)}.muted,.note{color:var(--muted);font-size:14px}.callout{border-left:3px solid var(--green);background:var(--soft);padding:17px 23px;margin:23px 0;border-radius:0 10px 10px 0}.callout p:last-child{margin-bottom:0}.callout p:first-child{margin-top:0}.callout.warn{border-color:var(--gold);background:#f5efe2}code{font: .87em/1.7 ui-monospace,SFMono-Regular,Consolas,"Liberation Mono",monospace;background:#e9eee7;border-radius:4px;padding:2px 5px;overflow-wrap:anywhere}.codebox{background:var(--code);color:var(--codeink);border-radius:12px;overflow:hidden;margin:22px 0}.codehead{padding:9px 18px;border-bottom:1px solid #34483c;color:#a9c4b4;display:flex;justify-content:space-between;align-items:center;font-size:11px;letter-spacing:.05em}.copy{font-size:11px;color:#d5e6db;border:1px solid #476252;background:transparent;border-radius:5px;padding:2px 8px}pre{margin:0;padding:21px 23px;overflow:auto;tab-size:4;line-height:1.7;font-size:13px}pre code{font:inherit;padding:0;background:none;color:inherit;overflow-wrap:normal;white-space:pre}.formula{border:1px solid var(--line);border-radius:11px;background:var(--card);padding:21px 24px;text-align:center;font:20px/1.9 Cambria,"Times New Roman","Microsoft YaHei",serif;margin:22px 0;overflow-x:auto}.formula small{display:block;font:12px/1.8 -apple-system,BlinkMacSystemFont,"Microsoft YaHei",sans-serif;color:var(--muted);margin-top:8px}.formula .em{color:var(--green);font-weight:700}.frac{display:inline-flex;flex-direction:column;vertical-align:middle;text-align:center;line-height:1.25;margin:0 .16em}.frac>span:first-child{border-bottom:1px solid currentColor;padding:0 .2em .12em}.frac>span:last-child{padding-top:.12em}.rule{display:inline-grid;grid-template-rows:auto auto;gap:9px;align-items:center}.rule>span:first-child{border-bottom:1px solid currentColor;padding:0 8px 8px}.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:11px;margin:23px 0}table{width:100%;border-collapse:collapse;font-size:14px;line-height:1.8;background:var(--card)}th,td{text-align:left;vertical-align:top;padding:13px 17px;border-bottom:1px solid var(--line)}th{background:#edf1e9;color:var(--green);font-weight:650}tr:last-child td{border-bottom:0}.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px;margin:24px 0}.card{padding:21px;border:1px solid var(--line);background:var(--card);border-radius:12px}.card b{font:32px Cambria,serif;color:var(--green)}.card h4{margin:10px 0 6px;font-size:16px}.card p{font-size:14px;line-height:1.8;margin:0}.flow{counter-reset:step;list-style:none;padding:0;margin:22px 0}.flow li{counter-increment:step;display:grid;grid-template-columns:28px 1fr;gap:12px;padding:12px 0;border-bottom:1px solid var(--line)}.flow li::before{content:counter(step);font:12px/28px ui-monospace,monospace;text-align:center;color:var(--green);background:var(--soft);border-radius:50%;height:28px}.flow li:last-child{border:0}.flow small{display:block;color:var(--muted);font-size:14px}.interactive{border:1px solid #c4d7c8;border-radius:var(--radius);padding:25px;background:#f0f5ee;margin:25px 0}.interactive h4{margin:0 0 4px;font-size:19px}.controls{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin:23px 0}.control label{display:flex;justify-content:space-between;gap:10px;font-size:14px}.control output{font-weight:700;color:var(--green);font-variant-numeric:tabular-nums}.control input{width:100%;accent-color:var(--green);margin-top:12px}.results{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.result{border:1px solid var(--line);background:var(--card);padding:16px 12px;border-radius:10px;text-align:center}.result span{display:block;font-size:11px;color:var(--muted)}.result output{font:22px/2 Cambria,serif;color:var(--green)}.interactive .note{margin:15px 0 0;font-size:12px}.ending{padding:27px 30px;background:var(--soft);border-radius:var(--radius);margin:26px 0}.ending p{margin:0}.ending strong{display:block;color:var(--green);font-size:20px;margin-bottom:8px}footer{border-top:1px solid var(--line);margin-top:45px;padding-top:20px;font-size:12px;color:var(--muted)}:focus-visible{outline:3px solid #a27738;outline-offset:4px}@media(max-width:1050px){.layout{gap:34px;padding:38px 28px 65px;grid-template-columns:200px minmax(0,1fr)}}@media(max-width:780px){body{font-size:16px}.layout{display:block;padding:26px 20px 50px}.sidebar{position:static}.brand{margin-bottom:12px}.side-title,.side-note{display:none}.sidebar nav{display:flex;gap:8px;overflow-x:auto;margin-bottom:30px;padding:12px 0;white-space:nowrap;border-bottom:1px solid var(--line)}.sidebar nav a{padding:5px 11px;border-radius:20px;background:#eaf0e8;font-size:12px}.sidebar nav span{width:auto;margin-right:5px}.print-btn{display:none}h2{font-size:24px}.cards{grid-template-columns:1fr}.card{display:grid;grid-template-columns:35px 1fr;column-gap:12px}.card b{grid-row:span 2}.card h4{margin:0 0 5px}.controls{gap:18px}.results{grid-template-columns:1fr}.result{display:flex;align-items:center;justify-content:space-between;padding:8px 16px}.result output{font-size:21px}.thesis{padding:22px}.thesis strong{font-size:19px}.formula{font-size:18px;padding:18px 12px}pre{font-size:12px;padding:18px}th,td{padding:11px 12px}section{padding-top:28px;margin-top:34px}}@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}@media print{body{background:#fff;color:#111;font-size:10.5pt;line-height:1.7}.layout{display:block;padding:0;max-width:none}.sidebar,.copy,.controls{display:none}.main{max-width:none}h1{font-size:29pt}h2{font-size:18pt}h3{font-size:14pt}section{margin-top:22pt;padding-top:16pt}.thesis,.callout,.ending,.interactive{background:#f3f5f0!important;color:#111!important;border:1px solid #c7d1c7}.thesis strong{font-size:15pt}.codebox{background:#f5f5f5;color:#111;border:1px solid #ccc}pre{font-size:8.5pt;white-space:pre-wrap}pre code{white-space:pre-wrap}.codehead{color:#444;border-color:#ccc}.formula{font-size:14pt;padding:10pt}.cards,.results{display:grid}h2,h3,h4,.codehead{break-after:avoid}.codebox,.formula,.card,.callout,table,.interactive{break-inside:avoid}a{color:inherit;text-decoration:none}.meta{margin:12pt 0}.lead{font-size:12pt}.eyebrow{margin-top:5pt}footer{font-size:9pt}@page{size:A4;margin:18mm 17mm}}
+</style>
+</head>
+<body>
+<div class="layout">
+<aside class="sidebar" aria-label="文档目录">
+<div class="brand">PROGRAM CORRECTNESS</div>
+<div class="side-title">契约式设计<br>与霍尔逻辑</div>
+<nav>
+<a href="#what-dbc"><span>01</span>什么是契约式设计</a>
+<a href="#why-dbc"><span>02</span>为什么需要契约</a>
+<a href="#what-hoare"><span>03</span>什么是霍尔逻辑</a>
+<a href="#why-hoare"><span>04</span>为什么需要证明</a>
+<a href="#how-hoare"><span>05</span>三项核心推理规则</a>
+<a href="#relationship"><span>06</span>二者的关系</a>
+<a href="#practice"><span>07</span>实际开发中的使用</a>
+<a href="#misunderstandings"><span>08</span>三个常见误解</a>
+<a href="#essence"><span>09</span>回到本质</a>
+</nav>
+<p class="side-note">What · Why · How<br>中文讲解 / C# 示例 / 逻辑推导<br>单文件，可离线阅读</p>
+<button class="print-btn" type="button" onclick="window.print()">打印 / 保存为 PDF</button>
+</aside>
+<main class="main">
+<header>
+<div class="eyebrow">What / Why / How · 直达本质</div>
+<h1>契约式设计与霍尔逻辑<small>Design by Contract &amp; Hoare Logic</small></h1>
+<p class="lead">我们如何确定一段程序的行为是正确的，而不仅仅是“看起来能运行”？</p>
+<div class="meta"><span class="tag">前置条件 P</span><span class="tag">后置条件 Q</span><span class="tag">不变量 I</span><span class="tag">程序正确性</span></div>
+<ul><li><strong>Design by Contract（DbC）：</strong>明确规定调用者与被调用者各自承担什么责任，以及程序必须保证什么。</li><li><strong>Hoare Logic（霍尔逻辑）：</strong>用数学逻辑证明，在给定条件下执行程序，能否保证得到预期结果。</li></ul>
+<div class="thesis"><p class="kicker">核心关系</p><strong>契约描述什么叫正确，<br>霍尔逻辑提供推理程序为何正确的方法。</strong></div>
+</header>
+
+<section id="what-dbc">
+<h2><span class="secnum">01 / WHAT</span>什么是契约式设计？</h2>
+<h3>1. 契约的本质是责任与保证</h3>
+<p>假设我们有一个钱包：</p>
+<div class="codebox"><div class="codehead"><span>C# · 最初的钱包实现</span></div><pre><code>public class Wallet
+{
+    public int Balance { get; private set; }
+
+    public void Withdraw(int amount)
+    {
+        Balance -= amount;
+    }
+}</code></pre></div>
+<p>我们希望这个方法能正确扣除余额。但“正确扣除”究竟意味着什么？</p>
+<ul><li>可以扣除负数吗？</li><li>可以扣除超过余额的金额吗？</li><li>扣除后余额允许小于零吗？</li><li>扣除成功后，余额一定减少了指定金额吗？</li></ul>
+<p>代码本身没有明确回答。契约式设计认为：<strong>一个方法的正确性，需要通过明确的条件来定义。</strong>通常包括三个核心概念。</p>
+<div class="cards">
+<div class="card"><b>P</b><h4>前置条件 · Precondition</h4><p>调用方法前，调用者必须满足的条件。<br><code>amount &gt; 0 &amp;&amp; amount &lt;= Balance</code></p></div>
+<div class="card"><b>Q</b><h4>后置条件 · Postcondition</h4><p>方法正常执行完成后，被调用者必须保证的条件。<br><code>Balance == oldBalance - amount</code></p></div>
+<div class="card"><b>I</b><h4>不变量 · Invariant</h4><p>对象在规定的有效状态边界必须始终满足的条件。<br><code>Balance &gt;= 0</code></p></div>
+</div>
+<p>可以把方法调用理解成下面的责任交换：</p>
+<ol class="flow"><li><div><strong>调用者 Caller</strong><small>负责满足前置条件 P。</small></div></li><li><div><strong>被调用者 Callee</strong><small>执行方法 C。</small></div></li><li><div><strong>正常执行完成</strong><small>被调用者保证后置条件 Q，并维护不变量 I。</small></div></li></ol>
+<div class="callout"><p><strong>调用者满足前置条件，被调用者才有义务履行相应的后置条件。</strong></p></div>
+<p>这不是说前置条件不满足时程序就应该崩溃，而是说：正常成功路径的契约不再适用。失败路径应另外定义，例如返回失败结果或抛出明确异常。</p>
+<h3>2. 契约不是注释，而是行为规范</h3>
+<p>例如我们可以写成：</p>
+<div class="codebox"><div class="codehead"><span>C# · 带条件检查的钱包</span></div><pre><code>using System;
+using System.Diagnostics;
+
+public sealed class Wallet
+{
+    public int Balance { get; private set; }
+
+    public Wallet(int initialBalance)
+    {
+        if (initialBalance &lt; 0)
+            throw new ArgumentOutOfRangeException(
+                nameof(initialBalance));
+
+        Balance = initialBalance;
+    }
+
+    public void Withdraw(int amount)
+    {
+        // 前置条件
+        if (amount &lt;= 0)
+            throw new ArgumentOutOfRangeException(
+                nameof(amount));
+
+        if (amount &gt; Balance)
+            throw new InvalidOperationException(
+                "Insufficient balance.");
+
+        int oldBalance = Balance;
+
+        // 状态转移
+        Balance -= amount;
+
+        // 后置条件
+        Debug.Assert(Balance == oldBalance - amount);
+
+        // 不变量
+        Debug.Assert(Balance &gt;= 0);
+    }
+}</code></pre></div>
+<p>这里 <code>oldBalance</code> 保存操作之前的状态。我们的契约可以写成：</p>
+<div class="formula"><div><var>P</var> : 0 &lt; <var>amount</var> ≤ <var>Balance</var><sub>old</sub></div><div><var>Q</var> : <var>Balance</var>′ = <var>Balance</var><sub>old</sub> − <var>amount</var></div><div><var>I</var> : <var>Balance</var> ≥ 0</div></div>
+<div class="callout warn"><p><code>Debug.Assert</code> 只是开发期间检查契约的一种手段，不等于数学证明，且通常不会在 Release 构建中执行。契约也不一定必须写成运行时断言。</p></div>
+<p>另外，如果“余额不足”是正常业务情况，实际设计中可能更适合用 <code>TryWithdraw</code> 返回失败结果，而非将其当成程序错误。</p>
+</section>
+
+<section id="why-dbc">
+<h2><span class="secnum">02 / WHY</span>为什么需要契约式设计？</h2>
+<h3>1. 因为程序能够执行，不代表行为正确</h3>
+<p>下面这段代码，对于编译器来说完全合法：</p>
+<div class="codebox"><div class="codehead"><span>C# · 语法合法的扣款</span></div><pre><code>Balance -= amount;</code></pre></div>
+<p>但是编译器一般不知道：</p><ul><li>余额不得为负数。</li><li>金额必须为正数。</li><li>这次扣款不能影响其他账户。</li></ul>
+<p>这些属于<strong>业务正确性</strong>，而不是语法正确性。契约式设计的作用，就是将隐含在开发者脑海中的规则转化为明确的规范。</p>
+<h3>2. 因为需要明确错误的责任归属</h3>
+<p>假设方法收到 <code>amount = -10</code>。如果 <code>Withdraw</code> 明确要求 <code>amount &gt; 0</code>，而调用者传入了 <code>-10</code>，说明调用者违反了约定。</p>
+<p>反过来，如果 <code>amount = 10</code>、余额为 <code>100</code>，调用方法后余额却成为 <code>120</code>，说明被调用者没有履行保证。</p>
+<p>契约因此让我们能够区分：</p><ul><li>调用方式是否正确？</li><li>方法实现是否正确？</li><li>数据状态是否仍然有效？</li></ul>
+<h3>3. 因为需要控制局部正确性</h3>
+<p>大型程序的一个核心困难是：一个方法可能被几十个地方调用。如果没有契约，每个调用者都需要阅读内部实现才能判断如何正确使用它。</p>
+<p>有契约以后，调用者只需要理解它的要求和保证，而不必知道具体实现细节。这就是契约式设计对<strong>模块边界、信息隐藏与模块组合</strong>的重要意义。</p>
+</section>
+
+<section id="what-hoare">
+<h2><span class="secnum">03 / WHAT</span>什么是霍尔逻辑？</h2>
+<p>Hoare Logic 是一种用于推理程序正确性的形式逻辑体系。它最核心的表达是：</p>
+<div class="formula"><span class="em">{P} C {Q}</span><small>Hoare Triple · 霍尔三元组</small></div>
+<div class="tablewrap"><table><thead><tr><th>符号</th><th>含义</th></tr></thead><tbody><tr><td>P</td><td>Precondition，前置条件</td></tr><tr><td>C</td><td>Command，待执行的程序或命令</td></tr><tr><td>Q</td><td>Postcondition，后置条件</td></tr></tbody></table></div>
+<p>它的标准含义是：</p>
+<div class="callout"><p><strong>如果程序执行前满足 P，并且程序 C 正常终止，那么执行后的状态一定满足 Q。</strong></p></div>
+<p>注意这里的“正常终止”。标准 Hoare 三元组描述的是<strong>部分正确性（Partial Correctness）</strong>，不自动保证程序一定终止。</p>
+<h3>一个最简单的例子</h3>
+<div class="codebox"><div class="codehead"><span>C# · 加法赋值</span></div><pre><code>int x = 5;
+x = x + 3;</code></pre></div>
+<p>我们希望证明执行后 <code>x == 8</code>。写成霍尔三元组：</p>
+<div class="formula">{x = 5} &nbsp; x := x + 3 &nbsp; {x = 8}</div>
+<ol><li>执行前，x = 5。</li><li>执行命令，x := x + 3。</li><li>执行后，x = 8。</li></ol>
+<p>这里 <code>:=</code> 表示赋值，并非数学上的相等关系。那么问题来了：<strong>为什么我们能够断定后置条件成立？</strong>这才是霍尔逻辑真正要解决的问题。</p>
+</section>
+
+<section id="why-hoare">
+<h2><span class="secnum">04 / WHY</span>为什么需要霍尔逻辑？</h2>
+<p>契约式设计告诉我们：“这个方法应当满足什么条件。”但它没有自动证明：“这个方法的实现是否真的满足这些条件。”</p>
+<div class="codebox"><div class="codehead"><span>C# · 待证明的实现片段</span></div><pre><code>void Withdraw(int amount)
+{
+    Balance -= amount;
+}</code></pre></div>
+<p>我们声明了：</p>
+<div class="formula"><div><var>P</var> : 0 &lt; <var>amount</var> ≤ <var>Balance</var></div><div><var>Q</var> : <var>Balance</var> ≥ 0</div></div>
+<p>我们如何证明，满足 P 的情况下执行代码必然满足 Q？不能仅仅因为我们写了后置条件，就认为它必然成立。我们需要进行逻辑推导，霍尔逻辑提供的就是这种推导方式。</p>
+<h3>关键思想：把程序当作状态变换来证明</h3>
+<p>设钱包原来的余额为 b，取款金额为 a。执行：</p>
+<div class="formula">b′ = b − a</div>
+<p>我们知道 a ≤ b。两边减去 a，得到 b − a ≥ 0。因此 b′ ≥ 0，证明完成。</p>
+<div class="formula"><span class="em">{0 &lt; a ≤ b} &nbsp; b := b − a &nbsp; {b ≥ 0}</span></div>
+<p>注意，后置条件里的 b 指更新后的变量值。这是一项非常简单的形式化证明，但它体现了本质：</p>
+<div class="callout"><p><strong>程序的正确性可以从前置条件、程序语义和逻辑规则中推导出来，而不只是依靠测试结果。</strong></p></div>
+</section>
+
+<section id="how-hoare">
+<h2><span class="secnum">05 / HOW</span>霍尔逻辑如何证明程序正确？</h2>
+<p>霍尔逻辑有一套推理规则。这里介绍最核心的三个。</p>
+<h3>规则一：赋值规则（Assignment Rule）</h3>
+<p>这是最基础、也是最重要的规则。假设程序是：</p>
+<div class="codebox"><div class="codehead"><span>C# · 赋值命令</span></div><pre><code>x = x + 3;</code></pre></div>
+<p>期望执行之后满足 Q：x = 8。那么执行之前需要满足什么？我们反过来思考：要让赋值后 <code>x == 8</code>，赋值前必须满足 x + 3 = 8，因此 x = 5。</p>
+<div class="formula">{x = 5} &nbsp; x := x + 3 &nbsp; {x = 8}</div>
+<p>这种从结果向前推导所需条件的思想，称为 <strong>Weakest Precondition（最弱前置条件，WP）</strong>。</p>
+<p>对于赋值 <code>x := E</code>，有：</p>
+<div class="formula"><span class="em">wp(x := E, Q) = Q[E/x]</span><small>Q[E/x]：把后置条件 Q 中自由出现的变量 x 替换为表达式 E。</small></div>
+<p>对应的赋值公理是 <code>{Q[E/x]} x := E {Q}</code>。对于这里无副作用、总能求值的整数表达式，替换也给出了最弱前置条件。</p>
+<h4>交互示例：反推前置条件</h4>
+<p>下面改变目标结果和加数，观察执行前的 x 必须是多少。</p>
+<div class="interactive" id="wp-demo">
+<h4>最弱前置条件计算器</h4><p class="note">整数赋值：x := x + k</p>
+<div class="controls">
+<div class="control"><label for="addend">加数 k <output id="addend-value" for="addend">3</output></label><input id="addend" type="range" min="-10" max="10" step="1" value="3"></div>
+<div class="control"><label for="target">期望最终结果 <output id="target-value" for="target">8</output></label><input id="target" type="range" min="-20" max="20" step="1" value="8"></div>
+</div>
+<div class="results" aria-live="polite" aria-atomic="true">
+<div class="result"><span>目标后置条件 Q</span><output id="postcondition">x = 8</output></div>
+<div class="result"><span>执行的命令 C</span><output id="command">x := x + 3</output></div>
+<div class="result"><span>最弱前置条件 P</span><output id="precondition">x = 5</output></div>
+</div>
+<p class="note" id="derivation">反向替换：x + 3 = 8，因此 x = 8 − 3 = 5。</p>
+<p class="note">这里在数学整数范围内讨论，不考虑机器整数溢出。禁用脚本时显示默认例子。</p>
+</div>
+<p>它真正重要的地方是：<strong>我们可以先定义什么结果是正确的，再反向计算为了得到正确结果，执行前需要满足什么。</strong>这正是程序验证的基础思路之一。</p>
+<h3>规则二：顺序组合（Sequence Rule）</h3>
+<p>假设程序执行两个操作，希望最终 x = 16：</p>
+<div class="codebox"><div class="codehead"><span>C# · 两个顺序操作</span></div><pre><code>x = x + 3;
+x = x * 2;</code></pre></div>
+<p>我们分别证明：</p>
+<div class="formula"><div>{x = 5} &nbsp; x := x + 3 &nbsp; {x = 8}</div><div>{x = 8} &nbsp; x := x × 2 &nbsp; {x = 16}</div></div>
+<p>把它们连接：</p>
+<div class="formula">{x = 5} &nbsp; C<sub>1</sub>; C<sub>2</sub> &nbsp; {x = 16}</div>
+<p>从而得到顺序组合规则：</p>
+<div class="formula"><div class="rule"><span>{P} C<sub>1</sub> {R} &emsp; {R} C<sub>2</sub> {Q}</span><span>{P} C<sub>1</sub>; C<sub>2</sub> {Q}</span></div></div>
+<p>这说明一个很重要的事实：<strong>复杂程序可以通过证明各个局部操作的正确性，再利用逻辑规则组合出整体正确性。</strong>其中 R 是连接两个操作的中间条件。</p>
+<h3>规则三：循环不变量（Loop Invariant）</h3>
+<p>循环比赋值和顺序执行更复杂，因为我们不知道循环会执行多少次。例如：</p>
+<div class="codebox"><div class="codehead"><span>C# · 求和循环</span></div><pre><code>int sum = 0;
+
+for (int i = 1; i &lt;= n; i++)
+{
+    sum += i;
+}</code></pre></div>
+<p>我们希望计算：</p>
+<div class="formula">1 + 2 + ⋯ + n = <span class="frac"><span>n(n + 1)</span><span>2</span></span></div>
+<p>那么如何证明这个循环正确？我们需要寻找一个<strong>循环不变量</strong>，即每次进入循环条件检查时都成立的关系。以下假设 n 是非负整数。</p>
+<p>换一种等价写法：</p>
+<div class="codebox"><div class="codehead"><span>C# · 便于证明的等价形式</span></div><pre><code>int i = 0;
+int sum = 0;
+
+while (i &lt; n)
+{
+    i++;
+    sum += i;
+}</code></pre></div>
+<p>可以找到：</p>
+<div class="formula"><span class="em">I : sum = <span class="frac"><span>i(i + 1)</span><span>2</span></span> ∧ 0 ≤ i ≤ n</span></div>
+<p>接下来检查三个方面。</p>
+<h4>第一：初始化（Initialization）</h4>
+<p>循环开始前 <code>i = 0, sum = 0</code>，所以不变量成立。</p>
+<h4>第二：保持（Preservation）</h4>
+<p>如果本轮开始时不变量成立，且 <code>i &lt; n</code>，执行 <code>i++</code> 和 <code>sum += i</code> 后，新的 <code>sum</code> 仍等于新 <code>i</code> 对应的前 i 项求和公式。</p>
+<div class="formula"><div>i′ = i + 1</div><div>sum′ = <span class="frac"><span>i(i + 1)</span><span>2</span></span> + (i + 1) = <span class="frac"><span>(i + 1)(i + 2)</span><span>2</span></span> = <span class="frac"><span>i′(i′ + 1)</span><span>2</span></span></div><small>由 i &lt; n 且 i、n 为整数，可得 0 ≤ i′ ≤ n。</small></div>
+<h4>第三：退出（Exit）</h4>
+<p>循环退出时 <code>i &gt;= n</code>，加上不变量中的 <code>i &lt;= n</code>，可得 <code>i == n</code>，因此 <code>sum = n(n+1)/2</code>。</p>
+<div class="callout warn"><p><strong>证明循环不变量，并不意味着证明循环一定结束。</strong></p></div>
+<p>还要证明某个非负整数度量会在每轮严格减小，例如：</p>
+<div class="formula">V = n − i</div>
+<p>循环继续时 V &gt; 0，每执行一轮 V 减少 1，因而循环最终终止。于是我们区分：</p>
+<div class="tablewrap"><table><thead><tr><th>正确性</th><th>需要证明的内容</th></tr></thead><tbody><tr><td>Partial Correctness<br>部分正确性</td><td>如果程序正常终止，结果一定正确。</td></tr><tr><td>Total Correctness<br>完全正确性</td><td>程序一定终止，并且正常终止时结果正确。</td></tr></tbody></table></div>
+<p class="note">这里的推理假设数学整数运算；实际 C# 中还需考虑溢出等机器执行语义。</p>
+</section>
+
+<section id="relationship">
+<h2><span class="secnum">06 / RELATIONSHIP</span>契约式设计与霍尔逻辑的关系</h2>
+<ol class="flow"><li><div><strong>Design by Contract</strong><small>制定契约：明确 P、Q、I 与责任边界。</small></div></li><li><div><strong>Hoare Logic</strong><small>根据程序 C 的语义，推理或证明正确性。</small></div></li><li><div><strong>实现满足契约的证据</strong><small>证明结论、验证结果，以及尚未覆盖的假设。</small></div></li></ol>
+<div class="tablewrap"><table><thead><tr><th>维度</th><th>Design by Contract</th><th>Hoare Logic</th></tr></thead><tbody><tr><td>核心目的</td><td>规定行为与责任</td><td>证明程序性质</td></tr><tr><td>关注重点</td><td>应该保证什么</td><td>为什么可以保证</td></tr><tr><td>核心概念</td><td>前置、后置、不变量</td><td>三元组、推理规则</td></tr><tr><td>使用方法</td><td>声明契约、边界检查</td><td>逻辑推导、形式化验证</td></tr><tr><td>是否需要数学证明</td><td>不要求</td><td>用于形式化证明</td></tr><tr><td>适用范围</td><td>API、对象、模块、业务行为</td><td>算法、程序、状态变换</td></tr></tbody></table></div>
+<p>特别注意：二者不是严格的上下层关系。契约式设计可以完全不使用霍尔逻辑；霍尔逻辑也可以用于没有显式契约的普通程序。</p>
+<p><strong>它们的共同基础，是用逻辑条件精确描述程序状态及其变化。</strong></p>
+</section>
+
+<section id="practice">
+<h2><span class="secnum">07 / HOW</span>实际开发应该如何使用？</h2>
+<p>可以按下面这个思考顺序处理重要的业务操作。</p>
+<h3>第一步：定义合法状态</h3>
+<p>例如钱包：</p><div class="formula">I : Balance ≥ 0</div>
+<h3>第二步：定义操作的有效输入</h3>
+<p>例如取款：</p><div class="formula">P : 0 &lt; amount ≤ Balance</div>
+<h3>第三步：定义成功后必须满足的结果</h3>
+<div class="formula">Q : Balance′ = Balance<sub>old</sub> − amount</div>
+<h3>第四步：实现状态转移</h3>
+<div class="codebox"><div class="codehead"><span>C# · 状态赋值</span></div><pre><code>Balance -= amount;</code></pre></div>
+<h3>第五步：推导该实现是否满足结果</h3>
+<p>我们已知：</p><div class="formula">amount ≤ Balance<sub>old</sub></div>
+<p>因而：</p><div class="formula">Balance<sub>old</sub> − amount ≥ 0</div>
+<p>执行后：</p><div class="formula">Balance′ = Balance<sub>old</sub> − amount</div>
+<p>所以：</p><div class="formula"><span class="em">Balance′ ≥ 0</span></div>
+<p>这就证明了，在给定假设下，该操作保持余额非负的不变量。</p>
+<p>不过，实际程序中还需要明确其他状态是否允许改变，以及并发执行、异常、中断和持久化失败等是否属于契约覆盖的行为范围。上面证明的是单次状态赋值的正确性，不是整个支付或存档系统的可靠性。</p>
+</section>
+
+<section id="misunderstandings">
+<h2><span class="secnum">08 / CLARIFICATIONS</span>容易产生的三个误解</h2>
+<h3>误解一：有了前置和后置条件，就证明程序正确了</h3>
+<p>不对。定义契约只是提出需要满足的性质。必须通过证明、静态验证或其他检查方式，才能获得实现符合这些性质的证据。即使所有测试通过，也不等于对所有可能输入完成了数学证明。</p>
+<h3>误解二：不变量在方法执行的每一个瞬间都必须成立</h3>
+<p>不一定。对象不变量通常要求在构造完成、公开方法正常进入与退出等规定边界成立；内部实现可以在受控的中间步骤暂时打破不变量，但不能向外暴露无效状态。</p>
+<p>而循环不变量是在循环检查点上保持的，不代表循环体每一行执行后都必须成立。</p>
+<h3>误解三：Hoare Logic 能证明任何程序绝对不会出错</h3>
+<p>不对。证明永远依赖明确的模型、前提和语义。例如只证明余额计算正确，不能自动得到并发安全、数据库事务原子性或服务器断电后数据不丢失等结论。这些性质需要额外建模和验证。</p>
+</section>
+
+<section id="essence">
+<h2><span class="secnum">09 / ESSENCE</span>回到本质</h2>
+<p>如果把程序看作一个状态转移：</p>
+<div class="formula">S <span style="display:inline-grid;vertical-align:middle;font-size:15px;line-height:1.1;text-align:center"><span>C</span><span style="font-size:30px">⟶</span></span> S′</div>
+<p>那么三个概念可以统一起来：</p>
+<ul><li><strong>前置条件 P：</strong>允许操作开始时，状态 S 需要满足什么？</li><li><strong>后置条件 Q：</strong>操作结束后，状态 S′ 必须满足什么？</li><li><strong>不变量 I：</strong>在约定的状态边界上，哪些性质必须保持？</li></ul>
+<p>而霍尔逻辑的核心可以用正常终止的状态关系表达：</p>
+<div class="formula"><span class="em">P(S) ∧ C(S, S′) ⇒ Q(S′)</span><small>对所有 S、S′ 成立；C(S, S′) 描述程序可能产生的正常终止状态转移。</small></div>
+<div class="ending"><strong>Design by Contract 让正确性成为明确的约定；<br>Hoare Logic 让正确性成为可以严谨推理的命题。</strong><p>这两个概念都在推动我们从“写出能执行的代码”，走向“知道代码满足什么性质，以及为什么满足”。</p></div>
+<p>如果继续深入，最值得研究的是 <strong>Weakest Precondition（最弱前置条件）</strong>。因为它直接回答一个很实用的问题：</p>
+<div class="callout"><p>已经知道程序执行后必须满足什么，能否反向推导出执行前需要满足什么？</p></div>
+<p>掌握这个思路之后，很多前置条件、状态转移约束以及不变量就不再只是凭经验设计，而是可以系统地推导。</p>
+</section>
+<footer>根据本次对话讲解整理 · 保留 What / Why / How 结构、C# 示例与逻辑推导 · 公式与交互均可离线使用</footer>
+</main>
+</div>
+<script>
+(()=>{
+'use strict';
+const k=document.getElementById('addend'),target=document.getElementById('target');
+const set=(id,value)=>document.getElementById(id).textContent=value;
+function update(){
+ const a=Number(k.value),t=Number(target.value),before=t-a;
+ const expr=a<0?'x − '+Math.abs(a):'x + '+a;
+ set('addend-value',a);set('target-value',t);
+ set('postcondition','x = '+t);set('command','x := '+expr);set('precondition','x = '+before);
+ set('derivation','反向替换：'+expr+' = '+t+'，因此 x = '+t+' − ('+a+') = '+before+'。');
+}
+k.addEventListener('input',update);target.addEventListener('input',update);update();
+document.querySelectorAll('.codebox').forEach(box=>{
+ const button=document.createElement('button');button.className='copy';button.type='button';button.textContent='复制';button.setAttribute('aria-label','复制这段 C# 代码');
+ button.addEventListener('click',async()=>{
+  const value=box.querySelector('code').textContent;
+  try{
+   if(navigator.clipboard&&window.isSecureContext){await navigator.clipboard.writeText(value)}
+   else{const ta=document.createElement('textarea');ta.value=value;ta.style.position='fixed';ta.style.left='-9999px';document.body.appendChild(ta);ta.select();const ok=document.execCommand('copy');ta.remove();if(!ok)throw Error('copy failed')}
+   button.textContent='已复制';
+  }catch{button.textContent='请选中复制'}
+  setTimeout(()=>{button.textContent='复制'},1800);
+ });box.querySelector('.codehead').appendChild(button);
+});
+if('IntersectionObserver' in window){
+ const links=[...document.querySelectorAll('nav a')];
+ const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){links.forEach(a=>{if(a.hash==='#'+entry.target.id)a.setAttribute('aria-current','location');else a.removeAttribute('aria-current')})}})},{rootMargin:'-10% 0px -70% 0px'});
+ document.querySelectorAll('section[id]').forEach(s=>observer.observe(s));
+}
+})();
+</script>
+</body>
+</html>

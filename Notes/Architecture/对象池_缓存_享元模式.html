@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="按照 What、Why、How 理解对象池、缓存与享元模式：实例复用、结果复用与状态共享。包含 C#、Unity 示例、流程图、对比表与选择指南。">
+<title>对象池、缓存与享元模式：复用的本质区别</title>
+<style>
+:root{--bg:#f4f5f8;--paper:#fff;--ink:#202c3d;--muted:#637086;--line:#dce3ec;--pool:#0b817c;--cache:#a56514;--fly:#6552bc;--code:#172334;--soft:#eef3f8}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:28px}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.9 system-ui,-apple-system,"Segoe UI","Microsoft YaHei","PingFang SC",sans-serif}a{color:#315f9f;text-decoration:none}a:hover{text-decoration:underline}.layout{max-width:1440px;margin:auto;display:grid;grid-template-columns:250px minmax(0,1000px);gap:34px;padding:36px 30px 80px}aside{align-self:start;position:sticky;top:30px;font-size:14px;padding:18px 6px}aside strong{display:block;font-size:12px;letter-spacing:2px;color:var(--muted);margin-bottom:14px}aside a{display:block;padding:7px 12px;border-left:2px solid var(--line);color:var(--muted)}aside a:hover,aside a[aria-current=true]{background:#e6edf5;color:#203e6b;border-color:#315f9f;text-decoration:none}.tools{margin-top:24px;display:flex;gap:8px;flex-wrap:wrap}button{font:inherit;font-size:13px;border:1px solid var(--line);border-radius:7px;padding:6px 11px;background:var(--paper);color:var(--ink);cursor:pointer}button:hover{background:var(--soft)}main{min-width:0;background:var(--paper);padding:56px 64px;border:1px solid var(--line);border-radius:14px;box-shadow:0 16px 50px #20334708}.eyebrow{font-size:12px;letter-spacing:3px;color:var(--pool);font-weight:700}h1{font-size:39px;line-height:1.35;letter-spacing:-1px;margin:14px 0 20px}header .lead{font-size:19px;color:var(--muted);max-width:720px}.tags{display:flex;gap:9px;flex-wrap:wrap;margin-top:23px}.tags span{font-size:12px;background:var(--soft);padding:3px 12px;border-radius:20px}section{margin-top:54px;padding-top:30px;border-top:1px solid var(--line)}h2{font-size:27px;line-height:1.5;margin:0 0 23px}h2 .num{display:block;font-size:12px;letter-spacing:2px;color:var(--muted);margin-bottom:6px}h3{font-size:21px;line-height:1.55;margin:35px 0 14px}h4{font-size:17px;margin:26px 0 8px}p{margin:13px 0}strong{font-weight:700}ul,ol{padding-left:25px}li{padding:2px 0}.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px;margin:24px 0}.card{background:#f5f9fa;border-top:3px solid var(--pool);padding:19px 17px;border-radius:8px}.card:nth-child(2){border-color:var(--cache);background:#fdf8ef}.card:nth-child(3){border-color:var(--fly);background:#f7f5fd}.card b{font-size:19px;display:block}.card em{display:block;font-size:13px;color:var(--muted);font-style:normal}.card p{margin:10px 0 0}.callout,blockquote{background:#eff6f6;border-left:4px solid var(--pool);padding:16px 22px;margin:23px 0;border-radius:0 8px 8px 0}.note{font-size:14px;color:var(--muted);background:var(--soft);padding:14px 18px;border-radius:8px}.table-wrap{overflow:auto;margin:23px 0}table{border-collapse:collapse;width:100%;font-size:14px;line-height:1.7}th,td{text-align:left;vertical-align:top;border:1px solid var(--line);padding:12px 14px}th{background:#edf2f7;font-weight:700}tbody tr:nth-child(even){background:#fafbfd}td:first-child{font-weight:600;min-width:95px}code{font-family:"Cascadia Code",Consolas,"SFMono-Regular",monospace;font-size:.88em;background:#edf1f6;padding:2px 5px;border-radius:4px}pre{position:relative;margin:0;padding:20px 23px;overflow:auto;background:var(--code);color:#e3eaf5;font-size:14px;line-height:1.8;border-radius:0 0 9px 9px;tab-size:4}pre code{background:none;padding:0;color:inherit;font-size:inherit}.codebar{background:#243348;color:#aebdd1;padding:8px 15px;font-size:12px;display:flex;align-items:center;justify-content:space-between;border-radius:9px 9px 0 0;margin-top:20px}.copy{color:#e3eaf5;background:#31445e;border:0;font-size:12px;padding:3px 10px}.formula{text-align:center;background:#f7f9fc;border:1px solid var(--line);border-radius:8px;padding:16px;font-family:Georgia,"Microsoft YaHei",serif;font-size:18px;overflow:auto;margin:22px 0}.diagram{margin:26px 0;padding:23px 15px;background:#f7f9fc;border:1px solid var(--line);border-radius:10px}.diagram svg{display:block;width:100%;height:auto;max-width:720px;margin:auto}.diagram figcaption{font-size:13px;text-align:center;color:var(--muted);margin-top:10px}svg text{font-family:system-ui,"Microsoft YaHei",sans-serif;fill:var(--ink)}.decision{display:grid;gap:12px;margin:23px 0}.decision div{padding:17px 20px;background:var(--soft);border-radius:8px}.decision strong{display:block;margin-bottom:4px}.closing{font-size:18px;line-height:2}footer{margin-top:50px;padding-top:20px;border-top:1px solid var(--line);color:var(--muted);font-size:12px}a:focus-visible,button:focus-visible{outline:3px solid #2c77bf;outline-offset:3px}
+@media(max-width:1100px){.layout{grid-template-columns:210px minmax(0,1fr);gap:20px;padding:24px 20px}main{padding:40px 35px}h1{font-size:33px}.cards{grid-template-columns:1fr}.card{padding:14px 18px}}
+@media(max-width:760px){.layout{display:block;padding:15px 12px 40px}aside{position:static;padding:10px 8px 24px}aside nav{display:grid;grid-template-columns:1fr 1fr}aside a{padding:5px 9px;font-size:12px}.tools{margin-top:14px}main{padding:30px 22px;border-radius:10px}h1{font-size:29px}h2{font-size:23px}header .lead{font-size:17px}pre{font-size:12px;padding:16px}th,td{min-width:125px;padding:10px}body{font-size:15px}.formula{font-size:16px}}
+@media print{body{background:white;font-size:11pt;line-height:1.7}.layout{display:block;max-width:none;padding:0}aside,.copy{display:none}main{border:0;box-shadow:none;padding:0;max-width:none}h1{font-size:25pt}h2{font-size:18pt}h3{font-size:14pt}section{margin-top:25px;padding-top:20px}a{color:inherit;text-decoration:none}.cards{grid-template-columns:repeat(3,1fr)}pre{white-space:pre-wrap;overflow-wrap:anywhere;font-size:9pt;background:#f3f5f8;color:#192839}.codebar{background:#e5ebf2;color:#192839}.table-wrap{overflow:visible}table{font-size:9pt}th,td{padding:7px;min-width:0}h2,h3,h4,.codebar{break-after:avoid}.card,figure,tr,.formula{break-inside:avoid}p{orphans:3;widows:3}*{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
+</style>
+</head>
+<body>
+<div class="layout">
+<aside aria-label="文档导航">
+<strong>复用 · 从概念到设计</strong>
+<nav>
+<a href="#core">00 · 核心结论</a>
+<a href="#what">01 · What：它们是什么</a>
+<a href="#pool">对象池：实例复用</a>
+<a href="#cache">缓存：结果复用</a>
+<a href="#flyweight">享元：状态共享</a>
+<a href="#why">02 · Why：三种重复</a>
+<a href="#unity">03 · How：Unity 协同</a>
+<a href="#identity">04 · 身份、状态与所有权</a>
+<a href="#tradeoffs">05 · 设计权衡</a>
+<a href="#choose">06 · 如何选择</a>
+<a href="#summary">07 · 回到复用的本质</a>
+</nav>
+<div class="tools"><button id="printBtn" type="button">打印 / 导出 PDF</button><button id="topBtn" type="button">回到顶部 ↑</button></div>
+</aside>
+<main id="top">
+<header>
+<div class="eyebrow">WHAT · WHY · HOW</div>
+<h1>对象池、缓存与享元模式<br>复用的本质区别</h1>
+<p class="lead">它们都涉及复用，但复用的究竟是什么？从实例生命周期、结果有效性与状态边界，理解三种设计为什么成立。</p>
+<div class="tags"><span>Object Pool</span><span>Cache</span><span>Flyweight</span><span>C# / Unity</span></div>
+</header>
+
+<section id="core">
+<h2><span class="num">00 / OVERVIEW</span>核心结论</h2>
+<p>这三个概念看起来非常相似：对象池避免重复创建对象，缓存避免重复获取或计算数据，享元模式避免重复保存相同的数据。但这只是表面区别。</p>
+<p>要真正理解它们，需要回答三个问题：<strong>复用的究竟是什么？为什么能够复用？复用之后，状态、身份与所有权发生了什么变化？</strong></p>
+<div class="cards">
+<div class="card"><b>对象池</b><em>Object Pool</em><p>复用<strong>实例</strong><br>不同时间，轮流使用。</p></div>
+<div class="card"><b>缓存</b><em>Cache</em><p>复用<strong>结果</strong><br>相同需求，直接取用。</p></div>
+<div class="card"><b>享元模式</b><em>Flyweight</em><p>共享<strong>内部状态</strong><br>不同对象，同时引用。</p></div>
+</div>
+<div class="callout">对象池解决<strong>反复使用实例</strong>的问题；缓存解决<strong>重复获得相同结果</strong>的问题；享元模式解决<strong>大量逻辑对象重复持有相同状态</strong>的问题。</div>
+<div class="table-wrap"><table><thead><tr><th>比较维度</th><th>对象池</th><th>缓存</th><th>享元模式</th></tr></thead><tbody>
+<tr><td>复用内容</td><td>可再次使用的实例或资源</td><td>已获取或计算的结果</td><td>多个对象共有的内部状态</td></tr>
+<tr><td>主要目的</td><td>降低创建与销毁成本</td><td>降低重复获取或计算成本</td><td>减少重复状态的存储</td></tr>
+<tr><td>关键机制</td><td>借出、归还、重置</td><td>查找、命中、失效</td><td>拆分状态、共享引用</td></tr>
+<tr><td>内部可变性</td><td>通常允许</td><td>取决于缓存契约</td><td>共享部分通常应不可变</td></tr>
+<tr><td>同时使用同一实例</td><td>通常不能独占借给多个使用者</td><td>可以，须保证共享安全</td><td>正是典型用法</td></tr>
+<tr><td>典型场景</td><td>子弹、特效、连接池</td><td>查询结果、计算结果</td><td>字形数据、物品定义、材质配置</td></tr>
+</tbody></table></div>
+<p><strong>它们都可能使用 Dictionary 保存对象，也都可能减少创建次数，但数据结构相同，不代表设计目的相同。</strong></p>
+</section>
+
+<section id="what">
+<h2><span class="num">01 / WHAT</span>它们究竟是什么？</h2>
+<h3 id="pool">1.1 对象池：复用可以重新投入使用的实例</h3>
+<p>假设在游戏中发射子弹。每次发射都创建一个 <code>Bullet</code>，子弹消失后不再使用，下一次再创建另一个。</p>
+<pre><code>Bullet bullet = new Bullet();</code></pre>
+<p>虽然子弹的游戏状态发生了变化，但<strong>用于承载这个状态的实例未必需要销毁</strong>。对象池的思路是：将对象完成任务后的实例保留下来，清理旧状态，再交给下一个任务使用。</p>
+<figure class="diagram">
+<svg viewBox="0 0 720 260" role="img" aria-labelledby="poolTitle poolDesc">
+<title id="poolTitle">对象池的复用过程</title><desc id="poolDesc">空闲实例 P1 借给子弹 A；A 结束后归还并重置 P1；再将 P1 借给子弹 B。</desc>
+<defs><marker id="arrowPool" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="#698197"/></marker></defs>
+<g fill="none" stroke="#698197" stroke-width="2" marker-end="url(#arrowPool)"><path d="M211 64H295"/><path d="M500 64H605V194H502"/><path d="M296 194H213"/></g>
+<g stroke="#c1cfda" fill="#eef3f8"><rect x="20" y="25" width="192" height="78" rx="10"/><rect x="296" y="155" width="205" height="78" rx="10"/></g>
+<g stroke="#0b817c" fill="#e9f6f4"><rect x="296" y="25" width="205" height="78" rx="10"/><rect x="20" y="155" width="192" height="78" rx="10"/></g>
+<g text-anchor="middle" font-size="17"><text x="116" y="58">空闲实例 P1</text><text x="398" y="58">子弹 A 使用 P1</text><text x="398" y="188">归还并重置 P1</text><text x="116" y="188">子弹 B 使用 P1</text></g>
+<g text-anchor="middle" font-size="13"><text x="116" y="82">可借出</text><text x="398" y="82">第一次使用</text><text x="398" y="212">旧任务结束，清理状态</text><text x="116" y="212">下一次租用</text><text x="640" y="130">使用结束</text></g>
+</svg><figcaption>同一实例 P1 在不同使用生命周期之间复用。</figcaption>
+</figure>
+<p>子弹 A 与 B 可以在不同时间使用同一个实例 P1，但不能在仍需独立状态时同时使用 P1。</p>
+<ul><li><strong>对象身份（Identity）</strong>：内存中这个实例是谁，例如 P1。</li><li><strong>对象状态（State）</strong>：实例当前保存什么，例如位置、速度、生命时间和伤害。</li></ul>
+<p>对象池保留实例身份，允许状态改变。可以将实例 P 在不同时间承担的任务写成：</p>
+<div class="formula">任务(P, t₁) = A，　任务(P, t₂) = B</div>
+<h4>Why：为什么对象池有效？</h4>
+<p><strong>创建对象的成本不一定等于使用对象的成本。</strong>有些对象需要分配内存、初始化组件、建立引擎资源或运行复杂构造流程。如果这些工作比重置对象昂贵，就可以通过池化降低反复创建与销毁的开销。</p>
+<p>对象池通常减少长期运行中的分配与创建次数，<strong>不一定减少峰值内存占用</strong>。没有对象正在使用时，池也可能保留大量空闲实例。</p>
+<h4>How：如何实现？</h4>
+<pre><code>var bullet = pool.Get();    // 借出实例
+
+bullet.Initialize(position, velocity, damage);
+
+// 子弹结束当前使用生命周期之后
+pool.Release(bullet);       // 归还实例</code></pre>
+<p>内部大致是：</p>
+<pre><code>public sealed class ObjectPool&lt;T&gt; where T : class
+{
+    private readonly Stack&lt;T&gt; idle = new();
+    private readonly Func&lt;T&gt; create;
+    private readonly Action&lt;T&gt; reset;
+
+    public ObjectPool(Func&lt;T&gt; create, Action&lt;T&gt; reset)
+    {
+        this.create = create;
+        this.reset = reset;
+    }
+
+    public T Get()
+    {
+        return idle.Count &gt; 0
+            ? idle.Pop()
+            : create();
+    }
+
+    public void Release(T item)
+    {
+        reset(item);
+        idle.Push(item);
+    }
+}</code></pre>
+<p class="note">这是原理示例，需要 System 与 System.Collections.Generic 命名空间。未处理重复归还、外来对象归还、最大容量、销毁策略及线程安全。</p>
+<p>对象池成立的核心前提是：</p>
+<div class="formula">当前使用已结束 ∧ 状态可恢复到可复用状态 ∧ 借用期间满足独占约束</div>
+<p>如果一个子弹还在运行，就将它的实例分配给另一颗子弹，两颗子弹会冲突地修改同一位置、速度等运行时状态。</p>
+
+<h3 id="cache">1.2 缓存：复用已经得到的结果</h3>
+<p>缓存关注的问题是：<strong>如果某个结果已经获得，下一次为什么还要重新获取？</strong></p>
+<p>假设计算装备升级后的基础伤害很昂贵，而相同武器、相同等级在同一配置下对应相同结果：</p>
+<pre><code>int damage = CalculateDamage(weaponId, level);</code></pre>
+<p>可以保存结果，下一次输入相同时直接返回。</p>
+<figure class="diagram">
+<svg viewBox="0 0 720 315" role="img" aria-labelledby="cacheTitle cacheDesc"><title id="cacheTitle">缓存的命中与未命中</title><desc id="cacheDesc">输入 Key 后检查缓存；存在且有效则返回已有结果；否则重新计算或加载，保存并返回。</desc>
+<defs><marker id="arrowCache" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#698197"/></marker></defs>
+<g fill="none" stroke="#698197" stroke-width="2" marker-end="url(#arrowCache)"><path d="M360 65V103"/><path d="M240 140H160V225"/><path d="M480 140H560V225"/></g>
+<rect x="260" y="10" width="200" height="55" rx="9" fill="#eef3f8" stroke="#c1cfda"/><rect x="240" y="104" width="240" height="70" rx="9" fill="#eef3f8" stroke="#c1cfda"/>
+<rect x="45" y="226" width="230" height="65" rx="9" fill="#e9f6f4" stroke="#0b817c"/><rect x="445" y="226" width="230" height="65" rx="9" fill="#fff5e5" stroke="#a56514"/>
+<g text-anchor="middle" font-size="17"><text x="360" y="44">输入 Key</text><text x="360" y="134">缓存中存在</text><text x="360" y="158">且结果仍有效？</text><text x="160" y="265">直接返回已有结果</text><text x="560" y="252">重新计算 / 加载</text><text x="560" y="276">保存并返回</text></g><g text-anchor="middle" font-size="13"><text x="117" y="200">有效命中</text><text x="608" y="200">未命中 / 已失效</text></g>
+</svg><figcaption>命中只是找到记录；能否复用，还取决于结果有效性。</figcaption>
+</figure>
+<p>缓存本质上维护映射：</p><div class="formula">Key → Value</div>
+<ul><li><code>Key</code> 表示确定结果所需的输入或资源身份。</li><li><code>Value</code> 表示对应的已获取或计算结果。</li></ul>
+<h4>Why：为什么缓存有效？</h4>
+<p>假设计算一次伤害需要 5 毫秒，同样输入请求 100 次。不缓存的理论累计计算成本约为 <code>100 × 5 = 500 ms</code>。缓存后第一次计算，后续只查找。</p>
+<p>如果查找远比计算便宜，就能降低重复工作。实际收益仍取决于命中率、查询开销和缓存管理成本。</p>
+<h4>How：如何实现？</h4>
+<pre><code>private readonly Dictionary&lt;(string, int), int&gt; cache = new();
+
+public int GetDamage(string weaponId, int level)
+{
+    var key = (weaponId, level);
+
+    if (cache.TryGetValue(key, out int damage))
+    {
+        return damage;
+    }
+
+    damage = CalculateDamage(weaponId, level);
+    cache[key] = damage;
+    return damage;
+}</code></pre>
+<p>缓存有一个关键问题：<strong>结果什么时候失效？</strong>如果装备平衡性配置改变，同一武器与等级对应的伤害也可能改变，旧值就不再正确。</p>
+<div class="formula">Key 相同 ∧ 在当前请求条件下结果仍然有效</div>
+<p>除了输入相同，还必须确保所有影响结果的因素已被纳入判断。例如在键中加入配置版本：</p>
+<pre><code>var key = (weaponId, level, balanceVersion);</code></pre>
+<p>不同版本使用不同缓存项。旧版本条目仍需根据容量和使用情况淘汰。</p>
+<blockquote>缓存真正困难的地方往往不是如何保存结果，而是如何判断旧结果还能不能使用。</blockquote>
+
+<h3 id="flyweight">1.3 享元模式：共享多个逻辑对象共有的内部状态</h3>
+<p>享元模式关注的是：<strong>多个看起来相互独立的逻辑对象，是否在重复保存完全相同的信息？</strong></p>
+<p>假设 1000 个同类型敌人，每个都保存：</p>
+<pre><code>public class Enemy
+{
+    public string Name;
+    public float BaseSpeed;
+    public int BaseDamage;
+
+    public Vector3 Position;
+    public int CurrentHp;
+}</code></pre>
+<p><code>Name</code>、<code>BaseSpeed</code>、<code>BaseDamage</code> 对同类型敌人相同；<code>Position</code>、<code>CurrentHp</code> 各不相同。这混合了两种性质不同的状态。</p>
+<div class="table-wrap"><table><thead><tr><th>状态类型</th><th>示例</th><th>特点</th></tr></thead><tbody>
+<tr><td>内部状态<br>Intrinsic State</td><td>类型名称、基础伤害、基础速度</td><td>不依赖某个敌人的具体使用上下文，可以共享</td></tr>
+<tr><td>外部状态<br>Extrinsic State</td><td>位置、当前生命值</td><td>随具体敌人变化，需要分别维护</td></tr>
+</tbody></table></div>
+<p>内部与外部是相对于<strong>被共享的享元对象</strong>而言，不是简单指 C# 成员变量放在哪里。外部状态可以由各自的上下文对象维护，在享元需要时传给它。</p>
+<figure class="diagram">
+<svg viewBox="0 0 720 315" role="img" aria-labelledby="flyTitle flyDesc"><title id="flyTitle">享元模式的共享结构</title><desc id="flyDesc">敌人 A、B、C 各自拥有位置与当前生命值，但都引用同一个 EnemyDefinition，包含名称、基础速度与基础伤害。</desc>
+<defs><marker id="arrowFly" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#6552bc"/></marker></defs>
+<g fill="none" stroke="#6552bc" stroke-width="2" marker-end="url(#arrowFly)"><path d="M127 196V154H285V118"/><path d="M360 196V118"/><path d="M593 196V154H435V118"/></g>
+<rect x="210" y="13" width="300" height="104" rx="10" fill="#f0edfc" stroke="#6552bc"/>
+<g fill="#eef3f8" stroke="#c1cfda"><rect x="17" y="197" width="220" height="98" rx="10"/><rect x="250" y="197" width="220" height="98" rx="10"/><rect x="483" y="197" width="220" height="98" rx="10"/></g>
+<g text-anchor="middle" font-size="17"><text x="360" y="43">同一份 EnemyDefinition</text><text x="127" y="229">敌人 A</text><text x="360" y="229">敌人 B</text><text x="593" y="229">敌人 C</text></g><g text-anchor="middle" font-size="13"><text x="360" y="71">Name · BaseSpeed · BaseDamage</text><text x="360" y="95">共享内部状态</text><text x="127" y="255">Position A · CurrentHp A</text><text x="360" y="255">Position B · CurrentHp B</text><text x="593" y="255">Position C · CurrentHp C</text><text x="127" y="279">独立运行时状态</text><text x="360" y="279">独立运行时状态</text><text x="593" y="279">独立运行时状态</text></g>
+</svg><figcaption>三个敌人同时存活，独立维护状态，共享同一份类型定义。</figcaption>
+</figure>
+<h4>Why：为什么享元模式有效？</h4>
+<p><strong>逻辑对象的数量，不一定等于它们需要保存的独立数据副本数量。</strong>假设 N 个敌人，每份共享类型数据大小为 S，每份独立状态大小为 E，全部属于同一种类型：</p>
+<div class="formula">M<sub>普通</sub> = N(S + E)<br>M<sub>享元</sub> ≈ S + NE<br>相同类型数据：NS → S</div>
+<p>1000 份相同类型数据可以变成 1 份。若有 K 种定义，理想化共享部分约为 KS。</p>
+<p class="note">这里省略引用、对象头、容器等开销。C# 引用字段原本也可能已指向同一对象，例如多个 Name 字段不一定各自复制字符串内容。实际节省量取决于真正被重复存储的数据，不能仅凭字段数量推算。</p>
+<h4>How：如何实现？</h4>
+<p>先独立出可共享的内部状态：</p>
+<pre><code>public sealed class EnemyDefinition
+{
+    public string Name { get; }
+    public float BaseSpeed { get; }
+    public int BaseDamage { get; }
+
+    public EnemyDefinition(
+        string name,
+        float baseSpeed,
+        int baseDamage)
+    {
+        Name = name;
+        BaseSpeed = baseSpeed;
+        BaseDamage = baseDamage;
+    }
+}</code></pre>
+<p>让各个敌人持有定义引用，并保留自己的运行时状态：</p>
+<pre><code>public class Enemy
+{
+    public EnemyDefinition Definition { get; } // 共享引用
+
+    public Vector3 Position;                  // 独立状态
+    public int CurrentHp;
+
+    public Enemy(
+        EnemyDefinition definition,
+        Vector3 position,
+        int hp)
+    {
+        Definition = definition;
+        Position = position;
+        CurrentHp = hp;
+    }
+}</code></pre>
+<pre><code>var slimeDefinition = new EnemyDefinition("Slime", 2.5f, 10);
+
+var enemyA = new Enemy(slimeDefinition, posA, 100);
+var enemyB = new Enemy(slimeDefinition, posB, 100);
+var enemyC = new Enemy(slimeDefinition, posC, 100);
+
+ReferenceEquals(enemyA.Definition, enemyB.Definition); // true
+ReferenceEquals(enemyA, enemyB);                       // false</code></pre>
+<div class="callout">共享的是每个敌人相同的那一部分。各个敌人仍然是不同实例，拥有自己的状态与身份。</div>
+<p>共享数据应尽可能不可变。如果将 <code>CurrentHp</code> 放入共享定义并由所有敌人使用，敌人 A 受伤就可能改变其他敌人的生命值。</p>
+</section>
+
+<section id="why">
+<h2><span class="num">02 / WHY</span>为什么都是复用，却需要三种设计？</h2>
+<p>因为软件中的重复有不同形式：</p>
+<div class="table-wrap"><table><thead><tr><th>重复发生在哪里</th><th>具体问题</th><th>对应设计</th></tr></thead><tbody>
+<tr><td>时间上</td><td>实例完成任务后被丢弃，下次又创建一个功能相同的实例</td><td>对象池：管理实例生命周期</td></tr>
+<tr><td>工作上</td><td>同一结果已计算或获取过，却再次执行相同工作</td><td>缓存：改变结果获取路径</td></tr>
+<tr><td>表示上</td><td>大量独立对象同时持有相同信息的副本</td><td>享元：调整状态组织结构</td></tr>
+</tbody></table></div>
+<h3>2.1 为什么不能让所有子弹共享一个对象？</h3>
+<pre><code>bulletA = sharedBullet;
+bulletB = sharedBullet;
+
+bulletA.Position = posA;
+bulletB.Position = posB;
+
+ReferenceEquals(bulletA, bulletB); // true</code></pre>
+<p>两次赋值操作同一实例，第二次位置修改会覆盖第一次结果。</p>
+<p>对象池给每颗活动子弹独立实例，等空闲后再复用。享元模式将可共享部分提取为 <code>BulletDefinition</code>，各子弹仍独立保存自己的 <code>Position</code>。</p>
+<blockquote>对象池按生命周期分配实例，享元模式按状态的可共享性组织数据。</blockquote>
+<h3>2.2 缓存与享元为什么容易混淆？</h3>
+<pre><code>Dictionary&lt;string, EnemyDefinition&gt; definitions;
+
+var definition = definitions["slime"];</code></pre>
+<p>这是缓存还是享元？<strong>可能两者都是，也可能只是其中之一。</strong></p>
+<ul><li>这张表如果用于避免反复从磁盘读取定义，承担<strong>缓存职责</strong>。</li><li>1000 个敌人都引用同一份定义，共享内部状态，体现<strong>享元职责</strong>。</li></ul>
+<p>缓存关注<strong>取得它的过程</strong>：下次是否还要重新加载？享元关注<strong>使用它的结构</strong>：1000 个敌人是否要各自保存一份定义？</p>
+<p>缓存也可以保存计算数值、查询响应，甚至一次失败结果；这些结果未必是大量逻辑对象共同的内部状态。因此仅看到字典或同一对象被返回，无法判断设计职责。</p>
+</section>
+
+<section id="unity">
+<h2><span class="num">03 / HOW</span>在 Unity 中如何协同？</h2>
+<p>假设一个弹幕游戏每分钟发射 1000 发子弹，最多同时存在 100 发，分为 5 种类型，还要反复计算部分弹道。</p>
+<div class="cards"><div class="card"><b>对象池</b><em>Bullet 实例</em><p>围绕约 100 发活动峰值配置实例复用。</p></div><div class="card"><b>缓存</b><em>TrajectoryCache</em><p>相同弹道参数命中时，复用预计算结果。</p></div><div class="card"><b>享元</b><em>BulletDefinition</em><p>5 种类型共享 5 份定义，保留各自运行状态。</p></div></div>
+<p>1000 是一段时间内的发射总量，100 是同时活动峰值。池中需要多少实例主要由同时活动数量及保留策略决定，不需要为全部 1000 发分别保留实例。</p>
+<h3>3.1 对象池负责运行时实例</h3>
+<pre><code>public class Bullet : MonoBehaviour
+{
+    public BulletDefinition Definition { get; private set; }
+
+    private Vector3 velocity;
+    private float lifetime;
+
+    public void Initialize(
+        BulletDefinition definition,
+        Vector3 position,
+        Vector3 velocity)
+    {
+        Definition = definition;
+        transform.position = position;
+
+        this.velocity = velocity;
+        lifetime = 0f;
+
+        gameObject.SetActive(true);
+    }
+
+    public void ResetState()
+    {
+        Definition = null;
+        velocity = Vector3.zero;
+        lifetime = 0f;
+
+        gameObject.SetActive(false);
+    }
+}</code></pre>
+<p><code>Definition</code> 是共享引用，<code>velocity</code> 和 <code>lifetime</code> 是独立状态。这里的启用安排在数据初始化之后；实际池的借出回调也要配合这个顺序。</p>
+<p class="note">Unity 示例需要 UnityEngine。代码展示职责分工，未包含移动、碰撞、计时归还与完整池管理。实际重置还可能涉及协程、异步回调、事件订阅、Rigidbody 速度、粒子、TrailRenderer 和碰撞状态等。</p>
+<h3>3.2 享元模式负责共享类型定义</h3>
+<pre><code>[CreateAssetMenu(menuName = "Game/Bullet Definition")]
+public class BulletDefinition : ScriptableObject
+{
+    [SerializeField] private float baseDamage;
+    [SerializeField] private float baseSpeed;
+    [SerializeField] private Sprite icon;
+
+    public float BaseDamage =&gt; baseDamage;
+    public float BaseSpeed =&gt; baseSpeed;
+    public Sprite Icon =&gt; icon;
+}</code></pre>
+<p>同类型子弹引用同一个 <code>BulletDefinition</code> 资源实例，避免各自复制全部配置。每颗子弹的生命时间等运行状态保留在独立实例中。</p>
+<p><strong>ScriptableObject 本身不是享元模式的同义词。</strong>只有承担多个逻辑对象共享内部状态的职责时，才体现享元特征。而且它在运行时并非天然不可修改，仍需通过设计约束共享配置的修改。</p>
+<h3>3.3 缓存负责昂贵的重复计算</h3>
+<p>如果弹道由固定初速度、重力与采样设置决定，可以用参数键查询预计算结果：</p>
+<pre><code>private readonly Dictionary&lt;TrajectoryKey, TrajectoryData&gt;
+    trajectoryCache = new();
+
+public TrajectoryData GetTrajectory(TrajectoryKey key)
+{
+    if (trajectoryCache.TryGetValue(key, out var data))
+    {
+        return data;
+    }
+
+    data = CalculateTrajectory(key);
+    trajectoryCache.Add(key, data);
+    return data;
+}</code></pre>
+<p><code>TrajectoryKey</code> 必须包含所有影响结果的必要参数：初速度、重力、采样间隔等。若用相对起点的轨迹表示，则可在使用时叠加各子弹自己的起点。</p>
+<p><code>TrajectoryData</code> 最好不可变，或通过可靠的只读接口防止被调用者意外修改。</p>
+<p class="note">TrajectoryKey、TrajectoryData 与 CalculateTrajectory 是说明职责的占位类型和方法，需要由项目实现。以上缓存示例按单线程访问说明原理。</p>
+</section>
+
+<section id="identity">
+<h2><span class="num">04 / DEEPER VIEW</span>身份、状态与所有权</h2>
+<div class="table-wrap"><table><thead><tr><th>维度</th><th>对象池</th><th>缓存</th><th>享元模式</th></tr></thead><tbody>
+<tr><td>身份</td><td>保留实例身份，反复租用</td><td>按 Key 查找已有结果，不一定承诺引用身份稳定</td><td>不同逻辑对象引用同一共享状态实例</td></tr>
+<tr><td>状态</td><td>复用前后通常需要重置</td><td>命中结果必须仍有效</td><td>共享部分通常不可变</td></tr>
+<tr><td>所有权与使用权</td><td>池管理保留与销毁，借用者暂时独占使用</td><td>缓存管理条目保留与失效，底层资源释放责任另行约定</td><td>多个使用者持有共享引用，最终释放责任另行约定</td></tr>
+<tr><td>生命周期</td><td>空闲 → 借出 → 归还 → 再次借出 / 销毁</td><td>获取 → 命中 → 失效 / 淘汰 → 重新获取</td><td>建立共享状态 → 多处引用 → 最终释放</td></tr>
+</tbody></table></div>
+<p>这里的所有权是设计约束，C# 普通引用不会自动强制执行。<strong>共享引用也不等于共享销毁权。</strong>尤其对于 Unity 对象或其他外部资源，需要明确谁可以最终释放。</p>
+<h3>4.1 对象池正确性：状态隔离</h3>
+<blockquote>上一次使用产生的状态，是否会影响下一次使用？</blockquote>
+<p>如果归还时仍订阅旧事件，下一次借出可能继续响应旧任务，造成重复处理。重置的意义是建立新旧使用生命周期之间的状态隔离；旧协程或异步回调也必须停止，或验证自己仍属于当前租用。</p>
+<h3>4.2 缓存正确性：结果有效性</h3>
+<blockquote>当前请求条件下，原来的结果仍然正确吗？</blockquote>
+<p>玩家统计从 100 变为 120，而缓存仍返回 100。即使命中 Key，也可能得到过期数据。因此需要根据契约考虑失效、版本、容量、一致性和并发更新策略。</p>
+<h3>4.3 享元正确性：共享边界</h3>
+<blockquote>哪些状态真正属于可以共同使用的部分？</blockquote>
+<p>将敌人当前生命值加入共享定义，会破坏敌人之间的逻辑独立性。难点是识别哪些状态可共享，哪些必须独立维护。</p>
+</section>
+
+<section id="tradeoffs">
+<h2><span class="num">05 / TRADE-OFFS</span>设计权衡：复用也有成本</h2>
+<div class="table-wrap"><table><thead><tr><th>技术</th><th>主要收益</th><th>成本和风险</th></tr></thead><tbody>
+<tr><td>对象池</td><td>减少创建、销毁与分配开销</td><td>状态残留、重复归还、容量管理、空闲对象占用内存</td></tr>
+<tr><td>缓存</td><td>降低重复计算、查询或读取成本</td><td>过期数据、失效策略、额外内存、一致性与并发问题</td></tr>
+<tr><td>享元</td><td>减少重复持有的相同状态</td><td>状态拆分复杂度、引用间接访问、共享可变状态风险</td></tr>
+</tbody></table></div>
+<p>仅含两个整数的小型 C# 对象，如果构造与回收成本很低，池化可能更麻烦，甚至更慢。只会请求一次的计算结果，保存到缓存通常没有收益。</p>
+<p>如果每个对象的数据几乎都不同，或共享部分非常小，强行拆分也可能使维护成本大于收益。应根据实际测量和需求选择。</p>
+<div class="callout"><strong>设计的目标是找到值得消除的重复成本。</strong>复用带来的管理成本必须一并计算。</div>
+</section>
+
+<section id="choose">
+<h2><span class="num">06 / DECISION GUIDE</span>如何判断应该使用哪一个？</h2>
+<p>先描述当前遇到的重复，再核对对应的正确性前提：</p>
+<div class="decision">
+<div><strong>反复创建、使用、销毁同类实例 → 考虑对象池</strong>确认创建成本显著、并发活动数量可估计、旧任务能结束、状态能可靠重置、借用与归还责任明确。</div>
+<div><strong>反复获取或计算相同结果 → 考虑缓存</strong>确认输入可作为准确的 Key、结果有效性可判断、请求有足够重复率、容量与淘汰策略可接受。</div>
+<div><strong>大量逻辑对象保存相同信息 → 考虑享元</strong>确认共享状态可从上下文中分离、独立状态保留在各自对象中、共享修改受到约束、节省量值得复杂度。</div>
+</div>
+<p><strong>选择并不互斥。</strong>同一份定义可以通过缓存加载，再作为享元供多个池化实例共享。</p>
+</section>
+
+<section id="summary">
+<h2><span class="num">07 / ESSENCE</span>回到「复用」的本质</h2>
+<p><strong>对象池：</strong>管理可再次使用的实例及其生命周期，避免频繁重新创建和销毁资源。</p>
+<div class="formula">对象池 = 实例复用 + 生命周期管理</div>
+<p><strong>缓存：</strong>保存已经取得的结果，在结果仍有效时避免重复执行获取或计算。</p>
+<div class="formula">缓存 = 结果复用 + 有效性管理</div>
+<p><strong>享元模式：</strong>提取并共享多个逻辑对象共有的内部状态，避免分别保存相同副本。</p>
+<div class="formula">享元 = 状态共享 + 状态边界划分</div>
+<blockquote class="closing"><strong>对象池：</strong>这个实例使用结束后，能不能给下一次任务使用？<br><strong>缓存：</strong>这个结果已经得到过，能不能直接返回？<br><strong>享元：</strong>这些不同的逻辑对象，是否需要各自保存一份相同数据？</blockquote>
+<p>三者消除的重复，分别发生在<strong>生命周期、结果获取、对象结构</strong>三个层面。以复用的对象和正确性约束来识别它们，就不会被相同的数据结构迷惑。</p>
+</section>
+<footer>依据本次对话整理 · C# 与 Unity 代码以说明概念为主 · 单文件 HTML，可离线阅读、复制代码与打印。</footer>
+</main>
+</div>
+<script>
+document.getElementById('printBtn').addEventListener('click',()=>window.print());
+document.getElementById('topBtn').addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
+for(const pre of document.querySelectorAll('pre')){
+  const bar=document.createElement('div');bar.className='codebar';
+  const label=document.createElement('span');label.textContent='C# · 示例';
+  const btn=document.createElement('button');btn.className='copy';btn.type='button';btn.textContent='复制代码';btn.setAttribute('aria-label','复制此段 C# 代码');
+  btn.addEventListener('click',async()=>{
+    const value=pre.querySelector('code').textContent;
+    try{
+      if(navigator.clipboard && window.isSecureContext){await navigator.clipboard.writeText(value);}
+      else{const ta=document.createElement('textarea');ta.value=value;ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.select();const ok=document.execCommand('copy');ta.remove();if(!ok)throw new Error('copy');}
+      btn.textContent='已复制';
+    }catch(e){btn.textContent='请选中代码复制';}
+    setTimeout(()=>btn.textContent='复制代码',1800);
+  });
+  bar.append(label,btn);pre.before(bar);
+}
+if('IntersectionObserver' in window){
+  const links=[...document.querySelectorAll('nav a')];
+  const ob=new IntersectionObserver(items=>{
+    for(const item of items)if(item.isIntersecting){
+      links.forEach(a=>a.removeAttribute('aria-current'));
+      const a=links.find(a=>a.hash==='#'+item.target.id);if(a)a.setAttribute('aria-current','true');
+    }
+  },{rootMargin:'-5% 0px -65% 0px'});
+  document.querySelectorAll('section[id],h3[id]').forEach(s=>ob.observe(s));
+}
+</script>
+</body>
+</html>

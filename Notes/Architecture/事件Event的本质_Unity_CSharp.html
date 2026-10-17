@@ -34,7 +34,15 @@ article{font-size:15px;line-height:1.95}article>p:first-child{color:var(--muted)
 <div class="page"><div class="page-inner"><header class="topbar"><div class="crumb">CONCEPT NOTES / EVENT</div><div class="tools"><button type="button" class="mobile-menu" id="menu-button" aria-controls="sidebar" aria-expanded="false">目录</button><button type="button" class="print-button" id="print-button">打印 / 保存 PDF</button></div></header>
 <section class="hero" aria-labelledby="page-title"><p class="eyebrow">WHAT / WHY / HOW</p><h1 id="page-title">事件：事实、顺序与一致性<span>。</span></h1><p class="hero-sub">从发布订阅到优先级、业务编排与可靠交付，理解事件如何让系统正确协作。</p><div class="hero-tags"><span>10 章完整主线</span><span>4 张矢量图解</span><span>6 个完整 C# 类型</span><span>2 组交互实验</span></div><nav class="reading-route" aria-label="按问题阅读"><a href="#chapter-3"><small>01 / MECHANISM</small><b>C# 事件如何工作？</b></a><a href="#chapter-5"><small>02 / ORDER</small><b>优先级与流程怎样保证先后？</b></a><a href="#chapter-7"><small>03 / RELIABILITY</small><b>如何避免半成功与通知丢失？</b></a></nav></section>
 <section class="essence" aria-label="三个独立的正确性问题"><p>事件表达事实；真实的业务依赖仍需要被明确管理。<br><strong>先区分调用次序、工作完成与提交可靠性。</strong></p><div class="role-grid"><div class="role"><b>谁先执行？</b><span>订阅顺序、优先级、阶段、编排、因果链</span></div><div class="role"><b>何时算完成？</b><span>同步返回、按序 await、前置条件与可见性</span></div><div class="role"><b>失败后怎么办？</b><span>事务、持久化消息、幂等、恢复与对账</span></div></div><p class="scope-note">优先级是有效的顺序方案；它与其他方案可以组合。选择时既要尊重业务约束，也要核对事件系统真正承诺的执行和失败语义。</p></section>
-<main><article id="content"><p>事件的本质，是描述某件事情发生了。事件机制把事实与响应连接起来；设计事件驱动系统，还需要把执行顺序、工作完成和状态一致性分别说清楚。</p>
+<main><article id="content"><p>先给出一个核心结论：</p>
+<p>事件的本质，是描述“某件事情发生了”这一事实。</p>
+<p>它并不直接规定系统必须做什么，而是让系统能够知道某件事情发生了，并决定是否对此作出反应。</p>
+<p>要真正理解事件，我们需要从三个角度研究：</p>
+<ul>
+<li>What： 事件究竟是什么？它与状态、行为、状态转移有什么关系？</li>
+<li>Why： 为什么需要事件？不使用事件会遇到什么问题？</li>
+<li>How： 事件如何产生、传播、处理？在程序中如何正确使用？</li>
+</ul>
 <h2 id="chapter-1"><span class="chapter-number">01</span>What：事件、事实与命令</h2>
 <h3 id="section">1. 从现实世界理解事件</h3>
 <p>想象一个房间：</p>

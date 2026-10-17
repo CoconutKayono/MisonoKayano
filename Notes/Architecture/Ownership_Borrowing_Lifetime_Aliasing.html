@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="用 What、Why、How 理解所有权、借用、生命周期与别名，并以 C#、Rust 和对象池示例串联资源管理与访问正确性。">
+<title>所有权、借用、生命周期与别名</title>
+<style>
+:root{color-scheme:light;--bg:#f4f6f8;--paper:#fff;--ink:#1f2937;--muted:#64748b;--line:#dce4eb;--teal:#087f78;--blue:#285bd3;--soft:#edf8f5;--code:#132237;--gold:#9a651b}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:28px}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI","Microsoft YaHei","PingFang SC",sans-serif;font-size:16px;line-height:1.9}a{color:var(--blue);text-underline-offset:4px}button{font:inherit;cursor:pointer}header{max-width:1180px;margin:42px auto 22px;padding:48px 54px;background:#132f3e;color:#fff;border-radius:20px;position:relative;overflow:hidden}header:after{content:"{ }";position:absolute;right:40px;top:28px;font:130px/1.3 monospace;opacity:.06}.eyebrow{font-size:12px;font-weight:700;letter-spacing:2px;color:#8fdbcf}h1{font-size:clamp(28px,4vw,43px);line-height:1.35;margin:16px 0 18px;letter-spacing:-1px}.subtitle{color:#c6d8df;max-width:800px;margin:0}.tags{display:flex;gap:10px;flex-wrap:wrap;margin-top:25px}.tags span{border:1px solid #53717b;border-radius:30px;padding:2px 12px;font-size:12px}.layout{max-width:1180px;margin:0 auto 64px;display:grid;grid-template-columns:232px minmax(0,1fr);gap:24px;align-items:start}nav{position:sticky;top:22px;padding:23px 18px;background:var(--paper);border:1px solid var(--line);border-radius:14px}nav strong{display:block;font-size:13px;color:var(--muted);margin:0 8px 12px}nav a{display:block;text-decoration:none;font-size:13px;line-height:1.6;padding:9px 8px;border-radius:6px;color:#41536a}nav a:hover{background:var(--soft);color:var(--teal)}nav button{background:transparent;border:1px solid var(--line);border-radius:6px;padding:6px 12px;font-size:12px;color:var(--muted);margin:14px 8px 0}main{min-width:0;background:var(--paper);padding:40px 44px;border:1px solid var(--line);border-radius:14px}section+section{border-top:1px solid var(--line);margin-top:44px;padding-top:28px}h2{font-size:26px;line-height:1.5;margin:5px 0 25px}h2 .num{display:block;color:var(--teal);font-size:12px;letter-spacing:2px;margin-bottom:8px}h3{font-size:20px;line-height:1.6;margin:30px 0 12px}h4{font-size:17px;margin:22px 0 8px}p{margin:12px 0}strong{font-weight:650}ul,ol{padding-left:24px}li{margin:7px 0}code{font-family:Consolas,"SFMono-Regular",monospace;background:#edf2f7;color:#235070;padding:2px 5px;border-radius:4px;font-size:.9em;overflow-wrap:anywhere}pre{background:var(--code);color:#dfebf6;border-radius:10px;padding:21px 23px;overflow-x:auto;line-height:1.75;font-size:13px;tab-size:4;margin:15px 0 20px;position:relative}pre code{padding:0;background:none;color:inherit;overflow-wrap:normal;font-size:inherit}.lang{display:block;letter-spacing:1px;font:10px/1.5 system-ui,sans-serif;color:#9ab5d0;margin-bottom:12px;text-transform:uppercase}.callout{padding:18px 22px;background:var(--soft);border-left:4px solid var(--teal);border-radius:0 8px 8px 0;margin:22px 0}.callout p{margin:0}.note{padding:16px 19px;background:#fff8eb;border-left:3px solid #ca9344;border-radius:0 7px 7px 0;font-size:14px}.table-wrap{overflow-x:auto;margin:20px 0}table{border-collapse:collapse;width:100%;font-size:14px;line-height:1.8}th,td{padding:12px 14px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line)}th{background:#f0f5f7;color:#395367;font-weight:650}tr:last-child td{border-bottom:0}figure{margin:23px 0;padding:22px;background:#f8fafc;border:1px solid var(--line);border-radius:10px}figure svg{display:block;width:100%;height:auto;max-height:270px}figcaption{font-size:12px;text-align:center;color:var(--muted);margin-top:10px}.formula{text-align:center;background:#f5f8fc;border-radius:8px;padding:17px;font-family:Cambria,"Times New Roman",serif;font-size:21px;overflow-x:auto}.questions{padding:20px 24px;background:#132f3e;color:#e4eff4;border-radius:10px}.questions ol{margin:0}.source-list{font-size:14px}.source-list a{overflow-wrap:anywhere}.small{font-size:13px;color:var(--muted)}footer{max-width:1180px;margin:0 auto 40px;padding:0 20px;text-align:center;font-size:12px;color:var(--muted)}
+@media(max-width:950px){header{margin:18px 18px 20px;padding:34px}.layout{margin:0 18px 40px;grid-template-columns:1fr}nav{position:static;display:flex;flex-wrap:wrap;gap:2px;padding:16px}nav strong{width:100%;margin:0 8px 4px}nav a{font-size:12px;padding:6px 8px}nav button{margin:0 8px}main{padding:30px}}
+@media(max-width:560px){body{font-size:15px}header{padding:27px 23px;border-radius:12px}main{padding:26px 20px}h2{font-size:23px}h3{font-size:18px}pre{padding:17px;font-size:12px}figure{padding:12px}.layout{gap:15px}th,td{padding:9px 10px;min-width:110px}}
+@media print{body{background:#fff;font-size:11pt;color:#111}header{background:#fff;color:#111;margin:0;padding:0 0 20px;border-radius:0;border-bottom:2px solid #087f78}header:after,.tags,nav{display:none}.eyebrow,.subtitle{color:#41536a}.layout{display:block;margin:0;max-width:none}main{border:0;padding:20px 0}h2,h3,h4{break-after:avoid}pre,figure,.callout,table{break-inside:avoid}pre{white-space:pre-wrap;overflow:visible;background:#f2f4f6;color:#111;border:1px solid #ddd}pre code{color:#111}.lang{color:#555}section+section{margin-top:25px}a{color:inherit}footer{margin-top:25px}.questions{color:#111;background:#f1f5f7}html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<header>
+<div class="eyebrow">RESOURCE ACCESS · WHAT / WHY / HOW</div>
+<h1>所有权、借用、生命周期与别名</h1>
+<p class="subtitle">Ownership · Borrowing · Lifetime · Aliasing<br>让资源的管理责任、访问权限、有效时间和共享关系保持一致。</p>
+<div class="tags"><span>C# 设计契约</span><span>Rust 语言约束</span><span>对象池与租借</span></div>
+</header>
+<div class="layout">
+<nav aria-label="章节目录">
+<strong>阅读目录</strong>
+<a href="#what">01 · What：四个概念</a>
+<a href="#why">02 · Why：共同解决的问题</a>
+<a href="#relationship">03 · 四者如何联系</a>
+<a href="#how">04 · How：C# API 设计</a>
+<a href="#rust">05 · Rust 借用规则对照</a>
+<a href="#pool">06 · 对象池中的生命周期</a>
+<a href="#model">07 · 统一的正确性模型</a>
+<a href="#mistakes">08 · 四个错误等式</a>
+<a href="#summary">09 · 设计检查与参考</a>
+<button type="button" onclick="window.print()">打印 / 保存为 PDF</button>
+</nav>
+<main>
+<div class="callout"><p><strong>先抓住四个问题：</strong>谁负责管理？谁可以使用？可以用到什么时候？还有哪些路径能访问同一份数据？</p></div>
+<section id="what">
+<h2><span class="num">01 / WHAT</span>四个概念分别是什么？</h2>
+<div class="table-wrap"><table><thead><tr><th>概念</th><th>核心问题</th><th>关注的维度</th></tr></thead><tbody>
+<tr><td>Ownership · 所有权</td><td>谁负责管理资源？</td><td>管理与释放责任</td></tr>
+<tr><td>Borrowing · 借用</td><td>谁可以在约定下使用资源？</td><td>访问权限</td></tr>
+<tr><td>Lifetime · 生命周期</td><td>资源或访问在何时有效？</td><td>有效时间与范围</td></tr>
+<tr><td>Aliasing · 别名</td><td>是否有多条路径指向同一份数据？</td><td>共享与访问冲突</td></tr>
+</tbody></table></div>
+<h3>1. Ownership：资源管理责任的归属</h3>
+<p>在资源管理语境中，所有权描述一个主体对某个资源承担的管理责任，以及相应的控制权限。例如：谁保证资源在使用期间有效，谁负责在适当的时候释放资源，以及责任是否可以转移。</p>
+<pre><span class="lang">C#</span><code>using var stream = File.OpenRead("data.txt");
+
+// 当前作用域承担 stream 的释放责任。
+// 离开作用域时，using 会调用 Dispose()。</code></pre>
+<p>这里的关键并不是“变量里存了一个引用”，而是代码确立了一个释放责任的归属。<strong>持有引用，并不会自动让持有者成为资源所有者。</strong></p>
+<p>所有权可以由语言强制执行，也可以由 API 契约规定。Rust 会跟踪许多值的所有权与移动；C# 对普通引用对象通常依赖设计约定来确定释放责任。</p>
+<h3>2. Borrowing：取得使用权限，但不接管管理责任</h3>
+<p>假设你拥有一份数据，需要交给函数处理。你可以把所有权交给函数，也可以保留所有权，只允许函数临时使用它。第二种就是借用。</p>
+<div class="callout"><p>借用的核心思想：<strong>将“使用资源的权限”与“管理资源的责任”分离。</strong></p></div>
+<pre><span class="lang">C#</span><code>void PrintLength(string text)
+{
+    Console.WriteLine(text.Length);
+}</code></pre>
+<p>函数需要访问字符串，但不需要成为它的生命周期管理者。在概念模型中，这是一种非拥有式使用。</p>
+<p class="note">C# 中普通引用参数传递，不等同于 Rust 编译器定义的借用。C# 不会针对一般引用对象自动施加 Rust 式的独占借用约束。</p>
+<p>借用可以按访问权限分成两种常见形式：</p>
+<ul><li><strong>共享借用：</strong>多个使用者可以共享访问；Rust 的普通共享引用 <code>&amp;T</code> 通常用于读取，内部可变性是需要另行理解的受控机制。</li><li><strong>独占可变借用：</strong>一个使用者在独占访问期间修改数据；Rust 使用 <code>&amp;mut T</code> 表达这种关系。</li></ul>
+<p>Rust 的典型规则是：在同一段有效借用期间，可以有多个共享引用，或者一个独占可变引用；不能同时存在相互冲突的两类有效借用。</p>
+<p>这里通用的设计思想是：<strong>修改共享数据时，必须明确其他访问路径是否还能够观察或修改它。</strong></p>
+<h3>3. Lifetime：资源或引用保持有效的范围</h3>
+<p>生命周期回答：<strong>在什么范围内，某种访问仍然合法？</strong>必须区分三个经常混淆的范围。</p>
+<div class="table-wrap"><table><thead><tr><th>范围</th><th>含义</th></tr></thead><tbody>
+<tr><td>变量作用域 · Scope</td><td>变量名称在源代码中的可见范围。</td></tr>
+<tr><td>借用有效期 · Borrow Lifetime</td><td>某条借用关系被允许用于访问的执行范围。</td></tr>
+<tr><td>资源有效期 · Resource Lifetime</td><td>底层资源保持可合法使用的范围，例如文件句柄从打开到关闭。</td></tr>
+</tbody></table></div>
+<pre><span class="lang">C#</span><code>var stream = new FileStream("data.txt", FileMode.Open);
+
+stream.Dispose();
+
+// stream 仍在作用域内，也仍然引用原来的托管对象。
+// 但流已经关闭，再执行正常读取会失败。</code></pre>
+<p>执行 <code>Dispose()</code> 后，再调用这个文件流的 <code>Read(...)</code>，通常会抛出 <code>ObjectDisposedException</code>。</p>
+<div class="callout"><p><strong>对象仍然存在，不代表它管理的资源仍然有效。</strong>GC 管理托管内存的回收；文件句柄等资源通常仍需要通过 Dispose 等机制及时释放。</p></div>
+<h3>4. Aliasing：多条访问路径指向同一份数据</h3>
+<pre><span class="lang">C#</span><code>class Player
+{
+    public int Health = 100;
+}
+
+Player a = new Player();
+Player b = a;
+
+b.Health = 50;
+Console.WriteLine(a.Health); // 50</code></pre>
+<p><code>a</code> 和 <code>b</code> 是两个不同的引用变量，但它们指向同一个 <code>Player</code> 实例。这就是别名。</p>
+<figure><svg viewBox="0 0 560 170" role="img" aria-label="变量 a 和变量 b 指向同一个 Player 实例">
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#46718d"/></marker></defs>
+<g font-family="system-ui, sans-serif" font-size="16" text-anchor="middle"><rect x="30" y="20" width="120" height="48" rx="9" fill="#e8efff" stroke="#285bd3"/><text x="90" y="50" fill="#285bd3">变量 a</text><rect x="30" y="105" width="120" height="48" rx="9" fill="#e3f5ef" stroke="#087f78"/><text x="90" y="135" fill="#087f78">变量 b</text><rect x="340" y="45" width="185" height="83" rx="10" fill="#edf2f7" stroke="#64748b"/><text x="432" y="78" fill="#334155">Player 实例</text><text x="432" y="106" font-size="14" fill="#64748b">Health = 50</text></g><path d="M150 44 Q245 44 335 74 M150 129 Q245 129 335 100" fill="none" stroke="#46718d" stroke-width="2" marker-end="url(#arrow)"/></svg><figcaption>复制引用产生多个访问路径，不会复制出多个对象。</figcaption></figure>
+<p>更广义地说，引用、指针或其他访问路径只要指向重叠的存储区域，就可能存在别名关系。</p>
+<pre><span class="lang">C#</span><code>var a = new List&lt;int&gt; { 1, 2, 3 };
+var b = a;
+
+b.Clear();
+Console.WriteLine(a.Count); // 0</code></pre>
+<p>别名本身并不是错误。真正需要关注的是：<strong>当多个别名可以访问同一份可变状态时，一个访问者的操作可能影响另一个访问者的行为与假设。</strong></p>
+</section>
+<section id="why">
+<h2><span class="num">02 / WHY</span>为什么需要同时研究这四个概念？</h2>
+<p>它们共同面对一个基础矛盾：我们希望资源能够共享，提高程序的灵活性；共享又使资源的修改与释放更难控制。</p>
+<h3>1. 使用者不一定是管理者</h3>
+<pre><span class="lang">C# · 示意</span><code>void ProcessData(Stream stream)
+{
+    // 读取数据；按借用契约，不关闭 stream。
+}
+
+void SaveData(Stream stream)
+{
+    // 写入数据；按借用契约，不关闭 stream。
+}
+
+using var stream = new MemoryStream();
+ProcessData(stream);
+SaveData(stream);</code></pre>
+<p>假如 <code>ProcessData()</code> 擅自在内部关闭了流，之后的 <code>SaveData()</code> 就无法正常使用它。</p>
+<p>问题不是变量是否还存在，而是<strong>使用者擅自承担了不属于它的释放责任</strong>。所有权建立管理责任；借用允许其他代码在不接管责任的情况下使用资源。</p>
+<h3>2. 资源不能在有效访问结束前失效</h3>
+<pre><span class="lang">Rust · 无法通过编译</span><code>let reference;
+
+{
+    let value = String::from("Hello");
+    reference = &amp;value;
+}
+
+println!("{}", reference);</code></pre>
+<p><code>value</code> 在内部作用域结束时被销毁，外部的 <code>reference</code> 还试图访问它。引用要求的有效期超出了数据的生命周期，Rust 的检查会拒绝这种关系，从而避免悬垂引用。</p>
+<p>对 C#，还需要多看一层：</p>
+<pre><span class="lang">C#</span><code>var stream = new MemoryStream();
+var alias = stream;
+
+stream.Dispose();
+alias.WriteByte(123); // 抛出 ObjectDisposedException</code></pre>
+<p>这里不是典型的内存悬垂：托管引用仍然指向对象。可是对象已经进入关闭状态，写入操作不再合法。</p>
+<div class="table-wrap"><table><thead><tr><th>有效性</th><th>需要回答的问题</th></tr></thead><tbody>
+<tr><td>内存有效性</td><td>访问是否仍指向合法存储？</td></tr><tr><td>资源有效性</td><td>底层文件、连接或缓冲区是否仍能按协议使用？</td></tr><tr><td>逻辑有效性</td><td>当前业务状态或当前租借关系是否允许这个操作？</td></tr>
+</tbody></table></div>
+<div class="callout"><p><strong>内存安全不等于资源使用正确，更不等于业务正确。</strong>GC 不会自动保证所有资源协议和业务生命周期正确。</p></div>
+<h3>3. 别名可能破坏彼此对状态的假设</h3>
+<pre><span class="lang">C#</span><code>void Process(List&lt;int&gt; input, List&lt;int&gt; output)
+{
+    int count = input.Count;
+    output.Clear();
+
+    Console.WriteLine(count);
+    Console.WriteLine(input.Count);
+}
+
+var list = new List&lt;int&gt; { 1, 2, 3 };
+Process(list, list);
+
+// 输出：
+// 3
+// 0</code></pre>
+<p><code>input</code> 和 <code>output</code> 指向同一个列表，因此清空输出也清空了输入。<strong>参数名称不同，不代表它们引用的对象不同。</strong></p>
+<p>这完全可以发生在单线程中。设计可变 API 时，必须决定是否允许输入输出重叠，以及发生重叠时如何保持预期行为。否则，函数很难仅凭自身代码进行局部推理。</p>
+<h3>4. 并发会放大别名问题</h3>
+<pre><span class="lang">C# · 示意</span><code>class Counter
+{
+    public int Value;
+}
+
+// 两个线程共享同一个 counter，并且都执行：
+counter.Value++;</code></pre>
+<p>这里的 <code>++</code> 不是保证原子的读—改—写操作。两个线程可能都读取 0，都计算出 1，最后都写回 1：期望增加两次，实际只增加了一次。</p>
+<ul><li><strong>Aliasing：</strong>多条路径指向相同或重叠的数据。</li><li><strong>Data Race：</strong>并发访问同一存储，至少一方写入，并且缺少必要同步。</li></ul>
+<p>别名不必然造成数据竞争。Rust 通过所有权、借用、<code>Send</code>、<code>Sync</code> 等机制限制安全代码中的数据竞争；这并不意味着它能排除所有种类的竞态条件。</p>
+</section>
+<section id="relationship">
+<h2><span class="num">03 / RELATIONSHIP</span>四个概念如何联系起来？</h2>
+<h3>1. Ownership × Borrowing：责任与权限分离</h3>
+<p>所有权回答“谁负责管理”，借用回答“谁被允许使用”。一个主体可以负责关闭文件，同时让多个其他主体按协议使用文件。</p>
+<div class="callout"><p><strong>使用权可以共享，而释放责任必须有清晰的归属和协调规则。</strong></p></div>
+<p>所有权也可以转移：</p>
+<pre><span class="lang">Rust</span><code>let a = String::from("Hello");
+let b = a; // 所有权移动到 b。
+
+println!("{}", b);
+// println!("{}", a); // 编译错误：a 的值已被移动。</code></pre>
+<p>对比 C#：</p>
+<pre><span class="lang">C#</span><code>var a = new Player();
+var b = a;
+
+// 复制的是引用；a 不会因此失效。</code></pre>
+<p>C# 的普通引用赋值不会自动转移编译器跟踪的独占所有权。所有权可以是语言规则，也可以是 API 规定的责任契约。</p>
+<h3>2. Borrowing × Lifetime：使用权限有时间边界</h3>
+<p>假设资源在区间 [t₀, t₃) 内有效，借用者在 [t₁, t₂) 内使用它，最基本的有效性要求是：</p>
+<div class="formula">[t₁, t₂) ⊆ [t₀, t₃)</div>
+<figure><svg viewBox="0 0 620 180" role="img" aria-label="借用有效期完全位于资源有效期内部">
+<g font-family="system-ui, sans-serif" font-size="15" fill="#334155"><text x="15" y="40">资源有效期</text><text x="15" y="109">借用有效期</text></g>
+<rect x="142" y="20" width="440" height="30" rx="5" fill="#d6f1e8" stroke="#087f78"/><rect x="252" y="89" width="220" height="30" rx="5" fill="#e1eaff" stroke="#285bd3"/>
+<g stroke="#9baabc" stroke-dasharray="4 5"><path d="M142 14V145 M252 14V145 M472 14V145 M582 14V145"/></g><g text-anchor="middle" font-family="system-ui, sans-serif" font-size="14" fill="#64748b"><text x="142" y="166">t₀</text><text x="252" y="166">t₁</text><text x="472" y="166">t₂</text><text x="582" y="166">t₃</text></g></svg><figcaption>借用的有效使用区间，必须包含在资源承诺有效的区间内。</figcaption></figure>
+<p>借用有效期不一定等于整个花括号作用域。Rust 可以分析引用实际需要保持有效的范围，不必机械地把所有借用维持到词法作用域结束。</p>
+<p class="note">Rust 的 <code>'a</code> 等生命周期标注描述引用之间的约束，不会延长对象寿命。</p>
+<h3>3. Aliasing × Borrowing：共享读取与独占修改</h3>
+<p>多个路径只读取同一份数据，并且没有其他路径修改它、读取也不产生隐式修改时，通常可以共同读取。若一个路径修改数据，其他路径仍依赖旧状态，就可能发生冲突。</p>
+<div class="table-wrap"><table><thead><tr><th>典型模式</th><th>有效访问关系</th></tr></thead><tbody><tr><td>共享借用 <code>&amp;T</code></td><td>可以有多个共享引用；不能同时存在冲突的独占可变访问。</td></tr><tr><td>独占可变借用 <code>&amp;mut T</code></td><td>在其独占访问期间，不允许相互冲突的其他有效访问。</td></tr></tbody></table></div>
+<p>这通常概括为：<strong>允许共享读取，或者允许独占修改。</strong>内部可变性等机制提供其他受控修改方式，并非允许任意的别名写入。</p>
+<p>C# 可以采用 <code>lock</code>、<code>Interlocked</code>、不可变数据、消息传递等方式协调访问。通用原则是：<strong>多个路径能访问数据时，必须明确修改与其他访问之间的协调规则。</strong></p>
+<h3>4. Ownership × Aliasing：引用数量不决定所有者数量</h3>
+<pre><span class="lang">C#</span><code>var a = new Player();
+var b = a;
+var c = a;</code></pre>
+<p>这里有三个引用变量，一个对象实例。并不意味着三个主体都应独立负责销毁它。</p>
+<div class="callout"><p><strong>引用数量、资源实例数量、所有权主体数量，是三个独立的概念。</strong></p></div>
+<pre><span class="lang">C# · 责任不清的设计</span><code>void FunctionA(Stream stream)
+{
+    stream.Dispose();
+}
+
+void FunctionB(Stream stream)
+{
+    stream.Dispose();
+}</code></pre>
+<p>如果两个函数都未经协调地认为自己拥有同一个流，就可能发生提前关闭、重复释放或后续访问失效。某些 <code>Dispose()</code> 实现能处理重复调用，但这不会消除提前释放对其他使用者的影响。</p>
+<p>因此，契约需要明确：谁负责释放，谁只是借用，以及何时转移责任。</p>
+</section>
+<section id="how">
+<h2><span class="num">04 / HOW</span>如何落实到 C# API 设计？</h2>
+<h3>1. 先定义所有权，再设计访问接口</h3>
+<p>下面的接口没有说明处理器是拥有流，还是只借用流：</p>
+<pre><span class="lang">C# · 契约不清晰</span><code>public class FileProcessor
+{
+    private Stream _stream;
+
+    public FileProcessor(Stream stream)
+    {
+        _stream = stream;
+    }
+}</code></pre>
+<p>调用者无法仅从这里判断，最终该由谁关闭流。一个责任明确的版本是：</p>
+<pre><span class="lang">C# · 拥有自己创建的流</span><code>public sealed class FileProcessor : IDisposable
+{
+    private readonly Stream _stream;
+
+    public FileProcessor(string path)
+    {
+        _stream = File.OpenRead(path);
+    }
+
+    public int ReadByte()
+    {
+        return _stream.ReadByte();
+    }
+
+    public void Dispose()
+    {
+        _stream.Dispose();
+    }
+}
+
+// 使用：
+using var processor = new FileProcessor("data.txt");
+int value = processor.ReadByte();</code></pre>
+<p>契约是：<code>FileProcessor</code> 创建并拥有文件流，也负责释放它。创建资源不是所有权的唯一来源；责任也可以通过明确协议从其他主体转移过来。</p>
+<h3>2. 借用接口不擅自释放资源</h3>
+<pre><span class="lang">C#</span><code>public static int ReadFirstByte(Stream borrowedStream)
+{
+    return borrowedStream.ReadByte();
+}
+
+// 使用：
+using var stream = File.OpenRead("data.txt");
+int value = ReadFirstByte(stream);
+
+// 调用结束后，stream 仍由调用者管理，还可以继续读取。</code></pre>
+<p>这个接口的借用契约是：调用者拥有流，函数只在调用期间使用，不保存它，也不关闭它。调用结束，函数的临时使用权限结束；资源不会因为函数返回而被释放。</p>
+<p>包装资源时，还要明确包装器是否负责底层资源。例如 <code>StreamReader</code> 的 <code>leaveOpen</code> 参数，可以表达释放读取器时是否保持底层流打开。</p>
+<h3>3. 明确是否允许借用逃逸</h3>
+<p>“逃逸”意味着原本临时使用的引用，被保存在比预期更长久的位置。</p>
+<pre><span class="lang">C# · 生命周期风险</span><code>public class Reader
+{
+    private Stream _stream;
+
+    public void SetStream(Stream stream)
+    {
+        _stream = stream;
+    }
+}
+
+// 使用：
+var reader = new Reader();
+
+using (var stream = File.OpenRead("data.txt"))
+{
+    reader.SetStream(stream);
+}
+
+// reader 仍保存引用，但流已经被 Dispose。</code></pre>
+<p>保存引用并不必然是错误。如果 <code>Reader</code> 是长期借用者，应当规定所有者在 Reader 使用期间保证流有效，并提供停止使用或解绑机制。如果 Reader 需要独立管理资源，则适合明确接管所有权，或者自己创建资源。</p>
+<div class="callout"><p><strong>引用可以保存多久，取决于被引用资源被承诺保持有效多久。</strong></p></div>
+<p>C# 在某些内存安全场景中也有编译期限制，例如 <code>ref</code>、<code>ref struct</code> 和 <code>Span&lt;T&gt;</code> 的引用安全规则：</p>
+<pre><span class="lang">C# · 无法通过编译</span><code>static Span&lt;int&gt; Invalid()
+{
+    Span&lt;int&gt; values = stackalloc int[3];
+    return values; // 不能返回指向本方法栈存储的 Span。
+}</code></pre>
+<p>离开函数后，栈存储不再有效，因此编译器禁止这种逃逸。这类保护不等于普通对象引用也具有完整的 Rust 借用检查机制。</p>
+<h3>4. 控制共享可变别名</h3>
+<pre><span class="lang">C# · 限制通过接口执行的修改</span><code>void DisplayItems(IReadOnlyList&lt;string&gt; items)
+{
+    foreach (var item in items)
+    {
+        Console.WriteLine(item);
+    }
+}</code></pre>
+<p><code>IReadOnlyList&lt;T&gt;</code> 限制通过这个接口直接修改集合的能力，但不保证底层集合不可变。其他别名仍可能修改它，集合元素也可能是可变对象。</p>
+<p>需要更强保证时，应按需求使用不可变数据、副本、锁、原子操作，或者由单一主体负责修改状态。</p>
+<div class="callout"><p><strong>“我不修改”不等于“没有人能修改”。</strong>只读接口不能单独保证独占访问或并发安全。</p></div>
+</section>
+<section id="rust">
+<h2><span class="num">05 / RUST</span>为什么 Rust 把这些规则整合进语言？</h2>
+<p>下面的代码可以通过编译：</p>
+<pre><span class="lang">Rust · 有效</span><code>fn main() {
+    let mut values = vec![10, 20];
+
+    let a = &amp;values;
+    let b = &amp;values;
+
+    println!("{:?}", a);
+    println!("{:?}", b);
+
+    // 上面的共享借用已经不再使用。
+    let c = &amp;mut values;
+    c.push(30);
+    println!("{:?}", c);
+}</code></pre>
+<p>开始时，<code>a</code>、<code>b</code> 共享读取；它们的最后使用结束后，<code>c</code> 才取得独占可变借用。不存在冲突的有效借用。</p>
+<p>调整一下顺序，就不能通过编译：</p>
+<pre><span class="lang">Rust · 借用冲突</span><code>fn main() {
+    let mut values = vec![10, 20];
+
+    let a = &amp;values;
+    let b = &amp;mut values;
+
+    b.push(30);
+    println!("{:?}", a);
+}</code></pre>
+<p><code>a</code> 的共享借用还要在最后一行使用，<code>b</code> 却在这段范围中试图获取并使用独占可变借用。编译器拒绝这个冲突。</p>
+<div class="table-wrap"><table><thead><tr><th>概念</th><th>在示例中的体现</th></tr></thead><tbody><tr><td>Ownership</td><td><code>values</code> 持有 Vec 值的所有权。</td></tr><tr><td>Borrowing</td><td>通过引用临时访问已有数据。</td></tr><tr><td>Lifetime</td><td>借用受实际需要保持有效的范围约束。</td></tr><tr><td>Aliasing</td><td>检查多个访问路径是否形成冲突的共享与独占访问。</td></tr></tbody></table></div>
+<p>四者共同工作，才能把“谁管理、谁访问、何时有效、是否冲突”串成一套规则。</p>
+</section>
+<section id="pool">
+<h2><span class="num">06 / OBJECT POOL</span>对象池为什么也需要这四个概念？</h2>
+<p>对象池把“实例仍然存在”与“当前使用者仍然有权使用”进一步拆开。</p>
+<pre><span class="lang">C# · 示意</span><code>var bullet = pool.Get();
+var alias = bullet;
+
+pool.Release(bullet);
+
+// 假设池又把同一个实例出租出去。
+var newBullet = pool.Get();
+
+alias.Damage = 999; // 旧引用可能修改了新一轮租借的对象。</code></pre>
+<p>如果 <code>newBullet</code> 与 <code>bullet</code> 是同一个实例，旧的 <code>alias</code> 仍然能直接访问它。它修改的已经是新一轮使用者正在使用的子弹。</p>
+<figure><svg viewBox="0 0 620 190" role="img" aria-label="对象一直存活，但先后经历租借 A、在池中和租借 B 三个阶段">
+<g font-family="system-ui, sans-serif" font-size="15" fill="#334155"><text x="20" y="24">对象实例存活</text><text x="20" y="100">逻辑使用权（Lease）</text></g>
+<rect x="20" y="37" width="580" height="26" rx="4" fill="#e4eaf0" stroke="#64748b"/>
+<rect x="20" y="113" width="205" height="34" rx="4" fill="#d8f3e8" stroke="#087f78"/><rect x="225" y="113" width="165" height="34" fill="#fff0d5" stroke="#bc8a45"/><rect x="390" y="113" width="210" height="34" rx="4" fill="#e2eaff" stroke="#285bd3"/>
+<g text-anchor="middle" font-family="system-ui, sans-serif" font-size="14" fill="#334155"><text x="123" y="135">Lease A</text><text x="307" y="135">在池中</text><text x="495" y="135">Lease B</text><text x="225" y="177">Release</text><text x="390" y="177">Get / Rent</text></g><g stroke="#94a3b8" stroke-dasharray="4 4"><path d="M225 30V155 M390 30V155"/></g></svg><figcaption>实例生命周期可以跨越多次租借，但每次租借的使用权都有独立终点。</figcaption></figure>
+<div class="table-wrap"><table><thead><tr><th>生命周期</th><th>含义</th></tr></thead><tbody><tr><td>对象的物理生命周期</td><td>实例仍然存活。</td></tr><tr><td>逻辑使用权的生命周期</td><td>本次租借从 Get / Rent 开始，在 Release / Return 时结束。</td></tr><tr><td>旧别名的存续范围</td><td>旧变量仍可能保存同一个实例的引用。</td></tr></tbody></table></div>
+<p><strong>回收后访问（Use-After-Return）</strong>正是因为这些范围没有自动保持一致。清理池化对象的内部状态，并不能自动清除外部保存的旧引用。</p>
+<p>可采用的设计手段包括：</p>
+<ul><li>限定明确的租借作用域，归还后立即停止使用。</li><li>使用 <code>Lease</code> 或租借令牌表示本轮使用权。</li><li>使用代数（Generation）或版本号识别过期句柄。</li><li>通过受控接口访问对象，减少可被无限期保存的原始引用。</li><li>明确释放、重新分配、异步回调及访问之间的规则。</li></ul>
+<p class="note">如果原始 C# 对象引用已经交给外部，仅增加一个令牌不会自动阻止旧引用访问对象。版本检查必须覆盖实际访问路径；原始引用上的直接赋值不会凭空经过检查。</p>
+<div class="callout"><p><strong>租借机制是否真正安全，取决于所有访问路径是否都受到约束。</strong></p></div>
+</section>
+<section id="model">
+<h2><span class="num">07 / CORRECTNESS</span>建立统一的正确性模型</h2>
+<p>设 R 为资源，O 为承担管理责任的主体，B 为某次借用，A(R) 为访问路径集合，Valid(R, t) 表示资源在时刻 t 允许被使用。</p>
+<h3>规则一：明确管理与释放协议</h3>
+<p>资源需要可定义的生命周期管理机制。不要求所有场景都存在唯一所有者：共享所有权、引用计数和 GC 都可以采用不同的管理方式。但必须能回答：</p>
+<p><strong>资源最终由什么机制、在什么条件下结束生命周期？</strong></p>
+<h3>规则二：每次访问都满足有效性条件</h3>
+<div class="formula">Access(B, R, t) ⇒ Valid(R, t)</div>
+<p>把它作为设计要求来理解：任何获准进行的访问，都必须发生在资源有效时。对于具有明确起止点的借用：</p>
+<div class="formula">Lifetime(B) ⊆ ValidInterval(R)</div>
+<p>有效性还可以包含本轮租借令牌有效、当前业务状态允许操作等条件；不能只判断对象是否仍在内存中。</p>
+<h3>规则三：存在别名时，修改受到协调</h3>
+<p>对指向重叠可变状态的路径，不能默认它们互不影响。发生冲突访问时，需要语言约束、同步、独占协议或不可变性等方式来控制。</p>
+<p>这不等于禁止别名，而是要求<strong>别名数量与操作权限，能够支持程序希望保证的正确性。</strong></p>
+<h3>规则四：所有权转移会改变责任归属</h3>
+<p>责任从 A 转移给 B 后，不能让双方仍未经协调地以独立所有者身份释放资源。C# 通常通过契约定义这种转移，Rust 对所有权移动提供更直接的语言约束。</p>
+</section>
+<section id="mistakes">
+<h2><span class="num">08 / COMMON MISTAKES</span>四个常见但错误的等式</h2>
+<div class="table-wrap"><table><thead><tr><th>错误理解</th><th>正确理解</th></tr></thead><tbody><tr><td>持有引用 = 拥有资源</td><td>引用描述可访问性，不自动决定管理与释放责任。</td></tr><tr><td>变量仍在作用域内 = 资源有效</td><td>资源可能已经关闭、Dispose、归还对象池或逻辑失效。</td></tr><tr><td>只读引用 = 底层数据永不变化</td><td>仍要考虑其他别名、元素可变性和内部可变性。</td></tr><tr><td>有 GC = 不必管理 Lifetime</td><td>GC 不替你保证外部资源与业务使用协议。</td></tr></tbody></table></div>
+<p>许多看似不同的问题，实际有相似根源：</p>
+<ul><li>文件提前关闭：释放责任与借用有效期没有协调。</li><li>共享集合被意外修改：可变别名破坏了对状态的假设。</li><li>对象归还后仍被使用：逻辑使用权结束，旧访问路径却仍存在。</li><li>并发修改丢失更新：共享可变状态缺少必要协调。</li></ul>
+</section>
+<section id="summary">
+<h2><span class="num">09 / DESIGN CHECK</span>形成一套资源访问的设计方法</h2>
+<div class="table-wrap"><table><thead><tr><th>思考顺序</th><th>设计任务</th></tr></thead><tbody><tr><td>Ownership</td><td>建立资源管理与释放责任。</td></tr><tr><td>Borrowing</td><td>在不必转移所有权时授予使用权限。</td></tr><tr><td>Lifetime</td><td>约束这些权限在何时有效。</td></tr><tr><td>Aliasing</td><td>检查多条访问路径是否冲突。</td></tr></tbody></table></div>
+<p>这是一种设计时的思考顺序，并不是说语言实现必须依次执行这四步。面对文件、连接、对象池、事件订阅或跨模块接口，都可以问：</p>
+<div class="questions"><ol><li>谁负责释放或结束这个资源？</li><li>谁可以访问它，有哪些操作权限？</li><li>这些访问最晚何时必须停止？</li><li>还有哪些路径能够修改或终止这个资源？</li></ol></div>
+<p><strong>共同目标：让资源的管理责任、访问权限、有效时间和共享关系保持一致。</strong></p>
+<h3>参考阅读</h3>
+<p class="small">以下保留原讲解所列的一手资料链接，便于进一步阅读。</p>
+<ul class="source-list">
+<li><a href="https://doc.rust-lang.org/book/ch04-01-what-is-ownership.html">The Rust Programming Language — What Is Ownership?</a></li>
+<li><a href="https://doc.rust-lang.org/book/ch04-02-references-and-borrowing.html">The Rust Programming Language — References and Borrowing</a></li>
+<li><a href="https://doc.rust-lang.org/book/ch10-03-lifetime-syntax.html">The Rust Programming Language — Validating References with Lifetimes</a></li>
+<li><a href="https://doc.rust-lang.org/nomicon/aliasing.html">The Rustonomicon — Aliasing</a></li>
+<li><a href="https://learn.microsoft.com/en-us/dotnet/csharp/write-safe-efficient-code">Microsoft Learn — Ref Safety and Span</a></li>
+<li><a href="https://learn.microsoft.com/en-us/dotnet/standard/design-guidelines/dispose-pattern">Microsoft Learn — Dispose Pattern</a></li>
+</ul>
+<p class="note"><strong>可以继续深入：</strong>Resource Lifetime 与 Logical Lifetime 的区别，以及 Lease 如何防止 Use-After-Return。这能把所有权与借用转化为可执行的 C# API 设计。</p>
+</section>
+</main>
+</div>
+<footer>所有权 · 借用 · 生命周期 · 别名　/　离线可读 · 响应式排版 · 打印友好</footer>
+</body>
+</html>
