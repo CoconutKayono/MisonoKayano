@@ -1,0 +1,1030 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Reactive Programming（响应式编程）What、Why、How 完整学习笔记，包含所有原文、C# 示例与交互演示。"><title>响应式编程 Reactive Programming · What / Why / How</title><style>
+:root{--paper:#fff;--bg:#f5f6f8;--ink:#252d38;--muted:#627080;--accent:#206a64;--line:#dfe5e9;--soft:#eef7f5;--mono:#f3f5f7;--body-size:18px;color-scheme:light}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:32px}body{margin:0;color:var(--ink);background:var(--bg);font-family:system-ui,-apple-system,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;font-size:var(--body-size);line-height:1.9;overflow-wrap:anywhere}
+a{color:var(--accent);text-underline-offset:4px}a:hover{text-decoration-thickness:2px}.layout{max-width:1360px;margin:auto;display:grid;grid-template-columns:260px minmax(0,1fr);gap:44px;padding:40px 30px 80px}aside{position:sticky;top:30px;align-self:start;max-height:calc(100vh - 60px);overflow:auto;padding:6px 0 16px}aside .label{font-size:12px;letter-spacing:.15em;color:var(--muted);margin:0 0 14px}nav a{display:block;text-decoration:none;font-size:14px;line-height:1.6;margin:0 0 5px;padding:9px 12px;border-left:2px solid var(--line)}nav a:hover{background:var(--soft);border-color:var(--accent)}.tools{display:flex;gap:8px;margin:22px 0}button{font:inherit;font-size:13px;border:1px solid var(--line);border-radius:7px;padding:7px 11px;background:var(--paper);color:var(--ink);cursor:pointer}button:hover{border-color:var(--accent)}.top-link{font-size:14px}main{min-width:0;background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:50px 60px;box-shadow:0 5px 28px #152c3b05}h1,h2,h3{line-height:1.5;color:#182c3b;text-wrap:pretty}h1{font-size:32px;margin:0 0 36px;font-weight:750;letter-spacing:-.02em}h2.chapter{font-size:27px;margin:58px 0 30px;padding-top:8px;border-left:4px solid var(--accent);padding-left:18px}h3{font-size:22px;margin:38px 0 18px}p{margin:16px 0}strong{font-weight:700}blockquote{margin:25px 0;padding:12px 23px;background:var(--soft);border-left:4px solid var(--accent);border-radius:0 7px 7px 0}blockquote p{margin:8px 0}ul,ol{padding-left:1.6em;margin:18px 0}li{padding-left:3px;margin:6px 0}hr{border:0;border-top:1px solid var(--line);margin:40px 0}code{font-family:"Cascadia Code",Consolas,"SFMono-Regular",monospace;font-size:.86em;background:var(--mono);padding:2px 5px;border-radius:4px;overflow-wrap:anywhere}pre{overflow-x:auto;white-space:pre;tab-size:4;background:#f1f4f7;border:1px solid #e0e6ec;border-radius:8px;padding:21px 23px;line-height:1.65;font-size:15px;overflow-wrap:normal;margin:24px 0}pre code{padding:0;border-radius:0;background:none;font-size:inherit;overflow-wrap:normal}.table-wrap{overflow-x:auto;margin:26px 0;border:1px solid var(--line);border-radius:8px}table{border-collapse:collapse;width:100%;font-size:15.5px;line-height:1.75;min-width:430px}th,td{text-align:left;vertical-align:top;padding:13px 15px;border-bottom:1px solid var(--line)}th{background:#edf3f3;color:#214c49;font-weight:700}tr:last-child td{border-bottom:0}tbody tr:nth-child(even){background:#fafbfc}.equation{font-family:"Cambria Math","Times New Roman","Microsoft YaHei",serif;text-align:center;font-size:21px;line-height:1.7;letter-spacing:.015em;padding:16px 18px;background:#f8fafb;border-radius:7px;margin:24px 0}.boxed{border:1px solid #b6d8d3;background:var(--soft);font-weight:600}.demo{padding:26px 30px;border:1px solid #b6d8d3;border-radius:12px;background:var(--soft);margin:30px 0}.demo h3{margin:0 0 22px}.demo label{display:flex;justify-content:space-between;gap:12px;font-weight:600;font-size:16px}.demo input{width:100%;accent-color:var(--accent);cursor:pointer}.demo output{font-variant-numeric:tabular-nums}.range-info{font-size:13px;color:var(--muted);margin:0 0 22px}.demo hr{margin:24px 0}.demo .percent{font-size:44px;color:var(--accent);font-weight:750;margin:0;line-height:1.5}.health-track{height:16px;background:#d8e3e2;border-radius:12px;overflow:hidden;margin:16px 0}#health-fill{height:100%;width:50%;background:var(--accent);border-radius:12px}.footer{font-size:13px;color:var(--muted);border-top:1px solid var(--line);margin-top:40px;padding-top:20px}
+@media(min-width:1100px){main{max-width:980px}}@media(max-width:1000px){.layout{grid-template-columns:210px minmax(0,1fr);gap:24px;padding:24px 20px}main{padding:35px 32px}h1{font-size:28px}h2.chapter{font-size:25px}}@media(max-width:760px){body{font-size:17px}.layout{display:block;padding:16px 12px 40px}aside{position:static;max-height:none;padding:12px 8px 20px}nav{display:grid;grid-template-columns:1fr 1fr;gap:4px}nav a{font-size:12px;margin:0}.tools{margin:14px 0}.top-link{display:none}main{padding:30px 22px;border-radius:9px}h1{font-size:26px}h2.chapter{font-size:23px;margin-top:44px}h3{font-size:20px}pre{font-size:13px;padding:17px}table{font-size:14px}.equation{font-size:18px}.demo{padding:22px 18px}}@media print{body{background:white;font-size:11pt}.layout{display:block;padding:0;max-width:none}aside{display:none}main{border:0;box-shadow:none;padding:0;max-width:none!important}h1{font-size:24pt}h2.chapter{font-size:18pt;break-after:avoid}h3{font-size:14pt;break-after:avoid}pre{white-space:pre-wrap;overflow-wrap:anywhere;break-inside:avoid;font-size:9pt}.table-wrap{overflow:visible}table{min-width:0;font-size:9pt}tr{break-inside:avoid}.equation{break-inside:avoid;font-size:12pt}.demo input{display:none}a{color:inherit}hr{margin:20px 0}}
+</style></head><body><div class="layout"><aside aria-label="阅读目录"><p class="label">REACTIVE PROGRAMMING · 阅读目录</p><nav><a href="#chapter-1">一、What：什么是响应式编程？</a><a href="#chapter-2">二、Why：为什么需要响应式编程？</a><a href="#chapter-3">三、How：响应式编程是如何工作的？</a><a href="#chapter-4">四、深入本质：响应式编程与事件驱动到底有什么区别？</a><a href="#chapter-5">五、响应式编程与缓存、依赖追踪、增量计算的关系</a><a href="#chapter-6">六、更深一步：响应式编程的正确性问题</a><a href="#chapter-7">七、实际工程中如何设计响应式架构？</a><a href="#chapter-8">八、最后总结：用五个问题真正掌握响应式编程</a></nav><div class="tools"><button id="font" type="button">调整字号</button><button id="print" type="button">打印 / PDF</button></div><a class="top-link" href="#top">返回文首 ↑</a></aside><main><article><h1 id="top">Reactive Programming（响应式编程）：What、Why、How，直击本质</h1>
+<p>响应式编程（Reactive Programming）是一种重要的编程范式。它与我们之前讨论的<strong>事件系统、观察者模式、缓存、依赖追踪、增量计算、状态转移</strong>有非常紧密的联系。</p>
+<p>理解响应式编程，最重要的不是先学习 <code>Observable</code>、<code>Subscribe</code> 或者各种响应式框架，而是理解一个根本问题：</p>
+<blockquote>
+<p><strong>当系统中的一个状态发生变化时，所有依赖这个状态的结果，应该如何保持正确？</strong></p>
+</blockquote>
+<p>响应式编程提供了一种答案：</p>
+<p><strong>不再要求使用者主动寻找变化、重新获取结果，而是声明依赖关系，让变化沿着依赖关系传播。</strong></p>
+<hr>
+<h2 class="chapter" id="chapter-1">一、What：什么是响应式编程？</h2>
+<h3 id="section-1-1">1.1 从最简单的问题开始</h3>
+<p>假设我们正在开发游戏。</p>
+<p>玩家拥有三个属性：</p>
+<pre><code class="language-csharp">int health = 80;
+int maxHealth = 100;
+
+float healthPercent = (float)health / maxHealth;
+</code></pre>
+<p>这里存在一个数学关系：</p>
+<div class="equation">P = H / M</div>
+
+<p>其中：</p>
+<ul>
+<li>H：当前生命值。</li>
+<li>M：最大生命值。</li>
+<li>P：生命值百分比。</li>
+</ul>
+<p>假设玩家受伤，生命值从 <code>80</code> 变成 <code>50</code>。</p>
+<pre><code class="language-csharp">health = 50;
+</code></pre>
+<p>请思考：</p>
+<p><strong><code>healthPercent</code> 会自动变成 0.5 吗？</strong></p>
+<p>不会。</p>
+<p>因为 <code>healthPercent</code> 是之前计算得到的一个数值，而不是与 <code>health</code> 自动保持联系的数学公式。</p>
+<p>我们必须重新计算：</p>
+<pre><code class="language-csharp">healthPercent = (float)health / maxHealth;
+</code></pre>
+<p>如果游戏还需要更新：</p>
+<ul>
+<li>生命值文字。</li>
+<li>生命条长度。</li>
+<li>低生命值警告。</li>
+<li>屏幕红色闪烁效果。</li>
+</ul>
+<p>那么还需要手动触发所有对应逻辑。</p>
+<p>问题逐渐出现：</p>
+<p><strong>为什么修改一个状态，还需要手动维护所有依赖它的结果？</strong></p>
+<p>这就是响应式编程试图解决的问题。</p>
+<h3 id="section-1-2">1.2 命令式与响应式的区别</h3>
+<p>传统命令式编程（Imperative Programming）侧重描述：</p>
+<blockquote>
+<p>状态变化之后，我应该执行哪些操作？</p>
+</blockquote>
+<p>例如：</p>
+<pre><code class="language-csharp">void TakeDamage(int damage)
+{
+    health -= damage;
+
+    healthPercent = (float)health / maxHealth;
+
+    healthText.text = health.ToString();
+    healthBar.fillAmount = healthPercent;
+
+    warning.SetActive(healthPercent &lt; 0.3f);
+}
+</code></pre>
+<p>在这段代码中，<code>TakeDamage()</code> 不仅负责修改生命值，还负责通知或更新多个依赖结果。</p>
+<p>响应式编程则倾向于声明：</p>
+<blockquote>
+<p>哪些结果依赖哪些状态？当依赖的状态发生变化时，应该如何更新结果？</p>
+</blockquote>
+<p>命令式：显式安排后续更新</p>
+<hr>
+<p>响应式：事先建立依赖，变化自动传播</p>
+<p>示意图：响应式系统预先知道依赖关系。状态变化时，不必让修改状态的代码逐个寻找下游使用者。</p>
+<p>注意，响应式编程并不是不再执行更新操作。</p>
+<p><strong>计算仍然需要执行，只是更新责任从业务调用者转移到了依赖传播机制。</strong></p>
+<h3 id="section-1-3">1.3 响应式编程的本质定义</h3>
+<p>我建议使用下面这个定义来建立认知：</p>
+<blockquote>
+<p>响应式编程是一种围绕随时间变化的数据、变化通知及其依赖关系组织程序的编程范式，使系统能够在上游数据变化时，自动传播变化并更新下游结果。</p>
+</blockquote>
+<p>可以抽象为：</p>
+<div class="equation">Y = f(X)</div>
+
+<p>传统计算：</p>
+<div class="equation">Y₀ = f(X₀)</div>
+
+<p>这只保证计算那一刻的结果正确。</p>
+<p>如果 X 变化，必须再次调用 <code>f</code> 才能得到新的 Y。</p>
+<p>响应式编程希望建立持续有效的依赖关系：</p>
+<div class="equation">X ⟶ f ⟶ Y</div>
+
+<p>当 X 发生变化：</p>
+<div class="equation">X₀ → X₁</div>
+
+<p>系统根据预先建立的关系执行：</p>
+<div class="equation">Y₁ = f(X₁)</div>
+
+<p>因此可以把响应式计算理解为：</p>
+<p><strong>计算关系 + 变化感知 + 依赖传播 + 结果更新。</strong></p>
+<p>但要强调：响应式机制并不保证一定是最小计算量。它可能重新执行整个计算，也可能采用更细粒度的增量计算。</p>
+<h3 id="section-1-4">1.4 响应式编程的四个核心元素</h3>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>核心元素</th>
+<th>作用</th>
+<th>例子</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Source（数据源）</td>
+<td>提供变化中的数据</td>
+<td>玩家生命值</td>
+</tr>
+<tr>
+<td>Dependency（依赖关系）</td>
+<td>描述谁依赖谁</td>
+<td>生命值百分比依赖生命值</td>
+</tr>
+<tr>
+<td>Propagation（变化传播）</td>
+<td>将变化传递到相关节点</td>
+<td>生命值变化通知生命条</td>
+</tr>
+<tr>
+<td>Reaction（响应）</td>
+<td>计算新结果或产生效果</td>
+<td>调整生命条显示</td>
+</tr>
+</tbody></table>
+</div><p>实际上，还需要考虑一项横切规则：<strong>订阅生命周期</strong>，即谁有权持续接收变化，以及何时停止接收。</p>
+<hr>
+<h2 class="chapter" id="chapter-2">二、Why：为什么需要响应式编程？</h2>
+<h3 id="section-2-1">2.1 根本原因：状态依赖会形成网络</h3>
+<p>假设游戏中拥有以下数据：</p>
+<pre><code class="language-text">玩家生命值
+玩家最大生命值
+玩家金币
+玩家等级
+玩家经验
+玩家装备
+</code></pre>
+<p>每个数据都可能影响多个结果。</p>
+<p>例如：</p>
+<pre><code class="language-text">金币
+ ├── 金币文字
+ ├── 商品是否可购买
+ ├── 商店按钮状态
+ └── 任务完成状态
+
+生命值
+ ├── 生命条
+ ├── 生命值百分比
+ │    ├── 低血量警告
+ │    └── 屏幕视觉效果
+ └── 是否死亡
+</code></pre>
+<p>这里已经不再只是简单的方法调用关系，而是形成了<strong>数据依赖图（Dependency Graph）</strong>。</p>
+<p>如果所有变化都靠手动更新，我们必须在每一个可能修改数据的入口处，记住所有相关依赖。</p>
+<p>例如生命值可能被这些行为修改：</p>
+<ul>
+<li>敌人攻击。</li>
+<li>使用药水。</li>
+<li>持续恢复效果。</li>
+<li>装备属性调整。</li>
+<li>关卡特殊规则。</li>
+</ul>
+<p>如果每个入口都需要同步维护生命条和其他衍生结果，就非常容易遗漏。</p>
+<p>因此，真正的问题是：</p>
+<blockquote>
+<p><strong>当同一个状态存在多个修改入口和多个依赖使用者时，如何避免各个修改入口重复承担依赖维护责任？</strong></p>
+</blockquote>
+<p>响应式编程的解决方式是将两者解耦：</p>
+<p>状态所有者只负责维护正确状态及其变化通知；依赖者自己声明对这个状态的关注。</p>
+<h3 id="section-2-2">2.2 轮询并不是总能解决问题</h3>
+<p>另一种方式是在 Unity 的 <code>Update()</code> 中不断检查：</p>
+<pre><code class="language-csharp">void Update()
+{
+    healthBar.fillAmount =
+        (float)player.Health / player.MaxHealth;
+}
+</code></pre>
+<p>这属于拉取式（Pull）检查。</p>
+<p>无论玩家生命值是否发生变化，都会执行。</p>
+<p>响应式编程常见的模式是由上游主动推送变化（Push）：</p>
+<pre><code class="language-csharp">player.HealthChanged += UpdateHealthBar;
+</code></pre>
+<p>只有生命值变化时才触发对应处理逻辑。</p>
+<p>两者区别：</p>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>维度</th>
+<th>轮询 Pull</th>
+<th>变化通知 Push</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>触发方式</td>
+<td>使用者主动查询</td>
+<td>数据源主动通知</td>
+</tr>
+<tr>
+<td>无变化时</td>
+<td>可能仍持续检查</td>
+<td>通常无须通知</td>
+</tr>
+<tr>
+<td>时效性</td>
+<td>取决于轮询频率</td>
+<td>取决于通知与调度机制</td>
+</tr>
+<tr>
+<td>依赖管理</td>
+<td>使用者自行管理</td>
+<td>可以通过订阅关系管理</td>
+</tr>
+<tr>
+<td>复杂度</td>
+<td>简单直接</td>
+<td>需要处理订阅和传播</td>
+</tr>
+</tbody></table>
+</div><p>但不能得出“响应式永远比轮询快”的结论。</p>
+<p>例如，角色位置每帧都变化，订阅、分配对象、调度和复杂事件处理可能比直接在 <code>Update()</code> 中计算更昂贵。</p>
+<p><strong>响应式首先是依赖关系的组织方式，而不是性能优化的保证。</strong></p>
+<h3 id="section-2-3">2.3 响应式将两种变化分离</h3>
+<p>这里有个很重要的设计思想：</p>
+<p><strong>事实发生变化，与如何呈现或使用这个事实，是两种不同的责任。</strong></p>
+<p>例如：</p>
+<pre><code class="language-text">领域层
+    玩家生命值从 80 变成 50
+
+表现层
+    更新生命条
+
+表现层
+    更新文本
+
+表现层
+    显示受伤效果
+</code></pre>
+<p>生命值是游戏事实。</p>
+<p>生命条只是这个事实的一种表现形式。</p>
+<p>假如以后换一个 UI 设计，游戏中生命值的修改逻辑不应该跟着改变。</p>
+<p>这正是响应式编程在 UI、游戏状态呈现和实时数据系统中特别有价值的原因。</p>
+<hr>
+<h2 class="chapter" id="chapter-3">三、How：响应式编程是如何工作的？</h2>
+<h3 id="section-3-1">3.1 第一步：让普通状态具有可观察性</h3>
+<p>假设我们原本拥有一个普通变量：</p>
+<pre><code class="language-csharp">private int health = 100;
+</code></pre>
+<p>外部无法直接知道它什么时候变化。</p>
+<p>我们可以封装状态，并在状态真正变化后发出通知：</p>
+<pre><code class="language-csharp">using System;
+
+public sealed class HealthModel
+{
+    private int _health;
+
+    public int Health =&gt; _health;
+    public int MaxHealth { get; }
+
+    public event Action&lt;int&gt; HealthChanged;
+
+    public HealthModel(int maxHealth)
+    {
+        if (maxHealth &lt;= 0)
+            throw new ArgumentOutOfRangeException(nameof(maxHealth));
+
+        MaxHealth = maxHealth;
+        _health = maxHealth;
+    }
+
+    public void TakeDamage(int damage)
+    {
+        if (damage &lt; 0)
+            throw new ArgumentOutOfRangeException(nameof(damage));
+
+        int next = Math.Max(0, _health - damage);
+
+        if (next == _health)
+            return;
+
+        // 先修改真实状态
+        _health = next;
+
+        // 再发布状态变化
+        HealthChanged?.Invoke(_health);
+    }
+}
+</code></pre>
+<p>这里发生了什么？</p>
+<p>首先：</p>
+<pre><code class="language-csharp">_health = next;
+</code></pre>
+<p>改变系统中的真实状态。</p>
+<p>然后：</p>
+<pre><code class="language-csharp">HealthChanged?.Invoke(_health);
+</code></pre>
+<p>通知依赖这个状态的其他部分。</p>
+<p>注意先后顺序：</p>
+<div class="equation">状态转移 → 状态提交 → 变化通知</div>
+
+<p>如果反过来，订阅者收到通知后，再去读取 <code>Health</code>，可能得到旧值。</p>
+<p>因此：</p>
+<p><strong>状态变化通知通常应该描述已经发生的事实，而不是将要发生的事实。</strong></p>
+<p>当然，<code>Changing</code> 类型的事件可以有不同的语义，但必须在接口契约中明确区分。</p>
+<h3 id="section-3-2">3.2 第二步：建立依赖关系</h3>
+<p>例如 Unity 中的生命条：</p>
+<pre><code class="language-csharp">using UnityEngine;
+using UnityEngine.UI;
+
+public sealed class HealthPresenter : MonoBehaviour
+{
+    [SerializeField] private Image healthBar;
+
+    private HealthModel _model;
+
+    public void Bind(HealthModel model)
+    {
+        Unbind();
+
+        _model = model;
+
+        _model.HealthChanged += UpdateBar;
+
+        // 初始化显示
+        UpdateBar(_model.Health);
+    }
+
+    public void Unbind()
+    {
+        if (_model == null)
+            return;
+
+        _model.HealthChanged -= UpdateBar;
+        _model = null;
+    }
+
+    private void UpdateBar(int health)
+    {
+        healthBar.fillAmount =
+            (float)health / _model.MaxHealth;
+    }
+
+    private void OnDestroy()
+    {
+        Unbind();
+    }
+}
+</code></pre>
+<p>这个例子使用普通 C# 事件，不依赖第三方响应式框架，并假定绑定、状态修改和 UI 更新都在 Unity 主线程执行。</p>
+<p>它已经具备最基本的响应式特征：</p>
+<ul>
+<li>数据源主动发出变化通知。</li>
+<li>使用者提前建立订阅关系。</li>
+<li>状态变化时触发下游响应。</li>
+<li>使用者不需要在每个伤害入口手动更新 UI。</li>
+</ul>
+<p>这里尤其值得思考：</p>
+<p><strong>我们真的使用了“响应式编程”吗？还是仅仅使用了观察者模式？</strong></p>
+<p>准确地说，这是一个使用观察者模式实现的简单响应式更新机制。</p>
+<p>它还没有体现复杂响应式系统非常重要的能力：<strong>组合和变换持续变化的数据。</strong></p>
+<p>接下来进入更核心的部分。</p>
+<h3 id="section-3-3">3.3 第三步：将变化理解为数据流</h3>
+<p>假设玩家生命值按下面的顺序变化：</p>
+<p>生命值随时间变化</p>
+<p>数据不再只是某一时刻的值，而是一系列按时间出现的值或变化。</p>
+<p>普通变量关注：</p>
+<div class="equation">H(t₀) = 100</div>
+
+<p>响应式系统进一步关注：</p>
+<div class="equation">H(t₀), H(t₁), H(t₂), H(t₃), …</div>
+
+<p>可以将这些变化建模为一个序列：</p>
+<pre><code class="language-text">HealthStream:
+
+100 ─── 80 ─── 50 ─── 65 ─── ...
+</code></pre>
+<p>我们可以对整个序列声明计算规则：</p>
+<pre><code class="language-text">HealthStream
+      ↓
+除以 MaxHealth
+      ↓
+HealthPercentStream
+</code></pre>
+<p>于是得到：</p>
+<pre><code class="language-text">HealthStream:         100 ── 80 ── 50 ── 65
+
+HealthPercentStream:  1.0 ─ 0.8 ─ 0.5 ─ 0.65
+</code></pre>
+<p><strong>关键变化是：计算函数不再只作用于单个值，而是被应用到未来持续到来的值。</strong></p>
+<p>例如：</p>
+<div class="equation">f(x) = x / 100</div>
+
+<p>普通程序：</p>
+<pre><code class="language-csharp">float result = f(80);
+</code></pre>
+<p>响应式流：</p>
+<pre><code class="language-text">对未来的每一个 Health 值应用 f
+</code></pre>
+<p>这就引出了响应式编程中的核心操作：流变换（Stream Transformation）。</p>
+<h3 id="section-3-4">3.4 Observable、Observer、Subscription 究竟是什么？</h3>
+<p>以 Reactive Extensions（Rx）为例，有三个基础概念。</p>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>概念</th>
+<th>本质</th>
+<th>责任</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Observable</td>
+<td>可被订阅的值或通知序列</td>
+<td>提供数据</td>
+</tr>
+<tr>
+<td>Observer</td>
+<td>序列的消费者</td>
+<td>接收和处理通知</td>
+</tr>
+<tr>
+<td>Subscription</td>
+<td>订阅关系及其控制句柄</td>
+<td>管理订阅生命周期</td>
+</tr>
+</tbody></table>
+</div><p>在 .NET 中，可以使用：</p>
+<pre><code class="language-csharp">IObservable&lt;T&gt;
+IObserver&lt;T&gt;
+IDisposable
+</code></pre>
+<p>其中 <code>IObserver&lt;T&gt;</code> 有三个标准通知方法：</p>
+<pre><code class="language-csharp">void OnNext(T value);
+void OnError(Exception error);
+void OnCompleted();
+</code></pre>
+<p>它们分别代表：</p>
+<ul>
+<li><code>OnNext</code>：出现一个新值。</li>
+<li><code>OnError</code>：流发生终止性错误。</li>
+<li><code>OnCompleted</code>：流正常结束。</li>
+</ul>
+<p>在典型 Rx 流契约中，一旦收到 <code>OnError</code> 或 <code>OnCompleted</code>，就不应再收到后续数据。<code>Subscribe()</code> 返回的 <code>IDisposable</code> 则允许提前取消订阅。<a href="https://learn.microsoft.com/en-us/dotnet/standard/events/observer-design-pattern">Microsoft — Observer Design Pattern</a>、<a href="https://reactivex.io/documentation/observable.html">ReactiveX — Observable</a></p>
+<p>请注意：<strong><code>Observable</code> 不等于一个普通变量，也不等于一定包含当前值。</strong></p>
+<p>Observable 描述的是一种通知序列。它可能表示当前状态的连续更新，也可能仅表示瞬时事件，甚至可能是一项异步计算的结果。</p>
+<h3 id="section-3-5">3.5 第四步：使用操作符建立计算关系</h3>
+<p>下面使用 Rx.NET 风格的 C# 代码。</p>
+<p>此示例需要项目已经安装并引用 <code>System.Reactive</code>，不是直接依靠 Unity 原生 API。</p>
+<p>假设：</p>
+<pre><code class="language-csharp">IObservable&lt;int&gt; healthStream;
+</code></pre>
+<p>我们需要监听低生命值状态：</p>
+<pre><code class="language-csharp">IDisposable subscription = healthStream
+    .Select(health =&gt; health / 100f)
+    .Select(percent =&gt; percent &lt; 0.3f)
+    .DistinctUntilChanged()
+    .Subscribe(isLowHealth =&gt;
+    {
+        warning.SetActive(isLowHealth);
+    });
+</code></pre>
+<p>这段代码可以拆成四层。</p>
+<p>这里最关键的是：</p>
+<p><strong>我们没有编写一个手动遍历所有下游依赖的更新函数，而是在订阅时构造了一条数据处理管道。</strong></p>
+<p>一旦订阅关系建立，后续数据就会沿着管道传播。</p>
+<p>常用操作符还有：</p>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>操作符</th>
+<th>本质</th>
+<th>典型用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>Select</code></td>
+<td>将每个值映射为另一个值</td>
+<td>生命值转换为百分比</td>
+</tr>
+<tr>
+<td><code>Where</code></td>
+<td>只允许符合条件的值通过</td>
+<td>筛选特定道具事件</td>
+</tr>
+<tr>
+<td><code>DistinctUntilChanged</code></td>
+<td>忽略连续重复的结果</td>
+<td>UI 状态去重</td>
+</tr>
+<tr>
+<td><code>CombineLatest</code></td>
+<td>合并多个输入的最新值</td>
+<td>组合生命值与最大生命值</td>
+</tr>
+<tr>
+<td><code>Merge</code></td>
+<td>合并多个事件流</td>
+<td>合并多个伤害来源</td>
+</tr>
+<tr>
+<td><code>Throttle</code> / <code>Debounce</code></td>
+<td>根据时间抑制频繁变化</td>
+<td>输入停止一段时间后搜索</td>
+</tr>
+<tr>
+<td><code>Switch</code></td>
+<td>只跟踪最新的内部流</td>
+<td>搜索时放弃旧请求结果</td>
+</tr>
+</tbody></table>
+</div><p>操作符命名与细节因库而异。例如 Rx.NET 的 <code>Throttle</code> 通常表现为防抖，而其他库对 <code>throttle</code> 的定义可能是限流，不能只凭名字判断行为。</p>
+<h3 id="section-3-6">3.6 第五步：多个依赖如何组合？</h3>
+<p>这是真正体现响应式编程价值的地方。</p>
+<p>生命值百分比依赖两个状态：</p>
+<div class="equation">P = H / M</div>
+
+<p>如果只监听 <code>Health</code>，却忽略 <code>MaxHealth</code>，就存在缺陷。</p>
+<p>假设：</p>
+<pre><code class="language-text">Health = 50
+MaxHealth = 100
+Percent = 0.5
+</code></pre>
+<p>玩家装备一个道具：</p>
+<pre><code class="language-text">Health = 50
+MaxHealth = 200
+</code></pre>
+<p>此时正确的 <code>Percent</code> 应该是：</p>
+<div class="equation">P = 50 / 200 = 0.25</div>
+
+<p>即使当前生命值没有变化，也需要重新计算。</p>
+<p>所以：</p>
+<p><strong>依赖关系必须覆盖决定结果的所有可变输入。</strong></p>
+<p>在 Rx.NET 中，可以通过 <code>CombineLatest</code> 实现：</p>
+<pre><code class="language-csharp">var healthPercentStream =
+    healthStream.CombineLatest(
+        maxHealthStream,
+        (health, maxHealth) =&gt;
+            maxHealth &gt; 0
+                ? (float)health / maxHealth
+                : 0f
+    );
+</code></pre>
+<p><code>CombineLatest</code> 在每个输入都至少产生过一个值之后，会在任意输入产生新值时，使用各个输入的最新值重新计算。<a href="https://reactivex.io/documentation/operators/combinelatest.html">ReactiveX — CombineLatest</a></p>
+<section class="demo" aria-label="交互示例：改变任意一个依赖">
+<h3>交互示例：改变任意一个依赖</h3>
+<label for="health">当前生命值 Health <output id="health-value" for="health">50</output></label>
+<input id="health" type="range" min="0" max="200" step="5" value="50">
+<p class="range-info">范围：0 至 200 · 步长：5</p>
+<label for="max-health">最大生命值 MaxHealth <output id="max-value" for="max-health">100</output></label>
+<input id="max-health" type="range" min="20" max="200" step="20" value="100">
+<p class="range-info">范围：20 至 200 · 步长：20</p>
+<hr>
+<p>派生状态：HealthPercent</p>
+<p class="percent" id="percent" aria-live="polite">50%</p>
+<div class="health-track" role="progressbar" aria-label="生命值百分比" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50"><div id="health-fill"></div></div>
+<p><code>min(Health / MaxHealth, 1)</code></p>
+<p>改变任意一个滑块，派生值和生命条会随之更新。演示中生命值允许超过最大生命值，显示比例截断为 100%。</p>
+<noscript><p>启用 JavaScript 后可操作滑块；当前静态示例为 50 / 100 = 50%。</p></noscript>
+</section>
+
+<p>至此，响应式编程最重要的机制已经建立：</p>
+<div class="equation boxed">数据源变化 → 依赖计算 → 结果传播</div>
+
+<p>但实际工程远比这个公式复杂，因为我们还要面对生命周期、时序、错误、线程和一致性问题。</p>
+<hr>
+<h2 class="chapter" id="chapter-4">四、深入本质：响应式编程与事件驱动到底有什么区别？</h2>
+<p>这是非常容易混淆的问题。</p>
+<h3 id="section-4-1">4.1 事件驱动关注“发生了什么”</h3>
+<p>例如：</p>
+<pre><code class="language-csharp">public event Action&lt;int&gt; OnDamageTaken;
+</code></pre>
+<p>当角色受到伤害：</p>
+<pre><code class="language-csharp">OnDamageTaken?.Invoke(20);
+</code></pre>
+<p>事件表示：</p>
+<blockquote>
+<p>有一件事情发生了：角色受到了 20 点伤害。</p>
+</blockquote>
+<p>它关注的是发生过的事实。</p>
+<p>但是，单凭这条事件，我们不能直接确定角色当前还有多少生命值。</p>
+<h3 id="section-4-2">4.2 响应式状态关注“当前是什么”</h3>
+<p>例如：</p>
+<pre><code class="language-csharp">Health = 80;
+</code></pre>
+<p>这表示一个持续有效的状态。</p>
+<p>可以将它理解为：</p>
+<pre><code class="language-text">事件：玩家受到了 20 点伤害。
+
+状态：玩家现在还剩 80 点生命值。
+</code></pre>
+<p>两者具有不同的时间语义。</p>
+<p>事件往往是瞬时的，错过了可能就没有了。</p>
+<p>状态是持续存在的，新的观察者通常需要在订阅时获取当前状态。</p>
+<p>因此，构建响应式系统时，最好区分：</p>
+<ul>
+<li><strong>Event Stream（事件流）</strong>：描述发生了什么。</li>
+<li><strong>State Stream（状态流）</strong>：描述状态如何随时间变化。</li>
+</ul>
+<p>例如 Rx 中，普通 <code>Subject&lt;T&gt;</code> 通常不会向新订阅者重放历史值，而 <code>BehaviorSubject&lt;T&gt;</code> 可以保存并向新订阅者提供最近的值。</p>
+<p>这也解释了为什么之前的代码在绑定 UI 时还需要：</p>
+<pre><code class="language-csharp">_model.HealthChanged += UpdateBar;
+UpdateBar(_model.Health);
+</code></pre>
+<p>第一次负责接收未来变化。</p>
+<p>第二次负责获取当前快照。</p>
+<p>如果没有第二次初始化，UI 可能一直显示默认内容，直到生命值第一次发生变化。</p>
+<h3 id="section-4-3">4.3 事件系统与响应式编程的关系</h3>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>对比</th>
+<th>事件驱动</th>
+<th>响应式编程</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>主要关注</td>
+<td>事件的发生与处理</td>
+<td>变化的数据及其关系</td>
+</tr>
+<tr>
+<td>核心抽象</td>
+<td>事件、监听器、处理器</td>
+<td>可观察状态、流、依赖与变换</td>
+</tr>
+<tr>
+<td>组合能力</td>
+<td>通常需要手动编排</td>
+<td>通常拥有丰富的组合操作</td>
+</tr>
+<tr>
+<td>时间处理</td>
+<td>由开发者自行实现</td>
+<td>可以通过时间操作符表达</td>
+</tr>
+<tr>
+<td>典型应用</td>
+<td>领域事件、输入、系统通知</td>
+<td>UI 绑定、实时查询、状态派生</td>
+</tr>
+</tbody></table>
+</div><p>这里没有严格的互斥关系。</p>
+<p><strong>事件是响应式系统的一种输入来源，观察者模式则是很多响应式实现所使用的基础机制。</strong></p>
+<p>响应式编程也不是完全等同于 Reactive Extensions。</p>
+<p>从更广泛的技术分类来看，常见的响应式模型还包括响应式 UI、Signals、基于依赖图的自动计算，以及更严格的函数式响应式编程（FRP）。</p>
+<p>这些模型共享变化传播思想，但并不具备完全相同的语义或实现方式。</p>
+<hr>
+<h2 class="chapter" id="chapter-5">五、响应式编程与缓存、依赖追踪、增量计算的关系</h2>
+<p>这一部分非常关键，因为它能够将几个概念联系起来。</p>
+<h3 id="section-5-1">5.1 它们解决的是同一个大问题的不同方面</h3>
+<p>考虑：</p>
+<div class="equation">C = f(A, B)</div>
+
+<p>我们已经计算出：</p>
+<pre><code class="language-text">A = 10
+B = 20
+C = 30
+</code></pre>
+<p>然后：</p>
+<pre><code class="language-text">A = 15
+</code></pre>
+<p>此时系统面临四个问题。</p>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>问题</th>
+<th>相关技术</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>如何知道 A 改变了？</td>
+<td>变化通知、可观察状态</td>
+</tr>
+<tr>
+<td>如何知道 C 依赖 A？</td>
+<td>依赖追踪</td>
+</tr>
+<tr>
+<td>如何知道旧 C 已经不能使用？</td>
+<td>缓存失效</td>
+</tr>
+<tr>
+<td>如何更新 C？</td>
+<td>重新计算、增量计算</td>
+</tr>
+</tbody></table>
+</div><p>响应式编程可以将这些技术组合起来，形成完整的变化传播机制。</p>
+<h3 id="section-5-2">5.2 使用依赖图理解</h3>
+<p>当 A 变化时，依赖图使系统能够定位需要更新的 C，再将新的 C 传播给 UI。</p>
+<p>在这一过程中：</p>
+<ul>
+<li>依赖追踪决定传播路径。</li>
+<li>缓存失效决定哪些旧结果不能再被直接使用。</li>
+<li>增量计算决定是否可以利用旧结果避免完整重算。</li>
+<li>响应式机制组织变化如何触发和传播。</li>
+</ul>
+<p>但注意，响应式编程不必同时实现缓存和增量计算。</p>
+<p>一个简单的响应式流可以完全不缓存结果，每次输入变化都重新执行函数。</p>
+<h3 id="section-5-3">5.3 响应式与记忆化的区别</h3>
+<p>记忆化（Memoization）通常是：</p>
+<pre><code class="language-text">调用 f(x)
+    ↓
+查询是否有缓存结果
+    ↓
+有：直接返回
+无：执行计算并缓存
+</code></pre>
+<p>它重点关注：</p>
+<p><strong>相同输入是否可以复用以前的计算结果？</strong></p>
+<p>响应式编程更关注：</p>
+<pre><code class="language-text">输入 X 改变
+    ↓
+通知依赖 X 的计算
+    ↓
+更新下游结果
+</code></pre>
+<p>它重点关注：</p>
+<p><strong>输入发生变化后，谁应该被更新？</strong></p>
+<p>所以它们并不冲突。</p>
+<p>甚至可以组合使用：</p>
+<pre><code class="language-text">响应式依赖追踪
+      ↓
+确定受影响计算
+      ↓
+记忆化 / 缓存
+      ↓
+决定是否需要重新计算
+      ↓
+更新结果
+</code></pre>
+<p>一个有用的区分方式是：</p>
+<blockquote>
+<p><strong>记忆化关注计算结果的复用；响应式关注变化关系的持续维护；增量计算关注已有结果变化后如何减少重算。</strong></p>
+</blockquote>
+<hr>
+<h2 class="chapter" id="chapter-6">六、更深一步：响应式编程的正确性问题</h2>
+<p>到这里，我们已经理解基本机制。但是，从架构和系统正确性的角度看，接下来这些问题往往比 <code>Subscribe</code> 本身更加重要。</p>
+<h3 id="section-6-1">6.1 问题一：变化传播是否具有一致性？</h3>
+<p>考虑以下依赖图：</p>
+<p>菱形依赖：X 同时影响 A 和 B，而 C 又依赖 A 与 B。</p>
+<p>初始状态：</p>
+<div class="equation">X = 1,　A = 2,　B = 2,　C = 4</div>
+
+<p>现在：</p>
+<div class="equation">X = 2</div>
+
+<p>正确的新状态应该是：</p>
+<div class="equation">A = 4,　B = 3,　C = 7</div>
+
+<p>但是，假设系统采用同步逐个通知的机制：</p>
+<ol>
+<li>X 变化，首先更新 A，得到 A = 4。</li>
+<li>A 通知 C，C 用新的 A 和旧的 B 计算出 C = 6。</li>
+<li>X 接着更新 B，得到 B = 3。</li>
+<li>B 再次通知 C，最终 C = 7。</li>
+</ol>
+<p>那么 C 曾短暂得到错误的中间结果 <code>6</code>。</p>
+<p>这就是响应式系统可能出现的 <strong>Glitch（瞬时不一致）</strong>。</p>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>阶段</th>
+<th>A</th>
+<th>B</th>
+<th>C</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>初始</td>
+<td>2</td>
+<td>2</td>
+<td>4</td>
+</tr>
+<tr>
+<td>A 更新后</td>
+<td>4</td>
+<td>2</td>
+<td>6</td>
+</tr>
+<tr>
+<td>B 更新后</td>
+<td>4</td>
+<td>3</td>
+<td>7</td>
+</tr>
+</tbody></table>
+</div><p>如果 C 只用于最终显示，并且中间变化不可见，也许问题不大。</p>
+<p>但如果 C 的订阅者执行：</p>
+<pre><code class="language-csharp">if (C &gt;= 6)
+{
+    GrantReward();
+}
+</code></pre>
+<p>那么中间结果就有可能触发不应该发生的业务副作用。</p>
+<p>这说明：</p>
+<p><strong>传播了变化，并不等于传播过程天然具有一致性。</strong></p>
+<p>需要根据具体框架和业务要求选择一致性策略。</p>
+<p>常见解决方式有：</p>
+<ul>
+<li>批量更新（Batching）。</li>
+<li>事务式状态提交。</li>
+<li>按拓扑顺序重新计算依赖节点。</li>
+<li>使用同一版本的状态快照。</li>
+<li>合并重复更新，最终再统一触发副作用。</li>
+</ul>
+<p>但不能认为所有 Rx 流都自动提供无 Glitch 保证。</p>
+<h3 id="section-6-2">6.2 问题二：订阅关系也有生命周期</h3>
+<p>例如：</p>
+<pre><code class="language-csharp">var subscription = healthStream.Subscribe(UpdateUI);
+</code></pre>
+<p>从订阅开始，数据源可能持续持有观察者的引用。</p>
+<p>如果 UI 已经销毁，但是订阅没有释放，可能出现：</p>
+<ul>
+<li>对象无法被及时回收。</li>
+<li>已经无效的 UI 继续接收消息。</li>
+<li>切换场景后发生非法访问。</li>
+<li>重复订阅导致同一逻辑执行多次。</li>
+</ul>
+<p>因此，订阅本身是一种需要管理的关系资源。</p>
+<pre><code class="language-csharp">private IDisposable _subscription;
+
+private void OnDisable()
+{
+    _subscription?.Dispose();
+    _subscription = null;
+}
+</code></pre>
+<p>如果订阅是在 <code>OnEnable()</code> 中创建，那么通常应该在对应的 <code>OnDisable()</code> 中解除。</p>
+<p>这里能够发现之前学过的几个概念之间的联系：</p>
+<div class="equation">Subscription Lifetime ⊆ Subscriber 的有效使用期</div>
+
+<p>具体的生命周期边界需要根据 UI、实体和服务的所有权关系确定。</p>
+<p>例如长期存在的服务订阅，不一定需要在每次 UI 隐藏时解除；但界面专属订阅通常应该跟随界面生命周期。</p>
+<h3 id="section-6-3">6.3 问题三：响应式不是天然异步</h3>
+<p>很多人容易产生一个误解：</p>
+<blockquote>
+<p>使用 <code>Subscribe()</code> 后，处理逻辑会自动在另一个线程执行。</p>
+</blockquote>
+<p>这并不成立。</p>
+<p>例如：</p>
+<pre><code class="language-csharp">healthStream.Subscribe(health =&gt;
+{
+    UpdateUI(health);
+});
+</code></pre>
+<p>订阅回调在哪个线程执行，取决于数据源、调度器以及操作符。</p>
+<p>一个同步发布的数据源，完全可以在触发变化的同一线程直接调用订阅者。</p>
+<p>在 Unity 中尤其需要注意：大多数 Unity 对象和 UI API 应该在 Unity 主线程上访问。</p>
+<p>如果生命值来自后台网络线程，通常需要明确将 UI 更新切换回主线程。</p>
+<p>这也意味着：</p>
+<p><strong>响应式解决的是变化的组织与传播；线程切换和执行调度是另一个需要明确设计的问题。</strong></p>
+<h3 id="section-6-4">6.4 问题四：当生产速度超过消费速度怎么办？</h3>
+<p>假设网络每秒产生 10,000 条消息，但是下游系统每秒只能处理 1,000 条。</p>
+<p>如果直接无限制缓存：</p>
+<pre><code class="language-text">生产者：10000 条/秒
+       ↓
+不断积累的队列
+       ↓
+消费者：1000 条/秒
+</code></pre>
+<p>积压会持续增加，可能最终耗尽内存。</p>
+<p>解决这个问题需要流量控制。</p>
+<p>典型策略有丢弃、合并最新值、限制缓存容量，或者让生产者依据消费者的处理能力调整发送速度。</p>
+<p>其中 <strong>Backpressure（背压）</strong> 是一种重要机制：消费者向生产者表达自身还可以接收多少数据，避免无界积压。</p>
+<p>需要区分：</p>
+<ul>
+<li>Reactive Programming 是更广泛的编程范式。</li>
+<li>ReactiveX / Rx 主要提供 Observable 及其组合操作。</li>
+<li>Reactive Streams 是面向异步数据流、规定非阻塞背压协议的规范。</li>
+</ul>
+<p>不能认为使用了 <code>IObservable&lt;T&gt;</code> 就自动拥有 Reactive Streams 规范中的背压保证。<a href="https://www.reactive-streams.org/">Reactive Streams Specification</a>、<a href="https://learn.microsoft.com/en-us/dotnet/standard/events/observer-design-pattern">Microsoft — Observer Design Pattern</a></p>
+<h3 id="section-6-5">6.5 问题五：响应式不应该破坏业务不变量</h3>
+<p>假设金币系统有一个不变量：</p>
+<div class="equation">Gold ≥ 0</div>
+
+<p>不应该让订阅者各自修改金币，形成没有统一约束的状态更新网络。</p>
+<p>更可靠的架构是：</p>
+<pre><code class="language-text">玩家发出购买请求
+       ↓
+领域服务验证
+       ↓
+检查金币、商品、库存
+       ↓
+原子地提交有效状态转移
+       ↓
+发布已提交的变化
+       ↓
+UI、提示、音效等响应
+</code></pre>
+<p>响应式非常适合处理<strong>状态派生和展示</strong>。</p>
+<p>但是对于需要原子性、持久性、严格顺序、去重或可靠投递的关键业务，例如购买扣费、奖励发放和存档写入，不能仅仅依赖普通订阅回调来保证正确性。</p>
+<p>这些仍然需要领域规则、事务、幂等或可靠消息机制。</p>
+<hr>
+<h2 class="chapter" id="chapter-7">七、实际工程中如何设计响应式架构？</h2>
+<p>我建议将它分为三个层次。</p>
+<p><strong>第一层：Authoritative State（权威状态）</strong></p>
+<p>保存真实游戏状态，验证命令，维护不变量，执行状态转移。</p>
+<p><strong>第二层：Reactive Derivation（响应式派生）</strong></p>
+<p>接收变化，组合多个状态，计算派生值，维护依赖关系。</p>
+<p><strong>第三层：Effects / Presentation（副作用与表现）</strong></p>
+<p>更新 UI、播放特效、展示提示，以及其他允许异步或延迟处理的响应。</p>
+<p>它的设计思想是：</p>
+<p><strong>真实状态由明确的所有者维护；派生状态通过依赖关系计算；非权威性的表现效果订阅计算结果。</strong></p>
+<p>例如：</p>
+<pre><code class="language-text">PlayerModel
+ ├── Health
+ ├── MaxHealth
+ └── IsAlive（权威规则或派生状态）
+         │
+         ▼
+Reactive ViewModel
+ ├── HealthPercent
+ ├── IsLowHealth
+ └── HealthBarColor
+         │
+         ▼
+Unity UI
+ ├── Image.fillAmount
+ ├── TMP_Text
+ └── WarningEffect
+</code></pre>
+<p>这种结构有助于避免让 UI 控制真实游戏状态，也避免领域层直接依赖具体 UI 组件。</p>
+<h3 id="section-7-1">7.1 什么时候值得使用响应式编程？</h3>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>场景</th>
+<th>推荐程度</th>
+<th>原因</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>生命值、金币、背包 UI</td>
+<td>高</td>
+<td>状态与视图之间有明确依赖</td>
+</tr>
+<tr>
+<td>复杂表单、筛选和搜索</td>
+<td>高</td>
+<td>多输入组合及时间操作很方便</td>
+</tr>
+<tr>
+<td>多个实时数据源组合</td>
+<td>高</td>
+<td>流组合具有明显优势</td>
+</tr>
+<tr>
+<td>简单按钮点击</td>
+<td>低至中</td>
+<td>普通事件通常足够</td>
+</tr>
+<tr>
+<td>每帧角色移动计算</td>
+<td>视情况</td>
+<td>可能增加调度和分配开销</td>
+</tr>
+<tr>
+<td>购买与奖励事务</td>
+<td>不宜单独依赖</td>
+<td>需要额外保证业务正确性</td>
+</tr>
+</tbody></table>
+</div><p>与其问“项目是否应该采用响应式架构”，不如问：</p>
+<p><strong>这个模块是否存在持续变化的数据、多个相互依赖的结果，以及值得抽象出来的变化传播关系？</strong></p>
+<p>如果只是一个按钮触发一个函数，使用普通 C# 事件可能最直接。</p>
+<p>如果多个状态互相组合，还需要筛选、防抖、状态派生和生命周期管理，响应式抽象的价值就会明显提高。</p>
+<hr>
+<h2 class="chapter" id="chapter-8">八、最后总结：用五个问题真正掌握响应式编程</h2>
+<p>把响应式编程归纳成以下五个问题，会比记住几十个操作符更有效。</p>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>问题</th>
+<th>本质</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>What changes?</td>
+<td>什么状态或事件会变化？</td>
+</tr>
+<tr>
+<td>Who depends on it?</td>
+<td>谁依赖这些变化？</td>
+</tr>
+<tr>
+<td>How does change propagate?</td>
+<td>变化如何传播到下游？</td>
+</tr>
+<tr>
+<td>When is the result consistent?</td>
+<td>什么时候可以认为结果正确且一致？</td>
+</tr>
+<tr>
+<td>Who owns the subscription?</td>
+<td>谁负责订阅的创建与释放？</td>
+</tr>
+</tbody></table>
+</div><p>最核心的思想，可以记成：</p>
+<div class="equation boxed">Reactive = Changes + Dependencies + Propagation</div>
+
+<p>这不是某个框架的正式数学定义，而是帮助理解其核心机制的抽象。</p>
+<p>再往深一层看，响应式编程实际上是在管理三个维度：</p>
+<p><strong>空间维度：依赖关系。</strong> 谁依赖谁，变化能够沿着哪些路径传播？</p>
+<p><strong>时间维度：变化序列。</strong> 变化何时发生，应该如何组合、过滤、延迟或取消？</p>
+<p><strong>正确性维度：状态一致性。</strong> 传播过程中是否存在旧值、乱序、重复、循环、竞争或无效订阅？</p>
+<p>这三个维度共同决定了一个响应式系统能否正确运行。</p>
+<p>最后，联系到之前讨论的架构设计：</p>
+<blockquote>
+<p><strong>命令式编程主要描述操作如何执行；声明式响应式编程主要描述随时间变化的数据之间应保持什么关系，并由机制维护这些关系。</strong></p>
+</blockquote>
+<p>它不是对命令式编程的全面取代，而是将变化传播这种横切责任从具体业务流程中抽离出来。</p>
+<p>如果继续深入，我最建议研究的下一个专题是 <strong>Dependency Graph、Automatic Dependency Tracking 与 Glitch Freedom（依赖图、自动依赖追踪和无瞬时不一致性）</strong>。它能够把响应式编程、增量计算、缓存失效和状态正确性真正统一到同一个理论框架中。</p>
+<p>参考资料：<a href="https://reactivex.io/documentation/observable.html">ReactiveX — Observable</a>、<a href="https://learn.microsoft.com/en-us/dotnet/standard/events/observer-design-pattern">Microsoft — Observer Design Pattern</a>、<a href="https://www.reactive-streams.org/">Reactive Streams Specification</a>。</p>
+</article><footer class="footer">Reactive Programming（响应式编程） · What、Why、How</footer></main></div><script>
+const health=document.getElementById('health'),max=document.getElementById('max-health');
+function update(){const h=Number(health.value),m=Number(max.value),p=Math.min(h/m,1)*100;document.getElementById('health-value').value=h;document.getElementById('max-value').value=m;document.getElementById('percent').textContent=Number(p.toFixed(1))+'%';document.getElementById('health-fill').style.width=p+'%';document.querySelector('[role=progressbar]').setAttribute('aria-valuenow',p.toFixed(1));}
+health.addEventListener('input',update);max.addEventListener('input',update);update();
+document.getElementById('print').addEventListener('click',()=>window.print());
+document.getElementById('font').addEventListener('click',()=>{const current=parseFloat(getComputedStyle(document.body).fontSize);document.body.style.fontSize=(current>=22?17:current+1)+'px';});
+</script></body></html>

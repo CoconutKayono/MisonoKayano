@@ -1,0 +1,986 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Dependency Graph（依赖图）与 Dirty Flag（脏标记）：What · Why · How</title><style>
+:root{--ink:#233239;--muted:#64737a;--accent:#147a70;--line:#dce5e3;--paper:#fff;--back:#f5f7f5;--soft:#edf6f2}*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:32px}body{margin:0;color:var(--ink);background:var(--back);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans CJK SC","Microsoft YaHei",sans-serif;font-size:18px;line-height:1.95;overflow-wrap:break-word}a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}.sidebar{position:fixed;inset:0 auto 0 0;width:272px;padding:36px 25px;background:#edf2ef;border-right:1px solid var(--line);overflow-y:auto}.brand{font-size:12px;font-weight:700;letter-spacing:.15em;color:var(--accent)}.sidebar h2{font-size:21px;line-height:1.5;margin:10px 0 26px}.sidebar nav a{display:block;font-size:13px;line-height:1.7;margin:0 0 8px;padding:7px 9px;border-radius:6px;color:#52645d}.sidebar nav a:hover{background:#dfeae4;color:var(--accent);text-decoration:none}main{margin-left:272px;padding:55px 48px 100px}article{max-width:860px;margin:auto;background:var(--paper);padding:48px 52px 64px;border:1px solid var(--line);border-radius:12px;box-shadow:0 8px 35px #23323906}.eyebrow{color:var(--accent);font-size:13px;letter-spacing:.08em;margin-bottom:18px}.toolbar{display:flex;gap:12px;margin:25px 0 40px}.toolbar button{font-size:13px}h1{font-size:36px;line-height:1.5;letter-spacing:-.035em;margin:0 0 32px;color:#172e2b}h2{font-size:27px;line-height:1.6;margin:62px 0 26px;padding-top:10px;border-bottom:2px solid #bdd9ce;padding-bottom:14px;color:#155b50}h3{font-size:22px;line-height:1.6;margin:38px 0 20px}h4{font-size:19px;line-height:1.7;margin:30px 0 16px}p{margin:16px 0}strong{font-weight:650;color:#203d37}ul,ol{padding-left:1.6em;margin:18px 0}li{padding-left:.2em;margin:7px 0}blockquote{margin:26px 0;padding:14px 22px;border-left:4px solid var(--accent);background:var(--soft);border-radius:0 8px 8px 0}blockquote p{margin:5px 0}hr{border:0;border-top:1px solid var(--line);margin:40px 0}code{font-family:"Cascadia Code",Consolas,"Liberation Mono",monospace;font-size:.87em;background:#eef2ef;color:#20594d;padding:.14em .36em;border-radius:4px}pre{position:relative;overflow-x:auto;background:#172a2d;color:#e1eeeb;padding:47px 22px 22px;border-radius:9px;font-size:14px;line-height:1.8;margin:24px 0;tab-size:4;overflow-wrap:normal}pre:before{content:attr(data-language);position:absolute;left:22px;top:12px;color:#98b4ae;font-size:11px;font-family:inherit;letter-spacing:.07em}pre code{background:none;color:inherit;padding:0;font-size:inherit;border-radius:0;white-space:pre}pre .copy{position:absolute;right:12px;top:8px;padding:3px 9px;font-size:11px;background:#294449;border-color:#43615e;color:#d9ebe5}.table-wrap{overflow-x:auto;margin:26px 0;border:1px solid var(--line);border-radius:8px}table{width:100%;border-collapse:collapse;font-size:15px;line-height:1.8}th{background:#eaf2ed;text-align:left;font-weight:650;color:#285b4c}td,th{padding:13px 16px;border-bottom:1px solid var(--line);min-width:130px}tr:last-child td{border-bottom:0}tbody tr:nth-child(even){background:#f8faf8}.equation{text-align:center;font-family:Cambria,Georgia,"Times New Roman",serif;line-height:1.65;font-size:19px;padding:17px 20px;margin:20px 0;background:#f5f8f5;border:1px solid #e1ebe3;border-radius:6px;overflow-x:auto;white-space:nowrap;overflow-wrap:normal}.math-inline{font-family:Cambria,Georgia,serif;font-style:italic}.original-diagram{max-width:550px;margin:24px auto;padding:20px;background:#fbfcfc;border:1px solid var(--line);border-radius:8px}.original-diagram svg{display:block}.flow{display:grid;gap:12px;margin:28px 0}.flow>div{position:relative;padding:15px 22px;border:1px solid #bcd4c7;border-radius:8px;background:#f3f8f4}.flow>div:not(:last-child):after{content:"↓";display:block;position:absolute;bottom:-22px;right:25px;color:var(--accent);font-size:20px;z-index:1}.flow span{display:block;color:var(--muted);font-size:15px}.demo{background:#f3f8f5;border:1px solid #bdd8ca;border-radius:10px;padding:24px;margin:28px 0}.demo h4{margin-top:0}.demo small{font-size:13px;font-weight:400;color:var(--muted)}.demo p{font-size:15px}.inputs{display:grid;grid-template-columns:1fr 1fr;gap:18px}.inputs label{font-size:14px;font-weight:600}input{display:block;width:100%;padding:10px 12px;border:1px solid #b6ccc1;border-radius:6px;font:inherit;background:#fff;margin-top:6px;color:var(--ink)}.node-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:20px 0}.node{background:white;border:1px solid #aad0b9;border-radius:7px;padding:13px 8px;text-align:center;font-size:12px}.node strong{font-size:12px}.node b{display:block;font-size:27px;line-height:1.8}.node span{color:#27734a}.node.dirty{border-color:#d5aa57;background:#fffaf0}.node.dirty span{color:#926018}.demo-actions{display:flex;gap:12px;align-items:center;flex-wrap:wrap;font-size:13px}button{cursor:pointer;border:1px solid var(--accent);background:var(--accent);color:#fff;padding:9px 14px;border-radius:6px;font:inherit;font-size:14px;line-height:1.5}button:hover{filter:brightness(.93)}button.secondary{background:transparent;color:var(--accent)}button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #e6b75b;outline-offset:3px}#demo-status{color:var(--muted);margin-bottom:0}.mobile-toc{display:none}.footer{margin:45px auto 0;text-align:center;color:var(--muted);font-size:12px}.back-top{position:fixed;right:20px;bottom:20px;z-index:5;font-size:13px;padding:7px 12px;background:#fff;border:1px solid var(--line);border-radius:6px}@media(min-width:1600px){article{max-width:900px;padding:55px 65px}}@media(max-width:1150px){.sidebar{width:235px;padding:28px 18px}main{margin-left:235px;padding:35px 24px}article{padding:36px 30px}h1{font-size:31px}}@media(max-width:850px){.sidebar{display:none}main{margin-left:0;padding:20px 14px 60px}article{padding:30px 24px}.mobile-toc{display:block;border:1px solid var(--line);border-radius:7px;padding:12px 16px;margin-bottom:30px}.mobile-toc a{display:block;font-size:14px;margin:7px 0}.mobile-toc summary{cursor:pointer;color:var(--accent);font-size:15px}}@media(max-width:520px){body{font-size:16px;line-height:1.95}main{padding:0}article{border:none;border-radius:0;padding:30px 20px 60px}h1{font-size:27px}h2{font-size:23px;margin-top:48px}h3{font-size:20px}pre{font-size:12px;padding-left:15px;padding-right:15px}.equation{font-size:16px;padding:14px 10px}.demo{padding:16px}.inputs{gap:10px}.node-grid{grid-template-columns:1fr}.node{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;gap:8px}.node b{font-size:22px}td,th{padding:11px 13px}.back-top{right:10px;bottom:10px}}@media print{.sidebar,.toolbar,.back-top,.mobile-toc,.copy{display:none!important}main{margin:0;padding:0}article{max-width:none;border:0;box-shadow:none;padding:0}body{background:white;color:black;font-size:11pt;line-height:1.65}h1{font-size:24pt}h2{font-size:18pt;break-after:avoid}h3,h4{break-after:avoid}pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#f1f4f2;color:#111;font-size:9pt;break-inside:auto}pre code{white-space:pre-wrap}.table-wrap{overflow:visible}table{font-size:9pt}tr,.equation,.original-diagram{break-inside:avoid}.demo-actions,input{display:none}.demo .node-grid{grid-template-columns:repeat(3,1fr)}.equation{white-space:normal}.footer{display:none}}
+</style></head><body id="top"><aside class="sidebar"><div class="brand">WHAT · WHY · HOW</div><h2>依赖图与脏标记</h2><nav aria-label="章节目录"><a href="#chapter-1">一、What：它们究竟是什么？</a><a href="#chapter-2">二、Why：为什么需要它们？</a><a href="#chapter-3">三、How：它们具体如何工作？</a><a href="#chapter-4">四、C# 实现：从零构建简化依赖计算系统</a><a href="#chapter-5">五、深入本质：为什么 Dirty Flag 能保证正确性？</a><a href="#chapter-6">六、进阶：静态依赖与动态依赖</a><a href="#chapter-7">七、Dependency Graph 与 Version（版本号）的关系</a><a href="#chapter-8">八、Unity 中的重要应用：Transform 层级更新</a><a href="#chapter-9">九、实际开发最容易出现的五个问题</a><a href="#chapter-10">十、与缓存、记忆化和增量计算的关系</a><a href="#chapter-11">十一、总结：真正需要建立的思维模型</a></nav></aside><main><article><div class="eyebrow">编程基础 · 数据依赖与缓存正确性</div><h1>Dependency Graph（依赖图）与 Dirty Flag（脏标记）：What · Why · How</h1><div class="toolbar"><button id="print" class="secondary">打印 / 另存为 PDF</button></div><details class="mobile-toc"><summary>阅读目录 · 11 个章节</summary><a href="#chapter-1">一、What：它们究竟是什么？</a><a href="#chapter-2">二、Why：为什么需要它们？</a><a href="#chapter-3">三、How：它们具体如何工作？</a><a href="#chapter-4">四、C# 实现：从零构建简化依赖计算系统</a><a href="#chapter-5">五、深入本质：为什么 Dirty Flag 能保证正确性？</a><a href="#chapter-6">六、进阶：静态依赖与动态依赖</a><a href="#chapter-7">七、Dependency Graph 与 Version（版本号）的关系</a><a href="#chapter-8">八、Unity 中的重要应用：Transform 层级更新</a><a href="#chapter-9">九、实际开发最容易出现的五个问题</a><a href="#chapter-10">十、与缓存、记忆化和增量计算的关系</a><a href="#chapter-11">十一、总结：真正需要建立的思维模型</a></details>
+<p>这两个概念是理解<strong>缓存失效、增量计算、响应式系统、游戏引擎更新机制以及构建系统</strong>的重要基础。</p>
+<p>它们经常一起出现，但实际上解决的是两个不同的问题：</p>
+<ul>
+<li><strong>Dependency Graph（依赖图）</strong>：当某个数据发生变化时，究竟会影响哪些数据？</li>
+<li><strong>Dirty Flag（脏标记）</strong>：某个数据的计算结果，是否已经不能保证正确，需要重新计算？</li>
+</ul>
+<p>先给出一个核心结论：</p>
+<blockquote>
+<p><strong>依赖图描述变化的影响范围，脏标记记录计算结果是否失效。两者结合，可以让系统只重新计算那些受到影响、并且实际需要使用的数据。</strong></p>
+</blockquote>
+<p>这背后有一个非常重要的设计思想：</p>
+<p><strong>数据发生变化，不代表必须立即重新计算所有依赖它的结果。我们可以先记录哪些结果已经失效，等真正需要时再计算。</strong></p>
+<hr>
+<h2 id="chapter-1">一、What：它们究竟是什么？</h2>
+<h3>1. Dependency Graph：依赖图</h3>
+<p>假设我们正在开发一个 RPG 游戏。</p>
+<p>玩家的战斗属性由以下数据决定：</p>
+<ul>
+<li>基础攻击力 <code>BaseAttack</code></li>
+<li>装备攻击加成 <code>EquipmentBonus</code></li>
+<li>总攻击力 <code>TotalAttack</code></li>
+<li>暴击伤害 <code>CriticalDamage</code></li>
+<li>战斗评分 <code>CombatPower</code></li>
+</ul>
+<p>它们之间存在计算关系：</p>
+<div class="equation" data-tex="TotalAttack=BaseAttack+EquipmentBonus">TotalAttack=BaseAttack+EquipmentBonus</div>
+
+<div class="equation" data-tex="CriticalDamage=TotalAttack\times2">CriticalDamage=TotalAttack × 2</div>
+
+<div class="equation" data-tex="CombatPower=TotalAttack+CriticalDamage">CombatPower=TotalAttack+CriticalDamage</div>
+
+<p>把这些依赖关系表示成图：</p>
+<div class="original-diagram">
+<svg viewbox="0 0 340 255" width="100%" xmlns="http://www.w3.org/2000/svg"><g stroke="#929AA5" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M88 63 L143 106"></path><path d="M252 63 L197 106"></path><path d="M170 136 L105 172"></path><path d="M170 136 L235 172"></path><path d="M105 202 L170 225"></path><path d="M235 202 L170 225"></path></g><g fill="#929AA5"><path d="M143 106 l-10 -2 l5 -7 z"></path><path d="M197 106 l10 -2 l-5 -7 z"></path><path d="M105 172 l4 -10 l4 8 z"></path><path d="M235 172 l-4 -10 l-4 8 z"></path><path d="M170 225 l-9 -9 l10 2 z"></path></g><rect x="5" y="20" width="146" height="44" rx="9" fill="#E0E7FF" stroke="#818CF8"></rect><rect x="189" y="20" width="146" height="44" rx="9" fill="#E0E7FF" stroke="#818CF8"></rect><rect x="92" y="100" width="156" height="39" rx="9" fill="#D1FAE5" stroke="#34D399"></rect><rect x="9" y="171" width="145" height="39" rx="9" fill="#D1FAE5" stroke="#34D399"></rect><rect x="186" y="171" width="145" height="39" rx="9" fill="#D1FAE5" stroke="#34D399"></rect><rect x="105" y="218" width="130" height="32" rx="8" fill="#D1FAE5" stroke="#34D399"></rect><g font-size="12" text-anchor="middle" fill="#1E293B" font-weight="500"><text x="78" y="38">BaseAttack</text><text x="78" y="53" font-size="10">基础攻击力</text><text x="262" y="38">EquipmentBonus</text><text x="262" y="53" font-size="10">装备加成</text><text x="170" y="116">TotalAttack</text><text x="170" y="131" font-size="10">总攻击力</text><text x="81" y="187">CriticalDamage</text><text x="81" y="201" font-size="10">暴击伤害</text><text x="259" y="187">CombatPower</text><text x="259" y="201" font-size="10">战斗评分（见下方说明）</text><text x="170" y="238" font-size="10">最终显示值</text></g></svg>
+</div>
+
+<p>概念示意：箭头从被依赖的数据指向依赖它的结果。实际实现中，CombatPower 同时依赖 TotalAttack 和 CriticalDamage。</p>
+<p>用数学语言描述：</p>
+<div class="equation" data-tex="G=(V,E)">G=(V,E)</div>
+
+<p>其中：</p>
+<ul>
+<li><span class="math-inline" data-tex="V">V</span> 是节点集合，每个节点代表一个数据或计算结果。</li>
+<li><span class="math-inline" data-tex="E">E</span> 是有向边集合，每条边表示一种依赖关系。</li>
+</ul>
+<p>我们约定：</p>
+<div class="equation" data-tex="A\rightarrow B">A →  B</div>
+
+<p>表示 <strong>B 依赖 A</strong>。</p>
+<p>如果 A 改变，那么 B 可能受到影响。</p>
+<p>例如：</p>
+<div class="equation" data-tex="BaseAttack\rightarrow TotalAttack">BaseAttack →  TotalAttack</div>
+
+<div class="equation" data-tex="TotalAttack\rightarrow CriticalDamage">TotalAttack →  CriticalDamage</div>
+
+<p>即使 <code>CriticalDamage</code> 不直接读取 <code>BaseAttack</code>，它也存在间接依赖。</p>
+<p>因此：</p>
+<div class="equation" data-tex="BaseAttack\rightarrow TotalAttack\rightarrow CriticalDamage">BaseAttack →  TotalAttack →  CriticalDamage</div>
+
+<p><strong>依赖图的价值，就是让间接影响也可以被系统追踪。</strong></p>
+<p>依赖图只描述数据之间的关系，本身并不规定什么时候计算、是否缓存、如何通知变化。</p>
+<h3>2. Dirty Flag：脏标记</h3>
+<p>Dirty Flag 通常只是一个布尔变量：</p>
+<pre data-language="C#"><code class="language-csharp">private bool _isDirty;
+</code></pre>
+<p>它记录的是：</p>
+<p><strong>当前缓存的计算结果，是否已经不能保证与最新输入一致。</strong></p>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>状态</th>
+<th>含义</th>
+<th>应当如何处理</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>false</code>（Clean）</td>
+<td>缓存结果可以直接使用</td>
+<td>返回缓存</td>
+</tr>
+<tr>
+<td><code>true</code>（Dirty）</td>
+<td>缓存结果可能已经过期</td>
+<td>使用前重新计算</td>
+</tr>
+</tbody></table>
+</div><p>注意这里最重要的一个区别：</p>
+<p><strong>Dirty 不等于计算结果一定发生了变化。</strong></p>
+<p>例如：</p>
+<pre data-language="示例 / 过程"><code class="language-text">TotalAttack = BaseAttack + EquipmentBonus
+
+初始：
+BaseAttack = 10
+EquipmentBonus = 5
+TotalAttack = 15
+
+随后：
+BaseAttack = 12
+EquipmentBonus = 3
+</code></pre>
+<p>最终 <code>TotalAttack</code> 仍然是 15。</p>
+<p>但是，在输入发生变化、结果尚未重新验证时，我们仍然可以将它标记为 Dirty。</p>
+<p>因为 Dirty 的真正含义是：</p>
+<blockquote>
+<p>我已经不能保证旧结果依然正确，需要重新验证或计算。</p>
+</blockquote>
+<p>它不是一个 <code>ValueChanged</code> 标记，而是一个 <code>CacheMayBeInvalid</code> 标记。</p>
+<h3>3. 依赖图与脏标记如何协作？</h3>
+<p>当 <code>BaseAttack</code> 改变时：</p>
+<section class="demo" aria-labelledby="demo-title">
+<h4 id="demo-title">交互演示：修改输入，再读取计算结果 <small>(模拟)</small></h4>
+<div class="inputs"><label>基础攻击力 <input type="number" id="base" value="10" step="1"></label><label>装备攻击加成 <input type="number" id="bonus" value="5" step="1"></label></div>
+<p>修改输入时，下游结果被视为失效，但缓存中的旧数值暂时保留。</p>
+<div class="node-grid" aria-live="polite"><div class="node" id="total"><strong>TotalAttack</strong><b>15</b><span>Clean</span></div><div class="node" id="critical"><strong>CriticalDamage</strong><b>30</b><span>Clean</span></div><div class="node" id="combat"><strong>CombatPower</strong><b>45</b><span>Clean</span></div></div>
+<div class="demo-actions"><button id="read">读取 CombatPower（按需重算）</button><span>累计计算批次：<output id="batches">0</output></span><button class="secondary" id="reset">重置</button></div>
+<p id="demo-status" role="status">当前缓存有效，可以直接使用。</p>
+<noscript>请在浏览器中启用 JavaScript 以使用交互演示。初始缓存：TotalAttack = 15，CriticalDamage = 30，CombatPower = 45。</noscript>
+</section>
+
+<p>这实际上包含三个相互独立的步骤：</p>
+<ol>
+<li><strong>Change（变化）</strong>：源数据发生修改。</li>
+<li><strong>Invalidate（失效）</strong>：沿依赖图将受影响的节点标记为 Dirty。</li>
+<li><strong>Recompute（重算）</strong>：当需要结果时，重新计算并恢复 Clean 状态。</li>
+</ol>
+<p>一个重要原则是：</p>
+<div class="equation" data-tex="\boxed{\text{Invalidate}\neq\text{Recompute}}">Invalidate ≠ Recompute</div>
+
+<p>失效通知和实际计算是两件不同的事。</p>
+<hr>
+<h2 id="chapter-2">二、Why：为什么需要它们？</h2>
+<h3>1. 根本问题：计算结果之间存在因果关系</h3>
+<p>假设玩家的基础攻击力发生变化。</p>
+<p>那么：</p>
+<ul>
+<li>总攻击力需要更新。</li>
+<li>暴击伤害需要更新。</li>
+<li>战斗评分需要更新。</li>
+<li>角色 UI 可能需要更新。</li>
+</ul>
+<p>最直观的实现：</p>
+<pre data-language="C#"><code class="language-csharp">void SetBaseAttack(int value)
+{
+    baseAttack = value;
+
+    RecalculateTotalAttack();
+    RecalculateCriticalDamage();
+    RecalculateCombatPower();
+    RefreshUI();
+}
+</code></pre>
+<p>这段代码可以正常工作。</p>
+<p>但它带来了一个架构问题：</p>
+<p><strong>修改一个数据的代码，必须知道所有依赖该数据的系统。</strong></p>
+<p>假设以后新增：</p>
+<ul>
+<li>技能伤害预测</li>
+<li>AI 战力评估</li>
+<li>装备推荐</li>
+<li>属性比较面板</li>
+</ul>
+<p>那么 <code>SetBaseAttack()</code> 可能需要不断修改。</p>
+<p>它实际上把数据变化与所有下游行为耦合在一起。</p>
+<p>依赖图则将这些关系显式化：</p>
+<pre data-language="示例 / 过程"><code class="language-text">BaseAttack
+    ↓
+TotalAttack
+    ├──→ CriticalDamage
+    ├──→ CombatPower
+    ├──→ SkillDamage
+    └──→ UI
+</code></pre>
+<p>数据变化的代码不再需要逐个调用所有相关的计算函数。</p>
+<p>它只需要向依赖系统报告：</p>
+<p><code>BaseAttack</code> 发生了变化。</p>
+<p>剩下的失效传播由依赖关系决定。</p>
+<h3>2. 第二个问题：重复计算</h3>
+<p>假设每一帧都要读取某个计算量很大的结果。</p>
+<p>如果采用直接计算：</p>
+<pre data-language="C#"><code class="language-csharp">public float GetCombatPower()
+{
+    return CalculateCombatPower();
+}
+</code></pre>
+<p>无论输入是否改变，每次读取都重新计算。</p>
+<p>这可能很浪费。</p>
+<p>我们可以加入缓存：</p>
+<pre data-language="C#"><code class="language-csharp">private float _cachedCombatPower;
+</code></pre>
+<p>但是缓存带来了新的问题：</p>
+<p><strong>什么时候应该丢弃缓存？</strong></p>
+<p>如果永远返回缓存，它可能变成错误数据。</p>
+<p>如果每次都重新计算，又失去了缓存的意义。</p>
+<p>因此需要脏标记：</p>
+<pre data-language="C#"><code class="language-csharp">public float GetCombatPower()
+{
+    if (_isDirty)
+    {
+        _cachedCombatPower = CalculateCombatPower();
+        _isDirty = false;
+    }
+
+    return _cachedCombatPower;
+}
+</code></pre>
+<p>这样：</p>
+<ul>
+<li>第一次读取：计算并缓存。</li>
+<li>第二次读取：直接返回缓存。</li>
+<li>输入发生变化：标记 Dirty。</li>
+<li>下一次读取：重新计算。</li>
+<li>此后继续读取：返回新缓存。</li>
+</ul>
+<p>它解决的是：</p>
+<p><strong>如何在保证结果正确的前提下，避免没有必要的重复计算？</strong></p>
+<h3>3. 第三个问题：变化很频繁，读取却不频繁</h3>
+<p>假设某个角色在一帧中连续获得了三个属性加成。</p>
+<pre data-language="示例 / 过程"><code class="language-text">BaseAttack: 10 → 12 → 15 → 20
+</code></pre>
+<p>如果每次修改都立即重新计算整条依赖链，就会导致三次计算。</p>
+<p>但用户可能只需要最终的攻击力：</p>
+<pre data-language="示例 / 过程"><code class="language-text">BaseAttack = 20
+</code></pre>
+<p>使用 Dirty Flag：</p>
+<pre data-language="示例 / 过程"><code class="language-text">第一次修改 → 标记 Dirty
+第二次修改 → 仍然 Dirty
+第三次修改 → 仍然 Dirty
+
+真正读取 → 只计算一次
+</code></pre>
+<p>这就是 <strong>延迟计算（Lazy Evaluation）与变化合并（Coalescing）</strong> 的作用。</p>
+<p>不过必须注意：这种方式适用于允许延迟更新的派生数据，不适用于要求每次变化都独立执行的业务事件，例如每次扣款、每次物品领取记录。</p>
+<h3>4. 第四个问题：不是所有数据都会受到影响</h3>
+<p>假设有两个互不相关的计算分支：</p>
+<pre data-language="示例 / 过程"><code class="language-text">Attack ──→ Damage
+HP ──────→ HealthBar
+</code></pre>
+<p>攻击力变化，不应使生命值 UI 的计算缓存失效。</p>
+<p>这就是依赖图比“全局一个 Dirty 标记”更有价值的原因。</p>
+<p>依赖图让系统能够定位<strong>受影响的子图</strong>，而不是重新计算整个系统。</p>
+<p>因此，这两个技术组合起来解决的是：</p>
+<blockquote>
+<p><strong>如何在复杂的数据依赖关系下，维持结果正确性，同时尽量减少重复计算、无关计算与模块之间的显式耦合？</strong></p>
+</blockquote>
+<hr>
+<h2 id="chapter-3">三、How：它们具体如何工作？</h2>
+<h3>1. 核心算法：先传播失效，再按需重新计算</h3>
+<p>我们先不考虑代码，而是研究算法本身。</p>
+<p>假设：</p>
+<pre data-language="示例 / 过程"><code class="language-text">A ──→ B ──→ D
+      ↑
+C ────┘
+</code></pre>
+<p>其中：</p>
+<div class="equation" data-tex="B=f(A,C)">B=f(A,C)</div>
+
+<div class="equation" data-tex="D=g(B)">D=g(B)</div>
+
+<p>如果 A 发生变化，那么需要执行两类操作。</p>
+<h4>第一阶段：失效传播（Invalidation Propagation）</h4>
+<pre data-language="示例 / 过程"><code class="language-text">A 发生变化
+    ↓
+找到 A 的所有直接依赖者
+    ↓
+B 被标记为 Dirty
+    ↓
+继续找到 B 的依赖者
+    ↓
+D 被标记为 Dirty
+</code></pre>
+<p>伪代码：</p>
+<pre data-language="示例 / 过程"><code class="language-text">Invalidate(node):
+    if node is already Dirty:
+        return
+
+    node.Dirty = true
+
+    for each dependent of node:
+        Invalidate(dependent)
+</code></pre>
+<p>这里存在一个非常重要的优化：</p>
+<p><strong>如果节点已经 Dirty，并且系统保证失效状态已经完整传播，那么再次遇到它时，可以停止向下传播。</strong></p>
+<p>例如，A 在一帧内变化了 100 次。</p>
+<p>B 第一次被标记 Dirty 时，会继续使 D 失效。</p>
+<p>后面 99 次修改，无须再对这条已经失效的链进行重复传播。</p>
+<p>但这依赖于正确维护脏状态及其传播不变量。</p>
+<h4>第二阶段：按需计算（On-Demand Evaluation）</h4>
+<p>当程序请求 D 时：</p>
+<pre data-language="示例 / 过程"><code class="language-text">Get(D)
+    │
+    ├── D 是 Dirty
+    │
+    ├── D 需要 B
+    │      │
+    │      ├── B 是 Dirty
+    │      ├── 读取最新的 A、C
+    │      ├── 重新计算 B
+    │      └── B 标记为 Clean
+    │
+    ├── 使用最新的 B 计算 D
+    ├── D 标记为 Clean
+    └── 返回 D
+</code></pre>
+<p>伪代码：</p>
+<pre data-language="示例 / 过程"><code class="language-text">Get(node):
+    if node is Clean:
+        return node.CachedValue
+
+    values = []
+
+    for each dependency of node:
+        values.add(Get(dependency))
+
+    result = node.Compute(values)
+
+    node.CachedValue = result
+    node.Dirty = false
+
+    return result
+</code></pre>
+<p>你可以发现：</p>
+<p><strong>失效是沿依赖关系向下游传播的，计算则会先向上游获取有效输入，再逐层返回结果。</strong></p>
+<p>这正是整个机制的核心。</p>
+<h3>2. 为什么依赖图通常要求无环？</h3>
+<p>假设出现：</p>
+<pre data-language="示例 / 过程"><code class="language-text">A ──→ B
+↑     │
+└─────┘
+</code></pre>
+<p>即：</p>
+<div class="equation" data-tex="A=f(B)">A=f(B)</div>
+
+<div class="equation" data-tex="B=g(A)">B=g(A)</div>
+
+<p>那么计算 A，需要先计算 B。</p>
+<p>但计算 B，又需要计算 A。</p>
+<p>这会造成循环依赖。</p>
+<p>在普通的按需重算系统中，通常要求图为：</p>
+<p><strong>DAG（Directed Acyclic Graph，有向无环图）。</strong></p>
+<p>其重要性质是存在拓扑顺序（Topological Order）。</p>
+<p>对于：</p>
+<pre data-language="示例 / 过程"><code class="language-text">A ──→ B ──→ D
+      ↑
+C ────┘
+</code></pre>
+<p>可能的合法计算顺序是：</p>
+<pre data-language="示例 / 过程"><code class="language-text">A → C → B → D
+</code></pre>
+<p>或：</p>
+<pre data-language="示例 / 过程"><code class="language-text">C → A → B → D
+</code></pre>
+<p>只要满足：</p>
+<blockquote>
+<p>计算一个派生节点之前，先获得它所依赖节点的有效结果。</p>
+</blockquote>
+<p>就可以保证计算顺序正确。</p>
+<p>注意，<strong>不是所有依赖系统都禁止循环</strong>。一些系统允许反馈、迭代求解或固定点计算。但那需要额外的收敛规则，不能直接使用最简单的 DAG 计算算法。</p>
+<hr>
+<h2 id="chapter-4">四、C# 实现：从零构建简化依赖计算系统</h2>
+<p>下面实现一个支持自动失效传播、缓存和按需计算的小型系统。</p>
+<h3>1. 首先定义节点基类</h3>
+<pre data-language="C#"><code class="language-csharp">using System;
+using System.Collections.Generic;
+
+public abstract class DependencyNode
+{
+    // 谁依赖当前节点
+    private readonly List&lt;DependencyNode&gt; _dependents = new();
+
+    private bool _dirty;
+
+    protected DependencyNode(
+        bool initiallyDirty,
+        params DependencyNode[] dependencies)
+    {
+        _dirty = initiallyDirty;
+
+        foreach (var dependency in dependencies)
+        {
+            dependency._dependents.Add(this);
+        }
+    }
+
+    protected bool IsDirty =&gt; _dirty;
+
+    protected void MarkClean()
+    {
+        _dirty = false;
+    }
+
+    // 当前节点的数据改变后，通知下游
+    protected void InvalidateDependents()
+    {
+        foreach (var dependent in _dependents)
+        {
+            dependent.MarkDirty();
+        }
+    }
+
+    private void MarkDirty()
+    {
+        if (_dirty)
+            return;
+
+        _dirty = true;
+
+        InvalidateDependents();
+    }
+}
+</code></pre>
+<p>注意，节点保存的是 <code>_dependents</code>，即依赖当前节点的下游节点。</p>
+<p>为什么？</p>
+<p>因为当当前节点变化时，我们需要找到哪些计算结果会受到影响。</p>
+<p>这是一种反向依赖索引。</p>
+<p>实际上，完整的图可能同时需要两个方向：</p>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>关系</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>Dependencies</code>：我依赖谁</td>
+<td>计算时获取输入</td>
+</tr>
+<tr>
+<td><code>Dependents</code>：谁依赖我</td>
+<td>修改时传播失效</td>
+</tr>
+</tbody></table>
+</div><p>示例为了简化，只显式保存 <code>Dependents</code>，而通过计算委托访问依赖。</p>
+<h3>2. 定义源数据节点</h3>
+<pre data-language="C#"><code class="language-csharp">public sealed class SourceNode&lt;T&gt; : DependencyNode
+{
+    private T _value;
+
+    public SourceNode(T initialValue)
+        : base(false)
+    {
+        _value = initialValue;
+    }
+
+    public T Get() =&gt; _value;
+
+    public void Set(T value)
+    {
+        if (EqualityComparer&lt;T&gt;.Default.Equals(_value, value))
+            return;
+
+        _value = value;
+
+        // 源数据始终是最新的，
+        // 需要失效的是依赖它的计算结果
+        InvalidateDependents();
+    }
+}
+</code></pre>
+<p>源数据和派生数据的区别很重要。</p>
+<p><strong>源数据（Source）本身不是通过当前计算图推导出来的，它就是系统中的权威输入。</strong></p>
+<p>例如：</p>
+<pre data-language="C#"><code class="language-csharp">SourceNode&lt;int&gt; baseAttack = new(10);
+</code></pre>
+<p>修改源数据，不需要把它自己标记 Dirty。</p>
+<p>因为它保存的就是最新值。</p>
+<p>真正失效的是依赖它的缓存结果。</p>
+<h3>3. 定义计算节点</h3>
+<pre data-language="C#"><code class="language-csharp">public sealed class ComputedNode&lt;T&gt; : DependencyNode
+{
+    private readonly Func&lt;T&gt; _compute;
+
+    private T _cachedValue = default!;
+    private bool _computing;
+
+    public ComputedNode(
+        Func&lt;T&gt; compute,
+        params DependencyNode[] dependencies)
+        : base(true, dependencies)
+    {
+        _compute = compute;
+    }
+
+    public T Get()
+    {
+        if (!IsDirty)
+            return _cachedValue;
+
+        if (_computing)
+            throw new InvalidOperationException(
+                "检测到循环计算依赖");
+
+        _computing = true;
+
+        try
+        {
+            // compute 内部读取其他节点，
+            // 会自动确保上游结果有效
+            T result = _compute();
+
+            _cachedValue = result;
+
+            // 只有成功计算后才能清除脏标记
+            MarkClean();
+
+            return _cachedValue;
+        }
+        finally
+        {
+            _computing = false;
+        }
+    }
+}
+</code></pre>
+<p>这里包含四个设计决定：</p>
+<ol>
+<li>计算节点最初是 Dirty，因为还没有有效缓存。</li>
+<li>如果 Clean，直接返回缓存。</li>
+<li>如果 Dirty，运行计算函数，并在成功后清除标记。</li>
+<li>如果计算中出现递归重入，抛出异常，防止无限递归计算。</li>
+</ol>
+<p>这里的 <code>_computing</code> 只检测计算过程中的循环重入，并不等于已经对整个图完成了静态无环验证。</p>
+<p>如果 <code>_compute()</code> 抛出异常，<code>MarkClean()</code> 不会执行，因此节点保持 Dirty。</p>
+<p>这也符合正确性要求：失败的计算不能被当作有效结果缓存。</p>
+<h3>4. 组合成一个完整的计算图</h3>
+<pre data-language="C#"><code class="language-csharp">var baseAttack = new SourceNode&lt;int&gt;(10);
+var equipmentBonus = new SourceNode&lt;int&gt;(5);
+
+// 总攻击力
+var totalAttack = new ComputedNode&lt;int&gt;(
+    () =&gt;
+    {
+        Console.WriteLine("计算总攻击力");
+
+        return baseAttack.Get()
+             + equipmentBonus.Get();
+    },
+    baseAttack,
+    equipmentBonus
+);
+
+// 暴击伤害
+var criticalDamage = new ComputedNode&lt;int&gt;(
+    () =&gt;
+    {
+        Console.WriteLine("计算暴击伤害");
+
+        return totalAttack.Get() * 2;
+    },
+    totalAttack
+);
+
+// 战斗评分
+var combatPower = new ComputedNode&lt;int&gt;(
+    () =&gt;
+    {
+        Console.WriteLine("计算战斗评分");
+
+        return totalAttack.Get()
+             + criticalDamage.Get();
+    },
+    totalAttack,
+    criticalDamage
+);
+</code></pre>
+<p>第一次读取：</p>
+<pre data-language="C#"><code class="language-csharp">Console.WriteLine(combatPower.Get());
+</code></pre>
+<p>执行过程：</p>
+<pre data-language="示例 / 过程"><code class="language-text">计算总攻击力
+计算暴击伤害
+计算战斗评分
+45
+</code></pre>
+<p>第二次读取：</p>
+<pre data-language="C#"><code class="language-csharp">Console.WriteLine(combatPower.Get());
+</code></pre>
+<p>结果：</p>
+<pre data-language="示例 / 过程"><code class="language-text">45
+</code></pre>
+<p>不会再次执行任何计算函数。</p>
+<p>现在修改基础攻击力：</p>
+<pre data-language="C#"><code class="language-csharp">baseAttack.Set(12);
+</code></pre>
+<p>这不会立即执行计算。</p>
+<p>但会使三个派生节点进入 Dirty 状态。</p>
+<p>再次读取：</p>
+<pre data-language="C#"><code class="language-csharp">Console.WriteLine(combatPower.Get());
+</code></pre>
+<p>结果：</p>
+<pre data-language="示例 / 过程"><code class="language-text">计算总攻击力
+计算暴击伤害
+计算战斗评分
+51
+</code></pre>
+<p>注意 <code>totalAttack.Get()</code> 虽然被两个计算函数调用，但真正的重新计算只执行一次。</p>
+<p>这就是<strong>依赖图、记忆化与脏标记之间的协同工作机制</strong>。</p>
+<h4>这个示例的适用边界</h4>
+<p>这是一个教学用的单线程、静态 DAG 实现，已经体现核心算法，但还不是生产级响应式框架。</p>
+<p>它依赖以下约定：</p>
+<ul>
+<li>每个计算函数所读取的依赖，都应正确登记在节点的依赖列表中。</li>
+<li>计算函数应该是无副作用的，不在计算中修改其他源节点。</li>
+<li>缓存数据不应被外部绕过变更 API 随意修改。</li>
+<li>同一节点的读写遵循单线程执行模型。</li>
+</ul>
+<p>如果要支持复杂动态依赖、异步计算、多线程写入或运行时重连边，需要进一步扩展。</p>
+<hr>
+<h2 id="chapter-5">五、深入本质：为什么 Dirty Flag 能保证正确性？</h2>
+<p>这是比实现算法更值得理解的部分。</p>
+<p>我们可以为系统建立一个不变量（Invariant）。</p>
+<p>对于计算节点 <span class="math-inline" data-tex="v">v</span>，定义：</p>
+<ul>
+<li><span class="math-inline" data-tex="C_v">C<sub>v</sub></span>：节点缓存的计算结果。</li>
+<li><span class="math-inline" data-tex="f_v">f<sub>v</sub></span>：节点的计算函数。</li>
+<li><span class="math-inline" data-tex="D_v">D<sub>v</sub></span>：其依赖集合。</li>
+<li><span class="math-inline" data-tex="dirty(v)">dirty(v)</span>：节点的脏状态。</li>
+</ul>
+<p>我们希望维持：</p>
+<div class="equation" data-tex="\boxed{dirty(v)=false\implies C_v=f_v(D_v^{current})}">dirty(v)=false ⇒  C<sub>v</sub>=f<sub>v</sub>(D<sub>v</sub><sup>current</sup>)</div>
+
+<p>通俗地说：</p>
+<p><strong>只要一个节点是 Clean，我们就应当能够相信它的缓存与当前有效输入一致。</strong></p>
+<p>为了维护这个不变量，必须满足三个条件。</p>
+<h3>1. 输入变化必须使受影响的下游缓存失效</h3>
+<p>假设：</p>
+<pre data-language="示例 / 过程"><code class="language-text">A → B → C
+</code></pre>
+<p>如果 A 变化，而 C 仍然保持 Clean，那么：</p>
+<pre data-language="示例 / 过程"><code class="language-text">C 看起来有效
+但 C 可能基于旧的 B
+而 B 可能基于旧的 A
+</code></pre>
+<p>此时不变量可能已经被破坏。</p>
+<p>所以，发生变化的输入必须使所有受影响、已经缓存的后继结果失效。</p>
+<p>注意是所有可达的下游结果，不仅仅是直接依赖者。</p>
+<h3>2. 清除 Dirty 之前必须计算出有效结果</h3>
+<p>错误做法：</p>
+<pre data-language="C#"><code class="language-csharp">_isDirty = false;
+_cachedValue = Calculate();
+</code></pre>
+<p>如果 <code>Calculate()</code> 抛出异常，节点就会处于：</p>
+<pre data-language="示例 / 过程"><code class="language-text">Dirty = false
+Cache = 旧结果
+</code></pre>
+<p>正确做法是：</p>
+<pre data-language="C#"><code class="language-csharp">var result = Calculate();
+
+_cachedValue = result;
+_isDirty = false;
+</code></pre>
+<p>先完成计算，再提交缓存和有效状态。</p>
+<p>更复杂的并发场景还需要版本校验或原子提交，避免计算过程中输入又发生变化。</p>
+<h3>3. 必须追踪真实的依赖关系</h3>
+<p>假设：</p>
+<pre data-language="C#"><code class="language-csharp">var damage = new ComputedNode&lt;int&gt;(
+    () =&gt; attack.Get() + equipment.Get(),
+    attack
+);
+</code></pre>
+<p>这里存在隐藏错误：</p>
+<p>计算函数读取了 <code>equipment</code>，但没有登记它。</p>
+<p>当 <code>equipment</code> 改变时，<code>damage</code> 不会被标记 Dirty。</p>
+<p>于是旧缓存仍然可能被当成最新结果。</p>
+<p>这说明：</p>
+<blockquote>
+<p>依赖图能够维护计算正确性，前提是依赖图本身足够准确。</p>
+</blockquote>
+<p>这也是为什么响应式系统中会出现<strong>自动依赖收集（Automatic Dependency Tracking）</strong>。</p>
+<p>它可以在计算期间追踪实际读取了哪些数据，并自动维护依赖关系。</p>
+<hr>
+<h2 id="chapter-6">六、进阶：静态依赖与动态依赖</h2>
+<p>考虑：</p>
+<pre data-language="C#"><code class="language-csharp">int Calculate()
+{
+    if (usePhysicalDamage)
+        return physicalAttack.Get();
+
+    return magicAttack.Get();
+}
+</code></pre>
+<p>这里的依赖关系会随着条件发生变化。</p>
+<p>当 <code>usePhysicalDamage = true</code> 时，真正需要的是：</p>
+<pre data-language="示例 / 过程"><code class="language-text">PhysicalAttack → Damage
+</code></pre>
+<p>当 <code>usePhysicalDamage = false</code> 时：</p>
+<pre data-language="示例 / 过程"><code class="language-text">MagicAttack → Damage
+</code></pre>
+<p>这就涉及两种设计。</p>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>方案</th>
+<th>实现方式</th>
+<th>代价</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>静态依赖图</td>
+<td>始终记录两条攻击力依赖和条件依赖</td>
+<td>容易实现，但可能产生不必要的失效</td>
+</tr>
+<tr>
+<td>动态依赖图</td>
+<td>每次计算时收集实际读取的依赖并更新边</td>
+<td>更精确，但需要管理依赖增删与生命周期</td>
+</tr>
+</tbody></table>
+</div><p>动态依赖追踪通常采用如下过程：</p>
+<pre data-language="示例 / 过程"><code class="language-text">开始计算 Damage
+    ↓
+清空或准备新依赖集合
+    ↓
+记录计算期间实际读取的数据
+    ↓
+得到新的依赖集合
+    ↓
+更新旧依赖和新依赖之间的差异
+    ↓
+提交计算结果
+</code></pre>
+<p>例如，以前订阅了 <code>PhysicalAttack</code>。</p>
+<p>现在计算逻辑切换到 <code>MagicAttack</code>。</p>
+<p>那么系统需要取消旧的依赖关系，并建立新的关系。</p>
+<p>动态依赖还需要处理计算失败、执行期间依赖变化和循环依赖等问题，因此生产实现比上述伪流程更复杂。</p>
+<hr>
+<h2 id="chapter-7">七、Dependency Graph 与 Version（版本号）的关系</h2>
+<p>Dirty Flag 并不是唯一的缓存失效机制。</p>
+<p>另一种常见思路是使用版本号。</p>
+<p>例如：</p>
+<pre data-language="C#"><code class="language-csharp">private int _dataVersion;
+private int _cachedVersion;
+</code></pre>
+<p>源数据每次发生变化：</p>
+<pre data-language="C#"><code class="language-csharp">_dataVersion++;
+</code></pre>
+<p>读取时检查：</p>
+<pre data-language="C#"><code class="language-csharp">if (_cachedVersion != _dataVersion)
+{
+    Recalculate();
+    _cachedVersion = _dataVersion;
+}
+</code></pre>
+<p>这叫版本校验。</p>
+<p>它和 Dirty Flag 的区别在于：</p>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>维度</th>
+<th>Dirty Flag</th>
+<th>Version</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>记录什么</td>
+<td>是否需要重新验证</td>
+<td>数据变化到了哪个版本</td>
+</tr>
+<tr>
+<td>典型状态</td>
+<td><code>true / false</code></td>
+<td>整数或版本令牌</td>
+</tr>
+<tr>
+<td>常见失效方式</td>
+<td>主动传播失效</td>
+<td>读取时比较版本</td>
+</tr>
+<tr>
+<td>主要优势</td>
+<td>简单、判断直接</td>
+<td>可以区分不同变化代次</td>
+</tr>
+<tr>
+<td>主要局限</td>
+<td>不表达变化次数或新旧顺序</td>
+<td>需要正确维护版本及其对应关系</td>
+</tr>
+</tbody></table>
+</div><p>两者也可以结合。</p>
+<p>例如：</p>
+<pre data-language="示例 / 过程"><code class="language-text">SourceA.Version = 10
+SourceB.Version = 7
+
+ComputedC 缓存时记录：
+
+A.Version = 10
+B.Version = 7
+</code></pre>
+<p>下次读取 C 时，检查 A、B 是否已经发生变化。</p>
+<p>但这还不够完整。</p>
+<p>如果 C 依赖的是另一个计算节点 B，那么必须先确认 B 自身的输入版本以及派生结果是否有效，才能合理判断 C 的缓存。</p>
+<p>因此版本机制并不会自动消除对依赖关系的管理需求。</p>
+<h4>什么时候适合使用哪一种？</h4>
+<p>当数据变化较少、读取频繁，而且依赖关系明确时，脏标记传播通常很直接。</p>
+<p>当源数据修改极其频繁，但派生数据很少读取时，主动遍历大量下游节点可能反而浪费性能。</p>
+<p>这时可以考虑通过版本信息，在读取时懒惰地检查是否失效。</p>
+<p>不过这并不意味着版本号一定更快。它只是把一部分维护成本从写入时转移到了读取时，仍然需要根据依赖图结构和实际访问模式做权衡。</p>
+<hr>
+<h2 id="chapter-8">八、Unity 中的重要应用：Transform 层级更新</h2>
+<p>用一个实际场景帮助理解。</p>
+<p>假设场景中有：</p>
+<pre data-language="示例 / 过程"><code class="language-text">Player
+  └── Weapon
+       └── Muzzle
+</code></pre>
+<p>每个对象都有一个本地变换矩阵（Local Matrix）和世界变换矩阵（World Matrix）。</p>
+<p>计算关系为：</p>
+<div class="equation" data-tex="WorldMatrix=ParentWorldMatrix\times LocalMatrix">WorldMatrix=ParentWorldMatrix ×  LocalMatrix</div>
+
+<p>因此：</p>
+<pre data-language="示例 / 过程"><code class="language-text">Player.WorldMatrix
+       ↓
+Weapon.WorldMatrix
+       ↓
+Muzzle.WorldMatrix
+</code></pre>
+<p>如果 Player 移动：</p>
+<pre data-language="示例 / 过程"><code class="language-text">Player.LocalMatrix 改变
+       ↓
+Player.WorldMatrix 失效
+       ↓
+Weapon.WorldMatrix 失效
+       ↓
+Muzzle.WorldMatrix 失效
+</code></pre>
+<p>但失效并不要求马上计算出三个新的世界矩阵。</p>
+<p>可以将它们都标记 Dirty。</p>
+<p>当渲染、物理或者其他系统真正需要 Muzzle 的世界坐标时：</p>
+<pre data-language="示例 / 过程"><code class="language-text">Get Muzzle.WorldMatrix
+       ↓
+确保 Player.WorldMatrix 有效
+       ↓
+确保 Weapon.WorldMatrix 有效
+       ↓
+计算 Muzzle.WorldMatrix
+       ↓
+返回结果
+</code></pre>
+<p>整个过程自然遵循父节点到子节点的依赖顺序。</p>
+<p>这是一种可以用于 Transform 层级缓存的设计模型，不代表 Unity 引擎内部一定完全按照上面的 C# 实现运作。</p>
+<p>它也揭示了另一个问题：</p>
+<p>如果武器在一帧中多次移动，系统没有必要每次都重新计算所有子节点的世界矩阵。</p>
+<p>通过失效合并，可以把多次输入变化压缩为较少的实际计算。</p>
+<hr>
+<h2 id="chapter-9">九、实际开发最容易出现的五个问题</h2>
+<h3>1. 漏掉依赖</h3>
+<p>计算读取了某个数据，却没有在图中记录它。</p>
+<p><strong>后果：</strong> 缓存已经过期，但系统仍然认为它是 Clean。</p>
+<p>解决方式是显式登记完整依赖，或者使用自动依赖追踪。</p>
+<h3>2. 存在循环依赖</h3>
+<p>A 依赖 B，B 又依赖 A。</p>
+<p><strong>后果：</strong> 普通递归求值可能无限递归。</p>
+<p>解决方式是在建图时检测环，或者执行时维护计算中的状态。确实需要循环求解时，应设计独立的迭代规则。</p>
+<h3>3. 可变对象绕过失效通知</h3>
+<p>例如：</p>
+<pre data-language="C#"><code class="language-csharp">var stats = statsNode.Get();
+
+stats.Attack += 10;
+</code></pre>
+<p>如果 <code>stats</code> 是一个可变引用对象，这次修改可能没有通过 <code>SourceNode.Set()</code>。</p>
+<p>图不会自动发现变化。</p>
+<p>解决方式通常是让修改经过受控 API、使用不可变数据，或者引入可观察数据结构。</p>
+<h3>4. 把 Dirty Flag 当成业务事件</h3>
+<p>假设某个角色连续获得三次道具。</p>
+<pre data-language="示例 / 过程"><code class="language-text">获得道具 A
+获得道具 B
+获得道具 C
+</code></pre>
+<p>Dirty Flag 可以记录：</p>
+<pre data-language="示例 / 过程"><code class="language-text">InventoryUI 需要刷新
+</code></pre>
+<p>但它不能可靠记录：</p>
+<pre data-language="示例 / 过程"><code class="language-text">玩家分别获得过 A、B、C
+</code></pre>
+<p>因为多次失效可能被合并为一个 Dirty 状态。</p>
+<p>因此：</p>
+<p><strong>事件用于表达已经发生的业务事实；脏标记用于表达某个派生结果需要重新验证。</strong></p>
+<p>两者不是替代关系。</p>
+<h3>5. 不必要地构建复杂的全局依赖图</h3>
+<p>假设一个对象只有：</p>
+<pre data-language="示例 / 过程"><code class="language-text">Width、Height → Area
+</code></pre>
+<p>直接写：</p>
+<pre data-language="C#"><code class="language-csharp">public float Area
+{
+    get
+    {
+        if (_dirty)
+        {
+            _cachedArea = width * height;
+            _dirty = false;
+        }
+
+        return _cachedArea;
+    }
+}
+</code></pre>
+<p>可能就已经足够。</p>
+<p>并不是所有缓存都需要完整依赖图。</p>
+<p>只有当依赖关系复杂、存在多个派生层级、失效传播难以手动维护时，构建显式依赖图才会更有价值。</p>
+<hr>
+<h2 id="chapter-10">十、与缓存、记忆化和增量计算的关系</h2>
+<p>这几个概念可以放到同一个体系中理解：</p>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>技术</th>
+<th>解决的问题</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Cache（缓存）</td>
+<td>保存已经获得或计算过的结果</td>
+</tr>
+<tr>
+<td>Memoization（记忆化）</td>
+<td>对函数输入复用对应的计算结果</td>
+</tr>
+<tr>
+<td>Dependency Graph（依赖图）</td>
+<td>描述一个结果依赖哪些数据</td>
+</tr>
+<tr>
+<td>Dirty Flag（脏标记）</td>
+<td>记录缓存结果是否需要重新验证</td>
+</tr>
+<tr>
+<td>Cache Invalidation（缓存失效）</td>
+<td>定义缓存何时不再可信</td>
+</tr>
+<tr>
+<td>Incremental Computation（增量计算）</td>
+<td>尽量复用旧工作，只更新受变化影响的部分</td>
+</tr>
+</tbody></table>
+</div><p>它们之间的关系：</p>
+<div class="flow">
+<div><strong>输入数据发生变化</strong><span>Source Changed</span></div>
+<div><strong>Dependency Graph</strong><span>定位受影响的下游节点</span></div>
+<div><strong>Dirty Flag</strong><span>标记缓存结果需要重新验证</span></div>
+<div><strong>Lazy Evaluation</strong><span>在需要结果时触发计算</span></div>
+<div><strong>Recompute &amp; Cache</strong><span>复用有效中间结果，更新失效节点</span></div>
+</div>
+
+<p>这里有一个值得特别澄清的概念：</p>
+<p><strong>Dirty Flag + Dependency Graph 可以构成一种增量计算系统，但不一定意味着节点内部也是增量计算的。</strong></p>
+<p>例如，某个节点负责对 100 万个数字求和。</p>
+<p>如果其中一个数字发生变化：</p>
+<ul>
+<li>基础 Dirty Flag 实现：可能重新遍历 100 万个数字。</li>
+<li>更细粒度的增量算法：可以直接从总和中减去旧值，再加上新值。</li>
+</ul>
+<p>两者都可能复用依赖图中未受影响的节点，但第二种还进一步利用变化量（Delta）更新节点内部结果。</p>
+<p>因此，依赖图管理的是<strong>哪些部分需要更新</strong>，而真正的增量算法还能解决<strong>每个部分如何以最小代价更新</strong>。</p>
+<hr>
+<h2 id="chapter-11">十一、总结：真正需要建立的思维模型</h2>
+<p>把数据计算看成一个图，而不是一系列彼此独立的函数。</p>
+<p>当输入变化时，系统面对的不是简单的“调用哪个函数”，而是三个更本质的问题：</p>
+<p><strong>1. 变化影响了谁？</strong></p>
+<p>Dependency Graph 回答依赖关系及其传递范围。</p>
+<hr>
+<p><strong>2. 哪些结果已经不能保证正确？</strong></p>
+<p>Dirty Flag 记录尚未完成的重新验证或计算工作。</p>
+<hr>
+<p><strong>3. 什么时候、按照什么顺序重新计算？</strong></p>
+<p>Lazy Evaluation、拓扑顺序和增量计算策略决定执行时机与代价。</p>
+<p>我认为最值得记住的是下面三个原则：</p>
+<p><strong>原则一：依赖关系决定失效传播的范围。</strong></p>
+<p><strong>原则二：失效通知与重新计算应该在概念上分离。</strong></p>
+<p><strong>原则三：Clean 是系统提供的正确性承诺，而 Dirty 表示这份承诺暂时不能成立。</strong></p>
+<p>理解了这三个原则，你就能进一步理解响应式编程（Reactive Programming）、自动依赖追踪、电子表格的公式重算、Unity 层级变换缓存以及各种增量构建系统。</p>
+<p>下一步适合深入的两个主题是 <strong>Topological Sorting（拓扑排序）与增量调度</strong>，以及 <strong>Reactive System（响应式系统）中的自动依赖收集</strong>。它们分别延伸了依赖图的执行顺序问题与依赖图的自动维护问题。</p>
+</article><div class="footer">Dependency Graph · Dirty Flag · What / Why / How</div></main><a class="back-top" href="#top">返回顶部 ↑</a><script>
+(()=>{let dirty=false,batches=0,a=10,e=5;const el=id=>document.getElementById(id);const ids=['total','critical','combat'];
+function paint(){ids.forEach(id=>{const n=el(id);n.classList.toggle('dirty',dirty);n.querySelector('span').textContent=dirty?'Dirty · 缓存待验证':'Clean · 缓存有效';});el('batches').textContent=batches;}
+function change(){const na=Number(el('base').value),ne=Number(el('bonus').value);if(!Number.isFinite(na)||!Number.isFinite(ne))return;if(na===a&&ne===e)return;a=na;e=ne;dirty=true;paint();el('demo-status').textContent='输入已变化，下游结果已标记 Dirty；缓存旧值保留，计算批次不变。';}
+['base','bonus'].forEach(id=>el(id).addEventListener('input',change));
+el('read').addEventListener('click',()=>{if(dirty){const t=a+e;[t,t*2,t*3].forEach((v,i)=>el(ids[i]).querySelector('b').textContent=v);dirty=false;batches++;paint();el('demo-status').textContent='已按依赖顺序重算 TotalAttack、CriticalDamage、CombatPower；每个节点计算一次，恢复 Clean。';}else{el('demo-status').textContent='直接返回有效缓存，本次没有重新计算，累计计算批次不变。';}});
+el('reset').addEventListener('click',()=>{a=10;e=5;dirty=false;batches=0;el('base').value=10;el('bonus').value=5;[15,30,45].forEach((v,i)=>el(ids[i]).querySelector('b').textContent=v);paint();el('demo-status').textContent='当前缓存有效，可以直接使用。';});paint();
+document.querySelectorAll('pre').forEach(pre=>{const btn=document.createElement('button');btn.className='copy';btn.textContent='复制';btn.setAttribute('aria-label','复制代码或示例');btn.addEventListener('click',async()=>{const s=pre.querySelector('code').textContent;try{await navigator.clipboard.writeText(s);btn.textContent='已复制';}catch{const area=document.createElement('textarea');area.value=s;document.body.append(area);area.select();const ok=document.execCommand('copy');area.remove();btn.textContent=ok?'已复制':'请手动选择复制';}setTimeout(()=>btn.textContent='复制',1800);});pre.append(btn);});
+document.getElementById('print').addEventListener('click',()=>window.print());
+})();
+</script></body></html>

@@ -1,0 +1,883 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>缓存失效与依赖追踪 · What、Why、How</title><meta name="description" content="保留完整讲解过程、段落、例子和代码的缓存失效与依赖追踪学习笔记。"><style>
+:root{color-scheme:light;--ink:#242628;--muted:#74787d;--line:#e5e7eb;--link:#235b93}*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:30px}body{margin:0;background:#fff;color:var(--ink);font:18px/1.88 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI","Microsoft YaHei","PingFang SC",sans-serif;-webkit-font-smoothing:antialiased}main{width:min(100% - 48px,820px);margin:58px auto 90px}h1{font-size:34px;line-height:1.42;margin:0 0 14px;letter-spacing:-.7px;text-wrap:balance}h2{font-size:27px;line-height:1.5;margin:48px 0 22px;letter-spacing:-.35px}h3{font-size:22px;line-height:1.55;margin:36px 0 16px}h4{font-size:18px;line-height:1.6;margin:22px 0 12px}p{margin:18px 0}strong{font-weight:700;color:#1d2227}a{color:var(--link);text-underline-offset:4px}hr{margin:42px 0;border:0;border-top:1px solid var(--line)}ul,ol{margin:18px 0;padding-left:1.65em}li{padding-left:3px;margin:9px 0}li>p{margin:10px 0}blockquote{margin:24px 0;padding:1px 0 1px 20px;border-left:3px solid #c7ccd1;color:#41484f}blockquote p{margin:10px 0}code{font-family:ui-monospace,SFMono-Regular,Consolas,"Liberation Mono",monospace}p code,li code,td code{font-size:.87em;background:#f0f1f3;border-radius:4px;padding:2px 5px;overflow-wrap:anywhere}.code-block{margin:22px 0 26px;border:1px solid #e2e5e8;border-radius:9px;overflow:hidden;max-width:100%}.code-header{display:flex;justify-content:space-between;align-items:center;background:#eaecef;color:#5c646d;padding:6px 15px;font-size:12px;line-height:1.8}.copy{background:none;border:none;color:#626b74;font-size:12px;padding:3px 5px;cursor:pointer}.copy:hover{color:#111}pre{margin:0;background:#f7f7f8;overflow:auto;padding:19px 21px;font-size:14px;line-height:1.75;tab-size:4;color:#25374a}pre code{font-size:inherit}.math{font-size:19px;line-height:1.9;text-align:center;margin:25px 0;padding:12px 8px;overflow:auto;color:#293441}.table-scroll{max-width:100%;overflow:auto;margin:24px 0}table{width:100%;border-collapse:collapse;font-size:16px;line-height:1.8}th{text-align:left;background:#f7f8fa;font-weight:600}th,td{border:1px solid #e0e4e8;padding:11px 14px;vertical-align:top;min-width:105px}.toolbar{display:flex;justify-content:flex-end;margin:0 0 22px}.print{font:inherit;font-size:12px;color:#7c8288;background:none;border:none;padding:5px 0;cursor:pointer}.print:hover{color:#222}.toc{font-size:15px;color:#626970;border:1px solid var(--line);border-radius:7px;padding:12px 16px;margin:0 0 32px}.toc summary{cursor:pointer;user-select:none}.toc ol{list-style:none;padding:0;margin:14px 0 3px}.toc li{margin:7px 0;line-height:1.7}.toc a{text-decoration:none}.diagram{margin:28px 0;padding:20px 16px;border:1px solid var(--line);border-radius:8px;overflow:auto;background:#fff}.diagram svg{display:block;width:100%;height:auto;min-width:480px}.diagram text{font-family:system-ui,"Microsoft YaHei",sans-serif}.diagram figcaption,.caption{font-size:14px;line-height:1.8;color:#747b83;margin:12px 0 0}.process{margin:24px auto;text-align:center;max-width:480px;font-size:16px;line-height:1.7}.process>div{padding:10px 14px;background:#f7f8fa;border:1px solid #e4e7ea;border-radius:5px}.process>span{display:block;color:#8a939c;padding:3px}.architecture-flow{margin:26px auto;max-width:560px;text-align:center;font-size:16px}.architecture-flow>div{padding:13px 16px;border:1px solid #e1e5e8;border-radius:6px;background:#fafbfc}.architecture-flow p{margin:5px 0 0;color:#68717b;font-size:15px}.architecture-flow>span{display:block;padding:8px;color:#7c858e;font-size:13px}.experiment{margin:28px 0;padding:23px;border:1px solid #dce1e6;background:#fafbfc;border-radius:8px;font-size:16px;line-height:1.85}.experiment>h4:first-child{margin-top:0}.experiment p{margin:12px 0}.controls{display:grid;grid-template-columns:1fr 1fr;gap:15px 20px;margin:20px 0}.controls label{display:flex;flex-direction:column;gap:7px;font-size:15px}.controls input,.controls select{min-width:0;width:100%;font:inherit;line-height:1.6;border:1px solid #cdd4db;border-radius:5px;padding:8px 10px;background:white;color:var(--ink)}.cache-states{border-top:1px solid #e1e5e8;border-bottom:1px solid #e1e5e8;padding:7px 0}.cache-states p{display:grid;grid-template-columns:minmax(0,1fr) 80px 135px;gap:12px;align-items:center}.cache-states p>span:last-child{font-size:14px;color:#367457}.cache-states p.invalid>span:last-child{color:#a56329}.buttons{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}.buttons button{font:inherit;font-size:14px;line-height:1.7;padding:8px 13px;background:#303943;color:#fff;border:1px solid #303943;border-radius:6px;cursor:pointer}.buttons .secondary{background:white;color:#39434e;border-color:#cdd4db}#input-error{color:#a64c35;font-size:13px}button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible{outline:3px solid #b5d1ec;outline-offset:3px}.skip{position:absolute;left:-9999px}.skip:focus{left:20px;top:10px;padding:10px;background:#fff;z-index:10}footer{margin:60px 0 0;padding-top:20px;border-top:1px solid var(--line);font-size:13px;color:#8a9096;text-align:center}@media(max-width:600px){body{font-size:17px;line-height:1.9}main{width:calc(100% - 36px);margin:28px auto 60px}h1{font-size:28px;letter-spacing:-.4px}h2{font-size:24px;margin-top:38px}h3{font-size:21px;margin-top:30px}p{margin:17px 0}hr{margin:34px 0}pre{font-size:13px;padding:16px}.math{font-size:17px;text-align:left;padding-left:12px}.experiment{padding:17px}.controls{gap:12px}.cache-states p{grid-template-columns:1fr 60px;gap:3px 12px}.cache-states p>span:last-child{grid-column:1/-1}.toc{font-size:14px}.diagram{padding:14px 10px}table{font-size:15px}th,td{padding:10px 12px}.architecture-flow{font-size:15px}}@media print{body{font-size:11pt;line-height:1.75}main{width:auto;margin:0}h1{font-size:24pt}h2{font-size:18pt}h3{font-size:14pt}h1,h2,h3,h4{break-after:avoid}p{orphans:3;widows:3}.toolbar,.toc,.copy,.experiment .controls,.experiment .buttons,#input-error,.skip{display:none}pre{font-size:9pt;white-space:pre-wrap;overflow-wrap:anywhere}.code-block,figure,table{break-inside:avoid}.table-scroll,.diagram{overflow:visible}.diagram svg{min-width:0}.math{font-size:12pt}a{color:inherit;text-decoration:none}*{-webkit-print-color-adjust:exact;print-color-adjust:exact}footer{margin-top:30px}}
+</style></head><body><a class="skip" href="#main">跳到正文</a><main id="main"><article><h1>Cache Invalidation（缓存失效）与 Dependency Tracking（依赖追踪）</h1><div class="toolbar"><button type="button" class="print" onclick="window.print()">打印 / 另存为 PDF</button></div><details class="toc"><summary>目录 · 12 个章节</summary><nav aria-label="文档目录"><ol><li><a href="#section-1">一、先从一个最简单的问题开始：缓存为什么会失效？</a></li><li><a href="#section-2">二、What：Cache Invalidation 到底是什么？</a></li><li><a href="#section-3">三、What：Dependency Tracking 到底是什么？</a></li><li><a href="#section-4">四、Why：为什么必须解决缓存失效和依赖追踪？</a></li><li><a href="#section-5">五、How：缓存失效究竟可以怎样实现？</a></li><li><a href="#section-6">六、How：依赖追踪究竟是怎么实现的？</a></li><li><a href="#section-7">七、How：在 Unity / C# 中应该怎样实现？</a></li><li><a href="#section-8">八、Unity 内部实际上也在运用这些思想</a></li><li><a href="#section-9">九、更深一层：Cache Invalidation 与 Dependency Tracking 最困难的地方在哪里？</a></li><li><a href="#section-10">十、从架构角度重新理解这两个概念</a></li><li><a href="#section-11">十一、真正掌握以后，应该怎样思考一个缓存设计？</a></li><li><a href="#section-12">十二、最终总结：这两个概念真正的本质</a></li></ol></nav></details>
+<p>我们按照 <strong>What、Why、How，直击本质</strong>的方式来理解这两个概念。</p>
+<p>先把它们最核心的分工说清楚：</p>
+<blockquote>
+<p><strong>Cache Invalidation 负责决定「哪些旧结果不能继续被信任」；Dependency Tracking 负责知道「谁可能受到变化影响」。</strong></p>
+</blockquote>
+<p>缓存保存了过去得到的结果，让系统不必重复完成同一份工作。但当原始数据发生变化，我们就必须回答：过去的结果，现在还能继续使用吗？如果不能，是哪些结果需要更新？</p>
+<p>这就是缓存失效与依赖追踪要解决的问题。</p>
+<hr>
+<h2 id="section-1">一、先从一个最简单的问题开始：缓存为什么会失效？</h2>
+<p>假设我们在开发一个游戏，玩家的最终攻击力由基础攻击力与装备加成决定：</p>
+<div class="code-block"><div class="code-header"><span>C#</span><button type="button" class="copy">复制</button></div><pre><code class="language-csharp">int finalAttack = baseAttack + equipmentBonus;
+</code></pre></div>
+<p>当基础攻击力是 100、装备加成是 50 时，最终攻击力就是 150。</p>
+<p>如果每次读取最终攻击力都重新执行计算，就存在重复工作。对于一次加法，这点成本几乎不值得关注；但如果公式需要遍历装备、Buff、技能、配置，甚至查询其他系统，计算成本就可能明显增加。</p>
+<p>于是我们把计算结果保存下来：</p>
+<div class="code-block"><div class="code-header"><span>C#</span><button type="button" class="copy">复制</button></div><pre><code class="language-csharp">int cachedFinalAttack = 150;
+</code></pre></div>
+<p>下一次需要最终攻击力时，直接复用这个结果。</p>
+<p>到这里，缓存完成了它的工作：<strong>用保存的结果，避免重复获取或计算。</strong></p>
+<p>但是，现在玩家更换了一件装备，装备加成从 50 变成了 80。</p>
+<p>真正的最终攻击力应该变成：</p>
+<div class="math">100 + 80 = 180</div>
+
+<p>而缓存中保存的仍然是 150。</p>
+<p>这时，如果继续直接返回缓存，就会得到不符合当前状态的结果。</p>
+<p>问题不在于缓存中的 150 当初算错了，而在于：</p>
+<blockquote>
+<p><strong>它是过去状态下的正确结果，却不一定是当前状态下的正确结果。</strong></p>
+</blockquote>
+<p>因此，缓存系统不仅要保存结果，还必须管理结果的有效性。</p>
+<p>接下来就出现两个问题：</p>
+<ol>
+<li>**缓存失效：**什么时候不能继续直接使用这个旧结果？</li>
+<li>**依赖追踪：**装备加成变化，究竟会影响哪些结果？</li>
+</ol>
+<hr>
+<h2 id="section-2">二、What：Cache Invalidation 到底是什么？</h2>
+<h3>2.1 失效的本质：撤销旧结果的直接复用资格</h3>
+<p>Cache Invalidation 通常译为「缓存失效」，也可以理解为让缓存失效、使缓存作废。</p>
+<p>它的核心不是某个固定的数据结构，也不是必须调用一个名为 <code>Invalidate()</code> 的方法，而是：</p>
+<blockquote>
+<p><strong>当旧结果不再具有足够的有效性依据时，阻止系统继续无条件地复用它。</strong></p>
+</blockquote>
+<p>例如，装备发生变化后，系统可以把攻击力缓存标记为 Dirty，表示下次读取时需要重新计算。</p>
+<p>这里要注意：<strong>标记失效，不一定意味着已经证明结果数值改变了。</strong></p>
+<p>假设最终攻击力存在上限：</p>
+<div class="code-block"><div class="code-header"><span>C#</span><button type="button" class="copy">复制</button></div><pre><code class="language-csharp">int finalAttack = Math.Min(baseAttack + equipmentBonus, 999);
+</code></pre></div>
+<p>装备加成虽然变化，但最终攻击力可能仍然是 999。系统依然可以保守地让缓存失效，因为它尚未重新验证结果。</p>
+<p>所以，失效更准确地说是在表达：<strong>不能再仅凭原先的依据，直接信任这份缓存。</strong></p>
+<h3>2.2 缓存失效不等于删除缓存</h3>
+<p>缓存失效之后，可以有多种处理方式。</p>
+<ul>
+<li>删除旧条目，下一次读取时重新获取。</li>
+<li>保留旧结果，但标记为 Dirty，下一次读取时重新计算。</li>
+<li>立即重新计算，并替换旧结果。</li>
+<li>安排稍后的批量刷新。</li>
+<li>在业务明确允许的情况下，短暂返回旧值，同时触发刷新。</li>
+</ul>
+<p>这意味着：<strong>失效、删除与重新计算，是相互关联但不同的动作。</strong></p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>动作</th>
+<th>处理的问题</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Invalidation（失效）</td>
+<td>旧结果还能不能按照当前规则直接复用？</td>
+</tr>
+<tr>
+<td>Removal / Eviction（删除／淘汰）</td>
+<td>这个缓存条目是否继续保留？</td>
+</tr>
+<tr>
+<td>Recomputation / Refresh（重算／刷新）</td>
+<td>怎样获得符合当前要求的新结果？</td>
+</tr>
+</tbody></table></div>
+<p>一个仍然有效的缓存，也可能因为空间不足而被淘汰；一个已经失效的缓存，也可能继续保留在内存里，等待重新计算。</p>
+<h3>2.3 有效性取决于系统要求的一致性契约</h3>
+<p>「有效」并不总是意味着与权威数据实时完全一致。</p>
+<p>例如，战斗属性可能要求更换装备后的下一次读取必须得到新值；排行榜可能允许几秒延迟；某些 UI 可以在下一帧才更新。</p>
+<p>因此，我们需要先明确：系统在什么时间、以什么标准要求这份缓存与源数据保持一致？</p>
+<p><strong>缓存是否有效，要根据它是否满足当前的一致性与新鲜度要求来判断。</strong></p>
+<p>实现上，也不一定只有「有效／无效」两个状态。复杂系统还可能区分未初始化、有效、脏（Dirty）、正在刷新（Refreshing）、刷新失败（Failed）等状态。</p>
+<hr>
+<h2 id="section-3">三、What：Dependency Tracking 到底是什么？</h2>
+<h3>3.1 依赖的本质：一个结果的正确性受什么影响？</h3>
+<p>假设有这样一个玩家数据系统：</p>
+<div class="code-block"><div class="code-header"><span>C#</span><button type="button" class="copy">复制</button></div><pre><code class="language-csharp">int baseAttack = 100;
+int equipmentBonus = 50;
+int finalAttack = baseAttack + equipmentBonus;
+</code></pre></div>
+<p>我们说：</p>
+<div class="math">FinalAttack = f(BaseAttack, EquipmentBonus)</div>
+
+<p>那么：</p>
+<div class="math">BaseAttack → FinalAttack</div>
+
+<div class="math">EquipmentBonus → FinalAttack</div>
+
+<p>箭头的含义是：</p>
+<p><strong>左侧的数据发生变化，可能影响右侧计算结果。</strong></p>
+<p>这是一种数据依赖（Data Dependency）。</p>
+<p>依赖追踪的本质，就是将这种原本隐含在计算过程中的关系显式记录下来，使系统能够回答：</p>
+<blockquote>
+<p>当某个数据发生变化时，哪些派生结果可能受到影响？</p>
+</blockquote>
+<h3>3.2 为什么这是一张图，而不只是一个变量列表？</h3>
+<p>因为真实的系统经常存在多层依赖。</p>
+<p>例如：</p>
+<div class="math">FinalAttack = BaseAttack + EquipmentBonus</div>
+
+<div class="math">PowerScore = FinalAttack × 10 + Defense</div>
+
+<div class="math">UI = Format(PowerScore)</div>
+
+<p>这意味着最终攻击力依赖两个原始属性，战斗力又依赖最终攻击力，UI 再依赖战斗力。</p>
+<figure class="diagram"><svg viewBox="0 0 660 365" role="img" aria-labelledby="graph-title graph-desc"><title id="graph-title">玩家属性的依赖关系图</title><desc id="graph-desc">基础攻击力和装备加成影响最终攻击力，最终攻击力和防御力影响战斗力，战斗力影响 UI 显示。昵称与这条计算链无关。</desc><defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10Z" fill="#6a8975"/></marker></defs><g fill="none" stroke="#6a8975" stroke-width="2" marker-end="url(#a)"><path d="M170 49 L250 121"/><path d="M170 137 L250 137"/><path d="M320 161 L320 220"/><path d="M490 137 L390 237"/><path d="M320 264 L320 308"/></g><g fill="#e5efe5" stroke="#b6cdb9"><rect x="20" y="27" width="150" height="44" rx="9"/><rect x="20" y="115" width="150" height="44" rx="9"/><rect x="250" y="115" width="140" height="46" rx="9"/><rect x="490" y="115" width="150" height="44" rx="9"/><rect x="250" y="220" width="140" height="44" rx="9"/><rect x="250" y="308" width="140" height="44" rx="9"/></g><rect x="490" y="27" width="150" height="44" rx="9" fill="#f0f0eb" stroke="#d5d8cf"/><g font-size="15" text-anchor="middle" fill="#245e4f"><text x="95" y="55">基础攻击力</text><text x="95" y="143">装备加成</text><text x="320" y="144">最终攻击力</text><text x="565" y="143">防御力</text><text x="320" y="248">战斗力</text><text x="320" y="336">UI 显示</text><text x="565" y="55" fill="#748075">昵称（无关）</text></g><text x="20" y="345" font-size="12" fill="#65716b">箭头：左侧变化可能影响右侧</text></svg><figcaption class="caption">图 1 · 修改基础攻击力会影响最终攻击力、战斗力及其显示；修改昵称不会影响这条计算链。</figcaption></figure>
+
+<p>现在我们修改基础攻击力：</p>
+<div class="code-block"><div class="code-header"><span>C#</span><button type="button" class="copy">复制</button></div><pre><code class="language-csharp">baseAttack = 120;
+</code></pre></div>
+<p>系统就可以顺着这张图识别受影响节点：</p>
+<p><code>基础攻击力 → 最终攻击力 → 战斗力 → UI 显示</code></p>
+<p>而假设我们只修改玩家昵称，最终攻击力就不应该受到影响。</p>
+<p>这带来了一个非常重要的性能价值：</p>
+<p><strong>系统不需要重新计算所有数据，只需要处理可能受到变化影响的部分。</strong></p>
+<h3>3.3 Dependency Tracking 实际上在追踪什么？</h3>
+<p>从实现角度看，核心是记录两类关系。</p>
+<p><strong>正向关系：我依赖谁？</strong></p>
+<p>例如：</p>
+<div class="code-block"><div class="code-header"><span>说明</span><button type="button" class="copy">复制</button></div><pre><code class="language-text">FinalAttack 依赖:
+    BaseAttack
+    EquipmentBonus
+
+PowerScore 依赖:
+    FinalAttack
+    Defense
+</code></pre></div>
+<p>正向关系方便在计算结果时检查所有输入是否仍然有效。</p>
+<p><strong>反向关系：谁依赖我？</strong></p>
+<p>例如：</p>
+<div class="code-block"><div class="code-header"><span>说明</span><button type="button" class="copy">复制</button></div><pre><code class="language-text">BaseAttack 被以下节点依赖:
+    FinalAttack
+
+FinalAttack 被以下节点依赖:
+    PowerScore
+</code></pre></div>
+<p>反向关系方便在原始数据发生变化时，找到需要失效的下游节点。</p>
+<p>这也是为什么很多响应式系统都会维护订阅者集合。</p>
+<p>Vue 的响应式机制便是一个经典例子：属性读取时记录当前计算者，属性被修改时查找依赖它的计算者；<code>computed</code> 在此基础上管理缓存失效和重新计算。</p>
+<h3>3.4 依赖追踪不是简单地记录谁调用了谁</h3>
+<p>这一点非常重要。</p>
+<p>假设：</p>
+<div class="code-block"><div class="code-header"><span>C#</span><button type="button" class="copy">复制</button></div><pre><code class="language-csharp">int CalculateAttack(Player player)
+{
+    return player.BaseAttack + player.EquipmentBonus;
+}
+</code></pre></div>
+<p>这里调用 <code>CalculateAttack()</code> 的函数，不一定就是计算结果的真正数据依赖。</p>
+<p>真正影响返回值的是 <code>BaseAttack</code> 和 <code>EquipmentBonus</code>。</p>
+<p>还要考虑这样的条件分支：</p>
+<div class="code-block"><div class="code-header"><span>C#</span><button type="button" class="copy">复制</button></div><pre><code class="language-csharp">int CalculateAttack(Player player)
+{
+    if (player.IsBerserk)
+        return player.BaseAttack * 2;
+
+    return player.BaseAttack + player.EquipmentBonus;
+}
+</code></pre></div>
+<p>这里存在<strong>动态依赖</strong>。</p>
+<p>当 <code>IsBerserk == true</code> 时，本次计算实际读取：</p>
+<p><code>IsBerserk</code>、<code>BaseAttack</code></p>
+<p>当 <code>IsBerserk == false</code> 时，本次计算实际读取：</p>
+<p><code>IsBerserk</code>、<code>BaseAttack</code>、<code>EquipmentBonus</code></p>
+<p>因此，依赖并不一定是固定不变的。运行时的分支路径可能决定当前究竟依赖哪些数据。</p>
+<p>一旦 <code>IsBerserk</code> 改变，原先的依赖集合可能也需要重新建立。</p>
+<p>这就是后面要讲的静态依赖追踪与动态依赖追踪的区别。</p>
+<hr>
+<h2 id="section-4">四、Why：为什么必须解决缓存失效和依赖追踪？</h2>
+<p>这里涉及两个看似冲突的目标：</p>
+<p><strong>正确性：不能使用不符合当前要求的缓存。</strong></p>
+<p><strong>性能：不能因为某个数据变化，就重新计算所有缓存。</strong></p>
+<p>我们可以从三个反例理解。</p>
+<h3>4.1 完全不失效：正确性受到破坏</h3>
+<p>例如游戏装备系统：</p>
+<p>玩家更换武器，但是战斗力 UI 仍然显示旧数值。</p>
+<p>这通常不是因为战斗力公式计算错了，而是系统根本不知道何时应该重新调用这个公式。</p>
+<p>此时缓存优化破坏了业务正确性。</p>
+<h3>4.2 所有变化都清空缓存：性能受到破坏</h3>
+<p>假设玩家有 100 个派生属性，每个属性的计算成本都不低。</p>
+<p>但玩家只是修改了昵称。</p>
+<p>如果我们采用：</p>
+<div class="code-block"><div class="code-header"><span>C#</span><button type="button" class="copy">复制</button></div><pre><code class="language-csharp">void OnPlayerDataChanged()
+{
+    RecalculateAll();
+}
+</code></pre></div>
+<p>那么昵称变化也会触发攻击力、防御力、技能伤害、装备评分等全部重新计算。</p>
+<p>这当然能够覆盖许多失效情况，但效率很低。</p>
+<p>更准确的做法，是通过依赖关系限制重新计算范围。</p>
+<h3>4.3 每次读取都重算：缓存失去意义</h3>
+<p>有一种看起来绝对安全的方案：</p>
+<div class="code-block"><div class="code-header"><span>C#</span><button type="button" class="copy">复制</button></div><pre><code class="language-csharp">public int FinalAttack =&gt;
+    _baseAttack + _equipmentBonus;
+</code></pre></div>
+<p>对于这个简单加法，它完全合理，甚至可能比维护缓存更好。</p>
+<p>但是当计算需要遍历数万个单位、分析复杂的状态、查询磁盘或者执行昂贵布局计算时，重复执行的成本就可能非常高。</p>
+<p>于是，我们不希望所有读取都重新计算。</p>
+<p>这也意味着：<strong>缓存的收益来自减少重复工作，而缓存失效的职责是防止这种复用越过正确性的边界。</strong></p>
+<h3>4.4 这两个技术共同处理的根本矛盾</h3>
+<p>我们可以把设计目标表示为：</p>
+<div class="math">min（重复计算成本 + 维护依赖成本）</div>
+
+<p>前提是：</p>
+<div class="math">缓存满足系统要求的一致性契约</div>
+
+<p>也就是说，性能优化必须处在正确性的约束之下。</p>
+<p>有两个重要判断：</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>失效决策</th>
+<th>实际受影响</th>
+<th>实际不受影响</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>标记失效</td>
+<td>正确识别</td>
+<td>过度失效，多做工作</td>
+</tr>
+<tr>
+<td>未标记失效</td>
+<td>漏判，可能返回旧结果</td>
+<td>正确跳过</td>
+</tr>
+</tbody></table></div>
+<p>因此，<strong>漏判比过度失效更加危险</strong>，至少对于要求严格一致性的缓存而言是这样。</p>
+<p>不过，并非所有场景都要求数据绝对实时。例如，游戏排行榜可以接受几秒延迟，某些 UI 允许下一帧更新。缓存策略需要根据业务的一致性要求来设计，而不是一律追求同步更新。</p>
+<hr>
+<h2 id="section-5">五、How：缓存失效究竟可以怎样实现？</h2>
+<p>缓存失效并没有唯一的实现方式。</p>
+<p>关键问题是：</p>
+<blockquote>
+<p>系统依靠什么证据，判断缓存还能不能继续使用？</p>
+</blockquote>
+<p>常见有五类实现策略。</p>
+<h3>5.1 第一种：主动失效（Explicit Invalidation）</h3>
+<p>最简单的方式，就是由修改数据的代码主动通知缓存。</p>
+<div class="code-block"><div class="code-header"><span>C#</span><button type="button" class="copy">复制</button></div><pre><code class="language-csharp">public void SetEquipmentBonus(int value)
+{
+    if (_equipmentBonus == value)
+        return;
+
+    _equipmentBonus = value;
+
+    // 装备加成改变，最终攻击力可能过期
+    _attackDirty = true;
+}
+</code></pre></div>
+<p>它的逻辑非常清楚：</p>
+<p>数据发生变化 → 将对应缓存标记为失效。</p>
+<p>优势是实现简单，容易理解。</p>
+<p>问题是所有修改路径都必须正确执行失效逻辑。</p>
+<p>例如：</p>
+<div class="code-block"><div class="code-header"><span>C#</span><button type="button" class="copy">复制</button></div><pre><code class="language-csharp">_equipmentBonus = 100;
+</code></pre></div>
+<p>如果其他代码直接修改私有字段，绕过统一方法，就可能遗漏缓存失效。</p>
+<p>所以，这实际上又引出了一个你之前学习过的概念：<strong>信息隐藏（Information Hiding）。</strong></p>
+<p>信息隐藏在这里不只是为了封装代码，而是在保护一个不变量：</p>
+<div class="math">相关数据修改 ⇒ 缓存被正确失效</div>
+
+<p>如果允许外部绕过修改入口，这个不变量就无法保证。</p>
+<h3>5.2 第二种：版本号（Versioning）</h3>
+<p>除了 Dirty Flag，还可以用版本号判断。</p>
+<p>我们先给源数据一个版本号：</p>
+<div class="code-block"><div class="code-header"><span>C#</span><button type="button" class="copy">复制</button></div><pre><code class="language-csharp">private long _attackRevision = 0;
+private long _cachedRevision = -1;
+private int _cachedAttack;
+</code></pre></div>
+<p>当攻击力相关数据发生变化：</p>
+<div class="code-block"><div class="code-header"><span>C#</span><button type="button" class="copy">复制</button></div><pre><code class="language-csharp">_attackRevision++;
+</code></pre></div>
+<p>读取缓存时：</p>
+<div class="code-block"><div class="code-header"><span>C#</span><button type="button" class="copy">复制</button></div><pre><code class="language-csharp">public int FinalAttack
+{
+    get
+    {
+        if (_cachedRevision != _attackRevision)
+        {
+            _cachedAttack = _baseAttack + _equipmentBonus;
+            _cachedRevision = _attackRevision;
+        }
+
+        return _cachedAttack;
+    }
+}
+</code></pre></div>
+<p>这里就不需要 <code>isDirty</code> 了。</p>
+<p>系统通过版本差异判断缓存是否过期：</p>
+<div class="math">Valid ⇔ V<sub>cache</sub> = V<sub>source</sub></div>
+
+<p>这个公式成立的前提，是版本号确实覆盖了所有相关变化，且版本标识能够可靠区分不同状态。</p>
+<p>版本号与脏标记有不同的侧重点：</p>
+<p><strong>Dirty Flag 记录一种状态：这个缓存需要重新计算。</strong></p>
+<p><strong>Version 记录一种历史关系：这个缓存对应哪一次源数据修订。</strong></p>
+<p>尤其在异步计算中，版本号可以帮助识别一个结果究竟基于哪个旧状态产生。</p>
+<p>不过，版本号并不能自动告诉系统哪些数据相关；它仍然需要正确的依赖范围。</p>
+<h3>5.3 第三种：TTL（Time To Live）</h3>
+<p>对于服务器数据缓存，我们可能无法直接观察源数据每一次变化。</p>
+<p>例如：</p>
+<div class="code-block"><div class="code-header"><span>说明</span><button type="button" class="copy">复制</button></div><pre><code class="language-text">缓存玩家资料，过期时间 60 秒。
+</code></pre></div>
+<p>读取时：</p>
+<div class="code-block"><div class="code-header"><span>说明</span><button type="button" class="copy">复制</button></div><pre><code class="language-text">当前时间 &lt; 过期时间：
+    允许继续使用缓存
+
+当前时间 &gt;= 过期时间：
+    重新获取玩家资料
+</code></pre></div>
+<p>这里使用的不是精确的依赖关系，而是时间策略。</p>
+<p>它的基本思想是：</p>
+<p><strong>即使不知道源数据什么时候变化，也可以限制在某段时间之后必须重新检查。</strong></p>
+<p>但必须注意：</p>
+<p>TTL 不保证过期之前的数据一定正确。</p>
+<p>例如，缓存生成后第 1 秒，数据库就更新了玩家资料，而缓存第 60 秒才到期，那么中间可能持续返回旧数据。</p>
+<p>所以 TTL 更准确地说是一种过期策略，而不是严格的变化检测机制。</p>
+<h3>5.4 第四种：事件驱动失效（Event-driven Invalidation）</h3>
+<p>我们还可以让数据修改时发出事件：</p>
+<div class="code-block"><div class="code-header"><span>C#</span><button type="button" class="copy">复制</button></div><pre><code class="language-csharp">public event Action OnEquipmentChanged;
+</code></pre></div>
+<p>装备修改：</p>
+<div class="code-block"><div class="code-header"><span>C#</span><button type="button" class="copy">复制</button></div><pre><code class="language-csharp">public void ChangeEquipment()
+{
+    // 修改装备数据...
+
+    OnEquipmentChanged?.Invoke();
+}
+</code></pre></div>
+<p>监听方：</p>
+<div class="code-block"><div class="code-header"><span>C#</span><button type="button" class="copy">复制</button></div><pre><code class="language-csharp">equipment.OnEquipmentChanged += InvalidateAttack;
+</code></pre></div>
+<p>这种方法把源数据修改者与缓存维护者解耦。</p>
+<p>但是注意：</p>
+<p><strong>事件是变化传播机制，并不是依赖追踪本身。</strong></p>
+<p>订阅事件之前，开发者仍然需要知道应该监听哪个事件。</p>
+<p>而且，如果订阅关系缺失、事件丢失、或者事件在错误的时机发出，缓存仍可能出现一致性问题。</p>
+<h3>5.5 第五种：依赖驱动失效（Dependency-based Invalidation）</h3>
+<p>这是我们今天重点讨论的方式。</p>
+<p>假设系统维护着这样一份关系：</p>
+<figure class="diagram"><svg viewBox="0 0 660 365" role="img" aria-labelledby="graph-small-title graph-small-desc"><title id="graph-small-title">玩家属性的依赖关系图</title><desc id="graph-small-desc">基础攻击力和装备加成影响最终攻击力，最终攻击力和防御力影响战斗力，战斗力影响 UI 显示。昵称与这条计算链无关。</desc><defs><marker id="a-small" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10Z" fill="#6a8975"/></marker></defs><g fill="none" stroke="#6a8975" stroke-width="2" marker-end="url(#a-small)"><path d="M170 49 L250 121"/><path d="M170 137 L250 137"/><path d="M320 161 L320 220"/><path d="M490 137 L390 237"/><path d="M320 264 L320 308"/></g><g fill="#e5efe5" stroke="#b6cdb9"><rect x="20" y="27" width="150" height="44" rx="9"/><rect x="20" y="115" width="150" height="44" rx="9"/><rect x="250" y="115" width="140" height="46" rx="9"/><rect x="490" y="115" width="150" height="44" rx="9"/><rect x="250" y="220" width="140" height="44" rx="9"/><rect x="250" y="308" width="140" height="44" rx="9"/></g><rect x="490" y="27" width="150" height="44" rx="9" fill="#f0f0eb" stroke="#d5d8cf"/><g font-size="15" text-anchor="middle" fill="#245e4f"><text x="95" y="55">基础攻击力</text><text x="95" y="143">装备加成</text><text x="320" y="144">最终攻击力</text><text x="565" y="143">防御力</text><text x="320" y="248">战斗力</text><text x="320" y="336">UI 显示</text><text x="565" y="55" fill="#748075">昵称（无关）</text></g><text x="20" y="345" font-size="12" fill="#65716b">箭头：左侧变化可能影响右侧</text></svg><figcaption>沿箭头可以定位上游变化所影响的派生结果。</figcaption></figure>
+
+<p>当 <code>BaseAttack</code> 发生变化，系统根据依赖图找到受影响的节点。</p>
+<p>它可以逐层传播失效：</p>
+<div class="process"><div>BaseAttack 修改</div><span>↓</span><div>FinalAttack 标记 Dirty</div><span>↓</span><div>PowerScore 标记 Dirty</div><span>↓</span><div>PowerUI 请求更新</div></div>
+
+<p>此时并不一定立即重算，而是等到相应结果被使用时再计算。</p>
+<p>五种方式的适用场景可以概括如下：</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>机制</th>
+<th>判断依据</th>
+<th>典型场景</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>主动失效</td>
+<td>修改代码主动标记</td>
+<td>游戏属性、本地缓存</td>
+</tr>
+<tr>
+<td>版本号</td>
+<td>源版本与缓存版本比较</td>
+<td>配置、快照、异步结果</td>
+</tr>
+<tr>
+<td>TTL</td>
+<td>时间是否到期</td>
+<td>网络请求、服务端缓存</td>
+</tr>
+<tr>
+<td>事件驱动</td>
+<td>收到变更通知</td>
+<td>多模块状态同步</td>
+</tr>
+<tr>
+<td>依赖驱动</td>
+<td>依赖图中的上游节点变化</td>
+<td>响应式 UI、增量计算</td>
+</tr>
+</tbody></table></div>
+<p>这些方式并不互斥。一个复杂系统完全可能同时使用事件、依赖图、版本号和 TTL。</p>
+<hr>
+<h2 id="section-6">六、How：依赖追踪究竟是怎么实现的？</h2>
+<p>我们已经知道依赖追踪要回答：</p>
+<p><strong>谁依赖谁？数据变化又应该通知谁？</strong></p>
+<p>真正的实现可以分成三种思路。</p>
+<h3>6.1 显式依赖：开发者直接声明</h3>
+<p>例如：</p>
+<div class="code-block"><div class="code-header"><span>说明</span><button type="button" class="copy">复制</button></div><pre><code class="language-text">FinalAttack:
+    BaseAttack
+    EquipmentBonus
+
+PowerScore:
+    FinalAttack
+    Defense
+</code></pre></div>
+<p>可以将依赖信息保存在一个映射中：</p>
+<div class="code-block"><div class="code-header"><span>C#</span><button type="button" class="copy">复制</button></div><pre><code class="language-csharp">Dictionary&lt;string, List&lt;string&gt;&gt; dependents;
+</code></pre></div>
+<p>例如：</p>
+<div class="code-block"><div class="code-header"><span>说明</span><button type="button" class="copy">复制</button></div><pre><code class="language-text">dependents[&quot;BaseAttack&quot;] = [&quot;FinalAttack&quot;]
+
+dependents[&quot;FinalAttack&quot;] = [&quot;PowerScore&quot;]
+</code></pre></div>
+<p>当 <code>BaseAttack</code> 改变，系统查找对应的下游节点，并逐步失效。</p>
+<p>这里维护的是反向依赖索引：<strong>给我一个发生变化的节点，我就能查出所有直接受它影响的节点。</strong></p>
+<p>这种实现适合依赖关系清晰且相对稳定的场景。</p>
+<p>但如果新增一个新的派生属性，开发者就需要同步维护依赖定义。</p>
+<h3>6.2 动态依赖：在数据读取时自动记录</h3>
+<p>这是响应式系统非常有意思的地方。</p>
+<p>首先假设系统有一个全局的计算上下文：</p>
+<div class="code-block"><div class="code-header"><span>说明</span><button type="button" class="copy">复制</button></div><pre><code class="language-text">CurrentComputation = null
+</code></pre></div>
+<p>现在需要计算 <code>FinalAttack</code>：</p>
+<div class="code-block"><div class="code-header"><span>说明</span><button type="button" class="copy">复制</button></div><pre><code class="language-text">CurrentComputation = FinalAttack
+</code></pre></div>
+<p>执行计算时：</p>
+<div class="code-block"><div class="code-header"><span>C#</span><button type="button" class="copy">复制</button></div><pre><code class="language-csharp">int finalAttack = ReadBaseAttack()
+                + ReadEquipmentBonus();
+</code></pre></div>
+<p>当调用 <code>ReadBaseAttack()</code> 时，系统发现：</p>
+<div class="code-block"><div class="code-header"><span>说明</span><button type="button" class="copy">复制</button></div><pre><code class="language-text">当前正在计算 FinalAttack
+
+读取了 BaseAttack
+</code></pre></div>
+<p>于是自动建立依赖：</p>
+<div class="code-block"><div class="code-header"><span>说明</span><button type="button" class="copy">复制</button></div><pre><code class="language-text">BaseAttack → FinalAttack
+</code></pre></div>
+<p>接着读取装备加成：</p>
+<div class="code-block"><div class="code-header"><span>说明</span><button type="button" class="copy">复制</button></div><pre><code class="language-text">EquipmentBonus → FinalAttack
+</code></pre></div>
+<p>计算结束之后：</p>
+<div class="code-block"><div class="code-header"><span>说明</span><button type="button" class="copy">复制</button></div><pre><code class="language-text">CurrentComputation = null
+</code></pre></div>
+<p>这样一次实际计算就建立了依赖关系。</p>
+<p>其本质不复杂：</p>
+<p><strong>在计算期间，记录它读取过哪些可观察数据。</strong></p>
+<p>这就是许多响应式系统中的 <code>track()</code> 思路。</p>
+<p>当源数据变化，再通过 <code>trigger()</code> 找到对应订阅者。Vue 官方对其响应式系统的说明采用了这一模型。</p>
+<p>不过，需要特别注意两个限制。</p>
+<p>第一，只有被追踪机制观察到的读取才会建立依赖。读取普通字段、外部文件或者没有接入追踪机制的状态，并不会自动产生依赖记录。</p>
+<p>第二，计算可能存在条件分支。因此重新计算时，需要更新当前依赖集合，而不是永远保留所有历史依赖。</p>
+<p>例如之前的狂暴状态：</p>
+<div class="code-block"><div class="code-header"><span>C#</span><button type="button" class="copy">复制</button></div><pre><code class="language-csharp">if (player.IsBerserk)
+    return player.BaseAttack * 2;
+
+return player.BaseAttack + player.EquipmentBonus;
+</code></pre></div>
+<p>当狂暴状态开启以后，当前计算就可能不再需要装备加成。动态依赖系统通常会在重新计算时重建或核对订阅关系，避免旧依赖长期保留。</p>
+<h3>6.3 增量计算：只重新计算受影响的节点</h3>
+<p>这是依赖追踪与缓存结合后，真正强大的地方。</p>
+<p>我们来看一个交互示例。</p>
+<div class="experiment" id="experiment"><h4>交互实验：依赖变化与缓存失效（模拟）</h4><p>修改原始数据，观察哪些缓存需要重算。这里使用快照比较模拟缓存失效检测，方便观察变化。</p><noscript><p>此实验需要 JavaScript；正文内容无需 JavaScript 即可阅读。</p></noscript><div class="controls"><label for="base">基础攻击力<input id="base" type="number" min="0" max="10000" step="1" value="100"></label><label for="bonus">装备加成<input id="bonus" type="number" min="0" max="10000" step="1" value="50"></label><label for="defense">防御力<input id="defense" type="number" min="0" max="10000" step="1" value="30"></label><label for="nickname">玩家昵称<select id="nickname"><option>Knight</option><option>Mage</option><option>Ranger</option></select></label></div><p id="input-error" role="status"></p><h4>缓存状态</h4><div class="cache-states" aria-live="polite"><p id="attack-state"><strong>最终攻击力</strong><span id="attack-value">150</span><span id="attack-status">有效</span></p><p id="power-state"><strong>战斗力</strong><span id="power-value">1530</span><span id="power-status">有效</span></p></div><div class="buttons"><button id="refresh" type="button">重新计算并刷新缓存</button><button id="reset" class="secondary" type="button">重置</button></div><p id="experiment-status" class="caption" role="status">当前缓存与输入快照一致。</p></div>
+
+<p>这个实验揭示了三件事。</p>
+<p>首先，改变昵称不应该影响战斗属性的缓存。其次，改变防御力可以让战斗力缓存失效，但不需要让最终攻击力缓存失效。最后，改变基础攻击力，会通过依赖链间接影响战斗力。</p>
+<p>注意，实验中的失效状态是通过当前值与缓存快照比较得出的，因此当数值恢复原值时，状态也会恢复为有效。真正采用 Dirty Flag 的系统，一旦标脏，通常会保持脏状态直到重新验证或计算。</p>
+<p>这代表两种不同策略：<strong>基于快照的有效性验证</strong>与<strong>基于变化通知的保守失效</strong>。</p>
+<hr>
+<h2 id="section-7">七、How：在 Unity / C# 中应该怎样实现？</h2>
+<p>我们先不构建复杂的通用响应式框架，而是实现一个容易维护、能够保证基本正确性的玩家属性缓存。</p>
+<h3>7.1 实现一个手动依赖管理的缓存</h3>
+<div class="code-block"><div class="code-header"><span>C#</span><button type="button" class="copy">复制</button></div><pre><code class="language-csharp">public sealed class PlayerStats
+{
+    private int _baseAttack;
+    private int _equipmentBonus;
+
+    // 派生结果的缓存
+    private int _cachedFinalAttack;
+
+    // 初始尚未计算
+    private bool _attackDirty = true;
+
+    public int BaseAttack
+    {
+        get =&gt; _baseAttack;
+
+        set
+        {
+            if (_baseAttack == value)
+                return;
+
+            _baseAttack = value;
+
+            InvalidateAttack();
+        }
+    }
+
+    public int EquipmentBonus
+    {
+        get =&gt; _equipmentBonus;
+
+        set
+        {
+            if (_equipmentBonus == value)
+                return;
+
+            _equipmentBonus = value;
+
+            InvalidateAttack();
+        }
+    }
+
+    public int FinalAttack
+    {
+        get
+        {
+            if (_attackDirty)
+            {
+                _cachedFinalAttack =
+                    _baseAttack + _equipmentBonus;
+
+                _attackDirty = false;
+            }
+
+            return _cachedFinalAttack;
+        }
+    }
+
+    private void InvalidateAttack()
+    {
+        _attackDirty = true;
+    }
+}
+</code></pre></div>
+<p>使用方式：</p>
+<div class="code-block"><div class="code-header"><span>C#</span><button type="button" class="copy">复制</button></div><pre><code class="language-csharp">var player = new PlayerStats();
+
+player.BaseAttack = 100;
+player.EquipmentBonus = 50;
+
+Debug.Log(player.FinalAttack); // 150
+Debug.Log(player.FinalAttack); // 使用缓存 150
+
+player.EquipmentBonus = 80;
+
+Debug.Log(player.FinalAttack); // 重新计算 180
+Debug.Log(player.FinalAttack); // 使用缓存 180
+</code></pre></div>
+<p>这个实现非常简单，但已经包含完整的核心流程：</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>步骤</th>
+<th>动作</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>首次读取</td>
+<td>计算并缓存 150</td>
+</tr>
+<tr>
+<td>2</td>
+<td>再次读取</td>
+<td>复用 150</td>
+</tr>
+<tr>
+<td>3</td>
+<td>修改装备</td>
+<td>标记 Dirty</td>
+</tr>
+<tr>
+<td>4</td>
+<td>再次读取</td>
+<td>计算并缓存 180</td>
+</tr>
+<tr>
+<td>5</td>
+<td>再次读取</td>
+<td>复用 180</td>
+</tr>
+</tbody></table></div>
+<p>不过，我希望你注意：</p>
+<p><strong>这不是自动依赖追踪。</strong></p>
+<p>我们是通过开发者自己的知识，在 <code>BaseAttack</code>、<code>EquipmentBonus</code> 的 Setter 里手动维护失效关系。</p>
+<p>系统本身并不知道 <code>FinalAttack</code> 依赖什么。</p>
+<p>但对于大多数依赖关系明确、规模不大的游戏模块，这种方案通常比引入复杂的自动依赖框架更值得优先考虑。</p>
+<h3>7.2 Lua 中也是同一个思想</h3>
+<p>在你日常使用的 Lua 环境中，可以采用相同设计。</p>
+<div class="code-block"><div class="code-header"><span>Lua</span><button type="button" class="copy">复制</button></div><pre><code class="language-lua">local PlayerStats = {}
+PlayerStats.__index = PlayerStats
+
+function PlayerStats.New()
+    local self = setmetatable({}, PlayerStats)
+
+    self.baseAttack = 100
+    self.equipmentBonus = 50
+
+    self._cachedAttack = 0
+    self._attackDirty = true
+
+    return self
+end
+
+function PlayerStats:SetEquipmentBonus(value)
+    if self.equipmentBonus == value then
+        return
+    end
+
+    self.equipmentBonus = value
+    self._attackDirty = true
+end
+
+function PlayerStats:GetFinalAttack()
+    if self._attackDirty then
+        self._cachedAttack =
+            self.baseAttack + self.equipmentBonus
+
+        self._attackDirty = false
+    end
+
+    return self._cachedAttack
+end
+
+return PlayerStats
+</code></pre></div>
+<p>但是 Lua 有一个需要格外注意的问题。</p>
+<p>如果外部代码这样做：</p>
+<div class="code-block"><div class="code-header"><span>Lua</span><button type="button" class="copy">复制</button></div><pre><code class="language-lua">player.equipmentBonus = 200
+</code></pre></div>
+<p>就会绕过 <code>SetEquipmentBonus()</code>。</p>
+<p>因此，业务层应该统一使用修改接口。如果需要更严格地限制直接访问，可以进一步设计私有状态和受控访问接口。</p>
+<p><strong>缓存的正确性依赖于数据修改入口是否被真正控制住，而不是依赖所使用的编程语言。</strong></p>
+<hr>
+<h2 id="section-8">八、Unity 内部实际上也在运用这些思想</h2>
+<p>这里有两个特别值得你关注的实际案例。</p>
+<h3>8.1 Unity UI 的 Dirty 机制</h3>
+<p>Unity uGUI 的 <code>Graphic</code> 类里存在这些方法：</p>
+<div class="code-block"><div class="code-header"><span>C#</span><button type="button" class="copy">复制</button></div><pre><code class="language-csharp">SetLayoutDirty();
+SetVerticesDirty();
+SetMaterialDirty();
+</code></pre></div>
+<p>它们分别涉及布局、顶点和材质相关的重新构建需求。</p>
+<p>例如，在官方 uGUI 源码中，<code>SetVerticesDirty()</code> 会将 <code>m_VertsDirty</code> 设置为 <code>true</code>，并向 <code>CanvasUpdateRegistry</code> 注册图形重建需求。</p>
+<p><code>SetMaterialDirty()</code> 也使用类似机制处理材质重建。</p>
+<p>从概念上理解：</p>
+<div class="process"><div>UI 属性改变</div><span>↓</span><div>对应计算结果可能失效</div><span>↓</span><div>SetVerticesDirty / SetMaterialDirty</div><span>↓</span><div>登记需要重建的 UI 元素</div><span>↓</span><div>在后续合适阶段处理重建</div></div>
+
+<p>这里的核心思想是：</p>
+<p><strong>状态变化不等于立即重新执行所有昂贵操作。</strong></p>
+<p>而且布局、顶点、材质具有不同的失效范围。</p>
+<p>这不是一个覆盖所有 UI 属性的通用自动依赖追踪系统，而是 Unity UI 根据已知依赖关系执行精细化失效管理的实例。</p>
+<p>这也解释了为什么你阅读 Unity 源码时，会反复看到各种 <code>Dirty</code>、<code>Rebuild</code>、<code>Register</code>。</p>
+<p>它们往往是在解决同一组问题：什么时候结果不再有效，以及怎样组织重新计算。</p>
+<h3>8.2 Unity AssetDatabase：一个更直接的依赖追踪实例</h3>
+<p>假设你修改了一张纹理。</p>
+<p>Unity 需要重新处理受影响的资源，但并不需要重新导入整个工程。</p>
+<p>而资源导入结果可能依赖：</p>
+<ul>
+<li>源资源文件。</li>
+<li>Importer 的版本和导入配置。</li>
+<li>构建目标平台。</li>
+<li>其他被引用的资源。</li>
+</ul>
+<p>Unity 的 AssetDatabase 会追踪静态与动态导入依赖。如果相关依赖变化，Unity 可以触发对应资源重新导入，更新其缓存的导入结果。</p>
+<p>例如，源纹理、导入设置等输入，共同影响导入后的纹理资源，而导入结果进一步成为运行时可使用的资源：</p>
+<figure class="diagram"><svg viewBox="0 0 640 280" role="img" aria-labelledby="asset-title asset-desc"><title id="asset-title">资源导入的依赖</title><desc id="asset-desc">源纹理、导入设置和平台环境共同影响导入后的纹理资源，导入结果进一步供运行时使用。</desc><defs><marker id="asset-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#727b84"/></marker></defs><g fill="none" stroke="#727b84" stroke-width="1.6" marker-end="url(#asset-arrow)"><path d="M190 54L270 118"/><path d="M190 132H270"/><path d="M190 210L270 146"/><path d="M450 132H495"/></g><g fill="#f6f7f8" stroke="#cdd3d9"><rect x="20" y="32" width="170" height="44" rx="6"/><rect x="20" y="110" width="170" height="44" rx="6"/><rect x="20" y="188" width="170" height="44" rx="6"/><rect x="270" y="102" width="180" height="60" rx="6"/><rect x="495" y="102" width="130" height="60" rx="6"/></g><g text-anchor="middle" fill="#303943" font-size="15"><text x="105" y="59">源纹理</text><text x="105" y="137">导入设置</text><text x="105" y="215">平台与其他依赖</text><text x="360" y="127">导入后的</text><text x="360" y="148">纹理资源</text><text x="560" y="127">运行时</text><text x="560" y="148">可使用的资源</text></g></svg></figure>
+
+<p>其中，导入结果不只依赖源纹理的字节内容，还可能依赖压缩设置、目标平台等环境数据。</p>
+<p>这说明一个非常值得记住的观点：</p>
+<p><strong>依赖不仅仅是另一个对象。任何可能影响结果的数据、配置或环境条件，都可能成为依赖。</strong></p>
+<hr>
+<h2 id="section-9">九、更深一层：Cache Invalidation 与 Dependency Tracking 最困难的地方在哪里？</h2>
+<p>前面描述的机制在单线程的小型系统中很容易实现，但真正复杂的地方出现在正确性边界。</p>
+<h3>9.1 隐式依赖：你以为只依赖 A，实际上还依赖了 B</h3>
+<p>假设游戏 UI 需要显示一段文字：</p>
+<div class="code-block"><div class="code-header"><span>C#</span><button type="button" class="copy">复制</button></div><pre><code class="language-csharp">string GetDisplayText(int score)
+{
+    return Localize(&quot;score&quot;) + score;
+}
+</code></pre></div>
+<p>开发者可能认为缓存只依赖 <code>score</code>。</p>
+<p>但事实上，<code>Localize()</code> 的结果还可能依赖当前语言。</p>
+<p>因此：</p>
+<div class="math">DisplayText = f(Score, Language)</div>
+
+<p>如果语言从中文切换到英文，但缓存只监听 Score 的变化，UI 就可能继续显示中文。</p>
+<p>同样的情况还包括主题、字体、屏幕尺寸、权限、配置版本、时区以及服务器数据。</p>
+<p>这也提醒我们：</p>
+<p><strong>缓存依赖集合必须覆盖所有能够影响结果的输入，而不是仅仅覆盖函数表面上的参数。</strong></p>
+<p>特别是以时间、随机数、外部状态为输入的计算，不能仅凭普通变量读取来自动追踪完整依赖。</p>
+<h3>9.2 多层依赖：变化需要正确地传递</h3>
+<p>假设：</p>
+<div class="math">A → B → C → D</div>
+
+<p>当 A 变化时，如果只把 B 标记为 Dirty，而 C、D 仍然认为自己有效，就可能继续返回旧结果。</p>
+<p>因此，通常需要设计两种机制之一。</p>
+<p>第一种是主动向下游传播失效，让所有可能受影响的节点都知道上游发生变化。</p>
+<p>第二种是在读取派生节点时，递归验证上游节点及其版本，必要时再重算。</p>
+<p>无论采用哪一种，都要保证读取结果之前，依赖链已经得到足够验证。</p>
+<p>另外，依赖图如果出现循环，例如 A 依赖 B、B 又依赖 A，就不能直接进行普通的递归重算。需要禁止循环、明确求值顺序，或者专门设计固定点计算等算法。</p>
+<h3>9.3 异步计算：旧计算结果覆盖新计算结果</h3>
+<p>这是实际项目中很容易出现的 Bug。</p>
+<p>想象以下执行顺序：</p>
+<figure class="diagram"><svg viewBox="0 0 640 420" role="img" aria-labelledby="async-title async-desc"><title id="async-title">异步缓存写入竞争</title><desc id="async-desc">旧任务读取 v1 后慢速计算，数据更新为 v2 并使缓存失效，旧任务随后完成并错误地把 v1 结果写回缓存。</desc><g text-anchor="middle" fill="#303943" font-size="17" font-weight="600"><text x="175" y="28">旧计算任务 A</text><text x="475" y="28">数据更新任务 B</text></g><g stroke="#bfc7cd" stroke-dasharray="5 5"><path d="M175 45V365"/><path d="M475 45V365"/></g><rect x="48" y="64" width="254" height="80" rx="8" fill="#edf3fa" stroke="#a7bbd3"/><rect x="348" y="174" width="254" height="80" rx="8" fill="#edf7f1" stroke="#a2c6b0"/><rect x="48" y="284" width="254" height="80" rx="8" fill="#fcefeb" stroke="#d4aaa0"/><g font-size="16" text-anchor="middle"><g fill="#36536f"><text x="175" y="97">读取旧版本 v1</text><text x="175" y="123">开始慢速计算</text></g><g fill="#38644b"><text x="475" y="207">修改数据为 v2</text><text x="475" y="233">旧缓存标记失效</text></g><g fill="#8e493a"><text x="175" y="317">v1 计算完成</text><text x="175" y="343">错误写回旧缓存</text></g></g><text x="320" y="402" text-anchor="middle" font-size="15" fill="#8e493a">结果：当前缓存被旧计算结果覆盖</text></svg><figcaption>异步缓存写入竞争 · 时间从上往下。</figcaption></figure>
+
+<p>虽然我们在修改数据时已经让缓存失效，但旧的异步计算仍然可能在之后完成，并把旧结果写回来。</p>
+<p>一种解决思路是给计算任务绑定版本号。</p>
+<div class="code-block"><div class="code-header"><span>说明</span><button type="button" class="copy">复制</button></div><pre><code class="language-text">任务开始：
+    记录源数据版本 v1
+    根据 v1 的状态计算
+
+任务完成：
+    检查当前版本
+
+    如果仍然是 v1：
+        可以尝试提交缓存
+
+    如果已经是 v2：
+        丢弃旧计算结果
+</code></pre></div>
+<p>但这里需要再深入一步：</p>
+<p>仅仅检查版本还不一定足够，因为检查之后、真正写入缓存之前，源数据仍可能变化。</p>
+<p>严格的解决方案需要保证版本检查和提交具有合适的原子性，例如通过锁、单线程调度、条件写入或其他同步机制完成。</p>
+<p>而且，异步任务读取的多个源数据，也应该来自一致的快照，否则即便版本检查通过，计算时读到的状态也可能不一致。</p>
+<p>这说明：<strong>版本号不只是判断缓存是否过期，还能够帮助控制异步计算结果的有效提交。</strong></p>
+<h3>9.4 分布式缓存：修改数据与删除缓存之间存在竞态</h3>
+<p>在 Cache-Aside 模式中，典型写入流程是：</p>
+<div class="process"><div>修改数据库</div><span>↓</span><div>使对应缓存失效</div></div>
+
+<p>微软的 Cache-Aside 设计文档也建议先更新存储、再移除缓存；如果先移除缓存，读请求可能在数据库更新前把旧值重新放入缓存。</p>
+<p>但即使先更新数据库再删除缓存，在并发情况下仍然可能发生旧读取请求较晚写回旧数据的竞态。</p>
+<p>因此，高一致性系统可能还需要版本校验、条件写入、协调机制或其他一致性协议。</p>
+<p>这也说明一件事：</p>
+<p><strong>在分布式系统中，缓存失效不再只是设置一个布尔变量，而是多个参与者之间的状态一致性问题。</strong></p>
+<h3>9.5 依赖追踪本身也有成本</h3>
+<p>依赖图不是免费的。</p>
+<p>它需要保存节点与边，需要在依赖关系变化时更新索引，还需要传播失效事件。</p>
+<p>假设一个基础属性被 10000 个派生节点依赖，那么一次修改可能引发相当大的通知成本。</p>
+<p>因此，实际系统需要考虑依赖粒度和传播策略。</p>
+<p>比如：</p>
+<ul>
+<li>是否能够把多个变化合并到同一帧处理？</li>
+<li>是否有必要按字段追踪，而不是整个对象？</li>
+<li>不再使用的 UI 是否应该解除订阅？</li>
+<li>是否有必要立即更新所有下游节点？</li>
+<li>能否只在结果真正被读取时才重新计算？</li>
+</ul>
+<p>特别是 Unity 中被销毁或复用的 UI 对象，如果没有正确清理事件订阅关系，可能造成无效回调、对象滞留等生命周期问题。</p>
+<p>这与你之前学习的对象池状态隔离、所有权和生命周期管理有直接关联：<strong>依赖订阅关系本身也是一种需要维护生命周期的资源关系。</strong></p>
+<hr>
+<h2 id="section-10">十、从架构角度重新理解这两个概念</h2>
+<p>你可以把整个机制分为四层。</p>
+<div class="architecture-flow"><div><strong>Source of Truth（权威数据）</strong><p>原始数据、配置、数据库状态</p></div><span>↓ 建立或验证依赖</span><div><strong>Dependency Tracking（依赖追踪）</strong><p>维护「谁依赖谁」的关系</p></div><span>↓ 识别受影响的节点</span><div><strong>Cache Invalidation（缓存失效）</strong><p>撤销旧结果的有效性</p></div><span>↓ 立即、按需或批量刷新</span><div><strong>Recomputation（重新计算）</strong><p>生成满足当前一致性要求的结果</p></div></div>
+
+<p>这里应该再澄清一点：这四层是一种便于理解的逻辑分工，并不意味着软件必须按照这四层实现。</p>
+<p>例如，基于 TTL 的缓存可以完全不维护依赖图；一个响应式事件系统也可以追踪依赖，却不缓存计算结果。</p>
+<p>换句话说：</p>
+<p><strong>缓存与依赖追踪是两个正交能力。它们组合起来很强大，但并不相互依存。</strong></p>
+<p>我们可以将它们与其他几个概念统一起来：</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>概念</th>
+<th>要回答的问题</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Cache</td>
+<td>哪些结果值得保存下来复用？</td>
+</tr>
+<tr>
+<td>Dependency Tracking</td>
+<td>哪些状态能够影响这个结果？</td>
+</tr>
+<tr>
+<td>Cache Invalidation</td>
+<td>哪些条件下不能直接复用旧结果？</td>
+</tr>
+<tr>
+<td>Dirty Flag</td>
+<td>怎样记录需要重新计算的状态？</td>
+</tr>
+<tr>
+<td>Versioning</td>
+<td>结果对应源数据的哪一个修订？</td>
+</tr>
+<tr>
+<td>Lazy Evaluation</td>
+<td>什么时候真正执行重新计算？</td>
+</tr>
+<tr>
+<td>Incremental Computation</td>
+<td>怎样避免重新计算未受影响的部分？</td>
+</tr>
+<tr>
+<td>Reactive Programming</td>
+<td>怎样让依赖变化自动驱动后续处理？</td>
+</tr>
+</tbody></table></div>
+<hr>
+<h2 id="section-11">十一、真正掌握以后，应该怎样思考一个缓存设计？</h2>
+<p>当你未来需要设计一个缓存系统时，我建议不要先问「要不要使用 Dictionary、Dirty Flag 或事件」。</p>
+<p>先问这六个问题：</p>
+<ol>
+<li><strong>权威数据是什么？</strong> 缓存保存的是可再生的派生结果，还是系统中唯一的真实状态？</li>
+<li><strong>结果依赖什么？</strong> 是否包含隐藏的配置、运行环境、时间或外部状态？</li>
+<li><strong>变化如何被观察？</strong> 是统一 Setter、事件、版本校验、运行时依赖记录，还是只能通过 TTL 近似维护？</li>
+<li><strong>什么时候必须恢复一致？</strong> 是修改后立即、下一次读取、下一帧，还是允许短暂过期？</li>
+<li><strong>怎样避免无关计算？</strong> 需要字段级依赖、批量更新或懒计算吗？</li>
+<li><strong>怎样处理生命周期与并发？</strong> 订阅何时解除，异步旧结果能否覆盖新结果，计算失败是否会错误地把缓存标记为有效？</li>
+</ol>
+<p>这六个问题回答清楚以后，具体的实现方式往往就自然浮现了。</p>
+<h2 id="section-12">十二、最终总结：这两个概念真正的本质</h2>
+<p>我们可以把今天所讨论的内容压缩成三个核心认识。</p>
+<p><strong>第一，缓存的本质是对已有结果的有条件复用。</strong></p>
+<p>我们之所以可以跳过某次计算，是因为相信过去的结果在当前条件下仍然能够使用。</p>
+<p>因此缓存失效，本质上是在维护这种信任的边界。</p>
+<p><strong>第二，依赖追踪的本质是对变化影响范围的建模。</strong></p>
+<p>它把隐含在计算逻辑中的数据依赖显式化，让系统能够从一个变化定位到可能受影响的结果。</p>
+<p><strong>第三，两者结合的本质是增量地维护系统的一致性。</strong></p>
+<p>我们并不希望每次状态变化都重新构建整个世界，而是希望只重新处理那些确实可能受到影响的部分。</p>
+<p>把它们放到你已经学过的架构知识里看，会出现一条非常清晰的脉络：</p>
+<ul>
+<li>不变量定义了什么必须保持正确。</li>
+<li>状态转移描述了系统如何发生变化。</li>
+<li>依赖追踪识别变化的影响范围。</li>
+<li>缓存失效阻止系统继续信任可能不正确的旧结果。</li>
+<li>增量计算以尽可能低的成本恢复所需的一致性。</li>
+</ul>
+<p>最终可以归结为一句话：</p>
+<p><strong>Dependency Tracking 负责知道「谁可能受到影响」，Cache Invalidation 负责决定「哪些旧结果不能继续被信任」，而重新计算负责「在需要时恢复正确结果」。</strong></p>
+<p>如果继续深入，我建议下一步学习 <strong>Incremental Computation（增量计算）与 Reactive Programming（响应式编程）</strong>，尤其是依赖图传播、拓扑排序、脏标记调度和批量更新。它们能将今天讨论的缓存机制，进一步扩展成一个完整的状态驱动计算系统。</p>
+</article><footer>缓存失效与依赖追踪 · What、Why、How</footer></main><script>
+(()=>{'use strict';
+ const get=id=>document.getElementById(id);
+ const fields=['base','bonus','defense'];
+ let source,snapshot,attack,power;
+ function render(){
+  const attackValid=source.base===snapshot.base&&source.bonus===snapshot.bonus;
+  const powerValid=attackValid&&source.defense===snapshot.defense;
+  get('attack-value').textContent=attack;
+  get('power-value').textContent=power;
+  get('attack-status').textContent=attackValid?'有效':'失效 · 需要刷新';
+  get('power-status').textContent=powerValid?'有效':'失效 · 需要刷新';
+  get('attack-state').classList.toggle('invalid',!attackValid);
+  get('power-state').classList.toggle('invalid',!powerValid);
+  get('experiment-status').textContent=powerValid?'当前缓存与输入快照一致。':'缓存保留旧值。点击「重新计算并刷新缓存」后更新。';
+ }
+ function refresh(){attack=source.base+source.bonus;power=attack*10+source.defense;snapshot={...source};render();}
+ function reset(){source={base:100,bonus:50,defense:30};fields.forEach(id=>get(id).value=source[id]);get('nickname').value='Knight';get('input-error').textContent='';refresh();}
+ fields.forEach(id=>get(id).addEventListener('input',()=>{
+  const valid=fields.every(key=>Number.isInteger(get(key).valueAsNumber)&&get(key).valueAsNumber>=0&&get(key).valueAsNumber<=10000);
+  get('input-error').textContent=valid?'':'请输入 0 到 10000 之间的整数。';
+  if(!valid)return;
+  fields.forEach(key=>source[key]=get(key).valueAsNumber);render();
+ }));
+ get('nickname').addEventListener('change',()=>{render();get('experiment-status').textContent='昵称不在战斗属性的依赖中，因此不会额外使这些缓存失效。';});
+ get('refresh').addEventListener('click',()=>{refresh();get('experiment-status').textContent='已重新计算，并保存当前输入快照。';});
+ get('reset').addEventListener('click',reset);
+ document.querySelectorAll('.copy').forEach(button=>button.addEventListener('click',async()=>{
+  const text=button.closest('.code-block').querySelector('code').textContent;
+  try{
+   if(navigator.clipboard?.writeText)await navigator.clipboard.writeText(text);
+   else{const t=document.createElement('textarea');t.value=text;document.body.appendChild(t);t.select();const ok=document.execCommand('copy');t.remove();if(!ok)throw Error('copy');}
+   button.textContent='已复制';
+  }catch{button.textContent='请选中代码复制';}
+ }));
+ reset();
+})();
+</script></body></html>

@@ -1,0 +1,699 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>动态规划与记忆化：从重复计算到状态复用</title><style>*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:25px}body{margin:0;background:#f4f6f8;color:#243343;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Microsoft YaHei","PingFang SC",sans-serif;font-size:17px;line-height:1.95}a{color:#176f73;text-decoration:none}a:hover{text-decoration:underline}.shell{max-width:1250px;margin:auto;padding:45px 28px;display:grid;grid-template-columns:240px minmax(0,850px);gap:40px}nav{position:sticky;top:30px;align-self:start;font-size:14px;line-height:1.65}nav strong{display:block;letter-spacing:.12em;font-size:12px;color:#697a87;margin-bottom:18px}nav a{display:block;padding:9px 0;border-bottom:1px solid #dfe6eb;color:#4f6274}article{background:white;border:1px solid #e1e7eb;border-radius:16px;padding:48px 55px;min-width:0}h1,h2,h3{color:#12384c;line-height:1.55}h1{font-size:27px;margin:58px 0 25px;padding-top:22px;border-top:1px solid #dce8eb}h1:first-child{font-size:33px;margin-top:0;border:0;padding:0;line-height:1.5}h2{font-size:22px;margin:38px 0 18px}h3{font-size:20px;margin:32px 0 16px}p{margin:15px 0}strong{font-weight:650;color:#183e4d}blockquote{margin:24px 0;border-left:4px solid #258d8c;padding:9px 22px;background:#eff8f7;border-radius:0 8px 8px 0}blockquote p{margin:7px 0}hr{border:0;border-top:1px solid #e4ecef;margin:40px 0}li{margin:8px 0}pre{background:#182634;color:#e6edf3;padding:23px;border-radius:10px;overflow:auto;font-size:14px;line-height:1.75;tab-size:4}code{font-family:Consolas,"SFMono-Regular",monospace;font-size:.88em}p code,li code{background:#f0f4f7;padding:3px 6px;border-radius:4px;color:#275269}pre code{font-size:inherit}table{border-collapse:collapse;width:100%;font-size:15px;line-height:1.75;margin:10px 0}th,td{border:1px solid #dce5eb;padding:12px 14px;text-align:left;vertical-align:top}th{background:#edf5f7;color:#204a5d}tr:nth-child(even){background:#fafcfd}.table-wrap{overflow:auto;margin:24px 0}.table-wrap .table-wrap{margin:0}.formula{background:#f8fafc;border:1px solid #e9eef2;border-radius:8px;padding:18px 15px;overflow:auto;margin:22px 0;font-size:1.1em}math{font-family:"Cambria Math","STIX Two Math",serif}mtext{font-family:"Microsoft YaHei","PingFang SC",sans-serif;font-size:.88em}.mathbox{border:1px solid #b7cbd4;padding:8px}figure{margin:24px 0;padding:18px 12px;border:1px solid #e1eaee;border-radius:10px;background:#fcfdfe}svg{display:block;width:100%;height:auto;font-family:inherit}figcaption{font-size:14px;text-align:center;margin-top:10px}.sim{border:1px solid #b8d8d3;background:#f3faf8;border-radius:12px;padding:24px;margin:25px 0}.sim h3{margin:0 0 15px}.sim small{font-weight:400}input[type=range]{display:block;width:100%;accent-color:#177f74;margin:18px 0}button{font:inherit;font-size:15px;background:#177f74;color:white;border:0;border-radius:7px;padding:9px 18px;cursor:pointer;margin:0 8px 10px 0}button:hover{filter:brightness(.94)}button.secondary{background:#e3eeec;color:#22564e}.metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:15px}.metrics>div{padding:14px;background:#fff;border-radius:7px;font-size:13px;line-height:1.5}.metrics strong{display:block;font-size:24px;font-weight:650;margin-top:7px}.subtle{font-size:13px;color:#697c89;line-height:1.8}.topbar{font-size:12px;letter-spacing:.15em;color:#518488;margin-bottom:20px}.print{font-size:13px;background:white;color:#3b6374;border:1px solid #ccdce3;margin-top:20px}@media(max-width:1050px){.shell{display:block;max-width:870px;padding:25px 16px}nav{position:static;margin-bottom:25px}nav a{display:inline-block;margin-right:16px;padding:6px 0}nav strong{margin-bottom:8px}article{padding:35px 32px}}@media(max-width:550px){body{font-size:16px}.shell{padding:12px 7px}article{padding:26px 20px;border-radius:10px}h1:first-child{font-size:27px}h1{font-size:24px}h2{font-size:21px}pre{padding:16px;font-size:12px}.metrics{gap:5px}.metrics>div{padding:10px 7px;font-size:12px}.sim{padding:18px}table{min-width:510px}}@media print{body{background:white;font-size:11pt}.shell{display:block;padding:0;max-width:none}nav,.print{display:none}article{border:0;padding:0}h1,h2,h3{break-after:avoid}pre,figure,.formula,table{break-inside:avoid}pre{white-space:pre-wrap;background:#f4f6f8;color:#172634}.sim button,.sim input{display:none}a{color:inherit}h1:first-child{font-size:24pt}h1{font-size:19pt}}</style></head><body><div class="shell"><nav aria-label="文章目录"><strong>阅读目录 · CONTENTS</strong><a href="#section-2">一、What：什么是动态规划与记忆化？</a><a href="#section-7">二、Why：为什么记忆化特别适合重叠子问题？</a><a href="#section-11">三、How：如何从普通递归设计出动态规划？</a><a href="#section-17">四、进一步理解：为什么动态规划适合解决最优化问题？</a><a href="#section-22">五、直击本质：动态规划与缓存、依赖图、增量计算究竟是什么关系？</a><a href="#section-27">六、什么时候应该使用 Memoization？什么时候不应该？</a><a href="#section-31">七、把整个知识体系统一起来</a><button class="print" onclick="window.print()">打印 / 保存 PDF</button></nav><article><div class="topbar">WHAT · WHY · HOW</div><h1 id="section-1">Dynamic Programming（动态规划）与 Memoization（记忆化）：从重复计算到状态复用</h1>
+<p><strong>动态规划的本质，不是某种特殊的算法模板，而是一种组织计算的思想：将问题表示为相互依赖的子问题，并让每个不同子问题的结果尽可能只计算一次。</strong></p>
+<p>而 Memoization（记忆化）是实现这种思想的常见技术之一。</p>
+<p>这两个概念与你之前学习的缓存（Cache）、依赖图（Dependency Graph）以及增量计算（Incremental Computation）有着非常紧密的联系。</p>
+<p>我们按照 <strong>What → Why → How → 本质联系 → 设计边界</strong> 的顺序，从计算模型本身理解它们。</p>
+<hr>
+<h1 id="section-2">一、What：什么是动态规划与记忆化？</h1>
+<h2 id="section-3">1.1 动态规划（Dynamic Programming）</h2>
+<p>动态规划，简称 DP，是一种通过定义子问题、建立子问题之间的递推关系，并复用子问题结果来求解问题的方法。</p>
+<p>它的核心可以表达为：</p>
+<div class="formula"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mrow class="mathbox"><mtext>定义状态</mtext><mo>→</mo><mtext>建立状态依赖</mtext><mo>→</mo><mtext>复用计算结果</mtext></mrow></mrow></math></div>
+<p>比如，你需要解决问题 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><mi>P</mi></mrow></math>。</p>
+<p>你发现：</p>
+<div class="formula"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mi>P</mi><mo>=</mo><mi>F</mi><mo>(</mo><mi>A</mi><mo>,</mo><mi>B</mi><mo>)</mo></mrow></math></div>
+<p>其中：</p>
+<div class="formula"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mi>A</mi><mo>=</mo><mi>G</mi><mo>(</mo><mi>C</mi><mo>,</mo><mi>D</mi><mo>)</mo></mrow></math></div>
+<div class="formula"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mi>B</mi><mo>=</mo><mi>H</mi><mo>(</mo><mi>C</mi><mo>,</mo><mi>E</mi><mo>)</mo></mrow></math></div>
+<p>注意：A 和 B 都依赖 C。</p>
+<p>如果分别求解 A 和 B，那么 C 就可能被重复计算。</p>
+<p>未复用计算：相同子问题出现在不同计算分支中</p>
+<figure><svg role="img" aria-label="子问题依赖图" viewBox="0 0 600 270"><defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8" fill="#8b9cae"/></marker></defs><path d="M300,53 L170,107" stroke="#8b9cae" stroke-width="2" marker-end="url(#arrow)"/><path d="M300,53 L430,107" stroke="#8b9cae" stroke-width="2" marker-end="url(#arrow)"/><path d="M170,148 L100,207" stroke="#8b9cae" stroke-width="2" marker-end="url(#arrow)"/><path d="M170,148 L240,207" stroke="#8b9cae" stroke-width="2" marker-end="url(#arrow)"/><path d="M430,148 L360,207" stroke="#8b9cae" stroke-width="2" marker-end="url(#arrow)"/><path d="M430,148 L500,207" stroke="#8b9cae" stroke-width="2" marker-end="url(#arrow)"/><rect x="264" y="15" width="72" height="40" rx="9" fill="#e7f0f8" stroke="#b5c8d1"/><text x="300" y="41" text-anchor="middle" fill="#18364c" font-size="17">P</text><rect x="134" y="110" width="72" height="40" rx="9" fill="#e7f0f8" stroke="#b5c8d1"/><text x="170" y="136" text-anchor="middle" fill="#18364c" font-size="17">A</text><rect x="394" y="110" width="72" height="40" rx="9" fill="#e7f0f8" stroke="#b5c8d1"/><text x="430" y="136" text-anchor="middle" fill="#18364c" font-size="17">B</text><rect x="64" y="210" width="72" height="40" rx="9" fill="#d7f1e6" stroke="#b5c8d1"/><text x="100" y="236" text-anchor="middle" fill="#18364c" font-size="17">C</text><rect x="204" y="210" width="72" height="40" rx="9" fill="#e7f0f8" stroke="#b5c8d1"/><text x="240" y="236" text-anchor="middle" fill="#18364c" font-size="17">D</text><rect x="324" y="210" width="72" height="40" rx="9" fill="#d7f1e6" stroke="#b5c8d1"/><text x="360" y="236" text-anchor="middle" fill="#18364c" font-size="17">C</text><rect x="464" y="210" width="72" height="40" rx="9" fill="#e7f0f8" stroke="#b5c8d1"/><text x="500" y="236" text-anchor="middle" fill="#18364c" font-size="17">E</text></svg></figure>
+
+<p>两个 C 节点代表同一个子问题被执行了两次。</p>
+<hr>
+<p>复用计算：两个分支共享一个子问题结果</p>
+<figure><svg role="img" aria-label="子问题依赖图" viewBox="0 0 600 270"><defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8" fill="#8b9cae"/></marker></defs><path d="M300,53 L170,107" stroke="#8b9cae" stroke-width="2" marker-end="url(#arrow)"/><path d="M300,53 L430,107" stroke="#8b9cae" stroke-width="2" marker-end="url(#arrow)"/><path d="M170,148 L300,207" stroke="#8b9cae" stroke-width="2" marker-end="url(#arrow)"/><path d="M170,148 L100,207" stroke="#8b9cae" stroke-width="2" marker-end="url(#arrow)"/><path d="M430,148 L300,207" stroke="#8b9cae" stroke-width="2" marker-end="url(#arrow)"/><path d="M430,148 L500,207" stroke="#8b9cae" stroke-width="2" marker-end="url(#arrow)"/><rect x="264" y="15" width="72" height="40" rx="9" fill="#e7f0f8" stroke="#b5c8d1"/><text x="300" y="41" text-anchor="middle" fill="#18364c" font-size="17">P</text><rect x="134" y="110" width="72" height="40" rx="9" fill="#e7f0f8" stroke="#b5c8d1"/><text x="170" y="136" text-anchor="middle" fill="#18364c" font-size="17">A</text><rect x="394" y="110" width="72" height="40" rx="9" fill="#e7f0f8" stroke="#b5c8d1"/><text x="430" y="136" text-anchor="middle" fill="#18364c" font-size="17">B</text><rect x="264" y="210" width="72" height="40" rx="9" fill="#d7f1e6" stroke="#b5c8d1"/><text x="300" y="236" text-anchor="middle" fill="#18364c" font-size="17">C</text><rect x="64" y="210" width="72" height="40" rx="9" fill="#e7f0f8" stroke="#b5c8d1"/><text x="100" y="236" text-anchor="middle" fill="#18364c" font-size="17">D</text><rect x="464" y="210" width="72" height="40" rx="9" fill="#e7f0f8" stroke="#b5c8d1"/><text x="500" y="236" text-anchor="middle" fill="#18364c" font-size="17">E</text></svg></figure>
+
+<p>逻辑上只有一个 C，计算一次即可供 A、B 使用。</p>
+<p>这就是动态规划最重要的观察之一：</p>
+<p><strong>递归调用可能形成一棵很大的计算树，但不同调用中真正需要求解的子问题，可能只有很少的几种。</strong></p>
+<p>如果能复用这些子问题的答案，就可以减少大量重复工作。</p>
+<p>需要注意，动态规划不仅用于优化问题，也可以用于计数、可达性判断、序列匹配等具有合适递推结构的问题。</p>
+<h2 id="section-4">1.2 什么是 Memoization（记忆化）？</h2>
+<p>Memoization 是一种缓存计算结果的技术。</p>
+<p>假设有一个函数：</p>
+<div class="formula"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mi>y</mi><mo>=</mo><mi>f</mi><mo>(</mo><mi>x</mi><mo>)</mo></mrow></math></div>
+<p>普通函数每次调用都重新计算：</p>
+<pre><code class="language-text">f(10) → 计算 → 返回结果
+f(10) → 计算 → 返回结果
+f(10) → 计算 → 返回结果
+</code></pre>
+<p>使用记忆化后：</p>
+<pre><code class="language-text">f(10) → 未命中 → 计算 → 保存结果
+f(10) → 命中缓存 → 返回结果
+f(10) → 命中缓存 → 返回结果
+</code></pre>
+<p>可以用下面的交互来直观理解。</p>
+<section class="sim"><h3 id="section-5">记忆化函数模拟器 <small>(Fibonacci)</small></h3><label for="fib-n">函数参数 n：<output id="n-value">10</output></label><input id="fib-n" type="range" min="0" max="20" step="1" value="10"><p>当前参数的缓存状态：<strong id="status">未缓存</strong></p><button id="call">调用 f(10)</button><button class="secondary" id="clear">清空缓存</button><div class="metrics"><div>函数结果<strong id="result">—</strong></div><div>已存状态数<strong id="states">0</strong></div><div>缓存命中次数<strong id="hits">0</strong></div></div><p>先调用一次，再以相同参数调用，观察第二次命中缓存。这是按参数存储函数结果的简化演示。</p><p class="subtle">滑块范围：0 至 20；步长：1。已存状态数包括递归中求出的子问题，命中次数包括递归中的缓存查询。</p></section>
+
+<p>记忆化的抽象公式可以写成：</p>
+<div class="formula"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mrow><mi>M</mi><mo>(</mo><mi>x</mi><mo>)</mo><mo>=</mo></mrow><mo stretchy="true">{</mo><mtable columnalign="left" rowspacing="0.45em"><mtr><mtd><mrow><mi>Cache</mi><mo>[</mo><mi>x</mi><mo>]</mo></mrow></mtd><mtd><mrow><mtext>如果缓存命中</mtext></mrow></mtd></mtr><mtr><mtd><mrow><mi>Cache</mi><mo>[</mo><mi>x</mi><mo>]</mo><mo>←</mo><mi>f</mi><mo>(</mo><mi>x</mi><mo>)</mo></mrow></mtd><mtd><mrow><mtext>否则计算并保存</mtext></mrow></mtd></mtr></mtable><mrow></mrow></mrow></math></div>
+<p>但这里存在一个非常关键的正确性条件：</p>
+<blockquote>
+<p>对于同一个缓存键，函数的结果必须在缓存有效期内保持一致。</p>
+</blockquote>
+<p>例如：</p>
+<pre><code class="language-csharp">int Square(int x) =&gt; x * x;
+</code></pre>
+<p><code>Square(5)</code> 始终返回 25，这种函数非常适合记忆化。</p>
+<p>但是：</p>
+<pre><code class="language-csharp">int GetCurrentHealth()
+{
+    return player.Health;
+}
+</code></pre>
+<p>如果角色生命值会发生变化，那么即使没有参数，函数返回值也可能不同。直接缓存它，就可能得到过期的数据。</p>
+<p>这解释了为什么记忆化不仅仅是存一个 Dictionary。</p>
+<p>它实际上隐含着一个约束：</p>
+<div class="formula"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mrow class="mathbox"><mtext>相同的有效输入</mtext><mo>⇒</mo><mtext>相同的输出</mtext></mrow></mrow></math></div>
+<h2 id="section-6">1.3 动态规划和记忆化是同一回事吗？</h2>
+<p>不是。</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>维度</th>
+<th>Dynamic Programming</th>
+<th>Memoization</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>本质</td>
+<td>组织子问题求解的方法</td>
+<td>复用函数计算结果的技术</td>
+</tr>
+<tr>
+<td>关注</td>
+<td>状态、转移、依赖、求解顺序</td>
+<td>缓存键、缓存结果、命中与失效</td>
+</tr>
+<tr>
+<td>必须递归吗</td>
+<td>不必须</td>
+<td>不必须</td>
+</tr>
+<tr>
+<td>必须优化问题吗</td>
+<td>不必须</td>
+<td>不必须</td>
+</tr>
+<tr>
+<td>是否依赖重叠子问题</td>
+<td>重叠通常带来主要效率收益</td>
+<td>重复调用带来主要效率收益</td>
+</tr>
+<tr>
+<td>典型实现</td>
+<td>自顶向下或自底向上</td>
+<td>按需计算并缓存</td>
+</tr>
+</tbody></table></div>
+<p>它们的关系是：</p>
+<p><strong>动态规划（求解思想）</strong></p>
+<p>定义状态、转移与依赖关系</p>
+<p>自顶向下</p>
+<p>递归 + Memoization</p>
+<p>自底向上</p>
+<p>Tabulation（制表法）</p>
+<p><strong>动态规划决定问题应该如何分解和组合，记忆化决定已经计算过的结果如何复用。</strong></p>
+<hr>
+<h1 id="section-7">二、Why：为什么记忆化特别适合重叠子问题？</h1>
+<h2 id="section-8">2.1 先理解什么叫重叠子问题（Overlapping Subproblems）</h2>
+<p>所谓重叠子问题，不是说两个子问题长得相似，而是：</p>
+<p><strong>求解一个问题时，不同的计算路径会多次遇到同一个状态的子问题。</strong></p>
+<p>用经典的斐波那契数列说明。</p>
+<div class="formula"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mi>F</mi><mo>(</mo><mi>n</mi><mo>)</mo><mo>=</mo><mi>F</mi><mo>(</mo><mi>n</mi><mo>-</mo><mn>1</mn><mo>)</mo><mo>+</mo><mi>F</mi><mo>(</mo><mi>n</mi><mo>-</mo><mn>2</mn><mo>)</mo></mrow></math></div>
+<p>边界条件：</p>
+<div class="formula"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mi>F</mi><mo>(</mo><mn>0</mn><mo>)</mo><mo>=</mo><mn>0</mn><mo>,</mo><mo> </mo><mi>F</mi><mo>(</mo><mn>1</mn><mo>)</mo><mo>=</mo><mn>1</mn></mrow></math></div>
+<p>比如：</p>
+<div class="formula"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mi>F</mi><mo>(</mo><mn>5</mn><mo>)</mo><mo>=</mo><mi>F</mi><mo>(</mo><mn>4</mn><mo>)</mo><mo>+</mo><mi>F</mi><mo>(</mo><mn>3</mn><mo>)</mo></mrow></math></div>
+<p>继续展开：</p>
+<div class="formula"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mi>F</mi><mo>(</mo><mn>4</mn><mo>)</mo><mo>=</mo><mi>F</mi><mo>(</mo><mn>3</mn><mo>)</mo><mo>+</mo><mi>F</mi><mo>(</mo><mn>2</mn><mo>)</mo></mrow></math></div>
+<div class="formula"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mi>F</mi><mo>(</mo><mn>3</mn><mo>)</mo><mo>=</mo><mi>F</mi><mo>(</mo><mn>2</mn><mo>)</mo><mo>+</mo><mi>F</mi><mo>(</mo><mn>1</mn><mo>)</mo></mrow></math></div>
+<p>你会发现，<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><mi>F</mi><mo>(</mo><mn>3</mn><mo>)</mo></mrow></math>、<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><mi>F</mi><mo>(</mo><mn>2</mn><mo>)</mo></mrow></math> 被多次计算。</p>
+<p>F(5) 的递归调用树</p>
+<figure><svg role="img" aria-label="子问题依赖图" viewBox="0 0 600 350"><defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8" fill="#8b9cae"/></marker></defs><path d="M300,48 L180,97" stroke="#8b9cae" stroke-width="2" marker-end="url(#arrow)"/><path d="M300,48 L440,97" stroke="#8b9cae" stroke-width="2" marker-end="url(#arrow)"/><path d="M180,138 L90,192" stroke="#8b9cae" stroke-width="2" marker-end="url(#arrow)"/><path d="M180,138 L265,192" stroke="#8b9cae" stroke-width="2" marker-end="url(#arrow)"/><path d="M440,138 L385,192" stroke="#8b9cae" stroke-width="2" marker-end="url(#arrow)"/><path d="M440,138 L520,192" stroke="#8b9cae" stroke-width="2" marker-end="url(#arrow)"/><path d="M90,233 L50,287" stroke="#8b9cae" stroke-width="2" marker-end="url(#arrow)"/><path d="M90,233 L135,287" stroke="#8b9cae" stroke-width="2" marker-end="url(#arrow)"/><rect x="264" y="10" width="72" height="40" rx="9" fill="#e7f0f8" stroke="#b5c8d1"/><text x="300" y="36" text-anchor="middle" fill="#18364c" font-size="17">F(5)</text><rect x="144" y="100" width="72" height="40" rx="9" fill="#e7f0f8" stroke="#b5c8d1"/><text x="180" y="126" text-anchor="middle" fill="#18364c" font-size="17">F(4)</text><rect x="404" y="100" width="72" height="40" rx="9" fill="#d7f1e6" stroke="#b5c8d1"/><text x="440" y="126" text-anchor="middle" fill="#18364c" font-size="17">F(3)</text><rect x="54" y="195" width="72" height="40" rx="9" fill="#d7f1e6" stroke="#b5c8d1"/><text x="90" y="221" text-anchor="middle" fill="#18364c" font-size="17">F(3)</text><rect x="229" y="195" width="72" height="40" rx="9" fill="#fff0d5" stroke="#b5c8d1"/><text x="265" y="221" text-anchor="middle" fill="#18364c" font-size="17">F(2)</text><rect x="349" y="195" width="72" height="40" rx="9" fill="#fff0d5" stroke="#b5c8d1"/><text x="385" y="221" text-anchor="middle" fill="#18364c" font-size="17">F(2)</text><rect x="484" y="195" width="72" height="40" rx="9" fill="#efeafa" stroke="#b5c8d1"/><text x="520" y="221" text-anchor="middle" fill="#18364c" font-size="17">F(1)</text><rect x="14" y="290" width="72" height="40" rx="9" fill="#fff0d5" stroke="#b5c8d1"/><text x="50" y="316" text-anchor="middle" fill="#18364c" font-size="17">F(2)</text><rect x="99" y="290" width="72" height="40" rx="9" fill="#efeafa" stroke="#b5c8d1"/><text x="135" y="316" text-anchor="middle" fill="#18364c" font-size="17">F(1)</text></svg></figure>
+
+<p>同色节点代表重复的子问题。图中还省略了 F(2) 下方继续展开的部分。</p>
+<p>虽然有很多函数调用，但不同的子问题实际上只有：</p>
+<div class="formula"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mi>F</mi><mo>(</mo><mn>0</mn><mo>)</mo><mo>,</mo><mi>F</mi><mo>(</mo><mn>1</mn><mo>)</mo><mo>,</mo><mi>F</mi><mo>(</mo><mn>2</mn><mo>)</mo><mo>,</mo><mi>F</mi><mo>(</mo><mn>3</mn><mo>)</mo><mo>,</mo><mi>F</mi><mo>(</mo><mn>4</mn><mo>)</mo><mo>,</mo><mi>F</mi><mo>(</mo><mn>5</mn><mo>)</mo></mrow></math></div>
+<p>也就是 6 个状态。</p>
+<p>这里要区分两种数量：</p>
+<ul>
+<li><strong>函数调用次数</strong>：原始递归展开后可能出现大量重复调用。</li>
+<li><strong>不同子问题的数量</strong>：按状态去重之后，真正需要求解的不同问题数。</li>
+</ul>
+<p>动态规划主要关心第二个数量。</p>
+<h2 id="section-9">2.2 没有记忆化，为什么计算量可能指数增长？</h2>
+<p>考虑最普通的实现：</p>
+<pre><code class="language-csharp">long Fibonacci(int n)
+{
+    if (n &lt;= 1)
+        return n;
+
+    return Fibonacci(n - 1)
+         + Fibonacci(n - 2);
+}
+</code></pre>
+<p>每次计算 <code>Fibonacci(n)</code>，都会产生两个递归分支。</p>
+<p>其中大量子问题被不断重新展开。</p>
+<p>对于这种朴素实现，其运行时间满足近似形式：</p>
+<div class="formula"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mi>T</mi><mo>(</mo><mi>n</mi><mo>)</mo><mo>=</mo><mi>T</mi><mo>(</mo><mi>n</mi><mo>-</mo><mn>1</mn><mo>)</mo><mo>+</mo><mi>T</mi><mo>(</mo><mi>n</mi><mo>-</mo><mn>2</mn><mo>)</mo><mo>+</mo><mi>O</mi><mo>(</mo><mn>1</mn><mo>)</mo></mrow></math></div>
+<p>时间复杂度为：</p>
+<div class="formula"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mrow class="mathbox"><mi>T</mi><mo>(</mo><mi>n</mi><mo>)</mo><mo>=</mo><mo>Θ</mo><mo>(</mo><msup><mo>φ</mo><mi>n</mi></msup><mo>)</mo></mrow></mrow></math></div>
+<p>其中：</p>
+<div class="formula"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mo>φ</mo><mo>≈</mo><mn>1.618</mn></mrow></math></div>
+<p>这是指数级增长，通常也可以用较宽松的 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><mi>O</mi><mo>(</mo><msup><mn>2</mn><mi>n</mi></msup><mo>)</mo></mrow></math> 来描述。</p>
+<p>关键问题不是加法很慢，而是：</p>
+<p><strong>程序没有区分“新的计算需求”和“已经求解过的计算需求”。</strong></p>
+<p>因此，相同的工作被无意义地重复执行。</p>
+<h2 id="section-10">2.3 使用记忆化，为什么复杂度会下降？</h2>
+<p>假设我们给每个 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><mi>F</mi><mo>(</mo><mi>k</mi><mo>)</mo></mrow></math> 都保存一次计算结果。</p>
+<p>那么：</p>
+<pre><code class="language-text">第一次需要 F(3)：
+    计算 F(3)
+    保存 F(3)
+
+第二次需要 F(3)：
+    直接读取结果
+</code></pre>
+<p>只要 <code>F(3)</code> 已经计算完成，不论后续哪个递归分支再次需要它，都无需重新计算。</p>
+<p>于是：</p>
+<div class="formula"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mtext>原始调用树</mtext><mo> </mo><mo>⟶</mo><mo> </mo><mtext>去重后的子问题依赖图</mtext></mrow></math></div>
+<p>斐波那契数列中，最多只有 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><mi>n</mi><mo>+</mo><mn>1</mn></mrow></math> 个不同状态：</p>
+<div class="formula"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mi>F</mi><mo>(</mo><mn>0</mn><mo>)</mo><mo>,</mo><mi>F</mi><mo>(</mo><mn>1</mn><mo>)</mo><mo>,</mo><mo>…</mo><mo>,</mo><mi>F</mi><mo>(</mo><mi>n</mi><mo>)</mo></mrow></math></div>
+<p>每个状态只需要常数次转移计算。</p>
+<p>因此：</p>
+<div class="formula"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mrow class="mathbox"><mi>T</mi><mo>(</mo><mi>n</mi><mo>)</mo><mo>=</mo><mi>O</mi><mo>(</mo><mi>n</mi><mo>)</mo></mrow></mrow></math></div>
+<p>这是从指数时间到线性时间的变化。</p>
+<p>计算量增长对比</p>
+<figure><svg role="img" aria-label="计算量增长对比，纵轴为对数刻度" viewBox="0 0 680 350"><path d="M72,290 H645" stroke="#e0e7eb"/><text x="62" y="295" text-anchor="end" font-size="13" fill="#657487">1</text><path d="M72,251 H645" stroke="#e0e7eb"/><text x="62" y="256" text-anchor="end" font-size="13" fill="#657487">10</text><path d="M72,212 H645" stroke="#e0e7eb"/><text x="62" y="217" text-anchor="end" font-size="13" fill="#657487">100</text><path d="M72,173 H645" stroke="#e0e7eb"/><text x="62" y="178" text-anchor="end" font-size="13" fill="#657487">1,000</text><path d="M72,134 H645" stroke="#e0e7eb"/><text x="62" y="139" text-anchor="end" font-size="13" fill="#657487">10,000</text><path d="M72,95 H645" stroke="#e0e7eb"/><text x="62" y="100" text-anchor="end" font-size="13" fill="#657487">100,000</text><path d="M72,56 H645" stroke="#e0e7eb"/><text x="62" y="61" text-anchor="end" font-size="13" fill="#657487">1,000,000</text><text x="80" y="318" text-anchor="middle" fill="#657487" font-size="14">5</text><text x="190" y="318" text-anchor="middle" fill="#657487" font-size="14">10</text><text x="300" y="318" text-anchor="middle" fill="#657487" font-size="14">15</text><text x="410" y="318" text-anchor="middle" fill="#657487" font-size="14">20</text><text x="520" y="318" text-anchor="middle" fill="#657487" font-size="14">25</text><text x="630" y="318" text-anchor="middle" fill="#657487" font-size="14">30</text><polyline points="80,244.13244089682843 190,202.32904261188955 300,161.49004367516454 410,120.72964156207911 520,79.97634780357313 630,39.2236944819598" fill="none" stroke="#cf693c" stroke-width="3"/><circle cx="80" cy="244.13244089682843" r="4" fill="#cf693c"><title>n=5：15</title></circle><circle cx="190" cy="202.32904261188955" r="4" fill="#cf693c"><title>n=10：177</title></circle><circle cx="300" cy="161.49004367516454" r="4" fill="#cf693c"><title>n=15：1,973</title></circle><circle cx="410" cy="120.72964156207911" r="4" fill="#cf693c"><title>n=20：21,891</title></circle><circle cx="520" cy="79.97634780357313" r="4" fill="#cf693c"><title>n=25：242,785</title></circle><circle cx="630" cy="39.2236944819598" r="4" fill="#cf693c"><title>n=30：2,692,537</title></circle><polyline points="80,259.6521012350379 190,249.38568527882921 300,243.03932067641892 410,238.43344750537716 520,234.8160394291381 630,231.83689394046337" fill="none" stroke="#198569" stroke-width="3"/><circle cx="80" cy="259.6521012350379" r="4" fill="#198569"><title>n=5：6</title></circle><circle cx="190" cy="249.38568527882921" r="4" fill="#198569"><title>n=10：11</title></circle><circle cx="300" cy="243.03932067641892" r="4" fill="#198569"><title>n=15：16</title></circle><circle cx="410" cy="238.43344750537716" r="4" fill="#198569"><title>n=20：21</title></circle><circle cx="520" cy="234.8160394291381" r="4" fill="#198569"><title>n=25：26</title></circle><circle cx="630" cy="231.83689394046337" r="4" fill="#198569"><title>n=30：31</title></circle><text x="365" y="346" text-anchor="middle" fill="#657487">n（纵轴使用对数刻度）</text></svg><figcaption><span style="color:#cf693c">● 朴素递归调用次数</span>　<span style="color:#198569">● 记忆化首次求解状态数</span></figcaption></figure><div class="table-wrap"><div class="table-wrap"><table><thead><tr><th>n</th><th>朴素递归调用次数</th><th>记忆化首次求解状态数</th></tr></thead><tbody><tr><td>5</td><td>15</td><td>6</td></tr><tr><td>10</td><td>177</td><td>11</td></tr><tr><td>15</td><td>1,973</td><td>16</td></tr><tr><td>20</td><td>21,891</td><td>21</td></tr><tr><td>25</td><td>242,785</td><td>26</td></tr><tr><td>30</td><td>2,692,537</td><td>31</td></tr></tbody></table></div></div><p class="subtle">比较朴素递归实际函数调用次数与记忆化算法按不同状态计数的首次求解次数；不包括缓存查找调用。</p>
+
+<p>记忆化仍会产生少量用于查询缓存的函数调用；图中绿色概念对应首次求解的不同状态数，不代表全部函数调用次数。</p>
+<p>这里得到一个更一般的结论：</p>
+<p>设：</p>
+<ul>
+<li><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><mi>U</mi></mrow></math>：真正需要求解的不同子问题数量。</li>
+<li><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><mi>C</mi></mrow></math>：每个子问题的平均计算及转移成本。</li>
+</ul>
+<p>那么在缓存操作近似为常数时间且依赖无环时，记忆化算法的时间复杂度通常可以表示为：</p>
+<div class="formula"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mrow class="mathbox"><mi>O</mi><mo>(</mo><mi>U</mi><mo>·</mo><mi>C</mi><mo>)</mo></mrow></mrow></math></div>
+<p>更一般地，如果将子问题表示为依赖图，图中有 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><mi>V</mi></mrow></math> 个状态节点和 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><mi>E</mi></mrow></math> 条需要处理的依赖边，那么在每条依赖只处理常数次时：</p>
+<div class="formula"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mrow class="mathbox"><mi>O</mi><mo>(</mo><mi>V</mi><mo>+</mo><mi>E</mi><mo>)</mo></mrow></mrow></math></div>
+<p>这才是记忆化真正的价值：</p>
+<blockquote>
+<p>它把计算成本从“展开递归时执行了多少次”转变为“有多少个不同状态，以及它们有多少需要处理的依赖”。</p>
+</blockquote>
+<p>这也正是依赖图与动态规划在思想上的交汇点。</p>
+<hr>
+<h1 id="section-11">三、How：如何从普通递归设计出动态规划？</h1>
+<p>要理解动态规划，最重要的不是先学习 DP 数组怎么写，而是学会发现和定义状态。</p>
+<p>我建议按照以下五个步骤思考。</p>
+<h2 id="section-12">3.1 第一步：定义状态（State）</h2>
+<p>状态代表一个可以被独立求解、并且答案能够被复用的子问题。</p>
+<p>例如斐波那契：</p>
+<div class="formula"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mi>State</mi><mo>(</mo><mi>n</mi><mo>)</mo><mo>=</mo><mi>F</mi><mo>(</mo><mi>n</mi><mo>)</mo></mrow></math></div>
+<p>这里 <code>n</code> 唯一确定了需要解决的问题。</p>
+<p>因此可以用 <code>n</code> 作为缓存键。</p>
+<p>但如果是背包问题，状态可能是：</p>
+<div class="formula"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mi>State</mi><mo>(</mo><mi>i</mi><mo>,</mo><mi>c</mi><mo>)</mo></mrow></math></div>
+<p>其中：</p>
+<ul>
+<li><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><mi>i</mi></mrow></math>：接下来可以考虑的物品位置。</li>
+<li><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><mi>c</mi></mrow></math>：剩余容量。</li>
+</ul>
+<p>这时只使用 <code>c</code> 作为缓存键就是错误的，因为不同的 <code>i</code> 可能意味着可选物品不同，即使剩余容量相同，答案也可能不同。</p>
+<p><strong>状态设计的核心要求：状态必须包含所有会影响子问题答案的信息。</strong></p>
+<p>形式上，如果：</p>
+<div class="formula"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><msub><mi>State</mi><mi>A</mi></msub><mo>=</mo><msub><mi>State</mi><mi>B</mi></msub></mrow></math></div>
+<p>那么必须能够保证：</p>
+<div class="formula"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mi>Answer</mi><mo>(</mo><msub><mi>State</mi><mi>A</mi></msub><mo>)</mo><mo>=</mo><mi>Answer</mi><mo>(</mo><msub><mi>State</mi><mi>B</mi></msub><mo>)</mo></mrow></math></div>
+<p>这里的相等指的是求解所需信息在语义上的相等，而不只是某几个字段碰巧相等。</p>
+<h2 id="section-13">3.2 第二步：定义状态转移（Transition）</h2>
+<p>状态转移描述当前问题如何依赖更小的子问题。</p>
+<p>斐波那契的状态转移是：</p>
+<div class="formula"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mi>F</mi><mo>(</mo><mi>n</mi><mo>)</mo><mo>=</mo><mi>F</mi><mo>(</mo><mi>n</mi><mo>-</mo><mn>1</mn><mo>)</mo><mo>+</mo><mi>F</mi><mo>(</mo><mi>n</mi><mo>-</mo><mn>2</mn><mo>)</mo></mrow></math></div>
+<p>但状态转移不一定是加法。</p>
+<p>例如：</p>
+<div class="formula"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mi>DP</mi><mo>(</mo><mi>s</mi><mo>)</mo><mo>=</mo><mo>min</mo><mo>(</mo><mi>DP</mi><mo>(</mo><msub><mi>s</mi><mi>1</mi></msub><mo>)</mo><mo>,</mo><mi>DP</mi><mo>(</mo><msub><mi>s</mi><mi>2</mi></msub><mo>)</mo><mo>)</mo><mo>+</mo><mn>1</mn></mrow></math></div>
+<p>可以表示某种最少操作次数问题。</p>
+<div class="formula"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mi>DP</mi><mo>(</mo><mi>s</mi><mo>)</mo><mo>=</mo><mi>DP</mi><mo>(</mo><msub><mi>s</mi><mi>1</mi></msub><mo>)</mo><mo>∨</mo><mi>DP</mi><mo>(</mo><msub><mi>s</mi><mi>2</mi></msub><mo>)</mo></mrow></math></div>
+<p>可以表示某种可达性判断问题。</p>
+<p>所以动态规划不局限于求最小值或最大值。</p>
+<p>它关注的是：<strong>能否通过其他状态已经求出的结果，正确地计算当前状态。</strong></p>
+<h2 id="section-14">3.3 第三步：定义终止条件（Base Case）</h2>
+<p>不能无限分解子问题。</p>
+<p>我们需要定义一些可以直接求解的状态。</p>
+<p>例如：</p>
+<div class="formula"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mi>F</mi><mo>(</mo><mn>0</mn><mo>)</mo><mo>=</mo><mn>0</mn><mo>,</mo><mo> </mo><mi>F</mi><mo>(</mo><mn>1</mn><mo>)</mo><mo>=</mo><mn>1</mn></mrow></math></div>
+<p>这两个状态不依赖其他状态。</p>
+<p>因此，它们成为整个依赖计算的起点。</p>
+<p>一个有效的普通动态规划递推通常需要满足：</p>
+<ol>
+<li>状态含义明确。</li>
+<li>转移关系正确。</li>
+<li>存在可以直接求解的边界状态。</li>
+<li>依赖能够最终到达边界，通常形成无环依赖图。</li>
+</ol>
+<p>如果递归依赖存在循环，那么单纯加一个缓存并不能保证算法正确或终止。</p>
+<h2 id="section-15">3.4 第四步：利用记忆化避免重复计算</h2>
+<p>下面用 C# 实现记忆化。</p>
+<pre><code class="language-csharp">public static long FibonacciMemo(int n)
+{
+    if (n &lt; 0 || n &gt; 92)
+        throw new ArgumentOutOfRangeException(nameof(n));
+
+    var memo = new Dictionary&lt;int, long&gt;
+    {
+        [0] = 0,
+        [1] = 1
+    };
+
+    return Solve(n);
+
+    long Solve(int k)
+    {
+        // 已求解过，直接复用
+        if (memo.TryGetValue(k, out long cached))
+            return cached;
+
+        // 首次求解：依赖更小的子问题
+        long result = Solve(k - 1) + Solve(k - 2);
+
+        // 保存本次计算结果
+        memo[k] = result;
+
+        return result;
+    }
+}
+</code></pre>
+<p>这里把输入限定在 0～92，是因为更大的 Fibonacci 数值无法用有符号 <code>long</code> 准确表示。</p>
+<p>请重点观察 <code>Solve()</code> 的行为：</p>
+<p><strong>Solve(k)</strong></p>
+<p><strong>缓存是否包含 k？</strong></p>
+<p>是（命中）</p>
+<p>直接返回结果</p>
+<p>否（未命中）</p>
+<p>递归计算子问题</p>
+<p>保存并返回结果</p>
+<p>它的执行策略可以概括为：</p>
+<div class="formula"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mrow><mi>Solve</mi><mo>(</mo><mi>s</mi><mo>)</mo><mo>=</mo></mrow><mo stretchy="true">{</mo><mtable columnalign="left" rowspacing="0.45em"><mtr><mtd><mrow><mi>Memo</mi><mo>[</mo><mi>s</mi><mo>]</mo></mrow></mtd><mtd><mrow><mtext>已计算</mtext></mrow></mtd></mtr><mtr><mtd><mrow><mi>Combine</mi><mo>(</mo><mi>Solve</mi><mo>(</mo><msub><mi>s</mi><mi>1</mi></msub><mo>)</mo><mo>,</mo><mo>…</mo><mo>)</mo></mrow></mtd><mtd><mrow><mtext>尚未计算</mtext></mrow></mtd></mtr></mtable><mrow></mrow></mrow></math></div>
+<p>注意，<strong>Memoization 并没有改变状态转移的数学意义，只改变了计算的执行策略。</strong></p>
+<p>我们仍然在计算同一个函数，得到同一个结果，只是不再重复进行已经完成的子计算。</p>
+<h2 id="section-16">3.5 第五步：也可以不用递归，自底向上计算</h2>
+<p>动态规划还有一种典型写法：Tabulation（制表法）。</p>
+<p>思路是先求小问题，再求大问题：</p>
+<pre><code class="language-csharp">public static long FibonacciBottomUp(int n)
+{
+    if (n &lt; 0 || n &gt; 92)
+        throw new ArgumentOutOfRangeException(nameof(n));
+
+    if (n &lt;= 1)
+        return n;
+
+    long prev2 = 0; // F(0)
+    long prev1 = 1; // F(1)
+
+    for (int i = 2; i &lt;= n; i++)
+    {
+        long current = prev1 + prev2;
+
+        prev2 = prev1;
+        prev1 = current;
+    }
+
+    return prev1;
+}
+</code></pre>
+<p>为什么这也是动态规划？</p>
+<p>因为它依然遵循同一个状态转移：</p>
+<div class="formula"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mi>F</mi><mo>(</mo><mi>i</mi><mo>)</mo><mo>=</mo><mi>F</mi><mo>(</mo><mi>i</mi><mo>-</mo><mn>1</mn><mo>)</mo><mo>+</mo><mi>F</mi><mo>(</mo><mi>i</mi><mo>-</mo><mn>2</mn><mo>)</mo></mrow></math></div>
+<p>不同的是，它按照依赖顺序主动计算所有必需的状态。</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>比较</th>
+<th>自顶向下 + 记忆化</th>
+<th>自底向上</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>计算方向</td>
+<td>从目标状态递归寻找依赖</td>
+<td>从边界状态逐步计算</td>
+</tr>
+<tr>
+<td>状态计算</td>
+<td>按需计算</td>
+<td>按安排好的顺序计算</td>
+</tr>
+<tr>
+<td>典型存储</td>
+<td>Dictionary 或数组</td>
+<td>DP 数组或滚动变量</td>
+</tr>
+<tr>
+<td>递归调用栈</td>
+<td>通常需要</td>
+<td>通常不需要</td>
+</tr>
+<tr>
+<td>适合场景</td>
+<td>只需要部分可达状态</td>
+<td>依赖顺序明确、状态密集</td>
+</tr>
+<tr>
+<td>Fibonacci 时间</td>
+<td><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><mi>O</mi><mo>(</mo><mi>n</mi><mo>)</mo></mrow></math></td>
+<td><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><mi>O</mi><mo>(</mo><mi>n</mi><mo>)</mo></mrow></math></td>
+</tr>
+<tr>
+<td>Fibonacci 额外空间</td>
+<td><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><mi>O</mi><mo>(</mo><mi>n</mi><mo>)</mo></mrow></math></td>
+<td>上面滚动变量实现为 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><mi>O</mi><mo>(</mo><mn>1</mn><mo>)</mo></mrow></math></td>
+</tr>
+</tbody></table></div>
+<p>这里有一个重要认识：</p>
+<p><strong>记忆化与自底向上不是两种不同的数学问题求解方法，而是针对同一状态依赖关系的两种求值策略。</strong></p>
+<hr>
+<h1 id="section-17">四、进一步理解：为什么动态规划适合解决最优化问题？</h1>
+<p>前面的 Fibonacci 只是计算一个确定的数值。</p>
+<p>真正理解动态规划，还需要看它如何解决“最优选择”。</p>
+<h2 id="section-18">4.1 示例：最少硬币数量</h2>
+<p>假设有无限数量的硬币，面值分别为：</p>
+<div class="formula"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mi>Coins</mi><mo>=</mo><mo>{</mo><mn>1</mn><mo>,</mo><mn>3</mn><mo>,</mo><mn>4</mn><mo>}</mo></mrow></math></div>
+<p>现在要凑出金额 6。</p>
+<p>希望使用的硬币数量最少。</p>
+<p>例如：</p>
+<div class="formula"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mn>4</mn><mo>+</mo><mn>1</mn><mo>+</mo><mn>1</mn><mo>=</mo><mn>6</mn></mrow></math></div>
+<p>使用了 3 枚硬币。</p>
+<p>但：</p>
+<div class="formula"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mn>3</mn><mo>+</mo><mn>3</mn><mo>=</mo><mn>6</mn></mrow></math></div>
+<p>只需要 2 枚。</p>
+<p>因此正确答案是 2。</p>
+<p>这里不能简单地每次都选择面值最大的硬币，因为局部贪心选择不一定得到全局最优解。</p>
+<h2 id="section-19">4.2 怎样定义动态规划状态？</h2>
+<p>令：</p>
+<div class="formula"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mi>DP</mi><mo>(</mo><mi>x</mi><mo>)</mo><mo>=</mo><mtext>凑出金额 </mtext><mi>x</mi><mtext> 所需的最少硬币数</mtext></mrow></math></div>
+<p>现在思考如何得到 <code>DP(6)</code>。</p>
+<p>如果第一枚硬币选 1，那么剩余问题是：</p>
+<div class="formula"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mn>1</mn><mo>+</mo><mi>DP</mi><mo>(</mo><mn>5</mn><mo>)</mo></mrow></math></div>
+<p>如果第一枚硬币选 3：</p>
+<div class="formula"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mn>1</mn><mo>+</mo><mi>DP</mi><mo>(</mo><mn>3</mn><mo>)</mo></mrow></math></div>
+<p>如果第一枚硬币选 4：</p>
+<div class="formula"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mn>1</mn><mo>+</mo><mi>DP</mi><mo>(</mo><mn>2</mn><mo>)</mo></mrow></math></div>
+<p>既然目标是最小数量，那就选择这三个候选值中最小的：</p>
+<div class="formula"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mi>DP</mi><mo>(</mo><mn>6</mn><mo>)</mo><mo>=</mo><mn>1</mn><mo>+</mo><mo>min</mo><mo>(</mo><mi>DP</mi><mo>(</mo><mn>5</mn><mo>)</mo><mo>,</mo><mi>DP</mi><mo>(</mo><mn>3</mn><mo>)</mo><mo>,</mo><mi>DP</mi><mo>(</mo><mn>2</mn><mo>)</mo><mo>)</mo></mrow></math></div>
+<p>更一般地：</p>
+<div class="formula"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mrow class="mathbox"><mi>DP</mi><mo>(</mo><mi>x</mi><mo>)</mo><mo>=</mo><mn>1</mn><mo>+</mo><msub><mo>min</mo><mrow><mi>c</mi><mo>∈</mo><mi>Coins</mi><mo>,</mo><mspace width="0.2em"/><mi>c</mi><mo>≤</mo><mi>x</mi></mrow></msub><mi>DP</mi><mo>(</mo><mi>x</mi><mo>-</mo><mi>c</mi><mo>)</mo></mrow></mrow></math></div>
+<p>边界：</p>
+<div class="formula"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mi>DP</mi><mo>(</mo><mn>0</mn><mo>)</mo><mo>=</mo><mn>0</mn></mrow></math></div>
+<p>无法凑出的状态记为无穷大。</p>
+<p>这就是状态转移方程。</p>
+<h2 id="section-20">4.3 为什么这个状态转移是正确的？</h2>
+<p>这里涉及动态规划解决优化问题时经常要求的性质：</p>
+<p><strong>最优子结构（Optimal Substructure）。</strong></p>
+<p>假设某个凑出金额 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><mi>x</mi></mrow></math> 的最优解，选择了面值 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><mi>c</mi></mrow></math> 作为第一枚硬币。</p>
+<p>那么剩余的 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><mi>x</mi><mo>-</mo><mi>c</mi></mrow></math> 部分也必须使用最少的硬币。</p>
+<p>为什么？</p>
+<p>假设剩余部分不是最优的。</p>
+<p>那么我们就可以用另一种硬币更少的组合替换它。</p>
+<p>替换后，总硬币数量会进一步减少。</p>
+<p>这与原本的解已经是最优解矛盾。</p>
+<p>因此，最优解包含相应子问题的最优解。</p>
+<p>这里要区分两个性质：</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>性质</th>
+<th>解决什么问题</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>最优子结构</td>
+<td>能否通过子问题的最优解正确构造整体最优解</td>
+</tr>
+<tr>
+<td>重叠子问题</td>
+<td>求解过程中是否会反复遇到相同的子问题</td>
+</tr>
+</tbody></table></div>
+<p>它们并不等价。</p>
+<p>最优子结构主要支撑优化问题的状态转移正确性，而重叠子问题主要解释记忆化为什么能提高效率。</p>
+<p>动态规划还有很多非优化应用，这些应用需要的是正确、可组合的递推关系，并不一定涉及“最优”这个概念。</p>
+<h2 id="section-21">4.4 使用记忆化实现最少硬币问题</h2>
+<pre><code class="language-csharp">public static int MinCoins(int[] coins, int amount)
+{
+    if (coins == null)
+        throw new ArgumentNullException(nameof(coins));
+
+    if (amount &lt; 0)
+        throw new ArgumentOutOfRangeException(nameof(amount));
+
+    foreach (int coin in coins)
+    {
+        if (coin &lt;= 0)
+            throw new ArgumentException(
+                &quot;Coin values must be positive.&quot;);
+    }
+
+    // 比任何可行最优解都大的哨兵值
+    int impossible = amount + 1;
+
+    int?[] memo = new int?[amount + 1];
+
+    int Solve(int remaining)
+    {
+        // 凑出 0 元不需要硬币
+        if (remaining == 0)
+            return 0;
+
+        // 已经计算过，直接复用
+        if (memo[remaining].HasValue)
+            return memo[remaining].Value;
+
+        int best = impossible;
+
+        foreach (int coin in coins)
+        {
+            if (coin &gt; remaining)
+                continue;
+
+            int subResult = Solve(remaining - coin);
+
+            if (subResult != impossible)
+            {
+                best = Math.Min(best, subResult + 1);
+            }
+        }
+
+        memo[remaining] = best;
+
+        return best;
+    }
+
+    int result = Solve(amount);
+
+    return result == impossible ? -1 : result;
+}
+</code></pre>
+<p>这个示例假定金额在实际可分配数组的范围内，且 amount + 1 不溢出 int；生产代码应另行处理极端输入与资源限制。</p>
+<p>调用：</p>
+<pre><code class="language-csharp">int result = MinCoins(new[] { 1, 3, 4 }, 6);
+// result == 2
+</code></pre>
+<p>观察它的三个重要特征：</p>
+<ol>
+<li><code>remaining</code> 是状态，也是记忆化缓存键。</li>
+<li><code>Solve(remaining - coin)</code> 建立子问题依赖。</li>
+<li><code>memo[remaining]</code> 保存最优解，使其他计算路径能够复用。</li>
+</ol>
+<p>假设目标金额为 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><mi>A</mi></mrow></math>，硬币面值种类为 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><mi>K</mi></mrow></math>。</p>
+<p>最多只有 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><mi>A</mi><mo>+</mo><mn>1</mn></mrow></math> 个不同状态，每个状态至多尝试 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><mi>K</mi></mrow></math> 种硬币。</p>
+<p>因此：</p>
+<div class="formula"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mrow class="mathbox"><mi>T</mi><mo>(</mo><mi>A</mi><mo>,</mo><mi>K</mi><mo>)</mo><mo>=</mo><mi>O</mi><mo>(</mo><mi>AK</mi><mo>)</mo></mrow></mrow></math></div>
+<p>空间复杂度，包括缓存与递归栈，为：</p>
+<div class="formula"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mrow class="mathbox"><mi>S</mi><mo>(</mo><mi>A</mi><mo>)</mo><mo>=</mo><mi>O</mi><mo>(</mo><mi>A</mi><mo>)</mo></mrow></mrow></math></div>
+<p>这也说明：动态规划的复杂度通常取决于<strong>状态空间的大小和转移成本</strong>，而不仅仅是递归深度。</p>
+<hr>
+<h1 id="section-22">五、直击本质：动态规划与缓存、依赖图、增量计算究竟是什么关系？</h1>
+<p>这部分是把这些知识连接起来的关键。</p>
+<h2 id="section-23">5.1 从依赖图理解 DP</h2>
+<p>可以把每一个状态看成一个节点：</p>
+<div class="formula"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mi>DP</mi><mo>(</mo><mi>s</mi><mo>)</mo></mrow></math></div>
+<p>如果计算状态 A 必须使用状态 B 的结果，就建立一条依赖关系：</p>
+<div class="formula"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mi>A</mi><mo>→</mo><mi>B</mi></mrow></math></div>
+<p>于是整个问题变成一张状态依赖图。</p>
+<p>对于普通无环动态规划，它是一张 DAG（有向无环图）。</p>
+<p>这时：</p>
+<ul>
+<li>状态定义决定图中有哪些节点。</li>
+<li>状态转移决定节点之间的边。</li>
+<li>Memoization 保存已经求解的节点结果。</li>
+<li>自底向上 DP 按照依赖先于使用者的拓扑顺序计算。</li>
+<li>最终答案来自目标节点的求值结果。</li>
+</ul>
+<p>记忆化通过复用相同节点的结果，避免在不同依赖路径中重复展开它们。</p>
+<h2 id="section-24">5.2 与普通缓存的区别</h2>
+<p>你之前探讨过对象池与缓存，以及缓存为什么能避免重复获取或计算。</p>
+<p>Memoization 本质上就是一种专门针对函数求值结果的缓存策略。</p>
+<p>但两者的侧重点不同。</p>
+<p>普通缓存可能缓存：</p>
+<ul>
+<li>网络请求结果。</li>
+<li>文件内容。</li>
+<li>数据库查询结果。</li>
+<li>已构建的资源。</li>
+<li>函数计算结果。</li>
+</ul>
+<p>记忆化通常特指最后一种，即按有效输入缓存函数的输出。</p>
+<p>所以我们可以说：</p>
+<div class="formula"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mrow class="mathbox"><mtext>Memoization 是计算结果缓存的一种形式</mtext></mrow></mrow></math></div>
+<p>但不能反过来说所有缓存都是 Memoization。</p>
+<p>同时，使用了 Memoization 的程序也不一定是动态规划。</p>
+<p>例如某个复杂数学函数被重复调用，即使内部完全没有递归子问题，也可以记忆化。</p>
+<h2 id="section-25">5.3 与增量计算的区别</h2>
+<p>考虑：</p>
+<div class="formula"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mi>C</mi><mo>=</mo><mi>A</mi><mo>+</mo><mi>B</mi></mrow></math></div>
+<div class="formula"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mi>D</mi><mo>=</mo><mi>C</mi><mo>×</mo><mn>2</mn></mrow></math></div>
+<p>如果 C 已经求出，后续计算 D 时直接复用 C，这类似记忆化。</p>
+<p>但假如 A 发生变化：</p>
+<div class="formula"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mi>A</mi><mo>←</mo><mi>A</mi><mo>&#x27;</mo></mrow></math></div>
+<p>那么 C 和 D 的旧结果就可能不再正确。</p>
+<p>增量计算进一步关心：</p>
+<p><strong>当输入发生变化时，哪些已有结果仍然有效，哪些需要重新计算？</strong></p>
+<p>可以理解为：</p>
+<p>记忆化关心</p>
+<p><strong>这个状态算过吗？</strong></p>
+<p>算过且有效 → 复用</p>
+<p>增量计算关心</p>
+<p><strong>这个状态受影响了吗？</strong></p>
+<p>受影响 → 更新必要部分</p>
+<p>因此，两者可以结合：</p>
+<div class="formula"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mtext>依赖图</mtext><mo>+</mo><mtext>记忆化</mtext><mo>+</mo><mtext>失效追踪</mtext></mrow></math></div>
+<p>就能构成一种支持结果复用和选择性重算的计算系统。</p>
+<p>不过，经典 DP 通常是在输入固定的一次求解过程中运行，并不需要处理输入持续变化的问题。</p>
+<p>如果将 DP 的状态缓存跨越不同输入版本复用，就必须考虑正确的缓存键或失效机制。</p>
+<h2 id="section-26">5.4 结合 Unity 的实际场景</h2>
+<p>例如游戏中的某个技能系统需要计算：</p>
+<pre><code class="language-text">角色基础属性
+      ↓
+装备属性修正
+      ↓
+角色最终属性
+      ↓
+技能伤害结果
+</code></pre>
+<p>如果装备属性、角色等级、Buff 都不变，那么技能伤害相关的纯计算结果有可能复用。</p>
+<p>但如果角色装备发生变化，相关缓存也必须失效。</p>
+<p>这个场景主要属于缓存与增量计算，而不必然属于动态规划。</p>
+<p>只有当技能计算能够拆分成具有合适递推结构的状态子问题，并通过子问题结果组合求解时，才有理由把它建模为 DP。</p>
+<p><strong>不要因为一个系统有缓存和依赖关系，就认为它一定是动态规划。</strong></p>
+<hr>
+<h1 id="section-27">六、什么时候应该使用 Memoization？什么时候不应该？</h1>
+<p>记忆化不是免费的。它通过增加存储和管理成本，换取重复计算的减少。</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>情况</th>
+<th>是否适合记忆化</th>
+<th>原因</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>同一子问题频繁出现</td>
+<td>非常适合</td>
+<td>重复计算可被消除</td>
+</tr>
+<tr>
+<td>单次计算成本高</td>
+<td>往往适合</td>
+<td>缓存命中收益大</td>
+</tr>
+<tr>
+<td>不存在重复子问题</td>
+<td>通常收益较低</td>
+<td>缓存本身有额外成本</td>
+</tr>
+<tr>
+<td>状态空间非常大</td>
+<td>需要权衡</td>
+<td>缓存可能消耗大量内存</td>
+</tr>
+<tr>
+<td>结果依赖可变外部状态</td>
+<td>需要额外设计</td>
+<td>可能出现过期缓存</td>
+</tr>
+<tr>
+<td>结果依赖随机数或时间</td>
+<td>不能直接按原参数缓存</td>
+<td>相同参数不保证相同结果</td>
+</tr>
+<tr>
+<td>子问题之间存在循环依赖</td>
+<td>不能只靠普通记忆化</td>
+<td>需要另外处理循环或求解不动点</td>
+</tr>
+</tbody></table></div>
+<p>特别需要关注三个容易犯错的地方。</p>
+<h3 id="section-28">6.1 缓存键不完整</h3>
+<p>例如背包状态为：</p>
+<div class="formula"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mi>DP</mi><mo>(</mo><mi>i</mi><mo>,</mo><mi>capacity</mi><mo>)</mo></mrow></math></div>
+<p>却只缓存：</p>
+<pre><code class="language-csharp">Dictionary&lt;int, int&gt; memo;
+</code></pre>
+<p>其中键只有 <code>capacity</code>。</p>
+<p>这样会把本来不同的状态错误地当成同一个状态。</p>
+<p>正确的缓存键应该涵盖所有会影响结果的输入，例如：</p>
+<pre><code class="language-csharp">Dictionary&lt;(int index, int capacity), int&gt; memo;
+</code></pre>
+<h3 id="section-29">6.2 把可变状态当成稳定输入</h3>
+<p>例如：</p>
+<pre><code class="language-csharp">int ComputeDamage(int skillId)
+{
+    return GetSkillPower(skillId) * player.Attack;
+}
+</code></pre>
+<p>即使 <code>skillId</code> 相同，只要 <code>player.Attack</code> 改变，结果就会改变。</p>
+<p>此时只使用 <code>skillId</code> 作为缓存键并不安全。</p>
+<p>可以将攻击力或相应配置版本纳入缓存键，也可以在属性变化时失效相关缓存。</p>
+<h3 id="section-30">6.3 忘记递归依赖的终止性</h3>
+<p>例如错误地定义：</p>
+<div class="formula"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mi>DP</mi><mo>(</mo><mi>x</mi><mo>)</mo><mo>=</mo><mi>DP</mi><mo>(</mo><mi>x</mi><mo>)</mo><mo>+</mo><mn>1</mn></mrow></math></div>
+<p>使用 Dictionary 不会自动解决这个问题。</p>
+<p>因为第一次计算 <code>DP(x)</code> 时，还没有得到可以缓存的结果，递归就会再次要求计算 <code>DP(x)</code>。</p>
+<p>所以普通 DP 的正确性不仅依赖缓存，还依赖一个可终止、定义良好的递推关系。</p>
+<hr>
+<h1 id="section-31">七、把整个知识体系统一起来</h1>
+<p>你可以从四个抽象层次来理解：</p>
+<p>第一层 · 计算结构</p>
+<p><strong>Dependency Graph（依赖图）</strong></p>
+<p>描述哪个结果依赖哪个结果</p>
+<p>第二层 · 求解模型</p>
+<p><strong>Dynamic Programming（动态规划）</strong></p>
+<p>通过正确的状态转移组合子问题结果</p>
+<p>第三层 · 复用机制</p>
+<p><strong>Memoization（记忆化）</strong></p>
+<p>保存状态结果，避免重复求解</p>
+<p>第四层 · 变化管理（可选扩展）</p>
+<p><strong>Incremental Computation（增量计算）</strong></p>
+<p>当输入变化时，保留有效结果并更新受影响部分</p>
+<p>这是一种理解它们之间联系的抽象视角，并不代表这些技术必须按这样的顺序组合使用。</p>
+<h2 id="section-32">最终总结：只记住五句话</h2>
+<ol>
+<li><strong>动态规划的核心是状态及其递推关系。</strong> 它通过复用子问题的答案，避免重复求解。</li>
+<li><strong>重叠子问题意味着不同计算路径重复遇到同一子问题。</strong> 这是记忆化通常能显著提速的根本原因。</li>
+<li><strong>记忆化是按状态缓存计算结果。</strong> 它不改变结果的数学定义，只改变计算执行方式。</li>
+<li><strong>动态规划的优化收益来自状态去重。</strong> 从重复展开计算树，转变为对不同状态及其依赖进行求值。</li>
+<li><strong>缓存正确性依赖状态完整性、结果稳定性和失效管理。</strong> 错误的缓存键会破坏整个算法的正确性。</li>
+</ol>
+<p>最值得记住的统一表达式是：</p>
+<div class="formula"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mrow></mrow><mtable columnalign="left" rowspacing="0.45em"><mtr><mtd><mrow><mtext>状态决定什么是同一个问题</mtext></mrow></mtd></mtr><mtr><mtd><mrow><mtext>转移决定如何求解问题</mtext></mrow></mtd></mtr><mtr><mtd><mrow><mtext>记忆化决定是否需要重复求解</mtext></mrow></mtd></mtr></mtable><mrow></mrow></mrow></math></div>
+<p>而对于你的架构学习，可以再往深一层思考：</p>
+<blockquote>
+<p><strong>当你发现程序重复执行某项工作时，先不要急着使用缓存，而是先问：什么信息唯一决定这项工作的结果？</strong></p>
+</blockquote>
+<p>这个问题迫使你识别真正的状态、依赖与计算边界。</p>
+<p>它不仅是动态规划的起点，也是设计正确缓存、增量计算和复杂计算系统的重要基础。</p>
+</article></div><script>const slider=document.getElementById('fib-n'), value=document.getElementById('n-value'), status=document.getElementById('status'), call=document.getElementById('call');let cache=new Map(),hits=0;function update(){value.value=slider.value;call.textContent='调用 f('+slider.value+')';status.textContent=cache.has(+slider.value)?'已缓存':'未缓存';document.getElementById('states').textContent=cache.size;document.getElementById('hits').textContent=hits;}function solve(n){if(cache.has(n)){hits++;return cache.get(n)}const result=n<=1?n:solve(n-1)+solve(n-2);cache.set(n,result);return result}slider.addEventListener('input',update);call.addEventListener('click',()=>{const hit=cache.has(+slider.value);document.getElementById('result').textContent=solve(+slider.value);update();status.textContent=hit?'命中缓存，直接返回':'首次计算，结果已保存'});document.getElementById('clear').addEventListener('click',()=>{cache.clear();hits=0;document.getElementById('result').textContent='—';update()});update();</script></body></html>

@@ -1,0 +1,276 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="按原回复完整整理的 Memoization 与增量计算学习笔记：What、Why、How。"><title>Memoization（记忆化）与增量计算：What、Why、How</title><style>
+:root{--text:#23262b;--muted:#6b7280;--border:#e3e5e8;--accent:#167b73;--soft:#f6f7f8;--code:#f6f7f9}*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:24px}body{margin:0;background:#fff;color:var(--text);font:18px/1.9 -apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;-webkit-font-smoothing:antialiased}main{width:min(100% - 56px,840px);margin:46px auto 80px}h1,h2,h3{color:#16191d;font-weight:700;line-height:1.5;overflow-wrap:break-word}h1{font-size:32px;line-height:1.55;letter-spacing:-.02em;margin:0 0 32px}h2{font-size:27px;margin:48px 0 22px}h3{font-size:22px;margin:34px 0 16px}p{margin:18px 0}strong{font-weight:700;color:#1b1e22}em{font-style:italic}ul,ol{margin:18px 0;padding-left:1.65em}li{margin:9px 0;padding-left:3px}li p{margin:0}hr{border:0;border-top:1px solid var(--border);margin:42px 0}blockquote{margin:24px 0;padding:2px 0 2px 21px;border-left:4px solid #d2d6dc;color:#40454c}blockquote p{margin:10px 0}a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}.tools{display:flex;justify-content:space-between;align-items:center;gap:16px;border-bottom:1px solid var(--border);padding-bottom:14px;margin-bottom:30px;font-size:13px;color:var(--muted)}button,select,input{font:inherit}button{font-size:13px;line-height:1.5;padding:6px 12px;border:1px solid #d5d9de;border-radius:6px;background:#fff;color:#49515a;cursor:pointer}button:hover{background:var(--soft)}:focus-visible{outline:3px solid #3ba79b;outline-offset:3px}.toc{margin:28px 0 35px;border:1px solid var(--border);border-radius:8px;padding:11px 17px;font-size:15px;background:#fcfcfc}.toc summary{cursor:pointer;font-weight:600}.toc ol{margin-bottom:8px;padding-left:1.5em}.toc li{margin:6px 0}.toc a{color:#4e5967}code{font:0.87em/1.7 "SFMono-Regular",Consolas,"Liberation Mono",monospace;background:#f0f1f3;border-radius:4px;padding:2px 5px;color:#30343b;overflow-wrap:anywhere}.code-block{margin:22px 0 26px;background:var(--code);border:1px solid #e5e7eb;border-radius:9px;overflow:hidden}.code-title{padding:8px 17px;font-size:12px;line-height:1.5;color:#747d88;background:#eef0f3;border-bottom:1px solid #e1e5e9}.code-block pre{padding:18px 20px;margin:0;overflow:auto;font-size:14px;line-height:1.75;tab-size:4}.code-block code{display:block;font:inherit;background:transparent;padding:0;border-radius:0;white-space:pre;overflow-wrap:normal;color:#28313c}.text-example{margin:22px 0;padding:18px 21px;border-radius:8px;background:#f6f7f8;font-size:15px;line-height:1.8;overflow:auto;border:1px solid #eaecf0}.text-example code{padding:0;background:transparent;font:inherit;white-space:pre;overflow-wrap:normal}.table-wrap{overflow-x:auto;margin:24px 0 28px}table{border-collapse:collapse;width:100%;font-size:16px;line-height:1.8;min-width:550px}th,td{border:1px solid #e1e4e8;padding:12px 15px;text-align:left;vertical-align:top}th{font-weight:650;background:#f6f7f8;color:#333941}tbody tr:nth-child(even){background:#fcfcfd}.concept{min-width:480px}.formula{margin:24px 0;text-align:center;padding:9px 6px;overflow-x:auto;font-size:20px;line-height:1.9}.math{font-family:"Cambria Math","STIX Two Math","Times New Roman","Microsoft YaHei",serif;white-space:nowrap}.cases{display:flex;align-items:center;justify-content:center;gap:12px;font-size:18px;text-align:left}.case-brace{font-size:70px;font-family:serif;font-weight:200;line-height:1}.cases>div>div{display:flex;gap:28px;align-items:center;padding:4px 0}.cases>div>div>.math{min-width:125px}.cases>div>div>span:last-child{font-size:15px;white-space:nowrap}.sequence{display:flex;justify-content:center;align-items:center;gap:12px;margin:22px 0;flex-wrap:wrap;font-size:16px}.seq-item{padding:6px 17px;border:1px solid #dbe0e5;border-radius:7px;background:#fafbfc;text-align:center}.seq-arrow{color:#8a939e;line-height:1.3}.sequence.vertical{flex-direction:column;gap:5px}.sequence.vertical .seq-item{min-width:200px}.flow-pair{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin:22px 0}.flow-pair>div>p{text-align:center;font-size:16px}.read-block{margin:24px 0;padding:4px 20px;background:#f8f9fa;border-radius:8px}.read-block h3{font-size:18px;margin-top:15px}.read-block dl{font-size:16px;margin:16px 0}.read-block dt{font-weight:650;margin-top:18px}.read-block dd{margin:5px 0 18px;color:#4e5661}figure{margin:25px 0}.figure-scroll{overflow-x:auto}.figure-scroll svg{display:block;width:100%;min-width:540px}figcaption,.caption{font-size:13px;color:var(--muted);text-align:center;margin:12px 0}.dependency-svg{display:block;width:100%;height:auto;margin:24px auto 0;min-width:430px}.svg-node rect{fill:#fafbfc;stroke:#b9c2cd;stroke-width:1.2}.svg-node text{fill:#38414c;font-size:16px;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Microsoft YaHei",sans-serif}.svg-node.active rect{fill:#fff0de;stroke:#d78b43;stroke-width:2}.svg-node.active text{fill:#994a0a}.demo{border:1px solid #dfe3e7;background:#fcfdfd;border-radius:10px;padding:20px 22px;margin:26px 0;overflow-x:auto}.demo>p:first-child{margin-top:0}.demo-heading{display:flex;justify-content:space-between;gap:12px;align-items:center;font-size:16px}.demo input{width:85px;padding:5px 8px;border:1px solid #c4ccd5;border-radius:5px;font-size:15px;background:white}.demo select{padding:6px 12px;border:1px solid #c4ccd5;border-radius:5px;background:#fff;font-size:15px;max-width:100%}.demo label{font-size:15px}.metrics{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin:23px 0}.metrics span{display:block;font-size:13px;color:var(--muted)}.metrics strong{display:block;font-size:22px;font-weight:650;line-height:1.8}.metrics>div:last-child strong{font-size:16px;padding-top:6px}.legend{font-size:13px;color:#647080}.legend-dot{display:inline-block;width:10px;height:10px;margin:0 5px 0 16px;border:1px solid #acb8c6;background:#fafbfc;border-radius:3px}.legend-dot:first-child{margin-left:0}.legend-dot.affected{background:#fff0de;border-color:#d78b43}#affected{font-size:15px}.footer{margin-top:50px;padding-top:18px;border-top:1px solid var(--border);color:#90959b;font-size:12px}.code-block .k,.code-block .kt{color:#814cbb}.code-block .c,.code-block .c1,.code-block .cm{color:#6a806f}.code-block .s,.code-block .s1,.code-block .s2{color:#a24d2e}.code-block .m,.code-block .mi{color:#1e7684}.code-block .nf{color:#1f6588}.code-block .nc{color:#1e7f77}
+@media(max-width:650px){body{font-size:17px;line-height:1.9}main{width:calc(100% - 36px);margin-top:23px}h1{font-size:27px;line-height:1.55}h2{font-size:24px;margin-top:39px}h3{font-size:20px}p{margin:17px 0}.code-block pre{padding:15px;font-size:12.5px}.text-example{font-size:13px}.tools{font-size:12px}.table-wrap table{font-size:14px}th,td{padding:10px 12px}.formula{font-size:17px}.cases{justify-content:flex-start;font-size:16px}.cases>div>div{gap:15px}.cases>div>div>span:last-child{font-size:12px}.case-brace{font-size:62px}.flow-pair{grid-template-columns:1fr;gap:0}.demo{padding:17px 15px}.metrics{grid-template-columns:1fr 1fr}.metrics>div:last-child{grid-column:1/-1}.metrics strong{font-size:21px}.legend{font-size:12px}}
+@media print{@page{margin:19mm 17mm}body{font-size:11pt;line-height:1.8;color:#111}main{width:100%;margin:0}.tools,.toc,button{display:none}h1{font-size:23pt}h2{font-size:18pt;break-after:avoid}h3{font-size:14pt;break-after:avoid}p,li{orphans:3;widows:3}blockquote{break-inside:avoid}.formula{font-size:13pt;break-inside:avoid}.table-wrap{overflow:visible}table{min-width:0;font-size:9.5pt}th,td{padding:7px 9px}tr{break-inside:avoid}.code-block{border-color:#ddd;break-inside:auto}.code-block pre{font-size:9pt;white-space:pre-wrap;overflow:visible}.code-block code{white-space:pre-wrap;overflow-wrap:anywhere}.code-title{font-size:8pt}.text-example{font-size:10pt;white-space:pre-wrap}.demo{overflow:visible;break-inside:avoid}.dependency-svg{min-width:0}.figure-scroll{overflow:visible}.figure-scroll svg{min-width:0}figure{break-inside:avoid}.seq-item{font-size:10pt}.footer{display:none}}
+
+/* 阅读目录：正文保持原有内容和排版。 */
+.reading-sidebar{display:none}.sidebar-toggle{display:none}.sidebar-backdrop[hidden]{display:none!important}
+@media screen and (min-width:1040px){
+ .reading-layout{display:grid;grid-template-columns:270px minmax(0,840px);gap:48px;max-width:1230px;margin:0 auto;padding:40px 28px 0;align-items:start}
+ .reading-layout main{width:100%;min-width:0;margin:6px 0 80px}
+ .reading-sidebar{display:flex;flex-direction:column;position:sticky;top:28px;max-height:calc(100vh - 56px);padding:8px 18px 12px 0;border-right:1px solid var(--border)}
+ .sidebar-close{display:none}
+}
+.sidebar-heading{display:flex;align-items:center;justify-content:space-between;padding:0 12px 14px;font-size:16px;font-weight:700;line-height:1.5;color:#30363d;flex-shrink:0}
+.sidebar-nav{overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;padding:0 5px 5px 0}
+.sidebar-link{display:block;font-size:14px;line-height:1.75;color:#66707b;padding:9px 12px;margin:2px 0;border-left:2px solid transparent;border-radius:0 5px 5px 0;overflow-wrap:anywhere;text-decoration:none}
+.sidebar-link:hover{background:#f6f7f8;color:#303a44;text-decoration:none}
+.sidebar-link[aria-current="location"]{color:#116d65;border-left-color:#167b73;background:#eef7f5;font-weight:600}
+.intro-link{font-size:13px;color:#7a838e;margin-bottom:8px}
+@media screen and (max-width:1039px){
+ .sidebar-toggle{display:inline-block}
+ .tools{position:sticky;top:0;background:#fff;z-index:20;padding-top:12px;padding-bottom:12px}
+ .tools>span{font-size:12px;flex:1}
+ .reading-sidebar{display:flex;flex-direction:column;position:fixed;left:0;top:0;bottom:0;height:100vh;height:100dvh;width:min(86vw,320px);max-width:100%;padding:24px 16px;background:#fff;box-shadow:4px 0 24px #00000014;z-index:60;transform:translateX(-110%);visibility:hidden;transition:transform .2s ease,visibility .2s}
+ body.sidebar-open .reading-sidebar{transform:translateX(0);visibility:visible}
+ body.sidebar-open{overflow:hidden}
+ .sidebar-backdrop{position:fixed;inset:0;border:0;border-radius:0;margin:0;padding:0;background:#17202b55;z-index:50;width:100%;height:100%;cursor:default}
+ .sidebar-backdrop:hover{background:#17202b55}
+ .sidebar-close{display:inline-block;font-size:12px;font-weight:400}
+ .sidebar-heading{padding-bottom:18px}
+ .sidebar-link{padding:10px 12px}
+}
+@media screen and (max-width:650px){.tools>span{display:none}.tools{justify-content:space-between}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.reading-sidebar{transition:none}}
+@media print{.reading-layout{display:block}.reading-sidebar,.sidebar-toggle,.sidebar-backdrop{display:none!important}}
+</style></head><body><div class="reading-layout"><aside class="reading-sidebar" id="reading-sidebar" aria-label="文章目录"><div class="sidebar-heading"><span>目录</span><button class="sidebar-close" type="button" aria-label="关闭目录">关闭</button></div><nav class="sidebar-nav" aria-label="章节导航"><a class="sidebar-link intro-link" href="#document-start">开篇 · 两个核心定义</a><a class="sidebar-link" href="#section-1">一、What：什么是 Memoization（记忆化）？</a><a class="sidebar-link" href="#section-2">二、Why：为什么需要记忆化？</a><a class="sidebar-link" href="#section-3">三、How：如何实现记忆化？</a><a class="sidebar-link" href="#section-4">四、What：什么是增量计算？</a><a class="sidebar-link" href="#section-5">五、Why：为什么有了记忆化，还需要增量计算？</a><a class="sidebar-link" href="#section-6">六、How：如何真正实现增量计算？</a><a class="sidebar-link" href="#section-7">七、进一步思考：为什么增量计算不总是简单地更新差值？</a><a class="sidebar-link" href="#section-8">八、Memoization、增量计算、缓存与对象池的统一理解</a><a class="sidebar-link" href="#section-9">九、架构层面：增量计算为什么与状态管理密不可分？</a><a class="sidebar-link" href="#section-10">十、实际工程中如何选择？</a><a class="sidebar-link" href="#section-11">十一、最终总结：直击两个概念的本质</a></nav></aside><button class="sidebar-backdrop" type="button" aria-label="关闭目录" tabindex="-1" hidden></button><main><div class="tools"><button class="sidebar-toggle" type="button" aria-controls="reading-sidebar" aria-expanded="false">☰ 目录</button><span>Memoization 与增量计算 · 完整阅读版</span><button id="print" type="button">打印 / 保存 PDF</button></div><article><h1 id="document-start">Memoization（记忆化）与增量计算（Incremental Computation）：What、Why、How，直击本质</h1><p>这两个概念非常值得放在一起学习，因为它们与我们之前讨论的<strong>缓存（Cache）、状态管理、不变量、依赖关系、版本号以及数据生命周期</strong>都有密切关系。</p><p>我希望这次不仅解释它们是什么，更重要的是让你理解：</p><ul><li>为什么明明有了缓存，还需要记忆化和增量计算？</li><li>记忆化复用的究竟是什么？</li><li>增量计算为什么能避免重新计算？</li><li>当数据发生变化时，如何知道哪些计算结果已经失效？</li><li>在 Unity、C#、Lua 和实际游戏系统中，应该如何使用？</li></ul><p>首先给出两个定义。</p><blockquote><p><strong>记忆化的本质：如果之前计算过相同的问题，就直接复用之前的答案。</strong></p></blockquote><blockquote><p><strong>增量计算的本质：当问题的一部分发生变化时，只处理变化造成的影响，尽可能复用其余计算成果。</strong></p></blockquote><p>它们解决的是两个不同层次的重复计算问题。</p><div class="table-wrap"><table class="concept"><thead><tr><th>Memoization</th><th>Incremental Computation</th></tr></thead><tbody><tr><td>同样的输入，再次出现</td><td>输入的一部分改变</td></tr><tr><td>f(A) → 结果 X<br>再次 f(A) → 复用 X</td><td>已有结果 + 变化信息<br>→ 更新受影响的部分</td></tr><tr><td>避免相同输入的重复计算</td><td>避免未受影响部分的重复计算</td></tr></tbody></table></div><p>这就是全文最重要的区别：</p><p><strong>记忆化关心的是「这个问题以前算过吗？」；增量计算关心的是「相较于上次，究竟有什么变了？」</strong></p><hr><h2 id="section-1">一、What：什么是 Memoization（记忆化）？</h2><h3>1. 从普通计算开始理解</h3><p>假设有一个函数：</p><div class="code-block"><div class="code-title">C#</div><pre><code class="language-csharp">int Calculate(int x)
+{
+    return x * x + 10;
+}</code></pre></div><p>当我们执行：</p><div class="code-block"><div class="code-title">C#</div><pre><code class="language-csharp">Calculate(5); // 35
+Calculate(5); // 35
+Calculate(5); // 35</code></pre></div><p>虽然每次输入都是 <code>5</code>，结果都是 <code>35</code>，但普通函数每次都会执行表达式。</p><p>这产生了一个值得思考的问题：</p><p><strong>既然第一次已经知道 <code>Calculate(5) = 35</code>，为什么第二次还要重新计算？</strong></p><p>于是我们可以存储计算结果：</p><div class="table-wrap"><table><thead><tr><th>输入</th><th>结果</th></tr></thead><tbody><tr><td>5</td><td>35</td></tr><tr><td>8</td><td>74</td></tr><tr><td>10</td><td>110</td></tr></tbody></table></div><p>下次再遇到输入 <code>5</code>，直接返回保存的 <code>35</code>。</p><p>这种技术就叫作 Memoization（记忆化）。</p><h3>2. 用数学理解其本质</h3><p>对于一个确定性函数：</p><div class="formula"><span class="math">y = f(x)</span></div><p>普通计算每次都会执行 f。</p><p>记忆化则引入一个映射：</p><div class="formula"><span class="math">M[x] = f(x)</span></div><p>当请求计算时：</p><div class="formula cases"><span class="math">Memo(x) =</span><span class="case-brace">{</span><div><div><span class="math">M[x]</span><span>如果存在已缓存的有效结果</span></div><div><span class="math">M[x] ← f(x)</span><span>否则先计算再记录</span></div></div></div><p>所以，记忆化实际上把函数计算转换成了：</p><p><strong>先查询历史答案，历史答案不可用时才进行计算。</strong></p><p>它并没有改变函数本身的数学含义，而是改变了函数的执行策略。</p><h3>3. 记忆化与普通缓存是什么关系？</h3><p>这里非常容易产生概念混淆。</p><p>记忆化不是与缓存完全平行的一种技术。</p><p><strong>Memoization 是缓存技术的一种特定应用形式。</strong></p><div class="table-wrap"><table><thead><tr><th>维度</th><th>缓存（Cache）</th><th>记忆化（Memoization）</th></tr></thead><tbody><tr><td>主要复用内容</td><td>已获取或计算的结果</td><td>函数调用的计算结果</td></tr><tr><td>Key</td><td>业务 Key、资源 ID、请求参数等</td><td>函数输入或能够唯一决定结果的有效输入</td></tr><tr><td>典型用途</td><td>资源加载、网络请求、数据库查询、计算</td><td>避免函数重复执行</td></tr><tr><td>依赖管理</td><td>取决于具体缓存策略</td><td>必须保证相同 Key 对应的结果仍有效</td></tr><tr><td>两者关系</td><td>更广泛的机制</td><td>一种计算结果缓存策略</td></tr></tbody></table></div><p>比如：</p><div class="code-block"><div class="code-title">C#</div><pre><code class="language-csharp">// 缓存加载后的贴图
+Texture2D GetTexture(string path);
+
+// 记忆化某个纯计算函数
+long Fibonacci(int n);</code></pre></div><p>两者底层都可能使用 <code>Dictionary</code>。</p><p>真正决定它们属于哪一种技术的，不是用了什么容器，而是<strong>如何使用它们来复用工作成果</strong>。</p><p>另外，记忆化通常针对函数的确定性结果；缓存则可以涉及外部资源、远程数据及其时效性，这些需要不同的有效性规则。</p><hr><h2 id="section-2">二、Why：为什么需要记忆化？</h2><h3>1. 根本原因：一个复杂问题可能包含重复的子问题</h3><p>普通的函数调用只关心：</p><blockquote><p>给我输入，我就重新执行计算。</p></blockquote><p>但实际上，很多计算任务具有一个特征：</p><p><strong>不同的计算路径，可能会反复遇到相同的子问题。</strong></p><p>最经典的例子是斐波那契数列：</p><div class="formula"><span class="math">F(n) = F(n − 1) + F(n − 2)</span></div><p>其中：</p><div class="formula"><span class="math">F(0) = 0，F(1) = 1</span></div><p>如果计算 <code>F(5)</code>，递归调用关系如下：</p><figure><div class="figure-scroll"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 690 360" role="img" aria-label="F(5) 的完整递归树，橙色节点表示重复出现的子问题"><line x1="87.5" y1="261" x2="45" y2="305" stroke="#aeb7c1" stroke-width="1.5"/><line x1="87.5" y1="261" x2="130" y2="305" stroke="#aeb7c1" stroke-width="1.5"/><line x1="151.25" y1="189" x2="87.5" y2="233" stroke="#aeb7c1" stroke-width="1.5"/><line x1="151.25" y1="189" x2="215" y2="233" stroke="#aeb7c1" stroke-width="1.5"/><line x1="342.5" y1="189" x2="300" y2="233" stroke="#aeb7c1" stroke-width="1.5"/><line x1="342.5" y1="189" x2="385" y2="233" stroke="#aeb7c1" stroke-width="1.5"/><line x1="246.875" y1="117" x2="151.25" y2="161" stroke="#aeb7c1" stroke-width="1.5"/><line x1="246.875" y1="117" x2="342.5" y2="161" stroke="#aeb7c1" stroke-width="1.5"/><line x1="512.5" y1="189" x2="470" y2="233" stroke="#aeb7c1" stroke-width="1.5"/><line x1="512.5" y1="189" x2="555" y2="233" stroke="#aeb7c1" stroke-width="1.5"/><line x1="576.25" y1="117" x2="512.5" y2="161" stroke="#aeb7c1" stroke-width="1.5"/><line x1="576.25" y1="117" x2="640" y2="161" stroke="#aeb7c1" stroke-width="1.5"/><line x1="411.5625" y1="45" x2="246.875" y2="89" stroke="#aeb7c1" stroke-width="1.5"/><line x1="411.5625" y1="45" x2="576.25" y2="89" stroke="#aeb7c1" stroke-width="1.5"/><rect x="382.5625" y="18" width="58" height="30" rx="6" fill="#f3f5f7" stroke="#adb8c5"/><text x="411.5625" y="39" text-anchor="middle" fill="#303944" font-size="14">F(5)</text><rect x="217.875" y="90" width="58" height="30" rx="6" fill="#f3f5f7" stroke="#adb8c5"/><text x="246.875" y="111" text-anchor="middle" fill="#303944" font-size="14">F(4)</text><rect x="122.25" y="162" width="58" height="30" rx="6" fill="#fff1df" stroke="#d6995b"/><text x="151.25" y="183" text-anchor="middle" fill="#303944" font-size="14">F(3)</text><rect x="58.5" y="234" width="58" height="30" rx="6" fill="#fff1df" stroke="#d6995b"/><text x="87.5" y="255" text-anchor="middle" fill="#303944" font-size="14">F(2)</text><rect x="16" y="306" width="58" height="30" rx="6" fill="#fff1df" stroke="#d6995b"/><text x="45" y="327" text-anchor="middle" fill="#303944" font-size="14">F(1)</text><rect x="101" y="306" width="58" height="30" rx="6" fill="#fff1df" stroke="#d6995b"/><text x="130" y="327" text-anchor="middle" fill="#303944" font-size="14">F(0)</text><rect x="186" y="234" width="58" height="30" rx="6" fill="#fff1df" stroke="#d6995b"/><text x="215" y="255" text-anchor="middle" fill="#303944" font-size="14">F(1)</text><rect x="313.5" y="162" width="58" height="30" rx="6" fill="#fff1df" stroke="#d6995b"/><text x="342.5" y="183" text-anchor="middle" fill="#303944" font-size="14">F(2)</text><rect x="271" y="234" width="58" height="30" rx="6" fill="#fff1df" stroke="#d6995b"/><text x="300" y="255" text-anchor="middle" fill="#303944" font-size="14">F(1)</text><rect x="356" y="234" width="58" height="30" rx="6" fill="#fff1df" stroke="#d6995b"/><text x="385" y="255" text-anchor="middle" fill="#303944" font-size="14">F(0)</text><rect x="547.25" y="90" width="58" height="30" rx="6" fill="#fff1df" stroke="#d6995b"/><text x="576.25" y="111" text-anchor="middle" fill="#303944" font-size="14">F(3)</text><rect x="483.5" y="162" width="58" height="30" rx="6" fill="#fff1df" stroke="#d6995b"/><text x="512.5" y="183" text-anchor="middle" fill="#303944" font-size="14">F(2)</text><rect x="441" y="234" width="58" height="30" rx="6" fill="#fff1df" stroke="#d6995b"/><text x="470" y="255" text-anchor="middle" fill="#303944" font-size="14">F(1)</text><rect x="526" y="234" width="58" height="30" rx="6" fill="#fff1df" stroke="#d6995b"/><text x="555" y="255" text-anchor="middle" fill="#303944" font-size="14">F(0)</text><rect x="611" y="162" width="58" height="30" rx="6" fill="#fff1df" stroke="#d6995b"/><text x="640" y="183" text-anchor="middle" fill="#303944" font-size="14">F(1)</text></svg></div><figcaption>橙色节点：同一个子问题被反复计算</figcaption></figure><p>观察你会发现：</p><p><code>F(3)</code> 被计算多次，<code>F(2)</code> 也被计算多次。</p><p>而且随着 n 增大，这类重复计算会迅速增多。</p><p>朴素递归的时间复杂度为：</p><div class="formula"><span class="math">O(φⁿ)，φ ≈ 1.618</span></div><p>现在我们增加记忆化：</p><p>第一次计算 <code>F(3)</code>，记录答案。后续需要 <code>F(3)</code>，不再展开整个递归树。</p><p>这样一来，每个不同的子问题至多真正计算一次。</p><div class="table-wrap"><table><thead><tr><th>算法</th><th>时间复杂度</th><th>额外空间复杂度</th></tr></thead><tbody><tr><td>朴素递归</td><td>O(φⁿ)</td><td>O(n) 递归栈</td></tr><tr><td>记忆化递归</td><td>O(n)</td><td>O(n)</td></tr><tr><td>自底向上的动态规划</td><td>O(n)</td><td>可优化至 O(1)</td></tr></tbody></table></div><p>注意：记忆化本身并不保证任何算法都能从指数复杂度降到线性复杂度。这里能够优化，是因为不同子问题只有 O(n) 个，而且每个问题在拿到依赖结果后只需常数时间计算。</p><h3>2. 更深一层：记忆化改变了计算的时间与空间关系</h3><p>通常情况下：</p><div class="sequence vertical"><span class="seq-item">每次请求</span><span class="seq-arrow" aria-hidden="true">↓</span><span class="seq-item">执行计算</span><span class="seq-arrow" aria-hidden="true">↓</span><span class="seq-item">返回结果</span></div><p>记忆化则变为：</p><div class="flow-pair"><div><p><strong>第一次请求</strong></p><div class="sequence vertical"><span class="seq-item">执行计算</span><span class="seq-arrow" aria-hidden="true">↓</span><span class="seq-item">存储结果</span><span class="seq-arrow" aria-hidden="true">↓</span><span class="seq-item">返回结果</span></div></div><div><p><strong>后续相同请求</strong></p><div class="sequence vertical"><span class="seq-item">读取存储结果</span><span class="seq-arrow" aria-hidden="true">↓</span><span class="seq-item">直接返回</span></div></div></div><p>其核心是一种权衡：</p><div class="formula"><span class="math">额外空间 + 管理开销 ⇄ 减少重复计算时间</span></div><p>也就是经典的<strong>空间换时间</strong>。</p><p>但这里有一个容易忽视的事实：</p><p>记忆化并不一定比重新计算快。</p><p>假设：</p><div class="code-block"><div class="code-title">C#</div><pre><code class="language-csharp">int Square(int x) =&gt; x * x;</code></pre></div><p>如果使用 <code>Dictionary</code> 存储结果，那么哈希计算、查询、内存访问的开销，可能比一次乘法更大。</p><p>因此：</p><blockquote><p>是否适合记忆化，并不取决于能不能缓存，而取决于复用收益是否超过查询、存储与维护成本。</p></blockquote><hr><h2 id="section-3">三、How：如何实现记忆化？</h2><h3>1. C# 实现一个真正的记忆化函数</h3><div class="code-block"><div class="code-title">C#</div><pre><code class="language-csharp">using System;
+using System.Collections.Generic;
+
+public sealed class FibonacciCalculator
+{
+    private readonly Dictionary&lt;int, long&gt; _memo = new()
+    {
+        [0] = 0,
+        [1] = 1
+    };
+
+    public long Calculate(int n)
+    {
+        if (n &lt; 0 || n &gt; 92)
+            throw new ArgumentOutOfRangeException(nameof(n));
+
+        // 1. 先检查问题是否已经解决
+        if (_memo.TryGetValue(n, out long result))
+        {
+            return result;
+        }
+
+        // 2. 没有历史答案，才真正计算
+        result = Calculate(n - 1) + Calculate(n - 2);
+
+        // 3. 记录这次计算成果
+        _memo[n] = result;
+
+        return result;
+    }
+}</code></pre></div><p>这里限制 <code>n &lt;= 92</code>，因为 <code>F(93)</code> 已经超出 C# <code>long</code> 的有效整数范围。</p><p>记忆化的执行过程可以归纳成三个动作：</p><div class="read-block"><p><strong>查询（Lookup）</strong></p><p>这个输入对应的答案是否已经存在？</p><ul><li><strong>命中：</strong>直接返回。</li><li><strong>未命中：</strong>计算 → 记录 → 返回。</li></ul></div><h3>2. 记忆化最重要的正确性前提</h3><p>现在思考一个问题。</p><p>假设有一个游戏伤害计算函数：</p><div class="code-block"><div class="code-title">C#</div><pre><code class="language-csharp">int CalculateDamage(int skillId)
+{
+    return skillConfig[skillId].BaseDamage
+           + player.Attack;
+}</code></pre></div><p>你决定为它添加记忆化，使用 <code>skillId</code> 作为 Key。</p><p>第一次调用：</p><pre class="text-example"><code>skillId = 1001
+player.Attack = 50
+
+计算结果 = 150</code></pre><p>假设技能基础伤害为 <code>100</code>。</p><p>之后玩家装备发生变化：</p><pre class="text-example"><code>skillId = 1001
+player.Attack = 80
+
+正确结果 = 180
+缓存结果 = 150</code></pre><p>为什么会出现错误？</p><p>因为 <code>skillId</code> 没有变化，但是实际影响结果的 <code>player.Attack</code> 变化了。</p><p>这暴露了一个至关重要的概念：</p><p><strong>函数的参数，不一定等于函数计算所依赖的全部输入。</strong></p><p>在上面的代码中：</p><div class="formula"><span class="math">Damage = f(skillId, player.Attack, skillConfig)</span></div><p>而不是真正的：</p><div class="formula"><span class="math">Damage = f(skillId)</span></div><p>记忆化使用的 Key，必须足以决定结果；否则就要在相关依赖变化时使历史结果失效。</p><p>可选策略包括：</p><ul><li>把所有有效输入纳入 Key，例如技能 ID、攻击力、配置版本。</li><li>在攻击力或技能配置变化时，删除对应的记忆化结果。</li><li>使用依赖版本号、脏标记等机制判断历史结果是否仍然有效。</li></ul><p><strong>缓存命中不等于结果正确。只有依赖条件仍然成立，缓存结果才值得复用。</strong></p><p>记忆化最容易与纯函数配合使用，原因就在这里：纯函数的结果只依赖显式输入，没有隐藏的可变状态，因此更容易确定缓存 Key。</p><hr><h2 id="section-4">四、What：什么是增量计算？</h2><p>现在进入第二个核心概念。</p><p>记忆化解决了一个问题：</p><blockquote><p>如果输入完全相同，是否可以不用重复计算？</p></blockquote><p>但现实世界里还有一种更普遍的情况：</p><p><strong>输入经常发生变化，但每次只改变其中很小的一部分。</strong></p><p>例如一个游戏背包拥有 10 万种不同道具，每种道具有自己的数量和重量。</p><p>我们希望得到背包当前的总重量：</p><div class="formula"><span class="math">W = Σᵢ₌₁ⁿ qᵢwᵢ</span></div><p>其中：</p><ul><li>qᵢ：第 i 种道具的数量。</li><li>wᵢ：第 i 种道具的单件重量。</li><li>W：背包总重量。</li></ul><p>假设系统已经计算出：</p><div class="formula"><span class="math">W = 10000</span></div><p>然后玩家获得了一件重量为 <code>5</code> 的道具。</p><p>最直观的方式是重新遍历整个背包：</p><div class="code-block"><div class="code-title">C#</div><pre><code class="language-csharp">long totalWeight = 0;
+
+foreach (var item in items)
+{
+    totalWeight += (long)item.Count * item.UnitWeight;
+}</code></pre></div><p>假设拥有 10 万种道具，那么每次重新计算，都要遍历 10 万个条目。</p><p>但你可能会产生一个疑问：</p><p><strong>之前已经知道总重量是 10000，现在只是增加了重量 5，为什么不能直接得到 10005？</strong></p><p>完全可以。</p><div class="formula"><span class="math">W′ = W + ΔW</span></div><p>其中：</p><div class="formula"><span class="math">ΔW = 5</span></div><p>所以：</p><div class="formula"><span class="math">W′ = 10000 + 5 = 10005</span></div><p>这便是最简单的增量计算。</p><h3>1. 增量计算的数学本质</h3><p>假设原始输入为：</p><div class="formula"><span class="math">y = f(x)</span></div><p>现在输入发生变化：</p><div class="formula"><span class="math">x′ = x + Δx</span></div><p>传统重新计算：</p><div class="formula"><span class="math">y′ = f(x′)</span></div><p>增量计算尝试通过一个更新算法获得新的结果：</p><div class="formula"><span class="math">y′ = Update(x, y, Δx)</span></div><p>这意味着我们不仅利用最新输入，还利用：</p><ol><li>原本已经完成的计算结果。</li><li>已经发生的输入变化。</li><li>必要时保留下来的中间计算状态。</li></ol><p>如果更新规则可以表达成加法形式，就有：</p><div class="formula"><span class="math">y′ = y + Δy</span></div><p>其中 Δy 是输入变化所产生的结果变化。</p><p>但是注意：</p><p><strong>并不是所有增量计算都能表示为简单的加减法。</strong></p><p>对于排序、最大值、路径规划、复杂依赖计算等问题，可能需要树、堆、索引、依赖图或其他辅助状态。</p><p>增量计算的本质不是「使用加法更新数据」，而是：</p><blockquote><p><strong>利用已有计算成果和变化信息，求出新的正确结果，而不是从头执行所有工作。</strong></p></blockquote><h3>2. 用可交互的例子直观理解</h3><p>下面模拟一个背包。修改一种道具的数量，观察两种计算方式所需处理的条目数量。</p><div class="demo"><div class="demo-heading"><strong>背包总重量 · 实时模拟</strong><button id="reset" type="button">重置</button></div><div class="table-wrap"><table><thead><tr><th>道具</th><th>单件重量</th><th>数量</th><th>小计</th></tr></thead><tbody id="inventory"></tbody></table></div><div class="metrics" aria-live="polite"><div><span>当前总重量</span><strong id="weight"></strong></div><div><span>与初始重量的差值</span><strong id="delta"></strong></div><div><span>本次处理条目</span><strong id="work"></strong></div></div><p class="caption">示例包含 5 种道具；比较的是参与处理的条目数，并非运行耗时。</p><noscript>启用 JavaScript 后可以修改数量并比较全量重算和增量更新。</noscript></div><p>在这个例子里：</p><ul><li>全量计算的时间复杂度为 O(n)。</li><li>已知某个条目的旧值、新值时，增量更新总重量的时间复杂度为 O(1)。</li></ul><p>对于 10 万种道具，区别会非常明显。</p><p>当然，前提是这次变更的信息可获得，并且总重量已经处于正确状态。</p><hr><h2 id="section-5">五、Why：为什么有了记忆化，还需要增量计算？</h2><p>这是理解两者关系最重要的地方。</p><p>假设我们已经利用记忆化保存了：</p><pre class="text-example"><code>CalculateTotalWeight(背包状态 A) = 10000</code></pre><p>后来玩家增加一个道具，背包从状态 A 变成了状态 B。</p><p>我们再执行：</p><pre class="text-example"><code>CalculateTotalWeight(背包状态 B)</code></pre><p>问题出现了：</p><p><strong>A 和 B 不是相同的输入。</strong></p><p>因此，假如记忆化仅以整个背包状态为 Key，且只缓存过 A，那么这次就会缓存未命中，需要重新计算 B。</p><p>但增量计算不一样。</p><p>它不需要输入完全相同。</p><p>它可以利用：</p><pre class="text-example"><code>已经计算的总重量：10000
+本次道具重量变化：+5</code></pre><p>直接得到：</p><pre class="text-example"><code>最新总重量：10005</code></pre><p>所以：</p><blockquote><p>记忆化通过识别「相同输入」来避免计算。</p><p>增量计算通过识别「输入变化」来减少计算。</p></blockquote><p>这也是为什么两者不是简单的替代关系。</p><p>记忆化有时也能通过复用不变子问题来实现部分增量效果；但只给整个问题加一个缓存，并不能自动获得高效的局部更新能力。</p><h3>进一步理解：两种技术复用的是什么？</h3><div class="table-wrap"><table><thead><tr><th>问题</th><th>记忆化</th><th>增量计算</th></tr></thead><tbody><tr><td>核心判断</td><td>这个子问题以前算过吗？</td><td>哪些输入或依赖发生了变化？</td></tr><tr><td>复用对象</td><td>历史输入对应的计算结果</td><td>旧结果、未失效的中间结果及其他计算状态</td></tr><tr><td>输入是否允许改变</td><td>可以改变，但通常只能命中已有的相同 Key</td><td>主要就是处理输入改变</td></tr><tr><td>关键机制</td><td>结果查询与保存</td><td>差量更新、依赖追踪、失效传播</td></tr><tr><td>主要风险</td><td>Key 不完整、缓存过期、内存增长</td><td>漏掉变化、依赖错误、更新顺序错误</td></tr><tr><td>常见适用问题</td><td>重复子问题、昂贵的确定性函数</td><td>大数据集合局部修改、复杂派生状态</td></tr></tbody></table></div><p>记忆化更侧重<strong>历史答案的可复用性</strong>。</p><p>增量计算更侧重<strong>变化对已有计算成果的影响范围</strong>。</p><hr><h2 id="section-6">六、How：如何真正实现增量计算？</h2><p>实际工程中的增量计算可以分为两种非常重要的实现方式。</p><ol><li><strong>差量更新（Delta Update）</strong>：根据变化直接更新已有结果。</li><li><strong>依赖追踪与局部重算（Dependency Tracking / Selective Recalculation）</strong>：确定哪些结果受到影响，只重新计算这些结果。</li></ol><p>这两种方式都可以避免不必要的全量重算，但原理并不完全相同。</p><h3>1. 第一种：差量更新</h3><p>我们继续使用背包重量的例子。</p><p>下面的 C# 代码实际维护一个总重量，而不是在每次读取时遍历所有道具。</p><div class="code-block"><div class="code-title">C#</div><pre><code class="language-csharp">using System;
+using System.Collections.Generic;
+
+public sealed class InventoryWeight
+{
+    private struct Item
+    {
+        public int Count;
+        public int UnitWeight;
+
+        public Item(int count, int unitWeight)
+        {
+            Count = count;
+            UnitWeight = unitWeight;
+        }
+    }
+
+    private readonly Dictionary&lt;string, Item&gt; _items = new();
+
+    public long TotalWeight { get; private set; }
+
+    public void SetItem(string itemId, int count, int unitWeight)
+    {
+        if (string.IsNullOrEmpty(itemId))
+            throw new ArgumentException(nameof(itemId));
+
+        if (count &lt; 0 || unitWeight &lt; 0)
+            throw new ArgumentOutOfRangeException();
+
+        // 1. 查询这个道具之前对总重量的贡献
+        long oldWeight = 0;
+
+        if (_items.TryGetValue(itemId, out Item oldItem))
+        {
+            oldWeight = (long)oldItem.Count * oldItem.UnitWeight;
+        }
+
+        // 2. 计算修改后的贡献
+        long newWeight = (long)count * unitWeight;
+
+        // 3. 使用差量计算新的总重量
+        long nextTotal = checked(TotalWeight - oldWeight + newWeight);
+
+        // 4. 修改原始数据
+        if (count == 0)
+            _items.Remove(itemId);
+        else
+            _items[itemId] = new Item(count, unitWeight);
+
+        // 5. 提交更新后的总重量
+        TotalWeight = nextTotal;
+    }
+}</code></pre></div><p>它的关键不是 <code>Dictionary</code>，而是这一行：</p><div class="code-block"><div class="code-title">C#</div><pre><code class="language-csharp">long nextTotal = TotalWeight - oldWeight + newWeight;</code></pre></div><p>对于每次修改，我们不关心所有其他道具。</p><p>只需要知道：</p><ul><li>原本的总重量。</li><li>这个道具以前贡献多少重量。</li><li>现在应该贡献多少重量。</li></ul><p>这就是增量计算的思想。</p><p>特别值得注意：<code>SetItem</code> 使用的是<strong>设置目标状态</strong>，而不只是一个 <code>AddWeight(5)</code> 方法。它会先比较旧贡献和新贡献，因此在不发生其他修改的情况下，重复设置同样的数量和重量不会重复累加。</p><p>这种设计还具有一个深层性质：它维持着一个不变量（Invariant）。</p><div class="formula"><span class="math">TotalWeight = Σᵢ Countᵢ × UnitWeightᵢ</span></div><p>如果初始状态满足这个不变量，每次操作又执行：</p><div class="formula"><span class="math">W′ = W − 旧贡献 + 新贡献</span></div><p>那么每次成功更新后，不变量仍然成立。</p><p><strong>从本质上说，增量计算的正确性要求是：更新后的派生结果，必须等价于使用更新后的原始数据重新计算的结果。</strong></p><p>这也是把增量计算与之前学到的契约式设计、不变量联系起来的地方。</p><h3>2. 第二种：依赖追踪与局部重算</h3><p>差量更新非常适合总和、计数等问题。</p><p>但更复杂的系统往往存在这样的情况：</p><figure><svg class="dependency-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 415" role="img" aria-label="属性与背包重量的两条依赖链"><defs><marker id="static-arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0 0 L9 4.5 L0 9 Z" fill="#8793a2"/></marker></defs><path d="M90 63 L264 118" fill="none" stroke="#8793a2" stroke-width="1.5" marker-end="url(#static-arrow)"/><path d="M264 63 L264 118" fill="none" stroke="#8793a2" stroke-width="1.5" marker-end="url(#static-arrow)"/><path d="M438 63 L264 118" fill="none" stroke="#8793a2" stroke-width="1.5" marker-end="url(#static-arrow)"/><path d="M264 173 L264 228" fill="none" stroke="#8793a2" stroke-width="1.5" marker-end="url(#static-arrow)"/><path d="M264 283 L264 338" fill="none" stroke="#8793a2" stroke-width="1.5" marker-end="url(#static-arrow)"/><path d="M664 63 L664 118" fill="none" stroke="#8793a2" stroke-width="1.5" marker-end="url(#static-arrow)"/><path d="M664 173 L664 228" fill="none" stroke="#8793a2" stroke-width="1.5" marker-end="url(#static-arrow)"/><g class="svg-node"><rect x="16" y="15" width="148" height="48" rx="7"/><text x="90" y="45" text-anchor="middle">基础攻击力</text></g><g class="svg-node"><rect x="190" y="15" width="148" height="48" rx="7"/><text x="264" y="45" text-anchor="middle">装备加成</text></g><g class="svg-node"><rect x="364" y="15" width="148" height="48" rx="7"/><text x="438" y="45" text-anchor="middle">Buff 加成</text></g><g class="svg-node"><rect x="190" y="125" width="148" height="48" rx="7"/><text x="264" y="155" text-anchor="middle">最终攻击力</text></g><g class="svg-node"><rect x="190" y="235" width="148" height="48" rx="7"/><text x="264" y="265" text-anchor="middle">战斗力</text></g><g class="svg-node"><rect x="190" y="345" width="148" height="48" rx="7"/><text x="264" y="375" text-anchor="middle">战斗力 UI</text></g><g class="svg-node"><rect x="590" y="15" width="148" height="48" rx="7"/><text x="664" y="45" text-anchor="middle">背包道具</text></g><g class="svg-node"><rect x="590" y="125" width="148" height="48" rx="7"/><text x="664" y="155" text-anchor="middle">背包总重量</text></g><g class="svg-node"><rect x="590" y="235" width="148" height="48" rx="7"/><text x="664" y="265" text-anchor="middle">背包重量 UI</text></g></svg><figcaption>基础攻击力、装备和 Buff 影响攻击力链；背包道具影响重量链。</figcaption></figure><p>你可以注意到，这里存在两条不同的依赖链。</p><p>如果 Buff 发生变化，究竟应该重新计算哪些内容？</p><div class="demo"><p><strong>依赖关系图 · 交互演示</strong></p><p>选择发生变化的数据源，观察需要重新计算或更新的节点。</p><label for="source">变化的数据源：</label><select id="source"><option value="buff">Buff 加成</option><option value="equipment">装备加成</option><option value="base">基础攻击力</option><option value="items">背包道具</option></select><p class="legend"><span class="legend-dot affected"></span>受影响节点 <span class="legend-dot"></span>不受影响节点</p><svg class="dependency-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 415" role="img" aria-label="属性与背包重量的两条依赖链"><defs><marker id="interactive-arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0 0 L9 4.5 L0 9 Z" fill="#8793a2"/></marker></defs><path d="M90 63 L264 118" fill="none" stroke="#8793a2" stroke-width="1.5" marker-end="url(#interactive-arrow)"/><path d="M264 63 L264 118" fill="none" stroke="#8793a2" stroke-width="1.5" marker-end="url(#interactive-arrow)"/><path d="M438 63 L264 118" fill="none" stroke="#8793a2" stroke-width="1.5" marker-end="url(#interactive-arrow)"/><path d="M264 173 L264 228" fill="none" stroke="#8793a2" stroke-width="1.5" marker-end="url(#interactive-arrow)"/><path d="M264 283 L264 338" fill="none" stroke="#8793a2" stroke-width="1.5" marker-end="url(#interactive-arrow)"/><path d="M664 63 L664 118" fill="none" stroke="#8793a2" stroke-width="1.5" marker-end="url(#interactive-arrow)"/><path d="M664 173 L664 228" fill="none" stroke="#8793a2" stroke-width="1.5" marker-end="url(#interactive-arrow)"/><g class="svg-node" data-node="base"><rect x="16" y="15" width="148" height="48" rx="7"/><text x="90" y="45" text-anchor="middle">基础攻击力</text></g><g class="svg-node" data-node="equipment"><rect x="190" y="15" width="148" height="48" rx="7"/><text x="264" y="45" text-anchor="middle">装备加成</text></g><g class="svg-node" data-node="buff"><rect x="364" y="15" width="148" height="48" rx="7"/><text x="438" y="45" text-anchor="middle">Buff 加成</text></g><g class="svg-node" data-node="attack"><rect x="190" y="125" width="148" height="48" rx="7"/><text x="264" y="155" text-anchor="middle">最终攻击力</text></g><g class="svg-node" data-node="power"><rect x="190" y="235" width="148" height="48" rx="7"/><text x="264" y="265" text-anchor="middle">战斗力</text></g><g class="svg-node" data-node="powerUI"><rect x="190" y="345" width="148" height="48" rx="7"/><text x="264" y="375" text-anchor="middle">战斗力 UI</text></g><g class="svg-node" data-node="items"><rect x="590" y="15" width="148" height="48" rx="7"/><text x="664" y="45" text-anchor="middle">背包道具</text></g><g class="svg-node" data-node="weight"><rect x="590" y="125" width="148" height="48" rx="7"/><text x="664" y="155" text-anchor="middle">背包总重量</text></g><g class="svg-node" data-node="weightUI"><rect x="590" y="235" width="148" height="48" rx="7"/><text x="664" y="265" text-anchor="middle">背包重量 UI</text></g></svg><p id="affected" aria-live="polite"></p><noscript>Buff 改变会影响最终攻击力、战斗力和战斗力 UI；背包重量链不受影响。</noscript></div><p>这体现了一个更高级的思想：</p><p><strong>当系统知道数据之间的依赖关系，就可以确定变化的影响范围。</strong></p><p>例如 Buff 变化，只需要处理：</p><div class="sequence vertical"><span class="seq-item">Buff</span><span class="seq-arrow" aria-hidden="true">↓</span><span class="seq-item">最终攻击力</span><span class="seq-arrow" aria-hidden="true">↓</span><span class="seq-item">战斗力</span><span class="seq-arrow" aria-hidden="true">↓</span><span class="seq-item">战斗力 UI</span></div><p>而背包重量以及重量 UI 完全不需要重新计算。</p><p>这种机制可以理解成一个依赖图（Dependency Graph）。</p><p>在无环依赖图中，增量计算通常包含四个阶段：</p><ol><li><strong>发现变化（Change Detection）</strong>：确定哪些源数据发生变化。</li><li><strong>依赖失效（Invalidation）</strong>：将受到影响的派生结果标记为不再可靠。</li><li><strong>重新计算或差量维护（Recomputation / Delta Update）</strong>：仅更新必要的结果。</li><li><strong>传播新结果（Propagation）</strong>：将必要的变化继续通知下游依赖。</li></ol><p>这里尤其需要区分两个概念：</p><p><strong>失效不等于立即重算。</strong></p><p>一个节点被标记为失效，只意味着：</p><blockquote><p>它保存的结果可能已经不能代表当前输入。</p></blockquote><p>系统可以选择立即重新计算，也可以等到真正有人读取结果时再计算。</p><p>后者称为按需计算（Lazy Evaluation）。</p><h3>3. C# 实现按需的局部重算</h3><p>下面用 Unity 项目里常见的角色属性系统举例。</p><div class="code-block"><div class="code-title">C#</div><pre><code class="language-csharp">public sealed class CharacterStats
+{
+    private readonly int _baseAttack;
+
+    private int _equipmentBonus;
+    private int _buffBonus;
+
+    private int _cachedAttack;
+
+    // true 表示缓存的攻击力可能已经失效
+    private bool _attackDirty = true;
+
+    public CharacterStats(int baseAttack)
+    {
+        _baseAttack = baseAttack;
+    }
+
+    public void SetEquipmentBonus(int value)
+    {
+        if (_equipmentBonus == value)
+            return;
+
+        _equipmentBonus = value;
+        _attackDirty = true;
+    }
+
+    public void SetBuffBonus(int value)
+    {
+        if (_buffBonus == value)
+            return;
+
+        _buffBonus = value;
+        _attackDirty = true;
+    }
+
+    public int Attack
+    {
+        get
+        {
+            if (_attackDirty)
+            {
+                _cachedAttack =
+                    _baseAttack +
+                    _equipmentBonus +
+                    _buffBonus;
+
+                _attackDirty = false;
+            }
+
+            return _cachedAttack;
+        }
+    }
+}</code></pre></div><p>假设执行过程是：</p><div class="code-block"><div class="code-title">C#</div><pre><code class="language-csharp">var stats = new CharacterStats(100);
+
+stats.SetEquipmentBonus(20);
+
+int a = stats.Attack; // 计算得到 120
+int b = stats.Attack; // 直接返回 120
+
+stats.SetBuffBonus(30);
+
+int c = stats.Attack; // 重新计算得到 150
+int d = stats.Attack; // 直接返回 150</code></pre></div><p>这里有两个机制：</p><ul><li><code>Attack</code> 没有变化时，重复读取直接复用结果。</li><li>Buff 或装备变化时，将攻击力标记为脏，只有后续需要读取时才重新计算。</li></ul><p>严格区分的话，这个例子没有直接用差量公式维护 <code>_cachedAttack</code>，而是使用了<strong>缓存失效 + 按需重算</strong>。</p><p>它是局部增量计算系统的一种基础机制。如果再把攻击力、战斗力、UI 等节点组织成依赖图，就能实现整个系统的选择性重算。</p><h3>4. 为什么需要版本号？</h3><p>你之前已经学习过版本号（Version）和逻辑生命周期。它们恰好可以解决增量计算中的一个关键问题：</p><p><strong>如何证明一个历史计算结果对应的仍然是当前状态？</strong></p><p>假设：</p><pre class="text-example"><code>角色属性版本 = 10
+攻击力缓存版本 = 10</code></pre><p>两者相同，说明没有检测到影响该缓存的后续变更，可以复用。</p><p>现在 Buff 改变：</p><pre class="text-example"><code>角色属性版本 = 11
+攻击力缓存版本 = 10</code></pre><p>缓存版本落后，需要重新计算。</p><p>计算完成后：</p><pre class="text-example"><code>角色属性版本 = 11
+攻击力缓存版本 = 11</code></pre><p>版本号所表达的并不是时间，而是：</p><p><strong>计算结果所依赖的状态属于哪一个逻辑修订版本。</strong></p><p>在异步计算中，它还有其他用途。</p><p>例如后台任务基于版本 10 的状态开始计算，但计算结束时角色属性已经到版本 11。</p><p>那么系统就可以检测到：</p><pre class="text-example"><code>任务使用的版本：10
+当前属性版本：11
+
+→ 本次结果已经过时
+→ 不应直接覆盖当前结果</code></pre><p>需要注意，版本号必须随着所有相关依赖的有效变更而更新。版本号一致只能说明所采用的版本跟踪规则没有检测到变化，并不自动证明没有遗漏依赖。</p><hr><h2 id="section-7">七、进一步思考：为什么增量计算不总是简单地更新差值？</h2><p>前面的背包重量例子可能让你觉得：</p><blockquote><p>那以后所有数据变化，我都保存一个旧结果，然后加上差值不就行了吗？</p></blockquote><p>但我们换一个问题。</p><p>假设玩家拥有五件装备，战斗力只取其中最高装备的攻击力：</p><div class="formula"><span class="math">MaxAttack = max(10, 20, 30, 40, 50) = 50</span></div><p>现在最强的装备攻击力从 <code>50</code> 降到 <code>15</code>。</p><p>如果你只保存：</p><pre class="text-example"><code>当前最大攻击力 = 50
+变化的装备：50 → 15</code></pre><p>那么能不能直接计算出新的最大值？</p><p>不能。</p><p>因为新的最大值取决于其他装备的攻击力。</p><p>正确答案为：</p><div class="formula"><span class="math">max(10, 20, 30, 40, 15) = 40</span></div><p>为了高效增量更新，你可能需要额外维护排序结构、最大堆或者其他索引。</p><p>这说明：</p><p><strong>不同计算具有不同的可增量化程度。</strong></p><div class="table-wrap"><table><thead><tr><th>计算类型</th><th>常见增量维护方式</th><th>典型更新开销</th></tr></thead><tbody><tr><td>总和 Sum</td><td>减去旧贡献，加上新贡献</td><td>O(1)</td></tr><tr><td>数量 Count</td><td>根据插入或删除更新计数</td><td>O(1)</td></tr><tr><td>平均值 Average</td><td>同时维护 Sum 和 Count</td><td>O(1)</td></tr><tr><td>最大值 Max</td><td>维护有序多重集合等结构</td><td>O(log n)</td></tr><tr><td>区间求和</td><td>线段树、树状数组</td><td>O(log n)</td></tr><tr><td>复杂依赖公式</td><td>依赖图、脏标记、局部重算</td><td>与受影响范围有关</td></tr></tbody></table></div><p>复杂度是相应数据结构和操作假设下的典型值，例如哈希操作平均 O(1)。并非所有实现都能保证这些界限。</p><p>增量计算的真正难点，不是写出 <code>old + delta</code>。</p><p>而是识别：</p><p><strong>为了让下一次计算变得便宜，究竟需要保存哪些中间状态？</strong></p><p>这些额外保存的状态，有时比最终答案本身还重要。</p><hr><h2 id="section-8">八、Memoization、增量计算、缓存与对象池的统一理解</h2><p>我们把之前学过的对象池和缓存也放在一起。</p><div class="table-wrap"><table><thead><tr><th>技术</th><th>避免重复做什么</th><th>主要复用什么</th></tr></thead><tbody><tr><td>对象池（Object Pool）</td><td>频繁创建、销毁或初始化对象</td><td>可重新使用的对象实例</td></tr><tr><td>缓存（Cache）</td><td>重复获取或计算已有结果</td><td>数据、资源、计算结果</td></tr><tr><td>记忆化（Memoization）</td><td>相同子问题的重复计算</td><td>输入对应的历史计算结果</td></tr><tr><td>增量计算（Incremental Computation）</td><td>输入局部变化后的不必要全量重算</td><td>旧结果、未受影响的计算成果与辅助状态</td></tr></tbody></table></div><p>这张表不是说四者完全互斥。</p><p>它们可以组合使用：</p><p>比如 Unity 中有一个复杂的排行榜系统：</p><ul><li>使用对象池复用排行榜 UI Item 的 GameObject。</li><li>使用缓存保存已经加载的头像 Sprite。</li><li>使用记忆化保存代价高昂、输入可确定的排名规则子计算结果。</li><li>使用增量计算，在一个玩家分数变化时尽量只维护受影响的排名与 UI。</li></ul><p>可以说，它们都属于对重复工作进行优化的思想，但在不同层次工作。</p><hr><h2 id="section-9">九、架构层面：增量计算为什么与状态管理密不可分？</h2><p>这是我认为比具体算法更值得理解的一部分。</p><p>假设我们拥有一个系统：</p><div class="sequence vertical"><span class="seq-item">源状态（Source State）</span><span class="seq-arrow" aria-hidden="true">↓</span><span class="seq-item">派生状态（Derived State）</span><span class="seq-arrow" aria-hidden="true">↓</span><span class="seq-item">UI / 逻辑消费者</span></div><p>例如：</p><div class="sequence vertical"><span class="seq-item">玩家基础属性、装备、Buff</span><span class="seq-arrow" aria-hidden="true">↓</span><span class="seq-item">最终攻击力</span><span class="seq-arrow" aria-hidden="true">↓</span><span class="seq-item">战斗力</span><span class="seq-arrow" aria-hidden="true">↓</span><span class="seq-item">角色面板 UI</span></div><p>最终攻击力和战斗力并不一定需要作为独立的权威源数据存在。</p><p>因为它们可以通过源状态计算得到。</p><p>这类数据称为<strong>派生状态</strong>。</p><p>增量计算则是在回答：</p><blockquote><p>如何以尽可能小的代价，使派生状态始终与源状态保持一致？</p></blockquote><p>这产生三个架构性要求。</p><h3>1. 要有明确的数据所有权</h3><p>谁可以修改 Buff？</p><p>谁可以修改装备？</p><p>如果任何模块都能够绕开接口直接修改底层字段，增量计算机制就可能完全不知道数据已经改变。</p><p>因此数据写入边界很重要。</p><h3>2. 要明确依赖关系</h3><p>如果最终攻击力依赖装备和 Buff，那么依赖跟踪机制必须知道这一点。</p><p>一旦遗漏依赖，结果就可能过期。</p><p>如果依赖关系动态变化，系统还需要更新依赖图，而不只是维护一张固定的表。</p><h3>3. 要有可靠的更新规则与不变量</h3><p>以缓存的攻击力为例：</p><div class="formula"><span class="math">¬dirty ⇒ cachedAttack = CalculateAttack(sourceState)</span></div><p>意思是：</p><p><strong>当我们宣称缓存有效时，它必须等于依据当前权威源状态重新计算的结果。</strong></p><p>而背包重量的增量实现要求：</p><div class="formula"><span class="math">TotalWeight = Σᵢ Countᵢ × UnitWeightᵢ</span></div><p>这些就是系统能够正确运行的核心约束。</p><p>工程上还要考虑更新事件是否重复、是否乱序、变化是否发生在多个线程、多个变更是否应该合并处理，以及是否存在循环依赖。</p><p>例如，Unity 中使用对象池复用 UI 时，还要避免上一任数据对象的事件订阅留在复用后的 UI 对象上，否则失效通知可能作用于错误的逻辑对象。</p><hr><h2 id="section-10">十、实际工程中如何选择？</h2><p>不要因为记忆化或增量计算看起来更高级，就为所有计算都添加复杂机制。</p><p>可以按照下面的决策方式选择：</p><div class="read-block"><h3>选择哪种优化策略？</h3><dl><dt>相同输入反复出现，单次计算代价高</dt><dd>优先考虑记忆化，复用相同输入的历史答案。</dd><dt>大型数据集合频繁发生小范围修改</dt><dd>优先考虑差量更新，并保留必要的中间状态。</dd><dt>多个派生数据相互依赖，局部变化影响部分节点</dt><dd>考虑依赖追踪、脏标记与选择性重算。</dd><dt>计算非常便宜，或者几乎不重复</dt><dd>直接计算通常更简单，也可能更快。</dd></dl></div><p>对于 Unity 游戏开发，我尤其建议在使用这些技术时坚持三个原则：</p><ul><li><strong>先证明计算是性能热点</strong>，而不是看到一个计算函数就想缓存它。</li><li><strong>先确定正确性不变量，再设计优化策略</strong>，否则很容易出现旧数据。</li><li><strong>对复杂增量计算定期验证</strong>，在测试中使用全量重算结果作为正确性基准，特别是在浮点误差、批量修改和异步更新场景中。</li></ul><hr><h2 id="section-11">十一、最终总结：直击两个概念的本质</h2><p>我们再回到最基础的数学表达式。</p><p>正常计算：</p><div class="formula"><span class="math">y = f(x)</span></div><p>Memoization：</p><div class="formula"><span class="math">相同输入 ⇒ 复用历史结果</span></div><p>Incremental Computation：</p><div class="formula"><span class="math">输入变化 ⇒ 复用旧成果并更新受影响部分</span></div><p>它们都是在利用一个事实：</p><p><strong>新的计算请求，并不一定意味着必须重新完成之前已经做过的所有工作。</strong></p><p>记忆化利用的是<em>子问题的重复性</em>。</p><p>增量计算利用的是<em>输入变化的局部性，以及计算依赖的结构性</em>。</p><p>而缓存、版本号、所有权、不变量、依赖图、事件、状态管理等技术，则是在帮助我们回答：</p><blockquote><p>哪些结果可以复用？为什么它们仍然正确？什么时候必须更新？由谁负责维护？</p></blockquote><p>如果你希望继续深入，我建议按照以下顺序学习：</p><ol><li><strong>Dependency Graph（依赖图）与 Dirty Flag（脏标记）</strong>：计算结果如何知道自己的依赖已经变化？</li><li><strong>Reactive Programming（响应式编程）</strong>：如何把数据变化与下游更新组织成一个自动传播系统？</li><li><strong>Incremental View Maintenance（增量视图维护）</strong>：数据库为什么能在数据变化后高效维护聚合结果？</li><li><strong>Dynamic Programming（动态规划）与 Memoization</strong>：记忆化为什么常被用来解决具有重叠子问题的计算？</li></ol><p>其中，我最建议你下一步深入的是 <strong>Dependency Graph + Dirty Flag + Versioning</strong>。</p><p>因为这三个概念结合起来，能够建立一套非常清晰的 Unity 属性系统、UI 派生状态系统乃至复杂游戏数据更新架构。</p></article><div class="footer">根据本次讲解完整整理 · 可离线阅读</div></main></div><script>
+const data=[{name:'铁矿石',weight:3,count:12},{name:'药水',weight:2,count:8},{name:'木材',weight:5,count:6},{name:'羽毛',weight:1,count:10},{name:'宝石',weight:4,count:3}];
+const initial=data.map(x=>x.count),initialTotal=data.reduce((s,x)=>s+x.count*x.weight,0);let total=initialTotal;
+function metrics(changed){document.getElementById('weight').textContent=total;const d=total-initialTotal;document.getElementById('delta').textContent=(d>0?'+':'')+d;document.getElementById('work').textContent=changed?'全量 5 / 增量 1':'初始全量 5';}
+function renderInventory(){const body=document.getElementById('inventory');body.textContent='';data.forEach((item,i)=>{const row=document.createElement('tr');const name=document.createElement('td');name.textContent=item.name;row.appendChild(name);const unit=document.createElement('td');unit.textContent=item.weight;row.appendChild(unit);const cell=document.createElement('td');const input=document.createElement('input');input.type='number';input.min=0;input.max=1000000;input.step=1;input.value=item.count;input.setAttribute('aria-label',item.name+'数量');cell.appendChild(input);row.appendChild(cell);const sub=document.createElement('td');sub.textContent=item.count*item.weight;row.appendChild(sub);input.addEventListener('input',()=>{if(input.value.trim()==='')return;const n=Number(input.value);if(!Number.isInteger(n)||n<0||n>1000000)return;const old=item.count*item.weight;item.count=n;const next=n*item.weight;total=total-old+next;sub.textContent=next;metrics(true);});body.appendChild(row);});metrics(false);}
+document.getElementById('reset').addEventListener('click',()=>{data.forEach((x,i)=>x.count=initial[i]);total=initialTotal;renderInventory();});renderInventory();
+const edges={base:['attack'],equipment:['attack'],buff:['attack'],attack:['power'],power:['powerUI'],items:['weight'],weight:['weightUI']};
+function graph(){const source=document.getElementById('source').value;const affected=new Set([source]);const queue=[source];while(queue.length){for(const n of edges[queue.shift()]||[]){if(!affected.has(n)){affected.add(n);queue.push(n);}}}const names=[];document.querySelectorAll('[data-node]').forEach(el=>{const on=affected.has(el.dataset.node);el.classList.toggle('active',on);if(on)names.push(el.textContent);});document.getElementById('affected').textContent='受影响：'+names.join('、')+'。共 '+affected.size+' / 9 个节点（包含数据源）。';}
+document.getElementById('source').addEventListener('change',graph);graph();
+document.getElementById('print').addEventListener('click',()=>window.print());
+</script><script>
+;(()=>{
+ const sidebar=document.getElementById('reading-sidebar');
+ const toggle=document.querySelector('.sidebar-toggle');
+ const close=sidebar.querySelector('.sidebar-close');
+ const backdrop=document.querySelector('.sidebar-backdrop');
+ const links=[...sidebar.querySelectorAll('.sidebar-link')];
+ const targets=links.map(a=>document.getElementById(a.hash.slice(1)));
+ const narrow=window.matchMedia('(max-width:1039px)');
+ let opened=false;let scheduled=false;let current=null;
+ function setOpen(value,restoreFocus=false){
+  opened=value;document.body.classList.toggle('sidebar-open',value);
+  toggle.setAttribute('aria-expanded',String(value));backdrop.hidden=!value;
+  if(value){sidebar.removeAttribute('inert');close.focus();}
+  else{if(narrow.matches)sidebar.setAttribute('inert','');if(restoreFocus)toggle.focus();}
+ }
+ toggle.addEventListener('click',()=>setOpen(!opened));
+ close.addEventListener('click',()=>setOpen(false,true));
+ backdrop.addEventListener('click',()=>setOpen(false,true));
+ document.addEventListener('keydown',e=>{
+  if(!opened)return;
+  if(e.key==='Escape'){setOpen(false,true);return;}
+  if(e.key==='Tab'){
+   const nodes=[close,...links];const first=nodes[0],last=nodes[nodes.length-1];
+   if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus();}
+   else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus();}
+  }
+ });
+ links.forEach((a,i)=>a.addEventListener('click',()=>{
+  setOpen(false);
+  if(narrow.matches){targets[i].setAttribute('tabindex','-1');targets[i].focus({preventScroll:true});}
+ }));
+ function syncLayout(){
+  setOpen(false);
+  if(!narrow.matches)sidebar.removeAttribute('inert');
+ }
+ narrow.addEventListener('change',syncLayout);syncLayout();
+ function highlight(){
+  scheduled=false;let index=0;
+  targets.forEach((h,i)=>{if(h.getBoundingClientRect().top<=155)index=i;});
+  if(window.innerHeight+window.scrollY>=document.documentElement.scrollHeight-8)index=links.length-1;
+  if(current===index)return;current=index;
+  links.forEach((a,i)=>{if(i===index)a.setAttribute('aria-current','location');else a.removeAttribute('aria-current');});
+  if(!narrow.matches){
+   const nav=sidebar.querySelector('.sidebar-nav');const item=links[index];
+   const box=nav.getBoundingClientRect(),rect=item.getBoundingClientRect();
+   if(rect.top<box.top||rect.bottom>box.bottom)nav.scrollTop+=rect.top-box.top-nav.clientHeight/2+item.offsetHeight/2;
+  }
+ }
+ window.addEventListener('scroll',()=>{if(!scheduled){scheduled=true;requestAnimationFrame(highlight);}},{passive:true});
+ window.addEventListener('resize',highlight);window.addEventListener('load',highlight);highlight();
+})();
+</script></body></html>
