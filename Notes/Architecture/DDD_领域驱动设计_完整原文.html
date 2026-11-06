@@ -1,0 +1,1230 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light dark"><title>DDD 领域驱动设计 · 完整原文</title><style>:root{--bg:#faf9f6;--paper:#fff;--ink:#252b30;--muted:#717a80;--line:#e3e6e5;--accent:#216a5e;--soft:#edf5f1;--code:#f5f7f8;--notice:#fbf6e9;--notice-line:#e5d8ae;font-synthesis:none;color-scheme:light}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:36px}body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.95 -apple-system,BlinkMacSystemFont,"Segoe UI","Microsoft YaHei","PingFang SC",sans-serif;overflow-wrap:break-word}.layout{max-width:1320px;margin:0 auto;display:grid;grid-template-columns:280px minmax(0,850px);gap:64px;padding:40px 36px 80px}aside{position:sticky;top:36px;height:calc(100vh - 72px);display:flex;flex-direction:column;min-width:0;padding-right:20px;border-right:1px solid var(--line)}.brand{font:600 10px/1.5 ui-monospace,monospace;letter-spacing:1.6px;color:var(--accent)}.sidebar-title{font-size:20px;font-weight:700;line-height:1.5;margin:11px 0 7px}.status{font-size:12px;color:var(--muted);margin-bottom:22px}nav{overflow:auto;flex:1;scrollbar-width:thin;padding-right:8px}.nav-link{display:block;color:var(--muted);text-decoration:none;font-size:13px;line-height:1.6;border-left:2px solid transparent;padding:7px 9px;margin:2px 0;border-radius:0 5px 5px 0}.depth-2{font-weight:650;font-size:14px;color:var(--ink);margin-top:13px}.depth-3{padding-left:18px}.nav-link:hover{color:var(--accent);background:var(--soft)}.nav-link.active{color:var(--accent);border-color:var(--accent);background:var(--soft)}.tools{display:flex;gap:8px;border-top:1px solid var(--line);padding-top:17px;margin-top:18px}button{font:inherit;cursor:pointer;border:1px solid var(--line);background:var(--paper);color:var(--muted);border-radius:6px;padding:6px 11px;font-size:12px;line-height:1.5}button:hover{color:var(--accent);border-color:var(--accent)}.sidebar-note{color:var(--muted);font-size:11px;line-height:1.8;margin-top:12px}main{min-width:0;background:var(--paper);padding:40px 44px 30px;border:1px solid var(--line);border-radius:8px}header{padding-bottom:24px}.eyebrow{color:var(--accent);font-size:11px;letter-spacing:2px;font-weight:650}h1{font-size:52px;line-height:1.25;letter-spacing:-1.5px;margin:22px 0 12px}h1 span{display:block;font-size:33px;letter-spacing:0;margin-top:8px}.subtitle{margin:0;color:var(--muted);font-size:16px;letter-spacing:.4px}.editor-note{background:var(--notice);border:1px solid var(--notice-line);border-radius:6px;padding:18px 20px;margin-top:30px;font-size:14px;line-height:1.85}.editor-note strong{font-weight:650}.editor-note p{margin:8px 0 0}.editor-note .small{font-size:12px;color:var(--muted)}article>h2{font-size:28px;line-height:1.55;margin:64px 0 25px;padding-top:22px;border-top:2px solid var(--accent);letter-spacing:-.3px}h3{font-size:22px;line-height:1.6;margin:42px 0 19px}h4{font-size:18px;line-height:1.65;margin:30px 0 14px;color:var(--accent)}p{margin:18px 0}strong{font-weight:700}ul,ol{padding-left:1.6em;margin:20px 0}li{padding-left:.15em;margin:7px 0}li>p{margin:9px 0}li::marker{color:var(--accent)}hr{border:0;border-top:1px solid var(--line);margin:36px 0}blockquote{border-left:3px solid var(--accent);background:var(--soft);padding:11px 21px;margin:22px 0;color:var(--ink)}blockquote p{margin:7px 0}code{font-family:"Cascadia Code",Consolas,ui-monospace,monospace;font-size:.86em;overflow-wrap:anywhere}p code,li code,td code{background:var(--code);padding:2px 5px;border-radius:4px;color:var(--accent)}.code-block{margin:23px 0;border:1px solid var(--line);border-radius:7px;overflow:hidden;background:var(--code)}.codebar{display:flex;align-items:center;justify-content:space-between;padding:7px 13px;border-bottom:1px solid var(--line);color:var(--muted);font:11px/1.5 ui-monospace,monospace;letter-spacing:.5px}.codebar button{font:11px/1.5 inherit;padding:3px 9px;background:transparent}pre{margin:0;padding:20px 22px;font:13px/1.85 "Cascadia Code",Consolas,ui-monospace,monospace;overflow-x:auto;tab-size:4}pre code{font:inherit;white-space:pre;overflow-wrap:normal}.table-wrap{overflow-x:auto;max-width:100%;margin:24px 0;border:1px solid var(--line);border-radius:6px}table{border-collapse:collapse;width:100%;font-size:14px;line-height:1.8;text-align:left;min-width:500px}th{background:var(--soft);font-weight:650}th,td{padding:12px 15px;border-bottom:1px solid var(--line);vertical-align:top}tbody tr:last-child td{border-bottom:0}td+td,th+th{border-left:1px solid var(--line)}.fragment>.table-wrap{border:0;border-radius:0;margin:0}.fragment{border-style:dashed}.formula{overflow-x:auto;text-align:center;background:var(--soft);border:1px solid var(--line);border-radius:6px;padding:23px 18px;margin:26px 0;font-size:21px}math{font-family:Cambria,"STIX Two Math",serif}.citation{font:11px/1 ui-monospace,monospace;color:var(--accent);margin-left:5px;cursor:help}footer{font-size:12px;color:var(--muted);border-top:1px solid var(--line);padding-top:20px;margin-top:55px}.progress{position:fixed;top:0;left:0;height:3px;width:0;background:var(--accent);z-index:50}.top{position:fixed;bottom:25px;right:24px;border-radius:50%;width:39px;height:39px;font-size:19px;padding:0;background:var(--paper)}.skip{position:fixed;left:10px;top:-100px;z-index:100;background:var(--paper);color:var(--accent);padding:8px 18px}.skip:focus{top:10px}.mobile-menu,.backdrop{display:none}:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.full-title{font-size:36px;line-height:1.5;letter-spacing:-.6px;margin-bottom:0}article>p:first-child{color:var(--muted);font-size:15px;margin-top:0;margin-bottom:34px}article a{color:var(--accent);text-underline-offset:3px}
+html[data-theme="dark"]{--bg:#171c1c;--paper:#202626;--ink:#dde4e2;--muted:#a3b0ac;--line:#394440;--accent:#8acdb7;--soft:#263b34;--code:#1b2221;--notice:#363223;--notice-line:#5e5635;color-scheme:dark}
+@media(max-width:1100px){.layout{gap:32px;padding:28px 24px;grid-template-columns:245px minmax(0,1fr)}main{padding:30px}h1{font-size:44px}article>h2{font-size:25px}}
+@media(max-width:850px){html{scroll-padding-top:70px}.layout{display:block;padding:77px 15px 35px}main{padding:26px 23px}aside{position:fixed;z-index:40;top:0;left:0;bottom:0;height:100dvh;width:300px;background:var(--paper);padding:30px 22px;transform:translateX(-105%);transition:transform .18s}.menu-open aside{transform:translateX(0)}.backdrop:not([hidden]){display:block;position:fixed;inset:0;background:#0006;z-index:30}.mobile-menu{display:block;position:fixed;top:15px;left:15px;background:var(--paper);box-shadow:0 2px 10px #0001;z-index:25;font-size:13px;padding:9px 14px}.menu-open{overflow:hidden}h1{font-size:42px}h1 span{font-size:27px}article>h2{font-size:23px;margin-top:48px}h3{font-size:20px}h4{font-size:17px}body{font-size:16px;line-height:1.95}pre{font-size:12px;padding:16px}th,td{padding:10px 12px}.editor-note{padding:15px;font-size:13px}.top{right:18px;bottom:18px}.formula{font-size:17px;padding:20px 12px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}aside{transition:none}}
+@media print{@page{margin:20mm 17mm}:root,html[data-theme="dark"]{--bg:#fff;--paper:#fff;--ink:#111;--muted:#555;--line:#ccc;--accent:#245c4a;--soft:#f2f6f3;--code:#f4f5f5;--notice:#faf7ed;--notice-line:#c5bb9e;color-scheme:light}body{font-size:10.5pt;line-height:1.8}.layout{display:block;padding:0;max-width:none}aside,.progress,.top,.mobile-menu,.copy,.backdrop{display:none!important}main{padding:0;border:0;border-radius:0}h1{font-size:32pt}h1 span{font-size:23pt}article>h2{font-size:19pt;margin-top:35px}h3{font-size:15pt}h4{font-size:12pt}h2,h3,h4{break-after:avoid}p,li{orphans:3;widows:3}.code-block{break-inside:auto}pre{white-space:pre-wrap;overflow:visible;font-size:8.5pt;padding:12px}pre code{white-space:pre-wrap;overflow-wrap:anywhere}.table-wrap{overflow:visible}table{min-width:0;font-size:9pt}th,td{padding:7px 9px}tr,.formula,.editor-note{break-inside:avoid}.formula{font-size:14pt}.codebar{padding:5px 12px}.editor-note{font-size:10pt}footer{font-size:9pt}}
+</style></head><body>
+<div class="progress" aria-hidden="true"></div>
+<a class="skip" href="#article">跳到正文</a>
+<button class="mobile-menu" aria-expanded="false" aria-controls="sidebar">☰ 阅读目录</button><div class="backdrop" hidden></div>
+<div class="layout"><aside id="sidebar" aria-label="阅读目录"><div class="brand">DOMAIN-DRIVEN DESIGN</div><div class="sidebar-title">DDD · 领域驱动设计</div><div class="status">What · Why · How · 完整原文</div><nav><a class="nav-link depth-2" href="#start">开篇</a><a class="nav-link depth-2" href="#section-1">一、What：DDD 到底是什么？</a>
+<a class="nav-link depth-3" href="#section-2">1. Domain：领域是什么？</a>
+<a class="nav-link depth-3" href="#section-3">2. Model：模型是什么？</a>
+<a class="nav-link depth-3" href="#section-4">3. Driven：什么叫驱动？</a>
+<a class="nav-link depth-2" href="#section-5">二、Why：为什么需要 DDD？</a>
+<a class="nav-link depth-3" href="#section-6">1. 根本问题：技术结构正确，业务仍然可能错误</a>
+<a class="nav-link depth-3" href="#section-7">2. 业务复杂度来自规则之间的关系</a>
+<a class="nav-link depth-3" href="#section-8">3. 同一个词，在不同业务中可能有不同含义</a>
+<a class="nav-link depth-2" href="#section-9">三、DDD 的两个层次：战略设计与战术设计</a>
+<a class="nav-link depth-2" href="#section-10">四、战略设计：先决定模型在哪里成立</a>
+<a class="nav-link depth-3" href="#section-11">1. Subdomain：子领域</a>
+<a class="nav-link depth-3" href="#section-12">2. Bounded Context：限界上下文</a>
+<a class="nav-link depth-3" href="#section-13">3. Ubiquitous Language：统一语言</a>
+<a class="nav-link depth-3" href="#section-14">4. Context Map：上下文映射</a>
+<a class="nav-link depth-2" href="#section-15">五、战术设计：怎样用代码表达业务规则？</a>
+<a class="nav-link depth-3" href="#section-16">1. Entity：实体</a>
+<a class="nav-link depth-3" href="#section-20">2. Value Object：值对象</a>
+<a class="nav-link depth-3" href="#section-24">3. Aggregate：聚合</a>
+<a class="nav-link depth-3" href="#section-28">4. Domain Service：领域服务</a>
+<a class="nav-link depth-3" href="#section-32">5. Application Service：应用服务</a>
+<a class="nav-link depth-3" href="#section-33">6. Repository：仓储</a>
+<a class="nav-link depth-3" href="#section-34">7. Domain Event：领域事件</a>
+<a class="nav-link depth-2" href="#section-35">六、How：在 C# 游戏服务端中实践 DDD</a>
+<a class="nav-link depth-3" href="#section-36">1. 战略设计：先确定业务边界</a>
+<a class="nav-link depth-3" href="#section-37">2. Domain：成就聚合</a>
+<a class="nav-link depth-3" href="#section-38">3. Domain：背包聚合</a>
+<a class="nav-link depth-3" href="#section-39">4. Application：协调两个聚合</a>
+<a class="nav-link depth-2" href="#section-41">七、这个案例中，DDD 到底发挥了什么作用？</a>
+<a class="nav-link depth-2" href="#section-42">八、如何从零开始进行 DDD 建模？</a>
+<a class="nav-link depth-2" href="#section-43">九、设计权衡：DDD 的优势和代价</a>
+<a class="nav-link depth-3" href="#section-44">1. DDD 不一定适合简单 CRUD</a>
+<a class="nav-link depth-3" href="#section-45">2. DDD 不等于面向对象编程</a>
+<a class="nav-link depth-3" href="#section-46">3. DDD 不等于微服务</a>
+<a class="nav-link depth-3" href="#section-47">4. DDD 也不会自动保证正确性</a>
+<a class="nav-link depth-2" href="#section-48">十、DDD 与之前学习的架构之间的关系</a>
+<a class="nav-link depth-2" href="#section-49">十一、直达本质：DDD 真正改变的是什么？</a></nav><div class="tools"><button id="theme" type="button">深浅切换</button><button id="print" type="button">打印 / PDF</button></div><div class="sidebar-note">正文保持原有叙述顺序<br>代码、表格与公式全部展开</div></aside>
+<main><header id="start"><div class="eyebrow">学习笔记 / WHAT · WHY · HOW</div><h1 class="full-title">DDD（Domain-Driven Design，领域驱动设计）</h1></header>
+<article id="article"><p>What · Why · How · 设计权衡 · C# / 游戏服务端实践</p>
+<p>DDD 是软件架构中非常值得深入理解的一种设计思想。</p>
+<p>它与之前学习的 Modular Monolith、Clean Architecture、Hexagonal Architecture 有一个重要区别：</p>
+<p>DDD 首先关心的不是代码如何分层、接口如何抽象，而是我们是否正确理解了要解决的业务问题，以及软件是否准确表达了这些业务规则。</p>
+<p>先用一句话直达本质：</p>
+<blockquote>
+<p>DDD 是一种以业务领域模型为中心的软件设计方法。它通过持续理解业务、建立共同语言、划分模型边界，并让业务规则体现在软件模型中，来管理复杂业务系统的复杂性。</p>
+</blockquote>
+<p>它的核心不是 Entity、Repository、Aggregate 这些类应该怎么写，而是：</p>
+<p>软件的结构和行为，应当反映业务本身的概念、规则和边界。</p>
+<p>Eric Evans 的《Domain-Driven Design》系统化提出了这套方法。Martin Fowler 也强调，DDD 特别适合需要组织大量复杂业务规则的系统。</p>
+<p><a href="https://www.google.com/s2/favicons?domain=https://www.domainlanguage.com&sz=32">image</a></p>
+<p>Domain Language</p>
+<p>+1</p>
+<h2 id="section-1">一、What：DDD 到底是什么？</h2>
+<p>首先理解三个词。</p>
+<h3 id="section-2">1. Domain：领域是什么？</h3>
+<p>领域（Domain）就是软件试图解决的某个业务问题范围。</p>
+<p>例如你要开发一个游戏。</p>
+<p>游戏中可能存在：</p>
+<ul>
+<li>背包与道具。</li>
+<li>战斗与伤害。</li>
+<li>成就和任务。</li>
+<li>商店和交易。</li>
+<li>玩家进度。</li>
+<li>排名与匹配。</li>
+</ul>
+<p>这些都是游戏业务中的不同问题范围。</p>
+<p>假设我们研究的是“玩家获得道具”。</p>
+<p>看起来似乎只是：</p>
+<div class="code-block"><div class="codebar"><span>TEXT</span><button class="copy" type="button">复制</button></div><pre tabindex="0"><code>inventory[itemId] += amount;</code></pre></div>
+<p>但真正的业务问题可能包括：</p>
+<ul>
+<li>玩家是否有资格获得该道具？</li>
+<li>是新增一个道具实例，还是增加堆叠数量？</li>
+<li>道具是否有持有上限？</li>
+<li>同一奖励能否重复领取？</li>
+<li>发放成功后是否记录累计获得数量？</li>
+<li>背包保存成功、统计保存失败怎么办？</li>
+<li>同一个请求被客户端发送三次怎么办？</li>
+</ul>
+<p>这些问题不是 C#、SQL 或 Unity 自动替你解决的。</p>
+<p>它们是业务领域本身的规则。</p>
+<p>DDD 希望我们首先理解这些规则，然后再决定如何将其变成软件。</p>
+<h3 id="section-3">2. Model：模型是什么？</h3>
+<p>模型（Model）是对现实业务进行有目的的抽象。</p>
+<p>它并不是现实世界的完整复制品。</p>
+<p>例如：</p>
+<div class="code-block"><div class="codebar"><span>TEXT</span><button class="copy" type="button">复制</button></div><pre tabindex="0"><code>public sealed class Inventory
+{
+    public void Grant(ItemId itemId, int amount)
+    {
+        // 根据背包规则发放道具
+    }
+}</code></pre></div>
+<p>这个 <code>Inventory</code> 是一个领域模型的一部分。</p>
+<p>它没有描述真实背包的材质、形状或重量，而是表达软件所关心的业务概念和规则。</p>
+<p>更重要的是，领域模型不等于数据结构。</p>
+<p>一个只有数据的类：</p>
+<div class="code-block"><div class="codebar"><span>TEXT</span><button class="copy" type="button">复制</button></div><pre tabindex="0"><code>public class InventoryData
+{
+    public Dictionary&lt;int, int&gt; Items = new();
+}</code></pre></div>
+<p>确实能够表示部分背包数据。</p>
+<p>但它还没有表达：</p>
+<ul>
+<li>怎样合法地增加道具？</li>
+<li>怎样消耗道具？</li>
+<li>哪些操作被禁止？</li>
+<li>必须维护什么不变量？</li>
+</ul>
+<p>如果这些规则全部散落在 UI、ShopService、RewardService 等地方，就很难形成一个有凝聚力的业务模型。</p>
+<p>DDD 中的模型既包括数据概念，也包括行为、规则、关系、约束和业务语言。</p>
+<h3 id="section-4">3. Driven：什么叫驱动？</h3>
+<p>这里的“驱动”意味着：</p>
+<p>用不断演化的领域模型指导代码结构和设计决策，而不是先由数据库表、框架或通用类结构决定业务应该如何组织。</p>
+<p>比较两种开发思路。</p>
+<p>技术结构先行</p>
+<p>设计数据库表</p>
+<p>生成数据类与 CRUD</p>
+<p>将业务规则分散到各种 Service</p>
+<p>领域模型驱动</p>
+<p>理解业务场景与规则</p>
+<p>建立业务概念、行为和边界</p>
+<p>用代码与持久化实现领域模型</p>
+<p>这不是说 DDD 禁止先设计数据库，也不是 CRUD 就一定不好。</p>
+<p>区别在于：当业务规则非常复杂时，数据库结构不应该成为理解和表达业务的唯一模型。</p>
+<h2 id="section-5">二、Why：为什么需要 DDD？</h2>
+<h3 id="section-6">1. 根本问题：技术结构正确，业务仍然可能错误</h3>
+<p>假设我们已经使用：</p>
+<ul>
+<li>Clean Architecture。</li>
+<li>依赖注入。</li>
+<li>Repository。</li>
+<li>数据库事务。</li>
+<li>高内聚、低耦合。</li>
+</ul>
+<p>架构看起来很漂亮。</p>
+<p>但代码是这样的：</p>
+<div class="code-block"><div class="codebar"><span>TEXT</span><button class="copy" type="button">复制</button></div><pre tabindex="0"><code>public void ClaimReward(Player player, int rewardId)
+{
+    if (player.Level &gt;= 10)
+    {
+        player.Inventory.Add(1001, 5);
+    }
+}</code></pre></div>
+<p>技术上没有什么特别复杂的问题。</p>
+<p>但真实的业务要求可能是：</p>
+<blockquote>
+<p>玩家等级达到 10 级后，可以领取一次等级奖励。已经领取过的奖励不可以重复领取。</p>
+</blockquote>
+<p>现在代码只验证了等级，却没有验证是否领取过。</p>
+<p>再调用一次：</p>
+<div class="code-block"><div class="codebar"><span>TEXT</span><button class="copy" type="button">复制</button></div><pre tabindex="0"><code>ClaimReward(player, rewardId);</code></pre></div>
+<p>就会重复获得奖励。</p>
+<p>这不是架构层次的问题，而是业务规则建模不完整。</p>
+<p>Clean Architecture 可以让这段代码不依赖数据库。</p>
+<p>依赖倒置可以让它不依赖具体背包实现。</p>
+<p>但这些技术并不能自动告诉你：</p>
+<p>“等级奖励只允许领取一次。”</p>
+<p>这个规则必须通过理解业务才能得到。</p>
+<p>DDD 就是把这种业务知识当作设计的中心。</p>
+<h3 id="section-7">2. 业务复杂度来自规则之间的关系</h3>
+<p>假设只有一条规则：</p>
+<div class="code-block"><div class="codebar"><span>TEXT</span><button class="copy" type="button">复制</button></div><pre tabindex="0"><code>玩家达到 10 级可以领奖。</code></pre></div>
+<p>很容易实现。</p>
+<p>后来新增：</p>
+<div class="code-block"><div class="codebar"><span>TEXT</span><button class="copy" type="button">复制</button></div><pre tabindex="0"><code>达到 10 级才能领取。
+每个等级奖励只能领取一次。
+奖励必须根据奖励配置发放。
+领取成功后更新任务。
+部分道具需要检查容量。
+领取过程中失败必须保证正确性。
+管理员可以补发奖励。</code></pre></div>
+<p>规则开始出现组合和例外。</p>
+<p>其中某些规则属于奖励领域，有些属于背包领域，有些涉及两个领域之间的协调。</p>
+<p>如果不知道各自归属，代码就很容易变成：</p>
+<div class="code-block"><div class="codebar"><span>TEXT</span><button class="copy" type="button">复制</button></div><pre tabindex="0"><code>RewardService
+    → InventoryData
+    → PlayerData
+    → AchievementData
+    → QuestData
+    → SaveManager</code></pre></div>
+<p>整个程序都知道彼此的内部数据结构。</p>
+<p>这时候真正困难的不是如何写一个 <code>if</code>。</p>
+<p>而是：</p>
+<p>一条业务规则应该由谁负责？它需要哪些状态？什么情况下必须始终成立？哪些其他业务依赖它？</p>
+<p>DDD 为这些问题提供了一套建模语言和设计方法。</p>
+<h3 id="section-8">3. 同一个词，在不同业务中可能有不同含义</h3>
+<p>再考虑一个更加根本的问题。</p>
+<p>“道具”是什么意思？</p>
+<p>在背包系统中：</p>
+<div class="code-block"><div class="codebar"><span>TEXT</span><button class="copy" type="button">复制</button></div><pre tabindex="0"><code>道具 = 玩家当前持有的资源或物品</code></pre></div>
+<p>在商店系统中：</p>
+<div class="code-block"><div class="codebar"><span>TEXT</span><button class="copy" type="button">复制</button></div><pre tabindex="0"><code>商品 = 可以购买的报价和交易项目</code></pre></div>
+<p>在战斗系统中：</p>
+<div class="code-block"><div class="codebar"><span>TEXT</span><button class="copy" type="button">复制</button></div><pre tabindex="0"><code>装备 = 参与战斗规则计算的物品</code></pre></div>
+<p>三者可能关联同一个 <code>ItemId</code>，但业务模型并不相同。</p>
+<p>一个商店商品甚至可能代表包含三个道具的礼包。</p>
+<p>如果强行让所有系统使用一个巨大的 <code>Item</code> 类：</p>
+<div class="code-block"><div class="codebar"><span>TEXT</span><button class="copy" type="button">复制</button></div><pre tabindex="0"><code>public class Item
+{
+    public int ItemId;
+    public int Price;
+    public int Attack;
+    public int Defense;
+    public int OwnedCount;
+    public bool IsOnSale;
+    public bool IsEquipped;
+}</code></pre></div>
+<p>这个类很快就会承担互相不相干的职责。</p>
+<p>不同业务的概念被错误地混合在一起。</p>
+<p>DDD 的一个重要思想就是：</p>
+<p>不同业务上下文，可以使用不同的模型描述看起来相同的事物。</p>
+<p>这就引出了 DDD 的第一大部分：战略设计。</p>
+<h2 id="section-9">三、DDD 的两个层次：战略设计与战术设计</h2>
+<p>理解 DDD 时，最好先将它们分开。</p>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>层次</th>
+<th>主要解决什么问题</th>
+<th>典型概念</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Strategic Design（战略设计）</td>
+<td>大系统怎样划分业务模型和边界？</td>
+<td>Subdomain、Bounded Context、Ubiquitous Language、Context Map</td>
+</tr>
+<tr>
+<td>Tactical Design（战术设计）</td>
+<td>一个边界内部怎样表达业务规则？</td>
+<td>Entity、Value Object、Aggregate、Domain Service、Repository、Domain Event</td>
+</tr>
+</tbody></table></div>
+<p>一个常见误区是直接开始写 Entity、Aggregate、Repository，然后宣布系统采用了 DDD。</p>
+<p>但<strong>只使用战术模式，不等于真正理解了 DDD</strong>。</p>
+<p>Martin Fowler 特别指出，DDD 的战略设计用于应对大型领域模型的复杂性，通过多个限界上下文管理模型，并明确它们之间的关系。<sup class="citation" title="原文引用标记：turn130541search2；当前对话未包含原链接。" data-original="citeturn130541search2">[2]</sup></p>
+<h2 id="section-10">四、战略设计：先决定模型在哪里成立</h2>
+<h3 id="section-11">1. Subdomain：子领域</h3>
+<p><strong>What：子领域是什么？</strong></p>
+<p>一个大业务问题中，可以区分的相对独立的问题范围。</p>
+<p>例如游戏运营可能有：</p>
+<div class="code-block"><div class="codebar"><span>text</span><button class="copy" type="button">复制</button></div><pre tabindex="0"><code>Game Domain
+├── Combat
+├── Inventory
+├── Achievement
+├── Commerce
+└── Matchmaking</code></pre></div>
+<p>这是一种业务分析划分，不意味着必须创建五个服务或者五个 C# 程序集。</p>
+<p>DDD 还常将子领域分为：</p>
+<ul>
+<li><strong>Core Domain（核心域）</strong>：构成产品核心竞争优势的部分。</li>
+<li><strong>Supporting Subdomain（支撑子域）</strong>：支撑核心业务，但不是主要竞争优势。</li>
+<li><strong>Generic Subdomain（通用子域）</strong>：很多系统都需要、差异化较低的功能。</li>
+</ul>
+<p>这种分类不是永久固定的。</p>
+<p>例如某个游戏的核心玩法可能就是独特的背包组合系统，那么 Inventory 就可能属于核心域；对于普通动作游戏，它可能只是支撑功能。</p>
+<p><strong>Why：</strong> 不同业务问题的重要性和复杂性不同，投入的建模精力也不应该相同。</p>
+<p><strong>How：</strong> 从实际业务目标、规则差异、团队知识和变化频率识别问题范围，再决定哪些值得深入建模。</p>
+<h3 id="section-12">2. Bounded Context：限界上下文</h3>
+<p>这是 DDD 最重要、也是最容易理解错误的概念之一。</p>
+<p><strong>What：限界上下文是某个领域模型具有明确、一致含义的适用边界。</strong></p>
+<p>我们用“商品”来理解。</p>
+<p><strong>Commerce Context</strong></p>
+<p>商业交易模型</p>
+<hr>
+<p>Product</p>
+<p>价格、库存状态、折扣、商品组合</p>
+<p><strong>Inventory Context</strong></p>
+<p>玩家持有模型</p>
+<hr>
+<p>ItemStack</p>
+<p>道具编号、持有数量、堆叠限制</p>
+<p>通过明确契约转换彼此的概念</p>
+<p><strong>PurchaseResult → ItemGrant</strong></p>
+<p>购买结果被转换成背包能够理解的授予请求</p>
+<p>商店中的 Product 和背包中的 ItemStack 不是同一个模型。</p>
+<p>它们只是存在某种业务关联。</p>
+<p>限界上下文的作用是明确：</p>
+<ul>
+<li>在 Commerce 中，Product 的含义是什么？</li>
+<li>在 Inventory 中，ItemStack 的含义是什么？</li>
+<li>两边的模型如何转换？</li>
+<li>哪一方有权决定什么业务事实？</li>
+</ul>
+<p><strong>限界上下文不是一个文件夹，也不天然等于微服务。</strong></p>
+<p>一个限界上下文可以在一个单体应用内部实现；它和子领域通常有关联，但也不是严格一一对应。</p>
+<h3 id="section-13">3. Ubiquitous Language：统一语言</h3>
+<p>DDD 强调开发者与业务专家使用一致的语言理解业务。</p>
+<p>例如，团队正在讨论奖励。</p>
+<p>最开始大家可能说：</p>
+<div class="code-block"><div class="codebar"><span>text</span><button class="copy" type="button">复制</button></div><pre tabindex="0"><code>玩家获得奖励。</code></pre></div>
+<p>但“获得”究竟是什么意思？</p>
+<ul>
+<li>奖励资格已经满足？</li>
+<li>奖励已解锁？</li>
+<li>玩家已经点击领取？</li>
+<li>奖励已成功发入背包？</li>
+</ul>
+<p>这些状态不应该混为一谈。</p>
+<p>我们可以约定：</p>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>业务术语</th>
+<th>明确含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Unlocked（已解锁）</td>
+<td>满足奖励条件，允许领取</td>
+</tr>
+<tr>
+<td>Claimed（已领取）</td>
+<td>该奖励已经完成一次合法领取</td>
+</tr>
+<tr>
+<td>Granted（已发放）</td>
+<td>奖励资源已经被成功授予</td>
+</tr>
+<tr>
+<td>Consumed（已消耗）</td>
+<td>已持有资源被合法扣除</td>
+</tr>
+</tbody></table></div>
+<p>然后让模型表达这些概念：</p>
+<div class="code-block"><div class="codebar"><span>C#</span><button class="copy" type="button">复制</button></div><pre tabindex="0"><code>achievement.Unlock();
+achievement.Claim();
+inventory.Grant(itemGrant);
+inventory.Consume(itemId, amount);</code></pre></div>
+<p><strong>Why：</strong> 语言含糊会导致需求理解与代码实现产生偏差。</p>
+<p><strong>How：</strong> 与业务设计者共同确定术语及其含义，并持续反映到需求、代码、测试和文档中。</p>
+<p>这里的“统一”不是全公司只能有一个统一模型，而是<strong>一个限界上下文内部保持一致，不同上下文可以使用不同语言与模型</strong>。</p>
+<h3 id="section-14">4. Context Map：上下文映射</h3>
+<p>当多个限界上下文协作时，需要明确它们之间的关系。</p>
+<p>例如：</p>
+<div class="code-block"><div class="codebar"><span>text</span><button class="copy" type="button">复制</button></div><pre tabindex="0"><code>Achievement Context
+       |
+       | 产生可领取的奖励
+       v
+Reward Fulfillment
+       |
+       | 请求发放道具
+       v
+Inventory Context</code></pre></div>
+<p>要进一步决定：</p>
+<ul>
+<li>谁定义跨上下文契约？</li>
+<li>哪一方依赖哪一方？</li>
+<li>使用同步调用还是事件？</li>
+<li>对方模型改变时如何保护自己的模型？</li>
+</ul>
+<p>DDD 中有防腐层（Anti-Corruption Layer）、客户—供应商（Customer–Supplier）、共享内核（Shared Kernel）等上下文协作模式。</p>
+<p>这里先掌握核心即可：</p>
+<p><strong>战略设计的本质是在决定：系统中的哪些地方应该使用同一个模型，哪些地方不应该强行共享模型。</strong></p>
+<hr>
+<h2 id="section-15">五、战术设计：怎样用代码表达业务规则？</h2>
+<p>战略设计解决模型应该在哪里成立。</p>
+<p>战术设计则进一步回答：</p>
+<p><strong>在一个明确的业务边界内部，应该怎样表示业务对象、维护业务规则和组织业务行为？</strong></p>
+<p>DDD 中几个最重要的战术概念是：</p>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>概念</th>
+<th>本质</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Entity（实体）</td>
+<td>有持续身份的领域对象</td>
+</tr>
+<tr>
+<td>Value Object（值对象）</td>
+<td>通过值而不是身份定义的概念</td>
+</tr>
+<tr>
+<td>Aggregate（聚合）</td>
+<td>共同维护一组一致性规则的对象边界</td>
+</tr>
+<tr>
+<td>Aggregate Root（聚合根）</td>
+<td>聚合中控制外部访问和合法状态变化的入口</td>
+</tr>
+<tr>
+<td>Domain Service（领域服务）</td>
+<td>不适合归属于单个实体或值对象的领域操作</td>
+</tr>
+<tr>
+<td>Application Service（应用服务）</td>
+<td>组织一次业务用例的执行流程</td>
+</tr>
+<tr>
+<td>Repository（仓储）</td>
+<td>提供领域对象的获取和持久化能力</td>
+</tr>
+<tr>
+<td>Domain Event（领域事件）</td>
+<td>表达领域中已发生的重要事实</td>
+</tr>
+</tbody></table></div>
+<p>这些是可选择的建模工具，不要求每个模块都完整使用一遍。</p>
+<h3 id="section-16">1. Entity：实体</h3>
+<h4 id="section-17">What：实体是什么？</h4>
+<p>实体是一种<strong>通过身份而不是单纯通过属性值来区分</strong>的领域对象。</p>
+<p>假设两个玩家都有五个金币。</p>
+<div class="code-block"><div class="codebar"><span>text</span><button class="copy" type="button">复制</button></div><pre tabindex="0"><code>Player A
+    Coins = 5
+
+Player B
+    Coins = 5</code></pre></div>
+<p>它们的数据可能相同，但显然不是同一个玩家。</p>
+<p>因为它们有不同的身份。</p>
+<p>而且玩家的等级、背包、金币可以变化，玩家仍然是同一个玩家。</p>
+<p>因此实体的核心特征是：</p>
+<p><strong>身份在生命周期中具有连续性，而属性可以发生变化。</strong></p>
+<h4 id="section-18">Why：为什么需要实体？</h4>
+<p>因为某些业务要求我们追踪“同一个对象”随着时间发生的变化。</p>
+<p>例如：</p>
+<ul>
+<li>哪个玩家领取过奖励？</li>
+<li>哪个订单已经完成？</li>
+<li>哪一把具有独立实例编号的武器已经强化？</li>
+</ul>
+<p>实体让这些问题有明确的对象归属。</p>
+<h4 id="section-19">How：如何设计？</h4>
+<div class="code-block"><div class="codebar"><span>C#</span><button class="copy" type="button">复制</button></div><pre tabindex="0"><code>public sealed class AchievementProgress
+{
+    public Guid PlayerId { get; }
+    public int AchievementId { get; }
+
+    public bool IsCompleted { get; private set; }
+    public bool IsClaimed { get; private set; }
+
+    public void Complete()
+    {
+        IsCompleted = true;
+    }
+}</code></pre></div>
+<p>一个玩家的某项成就进度，可以用：</p>
+<div class="code-block"><div class="codebar"><span>text</span><button class="copy" type="button">复制</button></div><pre tabindex="0"><code>(PlayerId, AchievementId)</code></pre></div>
+<p>作为业务身份。</p>
+<p>它的 <code>IsCompleted</code> 和 <code>IsClaimed</code> 可以变化，但身份不因此改变。</p>
+<p>在这里，Entity 不等于 Entity Framework Core 中的数据库实体类。</p>
+<p>两者有可能映射在一起，但 DDD 的实体是一个领域概念，不是 ORM 提供的技术类型。</p>
+<hr>
+<h3 id="section-20">2. Value Object：值对象</h3>
+<h4 id="section-21">What：值对象是什么？</h4>
+<p>值对象是一种<strong>不关心独立身份，只关心自身取值和意义</strong>的领域概念。</p>
+<p>例如：</p>
+<div class="code-block"><div class="codebar"><span>text</span><button class="copy" type="button">复制</button></div><pre tabindex="0"><code>ItemGrant
+    ItemId = 1001
+    Amount = 5</code></pre></div>
+<p>我们并不需要区分“第一份数量为五的发放描述”和“第二份数量为五的发放描述”各自的身份。</p>
+<p>如果它们所有有意义的属性相同，就可以被视为等价。</p>
+<h4 id="section-22">Why：为什么需要值对象？</h4>
+<p>假设你的方法是：</p>
+<div class="code-block"><div class="codebar"><span>C#</span><button class="copy" type="button">复制</button></div><pre tabindex="0"><code>GrantItem(int itemId, int amount);</code></pre></div>
+<p>其中 <code>amount</code> 必须大于零。</p>
+<p>如果每次使用它都在外部检查：</p>
+<div class="code-block"><div class="codebar"><span>C#</span><button class="copy" type="button">复制</button></div><pre tabindex="0"><code>if (amount &lt;= 0)
+    throw new Exception();</code></pre></div>
+<p>业务约束就容易被重复实现，甚至遗漏。</p>
+<p>我们可以让值对象在创建时建立合法性。</p>
+<h4 id="section-23">How：使用 C# record</h4>
+<div class="code-block"><div class="codebar"><span>C#</span><button class="copy" type="button">复制</button></div><pre tabindex="0"><code>public sealed record ItemGrant
+{
+    public int ItemId { get; }
+    public int Amount { get; }
+
+    public ItemGrant(int itemId, int amount)
+    {
+        if (itemId &lt;= 0)
+            throw new ArgumentOutOfRangeException(nameof(itemId));
+
+        if (amount &lt;= 0)
+            throw new ArgumentOutOfRangeException(nameof(amount));
+
+        ItemId = itemId;
+        Amount = amount;
+    }
+}</code></pre></div>
+<p>现在：</p>
+<div class="code-block"><div class="codebar"><span>C#</span><button class="copy" type="button">复制</button></div><pre tabindex="0"><code>var reward = new ItemGrant(1001, 5);</code></pre></div>
+<p>就是一份合法的道具发放描述。</p>
+<p>而：</p>
+<div class="code-block"><div class="codebar"><span>C#</span><button class="copy" type="button">复制</button></div><pre tabindex="0"><code>var reward = new ItemGrant(1001, -5);</code></pre></div>
+<p>会被拒绝。</p>
+<p>这将“不允许发放负数量道具”这一局部约束封装到了 <code>ItemGrant</code>。</p>
+<p>值对象通常设计成不可变的，方便比较、传递和推理。</p>
+<p>但值对象的规则还不能代替 Inventory 自己的规则。</p>
+<p>例如 <code>ItemGrant(1001, 5)</code> 合法，不代表当前背包一定有空间容纳五个道具。</p>
+<p><strong>值对象保证自身合法，使用值对象的领域对象继续保证更大范围的业务规则。</strong></p>
+<hr>
+<h3 id="section-24">3. Aggregate：聚合</h3>
+<p>这是 DDD 中最值得花精力理解的战术模式。</p>
+<h4 id="section-25">What：聚合是什么？</h4>
+<p>聚合是一个领域对象边界。</p>
+<p>在这个边界内部，一组对象共同维护某些必须成立的业务约束。</p>
+<p>聚合至少包含一个实体，作为聚合根；它也可以包含其他实体和值对象。</p>
+<p>假设我们设计一份订单：</p>
+<p><strong>Order Aggregate</strong> 一致性边界</p>
+<p><strong>Order（Aggregate Root）</strong></p>
+<p>确认订单、取消订单、计算总额</p>
+<p><strong>OrderLine</strong></p>
+<p>订单项实体</p>
+<p><strong>Money</strong></p>
+<p>金额值对象</p>
+<p>外部通过 Order 发起状态变化，由聚合根协调内部对象并维护订单规则。</p>
+<p>例如：</p>
+<div class="code-block"><div class="codebar"><span>text</span><button class="copy" type="button">复制</button></div><pre tabindex="0"><code>订单总金额必须等于各订单项金额之和。</code></pre></div>
+<p>如果外部可以随便修改 <code>OrderLine</code>，却不更新订单总金额，那么订单就可能进入不合法的状态。</p>
+<p>因此，由 <code>Order</code> 控制：</p>
+<div class="code-block"><div class="codebar"><span>C#</span><button class="copy" type="button">复制</button></div><pre tabindex="0"><code>order.AddLine(productId, quantity, price);</code></pre></div>
+<p>而不是允许外界随意修改内部订单项。</p>
+<h4 id="section-26">Why：为什么需要聚合？</h4>
+<p>因为业务系统中的状态必须维持某些条件。</p>
+<p>这些条件叫作 <strong>Invariant（不变量）</strong>。</p>
+<p>例如：</p>
+<div class="formula" data-original="Order.Total=\sum_{i=1}^{n}OrderLine_i.Total"><math display="block"><mrow><mi>Order.Total</mi><mo>=</mo><munderover><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>n</mi></munderover><msub><mi>OrderLine</mi><mi>i</mi></msub><mo>.</mo><mi>Total</mi></mrow></math></div>
+
+
+<p>又例如：</p>
+<div class="formula" data-original="0\leq Inventory.ItemCount\leq 99"><math display="block"><mn>0</mn><mo>≤</mo><mi>Inventory.ItemCount</mi><mo>≤</mo><mn>99</mn></math></div>
+
+
+<p>业务执行一次操作后，这些规则依然必须成立。</p>
+<p>聚合帮助我们明确：</p>
+<p><strong>由哪些对象共同负责保证这些约束，以及哪个入口有权改变它们。</strong></p>
+<p>Martin Fowler 对 DDD Aggregate 的解释中特别强调：聚合不是普通集合，而是一个可以作为整体处理的领域对象单元，聚合根负责维护其完整性。<sup class="citation" title="原文引用标记：turn130541search0；当前对话未包含原链接。" data-original="citeturn130541search0">[0]</sup></p>
+<h4 id="section-27">How：如何决定聚合边界？</h4>
+<p>首先列出业务不变量，然后研究它们依赖的状态。</p>
+<p>例如某个背包槽位必须满足：</p>
+<div class="code-block"><div class="codebar"><span>text</span><button class="copy" type="button">复制</button></div><pre tabindex="0"><code>0 ≤ 当前数量 ≤ 最大堆叠数量</code></pre></div>
+<p>如果只有修改这个槽位的操作才需要维护它，就没有必要因为玩家还拥有成就、邮箱和好友信息，而把这些对象全部塞入同一个超级聚合。</p>
+<p>判断聚合边界时，应该问：</p>
+<p><strong>“哪些状态必须在同一次业务状态变化中协调，才能确保这组不变量成立？”</strong></p>
+<p>通常应该尽量设计较小的聚合，以避免不相关的操作争抢同一份状态或锁。Microsoft 的 DDD 指南也明确强调，应根据事务不变量设计聚合，而不是随意把关联对象放在一起。<sup class="citation" title="原文引用标记：turn130541search4；当前对话未包含原链接。" data-original="citeturn130541search4">[4]</sup></p>
+<p>但这里要避免另一个误解：</p>
+<p><strong>聚合边界不等于数据库事务绝对不能跨越的边界。</strong></p>
+<p>DDD 常建议以一个聚合为事务修改单位，跨聚合通过事件实现协作与最终一致性。</p>
+<p>这是有价值的设计指导，尤其是在分布式系统中。</p>
+<p>但如果两个聚合在同一个事务型数据库内，而且真实业务要求它们必须同时提交，也可以由应用服务协调一个跨聚合事务。这需要明确设计取舍，而不是把所有涉及事务的对象强行合并成一个聚合。</p>
+<hr>
+<h3 id="section-28">4. Domain Service：领域服务</h3>
+<h4 id="section-29">What</h4>
+<p>领域服务用于表达<strong>具有明确业务含义，但不自然属于某个实体或值对象的领域操作</strong>。</p>
+<p>例如：</p>
+<div class="code-block"><div class="codebar"><span>text</span><button class="copy" type="button">复制</button></div><pre tabindex="0"><code>根据两个玩家的战力、匹配区间及组队规则，
+判断一场匹配是否允许成立。</code></pre></div>
+<p>这种规则可能需要多个领域对象参与，放在其中一个玩家内部未必合理。</p>
+<p>可以设计：</p>
+<div class="code-block"><div class="codebar"><span>C#</span><button class="copy" type="button">复制</button></div><pre tabindex="0"><code>public sealed class MatchEligibilityPolicy
+{
+    public bool CanMatch(PlayerRank a, PlayerRank b)
+    {
+        return Math.Abs(a.Score - b.Score) &lt;= 100;
+    }
+}</code></pre></div>
+<p>这只是一个简化的匹配策略例子。</p>
+<p>它没有数据库访问、HTTP 请求或 UI 逻辑，只表达一个领域判断。</p>
+<h4 id="section-30">Why</h4>
+<p>如果一个业务规则不属于任何单个实体，强行放进去可能会让实体承担不适当的职责。</p>
+<p>领域服务为这类规则提供明确的归属。</p>
+<h4 id="section-31">How</h4>
+<p>首先尝试将规则放在合适的实体或值对象中。</p>
+<p>如果规则确实跨越多个对象且不适合归属其中之一，再考虑领域服务。</p>
+<p>不要把所有业务逻辑统统搬进 <code>XXXDomainService</code>，否则可能重新形成只有数据、没有行为的贫血领域模型。</p>
+<hr>
+<h3 id="section-32">5. Application Service：应用服务</h3>
+<p>这是最容易与领域服务混淆的一对概念。</p>
+<p>它们的区别在于：</p>
+<p><strong>Domain Service 负责领域判断；Application Service 负责组织业务用例。</strong></p>
+<p>例如：</p>
+<div class="code-block"><div class="codebar"><span>text</span><button class="copy" type="button">复制</button></div><pre tabindex="0"><code>领取成就奖励
+    ↓
+加载成就进度
+    ↓
+验证领取规则
+    ↓
+加载背包
+    ↓
+发放道具
+    ↓
+原子保存数据
+    ↓
+返回领取结果</code></pre></div>
+<p>整个流程属于 Application Service 的职责。</p>
+<p>但：</p>
+<div class="code-block"><div class="codebar"><span>text</span><button class="copy" type="button">复制</button></div><pre tabindex="0"><code>成就是否已完成？
+是否可以领取？
+背包是否还能容纳该道具？</code></pre></div>
+<p>这些规则应由相关领域模型或领域服务负责。</p>
+<p>应用服务可以选择执行顺序、调用 Repository、开启事务和协调不同领域对象，但不应该成为存放所有业务规则的巨大类。</p>
+<hr>
+<h3 id="section-33">6. Repository：仓储</h3>
+<p>仓储并不是普通意义上“所有 SQL 的包装器”。</p>
+<p>在 DDD 中，它通常提供对聚合根的获取和持久化能力，让应用通过领域概念操作聚合。</p>
+<p>例如：</p>
+<div class="code-block"><div class="codebar"><span>C#</span><button class="copy" type="button">复制</button></div><pre tabindex="0"><code>public interface IAchievementRepository
+{
+    Task&lt;AchievementProgress&gt; GetAsync(
+        Guid playerId,
+        int achievementId,
+        CancellationToken ct);
+
+    Task SaveAsync(
+        AchievementProgress progress,
+        CancellationToken ct);
+}</code></pre></div>
+<p>业务只知道需要加载和保存成就进度。</p>
+<p>至于数据使用 MySQL、PostgreSQL 还是其他方式保存，不应该决定领域行为如何编写。</p>
+<p>但是也不需要为了 DDD 而给每一张数据库表创建一个 Repository。</p>
+<p><strong>Repository 的边界应该服务于领域模型，而不是机械复制数据表结构。</strong></p>
+<hr>
+<h3 id="section-34">7. Domain Event：领域事件</h3>
+<p>领域事件表达的是：</p>
+<p><strong>领域中某件有业务意义的事情已经发生。</strong></p>
+<p>例如：</p>
+<div class="code-block"><div class="codebar"><span>C#</span><button class="copy" type="button">复制</button></div><pre tabindex="0"><code>public sealed record AchievementRewardClaimed(
+    Guid PlayerId,
+    int AchievementId);</code></pre></div>
+<p>注意它描述的是过去已经发生的事实。</p>
+<p>它不同于命令：</p>
+<div class="code-block"><div class="codebar"><span>C#</span><button class="copy" type="button">复制</button></div><pre tabindex="0"><code>public sealed record ClaimAchievementReward(
+    Guid PlayerId,
+    int AchievementId);</code></pre></div>
+<p>命令表示：</p>
+<blockquote>
+<p>请求执行这项行为。</p>
+</blockquote>
+<p>事件表示：</p>
+<blockquote>
+<p>这件事情已经发生。</p>
+</blockquote>
+<p>区别如下：</p>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>命令 Command</th>
+<th>事件 Event</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>ClaimAchievementReward</td>
+<td>AchievementRewardClaimed</td>
+</tr>
+<tr>
+<td>要求执行操作</td>
+<td>陈述已发生的事实</td>
+</tr>
+<tr>
+<td>可能被拒绝</td>
+<td>表示对应事实已经成立</td>
+</tr>
+<tr>
+<td>通常有明确的处理者</td>
+<td>可以被多个订阅者处理</td>
+</tr>
+</tbody></table></div>
+<p>领域事件可以帮助不同聚合或上下文协作。</p>
+<p>不过，领域事件本身不自动保证消息可靠性。</p>
+<p>如果事件需要跨进程可靠发送，通常还需要 Outbox、可靠消息投递、幂等消费等机制。</p>
+<p>特别要区分：<strong>领域模型产生事件，与事件什么时候能够安全地向外发布，是两件事。</strong></p>
+<hr>
+<h2 id="section-35">六、How：在 C# 游戏服务端中实践 DDD</h2>
+<p>接下来把战略设计、实体、值对象、聚合、应用服务与仓储结合起来。</p>
+<p>我们实现一个业务：</p>
+<p><strong>玩家领取已经完成的成就奖励。</strong></p>
+<p>业务要求：</p>
+<ol>
+<li>成就必须已经完成才能领取。</li>
+<li>同一项成就奖励只能发放一次。</li>
+<li>道具数量不能违反背包规则。</li>
+<li>成就领取状态与道具发放必须原子提交。</li>
+<li>客户端重复发起领取请求时，不能重复发放道具。</li>
+</ol>
+<p>这个案例能够体现 DDD 最重要的思想：<strong>谁拥有规则，谁负责保证规则。</strong></p>
+<h3 id="section-36">1. 战略设计：先确定业务边界</h3>
+<p>我们把业务分为两个限界上下文：</p>
+<p><strong>Achievement</strong></p>
+<p>成就上下文</p>
+<hr>
+<p>负责：</p>
+<p>成就完成、领取资格、领取状态</p>
+<p><strong>Inventory</strong></p>
+<p>背包上下文</p>
+<hr>
+<p>负责：</p>
+<p>道具持有数量、堆叠上限、道具发放</p>
+<p><strong>ClaimAchievementReward（应用用例）</strong></p>
+<p>协调成就与背包完成一次奖励领取操作</p>
+<p>为什么不让 Achievement 自己直接修改背包？</p>
+<p>因为 Achievement 不拥有背包的数量和容量规则。</p>
+<p>为什么不把成就领取判断放在 Inventory 中？</p>
+<p>因为 Inventory 不负责决定成就是否已经完成、是否允许领取。</p>
+<p><strong>不同的规则拥有不同的业务归属。应用用例负责协调，而不是把它们的内部规则合并成一个大类。</strong></p>
+<h3 id="section-37">2. Domain：成就聚合</h3>
+<p>先构建成就领域对象。</p>
+<p><code>ItemGrant</code> 使用前面定义的值对象。</p>
+<div class="code-block"><div class="codebar"><span>C#</span><button class="copy" type="button">复制</button></div><pre tabindex="0"><code>public sealed class AchievementProgress
+{
+    public Guid PlayerId { get; }
+    public int AchievementId { get; }
+
+    public bool IsCompleted { get; private set; }
+    public bool IsClaimed { get; private set; }
+
+    public ItemGrant Reward { get; }
+
+    public AchievementProgress(
+        Guid playerId,
+        int achievementId,
+        ItemGrant reward)
+    {
+        PlayerId = playerId;
+        AchievementId = achievementId;
+        Reward = reward;
+    }
+
+    public void Complete()
+    {
+        IsCompleted = true;
+    }
+
+    public ItemGrant? Claim()
+    {
+        if (!IsCompleted)
+        {
+            throw new InvalidOperationException(
+                &quot;Achievement is not completed.&quot;);
+        }
+
+        if (IsClaimed)
+        {
+            return null;
+        }
+
+        IsClaimed = true;
+
+        return Reward;
+    }
+}</code></pre></div>
+<p>注意这里的重点。</p>
+<div class="code-block"><div class="codebar"><span>C#</span><button class="copy" type="button">复制</button></div><pre tabindex="0"><code>public ItemGrant? Claim()</code></pre></div>
+<p>这个方法不是简单修改 <code>bool</code>。</p>
+<p>它表达一项完整的业务行为：</p>
+<p><strong>尝试领取成就奖励。</strong></p>
+<p>它同时保证：</p>
+<ul>
+<li>未完成的成就不能领取。</li>
+<li>已领取的成就不会再次发放。</li>
+<li>只有首次合法领取才返回奖励内容。</li>
+</ul>
+<p>因此，<code>Claim()</code> 是一个具有业务意义的状态转移。</p>
+<p>形式化地表示：</p>
+<div class="formula" data-original="\{Completed \land \neg Claimed\}
+\quad Claim()
+\quad
+\{Claimed\}"><math display="block"><mrow><mo>{</mo><mi>Completed</mi><mo>∧</mo><mo>¬</mo><mi>Claimed</mi><mo>}</mo><mspace width="1em"/><mi>Claim</mi><mo>(</mo><mo>)</mo><mspace width="1em"/><mo>{</mo><mi>Claimed</mi><mo>}</mo></mrow></math></div>
+
+
+<p>这个表达表示：在满足前置条件时，合法执行 Claim 应当使领取状态变为已领取。</p>
+<p>如果已经领取，则当前示例返回 <code>null</code>，不产生新的奖励。</p>
+<p>这里把业务规则放在领域对象内部，而不是让应用服务直接修改：</p>
+<div class="code-block"><div class="codebar"><span>C#</span><button class="copy" type="button">复制</button></div><pre tabindex="0"><code>achievement.IsClaimed = true;</code></pre></div>
+<p>这就是我们之前讨论过的信息隐藏和不变量维护在 DDD 中的具体应用。</p>
+<h3 id="section-38">3. Domain：背包聚合</h3>
+<p>背包则拥有自己的业务规则。</p>
+<div class="code-block"><div class="codebar"><span>C#</span><button class="copy" type="button">复制</button></div><pre tabindex="0"><code>public sealed class Inventory
+{
+    private readonly Dictionary&lt;int, int&gt; _items = new();
+
+    public Guid PlayerId { get; }
+
+    public Inventory(Guid playerId)
+    {
+        PlayerId = playerId;
+    }
+
+    public int GetCount(int itemId)
+    {
+        return _items.GetValueOrDefault(itemId);
+    }
+
+    public void Grant(ItemGrant reward)
+    {
+        int current = GetCount(reward.ItemId);
+
+        const int maxStack = 99;
+
+        if (reward.Amount &gt; maxStack - current)
+        {
+            throw new InvalidOperationException(
+                &quot;Inventory stack limit exceeded.&quot;);
+        }
+
+        _items[reward.ItemId] =
+            checked(current + reward.Amount);
+    }
+}</code></pre></div>
+<p>这里选择每种道具最多持有 99 个作为示意规则，实际游戏可以采用多堆叠、独立槽位或其他规则。</p>
+<p>注意：</p>
+<p><code>AchievementProgress</code> 不需要知道背包如何检查容量。</p>
+<p><code>Inventory</code> 也不需要知道奖励来自哪个成就。</p>
+<p>它们只需要围绕合法的 <code>ItemGrant</code> 协作。</p>
+<p>这就是限界上下文与值对象配合的一种简单方式。</p>
+<h3 id="section-39">4. Application：协调两个聚合</h3>
+<p>现在定义仓储接口：</p>
+<div class="code-block"><div class="codebar"><span>C#</span><button class="copy" type="button">复制</button></div><pre tabindex="0"><code>public interface IAchievementRepository
+{
+    Task&lt;AchievementProgress&gt; GetForUpdateAsync(
+        Guid playerId,
+        int achievementId,
+        CancellationToken ct);
+
+    Task SaveAsync(
+        AchievementProgress progress,
+        CancellationToken ct);
+}
+
+public interface IInventoryRepository
+{
+    Task&lt;Inventory&gt; GetForUpdateAsync(
+        Guid playerId,
+        CancellationToken ct);
+
+    Task SaveAsync(
+        Inventory inventory,
+        CancellationToken ct);
+}</code></pre></div>
+<p>这里 <code>GetForUpdateAsync</code> 是我们自行定义的仓储契约，表示在事务中取得可安全更新的聚合，不是 .NET 自带的方法。</p>
+<p>数据库适配器需要使用适当的行锁、乐观并发版本检查或等效机制完成它的并发保证。</p>
+<p>定义事务协调接口：</p>
+<div class="code-block"><div class="codebar"><span>C#</span><button class="copy" type="button">复制</button></div><pre tabindex="0"><code>public interface ITransactionRunner
+{
+    Task&lt;T&gt; RunAsync&lt;T&gt;(
+        Func&lt;CancellationToken, Task&lt;T&gt;&gt; operation,
+        CancellationToken ct);
+}</code></pre></div>
+<p>再定义结果：</p>
+<div class="code-block"><div class="codebar"><span>C#</span><button class="copy" type="button">复制</button></div><pre tabindex="0"><code>public enum ClaimRewardResult
+{
+    Claimed,
+    AlreadyClaimed
+}</code></pre></div>
+<p>实现应用用例：</p>
+<div class="code-block"><div class="codebar"><span>C#</span><button class="copy" type="button">复制</button></div><pre tabindex="0"><code>public sealed class ClaimAchievementRewardHandler
+{
+    private readonly IAchievementRepository _achievements;
+    private readonly IInventoryRepository _inventories;
+    private readonly ITransactionRunner _transactions;
+
+    public ClaimAchievementRewardHandler(
+        IAchievementRepository achievements,
+        IInventoryRepository inventories,
+        ITransactionRunner transactions)
+    {
+        _achievements = achievements;
+        _inventories = inventories;
+        _transactions = transactions;
+    }
+
+    public Task&lt;ClaimRewardResult&gt; ExecuteAsync(
+        Guid playerId,
+        int achievementId,
+        CancellationToken ct)
+    {
+        return _transactions.RunAsync(async token =&gt;
+        {
+            var achievement =
+                await _achievements.GetForUpdateAsync(
+                    playerId, achievementId, token);
+
+            var reward = achievement.Claim();
+
+            if (reward is null)
+                return ClaimRewardResult.AlreadyClaimed;
+
+            var inventory =
+                await _inventories.GetForUpdateAsync(
+                    playerId, token);
+
+            inventory.Grant(reward);
+
+            await _achievements.SaveAsync(
+                achievement, token);
+
+            await _inventories.SaveAsync(
+                inventory, token);
+
+            return ClaimRewardResult.Claimed;
+
+        }, ct);
+    }
+}</code></pre></div>
+<h4 id="section-40">仔细分析这段代码</h4>
+<p>首先：</p>
+<div class="code-block"><div class="codebar"><span>C#</span><button class="copy" type="button">复制</button></div><pre tabindex="0"><code>achievement.Claim();</code></pre></div>
+<p>负责成就的业务规则。</p>
+<p>然后：</p>
+<div class="code-block"><div class="codebar"><span>C#</span><button class="copy" type="button">复制</button></div><pre tabindex="0"><code>inventory.Grant(reward);</code></pre></div>
+<p>负责背包的业务规则。</p>
+<p>最后：</p>
+<div class="code-block"><div class="codebar"><span>C#</span><button class="copy" type="button">复制</button></div><pre tabindex="0"><code>_transactions.RunAsync(...)</code></pre></div>
+<p>负责协调持久化事务。</p>
+<p>三个职责没有被混合起来。</p>
+<p>如果成就未完成，业务操作被拒绝。</p>
+<p>如果成就已经领取，直接返回 <code>AlreadyClaimed</code>，不会再次发放道具。</p>
+<p>如果背包已经达到上限，<code>Grant()</code> 抛出异常，事务应回滚成就的领取状态变化。</p>
+<p>只有成功完成所有数据库变更，事务才可以提交。</p>
+<p>这段代码要真正满足上述保证，还有几个必须落实的实现条件：</p>
+<ul>
+<li>两个仓储必须共享同一个事务型数据库事务。</li>
+<li>事务应当在操作全部成功后提交，失败时回滚。</li>
+<li>并发领取必须受到锁或数据库并发控制保护。</li>
+<li>同一玩家、同一成就进度必须具备唯一的持久化身份。</li>
+<li><code>AchievementProgress</code> 与 <code>Inventory</code> 的状态需要正确加载、跟踪并保存，不能直接把这个领域代码当成完整的数据库实现。</li>
+</ul>
+<p>这里使用<strong>跨两个聚合的单数据库事务</strong>，是因为需求明确要求领取状态与道具发放强一致，而且假设它们位于同一事务型数据库中。</p>
+<p>这不是说 DDD 要求所有跨聚合操作都使用同一个事务。对于分布式或允许最终一致性的场景，设计会不同。</p>
+<p>另外，<code>AlreadyClaimed</code> 保证的是不会重复发放，并不表示重试获得的响应内容与第一次完全一致。如果业务需要重复请求返回完全相同的原始结果，可以进一步持久化请求 ID 和执行结果。</p>
+<hr>
+<h2 id="section-41">七、这个案例中，DDD 到底发挥了什么作用？</h2>
+<p>我们把它重新对应到概念。</p>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>DDD 概念</th>
+<th>示例中的体现</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Domain</td>
+<td>成就奖励领取业务</td>
+</tr>
+<tr>
+<td>Bounded Context</td>
+<td>Achievement 与 Inventory</td>
+</tr>
+<tr>
+<td>Ubiquitous Language</td>
+<td>Complete、Claim、Grant</td>
+</tr>
+<tr>
+<td>Entity</td>
+<td>AchievementProgress</td>
+</tr>
+<tr>
+<td>Value Object</td>
+<td>ItemGrant</td>
+</tr>
+<tr>
+<td>Aggregate Root</td>
+<td>AchievementProgress、Inventory</td>
+</tr>
+<tr>
+<td>Invariant</td>
+<td>未完成不可领取、不能重复发放、背包数量上限</td>
+</tr>
+<tr>
+<td>Application Service</td>
+<td>ClaimAchievementRewardHandler</td>
+</tr>
+<tr>
+<td>Repository</td>
+<td>IAchievementRepository、IInventoryRepository</td>
+</tr>
+<tr>
+<td>Transaction</td>
+<td>协调领取状态与道具发放的原子提交</td>
+</tr>
+</tbody></table></div>
+<p>请注意，DDL、SQL、Controller、依赖注入等实现细节不在这张表里。</p>
+<p>因为 <strong>DDD 的贡献是让我们知道业务规则应该由谁负责，以及这些规则如何被表达和维护。</strong></p>
+<p>持久化和运行机制仍然需要其他技术提供支持。</p>
+<hr>
+<h2 id="section-42">八、如何从零开始进行 DDD 建模？</h2>
+<p>我建议使用下面这个流程。</p>
+<ol>
+<li><p><strong>描述真实业务场景</strong></p>
+<p>例如：玩家完成某项成就后，可以领取一次道具奖励。</p>
+</li>
+<li><p><strong>发现业务术语和事实</strong></p>
+<p>什么是完成？什么是领取？什么是发放？它们的区别是什么？</p>
+</li>
+<li><p><strong>找出不变量</strong></p>
+<p>未完成不可领取、不能重复领取、背包数量必须合法。</p>
+</li>
+<li><p><strong>确定职责与模型边界</strong></p>
+<p>成就负责领取资格，背包负责道具数量；明确跨上下文契约。</p>
+</li>
+<li><p><strong>识别实体、值对象与聚合</strong></p>
+<p>按身份、业务行为与一致性要求设计，不根据数据库表机械划分。</p>
+</li>
+<li><p><strong>实现领域行为和用例</strong></p>
+<p>让领域对象维护规则，由应用服务协调执行。</p>
+</li>
+<li><p><strong>通过测试与业务反馈修正模型</strong></p>
+<p>新增规则、发现例外时，重新审查模型和边界，而不只是继续堆 if。</p>
+</li>
+</ol>
+<p>如果业务复杂，还可以使用 Event Storming（事件风暴）等协作建模方法，从业务事件出发发现流程、命令、规则和边界。</p>
+<p>例如：</p>
+<div class="code-block"><div class="codebar"><span>text</span><button class="copy" type="button">复制</button></div><pre tabindex="0"><code>AchievementCompleted
+        ↓
+RewardBecameClaimable
+        ↓
+玩家请求 ClaimReward
+        ↓
+AchievementRewardClaimed
+        ↓
+ItemGranted</code></pre></div>
+<p>这是一种用于讨论业务流程的概念图，并不规定这些步骤必须通过异步消息实现。</p>
+<p>建模的重点是让团队发现：</p>
+<ul>
+<li>哪一步代表资格成立？</li>
+<li>哪一步代表状态已经改变？</li>
+<li>哪些操作必须原子完成？</li>
+<li>哪些事情可以延迟执行？</li>
+<li>哪些规则目前还没有明确？</li>
+</ul>
+<p><strong>领域模型是通过理解、验证、修改不断演化出来的，而不是项目开始时一次性设计完成的。</strong></p>
+<hr>
+<h2 id="section-43">九、设计权衡：DDD 的优势和代价</h2>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>维度</th>
+<th>DDD 的价值</th>
+<th>代价或风险</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>业务复杂性</td>
+<td>将复杂规则组织成清晰的领域模型</td>
+<td>需要花时间理解与建模</td>
+</tr>
+<tr>
+<td>代码可维护性</td>
+<td>让规则拥有明确的归属</td>
+<td>模型可能因需求变化需要重构</td>
+</tr>
+<tr>
+<td>业务沟通</td>
+<td>减少术语歧义</td>
+<td>需要开发者与业务人员持续沟通</td>
+</tr>
+<tr>
+<td>数据正确性</td>
+<td>聚合有助于集中维护不变量</td>
+<td>聚合边界不合理会造成性能或一致性问题</td>
+</tr>
+<tr>
+<td>系统划分</td>
+<td>识别不同业务模型的边界</td>
+<td>可能产生模型转换与跨上下文协调成本</td>
+</tr>
+<tr>
+<td>测试</td>
+<td>能直接验证领域规则</td>
+<td>仍需要数据库、并发和集成测试</td>
+</tr>
+<tr>
+<td>学习成本</td>
+<td>有助于掌握复杂业务建模方法</td>
+<td>大量概念容易被形式化滥用</td>
+</tr>
+</tbody></table></div>
+<h3 id="section-44">1. DDD 不一定适合简单 CRUD</h3>
+<p>如果你的业务只是：</p>
+<div class="code-block"><div class="codebar"><span>text</span><button class="copy" type="button">复制</button></div><pre tabindex="0"><code>创建一条公告
+修改公告内容
+删除公告
+查询公告</code></pre></div>
+<p>而且没有复杂的业务规则，可能只需要简单的数据访问和应用服务。</p>
+<p>这时候设计十几个领域类、多个聚合和领域事件，未必会改善代码。</p>
+<p>Microsoft 的 DDD 指南同样建议根据业务复杂性选择建模深度，而不是对所有 CRUD 功能一律应用复杂的 DDD 战术模式。<sup class="citation" title="原文引用标记：turn130541search3；当前对话未包含原链接。" data-original="citeturn130541search3">[3]</sup></p>
+<h3 id="section-45">2. DDD 不等于面向对象编程</h3>
+<p>实体、值对象、聚合经常使用 C# 类来实现。</p>
+<p>但 DDD 的战略设计、领域语言和建模思想，并不要求所有逻辑必须采用面向对象风格。</p>
+<p>你也可以使用不可变数据结构和纯函数表达领域规则。</p>
+<p>例如：</p>
+<div class="code-block"><div class="codebar"><span>C#</span><button class="copy" type="button">复制</button></div><pre tabindex="0"><code>public static bool CanClaim(
+    bool isCompleted,
+    bool isClaimed)
+{
+    return isCompleted &amp;&amp; !isClaimed;
+}</code></pre></div>
+<p>只要这种设计仍然准确表达业务，模型本身就有价值。</p>
+<h3 id="section-46">3. DDD 不等于微服务</h3>
+<p>限界上下文可以位于同一个应用中。</p>
+<p>例如：</p>
+<div class="code-block"><div class="codebar"><span>text</span><button class="copy" type="button">复制</button></div><pre tabindex="0"><code>GameServer（Modular Monolith）
+│
+├── Achievement Context
+├── Inventory Context
+├── Commerce Context
+└── Combat Context</code></pre></div>
+<p>它们可以运行在同一个进程，使用同一个数据库实例，同时拥有清晰的业务边界。</p>
+<p>没有必要因为采用 DDD 就拆成多个独立部署的服务。</p>
+<h3 id="section-47">4. DDD 也不会自动保证正确性</h3>
+<p>领域对象定义了合法操作，但如果数据库并发更新丢失、跨模块保存不原子，系统仍然可能出现错误。</p>
+<p>因此完整的正确性需要多个层次共同保证：</p>
+<ul>
+<li><strong>领域模型</strong>：表达并检查业务规则。</li>
+<li><strong>应用层</strong>：正确协调业务流程。</li>
+<li><strong>数据库</strong>：提供持久化、事务和并发约束。</li>
+<li><strong>系统设计</strong>：处理请求重复、故障恢复和消息可靠性。</li>
+<li><strong>测试</strong>：验证正常情况、异常情况和并发情况。</li>
+</ul>
+<p>DDD 是正确性设计的重要组成部分，但不是正确性的全部。</p>
+<hr>
+<h2 id="section-48">十、DDD 与之前学习的架构之间的关系</h2>
+<p>我们将几种架构放在同一个视角比较。</p>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>名称</th>
+<th>主要解决的问题</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Modular Monolith</td>
+<td>整个应用应该如何组织模块并保持单体部署？</td>
+</tr>
+<tr>
+<td>Clean Architecture</td>
+<td>业务与技术实现之间的源代码依赖如何组织？</td>
+</tr>
+<tr>
+<td>Hexagonal Architecture</td>
+<td>应用如何通过端口和适配器与外部协作？</td>
+</tr>
+<tr>
+<td>DDD</td>
+<td>如何理解、划分和表达业务领域及其规则？</td>
+</tr>
+</tbody></table></div>
+<p>例如一个游戏服务端可以这样组织：</p>
+<div class="code-block"><div class="codebar"><span>text</span><button class="copy" type="button">复制</button></div><pre tabindex="0"><code>GameServer
+│
+├── AchievementModule
+│   ├── Domain
+│   │   └── AchievementProgress
+│   ├── Application
+│   │   └── ClaimAchievementReward
+│   └── Infrastructure
+│       └── SqlAchievementRepository
+│
+├── InventoryModule
+│   ├── Domain
+│   │   └── Inventory
+│   ├── Application
+│   │   └── GrantItem
+│   └── Infrastructure
+│       └── SqlInventoryRepository
+│
+└── Host</code></pre></div>
+<p>其中：</p>
+<p><strong>Modular Monolith</strong> 决定整体的模块化单体结构。</p>
+<p><strong>DDD</strong> 帮助发现 Achievement、Inventory 的业务边界，并设计它们的领域模型。</p>
+<p><strong>Clean Architecture</strong> 指导 Domain、Application、Infrastructure 的依赖方向。</p>
+<p><strong>Hexagonal Architecture</strong> 帮助我们通过仓储端口、HTTP 适配器和数据库适配器隔离具体技术。</p>
+<p>这些思想能够互相配合，但不要求一定同时使用。</p>
+<hr>
+<h2 id="section-49">十一、直达本质：DDD 真正改变的是什么？</h2>
+<p>回到最初的问题。</p>
+<p>软件究竟为什么会变得难以维护？</p>
+<p>其中一种重要原因是：</p>
+<p><strong>业务规则散落在各个技术组件中，没人能清楚地说出规则由谁负责、在哪些条件下成立、哪些状态必须一起变化。</strong></p>
+<p>DDD 的解法不是简单地增加类和接口。</p>
+<p>它要求我们重新组织思考顺序：</p>
+<p><strong>先理解问题</strong></p>
+<p>业务事实是什么？真正需要保证哪些规则？</p>
+<hr>
+<p><strong>再划分模型边界</strong></p>
+<p>哪些概念属于同一个上下文？谁对状态和规则负责？</p>
+<hr>
+<p><strong>最后用代码落实模型</strong></p>
+<p>利用实体、值对象、聚合和服务表达并执行业务规则。</p>
+<p>可以把 DDD 归结成三句话。</p>
+<p><strong>What：</strong> 领域驱动设计是一套通过领域模型表达、组织和演化复杂业务的软件设计方法。</p>
+<p><strong>Why：</strong> 因为业务复杂性的核心常常在于概念、规则、例外以及它们之间的关系，而不仅是代码数量。</p>
+<p><strong>How：</strong> 通过统一语言、领域分析、限界上下文和战术建模，将业务知识落实为具有清晰职责、行为和约束的软件结构。</p>
+<p>我认为你接下来最值得深入研究的概念是 <strong>Aggregate（聚合）和 Aggregate Root（聚合根）</strong>。</p>
+<p>因为它们把我们前面学过的高内聚、信息隐藏、模块边界、不变量、状态转移、前置条件和事务一致性连接在了一起。</p>
+<p>尤其值得思考的一个问题是：</p>
+<p><strong>“一个业务操作涉及两个聚合时，应该使用一个事务，还是通过事件让它们分别完成？”</strong></p>
+<p>这个问题没有脱离业务要求的固定答案，而理解如何做出这个决定，正是从掌握 DDD 术语走向真正进行领域建模的重要一步。</p>
+</article><footer>DDD · Domain-Driven Design</footer></main></div>
+<button class="top" aria-label="回到顶部">↑</button>
+<script type="application/json" id="original-source">"# DDD（Domain-Driven Design，领域驱动设计）\n\nWhat · Why · How · 设计权衡 · C# / 游戏服务端实践\n\nDDD 是软件架构中非常值得深入理解的一种设计思想。\n\n它与之前学习的 Modular Monolith、Clean Architecture、Hexagonal Architecture 有一个重要区别：\n\nDDD 首先关心的不是代码如何分层、接口如何抽象，而是我们是否正确理解了要解决的业务问题，以及软件是否准确表达了这些业务规则。\n\n先用一句话直达本质：\n\n> DDD 是一种以业务领域模型为中心的软件设计方法。它通过持续理解业务、建立共同语言、划分模型边界，并让业务规则体现在软件模型中，来管理复杂业务系统的复杂性。\n\n它的核心不是 Entity、Repository、Aggregate 这些类应该怎么写，而是：\n\n软件的结构和行为，应当反映业务本身的概念、规则和边界。\n\nEric Evans 的《Domain-Driven Design》系统化提出了这套方法。Martin Fowler 也强调，DDD 特别适合需要组织大量复杂业务规则的系统。\n\n[image](https://www.google.com/s2/favicons?domain=https://www.domainlanguage.com\\&sz=32)\n\nDomain Language\n\n+1\n\n\n\n## 一、What：DDD 到底是什么？\n\n首先理解三个词。\n\n### 1. Domain：领域是什么？\n\n领域（Domain）就是软件试图解决的某个业务问题范围。\n\n例如你要开发一个游戏。\n\n游戏中可能存在：\n\n- 背包与道具。\n- 战斗与伤害。\n- 成就和任务。\n- 商店和交易。\n- 玩家进度。\n- 排名与匹配。\n\n这些都是游戏业务中的不同问题范围。\n\n假设我们研究的是“玩家获得道具”。\n\n看起来似乎只是：\n\n```\ninventory[itemId] += amount;\n```\n\n但真正的业务问题可能包括：\n\n- 玩家是否有资格获得该道具？\n- 是新增一个道具实例，还是增加堆叠数量？\n- 道具是否有持有上限？\n- 同一奖励能否重复领取？\n- 发放成功后是否记录累计获得数量？\n- 背包保存成功、统计保存失败怎么办？\n- 同一个请求被客户端发送三次怎么办？\n\n这些问题不是 C#、SQL 或 Unity 自动替你解决的。\n\n它们是业务领域本身的规则。\n\nDDD 希望我们首先理解这些规则，然后再决定如何将其变成软件。\n\n### 2. Model：模型是什么？\n\n模型（Model）是对现实业务进行有目的的抽象。\n\n它并不是现实世界的完整复制品。\n\n例如：\n\n```\npublic sealed class Inventory\n{\n    public void Grant(ItemId itemId, int amount)\n    {\n        // 根据背包规则发放道具\n    }\n}\n```\n\n这个 `Inventory` 是一个领域模型的一部分。\n\n它没有描述真实背包的材质、形状或重量，而是表达软件所关心的业务概念和规则。\n\n更重要的是，领域模型不等于数据结构。\n\n一个只有数据的类：\n\n```\npublic class InventoryData\n{\n    public Dictionary\u003cint, int> Items = new();\n}\n```\n\n确实能够表示部分背包数据。\n\n但它还没有表达：\n\n- 怎样合法地增加道具？\n- 怎样消耗道具？\n- 哪些操作被禁止？\n- 必须维护什么不变量？\n\n如果这些规则全部散落在 UI、ShopService、RewardService 等地方，就很难形成一个有凝聚力的业务模型。\n\nDDD 中的模型既包括数据概念，也包括行为、规则、关系、约束和业务语言。\n\n### 3. Driven：什么叫驱动？\n\n这里的“驱动”意味着：\n\n用不断演化的领域模型指导代码结构和设计决策，而不是先由数据库表、框架或通用类结构决定业务应该如何组织。\n\n比较两种开发思路。\n\n技术结构先行\n\n设计数据库表\n\n生成数据类与 CRUD\n\n将业务规则分散到各种 Service\n\n领域模型驱动\n\n理解业务场景与规则\n\n建立业务概念、行为和边界\n\n用代码与持久化实现领域模型\n\n这不是说 DDD 禁止先设计数据库，也不是 CRUD 就一定不好。\n\n区别在于：当业务规则非常复杂时，数据库结构不应该成为理解和表达业务的唯一模型。\n\n## 二、Why：为什么需要 DDD？\n\n### 1. 根本问题：技术结构正确，业务仍然可能错误\n\n假设我们已经使用：\n\n- Clean Architecture。\n- 依赖注入。\n- Repository。\n- 数据库事务。\n- 高内聚、低耦合。\n\n架构看起来很漂亮。\n\n但代码是这样的：\n\n```\npublic void ClaimReward(Player player, int rewardId)\n{\n    if (player.Level >= 10)\n    {\n        player.Inventory.Add(1001, 5);\n    }\n}\n```\n\n技术上没有什么特别复杂的问题。\n\n但真实的业务要求可能是：\n\n> 玩家等级达到 10 级后，可以领取一次等级奖励。已经领取过的奖励不可以重复领取。\n\n现在代码只验证了等级，却没有验证是否领取过。\n\n再调用一次：\n\n```\nClaimReward(player, rewardId);\n```\n\n就会重复获得奖励。\n\n这不是架构层次的问题，而是业务规则建模不完整。\n\nClean Architecture 可以让这段代码不依赖数据库。\n\n依赖倒置可以让它不依赖具体背包实现。\n\n但这些技术并不能自动告诉你：\n\n“等级奖励只允许领取一次。”\n\n这个规则必须通过理解业务才能得到。\n\nDDD 就是把这种业务知识当作设计的中心。\n\n### 2. 业务复杂度来自规则之间的关系\n\n假设只有一条规则：\n\n```\n玩家达到 10 级可以领奖。\n```\n\n很容易实现。\n\n后来新增：\n\n```\n达到 10 级才能领取。\n每个等级奖励只能领取一次。\n奖励必须根据奖励配置发放。\n领取成功后更新任务。\n部分道具需要检查容量。\n领取过程中失败必须保证正确性。\n管理员可以补发奖励。\n```\n\n规则开始出现组合和例外。\n\n其中某些规则属于奖励领域，有些属于背包领域，有些涉及两个领域之间的协调。\n\n如果不知道各自归属，代码就很容易变成：\n\n```\nRewardService\n    → InventoryData\n    → PlayerData\n    → AchievementData\n    → QuestData\n    → SaveManager\n```\n\n整个程序都知道彼此的内部数据结构。\n\n这时候真正困难的不是如何写一个 `if`。\n\n而是：\n\n一条业务规则应该由谁负责？它需要哪些状态？什么情况下必须始终成立？哪些其他业务依赖它？\n\nDDD 为这些问题提供了一套建模语言和设计方法。\n\n### 3. 同一个词，在不同业务中可能有不同含义\n\n再考虑一个更加根本的问题。\n\n“道具”是什么意思？\n\n在背包系统中：\n\n```\n道具 = 玩家当前持有的资源或物品\n```\n\n在商店系统中：\n\n```\n商品 = 可以购买的报价和交易项目\n```\n\n在战斗系统中：\n\n```\n装备 = 参与战斗规则计算的物品\n```\n\n三者可能关联同一个 `ItemId`，但业务模型并不相同。\n\n一个商店商品甚至可能代表包含三个道具的礼包。\n\n如果强行让所有系统使用一个巨大的 `Item` 类：\n\n```\npublic class Item\n{\n    public int ItemId;\n    public int Price;\n    public int Attack;\n    public int Defense;\n    public int OwnedCount;\n    public bool IsOnSale;\n    public bool IsEquipped;\n}\n```\n\n这个类很快就会承担互相不相干的职责。\n\n不同业务的概念被错误地混合在一起。\n\nDDD 的一个重要思想就是：\n\n不同业务上下文，可以使用不同的模型描述看起来相同的事物。\n\n这就引出了 DDD 的第一大部分：战略设计。\n\n# 三、DDD 的两个层次：战略设计与战术设计\n\n理解 DDD 时，最好先将它们分开。\n\n| 层次                     | 主要解决什么问题        | 典型概念                                                                 |\n| ---------------------- | --------------- | -------------------------------------------------------------------- |\n| Strategic Design（战略设计） | 大系统怎样划分业务模型和边界？ | Subdomain、Bounded Context、Ubiquitous Language、Context Map            |\n| Tactical Design（战术设计）  | 一个边界内部怎样表达业务规则？ | Entity、Value Object、Aggregate、Domain Service、Repository、Domain Event |\n\n一个常见误区是直接开始写 Entity、Aggregate、Repository，然后宣布系统采用了 DDD。\n\n但**只使用战术模式，不等于真正理解了 DDD**。\n\nMartin Fowler 特别指出，DDD 的战略设计用于应对大型领域模型的复杂性，通过多个限界上下文管理模型，并明确它们之间的关系。citeturn130541search2\n\n## 四、战略设计：先决定模型在哪里成立\n\n### 1. Subdomain：子领域\n\n**What：子领域是什么？**\n\n一个大业务问题中，可以区分的相对独立的问题范围。\n\n例如游戏运营可能有：\n\n```text\nGame Domain\n├── Combat\n├── Inventory\n├── Achievement\n├── Commerce\n└── Matchmaking\n```\n\n这是一种业务分析划分，不意味着必须创建五个服务或者五个 C# 程序集。\n\nDDD 还常将子领域分为：\n\n- **Core Domain（核心域）**：构成产品核心竞争优势的部分。\n- **Supporting Subdomain（支撑子域）**：支撑核心业务，但不是主要竞争优势。\n- **Generic Subdomain（通用子域）**：很多系统都需要、差异化较低的功能。\n\n这种分类不是永久固定的。\n\n例如某个游戏的核心玩法可能就是独特的背包组合系统，那么 Inventory 就可能属于核心域；对于普通动作游戏，它可能只是支撑功能。\n\n**Why：** 不同业务问题的重要性和复杂性不同，投入的建模精力也不应该相同。\n\n**How：** 从实际业务目标、规则差异、团队知识和变化频率识别问题范围，再决定哪些值得深入建模。\n\n### 2. Bounded Context：限界上下文\n\n这是 DDD 最重要、也是最容易理解错误的概念之一。\n\n**What：限界上下文是某个领域模型具有明确、一致含义的适用边界。**\n\n我们用“商品”来理解。\n\n**Commerce Context**\n\n商业交易模型\n\n---\n\nProduct\n\n价格、库存状态、折扣、商品组合\n\n**Inventory Context**\n\n玩家持有模型\n\n---\n\nItemStack\n\n道具编号、持有数量、堆叠限制\n\n通过明确契约转换彼此的概念\n\n**PurchaseResult → ItemGrant**\n\n购买结果被转换成背包能够理解的授予请求\n\n商店中的 Product 和背包中的 ItemStack 不是同一个模型。\n\n它们只是存在某种业务关联。\n\n限界上下文的作用是明确：\n\n- 在 Commerce 中，Product 的含义是什么？\n- 在 Inventory 中，ItemStack 的含义是什么？\n- 两边的模型如何转换？\n- 哪一方有权决定什么业务事实？\n\n**限界上下文不是一个文件夹，也不天然等于微服务。**\n\n一个限界上下文可以在一个单体应用内部实现；它和子领域通常有关联，但也不是严格一一对应。\n\n### 3. Ubiquitous Language：统一语言\n\nDDD 强调开发者与业务专家使用一致的语言理解业务。\n\n例如，团队正在讨论奖励。\n\n最开始大家可能说：\n\n```text\n玩家获得奖励。\n```\n\n但“获得”究竟是什么意思？\n\n- 奖励资格已经满足？\n- 奖励已解锁？\n- 玩家已经点击领取？\n- 奖励已成功发入背包？\n\n这些状态不应该混为一谈。\n\n我们可以约定：\n\n| 业务术语 | 明确含义 |\n|--------|--------|\n| Unlocked（已解锁） | 满足奖励条件，允许领取 |\n| Claimed（已领取） | 该奖励已经完成一次合法领取 |\n| Granted（已发放） | 奖励资源已经被成功授予 |\n| Consumed（已消耗） | 已持有资源被合法扣除 |\n\n然后让模型表达这些概念：\n\n```csharp\nachievement.Unlock();\nachievement.Claim();\ninventory.Grant(itemGrant);\ninventory.Consume(itemId, amount);\n```\n\n**Why：** 语言含糊会导致需求理解与代码实现产生偏差。\n\n**How：** 与业务设计者共同确定术语及其含义，并持续反映到需求、代码、测试和文档中。\n\n这里的“统一”不是全公司只能有一个统一模型，而是**一个限界上下文内部保持一致，不同上下文可以使用不同语言与模型**。\n\n### 4. Context Map：上下文映射\n\n当多个限界上下文协作时，需要明确它们之间的关系。\n\n例如：\n\n```text\nAchievement Context\n       |\n       | 产生可领取的奖励\n       v\nReward Fulfillment\n       |\n       | 请求发放道具\n       v\nInventory Context\n```\n\n要进一步决定：\n\n- 谁定义跨上下文契约？\n- 哪一方依赖哪一方？\n- 使用同步调用还是事件？\n- 对方模型改变时如何保护自己的模型？\n\nDDD 中有防腐层（Anti-Corruption Layer）、客户—供应商（Customer–Supplier）、共享内核（Shared Kernel）等上下文协作模式。\n\n这里先掌握核心即可：\n\n**战略设计的本质是在决定：系统中的哪些地方应该使用同一个模型，哪些地方不应该强行共享模型。**\n\n---\n\n# 五、战术设计：怎样用代码表达业务规则？\n\n战略设计解决模型应该在哪里成立。\n\n战术设计则进一步回答：\n\n**在一个明确的业务边界内部，应该怎样表示业务对象、维护业务规则和组织业务行为？**\n\nDDD 中几个最重要的战术概念是：\n\n| 概念 | 本质 |\n|--------|--------|\n| Entity（实体） | 有持续身份的领域对象 |\n| Value Object（值对象） | 通过值而不是身份定义的概念 |\n| Aggregate（聚合） | 共同维护一组一致性规则的对象边界 |\n| Aggregate Root（聚合根） | 聚合中控制外部访问和合法状态变化的入口 |\n| Domain Service（领域服务） | 不适合归属于单个实体或值对象的领域操作 |\n| Application Service（应用服务） | 组织一次业务用例的执行流程 |\n| Repository（仓储） | 提供领域对象的获取和持久化能力 |\n| Domain Event（领域事件） | 表达领域中已发生的重要事实 |\n\n这些是可选择的建模工具，不要求每个模块都完整使用一遍。\n\n## 1. Entity：实体\n\n### What：实体是什么？\n\n实体是一种**通过身份而不是单纯通过属性值来区分**的领域对象。\n\n假设两个玩家都有五个金币。\n\n```text\nPlayer A\n    Coins = 5\n\nPlayer B\n    Coins = 5\n```\n\n它们的数据可能相同，但显然不是同一个玩家。\n\n因为它们有不同的身份。\n\n而且玩家的等级、背包、金币可以变化，玩家仍然是同一个玩家。\n\n因此实体的核心特征是：\n\n**身份在生命周期中具有连续性，而属性可以发生变化。**\n\n### Why：为什么需要实体？\n\n因为某些业务要求我们追踪“同一个对象”随着时间发生的变化。\n\n例如：\n\n- 哪个玩家领取过奖励？\n- 哪个订单已经完成？\n- 哪一把具有独立实例编号的武器已经强化？\n\n实体让这些问题有明确的对象归属。\n\n### How：如何设计？\n\n```csharp\npublic sealed class AchievementProgress\n{\n    public Guid PlayerId { get; }\n    public int AchievementId { get; }\n\n    public bool IsCompleted { get; private set; }\n    public bool IsClaimed { get; private set; }\n\n    public void Complete()\n    {\n        IsCompleted = true;\n    }\n}\n```\n\n一个玩家的某项成就进度，可以用：\n\n```text\n(PlayerId, AchievementId)\n```\n\n作为业务身份。\n\n它的 `IsCompleted` 和 `IsClaimed` 可以变化，但身份不因此改变。\n\n在这里，Entity 不等于 Entity Framework Core 中的数据库实体类。\n\n两者有可能映射在一起，但 DDD 的实体是一个领域概念，不是 ORM 提供的技术类型。\n\n---\n\n## 2. Value Object：值对象\n\n### What：值对象是什么？\n\n值对象是一种**不关心独立身份，只关心自身取值和意义**的领域概念。\n\n例如：\n\n```text\nItemGrant\n    ItemId = 1001\n    Amount = 5\n```\n\n我们并不需要区分“第一份数量为五的发放描述”和“第二份数量为五的发放描述”各自的身份。\n\n如果它们所有有意义的属性相同，就可以被视为等价。\n\n### Why：为什么需要值对象？\n\n假设你的方法是：\n\n```csharp\nGrantItem(int itemId, int amount);\n```\n\n其中 `amount` 必须大于零。\n\n如果每次使用它都在外部检查：\n\n```csharp\nif (amount \u003c= 0)\n    throw new Exception();\n```\n\n业务约束就容易被重复实现，甚至遗漏。\n\n我们可以让值对象在创建时建立合法性。\n\n### How：使用 C# record\n\n```csharp\npublic sealed record ItemGrant\n{\n    public int ItemId { get; }\n    public int Amount { get; }\n\n    public ItemGrant(int itemId, int amount)\n    {\n        if (itemId \u003c= 0)\n            throw new ArgumentOutOfRangeException(nameof(itemId));\n\n        if (amount \u003c= 0)\n            throw new ArgumentOutOfRangeException(nameof(amount));\n\n        ItemId = itemId;\n        Amount = amount;\n    }\n}\n```\n\n现在：\n\n```csharp\nvar reward = new ItemGrant(1001, 5);\n```\n\n就是一份合法的道具发放描述。\n\n而：\n\n```csharp\nvar reward = new ItemGrant(1001, -5);\n```\n\n会被拒绝。\n\n这将“不允许发放负数量道具”这一局部约束封装到了 `ItemGrant`。\n\n值对象通常设计成不可变的，方便比较、传递和推理。\n\n但值对象的规则还不能代替 Inventory 自己的规则。\n\n例如 `ItemGrant(1001, 5)` 合法，不代表当前背包一定有空间容纳五个道具。\n\n**值对象保证自身合法，使用值对象的领域对象继续保证更大范围的业务规则。**\n\n---\n\n## 3. Aggregate：聚合\n\n这是 DDD 中最值得花精力理解的战术模式。\n\n### What：聚合是什么？\n\n聚合是一个领域对象边界。\n\n在这个边界内部，一组对象共同维护某些必须成立的业务约束。\n\n聚合至少包含一个实体，作为聚合根；它也可以包含其他实体和值对象。\n\n假设我们设计一份订单：\n\n**Order Aggregate** 一致性边界\n\n**Order（Aggregate Root）**\n\n确认订单、取消订单、计算总额\n\n**OrderLine**\n\n订单项实体\n\n**Money**\n\n金额值对象\n\n外部通过 Order 发起状态变化，由聚合根协调内部对象并维护订单规则。\n\n例如：\n\n```text\n订单总金额必须等于各订单项金额之和。\n```\n\n如果外部可以随便修改 `OrderLine`，却不更新订单总金额，那么订单就可能进入不合法的状态。\n\n因此，由 `Order` 控制：\n\n```csharp\norder.AddLine(productId, quantity, price);\n```\n\n而不是允许外界随意修改内部订单项。\n\n### Why：为什么需要聚合？\n\n因为业务系统中的状态必须维持某些条件。\n\n这些条件叫作 **Invariant（不变量）**。\n\n例如：\n\n\\[\nOrder.Total=\\sum_{i=1}^{n}OrderLine_i.Total\n\\]\n\n又例如：\n\n\\[\n0\\leq Inventory.ItemCount\\leq 99\n\\]\n\n业务执行一次操作后，这些规则依然必须成立。\n\n聚合帮助我们明确：\n\n**由哪些对象共同负责保证这些约束，以及哪个入口有权改变它们。**\n\nMartin Fowler 对 DDD Aggregate 的解释中特别强调：聚合不是普通集合，而是一个可以作为整体处理的领域对象单元，聚合根负责维护其完整性。citeturn130541search0\n\n### How：如何决定聚合边界？\n\n首先列出业务不变量，然后研究它们依赖的状态。\n\n例如某个背包槽位必须满足：\n\n```text\n0 ≤ 当前数量 ≤ 最大堆叠数量\n```\n\n如果只有修改这个槽位的操作才需要维护它，就没有必要因为玩家还拥有成就、邮箱和好友信息，而把这些对象全部塞入同一个超级聚合。\n\n判断聚合边界时，应该问：\n\n**“哪些状态必须在同一次业务状态变化中协调，才能确保这组不变量成立？”**\n\n通常应该尽量设计较小的聚合，以避免不相关的操作争抢同一份状态或锁。Microsoft 的 DDD 指南也明确强调，应根据事务不变量设计聚合，而不是随意把关联对象放在一起。citeturn130541search4\n\n但这里要避免另一个误解：\n\n**聚合边界不等于数据库事务绝对不能跨越的边界。**\n\nDDD 常建议以一个聚合为事务修改单位，跨聚合通过事件实现协作与最终一致性。\n\n这是有价值的设计指导，尤其是在分布式系统中。\n\n但如果两个聚合在同一个事务型数据库内，而且真实业务要求它们必须同时提交，也可以由应用服务协调一个跨聚合事务。这需要明确设计取舍，而不是把所有涉及事务的对象强行合并成一个聚合。\n\n---\n\n## 4. Domain Service：领域服务\n\n### What\n\n领域服务用于表达**具有明确业务含义，但不自然属于某个实体或值对象的领域操作**。\n\n例如：\n\n```text\n根据两个玩家的战力、匹配区间及组队规则，\n判断一场匹配是否允许成立。\n```\n\n这种规则可能需要多个领域对象参与，放在其中一个玩家内部未必合理。\n\n可以设计：\n\n```csharp\npublic sealed class MatchEligibilityPolicy\n{\n    public bool CanMatch(PlayerRank a, PlayerRank b)\n    {\n        return Math.Abs(a.Score - b.Score) \u003c= 100;\n    }\n}\n```\n\n这只是一个简化的匹配策略例子。\n\n它没有数据库访问、HTTP 请求或 UI 逻辑，只表达一个领域判断。\n\n### Why\n\n如果一个业务规则不属于任何单个实体，强行放进去可能会让实体承担不适当的职责。\n\n领域服务为这类规则提供明确的归属。\n\n### How\n\n首先尝试将规则放在合适的实体或值对象中。\n\n如果规则确实跨越多个对象且不适合归属其中之一，再考虑领域服务。\n\n不要把所有业务逻辑统统搬进 `XXXDomainService`，否则可能重新形成只有数据、没有行为的贫血领域模型。\n\n---\n\n## 5. Application Service：应用服务\n\n这是最容易与领域服务混淆的一对概念。\n\n它们的区别在于：\n\n**Domain Service 负责领域判断；Application Service 负责组织业务用例。**\n\n例如：\n\n```text\n领取成就奖励\n    ↓\n加载成就进度\n    ↓\n验证领取规则\n    ↓\n加载背包\n    ↓\n发放道具\n    ↓\n原子保存数据\n    ↓\n返回领取结果\n```\n\n整个流程属于 Application Service 的职责。\n\n但：\n\n```text\n成就是否已完成？\n是否可以领取？\n背包是否还能容纳该道具？\n```\n\n这些规则应由相关领域模型或领域服务负责。\n\n应用服务可以选择执行顺序、调用 Repository、开启事务和协调不同领域对象，但不应该成为存放所有业务规则的巨大类。\n\n---\n\n## 6. Repository：仓储\n\n仓储并不是普通意义上“所有 SQL 的包装器”。\n\n在 DDD 中，它通常提供对聚合根的获取和持久化能力，让应用通过领域概念操作聚合。\n\n例如：\n\n```csharp\npublic interface IAchievementRepository\n{\n    Task\u003cAchievementProgress> GetAsync(\n        Guid playerId,\n        int achievementId,\n        CancellationToken ct);\n\n    Task SaveAsync(\n        AchievementProgress progress,\n        CancellationToken ct);\n}\n```\n\n业务只知道需要加载和保存成就进度。\n\n至于数据使用 MySQL、PostgreSQL 还是其他方式保存，不应该决定领域行为如何编写。\n\n但是也不需要为了 DDD 而给每一张数据库表创建一个 Repository。\n\n**Repository 的边界应该服务于领域模型，而不是机械复制数据表结构。**\n\n---\n\n## 7. Domain Event：领域事件\n\n领域事件表达的是：\n\n**领域中某件有业务意义的事情已经发生。**\n\n例如：\n\n```csharp\npublic sealed record AchievementRewardClaimed(\n    Guid PlayerId,\n    int AchievementId);\n```\n\n注意它描述的是过去已经发生的事实。\n\n它不同于命令：\n\n```csharp\npublic sealed record ClaimAchievementReward(\n    Guid PlayerId,\n    int AchievementId);\n```\n\n命令表示：\n\n> 请求执行这项行为。\n\n事件表示：\n\n> 这件事情已经发生。\n\n区别如下：\n\n| 命令 Command | 事件 Event |\n|--------|--------|\n| ClaimAchievementReward | AchievementRewardClaimed |\n| 要求执行操作 | 陈述已发生的事实 |\n| 可能被拒绝 | 表示对应事实已经成立 |\n| 通常有明确的处理者 | 可以被多个订阅者处理 |\n\n领域事件可以帮助不同聚合或上下文协作。\n\n不过，领域事件本身不自动保证消息可靠性。\n\n如果事件需要跨进程可靠发送，通常还需要 Outbox、可靠消息投递、幂等消费等机制。\n\n特别要区分：**领域模型产生事件，与事件什么时候能够安全地向外发布，是两件事。**\n\n---\n\n# 六、How：在 C# 游戏服务端中实践 DDD\n\n接下来把战略设计、实体、值对象、聚合、应用服务与仓储结合起来。\n\n我们实现一个业务：\n\n**玩家领取已经完成的成就奖励。**\n\n业务要求：\n\n1. 成就必须已经完成才能领取。\n2. 同一项成就奖励只能发放一次。\n3. 道具数量不能违反背包规则。\n4. 成就领取状态与道具发放必须原子提交。\n5. 客户端重复发起领取请求时，不能重复发放道具。\n\n这个案例能够体现 DDD 最重要的思想：**谁拥有规则，谁负责保证规则。**\n\n## 1. 战略设计：先确定业务边界\n\n我们把业务分为两个限界上下文：\n\n**Achievement**\n\n成就上下文\n\n---\n\n负责：\n\n成就完成、领取资格、领取状态\n\n**Inventory**\n\n背包上下文\n\n---\n\n负责：\n\n道具持有数量、堆叠上限、道具发放\n\n**ClaimAchievementReward（应用用例）**\n\n协调成就与背包完成一次奖励领取操作\n\n为什么不让 Achievement 自己直接修改背包？\n\n因为 Achievement 不拥有背包的数量和容量规则。\n\n为什么不把成就领取判断放在 Inventory 中？\n\n因为 Inventory 不负责决定成就是否已经完成、是否允许领取。\n\n**不同的规则拥有不同的业务归属。应用用例负责协调，而不是把它们的内部规则合并成一个大类。**\n\n## 2. Domain：成就聚合\n\n先构建成就领域对象。\n\n`ItemGrant` 使用前面定义的值对象。\n\n```csharp\npublic sealed class AchievementProgress\n{\n    public Guid PlayerId { get; }\n    public int AchievementId { get; }\n\n    public bool IsCompleted { get; private set; }\n    public bool IsClaimed { get; private set; }\n\n    public ItemGrant Reward { get; }\n\n    public AchievementProgress(\n        Guid playerId,\n        int achievementId,\n        ItemGrant reward)\n    {\n        PlayerId = playerId;\n        AchievementId = achievementId;\n        Reward = reward;\n    }\n\n    public void Complete()\n    {\n        IsCompleted = true;\n    }\n\n    public ItemGrant? Claim()\n    {\n        if (!IsCompleted)\n        {\n            throw new InvalidOperationException(\n                \"Achievement is not completed.\");\n        }\n\n        if (IsClaimed)\n        {\n            return null;\n        }\n\n        IsClaimed = true;\n\n        return Reward;\n    }\n}\n```\n\n注意这里的重点。\n\n```csharp\npublic ItemGrant? Claim()\n```\n\n这个方法不是简单修改 `bool`。\n\n它表达一项完整的业务行为：\n\n**尝试领取成就奖励。**\n\n它同时保证：\n\n- 未完成的成就不能领取。\n- 已领取的成就不会再次发放。\n- 只有首次合法领取才返回奖励内容。\n\n因此，`Claim()` 是一个具有业务意义的状态转移。\n\n形式化地表示：\n\n\\[\n\\{Completed \\land \\neg Claimed\\}\n\\quad Claim()\n\\quad\n\\{Claimed\\}\n\\]\n\n这个表达表示：在满足前置条件时，合法执行 Claim 应当使领取状态变为已领取。\n\n如果已经领取，则当前示例返回 `null`，不产生新的奖励。\n\n这里把业务规则放在领域对象内部，而不是让应用服务直接修改：\n\n```csharp\nachievement.IsClaimed = true;\n```\n\n这就是我们之前讨论过的信息隐藏和不变量维护在 DDD 中的具体应用。\n\n## 3. Domain：背包聚合\n\n背包则拥有自己的业务规则。\n\n```csharp\npublic sealed class Inventory\n{\n    private readonly Dictionary\u003cint, int> _items = new();\n\n    public Guid PlayerId { get; }\n\n    public Inventory(Guid playerId)\n    {\n        PlayerId = playerId;\n    }\n\n    public int GetCount(int itemId)\n    {\n        return _items.GetValueOrDefault(itemId);\n    }\n\n    public void Grant(ItemGrant reward)\n    {\n        int current = GetCount(reward.ItemId);\n\n        const int maxStack = 99;\n\n        if (reward.Amount > maxStack - current)\n        {\n            throw new InvalidOperationException(\n                \"Inventory stack limit exceeded.\");\n        }\n\n        _items[reward.ItemId] =\n            checked(current + reward.Amount);\n    }\n}\n```\n\n这里选择每种道具最多持有 99 个作为示意规则，实际游戏可以采用多堆叠、独立槽位或其他规则。\n\n注意：\n\n`AchievementProgress` 不需要知道背包如何检查容量。\n\n`Inventory` 也不需要知道奖励来自哪个成就。\n\n它们只需要围绕合法的 `ItemGrant` 协作。\n\n这就是限界上下文与值对象配合的一种简单方式。\n\n## 4. Application：协调两个聚合\n\n现在定义仓储接口：\n\n```csharp\npublic interface IAchievementRepository\n{\n    Task\u003cAchievementProgress> GetForUpdateAsync(\n        Guid playerId,\n        int achievementId,\n        CancellationToken ct);\n\n    Task SaveAsync(\n        AchievementProgress progress,\n        CancellationToken ct);\n}\n\npublic interface IInventoryRepository\n{\n    Task\u003cInventory> GetForUpdateAsync(\n        Guid playerId,\n        CancellationToken ct);\n\n    Task SaveAsync(\n        Inventory inventory,\n        CancellationToken ct);\n}\n```\n\n这里 `GetForUpdateAsync` 是我们自行定义的仓储契约，表示在事务中取得可安全更新的聚合，不是 .NET 自带的方法。\n\n数据库适配器需要使用适当的行锁、乐观并发版本检查或等效机制完成它的并发保证。\n\n定义事务协调接口：\n\n```csharp\npublic interface ITransactionRunner\n{\n    Task\u003cT> RunAsync\u003cT>(\n        Func\u003cCancellationToken, Task\u003cT>> operation,\n        CancellationToken ct);\n}\n```\n\n再定义结果：\n\n```csharp\npublic enum ClaimRewardResult\n{\n    Claimed,\n    AlreadyClaimed\n}\n```\n\n实现应用用例：\n\n```csharp\npublic sealed class ClaimAchievementRewardHandler\n{\n    private readonly IAchievementRepository _achievements;\n    private readonly IInventoryRepository _inventories;\n    private readonly ITransactionRunner _transactions;\n\n    public ClaimAchievementRewardHandler(\n        IAchievementRepository achievements,\n        IInventoryRepository inventories,\n        ITransactionRunner transactions)\n    {\n        _achievements = achievements;\n        _inventories = inventories;\n        _transactions = transactions;\n    }\n\n    public Task\u003cClaimRewardResult> ExecuteAsync(\n        Guid playerId,\n        int achievementId,\n        CancellationToken ct)\n    {\n        return _transactions.RunAsync(async token =>\n        {\n            var achievement =\n                await _achievements.GetForUpdateAsync(\n                    playerId, achievementId, token);\n\n            var reward = achievement.Claim();\n\n            if (reward is null)\n                return ClaimRewardResult.AlreadyClaimed;\n\n            var inventory =\n                await _inventories.GetForUpdateAsync(\n                    playerId, token);\n\n            inventory.Grant(reward);\n\n            await _achievements.SaveAsync(\n                achievement, token);\n\n            await _inventories.SaveAsync(\n                inventory, token);\n\n            return ClaimRewardResult.Claimed;\n\n        }, ct);\n    }\n}\n```\n\n### 仔细分析这段代码\n\n首先：\n\n```csharp\nachievement.Claim();\n```\n\n负责成就的业务规则。\n\n然后：\n\n```csharp\ninventory.Grant(reward);\n```\n\n负责背包的业务规则。\n\n最后：\n\n```csharp\n_transactions.RunAsync(...)\n```\n\n负责协调持久化事务。\n\n三个职责没有被混合起来。\n\n如果成就未完成，业务操作被拒绝。\n\n如果成就已经领取，直接返回 `AlreadyClaimed`，不会再次发放道具。\n\n如果背包已经达到上限，`Grant()` 抛出异常，事务应回滚成就的领取状态变化。\n\n只有成功完成所有数据库变更，事务才可以提交。\n\n这段代码要真正满足上述保证，还有几个必须落实的实现条件：\n\n- 两个仓储必须共享同一个事务型数据库事务。\n- 事务应当在操作全部成功后提交，失败时回滚。\n- 并发领取必须受到锁或数据库并发控制保护。\n- 同一玩家、同一成就进度必须具备唯一的持久化身份。\n- `AchievementProgress` 与 `Inventory` 的状态需要正确加载、跟踪并保存，不能直接把这个领域代码当成完整的数据库实现。\n\n这里使用**跨两个聚合的单数据库事务**，是因为需求明确要求领取状态与道具发放强一致，而且假设它们位于同一事务型数据库中。\n\n这不是说 DDD 要求所有跨聚合操作都使用同一个事务。对于分布式或允许最终一致性的场景，设计会不同。\n\n另外，`AlreadyClaimed` 保证的是不会重复发放，并不表示重试获得的响应内容与第一次完全一致。如果业务需要重复请求返回完全相同的原始结果，可以进一步持久化请求 ID 和执行结果。\n\n---\n\n# 七、这个案例中，DDD 到底发挥了什么作用？\n\n我们把它重新对应到概念。\n\n| DDD 概念 | 示例中的体现 |\n|--------|--------|\n| Domain | 成就奖励领取业务 |\n| Bounded Context | Achievement 与 Inventory |\n| Ubiquitous Language | Complete、Claim、Grant |\n| Entity | AchievementProgress |\n| Value Object | ItemGrant |\n| Aggregate Root | AchievementProgress、Inventory |\n| Invariant | 未完成不可领取、不能重复发放、背包数量上限 |\n| Application Service | ClaimAchievementRewardHandler |\n| Repository | IAchievementRepository、IInventoryRepository |\n| Transaction | 协调领取状态与道具发放的原子提交 |\n\n请注意，DDL、SQL、Controller、依赖注入等实现细节不在这张表里。\n\n因为 **DDD 的贡献是让我们知道业务规则应该由谁负责，以及这些规则如何被表达和维护。**\n\n持久化和运行机制仍然需要其他技术提供支持。\n\n---\n\n# 八、如何从零开始进行 DDD 建模？\n\n我建议使用下面这个流程。\n\n1. **描述真实业务场景**\n\n   例如：玩家完成某项成就后，可以领取一次道具奖励。\n2. **发现业务术语和事实**\n\n   什么是完成？什么是领取？什么是发放？它们的区别是什么？\n3. **找出不变量**\n\n   未完成不可领取、不能重复领取、背包数量必须合法。\n4. **确定职责与模型边界**\n\n   成就负责领取资格，背包负责道具数量；明确跨上下文契约。\n5. **识别实体、值对象与聚合**\n\n   按身份、业务行为与一致性要求设计，不根据数据库表机械划分。\n6. **实现领域行为和用例**\n\n   让领域对象维护规则，由应用服务协调执行。\n7. **通过测试与业务反馈修正模型**\n\n   新增规则、发现例外时，重新审查模型和边界，而不只是继续堆 if。\n\n如果业务复杂，还可以使用 Event Storming（事件风暴）等协作建模方法，从业务事件出发发现流程、命令、规则和边界。\n\n例如：\n\n```text\nAchievementCompleted\n        ↓\nRewardBecameClaimable\n        ↓\n玩家请求 ClaimReward\n        ↓\nAchievementRewardClaimed\n        ↓\nItemGranted\n```\n\n这是一种用于讨论业务流程的概念图，并不规定这些步骤必须通过异步消息实现。\n\n建模的重点是让团队发现：\n\n- 哪一步代表资格成立？\n- 哪一步代表状态已经改变？\n- 哪些操作必须原子完成？\n- 哪些事情可以延迟执行？\n- 哪些规则目前还没有明确？\n\n**领域模型是通过理解、验证、修改不断演化出来的，而不是项目开始时一次性设计完成的。**\n\n---\n\n# 九、设计权衡：DDD 的优势和代价\n\n| 维度 | DDD 的价值 | 代价或风险 |\n|--------|--------|--------|\n| 业务复杂性 | 将复杂规则组织成清晰的领域模型 | 需要花时间理解与建模 |\n| 代码可维护性 | 让规则拥有明确的归属 | 模型可能因需求变化需要重构 |\n| 业务沟通 | 减少术语歧义 | 需要开发者与业务人员持续沟通 |\n| 数据正确性 | 聚合有助于集中维护不变量 | 聚合边界不合理会造成性能或一致性问题 |\n| 系统划分 | 识别不同业务模型的边界 | 可能产生模型转换与跨上下文协调成本 |\n| 测试 | 能直接验证领域规则 | 仍需要数据库、并发和集成测试 |\n| 学习成本 | 有助于掌握复杂业务建模方法 | 大量概念容易被形式化滥用 |\n\n## 1. DDD 不一定适合简单 CRUD\n\n如果你的业务只是：\n\n```text\n创建一条公告\n修改公告内容\n删除公告\n查询公告\n```\n\n而且没有复杂的业务规则，可能只需要简单的数据访问和应用服务。\n\n这时候设计十几个领域类、多个聚合和领域事件，未必会改善代码。\n\nMicrosoft 的 DDD 指南同样建议根据业务复杂性选择建模深度，而不是对所有 CRUD 功能一律应用复杂的 DDD 战术模式。citeturn130541search3\n\n## 2. DDD 不等于面向对象编程\n\n实体、值对象、聚合经常使用 C# 类来实现。\n\n但 DDD 的战略设计、领域语言和建模思想，并不要求所有逻辑必须采用面向对象风格。\n\n你也可以使用不可变数据结构和纯函数表达领域规则。\n\n例如：\n\n```csharp\npublic static bool CanClaim(\n    bool isCompleted,\n    bool isClaimed)\n{\n    return isCompleted && !isClaimed;\n}\n```\n\n只要这种设计仍然准确表达业务，模型本身就有价值。\n\n## 3. DDD 不等于微服务\n\n限界上下文可以位于同一个应用中。\n\n例如：\n\n```text\nGameServer（Modular Monolith）\n│\n├── Achievement Context\n├── Inventory Context\n├── Commerce Context\n└── Combat Context\n```\n\n它们可以运行在同一个进程，使用同一个数据库实例，同时拥有清晰的业务边界。\n\n没有必要因为采用 DDD 就拆成多个独立部署的服务。\n\n## 4. DDD 也不会自动保证正确性\n\n领域对象定义了合法操作，但如果数据库并发更新丢失、跨模块保存不原子，系统仍然可能出现错误。\n\n因此完整的正确性需要多个层次共同保证：\n\n- **领域模型**：表达并检查业务规则。\n- **应用层**：正确协调业务流程。\n- **数据库**：提供持久化、事务和并发约束。\n- **系统设计**：处理请求重复、故障恢复和消息可靠性。\n- **测试**：验证正常情况、异常情况和并发情况。\n\nDDD 是正确性设计的重要组成部分，但不是正确性的全部。\n\n---\n\n# 十、DDD 与之前学习的架构之间的关系\n\n我们将几种架构放在同一个视角比较。\n\n| 名称 | 主要解决的问题 |\n|--------|--------|\n| Modular Monolith | 整个应用应该如何组织模块并保持单体部署？ |\n| Clean Architecture | 业务与技术实现之间的源代码依赖如何组织？ |\n| Hexagonal Architecture | 应用如何通过端口和适配器与外部协作？ |\n| DDD | 如何理解、划分和表达业务领域及其规则？ |\n\n例如一个游戏服务端可以这样组织：\n\n```text\nGameServer\n│\n├── AchievementModule\n│   ├── Domain\n│   │   └── AchievementProgress\n│   ├── Application\n│   │   └── ClaimAchievementReward\n│   └── Infrastructure\n│       └── SqlAchievementRepository\n│\n├── InventoryModule\n│   ├── Domain\n│   │   └── Inventory\n│   ├── Application\n│   │   └── GrantItem\n│   └── Infrastructure\n│       └── SqlInventoryRepository\n│\n└── Host\n```\n\n其中：\n\n**Modular Monolith** 决定整体的模块化单体结构。\n\n**DDD** 帮助发现 Achievement、Inventory 的业务边界，并设计它们的领域模型。\n\n**Clean Architecture** 指导 Domain、Application、Infrastructure 的依赖方向。\n\n**Hexagonal Architecture** 帮助我们通过仓储端口、HTTP 适配器和数据库适配器隔离具体技术。\n\n这些思想能够互相配合，但不要求一定同时使用。\n\n---\n\n# 十一、直达本质：DDD 真正改变的是什么？\n\n回到最初的问题。\n\n软件究竟为什么会变得难以维护？\n\n其中一种重要原因是：\n\n**业务规则散落在各个技术组件中，没人能清楚地说出规则由谁负责、在哪些条件下成立、哪些状态必须一起变化。**\n\nDDD 的解法不是简单地增加类和接口。\n\n它要求我们重新组织思考顺序：\n\n**先理解问题**\n\n业务事实是什么？真正需要保证哪些规则？\n\n---\n\n**再划分模型边界**\n\n哪些概念属于同一个上下文？谁对状态和规则负责？\n\n---\n\n**最后用代码落实模型**\n\n利用实体、值对象、聚合和服务表达并执行业务规则。\n\n可以把 DDD 归结成三句话。\n\n**What：** 领域驱动设计是一套通过领域模型表达、组织和演化复杂业务的软件设计方法。\n\n**Why：** 因为业务复杂性的核心常常在于概念、规则、例外以及它们之间的关系，而不仅是代码数量。\n\n**How：** 通过统一语言、领域分析、限界上下文和战术建模，将业务知识落实为具有清晰职责、行为和约束的软件结构。\n\n我认为你接下来最值得深入研究的概念是 **Aggregate（聚合）和 Aggregate Root（聚合根）**。\n\n因为它们把我们前面学过的高内聚、信息隐藏、模块边界、不变量、状态转移、前置条件和事务一致性连接在了一起。\n\n尤其值得思考的一个问题是：\n\n**“一个业务操作涉及两个聚合时，应该使用一个事务，还是通过事件让它们分别完成？”**\n\n这个问题没有脱离业务要求的固定答案，而理解如何做出这个决定，正是从掌握 DDD 术语走向真正进行领域建模的重要一步。\n"</script><script>(()=>{
+ const root=document.documentElement;
+ const links=[...document.querySelectorAll('nav a')];
+ const sections=links.map(a=>document.querySelector(a.getAttribute('href'))).filter(Boolean);
+ const progress=document.querySelector('.progress');
+ let active='';
+ function update(){
+  const max=document.documentElement.scrollHeight-innerHeight;
+  progress.style.width=(max>0?100*scrollY/max:0)+'%';
+  let current=sections[0];
+  for(const el of sections){if(el.getBoundingClientRect().top<=140)current=el;}
+  if(current&&current.id!==active){active=current.id;for(const a of links){const selected=a.hash==='#'+active;a.classList.toggle('active',selected);if(selected)a.setAttribute('aria-current','location');else a.removeAttribute('aria-current');}}
+ }
+ let ticking=false;addEventListener('scroll',()=>{if(!ticking){requestAnimationFrame(()=>{update();ticking=false});ticking=true}},{passive:true});addEventListener('resize',update);update();
+ document.querySelector('#theme').addEventListener('click',()=>{const dark=root.dataset.theme!=='dark';root.dataset.theme=dark?'dark':'light';try{localStorage.setItem('ddd-theme',root.dataset.theme)}catch{}});
+ try{const theme=localStorage.getItem('ddd-theme');if(theme)root.dataset.theme=theme}catch{}
+ document.querySelector('#print').addEventListener('click',()=>window.print());
+ document.querySelector('.top').addEventListener('click',()=>window.scrollTo({top:0,behavior:matchMedia('(prefers-reduced-motion:reduce)').matches?'instant':'smooth'}));
+ const toggle=document.querySelector('.mobile-menu'),backdrop=document.querySelector('.backdrop');
+ function close(){document.body.classList.remove('menu-open');toggle.setAttribute('aria-expanded','false');backdrop.hidden=true;}
+ toggle.addEventListener('click',()=>{const open=document.body.classList.toggle('menu-open');toggle.setAttribute('aria-expanded',String(open));backdrop.hidden=!open;});
+ backdrop.addEventListener('click',close);links.forEach(a=>a.addEventListener('click',close));addEventListener('keydown',e=>{if(e.key==='Escape')close()});
+ for(const button of document.querySelectorAll('.copy'))button.addEventListener('click',async()=>{const text=button.closest('.code-block').querySelector('code').textContent;try{await navigator.clipboard.writeText(text);button.textContent='已复制'}catch{const area=document.createElement('textarea');area.value=text;area.style.position='fixed';area.style.opacity='0';document.body.append(area);area.select();const ok=document.execCommand('copy');area.remove();button.textContent=ok?'已复制':'复制失败';}setTimeout(()=>button.textContent='复制',1500)});
+})();
+</script></body></html>

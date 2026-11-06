@@ -1,0 +1,269 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="按照 What、Why、How 深入理解对象池，包含 Unity C# 完整示例、状态隔离、容量管理与离线交互演示。"><title>对象池 Object Pool：What、Why、How，直达本质</title><style>
+:root{--bg:#f4f6f3;--paper:#fff;--text:#24332f;--muted:#6d7b76;--line:#dce5df;--accent:#0d7667;--tint:#edf7f2;--code:#132b28;--blue:#3970ae;--shadow:0 12px 35px #16362b08;color-scheme:light}
+:root[data-theme=dark]{--bg:#101b18;--paper:#172520;--text:#e1ece5;--muted:#a2b4aa;--line:#34473d;--accent:#79d6bc;--tint:#233e32;--code:#0b1814;--blue:#8cb8ee;--shadow:none;color-scheme:dark}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:32px}body{margin:0;background:var(--bg);color:var(--text);font:16px/1.95 -apple-system,BlinkMacSystemFont,"Segoe UI","Microsoft YaHei","PingFang SC",sans-serif}a{color:var(--accent);text-underline-offset:4px}button{font:inherit;cursor:pointer}button:focus-visible,a:focus-visible,summary:focus-visible{outline:3px solid var(--blue);outline-offset:4px}button{border:1px solid var(--accent);background:var(--accent);color:var(--paper);border-radius:8px;padding:8px 15px;font-size:13px;font-weight:600}button:disabled{opacity:.45;cursor:default}.secondary{background:var(--paper);color:var(--accent)}.ghost{background:transparent;color:var(--muted);border-color:var(--line)}.shell{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:225px minmax(0,1fr);gap:40px;padding:42px 30px 90px}.sidebar{position:sticky;top:30px;align-self:start;font-size:13px}.brand{letter-spacing:2px;font-size:11px;font-weight:700;color:var(--accent)}.sidebar h2{font-size:19px;margin:8px 0 20px}.sidebar nav{border-left:1px solid var(--line)}.sidebar a{display:block;text-decoration:none;padding:8px 0 8px 16px;color:var(--muted);line-height:1.6}.sidebar a:hover,.sidebar a.current{color:var(--accent);background:var(--tint);border-left:2px solid var(--accent);margin-left:-1px}.tools{margin-top:25px;display:flex;gap:8px}.tools button{padding:6px 10px;font-size:12px}main{min-width:0}.hero{padding:30px 4px 38px}.kicker{font-size:12px;letter-spacing:3px;color:var(--accent);font-weight:700}.hero h1{font-size:clamp(38px,5vw,56px);letter-spacing:-2px;line-height:1.2;margin:17px 0 12px}.hero h1 small{display:block;font-size:22px;letter-spacing:0;font-weight:400;color:var(--muted);margin-top:12px}.hero .lead{font-size:19px;max-width:720px}.tags{display:flex;gap:9px;flex-wrap:wrap}.tags span,.badge{border:1px solid var(--line);font-size:11px;letter-spacing:1px;border-radius:20px;padding:3px 10px;color:var(--accent)}section{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:34px 40px;margin:0 0 24px;box-shadow:var(--shadow)}.eyebrow{color:var(--accent);font-size:11px;letter-spacing:2.5px;font-weight:700}h2{font-size:27px;line-height:1.5;letter-spacing:-.5px;margin:8px 0 23px}h3{font-size:20px;line-height:1.6;margin:32px 0 12px}h4{font-size:17px;margin:24px 0 9px}p{margin:13px 0}li{margin:6px 0}ul,ol{padding-left:25px}strong{font-weight:650}blockquote{border-left:4px solid var(--accent);margin:24px 0;padding:16px 21px;background:var(--tint);font-size:18px;font-weight:600;border-radius:0 9px 9px 0}.callout{border:1px solid var(--line);background:var(--tint);padding:18px 22px;border-radius:10px;margin:22px 0}.callout p:last-child{margin-bottom:0}.subtle{font-size:14px}.note{font-size:13px;color:var(--muted)}code{font:0.88em/1.6 Consolas,"SFMono-Regular",monospace;overflow-wrap:anywhere}p code,li code,td code{background:var(--tint);padding:2px 5px;border-radius:4px;color:var(--accent)}.code-wrap{border-radius:10px;overflow:hidden;margin:20px 0;background:var(--code);color:#d4e8e0}.code-head{padding:8px 16px;display:flex;align-items:center;justify-content:space-between;background:#ffffff06;border-bottom:1px solid #ffffff15;font-size:12px;color:#a0c5b9}.copy{font-size:11px;border:1px solid #ffffff30;background:transparent;color:#c2e5d7;padding:3px 9px}pre{padding:18px 22px;margin:0;overflow:auto;line-height:1.8;tab-size:4}pre code{font-size:13px;white-space:pre;overflow-wrap:normal}.table-wrap{overflow-x:auto;margin:20px 0;border:1px solid var(--line);border-radius:10px}table{border-collapse:collapse;width:100%;font-size:14px;line-height:1.75;min-width:470px}th{text-align:left;background:var(--tint);font-weight:650;color:var(--accent)}td,th{padding:13px 16px;border-bottom:1px solid var(--line);vertical-align:top}tbody tr:last-child td{border-bottom:0}.formula,.flow{background:var(--tint);padding:19px 20px;text-align:center;border:1px solid var(--line);border-radius:10px;overflow-wrap:anywhere;margin:18px 0}.formula{font-size:20px;font-family:Georgia,"Microsoft YaHei",serif}.formula sub{font-size:12px}.diagram{margin:22px 0;border:1px solid var(--line);border-radius:12px;padding:14px;background:var(--bg);color:var(--accent)}svg{display:block;width:100%;height:auto}.idle-box{fill:var(--tint)}.active-box{fill:var(--paper)}figcaption{text-align:center;font-size:12px;color:var(--muted);margin-top:8px}.sequence{display:grid;gap:0;border-left:2px solid var(--accent);padding-left:20px;margin:22px 0}.sequence span{padding:7px 0}.sequence span:first-child{color:var(--accent);font-weight:650}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:24px 0}.stats div{background:var(--tint);border-radius:10px;padding:20px 12px;text-align:center}.stats b{display:block;color:var(--accent);font-size:29px;line-height:1.5}.stats span{font-size:11px;color:var(--muted)}.sim{border:1px solid var(--line);border-radius:12px;padding:22px;background:var(--bg);margin:22px 0}.sim-header{display:flex;justify-content:space-between;gap:10px;align-items:start}.sim-header p{font-size:12px;color:var(--muted);margin:3px 0 15px}.sim-metrics{display:flex;flex-wrap:wrap;gap:12px;font-size:11px;padding:12px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}.sim-metrics b{font-size:17px;color:var(--accent);margin-left:4px}.sim-columns{display:grid;grid-template-columns:1fr 1fr;gap:15px}.sim-columns h4{font-size:14px;margin:18px 0 12px}.sim-columns small{display:block;font-weight:400;color:var(--muted);font-size:11px}.objects{display:flex;align-content:start;gap:8px;flex-wrap:wrap;min-height:104px}.object{width:48px;height:42px;display:inline-flex;justify-content:center;align-items:center;font-size:12px;border-radius:7px;line-height:1;background:var(--tint);color:var(--accent);border:1px solid var(--accent);padding:0}.object.active{color:var(--blue);border-color:var(--blue);background:var(--paper)}.empty{font-size:12px;color:var(--muted)}.sim-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:20px}.sim-actions button{font-size:12px;padding:7px 10px}#sim-message{font-size:13px;margin:15px 0 10px}#invariant{font-size:11px;color:var(--accent);border-top:1px solid var(--line);padding-top:10px}.closing{font-size:24px;padding:24px}details{border-top:1px solid var(--line);padding-top:20px;margin-top:30px}summary{cursor:pointer;color:var(--accent);font-size:14px}footer{padding:20px 4px;color:var(--muted);font-size:12px;display:flex;justify-content:space-between}#reading-progress{position:fixed;top:0;left:0;height:3px;background:var(--accent);z-index:10;width:0}
+@media(max-width:1000px){.shell{gap:24px;grid-template-columns:185px minmax(0,1fr);padding:26px 20px 60px}section{padding:28px}.sidebar{font-size:12px}}
+@media(max-width:760px){.shell{display:block;padding:18px 14px 45px}.sidebar{position:static;margin-bottom:5px}.sidebar h2{display:none}.sidebar nav{display:flex;overflow:auto;gap:6px;border:0;padding:12px 0;white-space:nowrap}.sidebar a{padding:5px 9px;border:1px solid var(--line);border-radius:6px}.sidebar a.current{margin:0;border:1px solid var(--accent)}.tools{margin:0;position:absolute;right:18px;top:15px}.brand{font-size:10px;letter-spacing:1px}.hero{padding:25px 7px}.hero h1{font-size:40px}.hero .lead{font-size:17px}section{padding:25px 21px;border-radius:12px}h2{font-size:23px}h3{font-size:18px}body{font-size:15px}.stats{gap:6px}.stats b{font-size:23px}.stats div{padding:14px 7px}.sim{padding:15px}.sim-columns{gap:12px}.sim-actions{gap:6px}pre{padding:16px}.closing{font-size:21px}.badge{display:none}}
+@media print{html{scroll-behavior:auto}body{background:#fff;color:#111;font-size:11pt}.shell{display:block;max-width:none;padding:0}.sidebar,#reading-progress,.copy,.sim-actions,.tools,.badge{display:none!important}.hero{padding:0 0 15px}.hero h1{font-size:32pt}section{box-shadow:none;border:0;border-top:1px solid #bbb;border-radius:0;padding:20px 0;margin:0;break-inside:auto}h2,h3,h4{break-after:avoid}pre{white-space:pre-wrap}.code-wrap{background:#f4f4f4;color:#111;border:1px solid #ddd;break-inside:auto}.code-head{color:#444}pre code{white-space:pre-wrap;overflow-wrap:anywhere;font-size:9pt}.table-wrap{overflow:visible}table{min-width:0;font-size:10pt}tr,.stats,figure,.callout{break-inside:avoid}blockquote{font-size:13pt}a{color:inherit}footer{font-size:9pt}.sim{background:#fff}details> :not(summary){display:block!important}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style></head><body><div id="reading-progress" aria-hidden="true"></div><div class="shell"><aside class="sidebar"><div class="brand">SOFTWARE DESIGN NOTES</div><h2>对象池 · 阅读导航</h2><nav aria-label="目录"><a href="#essence">开篇 · 直达本质</a><a href="#what">01  What · 是什么</a><a href="#why">02  Why · 为什么</a><a href="#how">03  How · 如何实现</a><a href="#unity">04  Unity / C# 示例</a><a href="#correctness">05  正确性与状态隔离</a><a href="#capacity">06  容量与预热</a><a href="#when">07  使用场景与缓存</a><a href="#resource">08  资源管理与权衡</a><a href="#recap">09  回顾与继续学习</a></nav><div class="tools"><button type="button" id="theme-toggle" class="ghost" aria-label="切换明暗主题">明 / 暗</button><button type="button" id="print" class="ghost">打印</button></div></aside><main><header class="hero"><div class="kicker">WHAT · WHY · HOW</div><h1>对象池<small>Object Pool · 直达本质</small></h1><p class="lead">一项工作结束，不代表完成这项工作的资源必须销毁。</p><div class="tags"><span>实例复用</span><span>生命周期</span><span>使用权</span><span>Unity / C#</span></div></header><section id="essence"><div class="eyebrow">开篇</div><h2>先抓住对象池的本质</h2><p><strong>对象池（Object Pool）是一种通过复用对象，减少反复创建与销毁成本的设计模式。</strong>但这个定义只描述了它的作用，还没有揭示它的本质。</p>
+<p>理解对象池，应该抓住三个核心问题：</p><ol><li><strong>对象为什么一定要销毁？</strong>如果一个对象暂时不用，能不能留下来？</li><li><strong>对象与它所承担的工作是否必须绑定？</strong>完成一次工作，是否意味着对象的生命周期也必须结束？</li><li><strong>谁应该管理对象的生命周期？</strong>是使用对象的业务代码，还是一个专门的资源管理者？</li></ol>
+<blockquote>将对象的物理生命周期与它的业务使用周期分离，通过集中管理和复用，以空间换取时间，并控制资源分配的成本。</blockquote></section><section id="what"><div class="eyebrow">01 · WHAT</div><h2>什么是对象池？</h2><h3>1. 从最普通的对象使用方式开始</h3><p>假设我们正在制作一个游戏，需要不断发射子弹。最直接的实现方式是：</p><div class="code-wrap"><div class="code-head"><span>C# · 示意片段</span><button class="copy" type="button">复制代码</button></div><pre><code>public void Fire()
+{
+    Bullet bullet = new Bullet();
+
+    bullet.Initialize();
+    bullet.Move();
+
+    // 工作完成后，失去对 bullet 的引用
+}</code></pre></div><p>这里是普通 C# 对象的示意。它在不再被引用后，可能由垃圾回收器回收，并不是立即销毁。如果是 Unity 的 <code>GameObject</code>，还涉及 <code>Instantiate()</code> 和 <code>Destroy()</code>。</p><p>这种方式的对象生命周期通常是：<strong>创建 → 使用 → 销毁或回收</strong>。每一次使用，都可能需要创建一个新对象。</p><p>问题是：子弹飞行结束后，对应的对象真的必须销毁吗？不一定。</p><p>我们需要结束的是<strong>这颗子弹当前承担的工作</strong>，而不一定是承载这项工作的对象本身。</p><p>例如，一颗子弹命中敌人之后：</p><ul><li>它不应该继续飞行。</li><li>它不应该继续造成伤害。</li><li>它不应该继续参与当前子弹的游戏逻辑。</li></ul><p>但这不意味着它的 <code>Transform</code>、组件、内存等资源必须立即释放。它完全可以重置状态，等待下一次发射。</p>
+<h3>2. 对象池改变了什么？</h3><p>引入对象池后，对象不再随着一次使用结束而必然销毁，而是在空闲与使用中两个状态之间转换。</p>
+<figure class="diagram"><svg viewBox="0 0 700 270" role="img" aria-labelledby="state-title" xmlns="http://www.w3.org/2000/svg"><title id="state-title">对象池状态转移：创建后空闲，获取后使用，归还并重置后空闲，按需销毁。</title><defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0L8 4L0 8" fill="currentColor"/></marker></defs><g fill="none" stroke="currentColor" stroke-width="1.6"><rect x="20" y="100" width="130" height="60" rx="12"/><rect x="240" y="100" width="160" height="60" rx="12" class="idle-box"/><rect x="500" y="100" width="170" height="60" rx="12" class="active-box"/><path d="M150 130H230" marker-end="url(#arrow)"/><path d="M400 115H490" marker-end="url(#arrow)"/><path d="M585 165V215H320V165" marker-end="url(#arrow)"/><path d="M320 95V45H490" stroke-dasharray="5 5" marker-end="url(#arrow)"/><rect x="500" y="20" width="170" height="50" rx="10"/></g><g fill="currentColor" text-anchor="middle" font-size="17"><text x="85" y="136">创建对象</text><text x="320" y="126">空闲 Available</text><text x="320" y="147" font-size="12">等待下一次使用</text><text x="585" y="126">使用中 In Use</text><text x="585" y="147" font-size="12">承担本次业务工作</text><text x="445" y="102" font-size="13">获取 Get</text><text x="450" y="205" font-size="13">归还 Release ＋ 重置</text><text x="405" y="35" font-size="13">按需清理</text><text x="585" y="51">销毁 Destroy</text></g></svg><figcaption>对象被反复获取与归还；满足清理条件时，才真正销毁。</figcaption></figure>
+<p>对象池不是让对象永远存在，而是让对象的创建与销毁不再和每次业务使用一一对应。</p>
+<h3>3. 对象池的两个生命周期</h3><p>这是理解对象池最重要的区分。</p><div class="table-wrap"><table><thead><tr><th>生命周期</th><th>含义</th><th>子弹示例</th></tr></thead><tbody><tr><td>物理生命周期<br>Physical Lifetime</td><td>一个实际对象从创建到最终销毁、回收的过程</td><td>创建实例 → 存在于内存中 → 最终销毁</td></tr><tr><td>逻辑使用周期<br>Logical Usage Lifetime</td><td>对象承担某次业务工作的过程</td><td>开始发射 → 飞行 → 碰撞 → 本次发射结束</td></tr></tbody></table></div><p>不使用对象池时，我们通常让两个生命周期近似绑定。使用对象池后，一个物理对象可以先后承担多个逻辑使用周期。</p><div class="sequence"><span>同一个 Bullet 实例</span><span>子弹 A：第一次使用</span><span>重置 → 子弹 B：第二次使用</span><span>重置 → 子弹 C：第三次使用</span></div><p>子弹 A、B、C 是三次不同的业务使用，但底层完全可以是同一个对象实例。</p><div class="callout"><strong>对象池复用的是对象实例，而不是上一次业务的状态。</strong><p>这也解释了为什么“重置状态”是对象池正确性中非常重要的一部分。</p></div></section><section id="why"><div class="eyebrow">02 · WHY</div><h2>为什么需要对象池？</h2><h3>1. 创建对象并不总是免费的</h3><p>先区分普通 C# 对象和 Unity 游戏对象。</p><p>普通 C# 对象的创建，可能涉及内存分配、字段初始化、构造函数执行，以及未来的垃圾回收压力。</p><p>Unity 中创建一个复杂的游戏对象，还可能涉及：</p><ul><li>实例化 <code>GameObject</code> 及其组件。</li><li>初始化组件状态。</li><li>执行相关生命周期回调。</li><li>建立引擎内部的数据结构。</li><li>注册或更新渲染、物理等相关状态。</li></ul><p>实际成本取决于对象结构和引擎工作量，并非每次创建都会执行上述所有操作。</p><p><strong>垃圾回收（GC）并不是对象销毁本身，而是托管内存回收机制。</strong>Unity 的 <code>Destroy(gameObject)</code> 与 C# 的 GC 也不是同一个操作。</p>
+<h3>2. 问题通常不是创建一次，而是反复创建</h3><p>假设某个游戏每秒生成 200 颗子弹。</p><div class="stats"><div><b>200</b><span>每秒发射数量</span></div><div><b>60,000</b><span>持续 5 分钟的发射次数</span></div><div><b>≈ 400</b><span>存活 2 秒时的稳态并发量</span></div></div><p>如果没有复用，并且每次发射都需要新建对象，那么五分钟就可能出现 60,000 次对象创建。</p><p>但如果每颗子弹的存活时间只有两秒，并且同时存在的子弹数量稳定在约 400 个，那么可以考虑复用大约这个量级的对象，而不是持续产生新实例。</p><p><strong>对象池减少的是重复分配与初始化，并不是减少业务上实际发射的子弹数。</strong></p>
+<h3>3. 对象池通过什么来降低成本？</h3><p>可以把普通创建销毁方式的成本写为：</p><div class="formula">C<sub>普通</sub> = C<sub>创建</sub> ＋ C<sub>初始化</sub> ＋ C<sub>使用</sub> ＋ C<sub>回收</sub></div><p>而一次命中空闲对象的池化使用，大致是：</p><div class="formula">C<sub>池化</sub> = C<sub>获取</sub> ＋ C<sub>重置</sub> ＋ C<sub>使用</sub> ＋ C<sub>归还</sub></div><p>这里不是严格的性能方程，而是成本组成的模型。对象池将昂贵的首次创建成本摊到了后续多次使用中。</p><p>但对象池也引入了额外操作和内存保留成本。因此：<strong>对象池不保证比直接创建更快。</strong></p><p>对于初始化成本很低的对象，使用对象池反而可能更慢；应当根据实际性能测量决定是否池化。</p>
+<h3>4. 对象池实际上做了一次资源权衡</h3><div class="table-wrap"><table><thead><tr><th>维度</th><th>直接创建与销毁</th><th>对象池</th></tr></thead><tbody><tr><td>创建成本</td><td>使用时反复承担</td><td>首次或扩容时承担</td></tr><tr><td>内存占用</td><td>空闲对象通常可被回收</td><td>主动保留空闲对象</td></tr><tr><td>GC 压力</td><td>可能较高</td><td>可以降低</td></tr><tr><td>状态管理</td><td>较简单</td><td>必须正确重置</td></tr><tr><td>生命周期</td><td>相对直观</td><td>需要明确获取与归还</td></tr><tr><td>性能表现</td><td>可能产生频繁的开销</td><td>通常更稳定，但并非必然</td></tr></tbody></table></div><blockquote>使用更多持续占用的内存，换取更少的重复创建、初始化与回收工作。</blockquote><p>它追求的不只是平均速度，还可能是运行过程中的稳定性，例如降低游戏运行中因重复分配而出现的帧耗时波动。</p></section><section id="how"><div class="eyebrow">03 · HOW</div><h2>对象池如何实现？</h2><h3>1. 先不要考虑代码，理解对象池需要管理什么</h3><p>一个最基本的对象池，需要解决四个问题：</p><ol><li><strong>创建（Create）：</strong>没有可用对象时，如何产生对象？</li><li><strong>获取（Acquire / Get）：</strong>如何把一个空闲对象交给使用者？</li><li><strong>归还（Release / Return）：</strong>如何把使用结束的对象重新放入池中？</li><li><strong>销毁（Destroy）：</strong>对象太多或对象池结束时，如何清理对象？</li></ol><p>为了管理这些行为，对象池一般还需要保存一个集合，用于存储暂时没有被使用的对象。</p><div class="table-wrap"><table><thead><tr><th>BulletPool 中的对象</th><th>示例</th><th>如何管理</th></tr></thead><tbody><tr><td>空闲对象</td><td>Bullet #1、#2、#3</td><td>存放在空闲集合中</td></tr><tr><td>使用中的对象</td><td>Bullet #4、#5</td><td>可以只做计数，也可以显式追踪</td></tr></tbody></table></div><p>需要发射子弹时，先从空闲集合获取。子弹结束飞行时，把它归还到空闲集合。这是对象池最基础的实现。</p>
+<h3>2. 对象池的状态转移</h3><p>可以从状态机的角度理解对象池。对于某个对象，它有三种主要状态：</p><ul><li><code>Available</code>：已经创建，目前空闲，可以被获取。</li><li><code>InUse</code>：已经被获取，正在被使用。</li><li><code>Destroyed</code>：对象已经被销毁，不再受池管理，是终止状态。</li></ul><div class="table-wrap"><table><thead><tr><th>操作</th><th>前置状态</th><th>后置状态</th></tr></thead><tbody><tr><td>Create</td><td>不存在</td><td>Available 或 InUse</td></tr><tr><td>Get</td><td>Available</td><td>InUse</td></tr><tr><td>Release</td><td>InUse</td><td>Available</td></tr><tr><td>Destroy</td><td>Available 或 InUse</td><td>Destroyed</td></tr></tbody></table></div><p class="note">这里描述的是概念模型，不意味着所有对象池 API 都支持从 InUse 直接执行销毁。归还时如果超出保留上限，也可能直接销毁。</p>
+<h4>对象池必须维护的不变量</h4><p>假设 A 表示正在使用的对象数，I 表示空闲对象数，T 表示池仍然管理的全部存活对象数，那么正常情况下：</p><div class="formula">T = A ＋ I</div><p>而且，对同一个对象而言：</p><div class="formula">Available ∩ InUse = ∅</div><p><strong>一个对象不可能同时处于空闲和使用状态。</strong></p><p>如果一个对象既在空闲集合中，又正在被使用，那么对象池就出现了严重错误：另一个使用者可能取得这个仍在工作的对象。</p>
+<h3>3. Get 与 Release 究竟做了什么？</h3><p>下面是概念性伪代码。</p><div class="code-wrap"><div class="code-head"><span>C# · 示意片段</span><button class="copy" type="button">复制代码</button></div><pre><code>Bullet Get()
+{
+    if (idleObjects.Count &gt; 0)
+    {
+        Bullet bullet = idleObjects.Pop();
+
+        // 标记对象正在使用
+        return bullet;
+    }
+
+    // 无空闲对象，按策略创建新对象
+    return CreateBullet();
+}</code></pre></div><blockquote>Get 不是请求创建对象，而是请求获得对象的使用权。</blockquote><p>再看 <code>Release()</code>：</p><div class="code-wrap"><div class="code-head"><span>C# · 示意片段</span><button class="copy" type="button">复制代码</button></div><pre><code>void Release(Bullet bullet)
+{
+    // 验证对象确实由本池借出
+
+    bullet.ResetForPool();
+
+    idleObjects.Push(bullet);
+}</code></pre></div><blockquote>Release 不是请求销毁对象，而是声明本次使用已经结束，并交还使用权。</blockquote><p>这段代码只是展示基本思想。健壮的实现还需要处理重复归还、归还不属于该池的对象、池容量已满以及并发等问题。</p>
+<h3>4. 用交互模拟理解对象的复用</h3><p>连续获取五次，再全部归还，然后再次获取。最初只有三个对象，所以连续获取五次会创建两个新对象；归还后再次获取，不需要再创建对象。</p>
+<div class="sim" id="simulation"><div class="sim-header"><div><strong>对象池实验台</strong><p>初始预热 3 个 · 最大空闲保留 6 个 · 按后进先出获取</p></div><span class="badge">可交互</span></div><div class="sim-metrics"><span>存活总数 T <b id="m-total">3</b></span><span>使用中 A <b id="m-active">0</b></span><span>空闲 I <b id="m-idle">3</b></span><span>累计创建 <b id="m-created">3</b></span><span>累计销毁 <b id="m-destroyed">0</b></span></div><div class="sim-columns"><div><h4>空闲对象 <small>Available</small></h4><div class="objects" id="idle-objects"></div></div><div><h4>使用中的对象 <small>In Use</small></h4><div class="objects" id="active-objects"></div><p class="note">点击使用中的对象，可单独归还。</p></div></div><div class="sim-actions"><button id="get" type="button">Get：获取</button><button id="release" type="button" class="secondary">Release：归还最近一个</button><button id="release-all" type="button" class="secondary">全部归还</button><button id="reset" type="button" class="ghost">重置模拟</button></div><p id="sim-message" role="status" aria-live="polite">已预热 3 个对象。点击 Get 开始。</p><div id="invariant">✓ 不变量成立：3 = 0 + 3，空闲与使用集合互斥</div><noscript>启用 JavaScript 后可操作此模拟；正文可直接离线阅读。</noscript></div><p>对象池在达到稳定工作负载后，可以持续复用已有对象。也可以尝试获取 8 次再全部归还：其中 2 个会因空闲保留上限而被销毁。</p></section><section id="unity"><div class="eyebrow">04 · UNITY / C#</div><h2>完整实现示例</h2><p>Unity 提供了内置对象池：<code>UnityEngine.Pool.ObjectPool&lt;T&gt;</code>。它提供基于栈的复用行为，支持获取、归还、创建、销毁回调及容量管理。下面实现一个可以重复使用的子弹。</p><h3>1. 子弹对象：PooledBullet.cs</h3><div class="code-wrap"><div class="code-head"><span>PooledBullet.cs · Unity C#</span><button class="copy" type="button">复制代码</button></div><pre><code>using System;
+using UnityEngine;
+
+public sealed class PooledBullet : MonoBehaviour
+{
+    private Action&lt;PooledBullet&gt; _returnToPool;
+
+    private Vector3 _direction;
+    private float _speed;
+    private float _remainingLife;
+
+    private bool _inUse;
+
+    // 每次从对象池获取后，重新初始化
+    public void Launch(
+        Vector3 position,
+        Vector3 direction,
+        float speed,
+        float lifetime,
+        Action&lt;PooledBullet&gt; returnToPool)
+    {
+        _returnToPool = returnToPool;
+
+        transform.position = position;
+
+        _direction = direction.normalized;
+        _speed = speed;
+        _remainingLife = lifetime;
+
+        _inUse = true;
+
+        gameObject.SetActive(true);
+    }
+
+    private void Update()
+    {
+        if (!_inUse)
+            return;
+
+        transform.position +=
+            _direction * _speed * Time.deltaTime;
+
+        _remainingLife -= Time.deltaTime;
+
+        if (_remainingLife &lt;= 0f)
+        {
+            Finish();
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (!_inUse)
+            return;
+
+        // 此处可以添加碰撞对象过滤和伤害逻辑
+        Finish();
+    }
+
+    private void Finish()
+    {
+        // 防止重复归还
+        if (!_inUse)
+            return;
+
+        _inUse = false;
+
+        var callback = _returnToPool;
+        _returnToPool = null;
+
+        callback?.Invoke(this);
+    }
+
+    // 清理上一次使用的业务状态
+    public void ResetForPool()
+    {
+        _inUse = false;
+        _returnToPool = null;
+
+        _direction = Vector3.zero;
+        _speed = 0f;
+        _remainingLife = 0f;
+
+        gameObject.SetActive(false);
+    }
+}</code></pre></div><p>这里有两点特别重要。</p><p>第一，<code>Launch()</code> 每次都会重新设置位置、方向、速度以及生存时间。这保证借用的是干净的对象，而不是继承上一颗子弹的状态。</p><p>第二，<code>Finish()</code> 会先设置 <code>_inUse = false</code>，然后再归还。因为物理事件有可能在一次使用过程中多次触发。如果重复归还，就可能破坏对象池的状态。</p><h3>2. 对象池管理者：BulletPool.cs</h3><div class="code-wrap"><div class="code-head"><span>BulletPool.cs · Unity C#</span><button class="copy" type="button">复制代码</button></div><pre><code>using UnityEngine;
+using UnityEngine.Pool;
+
+public sealed class BulletPool : MonoBehaviour
+{
+    [SerializeField]
+    private PooledBullet bulletPrefab;
+
+    private ObjectPool&lt;PooledBullet&gt; _pool;
+
+    private void Awake()
+    {
+        _pool = new ObjectPool&lt;PooledBullet&gt;(
+            createFunc: CreateBullet,
+            actionOnGet: null,
+            actionOnRelease: OnRelease,
+            actionOnDestroy: DestroyBullet,
+            collectionCheck: true,
+            defaultCapacity: 16,
+            maxSize: 64
+        );
+    }
+
+    // 对象池需要一个新实例时调用
+    private PooledBullet CreateBullet()
+    {
+        PooledBullet bullet =
+            Instantiate(bulletPrefab, transform);
+
+        bullet.gameObject.SetActive(false);
+
+        return bullet;
+    }
+
+    // 对象归还时重置
+    private void OnRelease(PooledBullet bullet)
+    {
+        bullet.ResetForPool();
+    }
+
+    // 池不再保留该对象时调用
+    private void DestroyBullet(PooledBullet bullet)
+    {
+        Destroy(bullet.gameObject);
+    }
+
+    // 对外提供发射子弹的方法
+    public void Fire(
+        Vector3 position,
+        Vector3 direction)
+    {
+        PooledBullet bullet = _pool.Get();
+
+        bullet.Launch(
+            position,
+            direction,
+            speed: 10f,
+            lifetime: 3f,
+            returnToPool: _pool.Release
+        );
+    }
+
+    private void OnDestroy()
+    {
+        _pool?.Dispose();
+    }
+}</code></pre></div><p class="note">示例假定子弹预制体配置了用于触发碰撞的 Collider，并满足 Unity 的物理触发条件。池和子弹由同一场景对象管理，销毁管理者时，其子对象也随 Unity 层级清理。跨场景或长期运行的对象池需要更明确的生命周期管理。</p><div class="callout subtle"><strong>初始化顺序补充</strong><p>如果预制体默认处于激活状态，<code>Instantiate()</code> 可能先触发 <code>OnEnable()</code>，再执行紧随其后的 <code>SetActive(false)</code>。若要求首次创建时也严格遵守“初始化后激活”，请把子弹预制体根对象保存为未激活状态，并避免在 <code>OnEnable()</code> 中重置刚设置的发射参数。</p></div>
+<h3>3. 为什么 actionOnGet 是 null？</h3><p>这里没有在 <code>actionOnGet</code> 中激活子弹，这是刻意设计的。希望确保以下顺序：</p><div class="flow">从池中获取 → 设置位置、速度、方向等状态 → 激活 GameObject → 开始工作</div><p>如果在 <code>actionOnGet</code> 内部就执行 <code>SetActive(true)</code>，那么 <code>OnEnable()</code> 会在业务初始化之前运行。当 <code>OnEnable()</code> 依赖新的状态时，这可能引发问题。</p><p>因此，让业务初始化方法 <code>Launch()</code> 完成设置，并在最后激活对象。</p><h3>4. 这套实现的职责划分</h3><div class="table-wrap"><table><thead><tr><th>角色</th><th>负责什么</th><th>不负责什么</th></tr></thead><tbody><tr><td>BulletPool</td><td>对象创建、保留、归还及销毁</td><td>子弹的移动和伤害规则</td></tr><tr><td>PooledBullet</td><td>子弹行为、生命周期结束通知、业务状态重置</td><td>决定池的存储策略</td></tr><tr><td>发射者</td><td>决定何时、何地发射子弹</td><td>直接创建和销毁子弹</td></tr></tbody></table></div><p><strong>对象池管理资源生命周期，业务对象管理自己的行为。</strong></p><p>对象池不一定要是 <code>MonoBehaviour</code>，也不一定要是单例。它可以是普通 C# 类，由上层组件或系统持有。</p></section><section id="correctness"><div class="eyebrow">05 · CORRECTNESS</div><h2>最容易忽略的正确性问题</h2><p>性能优化是对象池的目的，但保证对象的正确复用才是实现难点。</p><h3>1. 归还后，对象还可以使用吗？</h3><div class="code-wrap"><div class="code-head"><span>C# · 示意片段</span><button class="copy" type="button">复制代码</button></div><pre><code>Bullet bullet = pool.Get();
+
+pool.Release(bullet);
+
+// 危险：归还后继续操作
+bullet.Damage = 100;</code></pre></div><p>这是危险的。因为 <code>Release()</code> 后，对象已经不再属于当前使用者。这时，另一个系统可能通过 <code>Get()</code> 取得相同对象。如果之前的使用者继续修改，就会造成状态污染。</p><p>这涉及<strong>所有权（Ownership）与借用（Borrowing）</strong>：</p><ul><li><code>Get()</code> 获得的是一段使用权。</li><li><code>Release()</code> 代表放弃这段使用权。</li><li>归还后，不应再使用原引用操作对象，除非重新获得合法的使用权。</li></ul><p>C# 普通引用本身不会自动强制执行这一约束，需要靠 API 设计、状态检查或借用句柄等机制维护。</p>
+<h3>2. 重置状态究竟应该重置什么？</h3><p>假设子弹包含：</p><div class="code-wrap"><div class="code-head"><span>C# · 示意片段</span><button class="copy" type="button">复制代码</button></div><pre><code>public int Damage;
+public float Speed;
+public Vector3 Direction;
+
+public Transform Target;
+
+public event Action OnHit;</code></pre></div><p>如果只关闭 GameObject，却没有清理这些字段，那么下一次使用时可能产生问题：</p><ul><li>沿用上一次的攻击目标。</li><li>使用上一次的伤害数值。</li><li>调用上一次注册的事件订阅者。</li><li>继续执行上一次尚未结束的协程或异步回调。</li></ul><p>这类问题称为<strong>状态泄漏（State Leakage）</strong>。正确的复用必须保证新一次使用不受到上一次业务状态的不合理影响。</p><div class="formula">Reset(S<sub>旧</sub>) → S<sub>可安全复用</sub></div><p>但不要求把所有字段恢复成构造时的原始值。例如，Prefab 中固定不变的 Mesh、材质引用、组件配置，通常可以保留。</p><blockquote>清理所有跨使用周期不应保留的可变状态，同时保留可以安全复用的稳定资源。</blockquote>
+<h3>3. 异步操作会让对象池更复杂</h3><p>假设对象 A 被获取后，启动一个网络请求。请求还没有完成，对象 A 已经归还对象池，随后被另一个业务重新获取。这时，旧网络请求返回，继续修改对象 A，结果新业务的数据被旧请求污染了。</p><p><strong>即使旧请求的回调持有相同的对象引用，也不意味着它仍然有使用权。</strong></p><p>一种常见解决方案是使用版本号（Generation）。原理是记录本次使用的标识，并在异步返回后检查标识和使用状态：</p><div class="code-wrap"><div class="code-head"><span>C# · 异步检查示意，独立于前面的子弹类</span><button class="copy" type="button">复制代码</button></div><pre><code>int version = bullet.Generation;
+
+await SomeAsyncOperation();
+
+if (bullet == null ||
+    !bullet.IsInUse ||
+    bullet.Generation != version)
+{
+    // 对象已销毁、已归还，或已进入新的使用周期
+    return;
+}
+
+// 只有仍属于同一次使用，才允许继续处理</code></pre></div><p class="note">此处 <code>Generation</code> 和 <code>IsInUse</code> 是概念接口，前面的基础子弹类未实现它们。每次获取应分配新的版本；归还时须使租约失效，例如设为非使用状态，也可同时推进版本。仅在下次获取时更新版本、却不检查是否仍在使用，无法拦截“已归还但尚未重新借出”的旧回调。</p><p>实际实现还需要处理异步取消；Unity 对象检查和修改应在主线程进行。这种技术不局限于对象池，在 UI 请求复用、异步加载、网络任务等场景也很重要。</p></section><section id="capacity"><div class="eyebrow">06 · CAPACITY</div><h2>对象池应该保留多少对象？</h2><p>这里需要区分两个不同的容量概念。</p><div class="table-wrap"><table><thead><tr><th>容量概念</th><th>限制什么</th></tr></thead><tbody><tr><td>最大空闲保留量<br>Maximum Retained Capacity</td><td>最多保留多少个空闲对象</td></tr><tr><td>最大总量<br>Maximum Total Capacity</td><td>一共最多允许存在多少个对象，包括正在使用的对象</td></tr></tbody></table></div><p>这两个概念不是一回事。Unity 的 <code>ObjectPool&lt;T&gt;</code> 中，<code>maxSize</code> 限制的是池可保留的空闲对象数量，而不是所有已创建对象的并发总数。如果池已经没有空闲对象，<code>Get()</code> 可以继续创建新对象。</p><div class="code-wrap"><div class="code-head"><span>容量示意</span><button class="copy" type="button">复制代码</button></div><pre><code>maxSize = 64
+
+当前：
+使用中 = 100
+空闲   = 0
+总量   = 100</code></pre></div><p>这种情况仍然可能出现。等到 100 个对象全部归还时，池最多保留 64 个空闲对象，另外 36 个会按清理策略处理。</p><p><code>defaultCapacity</code> 是底层空闲集合的初始容量设置，<strong>并不意味着构造对象池时就预先创建了同样数量的子弹</strong>。</p>
+<h3>预热（Prewarming）</h3><p>如果希望游戏开始时提前创建对象，就需要进行预热。</p><div class="flow">游戏加载阶段 → 创建预期数量的实例 → 全部放入空闲池 → 正式进入游戏</div><p>这相当于提前承担一部分创建成本，避免在游戏进行过程中集中分配。但预热也有缺点：</p><ul><li>增加初始加载时间。</li><li>提高初始内存占用。</li><li>可能创建实际不会使用的对象。</li></ul><p>应该根据游戏实际的并发峰值和加载预算选择预热数量，而不是越多越好。</p><p class="note">预热时若使用 Get / Release，应先连续 Get 出目标数量，再统一 Release；每次 Get 后立即 Release，往往只会反复复用同一个对象。</p></section><section id="when"><div class="eyebrow">07 · WHEN</div><h2>什么情况下应该使用对象池？</h2><div class="table-wrap"><table><thead><tr><th>对象类型</th><th>是否适合</th><th>原因</th></tr></thead><tbody><tr><td>大量子弹</td><td>非常适合</td><td>数量多、生命周期短、频繁创建</td></tr><tr><td>粒子特效</td><td>适合</td><td>反复出现，创建成本可能较高</td></tr><tr><td>伤害数字 UI</td><td>适合</td><td>大量短暂显示，组件结构重复</td></tr><tr><td>敌人单位</td><td>视情况</td><td>实例化昂贵，但状态清理较复杂</td></tr><tr><td>普通小型数据对象</td><td>通常不必</td><td>直接创建可能更简单、更快</td></tr><tr><td>玩家永久存档数据</td><td>通常不适合</td><td>生命周期较长，复用价值不明显</td></tr><tr><td>大型临时缓冲区</td><td>适合</td><td>分配成本较高，可以复用内存</td></tr></tbody></table></div><p>尤其要避免一种思维误区：“对象池可以优化性能，所以所有对象都应该放进对象池。”</p><p>对于一个只包含两个整数的 C# 对象，直接分配可能非常便宜。引入对象池反而需要额外的访问、状态管理和存储成本。</p><h3>对象池与缓存（Cache）有什么区别？</h3><div class="table-wrap"><table><thead><tr><th>机制</th><th>主要关注</th><th>通常保留的价值</th></tr></thead><tbody><tr><td>缓存 Cache</td><td>保留某个计算结果或数据，以便下次直接使用</td><td>数据或计算结果的价值</td></tr><tr><td>对象池 Object Pool</td><td>复用承载工作的对象或资源，让下一次使用重新执行工作</td><td>对象的可复用能力</td></tr></tbody></table></div><p>它们都涉及保留资源，但关注点不同：缓存往往保留数据的价值；对象池保留对象的可复用能力。</p></section><section id="resource"><div class="eyebrow">08 · DEEPER</div><h2>对象池真正解决的是资源管理问题</h2><p>对象池看似只是一个性能设计模式，实际上隐含了三个更广泛的软件工程问题。</p>
+<h3>1. 资源生命周期管理</h3><p>对象池需要明确：</p><ul><li>谁有权创建对象？</li><li>谁可以使用对象？</li><li>何时认为对象已经使用结束？</li><li>谁有责任归还？</li><li>谁有责任最终销毁？</li></ul><p>如果这些责任不清楚，就容易出现忘记归还、重复归还和对象被提前销毁等问题。</p>
+<h3>2. 容量与负载管理</h3><p>如果瞬间有十万个请求需要对象，该怎么办？策略可能包括：</p><ul><li>继续创建，允许弹性增长。</li><li>拒绝新的请求。</li><li>等待空闲对象。</li><li>设置并发上限。</li><li>回收或替换优先级较低的使用任务。</li></ul><p>对于游戏子弹，也许超过视觉预算就跳过某些不重要的表现。对于服务端连接池，则可能需要排队、超时和背压。</p><p><strong>对象池本身并不自动等于资源上限控制。上限策略需要明确设计。</strong></p>
+<h3>3. 性能与正确性的取舍</h3><p>对象池引入新的状态转换后，必须保证以下性质：</p><div class="table-wrap"><table><thead><tr><th>约束</th><th>目的</th></tr></thead><tbody><tr><td>同一个对象不能同时借给两个使用者</td><td>排他使用</td></tr><tr><td>同一个对象不能被重复归还</td><td>避免重复分配</td></tr><tr><td>对象必须归还到正确的池</td><td>维护对象归属</td></tr><tr><td>归还后不能继续被旧使用者修改</td><td>保证使用权边界</td></tr><tr><td>新一轮使用不能被上一轮状态污染</td><td>保证状态隔离</td></tr><tr><td>对象池销毁后不能被继续正常使用</td><td>保证生命周期有效</td></tr></tbody></table></div><p>这也解释了为什么对象池不是简单的 <code>List&lt;GameObject&gt;</code> 或 <code>Stack&lt;T&gt;</code>。集合只是它的存储机制。</p><blockquote>真正构成对象池的是围绕对象使用权、生命周期、复用规则和资源容量建立的一组约束。</blockquote></section><section id="recap"><div class="eyebrow">09 · REVIEW</div><h2>从 What、Why、How 回到本质</h2><div class="table-wrap"><table><thead><tr><th>问题</th><th>核心答案</th></tr></thead><tbody><tr><td>What</td><td>将对象的物理生命周期与单次业务使用周期解耦的复用机制</td></tr><tr><td>Why</td><td>减少频繁分配、初始化和回收的开销，改善资源使用与性能稳定性</td></tr><tr><td>How</td><td>通过创建、获取、重置、归还和销毁等操作集中管理对象</td></tr><tr><td>核心权衡</td><td>以额外的内存占用和管理复杂度换取潜在的性能收益</td></tr><tr><td>正确性核心</td><td>对象所有权、状态隔离和生命周期约束</td></tr></tbody></table></div><p>最后值得记住的不是 <code>Get()</code> 或 <code>Release()</code>，而是这句话：</p><blockquote class="closing">一项工作结束，不代表完成这项工作的资源必须销毁。</blockquote><p>一个对象可以长期存在，却先后承担许多次相互独立的工作。对象池把这件事情变成了一套明确、可管理、可验证的机制。</p>
+<h3>接下来值得深入的三个概念</h3><ol><li><strong>RAII、IDisposable 与资源所有权：</strong>为什么 C# 中的内存、文件、连接以及 Unity 对象的生命周期管理不同？</li><li><strong>池化对象的状态隔离与不变量：</strong>如何严格保证重复使用一个对象，不会引入上一次的残留状态？</li><li><strong>对象池、缓存与享元模式（Flyweight）的区别：</strong>它们都涉及复用，但复用的究竟是什么？</li></ol><p>最建议先理解第二个问题，因为它直接决定对象池能不能可靠工作。</p>
+<details><summary>相关官方文档</summary><ul><li><a href="https://docs.unity3d.com/ScriptReference/Pool.ObjectPool_1.html" target="_blank" rel="noopener noreferrer">Unity — ObjectPool&lt;T&gt;</a></li><li><a href="https://learn.microsoft.com/en-us/aspnet/core/performance/objectpool" target="_blank" rel="noopener noreferrer">Microsoft Learn — Object reuse with ObjectPool</a></li></ul><p class="note">本文根据本次对话整理；链接供进一步查阅。正文、样式、示意图和交互脚本均内嵌，可离线阅读。</p></details></section><footer><span>对象池 · What / Why / How</span><a href="#">回到顶部 ↑</a></footer></main></div><script>
+(() => {
+ const $ = id => document.getElementById(id);
+ const root = document.documentElement;
+ try { if(localStorage.getItem('pool-theme')) root.dataset.theme=localStorage.getItem('pool-theme'); } catch(e) {}
+ $('theme-toggle').addEventListener('click',()=>{root.dataset.theme=root.dataset.theme==='dark'?'light':'dark';try{localStorage.setItem('pool-theme',root.dataset.theme)}catch(e){}});
+ $('print').addEventListener('click',()=>window.print());
+ document.querySelectorAll('.copy').forEach(btn=>btn.addEventListener('click',async()=>{
+  const text=btn.closest('.code-wrap').querySelector('code').textContent;
+  try{if(navigator.clipboard && window.isSecureContext){await navigator.clipboard.writeText(text)}else{const ta=document.createElement('textarea');ta.value=text;ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.select();const ok=document.execCommand('copy');ta.remove();if(!ok)throw new Error('copy');}btn.textContent='已复制';}catch(e){btn.textContent='请选中代码复制';}setTimeout(()=>btn.textContent='复制代码',1800);
+ }));
+ let idle=[], active=[], next=1, created=0, destroyed=0;const MAX_IDLE=6;
+ function render(message){
+  $('idle-objects').replaceChildren();$('active-objects').replaceChildren();
+  const add=(container,id,isActive)=>{let el=document.createElement(isActive?'button':'span');el.className='object'+(isActive?' active':'');el.textContent='#'+id;if(isActive){el.type='button';el.setAttribute('aria-label','归还对象 '+id);el.onclick=()=>release(id);}container.appendChild(el);};
+  idle.forEach(id=>add($('idle-objects'),id,false));active.forEach(id=>add($('active-objects'),id,true));
+  ['idle','active'].forEach(k=>{if(!$(k+'-objects').children.length){let el=document.createElement('span');el.className='empty';el.textContent=k==='idle'?'没有空闲对象':'还没有使用中的对象';$(k+'-objects').appendChild(el)}});
+  const total=idle.length+active.length;
+  $('m-total').textContent=total;$('m-active').textContent=active.length;$('m-idle').textContent=idle.length;$('m-created').textContent=created;$('m-destroyed').textContent=destroyed;
+  $('sim-message').textContent=message;$('release').disabled=$('release-all').disabled=active.length===0;
+  const valid=new Set([...idle,...active]).size===total && total===created-destroyed;
+  $('invariant').textContent=(valid?'✓ 不变量成立：':'⚠ 状态异常：')+total+' = '+active.length+' + '+idle.length+'，空闲与使用集合互斥';
+ }
+ function reset(){idle=[1,2,3];active=[];next=4;created=3;destroyed=0;render('已预热 3 个对象。点击 Get 开始。')}
+ function get(){let id,reused=idle.length>0;if(reused)id=idle.pop();else{id=next++;created++}active.push(id);render('Get：'+(reused?'复用空闲对象 #':'无空闲对象，创建 #')+id+'。')}
+ function giveBack(id){const index=active.indexOf(id);if(index<0)return null;active.splice(index,1);if(idle.length<MAX_IDLE){idle.push(id);return true}else{destroyed++;return false}}
+ function release(id){const retained=giveBack(id);if(retained===null)return;render('Release：对象 #'+id+(retained?' 已重置并归还。':' 因空闲保留量已达 6 而被销毁。'))}
+ $('get').onclick=get;$('release').onclick=()=>{if(active.length)release(active[active.length-1])};$('release-all').onclick=()=>{const count=active.length;const before=destroyed;[...active].reverse().forEach(giveBack);render('已归还 '+count+' 个对象；其中 '+(destroyed-before)+' 个超出空闲保留上限而被销毁。')};$('reset').onclick=reset;reset();
+ const updateProgress=()=>{const max=document.documentElement.scrollHeight-innerHeight;$('reading-progress').style.width=(max>0?scrollY/max*100:0)+'%'};addEventListener('scroll',updateProgress,{passive:true});addEventListener('resize',updateProgress);updateProgress();
+ if('IntersectionObserver' in window){const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){document.querySelectorAll('.sidebar a').forEach(a=>a.classList.toggle('current',a.hash==='#'+entry.target.id))}})},{rootMargin:'-8% 0px -72% 0px'});document.querySelectorAll('section').forEach(s=>observer.observe(s))}
+})();
+</script></body></html>

@@ -1,0 +1,392 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light"><meta name="description" content="转移 Transition 的 What、Why、How：合法状态变化、事件与守卫条件、Unity C# 门状态机，以及可离线操作的转移实验。"><title>转移 Transition 的本质 · Unity C# 笔记</title><style>
+:root{--paper:#f7f8fa;--ink:#202a36;--muted:#697581;--line:#e1e6ec;--blue:#2862b7;--nav:#152330;--nav-muted:#aebdca;--code:#172433;--side:272px}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:32px}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.85 "Segoe UI","Microsoft YaHei","PingFang SC",sans-serif;text-rendering:optimizeLegibility}button,a{-webkit-tap-highlight-color:transparent}a{color:var(--blue);text-decoration-thickness:1px;text-underline-offset:4px}a:hover{color:#153f7c}button{font:inherit;cursor:pointer}button:focus-visible,a:focus-visible,pre:focus-visible,.table-scroll:focus-visible{outline:3px solid #74a9ee;outline-offset:4px}.skip-link{position:fixed;left:20px;top:-90px;z-index:100;background:white;padding:12px 20px}.skip-link:focus{top:16px}.progress{position:fixed;left:var(--side);right:0;top:0;height:3px;background:transparent;z-index:30}.progress i{display:block;height:100%;width:0;background:#609bdd}
+.sidebar{position:fixed;inset:0 auto 0 0;width:var(--side);background:var(--nav);color:#fff;padding:36px 23px 22px;display:flex;flex-direction:column;z-index:25}.brand{display:flex;gap:12px;align-items:center;margin:0 7px 32px}.brand-mark{display:grid;place-items:center;width:39px;height:39px;border:1px solid #607689;border-radius:10px;font:bold 14px/1 monospace;letter-spacing:-1px;color:#d1e5f8}.brand b{display:block;font-size:15px;letter-spacing:.6px}.brand small{display:block;font-size:11px;color:var(--nav-muted);letter-spacing:1.3px;margin-top:2px}.toc-title{margin:0 12px 12px;color:#9eafbe;font-size:11px;font-weight:600;letter-spacing:2px}.toc{overflow:auto;scrollbar-width:thin;scrollbar-color:#425464 transparent}.toc a{display:flex;gap:12px;align-items:baseline;text-decoration:none;color:#c5d1dc;font-size:13px;line-height:1.6;border-radius:6px;padding:10px 11px;margin:3px 0}.toc a span{font:11px/1.6 monospace;color:#9caebe;flex:0 0 16px}.toc a:hover,.toc a.active{color:#fff;background:#283e51}.toc a.active{box-shadow:inset 2px 0 #8cb7e5}.sidebar-footer{margin-top:auto;padding:23px 10px 0;font-size:11px;color:#aebdca;line-height:1.7}.sidebar-footer strong{color:#dbe6ef;font-weight:500}.page{margin-left:var(--side);padding:0 48px 64px}.page-inner{max-width:1010px;margin:auto}.topbar{display:flex;align-items:center;justify-content:space-between;padding:27px 0 25px;border-bottom:1px solid var(--line);gap:12px;font-size:12px;color:var(--muted)}.topbar .crumb{letter-spacing:1px}.topbar .tools{display:flex;align-items:center;gap:16px}.print-button{padding:5px 12px;border:1px solid #ccd6e1;background:transparent;border-radius:5px;font-size:12px;color:#526477}.mobile-menu{display:none}.hero{padding:54px 0 36px}.eyebrow{font:600 12px/1.4 "Segoe UI",sans-serif;letter-spacing:2.5px;color:var(--blue);margin:0 0 20px}.hero h1{font-size:clamp(34px,4.6vw,55px);font-weight:750;line-height:1.2;letter-spacing:-2px;margin:0 0 16px}.hero h1 span{font-weight:400;color:#76818e}.hero-sub{font-size:19px;color:#687888;margin:0 0 27px;letter-spacing:.25px}.hero-tags{display:flex;flex-wrap:wrap;gap:9px}.hero-tags span{font-size:11px;padding:3px 10px;border:1px solid #d9e0e7;border-radius:4px;color:#60717f;background:#fff}.essence{margin:0 0 40px;padding:25px 27px;background:#fff;border:1px solid var(--line);border-left:3px solid var(--blue);border-radius:0 9px 9px 0}.essence p{font-size:18px;line-height:1.85;margin:0}.role-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:20px}.role{border-top:1px solid var(--line);padding-top:14px}.role b{font-size:13px;color:#355b87}.role span{display:block;font-size:12px;margin-top:3px;color:var(--muted)}
+article{font-size:15px;line-height:1.95}article>p:first-child{color:var(--muted);font-size:12px}article p{margin:14px 0}article>h2{font-size:25px;line-height:1.55;margin:58px 0 21px;padding-top:25px;border-top:1px solid var(--line);letter-spacing:-.5px;display:flex;align-items:baseline;gap:12px}.chapter-number{font:12px/1.4 monospace;color:#8695a4;letter-spacing:1px;flex:0 0 24px}article h3{font-size:18px;line-height:1.6;margin:30px 0 12px}article strong{font-weight:650}article ul,article ol{padding-left:24px;margin:14px 0}article li{padding-left:3px;margin:7px 0}article blockquote{margin:24px 0;background:#edf3fb;border-left:3px solid #5d86bd;padding:14px 23px;border-radius:0 6px 6px 0;color:#27466b}article blockquote p{margin:0}article p code,article li code,article td code{padding:2px 5px;background:#eaf0f6;border-radius:4px;color:#2b537f;font:12.5px/1.65 Consolas,"Cascadia Code",monospace;overflow-wrap:anywhere}.table-scroll{overflow-x:auto;margin:22px 0;border:1px solid var(--line);border-radius:8px;background:#fff}table{border-collapse:collapse;width:100%;font-size:13px;line-height:1.8}th{text-align:left;font-weight:650;background:#edf1f6;color:#334c67;white-space:nowrap}td,th{padding:13px 16px;vertical-align:top;border-bottom:1px solid var(--line)}tr:last-child td{border-bottom:0}td:first-child{font-weight:500;min-width:120px}pre{white-space:pre;overflow-x:auto;tab-size:4;font:12.5px/1.8 Consolas,"Cascadia Code","Microsoft YaHei",monospace}.flow-block{padding:22px 24px;border:1px solid #d8e0e9;background:#eef2f7;border-radius:8px;color:#36516c;margin:22px 0;line-height:2}.code-card{margin:23px 0 20px;background:var(--code);color:#e2e9f1;border:1px solid #26394b;border-radius:9px;overflow:hidden}.code-toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 18px;background:#203043;border-bottom:1px solid #344557}.code-toolbar strong{font:12px/1.6 Consolas,"Cascadia Code",monospace;letter-spacing:.2px;display:block;color:#e9f1fa}.code-toolbar small{font-size:10px;color:#b4c3d2;display:block;margin-top:1px}.code-actions{display:flex;gap:7px;flex-shrink:0}.code-actions button{font-size:11px;line-height:1.5;border:1px solid #5b6f83;border-radius:4px;background:transparent;color:#d7e6f6;padding:4px 9px}.code-actions button:hover{background:#3a536c;color:white}.code-card pre{padding:20px 23px;margin:0;scrollbar-color:#647c95 transparent}.tok-keyword{color:#a8c8ff}.tok-string{color:#b9dba7}.tok-comment{color:#a8b8c9}.tok-number{color:#efc79b}.end-note{margin-top:54px;padding-top:20px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:16px;font-size:11px;color:var(--muted)}.end-note a{color:#6a7f94}.toast{position:fixed;left:calc(50% + var(--side)/2);bottom:24px;transform:translateX(-50%);background:#20384e;color:#fff;padding:10px 19px;border-radius:7px;font-size:13px;box-shadow:0 4px 18px #0002;opacity:0;transition:opacity .16s;pointer-events:none;z-index:100}.toast.show{opacity:1}
+@media(min-width:1550px){.page{padding-left:80px;padding-right:80px}.hero{padding-top:65px}}
+@media(max-width:1150px){:root{--side:234px}.sidebar{padding-left:15px;padding-right:15px}.toc a{font-size:12px}.page{padding-left:30px;padding-right:30px}.hero h1{font-size:40px}}
+@media(max-width:820px){:root{--side:0px}html{scroll-padding-top:20px}.sidebar{display:none;width:260px}.sidebar.open{display:flex;box-shadow:10px 0 40px #0003}.page{margin-left:0;padding:0 23px 36px}.progress{left:0}.topbar{padding-top:17px;padding-bottom:16px}.topbar .crumb{font-size:11px}.topbar .tools{gap:9px}.mobile-menu{display:inline-block;padding:5px 9px;border:1px solid #ccd6e1;background:white;border-radius:5px;font-size:12px;color:#526477}.hero{padding-top:37px}.hero h1{font-size:37px;letter-spacing:-1px}.hero-sub{font-size:16px}.hero-tags span{font-size:10px}.essence{padding:20px}.essence p{font-size:16px}.role-grid{gap:10px}.role b{font-size:12px}.role span{font-size:11px}article{font-size:14px}article>h2{font-size:22px;margin-top:40px}article h3{font-size:17px}.code-toolbar{padding:11px 12px}.code-card pre{padding:17px 14px;font-size:11.5px}.toast{left:50%}}
+@media(max-width:420px){.page{padding-left:16px;padding-right:16px}.topbar .crumb{letter-spacing:0}.print-button{padding-left:8px;padding-right:8px}.hero h1{font-size:33px}.role-grid{grid-template-columns:1fr}.role{padding-top:8px}.role span{display:inline;margin-left:8px}.code-toolbar{align-items:flex-start}.code-actions{flex-direction:column;gap:5px}.code-actions button{padding:3px 6px}.flow-block{padding:17px 14px;font-size:11px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.toast{transition:none}}
+@media print{@page{margin:16mm}body{background:#fff;font-size:11pt}.sidebar,.topbar,.progress,.code-actions,.toast,.hero-tags,.end-note{display:none!important}.page{margin:0;padding:0}.page-inner{max-width:none}.hero{padding:0 0 16px}.hero h1{font-size:30pt}.hero-sub{font-size:14pt}.essence{margin-bottom:20px;padding:14px 18px}.essence p{font-size:12pt}article{font-size:10pt;line-height:1.65}article>h2{margin-top:26px;padding-top:15px;font-size:17pt;break-after:avoid}article h3{font-size:12pt;break-after:avoid}pre{white-space:pre-wrap;overflow:visible;overflow-wrap:anywhere;font-size:8pt!important}.code-card{background:#f7f8fa;color:#202a36;border-color:#ccd4dc}.code-toolbar{background:#edf1f6;border-color:#ccd4dc}.code-toolbar strong,.code-toolbar small{color:#34495e}.tok-keyword{color:#23558b}.tok-string{color:#3b6133}.tok-comment{color:#657566}.tok-number{color:#8a4b25}.table-scroll{overflow:visible}th,td{padding:8px 9px}.role-grid{grid-template-columns:repeat(3,1fr)}a{color:inherit;text-decoration:none}.flow-block{background:#f4f6f8;color:#30465d}}
+
+.hero h1{letter-spacing:-1.8px}.hero-sub{max-width:720px}.equation{display:block;margin:25px 0;padding:24px 20px;text-align:center;border:1px solid #d7e2ee;border-radius:8px;background:#edf3fa;font:500 23px/1.65 "Cambria Math",Cambria,"Microsoft YaHei",serif;color:#264d79;overflow-wrap:anywhere}.equation sub{font-size:60%;margin-right:3px}.equation-final{font:600 20px/1.7 "Segoe UI","Microsoft YaHei",sans-serif}var{font-family:Cambria,"Times New Roman",serif}.demo{border:1px solid #d6e1ed;border-radius:10px;margin:25px 0;padding:24px;background:#fff}.demo-heading{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;margin-bottom:20px}.demo-heading h3{margin:5px 0 0;font-size:16px;line-height:1.7}.demo-kicker{font-size:10px;color:#6c84a0;letter-spacing:1.3px;font-weight:600}.demo-chip{white-space:nowrap;font-size:10px;background:#edf3fb;color:#43668c;padding:4px 9px;border-radius:4px;align-self:flex-start}.door-layout{display:grid;grid-template-columns:180px 1fr;gap:27px;align-items:center}.door-scene{height:184px;position:relative;display:grid;place-items:center;background:#f0f4f8;border-radius:8px}.door-frame{height:136px;width:88px;border:7px solid #65798b;border-bottom:0;background:#20394a;perspective:400px;z-index:1}.door-leaf{height:100%;background:#c59767;border:3px solid #a2774f;position:relative;transform-origin:left;transition:transform .35s,background .25s}.door-leaf::before{content:"";position:absolute;inset:8px;border:2px solid #a67a50}.door-leaf i{position:absolute;width:7px;height:7px;border-radius:50%;background:#f8df9d;top:58%;right:8px;box-shadow:0 0 0 1px #8c642a}.door-leaf.is-open{transform:rotateY(-65deg)}.door-leaf.is-locked{background:#8b98a3;border-color:#647685}.door-leaf.is-locked::before{border-color:#647685}.door-leaf.is-locked::after{content:"锁";position:absolute;left:23px;top:42px;padding:2px 5px;color:#e9edf2;background:#425564;border-radius:3px;font-size:12px}.door-ground{position:absolute;bottom:22px;width:118px;height:5px;background:#c6d2dd;border-radius:50%}.door-controls label{font-size:12px;color:#60768b;display:block;margin-bottom:5px}.door-controls select{font:13px/1.5 inherit;padding:9px 32px 9px 12px;border:1px solid #becedf;border-radius:5px;background:#fff;color:#344d67;margin-right:7px;margin-bottom:10px;max-width:100%}.action-button,.secondary-button{font-size:12px;padding:9px 14px;border:1px solid #2c609f;border-radius:5px;line-height:1.5;background:#2c609f;color:white}.secondary-button{color:#3e5c7b;background:#f4f7fa;border-color:#cfdae6}.action-button:hover{background:#1f4a7e}.secondary-button:hover{background:#e7eff7}.demo p.demo-result{font-size:13px;line-height:1.85;color:#325675;margin:10px 0 0}.demo-caption{font-size:11.5px!important;color:#708092!important;line-height:1.85!important;margin:16px 0 0!important}.hp-display{display:flex;align-items:baseline;gap:9px}.hp-display output{font:600 48px/1.1 "Segoe UI",sans-serif;letter-spacing:-2px;color:#315d8f}.hp-display span{font-size:14px;color:#8190a0}progress{display:block;width:100%;height:13px;margin:18px 0 22px;accent-color:#3b7baf;border:0;border-radius:5px;overflow:hidden;background:#e9eff6}progress::-webkit-progress-bar{background:#e9eff6;border-radius:5px}progress::-webkit-progress-value{background:#4e85b5;border-radius:5px;transition:width .2s}progress::-moz-progress-bar{background:#4e85b5}.demo-buttons{display:flex;flex-wrap:wrap;gap:8px}.fsm-figure{margin:25px 0}.fsm-states{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.fsm-states>div{padding:16px 12px;border-radius:7px;background:#edf3f9;border:1px solid #d7e3ee;text-align:center}.fsm-states b{display:block;font:600 13px/1.7 Consolas,monospace;color:#375d85}.fsm-states span{font-size:12px;color:#708195}.fsm-states .dead-state{background:#f4eeed;border-color:#e8d8d4}.fsm-states .dead-state b{color:#8a5d52}.editor-note{background:#fff;border:1px solid var(--line);border-radius:8px;padding:20px 24px;margin-top:46px;font-size:12px;color:#657488}.editor-note h3{font-size:14px;margin:0 0 8px}.editor-note p{margin:8px 0}.editor-note summary{cursor:pointer;color:#3f648c;margin-top:12px}.editor-note ul{padding-left:19px}.editor-note a{overflow-wrap:anywhere}.mobile-menu{flex-shrink:0}
+@media(max-width:600px){.hero h1{font-size:34px}.hero-sub{font-size:15px}.door-layout{grid-template-columns:1fr}.door-scene{height:170px}.door-controls{margin-top:-10px}.demo{padding:18px}.demo-heading h3{font-size:15px}.demo-chip{font-size:9px}.equation{font-size:19px;padding:20px 12px}.equation-final{font-size:16px}.fsm-states{grid-template-columns:repeat(2,1fr)}}
+@media(prefers-reduced-motion:reduce){.door-leaf,progress::-webkit-progress-value{transition:none}}
+@media print{.demo{break-inside:avoid;padding:15px}.demo-buttons,.door-controls select,.door-controls label,.door-controls button{display:none}.door-layout{grid-template-columns:130px 1fr}.door-scene{height:160px}.hp-display output{font-size:26pt}.demo-heading h3{font-size:11pt}.equation{font-size:15pt;padding:15px}.fsm-states{grid-template-columns:repeat(4,1fr)}.editor-note{font-size:9pt}.equation-final{font-size:13pt}}
+.labeled-arrow{display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;line-height:1;margin:0 24px;position:relative;top:-5px}.labeled-arrow small{font-size:13px;line-height:1.4;white-space:nowrap;margin-bottom:-1px}.labeled-arrow>span{font:33px/1 Cambria,serif}.guard-arrow{margin:0 17px}.guard-arrow small{font:11px/1.5 "Microsoft YaHei",sans-serif}.guard-arrow>span{font-size:52px}.transition-graph{margin:24px 0;border:1px solid #d5e0eb;background:#fff;border-radius:9px;overflow:hidden}.transition-graph svg{display:block;width:100%;height:auto;min-height:130px}.graph-labels text{font:12px "Segoe UI","Microsoft YaHei",sans-serif;fill:#667e97}.graph-node rect{fill:#edf3f8;stroke:#cfdae6;stroke-width:1.5}.graph-node text{fill:#3a536b;font:600 17px "Segoe UI","Microsoft YaHei",sans-serif}.graph-node .graph-en{font:11px Consolas,monospace;fill:#70859b}.graph-node.is-active rect{fill:#e1edf9;stroke:#4779b1;stroke-width:2}.graph-node.is-active text{fill:#24578c}.transition-graph figcaption{font-size:11.5px;color:#6d7f91;margin:0;padding:0 21px 19px;line-height:1.8}.transition-current{display:flex;align-items:baseline;gap:15px;flex-wrap:wrap;margin:23px 0 21px}.transition-current>span{font-size:12px;color:#75869a}.transition-current output{font-size:34px;font-weight:650;line-height:1.3;color:#305f92;letter-spacing:-1px}.transition-current>code{font:11px/1.6 Consolas,monospace;color:#647d98;background:#eff4f9;padding:4px 8px;border-radius:4px}.event-buttons{display:grid;grid-template-columns:repeat(4,1fr);gap:9px}.event-buttons button{padding:11px 8px}.event-buttons small{display:block;font:10px/1.6 Consolas,monospace;opacity:.8;margin-top:2px}.transition-feedback{border:1px solid #dbe4ed;border-radius:6px;background:#f2f6fa;padding:12px 15px;font-size:13px;line-height:1.85;min-height:53px;margin:17px 0 23px!important;color:#45617b}.transition-feedback.accepted{background:#edf5f1;border-color:#d0e3d8;color:#3d6752}.transition-feedback.rejected{background:#faf2eb;border-color:#ecdacb;color:#936441}.log-heading{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #e0e7ee;padding-bottom:11px;gap:12px}.log-heading strong{font-size:12px;color:#4f667d}.reset-button{background:none;border:1px solid #d1dce7;border-radius:4px;padding:4px 10px;color:#637a92;font-size:11px}.reset-button:hover{background:#eef4fa}.transition-log{list-style:none!important;margin:0!important;padding:0!important;max-height:260px;overflow:auto;scrollbar-width:thin}.transition-log li{margin:0!important;padding:10px 3px!important;border-bottom:1px solid #eaf0f5;font-size:12px;line-height:1.8;color:#5c748b}.transition-log li.accepted{color:#3d6e55}.transition-log li.rejected{color:#936441}.transition-log li.initial-record{color:#8795a4;font-size:11px}.demo-heading h3{max-width:420px}
+@media(max-width:600px){.labeled-arrow{margin-left:15px;margin-right:15px}.labeled-arrow small{font-size:11px}.guard-arrow{margin-left:10px;margin-right:10px}.guard-arrow small{font-size:9px}.equation{font-size:18px}.event-buttons{grid-template-columns:repeat(2,1fr)}.transition-current{gap:10px}.transition-current output{font-size:30px}.transition-current code{font-size:10px}.demo-heading{flex-direction:column;gap:9px}.transition-graph svg{min-height:110px}.transition-graph figcaption{font-size:10px;padding:0 14px 14px}}
+@media print{.event-buttons,.reset-button{display:none}.transition-demo{break-inside:auto}.transition-log{max-height:none;overflow:visible}.transition-graph{break-inside:avoid}.transition-current output{font-size:21pt}}</style></head><body><a class="skip-link" href="#content">跳到正文</a><div class="progress" aria-hidden="true"><i id="reading-progress"></i></div>
+<aside class="sidebar" id="sidebar" aria-label="文档目录"><div class="brand"><div class="brand-mark" aria-hidden="true">T→</div><div><b>概念笔记</b><small>TRANSITION · UNITY · C#</small></div></div><div class="toc-title">阅读导航 / CONTENTS</div><nav class="toc"><a href="#chapter-1"><span>01</span>What：转移是什么？</a>
+<a href="#chapter-2"><span>02</span>Why：为什么需要转移？</a>
+<a href="#chapter-3"><span>03</span>How：转移如何实现？</a>
+<a href="#chapter-4"><span>04</span>深入本质：转移、事件、动作有什么区别？</a>
+<a href="#chapter-5"><span>05</span>动手实验：你来决定什么是合法转移</a>
+<a href="#chapter-6"><span>06</span>再深入一层：用函数描述转移规则</a>
+<a href="#chapter-7"><span>07</span>最终总结：状态与转移的本质关系</a>
+<a href="#chapter-8"><span>08</span>补充：过程、规则与转移，严格区分</a></nav><div class="sidebar-footer"><strong>单文件 · 可离线阅读</strong><br>2026.10.16 · 根据原文与补充整理<br>八个主题 · 公式 · 交互实验</div></aside>
+<div class="page"><div class="page-inner"><header class="topbar"><div class="crumb">CONCEPT NOTES / 03</div><div class="tools"><button type="button" class="mobile-menu" id="menu-button" aria-controls="sidebar" aria-expanded="false">目录</button><button type="button" class="print-button" id="print-button">打印 / 保存 PDF</button></div></header>
+<section class="hero" aria-labelledby="page-title"><p class="eyebrow">WHAT / WHY / HOW</p><h1 id="page-title">转移的本质<span>。</span></h1><p class="hero-sub">变化是核心，规则约束变化，过程描述变化。</p><div class="hero-tags"><span>State Transition</span><span>8 个主题</span><span>含过程与规则补充</span><span>Unity C# 示例</span></div></section>
+<section class="essence" aria-label="核心观点"><p>一次变化、它的约束、它的执行方式，是三个相关层次。<br><strong>转移是变化；规则约束变化，过程描述变化。</strong></p><div class="role-grid"><div class="role"><b>TRANSITION / 变化</b><span>从什么状态到什么状态</span></div><div class="role"><b>RULE / 约束</b><span>在什么条件下可以发生</span></div><div class="role"><b>PROCESS / 执行</b><span>这一次变化实际如何完成</span></div></div></section>
+<main><article id="content"><p>更准确地理解“怎样变”，才能把状态组织成一个持续演化的系统。</p>
+<p><strong>转移（Transition）是从一种状态到另一种状态的变化；转移规则（Transition Rule）决定在什么条件下可以发生这种变化；转移过程（Transition Process）描述这种变化实际如何完成。</strong></p>
+<p>要真正理解转移，需要先区分三个概念：</p>
+<ul>
+<li>状态（State）：现在是什么样。</li>
+<li>事件（Event）：发生了什么。</li>
+<li>转移（Transition）：从一种状态到另一种状态的变化。</li>
+</ul>
+<p>“状态应该如何改变”由转移规则决定；一次具体变化如何完成，由转移过程描述。三者密切相关，但并不等同。文末补充章节进一步区分这三个层次。</p>
+<p>下面主要讨论程序设计中的状态转移（State Transition），但其原理具有普遍性。</p>
+<h2 id="chapter-1"><span class="chapter-number">01</span>What：转移是什么？</h2>
+<p>想象一扇门。它有三种状态：关闭、打开、锁定。同一个对象可以在不同状态之间转移。</p>
+<figure class="transition-graph" aria-labelledby="graph-caption"><svg viewBox="0 0 740 242" role="img" aria-labelledby="graph-title graph-description"><title id="graph-title">门的合法状态转移</title><desc id="graph-description">关闭时可以打开或上锁。打开时可以关闭。锁定时可以解锁回到关闭。锁定不能直接打开。</desc><defs><marker id="transition-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#6a8bad"></path></marker></defs>
+<g class="graph-edges" fill="none" stroke="#6a8bad" stroke-width="2" marker-end="url(#transition-arrow)"><path d="M 445 105 Q 505 65 559 105"></path><path d="M 560 143 Q 501 181 446 143"></path><path d="M 295 105 Q 238 65 181 105"></path><path d="M 180 143 Q 238 181 294 143"></path></g>
+<g class="graph-labels" text-anchor="middle"><text x="501" y="77">打开 Open</text><text x="501" y="183">关闭 Close</text><text x="238" y="77">上锁 Lock</text><text x="238" y="183">解锁 Unlock</text></g>
+<g class="graph-node" data-state="Locked"><rect x="30" y="90" width="150" height="68" rx="9"></rect><text x="105" y="117" text-anchor="middle">锁定</text><text class="graph-en" x="105" y="140" text-anchor="middle">Locked</text></g>
+<g class="graph-node is-active" data-state="Closed"><rect x="295" y="90" width="150" height="68" rx="9"></rect><text x="370" y="117" text-anchor="middle">关闭</text><text class="graph-en" x="370" y="140" text-anchor="middle">Closed</text></g>
+<g class="graph-node" data-state="Open"><rect x="560" y="90" width="150" height="68" rx="9"></rect><text x="635" y="117" text-anchor="middle">打开</text><text class="graph-en" x="635" y="140" text-anchor="middle">Open</text></g></svg><figcaption id="graph-caption">三种状态，四条合法转移。高亮节点对应下方实验的当前状态；未列出的组合在本示例中被拒绝。</figcaption></figure>
+<p>当门处于“关闭”状态时，收到“打开”请求，它就可能转移到“打开”状态。</p>
+<p>我们可以抽象为：</p>
+<div class="equation" role="math" aria-label="当前状态在事件 E 触发下转移到下一状态"><var>S</var><sub>t</sub><span class="labeled-arrow"><small><var>E</var></small><span>⟶</span></span><var>S</var><sub>t+1</sub></div>
+<p>其中：</p>
+<ul>
+<li><var>S<sub>t</sub></var>：转移前的状态。</li>
+<li><var>E</var>：触发转移的事件。</li>
+<li><var>S<sub>t+1</sub></var>：转移后的状态。</li>
+</ul>
+<p>但有一个关键问题：任何事件都能引起任何转移吗？</p>
+<p>显然不是。例如，锁定的门不应该直接打开。</p>
+<p>为了表达哪些变化被允许，可以定义转移规则：</p>
+<div class="equation" role="math" aria-label="转换规则 T 作用于当前状态 S 和事件 E，得到新状态 S prime"><var>T</var>(<var>S</var>, <var>E</var>) = <var>S</var>′</div>
+<p>其中 <var>T</var> 是转移规则，它决定在状态 <var>S</var> 下遇到事件 <var>E</var>，是否允许转移，以及转移到什么状态。</p>
+<p>如果不满足条件，可以拒绝转移，保持原状态。</p>
+<h2 id="chapter-2"><span class="chapter-number">02</span>Why：为什么需要转移？</h2>
+<p>表面上看，我们完全可以直接修改状态：</p>
+<div class="code-card" data-filename="反例片段1"><div class="code-toolbar"><div><strong>直接赋值 · 概念反例</strong><small>C# · 假设 State 允许外部赋值，非推荐实现</small></div><div class="code-actions"><button type="button" data-action="copy" aria-label="复制 直接赋值 · 概念反例">复制代码</button></div></div><pre tabindex="0"><code class="language-csharp">door.State = DoorState.Open;
+</code></pre></div>
+<p>为什么还要引入转移？因为能够赋予一个状态，不代表应该允许进入这个状态。</p>
+<p>例如：</p>
+<div class="code-card" data-filename="反例片段2"><div class="code-toolbar"><div><strong>绕过规则 · 概念反例</strong><small>C# · 假设 State 允许外部赋值，非推荐实现</small></div><div class="code-actions"><button type="button" data-action="copy" aria-label="复制 绕过规则 · 概念反例">复制代码</button></div></div><pre tabindex="0"><code class="language-csharp"><span class="tok-comment">// 即使门已经锁定，也能被直接打开</span>
+door.State = DoorState.Open;
+</code></pre></div>
+<p>代码在语法上可能正确，但业务逻辑可能错误。这里的反例假设 <code>State</code> 允许外部赋值；后面的完整实现会通过私有 setter 禁止这种访问。</p>
+<p>根本原因是：</p>
+<blockquote>
+<p>状态描述当前事实，却不能独自表达状态变化的合法规则。</p>
+</blockquote>
+<p>转移规则将合法变化显式地表达出来：</p>
+<div class="table-scroll" tabindex="0"><table>
+<thead>
+<tr>
+<th>当前状态</th>
+<th>事件或请求</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>关闭</td>
+<td>打开</td>
+<td>转移到打开</td>
+</tr>
+<tr>
+<td>关闭</td>
+<td>上锁</td>
+<td>转移到锁定</td>
+</tr>
+<tr>
+<td>打开</td>
+<td>关闭</td>
+<td>转移到关闭</td>
+</tr>
+<tr>
+<td>锁定</td>
+<td>解锁</td>
+<td>转移到关闭</td>
+</tr>
+<tr>
+<td>锁定</td>
+<td>打开</td>
+<td>拒绝，保持锁定</td>
+</tr>
+</tbody>
+</table></div>
+<p>由此获得一个重要的设计原则：</p>
+<p><strong>不要让外部代码随意决定对象变成什么状态，而应该由对象或状态机根据规则决定。</strong></p>
+<p>这样可以保证业务约束集中、明确、可测试，并减少非法状态的产生。</p>
+<h2 id="chapter-3"><span class="chapter-number">03</span>How：转移如何实现？</h2>
+<p>实现转移不需要复杂的框架。它最基本只需要三个步骤：</p>
+<ol>
+<li><strong>接收事件。</strong> 例如：<code>OpenRequested</code>，表达“请求打开”。</li>
+<li><strong>检查转移条件。</strong> 当前状态允许打开吗？还有没有其他守卫条件？</li>
+<li><strong>提交合法的新状态。</strong> 需要时执行伴随转移的动作；若不满足规则，就拒绝并保持原状态。</li>
+</ol>
+<p>使用 Unity C# 写一个简单实现：</p>
+<div class="code-card" data-filename="Door.cs"><div class="code-toolbar"><div><strong>Door.cs</strong><small>Unity C# · 完整类型定义</small></div><div class="code-actions"><button type="button" data-action="copy" aria-label="复制 Door.cs">复制代码</button><button type="button" data-action="download" aria-label="下载 Door.cs">下载 .cs</button></div></div><pre tabindex="0"><code class="language-csharp"><span class="tok-keyword">public</span> <span class="tok-keyword">enum</span> DoorState
+{
+    Closed,
+    Open,
+    Locked
+}
+
+<span class="tok-keyword">public</span> <span class="tok-keyword">enum</span> DoorEvent
+{
+    Open,
+    Close,
+    Lock,
+    Unlock
+}
+
+<span class="tok-keyword">public</span> <span class="tok-keyword">class</span> Door
+{
+    <span class="tok-keyword">public</span> DoorState State { <span class="tok-keyword">get</span>; <span class="tok-keyword">private</span> <span class="tok-keyword">set</span>; }
+        = DoorState.Closed;
+
+    <span class="tok-keyword">public</span> <span class="tok-keyword">bool</span> Handle(DoorEvent e)
+    {
+        <span class="tok-comment">// 由当前状态和事件共同决定下一个状态</span>
+        DoorState? next = (State, e) <span class="tok-keyword">switch</span>
+        {
+            (DoorState.Closed, DoorEvent.Open)
+                =&gt; DoorState.Open,
+
+            (DoorState.Open, DoorEvent.Close)
+                =&gt; DoorState.Closed,
+
+            (DoorState.Closed, DoorEvent.Lock)
+                =&gt; DoorState.Locked,
+
+            (DoorState.Locked, DoorEvent.Unlock)
+                =&gt; DoorState.Closed,
+
+            _ =&gt; <span class="tok-keyword">null</span>
+        };
+
+        <span class="tok-comment">// 不存在合法转移</span>
+        <span class="tok-keyword">if</span> (next == <span class="tok-keyword">null</span>)
+            <span class="tok-keyword">return</span> <span class="tok-keyword">false</span>;
+
+        State = next.Value;
+        <span class="tok-keyword">return</span> <span class="tok-keyword">true</span>;
+    }
+}
+</code></pre></div>
+<p>这里有两个值得注意的设计：</p>
+<p>第一，<code>State</code> 具有私有 setter，外部代码不能任意修改状态。</p>
+<p>第二，<code>Handle</code> 不只是修改变量，它定义了哪些转移允许发生。</p>
+<p>这已经是一个最基本的有限状态机。代码中的 <code>Door</code> 是普通 C# 对象，可由 Unity 的 MonoBehaviour 创建并持有；它本身不需要挂到 GameObject 上。示例使用元组和 switch 表达式，需要相应的 C# 语法支持。</p>
+<blockquote>
+<p>本例只允许代码中列出的四种转移。其他组合都返回 <code>false</code>，包括“已打开时再次打开”。某些系统也允许不改变状态的自转移；是否允许，应由各自规则明确规定，不能仅凭“前后状态相同”判断是否拒绝。</p>
+</blockquote>
+<h2 id="chapter-4"><span class="chapter-number">04</span>深入本质：转移、事件、动作有什么区别？</h2>
+<p>假设玩家按下跳跃键：</p>
+<ul>
+<li><strong>事件：</strong> 玩家按下跳跃键。</li>
+<li><strong>条件：</strong> 玩家处于地面，并且允许跳跃。</li>
+<li><strong>转移：</strong> 从站立转移到跳跃。</li>
+<li><strong>动作：</strong> 施加向上的速度，播放跳跃动画。</li>
+</ul>
+<p>它们之间的关系是：</p>
+<div class="equation" role="math" aria-label="当前状态和事件，经由满足条件的转换规则 T，得到新状态和动作">(<var>S</var>, <var>E</var>)<span class="labeled-arrow guard-arrow"><small><var>T</var> · 满足条件</small><span>⟶</span></span>(<var>S</var>′, <var>A</var>)</div>
+<p>这里的 <var>A</var> 表示转移时需要执行的动作或副作用。</p>
+<p>关键在于：<strong>事件不等于转移，转移也不等于动作。</strong></p>
+<p>同一个事件在不同状态下，可能产生不同的转移，也可能什么都不发生。</p>
+<p>例如玩家在空中按下跳跃键，如果游戏禁止二段跳，那么事件发生了，但不会发生新的跳跃转移。</p>
+<p>此外，转移不一定必须由外部事件触发。计时器到期、内部条件满足，也可能触发转移。</p>
+<p>本例 <code>DoorEvent.Open</code> 的含义是“打开请求”。若业务系统严格区分命令与已发生的事实，可以把请求命名为 <code>OpenRequested</code>，把成功结果命名为 <code>DoorOpened</code>；无论使用什么名字，都应先明确它代表输入还是结果。</p>
+<h2 id="chapter-5"><span class="chapter-number">05</span>动手实验：你来决定什么是合法转移</h2>
+<p>尝试发送不同事件，观察“接受还是拒绝”以及当前状态的变化。所有按钮都保持可用，以便比较合法和非法请求。</p>
+<section class="demo transition-demo" aria-labelledby="experiment-title"><div class="demo-heading"><div><span class="demo-kicker">离线交互实验</span><h3 id="experiment-title">向同一扇门发送不同事件</h3></div><span class="demo-chip">与 Door.Handle 规则一致</span></div><div class="transition-current"><span>当前状态</span><output id="current-state" aria-label="当前门状态">关闭</output><code id="current-state-en">DoorState.Closed</code></div><div class="event-buttons" role="group" aria-label="发送门事件"><button type="button" class="action-button" data-event="Open">打开 <small>Open</small></button><button type="button" class="secondary-button" data-event="Close">关闭 <small>Close</small></button><button type="button" class="secondary-button" data-event="Lock">上锁 <small>Lock</small></button><button type="button" class="secondary-button" data-event="Unlock">解锁 <small>Unlock</small></button></div><p class="transition-feedback" id="transition-feedback" role="status" aria-live="polite">初始状态：关闭。尝试发送不同事件，观察结果。</p><div class="log-heading"><strong>转移记录</strong><button type="button" class="reset-button" id="reset-experiment">重置实验</button></div><ol class="transition-log" id="transition-log" aria-label="最近的转移记录"><li class="initial-record">初始状态：关闭</li></ol><p class="demo-caption">最多保留最近 30 条记录。接受或拒绝由当前状态与事件共同决定；重置会清空记录并创建新的初始对象。</p></section>
+<p>可以依次尝试：</p>
+<ol>
+<li><strong>上锁 → 打开：</strong> 第一步成功，第二步拒绝，门保持锁定。</li>
+<li><strong>解锁 → 打开：</strong> 先回到关闭，再转移到打开。</li>
+<li><strong>打开 → 打开：</strong> 已经打开时，再次发送打开请求；按本例规则应拒绝。</li>
+<li><strong>打开 → 上锁：</strong> 本例没有“打开 → 锁定”的规则，应先关闭才能上锁。</li>
+</ol>
+<p>以上第三、四项可以从重置后的关闭状态开始。“重置实验”用于重新创建初始对象，不属于 <code>DoorEvent</code> 中定义的业务事件。</p>
+<h2 id="chapter-6"><span class="chapter-number">06</span>再深入一层：用函数描述转移规则</h2>
+<p>从更抽象的层面看，确定性的转移规则可以用一个函数描述：</p>
+<div class="equation" role="math" aria-label="转换规则 T 从状态集合与事件集合的笛卡尔积映射到状态集合"><var>T</var> : <var>S</var> × <var>E</var> ⟶ <var>S</var></div>
+<p>意思是，将“当前状态”和“事件”作为输入，求出“下一个状态”。</p>
+<p>这里把 <var>S</var>、<var>E</var> 分别看作状态集合与事件集合。当把拒绝请求的结果定义为“保持原状态”时，可以写成上面的总函数；如果只对合法组合定义转移结果，则是偏函数。本例的 <code>bool</code> 返回值额外区分“接受”和“拒绝”，避免仅凭新旧状态判断结果。</p>
+<p>这只是最简单的模型。真实程序中，可能还需要考虑上下文、守卫条件、操作结果和转移副作用，例如：</p>
+<div class="equation" role="math" aria-label="转换规则作用于状态、事件和上下文，得到新状态和动作"><var>T</var>(<var>S</var>, <var>E</var>, <var>C</var>) = (<var>S</var>′, <var>A</var>)</div>
+<p>其中 <var>C</var> 是上下文条件，<var>A</var> 是伴随转移的动作。</p>
+<p>因此，一次转移的执行不一定只有一个简单的赋值语句，而可能包含一套受约束的业务过程。函数或规则描述允许怎样变化，执行过程才使具体变化实际发生。</p>
+<p>对于重要的数据转移，例如“道具未领取 → 已领取”，还需要考虑并发、持久化和原子性，否则内存中的转移成功，不意味着整个业务操作已经可靠完成。</p>
+<h2 id="chapter-7"><span class="chapter-number">07</span>最终总结：状态与转移的本质关系</h2>
+<div class="table-scroll" tabindex="0"><table>
+<thead>
+<tr>
+<th>概念</th>
+<th>本质</th>
+<th>关注的问题</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>状态 State</td>
+<td>某个时刻的情况</td>
+<td>现在是什么？</td>
+</tr>
+<tr>
+<td>事件 Event</td>
+<td>发生的事情</td>
+<td>发生了什么？</td>
+</tr>
+<tr>
+<td>条件 Guard</td>
+<td>转移的约束</td>
+<td>允许改变吗？</td>
+</tr>
+<tr>
+<td>转移 Transition</td>
+<td>从一种状态到另一种状态的变化</td>
+<td>从什么状态变成什么状态？</td>
+</tr>
+<tr>
+<td>转移规则 Transition Rule</td>
+<td>定义允许的变化及其条件</td>
+<td>在什么条件下可以怎样变？</td>
+</tr>
+<tr>
+<td>转移过程 Transition Process</td>
+<td>一次具体变化的执行过程</td>
+<td>这次变化实际如何完成？</td>
+</tr>
+<tr>
+<td>动作 Action</td>
+<td>执行的操作</td>
+<td>转移时做什么？</td>
+</tr>
+</tbody>
+</table></div>
+<p>最后记住两个层次：</p>
+<ul>
+<li><strong>从数学角度：</strong> 转移关系描述状态之间允许的变化，转移函数描述确定性的变化规则；一次转移是关系中的一个实例。</li>
+<li><strong>从软件设计角度：</strong> 通过转移规则约束变化，通过执行过程完成一次具体的状态变化。</li>
+</ul>
+<p><strong>状态回答的是“是什么”，转移回答的是“怎样变”。</strong></p>
+<p>把两者结合起来，才能描述一个系统如何随着时间和事件不断演化。这正是状态机、交互系统、游戏玩法逻辑和业务流程建模的共同基础。</p>
+<h2 id="chapter-8"><span class="chapter-number">08</span>补充：过程、规则与转移，严格区分</h2>
+<p>理解转移时，可以从两个不同角度观察：一个关注实际发生的变化，另一个关注变化必须遵循的约束。过程与规则密切相关，但严格来说不是同一个概念。</p>
+<h3 id="process">1. 过程（Process）：状态是怎么改变的？</h3>
+<p>过程描述实际发生了什么，以及变化如何完成。</p>
+<p>例如，一扇门从“关闭”变成“打开”：</p>
+<ol>
+<li>门最初处于关闭状态。</li>
+<li>用户发出打开请求。</li>
+<li>系统检查是否允许打开。</li>
+<li>系统将状态更新为打开。</li>
+<li>转移完成。</li>
+</ol>
+<p>这是一段实际发生的过程。如果只关注状态本身，可以简化为：</p>
+<div class="equation" role="math" aria-label="初始状态 S 零转移到状态 S 一"><var>S</var><sub>0</sub> ⟶ <var>S</var><sub>1</sub></div>
+<p>即：</p>
+<div class="equation" role="math" aria-label="关闭转移到打开">关闭 ⟶ 打开</div>
+<p>这里描述的是一次具体的状态变化。上面的五个步骤是帮助理解的展开，并不意味着一次转移必须具有五个步骤。</p>
+<h3 id="rule">2. 规则（Rule）：状态允许怎样改变？</h3>
+<p>规则描述在什么条件下，允许或应该发生什么变化。例如：</p>
+<ul>
+<li>门关闭时，收到打开请求，可以转移到打开。</li>
+<li>门锁定时，收到打开请求，不允许转移到打开。</li>
+<li>门锁定时，收到解锁请求，可以转移到关闭。</li>
+</ul>
+<p>可以将这些规则表达为：</p>
+<div class="equation" role="math" aria-label="转移规则作用于状态和事件，得到新状态"><var>T</var>(<var>S</var>, <var>E</var>) = <var>S</var>′</div>
+<p>规则本身只是定义了状态变化的关系。即使现在没有任何人打开门，这套规则依然存在。</p>
+<ul>
+<li><strong>过程</strong>关注实际发生的一次变化。</li>
+<li><strong>规则</strong>关注可能发生的变化及其条件。</li>
+</ul>
+<h3 id="section-5">3. 过程和规则是什么关系？</h3>
+<p><strong>规则决定怎样转移，过程体现转移实际如何发生。</strong></p>
+<p>例如：</p>
+<div class="code-card" data-filename="反例片段4"><div class="code-toolbar"><div><strong>过程与规则 · 条件执行片段</strong><small>C# · 对象内部或局部上下文的示意片段</small></div><div class="code-actions"><button type="button" data-action="copy" aria-label="复制 过程与规则 · 条件执行片段">复制代码</button></div></div><pre tabindex="0"><code class="language-csharp"><span class="tok-comment">// 规则：门关闭时，才允许打开</span>
+<span class="tok-keyword">if</span> (state == DoorState.Closed)
+{
+    <span class="tok-comment">// 执行一次实际的状态变化</span>
+    state = DoorState.Open;
+}
+</code></pre></div>
+<p>其中：</p>
+<ul>
+<li><code>state == DoorState.Closed</code> 是转移条件。</li>
+<li>整个 <code>if</code> 语句表达了一个转移规则。</li>
+<li><code>state = DoorState.Open</code> 是执行状态更新的操作。</li>
+<li>当这段代码在运行时成功将状态从关闭改为打开，便发生了一次状态转移。</li>
+</ul>
+<p>这段代码是拥有状态修改权限的对象内部或局部上下文中的示意片段，不表示外部调用者可以绕过前面 <code>Door.State</code> 的私有 setter。</p>
+<h3 id="transition">4. Transition 到底指过程还是规则？</h3>
+<p>Transition 的核心含义是“从一种状态到另一种状态的变化”，而不是规则本身。在不同语境下，它的侧重点有所不同：</p>
+<div class="table-scroll" tabindex="0"><table>
+<thead>
+<tr>
+<th>语境</th>
+<th>Transition 指什么</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>日常语言</td>
+<td>从一种情况变成另一种情况的变化或过渡过程</td>
+</tr>
+<tr>
+<td>数学、状态机理论</td>
+<td>状态之间的转移关系，或者关系中的一次转移</td>
+</tr>
+<tr>
+<td>软件设计</td>
+<td>一次状态变化；也可能用作定义这种变化的转移规则的简称</td>
+</tr>
+</tbody>
+</table></div>
+<p>例如在有限状态机中：</p>
+<div class="equation" role="math" aria-label="转移函数 delta 作用于关闭状态和打开请求，结果为打开">δ(关闭, 打开请求) = 打开</div>
+<p>这里的 δ 是<strong>转移函数（Transition Function）</strong>，也就是规则的数学表示。</p>
+<p>而：</p>
+<div class="equation" role="math" aria-label="关闭转移到打开">关闭 ⟶ 打开</div>
+<p>表示一次可能的或实际发生的状态转移。两者密切相关，但不完全相同；箭头表达允许的变化还是执行轨迹中的一次变化，需要结合上下文判断。</p>
+<p>因此，最初的表述应进一步严谨地区分为：</p>
+<blockquote>
+<p>转移（Transition）是从一种状态到另一种状态的变化；转移规则（Transition Rule）决定在什么条件下可以发生这种变化；转移过程（Transition Process）描述这种变化实际如何完成。</p>
+</blockquote>
+<p>还有一点值得注意：转移不一定需要多个步骤或持续一段时间。像 <code>state = Open</code> 这样的瞬时更新，只要完成了相应状态变化，也可以构成一次转移。</p>
+<p><strong>变化是转移的核心；规则约束变化，过程描述变化。</strong></p>
+</article><aside class="editor-note" aria-label="整理说明"><h3>整理说明</h3><p>本文依据你提供的完整原文及补充内容整理，修复表格、公式和代码语言标记，并补全“实现转移”的第三步。补充章节区分转移、转移规则与转移过程，开篇、数学解释和总结也已同步修订。Door 的四条合法转移与原文代码一致。</p><p>为准确解释示例，补充了直接赋值反例的前提、请求与结果事件的区别，以及总函数、偏函数、自转移和拒绝的简短说明。图示和交互实验均为原生 HTML / SVG，可离线使用；正文示例为 C#。</p></aside></main>
+<footer class="end-note"><span>转移 Transition 的本质 · Unity C# 笔记</span><a href="#page-title">回到开头 ↑</a></footer></div></div><div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script>
+(function(){
+  'use strict';
+  const toast=document.getElementById('toast');let toastTimer;
+  function notify(message){toast.textContent=message;toast.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>toast.classList.remove('show'),2300);}
+  async function copyText(text){if(navigator.clipboard&&window.isSecureContext){try{await navigator.clipboard.writeText(text);return;}catch(error){}}const area=document.createElement('textarea');area.value=text;area.style.cssText='position:fixed;left:-9999px;top:0';document.body.appendChild(area);area.select();try{if(!document.execCommand('copy'))throw new Error('copy failed');}finally{area.remove();}}
+  document.querySelectorAll('.code-card').forEach(card=>{card.querySelector('[data-action="copy"]').addEventListener('click',async()=>{try{await copyText(card.querySelector('code').textContent);notify('代码已复制');}catch(error){notify('请在代码框中手动选择并复制。');}});const button=card.querySelector('[data-action="download"]');if(button)button.addEventListener('click',()=>{const blob=new Blob(['\ufeff'+card.querySelector('code').textContent],{type:'text/plain;charset=utf-8'});const url=URL.createObjectURL(blob);const link=document.createElement('a');link.href=url;link.download=card.dataset.filename;document.body.appendChild(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);notify('已准备下载 '+card.dataset.filename);});});
+  document.getElementById('print-button').addEventListener('click',()=>window.print());
+  const menu=document.getElementById('sidebar');const menuButton=document.getElementById('menu-button');
+  function closeMenu(){menu.classList.remove('open');menuButton.setAttribute('aria-expanded','false');}
+  menuButton.addEventListener('click',()=>menuButton.setAttribute('aria-expanded',String(menu.classList.toggle('open'))));menu.querySelectorAll('a').forEach(a=>a.addEventListener('click',closeMenu));document.addEventListener('keydown',e=>{if(e.key==='Escape')closeMenu();});document.addEventListener('click',e=>{if(menu.classList.contains('open')&&!menu.contains(e.target)&&!menuButton.contains(e.target))closeMenu();});
+  const headings=Array.from(document.querySelectorAll('article>h2'));const navLinks=Array.from(menu.querySelectorAll('a'));
+  function updateReading(){const total=document.documentElement.scrollHeight-window.innerHeight;document.getElementById('reading-progress').style.width=(total>0?window.scrollY/total*100:0)+'%';let current=headings[0];for(const heading of headings){if(heading.getBoundingClientRect().top<180)current=heading;}navLinks.forEach(link=>{const active=current&&link.getAttribute('href')==='#'+current.id;link.classList.toggle('active',!!active);if(active)link.setAttribute('aria-current','location');else link.removeAttribute('aria-current');});}
+  window.addEventListener('scroll',updateReading,{passive:true});window.addEventListener('resize',updateReading);updateReading();
+  const stateNames={Closed:'关闭',Open:'打开',Locked:'锁定'};
+  const eventNames={Open:'打开',Close:'关闭',Lock:'上锁',Unlock:'解锁'};
+  const rules={Closed:{Open:'Open',Lock:'Locked'},Open:{Close:'Closed'},Locked:{Unlock:'Closed'}};
+  let state='Closed';let attempts=0;
+  const stateOutput=document.getElementById('current-state');const stateCode=document.getElementById('current-state-en');const feedback=document.getElementById('transition-feedback');const log=document.getElementById('transition-log');
+  function renderState(){stateOutput.textContent=stateNames[state];stateCode.textContent='DoorState.'+state;document.querySelectorAll('.graph-node').forEach(node=>node.classList.toggle('is-active',node.dataset.state===state));}
+  document.querySelectorAll('[data-event]').forEach(button=>button.addEventListener('click',()=>{
+    const event=button.dataset.event;const from=state;const next=rules[state][event];const accepted=next!==undefined;
+    attempts++;if(accepted)state=next;renderState();
+    feedback.classList.toggle('accepted',accepted);feedback.classList.toggle('rejected',!accepted);
+    feedback.textContent=accepted?'接受：'+stateNames[from]+' + '+eventNames[event]+' → '+stateNames[state]+'。Handle 返回 true。':'拒绝：'+stateNames[from]+' 状态不接受“'+eventNames[event]+'”；保持'+stateNames[state]+'。Handle 返回 false。';
+    const record=document.createElement('li');record.className=accepted?'accepted':'rejected';record.textContent=String(attempts).padStart(2,'0')+' · '+stateNames[from]+' + '+eventNames[event]+' → '+stateNames[state]+' · '+(accepted?'接受':'拒绝');
+    const initial=log.querySelector('.initial-record');if(initial)initial.remove();log.prepend(record);while(log.children.length>30)log.lastElementChild.remove();log.scrollTop=0;
+  }));
+  document.getElementById('reset-experiment').addEventListener('click',()=>{state='Closed';attempts=0;renderState();feedback.classList.remove('accepted');feedback.classList.remove('rejected');feedback.textContent='已重置：重新创建初始状态为“关闭”的对象。';log.replaceChildren();const initial=document.createElement('li');initial.className='initial-record';initial.textContent='初始状态：关闭';log.appendChild(initial);});
+  renderState();
+})();
+</script></body></html>

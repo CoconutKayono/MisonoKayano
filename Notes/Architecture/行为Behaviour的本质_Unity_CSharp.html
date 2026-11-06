@@ -1,0 +1,304 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light"><meta name="description" content="行为 Behaviour 的 What、Why、How：状态、输入、响应、结果；Unity C# 门示例，以及行为、动作、转移、事件和引擎 Behaviour 类型的区别。"><title>行为 Behaviour 的本质 · Unity C# 笔记</title><style>
+:root{--paper:#f7f8fa;--ink:#202a36;--muted:#697581;--line:#e1e6ec;--blue:#2862b7;--nav:#152330;--nav-muted:#aebdca;--code:#172433;--side:272px}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:32px}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.85 "Segoe UI","Microsoft YaHei","PingFang SC",sans-serif;text-rendering:optimizeLegibility}button,a{-webkit-tap-highlight-color:transparent}a{color:var(--blue);text-decoration-thickness:1px;text-underline-offset:4px}a:hover{color:#153f7c}button{font:inherit;cursor:pointer}button:focus-visible,a:focus-visible,pre:focus-visible,.table-scroll:focus-visible{outline:3px solid #74a9ee;outline-offset:4px}.skip-link{position:fixed;left:20px;top:-90px;z-index:100;background:white;padding:12px 20px}.skip-link:focus{top:16px}.progress{position:fixed;left:var(--side);right:0;top:0;height:3px;background:transparent;z-index:30}.progress i{display:block;height:100%;width:0;background:#609bdd}
+.sidebar{position:fixed;inset:0 auto 0 0;width:var(--side);background:var(--nav);color:#fff;padding:36px 23px 22px;display:flex;flex-direction:column;z-index:25}.brand{display:flex;gap:12px;align-items:center;margin:0 7px 32px}.brand-mark{display:grid;place-items:center;width:39px;height:39px;border:1px solid #607689;border-radius:10px;font:bold 14px/1 monospace;letter-spacing:-1px;color:#d1e5f8}.brand b{display:block;font-size:15px;letter-spacing:.6px}.brand small{display:block;font-size:11px;color:var(--nav-muted);letter-spacing:1.3px;margin-top:2px}.toc-title{margin:0 12px 12px;color:#9eafbe;font-size:11px;font-weight:600;letter-spacing:2px}.toc{overflow:auto;scrollbar-width:thin;scrollbar-color:#425464 transparent}.toc a{display:flex;gap:12px;align-items:baseline;text-decoration:none;color:#c5d1dc;font-size:13px;line-height:1.6;border-radius:6px;padding:10px 11px;margin:3px 0}.toc a span{font:11px/1.6 monospace;color:#9caebe;flex:0 0 16px}.toc a:hover,.toc a.active{color:#fff;background:#283e51}.toc a.active{box-shadow:inset 2px 0 #8cb7e5}.sidebar-footer{margin-top:auto;padding:23px 10px 0;font-size:11px;color:#aebdca;line-height:1.7}.sidebar-footer strong{color:#dbe6ef;font-weight:500}.page{margin-left:var(--side);padding:0 48px 64px}.page-inner{max-width:1010px;margin:auto}.topbar{display:flex;align-items:center;justify-content:space-between;padding:27px 0 25px;border-bottom:1px solid var(--line);gap:12px;font-size:12px;color:var(--muted)}.topbar .crumb{letter-spacing:1px}.topbar .tools{display:flex;align-items:center;gap:16px}.print-button{padding:5px 12px;border:1px solid #ccd6e1;background:transparent;border-radius:5px;font-size:12px;color:#526477}.mobile-menu{display:none}.hero{padding:54px 0 36px}.eyebrow{font:600 12px/1.4 "Segoe UI",sans-serif;letter-spacing:2.5px;color:var(--blue);margin:0 0 20px}.hero h1{font-size:clamp(34px,4.6vw,55px);font-weight:750;line-height:1.2;letter-spacing:-2px;margin:0 0 16px}.hero h1 span{font-weight:400;color:#76818e}.hero-sub{font-size:19px;color:#687888;margin:0 0 27px;letter-spacing:.25px}.hero-tags{display:flex;flex-wrap:wrap;gap:9px}.hero-tags span{font-size:11px;padding:3px 10px;border:1px solid #d9e0e7;border-radius:4px;color:#60717f;background:#fff}.essence{margin:0 0 40px;padding:25px 27px;background:#fff;border:1px solid var(--line);border-left:3px solid var(--blue);border-radius:0 9px 9px 0}.essence p{font-size:18px;line-height:1.85;margin:0}.role-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:20px}.role{border-top:1px solid var(--line);padding-top:14px}.role b{font-size:13px;color:#355b87}.role span{display:block;font-size:12px;margin-top:3px;color:var(--muted)}
+article{font-size:15px;line-height:1.95}article>p:first-child{color:var(--muted);font-size:12px}article p{margin:14px 0}article>h2{font-size:25px;line-height:1.55;margin:58px 0 21px;padding-top:25px;border-top:1px solid var(--line);letter-spacing:-.5px;display:flex;align-items:baseline;gap:12px}.chapter-number{font:12px/1.4 monospace;color:#8695a4;letter-spacing:1px;flex:0 0 24px}article h3{font-size:18px;line-height:1.6;margin:30px 0 12px}article strong{font-weight:650}article ul,article ol{padding-left:24px;margin:14px 0}article li{padding-left:3px;margin:7px 0}article blockquote{margin:24px 0;background:#edf3fb;border-left:3px solid #5d86bd;padding:14px 23px;border-radius:0 6px 6px 0;color:#27466b}article blockquote p{margin:0}article p code,article li code,article td code{padding:2px 5px;background:#eaf0f6;border-radius:4px;color:#2b537f;font:12.5px/1.65 Consolas,"Cascadia Code",monospace;overflow-wrap:anywhere}.table-scroll{overflow-x:auto;margin:22px 0;border:1px solid var(--line);border-radius:8px;background:#fff}table{border-collapse:collapse;width:100%;font-size:13px;line-height:1.8}th{text-align:left;font-weight:650;background:#edf1f6;color:#334c67;white-space:nowrap}td,th{padding:13px 16px;vertical-align:top;border-bottom:1px solid var(--line)}tr:last-child td{border-bottom:0}td:first-child{font-weight:500;min-width:120px}pre{white-space:pre;overflow-x:auto;tab-size:4;font:12.5px/1.8 Consolas,"Cascadia Code","Microsoft YaHei",monospace}.flow-block{padding:22px 24px;border:1px solid #d8e0e9;background:#eef2f7;border-radius:8px;color:#36516c;margin:22px 0;line-height:2}.code-card{margin:23px 0 20px;background:var(--code);color:#e2e9f1;border:1px solid #26394b;border-radius:9px;overflow:hidden}.code-toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 18px;background:#203043;border-bottom:1px solid #344557}.code-toolbar strong{font:12px/1.6 Consolas,"Cascadia Code",monospace;letter-spacing:.2px;display:block;color:#e9f1fa}.code-toolbar small{font-size:10px;color:#b4c3d2;display:block;margin-top:1px}.code-actions{display:flex;gap:7px;flex-shrink:0}.code-actions button{font-size:11px;line-height:1.5;border:1px solid #5b6f83;border-radius:4px;background:transparent;color:#d7e6f6;padding:4px 9px}.code-actions button:hover{background:#3a536c;color:white}.code-card pre{padding:20px 23px;margin:0;scrollbar-color:#647c95 transparent}.tok-keyword{color:#a8c8ff}.tok-string{color:#b9dba7}.tok-comment{color:#a8b8c9}.tok-number{color:#efc79b}.end-note{margin-top:54px;padding-top:20px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:16px;font-size:11px;color:var(--muted)}.end-note a{color:#6a7f94}.toast{position:fixed;left:calc(50% + var(--side)/2);bottom:24px;transform:translateX(-50%);background:#20384e;color:#fff;padding:10px 19px;border-radius:7px;font-size:13px;box-shadow:0 4px 18px #0002;opacity:0;transition:opacity .16s;pointer-events:none;z-index:100}.toast.show{opacity:1}
+@media(min-width:1550px){.page{padding-left:80px;padding-right:80px}.hero{padding-top:65px}}
+@media(max-width:1150px){:root{--side:234px}.sidebar{padding-left:15px;padding-right:15px}.toc a{font-size:12px}.page{padding-left:30px;padding-right:30px}.hero h1{font-size:40px}}
+@media(max-width:820px){:root{--side:0px}html{scroll-padding-top:20px}.sidebar{display:none;width:260px}.sidebar.open{display:flex;box-shadow:10px 0 40px #0003}.page{margin-left:0;padding:0 23px 36px}.progress{left:0}.topbar{padding-top:17px;padding-bottom:16px}.topbar .crumb{font-size:11px}.topbar .tools{gap:9px}.mobile-menu{display:inline-block;padding:5px 9px;border:1px solid #ccd6e1;background:white;border-radius:5px;font-size:12px;color:#526477}.hero{padding-top:37px}.hero h1{font-size:37px;letter-spacing:-1px}.hero-sub{font-size:16px}.hero-tags span{font-size:10px}.essence{padding:20px}.essence p{font-size:16px}.role-grid{gap:10px}.role b{font-size:12px}.role span{font-size:11px}article{font-size:14px}article>h2{font-size:22px;margin-top:40px}article h3{font-size:17px}.code-toolbar{padding:11px 12px}.code-card pre{padding:17px 14px;font-size:11.5px}.toast{left:50%}}
+@media(max-width:420px){.page{padding-left:16px;padding-right:16px}.topbar .crumb{letter-spacing:0}.print-button{padding-left:8px;padding-right:8px}.hero h1{font-size:33px}.role-grid{grid-template-columns:1fr}.role{padding-top:8px}.role span{display:inline;margin-left:8px}.code-toolbar{align-items:flex-start}.code-actions{flex-direction:column;gap:5px}.code-actions button{padding:3px 6px}.flow-block{padding:17px 14px;font-size:11px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.toast{transition:none}}
+@media print{@page{margin:16mm}body{background:#fff;font-size:11pt}.sidebar,.topbar,.progress,.code-actions,.toast,.hero-tags,.end-note{display:none!important}.page{margin:0;padding:0}.page-inner{max-width:none}.hero{padding:0 0 16px}.hero h1{font-size:30pt}.hero-sub{font-size:14pt}.essence{margin-bottom:20px;padding:14px 18px}.essence p{font-size:12pt}article{font-size:10pt;line-height:1.65}article>h2{margin-top:26px;padding-top:15px;font-size:17pt;break-after:avoid}article h3{font-size:12pt;break-after:avoid}pre{white-space:pre-wrap;overflow:visible;overflow-wrap:anywhere;font-size:8pt!important}.code-card{background:#f7f8fa;color:#202a36;border-color:#ccd4dc}.code-toolbar{background:#edf1f6;border-color:#ccd4dc}.code-toolbar strong,.code-toolbar small{color:#34495e}.tok-keyword{color:#23558b}.tok-string{color:#3b6133}.tok-comment{color:#657566}.tok-number{color:#8a4b25}.table-scroll{overflow:visible}th,td{padding:8px 9px}.role-grid{grid-template-columns:repeat(3,1fr)}a{color:inherit;text-decoration:none}.flow-block{background:#f4f6f8;color:#30465d}}
+
+.hero h1{letter-spacing:-1.8px}.hero-sub{max-width:720px}.equation{display:block;margin:25px 0;padding:24px 20px;text-align:center;border:1px solid #d7e2ee;border-radius:8px;background:#edf3fa;font:500 23px/1.65 "Cambria Math",Cambria,"Microsoft YaHei",serif;color:#264d79;overflow-wrap:anywhere}.equation sub{font-size:60%;margin-right:3px}.equation-final{font:600 20px/1.7 "Segoe UI","Microsoft YaHei",sans-serif}var{font-family:Cambria,"Times New Roman",serif}.demo{border:1px solid #d6e1ed;border-radius:10px;margin:25px 0;padding:24px;background:#fff}.demo-heading{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;margin-bottom:20px}.demo-heading h3{margin:5px 0 0;font-size:16px;line-height:1.7}.demo-kicker{font-size:10px;color:#6c84a0;letter-spacing:1.3px;font-weight:600}.demo-chip{white-space:nowrap;font-size:10px;background:#edf3fb;color:#43668c;padding:4px 9px;border-radius:4px;align-self:flex-start}.door-layout{display:grid;grid-template-columns:180px 1fr;gap:27px;align-items:center}.door-scene{height:184px;position:relative;display:grid;place-items:center;background:#f0f4f8;border-radius:8px}.door-frame{height:136px;width:88px;border:7px solid #65798b;border-bottom:0;background:#20394a;perspective:400px;z-index:1}.door-leaf{height:100%;background:#c59767;border:3px solid #a2774f;position:relative;transform-origin:left;transition:transform .35s,background .25s}.door-leaf::before{content:"";position:absolute;inset:8px;border:2px solid #a67a50}.door-leaf i{position:absolute;width:7px;height:7px;border-radius:50%;background:#f8df9d;top:58%;right:8px;box-shadow:0 0 0 1px #8c642a}.door-leaf.is-open{transform:rotateY(-65deg)}.door-leaf.is-locked{background:#8b98a3;border-color:#647685}.door-leaf.is-locked::before{border-color:#647685}.door-leaf.is-locked::after{content:"锁";position:absolute;left:23px;top:42px;padding:2px 5px;color:#e9edf2;background:#425564;border-radius:3px;font-size:12px}.door-ground{position:absolute;bottom:22px;width:118px;height:5px;background:#c6d2dd;border-radius:50%}.door-controls label{font-size:12px;color:#60768b;display:block;margin-bottom:5px}.door-controls select{font:13px/1.5 inherit;padding:9px 32px 9px 12px;border:1px solid #becedf;border-radius:5px;background:#fff;color:#344d67;margin-right:7px;margin-bottom:10px;max-width:100%}.action-button,.secondary-button{font-size:12px;padding:9px 14px;border:1px solid #2c609f;border-radius:5px;line-height:1.5;background:#2c609f;color:white}.secondary-button{color:#3e5c7b;background:#f4f7fa;border-color:#cfdae6}.action-button:hover{background:#1f4a7e}.secondary-button:hover{background:#e7eff7}.demo p.demo-result{font-size:13px;line-height:1.85;color:#325675;margin:10px 0 0}.demo-caption{font-size:11.5px!important;color:#708092!important;line-height:1.85!important;margin:16px 0 0!important}.hp-display{display:flex;align-items:baseline;gap:9px}.hp-display output{font:600 48px/1.1 "Segoe UI",sans-serif;letter-spacing:-2px;color:#315d8f}.hp-display span{font-size:14px;color:#8190a0}progress{display:block;width:100%;height:13px;margin:18px 0 22px;accent-color:#3b7baf;border:0;border-radius:5px;overflow:hidden;background:#e9eff6}progress::-webkit-progress-bar{background:#e9eff6;border-radius:5px}progress::-webkit-progress-value{background:#4e85b5;border-radius:5px;transition:width .2s}progress::-moz-progress-bar{background:#4e85b5}.demo-buttons{display:flex;flex-wrap:wrap;gap:8px}.fsm-figure{margin:25px 0}.fsm-states{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.fsm-states>div{padding:16px 12px;border-radius:7px;background:#edf3f9;border:1px solid #d7e3ee;text-align:center}.fsm-states b{display:block;font:600 13px/1.7 Consolas,monospace;color:#375d85}.fsm-states span{font-size:12px;color:#708195}.fsm-states .dead-state{background:#f4eeed;border-color:#e8d8d4}.fsm-states .dead-state b{color:#8a5d52}.editor-note{background:#fff;border:1px solid var(--line);border-radius:8px;padding:20px 24px;margin-top:46px;font-size:12px;color:#657488}.editor-note h3{font-size:14px;margin:0 0 8px}.editor-note p{margin:8px 0}.editor-note summary{cursor:pointer;color:#3f648c;margin-top:12px}.editor-note ul{padding-left:19px}.editor-note a{overflow-wrap:anywhere}.mobile-menu{flex-shrink:0}
+@media(max-width:600px){.hero h1{font-size:34px}.hero-sub{font-size:15px}.door-layout{grid-template-columns:1fr}.door-scene{height:170px}.door-controls{margin-top:-10px}.demo{padding:18px}.demo-heading h3{font-size:15px}.demo-chip{font-size:9px}.equation{font-size:19px;padding:20px 12px}.equation-final{font-size:16px}.fsm-states{grid-template-columns:repeat(2,1fr)}}
+@media(prefers-reduced-motion:reduce){.door-leaf,progress::-webkit-progress-value{transition:none}}
+@media print{.demo{break-inside:avoid;padding:15px}.demo-buttons,.door-controls select,.door-controls label,.door-controls button{display:none}.door-layout{grid-template-columns:130px 1fr}.door-scene{height:160px}.hp-display output{font-size:26pt}.demo-heading h3{font-size:11pt}.equation{font-size:15pt;padding:15px}.fsm-states{grid-template-columns:repeat(4,1fr)}.editor-note{font-size:9pt}.equation-final{font-size:13pt}}
+.behaviour-arrow{display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;line-height:1;margin:0 22px;position:relative;top:-5px}.behaviour-arrow small{font-size:13px;line-height:1.4}.behaviour-arrow>span{font:38px/1 Cambria,serif}.response-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:22px 0 0}.response-grid>div{background:#f1f5f9;border:1px solid #dfe7ef;border-radius:6px;padding:12px 14px;min-width:0}.response-grid dt{font-size:10px;color:#788ca0;margin-bottom:5px}.response-grid dd{margin:0;font:12px/1.75 Consolas,"Microsoft YaHei",monospace;color:#365d82;overflow-wrap:anywhere}.behaviour-flow{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:24px 0}.flow-card{border:1px solid #d9e3ed;background:#fff;border-radius:7px;padding:16px 13px}.flow-card small{font:10px/1.5 Consolas,monospace;color:#8295a9;display:block}.flow-card b{display:block;font-size:13px;color:#3b6188;line-height:1.7;margin:8px 0}.flow-card span{font-size:11px;line-height:1.8;color:#6d8094;display:block}.behaviour-timeline{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:25px 0}.time-point{position:relative;padding:17px 13px;border:1px solid #d7e2ed;border-radius:7px;background:#edf3f9;text-align:center}.time-point small{display:block;font:13px/1.5 Cambria,serif;color:#7c91a5}.time-point b{display:block;font:600 16px/1.8 Consolas,monospace;color:#466787;margin:5px 0}.time-point span{font-size:11px;color:#71859a;display:block;line-height:1.75}.time-point.selected{background:#e0edf9;border-color:#5883b2}.time-point.selected b{color:#285b91}.behaviour-timeline figcaption{grid-column:1/-1;font-size:11px;line-height:1.8;color:#7b8b9b}.hero-sub{max-width:760px}
+@media(max-width:650px){.behaviour-flow,.behaviour-timeline{grid-template-columns:repeat(2,minmax(0,1fr))}.response-grid{grid-template-columns:1fr}.demo-heading{flex-direction:column;gap:9px}.behaviour-arrow{margin-left:12px;margin-right:12px}}
+@media print{.behaviour-flow,.behaviour-timeline{grid-template-columns:repeat(4,minmax(0,1fr))}.response-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.demo,.behaviour-flow,.behaviour-timeline{break-inside:avoid}.response-grid dd{font-size:8pt}}</style></head><body><a class="skip-link" href="#content">跳到正文</a><div class="progress" aria-hidden="true"><i id="reading-progress"></i></div>
+<aside class="sidebar" id="sidebar" aria-label="文档目录"><div class="brand"><div class="brand-mark" aria-hidden="true">B→</div><div><b>概念笔记</b><small>BEHAVIOUR · UNITY · C#</small></div></div><div class="toc-title">阅读导航 / CONTENTS</div><nav class="toc"><a href="#chapter-1"><span>01</span>What：行为究竟是什么？</a>
+<a href="#chapter-2"><span>02</span>Why：为什么需要行为这个概念？</a>
+<a href="#chapter-3"><span>03</span>How：如何设计一个行为？</a>
+<a href="#chapter-4"><span>04</span>Behaviour、Action、Transition、Event 到底有什么不同？</a>
+<a href="#chapter-5"><span>05</span>更深入：行为其实是系统在时间中的表现</a>
+<a href="#chapter-6"><span>06</span>Unity 的 Behaviour 是什么意思？</a>
+<a href="#chapter-7"><span>07</span>最终回归本质</a></nav><div class="sidebar-footer"><strong>单文件 · 可离线阅读</strong><br>2026.10.16 · 根据提供原文整理<br>七个主题 · 公式 · 行为示意</div></aside>
+<div class="page"><div class="page-inner"><header class="topbar"><div class="crumb">CONCEPT NOTES / 04</div><div class="tools"><button type="button" class="mobile-menu" id="menu-button" aria-controls="sidebar" aria-expanded="false">目录</button><button type="button" class="print-button" id="print-button">打印 / 保存 PDF</button></div></header>
+<section class="hero" aria-labelledby="page-title"><p class="eyebrow">WHAT / WHY / HOW</p><h1 id="page-title">行为的本质<span>。</span></h1><p class="hero-sub">在特定条件下，如何响应、做什么、产生什么结果。</p><div class="hero-tags"><span>Behaviour</span><span>7 个主题</span><span>Unity C# 示例</span><span>离线行为示意</span></div></section>
+<section class="essence" aria-label="核心观点"><p>行为不只是“做一个动作”。<br><strong>它描述系统在各种条件下，如何运作和响应。</strong></p><div class="role-grid"><div class="role"><b>STATE / 状态</b><span>现在是什么样</span></div><div class="role"><b>BEHAVIOUR / 行为</b><span>会如何运作</span></div><div class="role"><b>TRANSITION / 转移</b><span>状态发生了什么改变</span></div></div></section>
+<main><article id="content"><p>先给出一个核心定义：</p>
+<p><strong>行为（Behaviour）的本质，是一个事物在特定条件下，如何响应、做什么，以及产生什么结果。</strong></p>
+<p>更抽象地说：</p>
+<blockquote>
+<p>状态（State）描述一个事物现在是什么样。</p>
+<p>行为（Behaviour）描述一个事物会如何运作。</p>
+<p>转移（Transition）描述一个事物从一个状态变成另一个状态。</p>
+</blockquote>
+<p>这三个概念不是孤立的。理解它们的关系，是理解行为的关键。</p>
+<h2 id="chapter-1"><span class="chapter-number">01</span>What：行为究竟是什么？</h2>
+<p>先不谈编程。假设我们有一扇门，它可能处于三种状态：</p>
+<ul>
+<li>关闭（Closed）</li>
+<li>打开（Open）</li>
+<li>锁定（Locked）</li>
+</ul>
+<p>这扇门可以表现出一些行为：打开（Open）、关闭（Close）、上锁（Lock）、解锁（Unlock）。</p>
+<p>但一个行为不一定能够在任何状态下成功执行。例如，尝试打开一扇门：</p>
+<section class="demo" aria-labelledby="door-demo-title"><div class="demo-heading"><div><span class="demo-kicker">行为响应 · 离线示意</span><h3 id="door-demo-title">同样的 TryOpen，可能有不同结果</h3></div><span class="demo-chip">状态 + 输入 → 状态 + 结果</span></div><div class="door-layout"><div class="door-scene" aria-hidden="true"><div class="door-frame"><div class="door-leaf" id="behaviour-door"><i></i></div></div><div class="door-ground"></div></div><div class="door-controls"><label for="initial-door-state">选择实验初始状态</label><select id="initial-door-state"><option value="Closed">关闭 Closed</option><option value="Open">打开 Open</option><option value="Locked">锁定 Locked</option></select><div class="demo-buttons"><button type="button" class="action-button" id="try-open">尝试开门 TryOpen</button><button type="button" class="secondary-button" id="try-close">尝试关门 TryClose</button></div><p class="demo-result" id="behaviour-feedback" role="status" aria-live="polite">当前状态：关闭。尝试开门，观察条件、状态与返回值。</p></div></div><dl class="response-grid"><div><dt>当前状态</dt><dd id="behaviour-current">Closed</dd></div><div><dt>返回结果</dt><dd id="behaviour-result">尚未调用</dd></div><div><dt>是否发生转移</dt><dd id="behaviour-transition">尚未调用</dd></div><div><dt>表现调用（假设已配置 Animator）</dt><dd id="behaviour-action">尚未调用</dd></div></dl><p class="demo-caption">下拉选择仅设定演示起点，不是上锁或解锁方法。失败请求也有响应，状态保持不变，不会调用动画参数。这里展示参数设置，不模拟 Unity 的真实动画播放。</p></section>
+<p><strong>相同的行为，面对不同的状态，产生不同的结果。</strong></p>
+<p>因此，行为不只是一个动作，更重要的是它背后的响应规则。可以抽象为：</p>
+<div class="equation" role="math" aria-label="当前状态和输入，经由行为 B，产生新状态和输出">(<var>S</var>, <var>I</var>)<span class="behaviour-arrow"><small><var>B</var></small><span>⟶</span></span>(<var>S</var>′, <var>O</var>)</div>
+<div class="table-scroll" tabindex="0"><table>
+<thead>
+<tr>
+<th>符号</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>S</td>
+<td>当前状态（State）</td>
+</tr>
+<tr>
+<td>I</td>
+<td>输入（Input），也可以是触发条件</td>
+</tr>
+<tr>
+<td>B</td>
+<td>行为（Behaviour）</td>
+</tr>
+<tr>
+<td>S′</td>
+<td>行为执行后的状态</td>
+</tr>
+<tr>
+<td>O</td>
+<td>输出或产生的结果（Output）</td>
+</tr>
+</tbody>
+</table></div>
+<p>这是一个简化的行为模型。它表达的是：行为规定了系统在当前状态下，遇到输入时应该如何响应。</p>
+<p>行为不一定改变状态。例如查询余额、拒绝开门，也可以构成行为。对于连续运动、异步任务等，行为还可能依赖时间和历史输入。</p>
+<h2 id="chapter-2"><span class="chapter-number">02</span>Why：为什么需要行为这个概念？</h2>
+<p>想象游戏中存在一个玩家。我们可以描述他的状态：</p>
+<div class="code-card" data-filename="概念片段1"><div class="code-toolbar"><div><strong>玩家状态 · 字段片段</strong><small>C# · 示意片段，需置于相应上下文</small></div><div class="code-actions"><button type="button" data-action="copy" aria-label="复制 玩家状态 · 字段片段">复制代码</button></div></div><pre tabindex="0"><code class="language-csharp"><span class="tok-keyword">int</span> health = <span class="tok-number">100</span>;
+<span class="tok-keyword">int</span> maxHealth = <span class="tok-number">100</span>;
+<span class="tok-keyword">bool</span> isDead = <span class="tok-keyword">false</span>;
+</code></pre></div>
+<p>这些数据回答了：玩家目前有多少生命值？玩家是否死亡？</p>
+<p>但是数据本身无法回答：</p>
+<ul>
+<li>玩家受到伤害时应该发生什么？</li>
+<li>生命值能不能低于零？</li>
+<li>死亡后还能否继续受到伤害？</li>
+<li>什么时候应该触发死亡？</li>
+</ul>
+<p>这些问题属于行为规则。例如：</p>
+<div class="code-card" data-filename="概念片段2"><div class="code-toolbar"><div><strong>TakeDamage · 方法片段</strong><small>C# · 示意片段，需置于相应上下文</small></div><div class="code-actions"><button type="button" data-action="copy" aria-label="复制 TakeDamage · 方法片段">复制代码</button></div></div><pre tabindex="0"><code class="language-csharp"><span class="tok-keyword">public</span> <span class="tok-keyword">void</span> TakeDamage(<span class="tok-keyword">int</span> damage)
+{
+    <span class="tok-keyword">if</span> (isDead)
+        <span class="tok-keyword">return</span>;
+
+    <span class="tok-keyword">if</span> (damage &lt;= <span class="tok-number">0</span>)
+        <span class="tok-keyword">return</span>;
+
+    health = Mathf.Max(<span class="tok-number">0</span>, health - damage);
+
+    <span class="tok-keyword">if</span> (health == <span class="tok-number">0</span>)
+        isDead = <span class="tok-keyword">true</span>;
+}
+</code></pre></div>
+<p><code>TakeDamage</code> 表达了玩家受到伤害时的规则。这就是为什么软件设计不仅需要状态，也需要行为。</p>
+<p>如果只有状态而没有行为规则，任何代码都可能随意修改生命值：</p>
+<div class="code-card" data-filename="概念片段3"><div class="code-toolbar"><div><strong>任意修改状态 · 反例</strong><small>C# · 示意片段，需置于相应上下文</small></div><div class="code-actions"><button type="button" data-action="copy" aria-label="复制 任意修改状态 · 反例">复制代码</button></div></div><pre tabindex="0"><code class="language-csharp">player.health = -<span class="tok-number">500</span>;
+player.isDead = <span class="tok-keyword">false</span>;
+</code></pre></div>
+<p>最终可能出现生命值为负数却仍然存活的矛盾。这个反例假设字段允许外部写入；真实对象可通过访问控制与受控方法保护约束。</p>
+<p>把规则集中到行为中，就可以维护约束。行为的重要价值，是把一个事物允许做什么、在什么条件下做、产生什么结果，组织成明确的规则。</p>
+<p>这也是面向对象设计强调把数据与行为放在一起的原因之一。</p>
+<blockquote>
+<p>上面是概念片段，需放在持有这些字段的类型内部，并引用 UnityEngine。这里保留原文的 <code>isDead</code> 写法；若死亡完全由 <code>health == 0</code> 决定，也可由生命值推导，减少重复状态。</p>
+</blockquote>
+<h2 id="chapter-3"><span class="chapter-number">03</span>How：如何设计一个行为？</h2>
+<p>一个实用的思考方式是回答四个问题：</p>
+<ol>
+<li><strong>触发（Trigger）：</strong> 什么引起行为？</li>
+<li><strong>条件（Condition）：</strong> 什么情况下允许执行？</li>
+<li><strong>执行（Execution）：</strong> 具体如何处理？</li>
+<li><strong>结果（Result）：</strong> 最终产生什么变化或输出？</li>
+</ol>
+<p>还是使用门的例子：</p>
+<figure class="behaviour-flow" aria-label="请求开门的触发、条件、执行与结果"><div class="flow-card"><small>01 / TRIGGER</small><b>请求开门</b><span>玩家发起 TryOpen</span></div><div class="flow-card"><small>02 / CONDITION</small><b>当前是 Closed？</b><span>满足条件才继续</span></div><div class="flow-card"><small>03 / EXECUTION</small><b>更新状态与表现</b><span>变为 Open；若有 Animator 则设置参数</span></div><div class="flow-card"><small>04 / RESULT</small><b>返回成功或失败</b><span>通过返回 true；拒绝返回 false，状态不变</span></div></figure>
+<p>用 Unity C# 实现：</p>
+<div class="code-card" data-filename="DoorController.cs"><div class="code-toolbar"><div><strong>DoorController.cs</strong><small>Unity C# · MonoBehaviour 完整脚本</small></div><div class="code-actions"><button type="button" data-action="copy" aria-label="复制 DoorController.cs">复制代码</button><button type="button" data-action="download" aria-label="下载 DoorController.cs">下载 .cs</button></div></div><pre tabindex="0"><code class="language-csharp"><span class="tok-keyword">using</span> UnityEngine;
+
+<span class="tok-keyword">public</span> <span class="tok-keyword">enum</span> DoorState
+{
+    Closed,
+    Open,
+    Locked
+}
+
+<span class="tok-keyword">public</span> <span class="tok-keyword">class</span> DoorController : MonoBehaviour
+{
+    [SerializeField] <span class="tok-keyword">private</span> Animator animator;
+
+    <span class="tok-keyword">public</span> DoorState State { <span class="tok-keyword">get</span>; <span class="tok-keyword">private</span> <span class="tok-keyword">set</span>; }
+        = DoorState.Closed;
+
+    <span class="tok-comment">// 行为：尝试打开门</span>
+    <span class="tok-keyword">public</span> <span class="tok-keyword">bool</span> TryOpen()
+    {
+        <span class="tok-comment">// 条件</span>
+        <span class="tok-keyword">if</span> (State != DoorState.Closed)
+            <span class="tok-keyword">return</span> <span class="tok-keyword">false</span>;
+
+        <span class="tok-comment">// 状态转移</span>
+        State = DoorState.Open;
+
+        <span class="tok-comment">// 对外效果</span>
+        <span class="tok-keyword">if</span> (animator != <span class="tok-keyword">null</span>)
+            animator.SetBool(<span class="tok-string">&quot;IsOpen&quot;</span>, <span class="tok-keyword">true</span>);
+
+        <span class="tok-keyword">return</span> <span class="tok-keyword">true</span>;
+    }
+
+    <span class="tok-comment">// 行为：尝试关闭门</span>
+    <span class="tok-keyword">public</span> <span class="tok-keyword">bool</span> TryClose()
+    {
+        <span class="tok-keyword">if</span> (State != DoorState.Open)
+            <span class="tok-keyword">return</span> <span class="tok-keyword">false</span>;
+
+        State = DoorState.Closed;
+
+        <span class="tok-keyword">if</span> (animator != <span class="tok-keyword">null</span>)
+            animator.SetBool(<span class="tok-string">&quot;IsOpen&quot;</span>, <span class="tok-keyword">false</span>);
+
+        <span class="tok-keyword">return</span> <span class="tok-keyword">true</span>;
+    }
+}
+</code></pre></div>
+<p>这里可以识别出三个不同层次：</p>
+<ul>
+<li><code>DoorState</code>：门拥有的状态。</li>
+<li><code>TryOpen()</code>：规定如何响应开门请求的行为。</li>
+<li><code>Closed → Open</code>：成功开门后发生的状态转移。</li>
+</ul>
+<p>Animator 负责播放动画，这是行为产生的一种外部效果。实际项目也可以将表现逻辑与门的业务规则进一步分离。</p>
+<p>使用时将完整代码保存为 <code>DoorController.cs</code>，挂到门的 GameObject 上。如果配置 Animator，需要在 Animator Controller 中设置名称一致的布尔参数 <code>IsOpen</code>，并配置由它控制的动画转换。<code>SetBool</code> 设置参数，不代表动画已经播放完成。参见 <a target="_blank" rel="noopener noreferrer" href="https://docs.unity3d.com/6000.0/Documentation/ScriptReference/Animator.SetBool.html">Unity：Animator.SetBool</a>。</p>
+<p>本例只实现 <code>TryOpen</code> 和 <code>TryClose</code>，枚举中的 <code>Locked</code> 用于说明状态约束，没有实现上锁、解锁方法。返回 <code>true</code> 表示方法接受请求并完成了这里定义的状态更新；即使没有配置 Animator，也能返回成功。</p>
+<blockquote>
+<p>与前几份示例放在同一 Unity 工程时，注意它们都定义了 <code>DoorState</code>。应使用不同命名空间，或按需要复用同一个定义，避免同名类型重复。</p>
+</blockquote>
+<h2 id="chapter-4"><span class="chapter-number">04</span>Behaviour、Action、Transition、Event 到底有什么不同？</h2>
+<div class="table-scroll" tabindex="0"><table>
+<thead>
+<tr>
+<th>概念</th>
+<th>它回答的问题</th>
+<th>举例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>State（状态）</td>
+<td>现在是什么情况？</td>
+<td>门处于关闭</td>
+</tr>
+<tr>
+<td>Behaviour（行为）</td>
+<td>在各种情况下会如何响应？</td>
+<td>尝试开门时先检查是否处于 Closed，再决定结果</td>
+</tr>
+<tr>
+<td>Action（动作）</td>
+<td>执行什么具体操作？</td>
+<td>播放开门动画</td>
+</tr>
+<tr>
+<td>Transition（转移）</td>
+<td>状态发生了什么改变？</td>
+<td>Closed → Open</td>
+</tr>
+<tr>
+<td>Event（事件）</td>
+<td>发生了什么值得记录或通知的事情？</td>
+<td>DoorOpened</td>
+</tr>
+</tbody>
+</table></div>
+<p>这些概念有关联，却不能简单地互相替代。</p>
+<h3 id="section">行为不等于状态转移</h3>
+<p>尝试开门失败仍然是一次行为响应，但状态没有改变。</p>
+<h3 id="method">行为不等于方法（Method）</h3>
+<p>方法是编程语言提供的代码组织机制；行为是系统语义上的运作方式。一个行为可以由多个方法协作实现，而一个方法也可能包含多个行为。</p>
+<h3 id="section-1">行为不等于事件</h3>
+<p>事件主要用于表示某件事情发生了，可以用于通知其他系统。行为则规定如何处理输入、条件及后果。</p>
+<p>这里的 <code>DoorOpened</code> 是结果事件的概念示例；上面的最小代码没有声明或发送这个事件。若其他系统需要订阅，再显式增加通知机制。</p>
+<h2 id="chapter-5"><span class="chapter-number">05</span>更深入：行为其实是系统在时间中的表现</h2>
+<p>假设我们观察一个角色：</p>
+<figure class="behaviour-timeline" aria-labelledby="timeline-caption"><div class="time-point"><small>t₀</small><b>Idle</b><span>静止</span></div><div class="time-point"><small>t₁</small><b>Run</b><span>奔跑</span></div><div class="time-point selected"><small>t₂</small><b>Jump</b><span>跳跃 · 这一刻的快照</span></div><div class="time-point"><small>t₃</small><b>Fall</b><span>下落</span></div><figcaption id="timeline-caption">一段角色行为序列：单个时刻给出状态，整段过程呈现系统如何运作。</figcaption></figure>
+<p>如果把时间定格在 <var>t<sub>2</sub></var>，你只能知道：</p>
+<blockquote>
+<p>角色现在处于 Jump 状态。</p>
+</blockquote>
+<p>但是如果观察整个过程，你才知道：</p>
+<blockquote>
+<p>角色如何从静止开始奔跑、跳跃，再进入下落。</p>
+</blockquote>
+<p>这就是状态和行为之间更深层次的关系：</p>
+<p><strong>状态是对某个时刻的描述；行为可以理解为系统随时间表现出来的响应规律。</strong></p>
+<p>一套行为规则配合初始状态和外部输入，会决定系统可能展现出什么样的状态变化和输出序列。</p>
+<p>这也是为什么状态机（State Machine）非常适合建模游戏角色的行为：它可以明确规定各个状态下允许发生哪些转移，以及执行哪些效果。</p>
+<p>不过状态机只是建模行为的一种方法，并不是所有行为都必须使用状态机。</p>
+<h2 id="chapter-6"><span class="chapter-number">06</span>Unity 的 Behaviour 是什么意思？</h2>
+<p>Unity 中还存在一个名字就叫 <code>Behaviour</code> 的类。它的继承关系是：</p>
+<pre class="flow-block" tabindex="0"><code class="language-text">UnityEngine.Object
+    └── Component
+          └── Behaviour
+                └── MonoBehaviour
+</code></pre>
+<p>Unity 的 <code>Behaviour</code> 是一种引擎 API 类型，主要提供组件启用、禁用等能力。参见 <a target="_blank" rel="noopener noreferrer" href="https://docs.unity3d.com/6000.0/Documentation/ScriptReference/Behaviour.html">Unity：Behaviour</a>。</p>
+<p>例如：</p>
+<div class="code-card" data-filename="概念片段5"><div class="code-toolbar"><div><strong>组件启用开关 · 调用片段</strong><small>C# · 示意片段，需置于相应上下文</small></div><div class="code-actions"><button type="button" data-action="copy" aria-label="复制 组件启用开关 · 调用片段">复制代码</button></div></div><pre tabindex="0"><code class="language-csharp">playerController.enabled = <span class="tok-keyword">false</span>;
+</code></pre></div>
+<p>这可以禁用该 MonoBehaviour 组件，影响 Unity 对它的启用状态与更新调度。<code>enabled</code> 的意义见 <a target="_blank" rel="noopener noreferrer" href="https://docs.unity3d.com/6000.0/Documentation/ScriptReference/Behaviour-enabled.html">Unity：Behaviour.enabled</a>。</p>
+<p>但 Unity 的 <code>Behaviour</code> 类，并不是对所有“行为”的统一理论定义。</p>
+<p>你可以使用 MonoBehaviour 实现行为，也可以使用普通 C# 类、状态机、行为树等方式组织行为。</p>
+<p>组件的启用开关也不等于给每个公共方法自动添加业务前置条件。如果某个业务方法只允许在组件启用时接受调用，需要明确设计相应条件。</p>
+<h2 id="chapter-7"><span class="chapter-number">07</span>最终回归本质</h2>
+<p>可以把整个概念压缩到三个层次：</p>
+<div class="equation equation-final" role="math" aria-label="状态描述系统当前有什么状态信息">State：系统有什么</div>
+<p>这里的“有什么”，指系统当前保留的状态信息，也就是“现在是什么样”。</p>
+<div class="equation equation-final" role="math" aria-label="行为描述系统如何运作">Behaviour：系统如何运作</div>
+<div class="equation equation-final" role="math" aria-label="转移描述系统如何改变状态">Transition：系统如何改变状态</div>
+<p>行为不是简单的“做了一个动作”，而是一套决定系统如何响应和表现的规则。</p>
+<p>设计任何一个行为时，最核心的思考不是“我要写哪个方法”，而是：</p>
+<blockquote>
+<p>当什么事情发生时，在什么条件下，这个对象应该如何响应，产生什么结果，并且必须遵守哪些约束？</p>
+</blockquote>
+<p>一旦这个问题明确了，代码里的方法、状态机、事件、组件，才有了真正清晰的职责。</p>
+</article><aside class="editor-note" aria-label="整理说明"><h3>整理说明</h3><p>本文依据你提供的完整原文整理，修复了两张表格、数学表达、角色时间序列和行为处理流程，并将误标为 C++ 或 INI 的示例统一标为 C#。正文结构和 DoorController 的业务逻辑保持原意。</p><p>补充说明了代码片段的上下文、Animator 参数设置与动画完成的区别、Locked 状态的示例范围，以及 Unity Behaviour 类与一般行为概念的区别。交互区域只演示状态、返回值和参数调用；不包含真实 Unity 动画运行。</p></aside></main><footer class="end-note"><span>行为 Behaviour 的本质 · Unity C# 笔记</span><a href="#page-title">回到开头 ↑</a></footer></div></div><div class="toast" id="toast" role="status" aria-live="polite"></div><script>
+(function(){
+  'use strict';
+  const toast=document.getElementById('toast');let timer;
+  function notify(message){toast.textContent=message;toast.classList.add('show');clearTimeout(timer);timer=setTimeout(()=>toast.classList.remove('show'),2300);}
+  async function copyText(text){if(navigator.clipboard&&window.isSecureContext){try{await navigator.clipboard.writeText(text);return;}catch(error){}}const area=document.createElement('textarea');area.value=text;area.style.cssText='position:fixed;left:-9999px;top:0';document.body.appendChild(area);area.select();try{if(!document.execCommand('copy'))throw new Error('copy failed');}finally{area.remove();}}
+  document.querySelectorAll('.code-card').forEach(card=>{card.querySelector('[data-action="copy"]').addEventListener('click',async()=>{try{await copyText(card.querySelector('code').textContent);notify('代码已复制');}catch(error){notify('请在代码框内手动选择并复制。');}});const button=card.querySelector('[data-action="download"]');if(button)button.addEventListener('click',()=>{const blob=new Blob(['\ufeff'+card.querySelector('code').textContent],{type:'text/plain;charset=utf-8'});const url=URL.createObjectURL(blob);const link=document.createElement('a');link.href=url;link.download=card.dataset.filename;document.body.appendChild(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);notify('已准备下载 '+card.dataset.filename);});});
+  document.getElementById('print-button').addEventListener('click',()=>window.print());
+  const menu=document.getElementById('sidebar');const menuButton=document.getElementById('menu-button');
+  function closeMenu(){menu.classList.remove('open');menuButton.setAttribute('aria-expanded','false');}
+  menuButton.addEventListener('click',()=>menuButton.setAttribute('aria-expanded',String(menu.classList.toggle('open'))));menu.querySelectorAll('a').forEach(a=>a.addEventListener('click',closeMenu));document.addEventListener('keydown',e=>{if(e.key==='Escape')closeMenu();});document.addEventListener('click',e=>{if(menu.classList.contains('open')&&!menu.contains(e.target)&&!menuButton.contains(e.target))closeMenu();});
+  const headings=Array.from(document.querySelectorAll('article>h2'));const links=Array.from(menu.querySelectorAll('a'));
+  function updateReading(){const total=document.documentElement.scrollHeight-window.innerHeight;document.getElementById('reading-progress').style.width=(total>0?window.scrollY/total*100:0)+'%';let current=headings[0];for(const h of headings){if(h.getBoundingClientRect().top<180)current=h;}links.forEach(link=>{const active=current&&link.getAttribute('href')==='#'+current.id;link.classList.toggle('active',!!active);if(active)link.setAttribute('aria-current','location');else link.removeAttribute('aria-current');});}
+  window.addEventListener('scroll',updateReading,{passive:true});window.addEventListener('resize',updateReading);updateReading();
+  let doorState='Closed';
+  const initial=document.getElementById('initial-door-state');const leaf=document.getElementById('behaviour-door');const feedback=document.getElementById('behaviour-feedback');
+  const names={Closed:'关闭',Open:'打开',Locked:'锁定'};
+  function renderDoor(){leaf.classList.toggle('is-open',doorState==='Open');leaf.classList.toggle('is-locked',doorState==='Locked');document.getElementById('behaviour-current').textContent=doorState;}
+  initial.addEventListener('change',()=>{doorState=initial.value;renderDoor();feedback.textContent='已设定实验起点：'+names[doorState]+'。选择行为，观察响应。';['behaviour-result','behaviour-transition','behaviour-action'].forEach(id=>document.getElementById(id).textContent='尚未调用');});
+  function attempt(open){const before=doorState;const accepted=before===(open?'Closed':'Open');if(accepted)doorState=open?'Open':'Closed';renderDoor();const method=open?'TryOpen':'TryClose';document.getElementById('behaviour-result').textContent=accepted?'true · 成功':'false · 拒绝';document.getElementById('behaviour-transition').textContent=accepted?before+' → '+doorState:'无，保持 '+doorState;document.getElementById('behaviour-action').textContent=accepted?'SetBool("IsOpen", '+String(open)+')':'无参数调用';feedback.textContent=method+'：'+names[before]+' → '+names[doorState]+'；'+(accepted?'接受请求，更新状态并设置动画参数。':'拒绝请求。行为已有响应，状态没有转移。');}
+  document.getElementById('try-open').addEventListener('click',()=>attempt(true));document.getElementById('try-close').addEventListener('click',()=>attempt(false));renderDoor();
+})();</script></body></html>

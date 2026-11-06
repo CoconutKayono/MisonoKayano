@@ -1,0 +1,192 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="按 What、Why、How 理解状态机、状态转移正确性、不变量、安全性、活性以及并发持久化。含 C# 示例。"><title>状态机与状态转移的正确性 · What / Why / How</title><style>
+:root{--ink:#203247;--muted:#617186;--blue:#2365a1;--line:#dce5ef;--page:#f3f6fa;--card:#fff}*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:25px}body{margin:0;background:var(--page);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Microsoft YaHei","PingFang SC",sans-serif;font-size:16px;line-height:1.95}a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}.layout{max-width:1320px;margin:auto;display:grid;grid-template-columns:245px minmax(0,1fr);gap:36px;padding:40px 30px 70px}nav{position:sticky;top:28px;align-self:start;padding:22px 17px;background:#fff;border:1px solid var(--line);border-radius:15px}nav strong{font-size:14px;letter-spacing:.12em;color:var(--muted);display:block;margin:0 10px 12px}nav a{display:block;font-size:14px;padding:7px 10px;color:#465e75;line-height:1.6;border-radius:7px}nav a:hover{background:#edf4fc;text-decoration:none}.nav-note{font-size:12px;color:var(--muted);padding:15px 10px 0;border-top:1px solid var(--line);margin-top:12px}.print{width:100%;background:#eff5fc;border:1px solid #ccddf0;color:#285881;padding:9px;border-radius:7px;cursor:pointer;margin-top:12px}main{min-width:0}header{padding:10px 8px 33px}.eyebrow{font-size:12px;color:var(--blue);font-weight:750;letter-spacing:.14em}h1{font-size:clamp(29px,3.2vw,42px);line-height:1.4;margin:12px 0 16px;letter-spacing:-.025em}.subtitle{font-size:18px;color:var(--muted);margin:0}.tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:22px}.tag{padding:2px 12px;border:1px solid #cfdeec;border-radius:20px;font-size:12px;color:#4b667d;background:#fff}section{padding:34px 40px;margin:0 0 24px;background:#fff;border:1px solid var(--line);border-radius:16px;box-shadow:0 4px 20px #29456604}h2{font-size:27px;line-height:1.5;margin:7px 0 22px}h3{font-size:20px;margin:30px 0 12px;line-height:1.55}p{margin:12px 0}strong{font-weight:700}ul,ol{padding-left:1.6em}li{padding-left:.2em;margin:5px 0}blockquote{margin:20px 0;padding:12px 22px;border-left:4px solid #4181ba;background:#f0f6fc;border-radius:0 9px 9px 0}blockquote p{margin:9px 0}aside{background:#faf7ee;border:1px solid #e8dfc7;border-radius:10px;padding:17px 21px;margin:23px 0;font-size:14px;color:#62543a}aside p{margin:8px 0}table{width:100%;border-collapse:collapse;font-size:14px;margin:20px 0}th,td{text-align:left;vertical-align:top;padding:12px 14px;border-bottom:1px solid var(--line);overflow-wrap:anywhere}th{background:#f0f5fa;color:#34536d;font-weight:650}tbody tr:nth-child(even){background:#fbfcfe}.table-wrap{overflow:auto}.formula{font-family:"Cambria Math",Cambria,"Times New Roman",serif;font-size:22px;line-height:1.85;text-align:center;background:#f5f8fc;border:1px solid #e0e9f3;border-radius:10px;padding:18px 14px;margin:20px 0;overflow-wrap:anywhere;color:#204968}.math-inline{font-family:Cambria,"Times New Roman",serif;overflow-wrap:anywhere}.caption,figcaption{font-size:13px;line-height:1.8;color:var(--muted);margin:9px 0 16px}.formula+.caption{text-align:center;margin-top:-9px}code{font-family:Consolas,"SFMono-Regular",Menlo,monospace;font-size:.88em;background:#edf2f7;border-radius:4px;padding:2px 5px;overflow-wrap:anywhere}.code{margin:19px 0 24px;border-radius:11px;overflow:hidden;background:#152536}.codebar{display:flex;align-items:center;justify-content:space-between;gap:12px;background:#203549;color:#bcd0e2;padding:8px 18px;font-size:12px}.copy{border:1px solid #52687a;background:#2e465b;color:#e1edf6;border-radius:5px;padding:4px 9px;cursor:pointer}pre{margin:0;padding:22px 24px;overflow:auto;color:#e0ebf5;font-size:13px;line-height:1.8;tab-size:4}pre code{font-size:inherit;background:none;padding:0;border-radius:0;overflow-wrap:normal}figure{margin:23px 0}svg{display:block;width:100%;height:auto;background:#fbfdff;border:1px solid var(--line);border-radius:12px}figcaption{text-align:center}.duo{display:grid;grid-template-columns:1fr 1fr;gap:16px}.request{padding:19px 23px;border:1px solid var(--line);border-radius:10px;background:#f7fafd}.request strong{color:var(--blue)}.request ol{margin:9px 0}.check-head{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;background:#edf5fc;padding:12px 17px;border-radius:9px 9px 0 0;font-size:14px}.check-head span{color:var(--muted);margin-left:auto}.check-head button{border:1px solid #c8d9e8;background:white;border-radius:5px;padding:4px 10px;color:#47647c;cursor:pointer}.checklist{border:1px solid var(--line);border-top:0;border-radius:0 0 9px 9px}.check{display:flex;gap:13px;padding:13px 17px;border-bottom:1px solid #e6edf4;cursor:pointer;font-size:14px;align-items:flex-start}.check:last-child{border:0}.check input{accent-color:#24759b;width:17px;height:17px;margin-top:6px;flex-shrink:0}.check small{display:block;color:var(--muted);font-size:13px}.check:has(input:checked){background:#f0f8f4}.check:has(input:checked) strong{color:#30725a}footer{font-size:12px;color:var(--muted);padding:10px 10px 0}button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #77a7d5;outline-offset:3px}
+@media(max-width:1000px){.layout{grid-template-columns:190px minmax(0,1fr);gap:20px;padding:25px 20px}section{padding:27px}nav{padding:15px 8px}}@media(max-width:740px){.layout{display:block;padding:20px 12px 40px}nav{position:static;margin-bottom:25px;padding:15px;display:flex;flex-wrap:wrap;gap:4px}nav strong{width:100%;margin:0 5px 6px}nav a{font-size:12px;padding:5px 7px;background:#f4f7fb}.nav-note,.print{display:none}header{padding:0 9px 25px}section{padding:25px 20px;border-radius:12px}h2{font-size:24px}h3{font-size:19px}body{font-size:15px}.formula{font-size:19px}.duo{grid-template-columns:1fr}pre{padding:18px;font-size:12px}th,td{padding:9px 7px;font-size:12px}}@media print{@page{size:A4;margin:18mm 16mm}body{background:white;font-size:10.5pt;color:#111}.layout{display:block;padding:0;max-width:none}nav,.copy,.check-head button{display:none}header{padding:0 0 20px}h1{font-size:27pt}section{box-shadow:none;border:0;border-radius:0;padding:0;margin:0 0 25px}h2{font-size:19pt;border-bottom:1px solid #ddd;padding-bottom:6px}h3{font-size:14pt}h2,h3,.eyebrow{break-after:avoid}table,figure,aside,.formula{break-inside:avoid}pre{white-space:pre-wrap;overflow:visible;font-size:8.3pt;padding:12px;line-height:1.6;color:#111;background:#f5f5f5}.code{background:#f5f5f5;overflow:visible;border:1px solid #ddd}.codebar{background:#e7edf2;color:#222}.formula{font-size:15pt}.tag{background:white}.check-head{background:#eee}.check{padding:8px 12px}footer{border-top:1px solid #ddd}a{color:#111;text-decoration:none}}
+</style></head><body><div class="layout"><nav aria-label="文档目录"><strong>阅读目录</strong><a href="#overview">核心结论</a><a href="#what">01 什么是状态机</a><a href="#why">02 为什么需要状态机</a><a href="#correctness">03 转移的正确性</a><a href="#how">04 C# 实现</a><a href="#proof">05 正确性推导</a><a href="#reality">06 并发与持久化</a><a href="#verify">07 验证与检查</a><a href="#essence">08 直达本质</a><button class="print" type="button">打印 / 另存为 PDF</button><div class="nav-note">What → Why → How<br>本质与正确性推导</div></nav><main><header><div class="eyebrow">ARCHITECTURE NOTES / 程序正确性</div><h1>状态机与<br>状态转移的正确性</h1><p class="subtitle">What、Why、How，直达本质</p><div class="tags"><span class="tag">State Machine</span><span class="tag">Invariant</span><span class="tag">C# 示例</span><span class="tag">Safety &amp; Liveness</span></div></header><section id="overview"><div class="eyebrow">核心结论</div><h2>先抓住两个问题</h2>
+<blockquote><p><strong>状态机的本质，是用明确的状态与转移规则，约束一个系统在什么条件下，可以从什么状态变成什么状态。</strong></p><p>状态转移的正确性，是保证每一次被允许的转移，都不会破坏系统必须遵守的规则，并且产生符合预期的结果。</p></blockquote>
+<table><thead><tr><th>问题</th><th>关注点</th></tr></thead><tbody><tr><td>状态机</td><td>系统允许发生哪些变化？</td></tr><tr><td>正确性</td><td>如何证明这些变化不会让系统进入错误状态，并且符合预期？</td></tr></tbody></table></section>
+
+<section id="what"><div class="eyebrow">01 / WHAT</div><h2>什么是状态机？</h2><h3>1. 从一个任务系统理解</h3><p>假设游戏中有一个任务：玩家需要击败 3 个敌人，然后领取 100 金币。这个任务可以处于四种状态：</p>
+<table><thead><tr><th>状态</th><th>英文</th><th>含义</th></tr></thead><tbody><tr><td>未开始</td><td><code>NotStarted</code></td><td>玩家尚未接受任务</td></tr><tr><td>进行中</td><td><code>InProgress</code></td><td>正在完成任务</td></tr><tr><td>已完成</td><td><code>Completed</code></td><td>达成目标，但尚未领奖</td></tr><tr><td>已领取</td><td><code>Claimed</code></td><td>已经领取任务奖励</td></tr></tbody></table>
+<p>任务不能任意切换状态。例如，未开始 → 进行中是允许的；进行中 → 已完成需要达成任务目标；已完成 → 已领取需要执行领奖；未开始 → 已领取则不允许。</p>
+<figure><svg viewBox="0 0 800 320" role="img" aria-labelledby="diagram-title diagram-desc" xmlns="http://www.w3.org/2000/svg"><title id="diagram-title">任务状态机</title><desc id="diagram-desc">未开始通过开始事件进入进行中。进行中击败敌人时更新进度，达到三次后进入已完成。已完成领取奖励后进入已领取；重复领奖保持原状态。</desc><defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10Z" fill="#6e8195"/></marker></defs><g fill="none" stroke="#6e8195" stroke-width="2" marker-end="url(#arrow)"><path d="M180 100H290"/><path d="M470 100H590"/><path d="M680 138V235H470"/><path d="M345 62C290 0 470 0 415 62"/><path d="M415 273C470 330 290 330 345 273"/></g><g fill="#eff6ff" stroke="#b8d0ec" stroke-width="1.5"><rect x="20" y="62" width="160" height="76" rx="14"/><rect x="290" y="62" width="180" height="76" rx="14"/><rect x="590" y="62" width="180" height="76" rx="14"/><rect x="290" y="197" width="180" height="76" rx="14" fill="#eaf7f1" stroke="#9bcbb8"/></g><g font-family="system-ui, sans-serif" text-anchor="middle" fill="#18344e"><text x="100" y="94" font-size="20">未开始</text><text x="100" y="119" font-size="13">NotStarted</text><text x="380" y="94" font-size="20">进行中</text><text x="380" y="119" font-size="13">InProgress</text><text x="680" y="94" font-size="20">已完成</text><text x="680" y="119" font-size="13">Completed</text><text x="380" y="229" font-size="20">已领取</text><text x="380" y="254" font-size="13">Claimed</text><text x="235" y="88" font-size="14">开始</text><text x="530" y="76" font-size="13">击败敌人</text><text x="530" y="95" font-size="13">进度达到 3</text><text x="380" y="17" font-size="13">击败敌人，进度仍小于 3</text><text x="643" y="224" font-size="14">领奖：+100 金币</text><text x="380" y="316" font-size="13">重复领奖：保持原状态，不再发奖</text></g></svg><figcaption>方框表示状态；箭头表示允许的转移；文字表示触发事件或条件。</figcaption></figure>
+<p>任务进行中的进度可以是 0、1、2，不一定要分别定义成独立的枚举状态。可以用 <code>Progress</code> 表示数值，再用 <code>Phase</code> 表示所处阶段。</p>
+<h3>2. 状态机的数学定义</h3><p>一个基础的确定性有限状态机可以抽象为：</p><div class="formula">M = (S, E, δ, s<sub>0</sub>)</div><table><thead><tr><th>符号</th><th>含义</th></tr></thead><tbody><tr><td>S</td><td>系统可能处于的状态集合</td></tr><tr><td>E</td><td>输入事件的集合</td></tr><tr><td>δ</td><td>状态转移函数</td></tr><tr><td>s<sub>0</sub></td><td>初始状态</td></tr></tbody></table><p>最关键的是状态转移函数：</p><div class="formula">s′ = δ(s, e)</div><p class="caption">给定当前状态 s 和事件 e，按照转移规则得到下一个状态 s′。</p><div class="formula">δ(NotStarted, Start) = InProgress</div><p>但是 <code>δ(NotStarted, ClaimReward)</code> 在这个设计中不是合法的领奖转移。实际业务通常还需要考虑进度、权限、余额等上下文数据：</p><div class="formula">s′ = δ(s, e, c)</div><p class="caption">c 表示影响转移判断的上下文数据。</p><aside><strong>定义上的说明</strong><p>标准的确定性有限自动机通常使用全函数 δ。业务状态机可以使用部分转移函数；也可以对所有输入定义结果，把非法输入明确处理为“拒绝”“报告错误”或“保持原状态”。这里采用业务状态机的表述。</p><p><code>Phase</code> 是阶段标签；用于正确性推导的完整状态 s 还包括 <code>Progress</code>、<code>Gold</code> 等相关数据。只看阶段枚举，无法判断所有业务约束。</p></aside></section>
+
+<section id="why"><div class="eyebrow">02 / WHY</div><h2>为什么需要状态机？</h2><h3>1. 不是所有状态变化都合法</h3><p>假设我们直接修改状态：</p><div class="code"><div class="codebar"><span>C# · 教学示例</span><button class="copy" type="button">复制代码</button></div><pre><code>quest.Phase = QuestPhase.Claimed;</code></pre></div><p>这行代码语法上可能完全正确，但业务上可能存在问题：</p><ul><li>玩家还没有接受任务。</li><li>玩家还没有击败 3 个敌人。</li><li>玩家没有完成领取奖励的流程。</li><li>玩家已经领取过奖励。</li></ul><p><strong>程序能够修改一个值，不代表这个修改符合业务规则。</strong> 状态机首先用于限制非法变化。</p><h3>2. 局部正确不等于整体正确</h3><p>假设有三个方法：</p><div class="code"><div class="codebar"><span>C# · 教学示例</span><button class="copy" type="button">复制代码</button></div><pre><code>StartQuest();
+CompleteQuest();
+ClaimReward();</code></pre></div><p>每个方法单独看都没有明显错误。但如果顺序变成：</p><div class="code"><div class="codebar"><span>C# · 教学示例</span><button class="copy" type="button">复制代码</button></div><pre><code>ClaimReward();
+StartQuest();
+CompleteQuest();</code></pre></div><p>系统就可能出现问题。我们不仅要检查方法内部，还要检查：<strong>这些操作以什么顺序发生，以及当前状态是否允许执行。</strong> 状态机把隐含的调用顺序约束变成显式的转移规则。</p><h3>3. 状态之间可能互相矛盾</h3><p>使用三个布尔变量时：</p><div class="code"><div class="codebar"><span>C# · 教学示例</span><button class="copy" type="button">复制代码</button></div><pre><code>bool isStarted;
+bool isCompleted;
+bool isClaimed;</code></pre></div><p>它们一共可以产生 2³ = 8 种组合，但有些组合是非法的：</p><div class="code"><div class="codebar"><span>C# · 教学示例</span><button class="copy" type="button">复制代码</button></div><pre><code>isStarted   = false;
+isCompleted = false;
+isClaimed   = true;</code></pre></div><p>玩家没有开始任务，却已经领取奖励。用枚举表达互斥阶段，可以减少组合歧义：</p><div class="code"><div class="codebar"><span>C# · 教学示例</span><button class="copy" type="button">复制代码</button></div><pre><code>public enum QuestPhase
+{
+    NotStarted,
+    InProgress,
+    Completed,
+    Claimed
+}</code></pre></div><p><strong>使用 enum 不等于实现了状态机。</strong> 只有明确约束哪些事件能够导致哪些状态变化，才建立了转移规则。</p></section>
+
+<section id="correctness"><div class="eyebrow">03 / WHAT</div><h2>什么叫状态转移的正确性？</h2><p>先区分四个概念：</p><table><thead><tr><th>概念</th><th>它回答的问题</th></tr></thead><tbody><tr><td>不变量 · Invariant</td><td>系统始终必须满足什么？</td></tr><tr><td>前置条件 · Precondition</td><td>转移之前必须满足什么？</td></tr><tr><td>后置条件 · Postcondition</td><td>转移成功之后必须保证什么？</td></tr><tr><td>转移规则 · Transition Rule</td><td>什么事件和条件决定下一个状态？</td></tr></tbody></table>
+<h3>1. 不变量：系统绝不能违背的约束</h3><p>对于任务系统，可以规定：</p><ul><li>任务进度必须在 0～3 之间。</li><li>任务已领取奖励，意味着必须已完成目标。</li><li>已领取状态必须有相应的奖励发放记录。</li></ul><p>用谓词 I 表示判断状态是否合法：</p><div class="formula">I(s) = true</div><div class="formula">0 ≤ Progress ≤ 3<br>Phase = Claimed ⇒ Progress = 3</div><p>这些条件必须对所有可达的有效任务状态成立。不变量可以约束单个字段，也可以约束多个字段之间的关系。</p><h3>2. 前置条件：什么时候允许转移？</h3><p>对于首次领取任务奖励：</p><div class="formula">Pre(s, Claim) = (Phase = Completed)</div><p>当前任务必须已经完成，否则拒绝首次领奖。前置条件约束的是<strong>操作执行之前</strong>需要满足的要求。</p><h3>3. 后置条件：成功以后必须发生什么？</h3><p>如果奖励为 100 金币，首次领取成功后应保证：</p><div class="formula">Phase′ = Claimed<br>Gold′ = Gold + 100<br>RewardRecorded′ = true</div><p>撇号 ′ 表示转移后的值。后置条件不仅描述结果状态，还能描述前后状态的关系：</p><div class="formula">Gold′ − Gold = 100</div><p>这比 <code>Gold ≥ 100</code> 更准确：它说明本次操作究竟增加了多少金币。</p><h3>4. 把条件放在一起</h3><div class="formula">I(s) ∧ Pre(s, e)<br>⇒ I(s′) ∧ Post(s, e, s′)</div><p>这表示：<strong>如果转移之前状态合法，并且满足执行条件，那么成功执行后，结果必须符合预期，而且不变量仍然成立。</strong></p><aside><strong>公式的前提</strong><p>这里的 s′ 必须是按照规定转移实际得到的后继状态。更显式的写法是：</p><p class="math-inline">I(s) ∧ Pre(s, e) ∧ T(s, e, s′) ⇒ I(s′) ∧ Post(s, e, s′)</p><p>T 表示一次实际转移。这个公式约束成功执行的结果，本身不证明操作一定终止，也不证明数据库提交一定成功。</p></aside></section>
+
+<section id="how"><div class="eyebrow">04 / HOW</div><h2>用 C# 实现一个具有约束的状态机</h2><p>下面实现一个简化的任务状态机。为方便理解，暂时把任务状态和金币放在同一个快照中。真实项目可以分为不同模块，但跨模块更新需要单独考虑事务一致性。</p><h3>1. 定义状态和事件</h3><div class="code"><div class="codebar"><span>C# · 教学示例</span><button class="copy" type="button">复制代码</button></div><pre><code>using System;
+
+public enum QuestPhase
+{
+    NotStarted,
+    InProgress,
+    Completed,
+    Claimed
+}
+
+public enum QuestEvent
+{
+    Start,
+    DefeatEnemy,
+    ClaimReward
+}
+
+public record QuestSnapshot(
+    QuestPhase Phase,
+    int Progress,
+    bool RewardRecorded,
+    int Gold
+);</code></pre></div><p>把当前状态作为完整快照，可以直接对比转移前后的数据。此示例使用 C# 9 的 <code>record</code> 和 <code>with</code> 语法；在 Unity 中使用时，需要确认项目的编译环境支持这些语法及相关类型。</p><h3>2. 实现转移函数</h3><div class="code"><div class="codebar"><span>C# · 教学示例</span><button class="copy" type="button">复制代码</button></div><pre><code>public static class QuestStateMachine
+{
+    private const int Target = 3;
+    private const int Reward = 100;
+
+    public static QuestSnapshot Apply(
+        QuestSnapshot before,
+        QuestEvent evt)
+    {
+        // 输入状态必须满足不变量。
+        Validate(before);
+
+        QuestSnapshot after = evt switch
+        {
+            QuestEvent.Start
+                when before.Phase == QuestPhase.NotStarted
+                =&gt; before with
+                {
+                    Phase = QuestPhase.InProgress
+                },
+
+            QuestEvent.DefeatEnemy
+                when before.Phase == QuestPhase.InProgress
+                =&gt; Advance(before),
+
+            QuestEvent.ClaimReward
+                when before.Phase == QuestPhase.Completed
+                =&gt; before with
+                {
+                    Phase = QuestPhase.Claimed,
+                    RewardRecorded = true,
+                    Gold = checked(before.Gold + Reward)
+                },
+
+            // 重复领奖：返回原状态，不重复增加金币。
+            QuestEvent.ClaimReward
+                when before.Phase == QuestPhase.Claimed
+                =&gt; before,
+
+            _ =&gt; throw new InvalidOperationException(
+                &quot;非法状态转移&quot;)
+        };
+
+        // 输出状态必须继续满足不变量。
+        Validate(after);
+        return after;
+    }
+
+    private static QuestSnapshot Advance(QuestSnapshot state)
+    {
+        int progress = Math.Min(Target, state.Progress + 1);
+
+        return state with
+        {
+            Progress = progress,
+            Phase = progress == Target
+                ? QuestPhase.Completed
+                : QuestPhase.InProgress
+        };
+    }
+
+    private static void Validate(QuestSnapshot state)
+    {
+        if (state is null)
+            throw new ArgumentNullException(nameof(state));
+
+        // C# 枚举也可能包含未定义的整数值。
+        if (!Enum.IsDefined(typeof(QuestPhase), state.Phase))
+            throw new InvalidOperationException(&quot;未知任务阶段&quot;);
+
+        if (state.Progress &lt; 0 ||
+            state.Progress &gt; Target ||
+            state.Gold &lt; 0)
+        {
+            throw new InvalidOperationException(
+                &quot;数值不变量被破坏&quot;);
+        }
+
+        if (state.RewardRecorded !=
+            (state.Phase == QuestPhase.Claimed))
+        {
+            throw new InvalidOperationException(
+                &quot;奖励状态不一致&quot;);
+        }
+
+        if ((state.Phase == QuestPhase.Completed ||
+             state.Phase == QuestPhase.Claimed) &amp;&amp;
+            state.Progress != Target)
+        {
+            throw new InvalidOperationException(
+                &quot;任务完成状态与进度不一致&quot;);
+        }
+
+        if (state.Phase == QuestPhase.NotStarted &amp;&amp;
+            state.Progress != 0)
+        {
+            throw new InvalidOperationException(
+                &quot;未开始任务存在进度&quot;);
+        }
+
+        if (state.Phase == QuestPhase.InProgress &amp;&amp;
+            state.Progress &gt;= Target)
+        {
+            throw new InvalidOperationException(
+                &quot;进行中任务已达到完成条件&quot;);
+        }
+    }
+}</code></pre></div><p class="caption">整理时补充了空快照和未定义枚举值检查，其余核心转移逻辑与原讲解一致。</p><h3>3. 用转移表核对实现</h3><div class="table-wrap"><table><thead><tr><th>当前阶段</th><th>事件 / 条件</th><th>新阶段</th><th>数据变化</th></tr></thead><tbody><tr><td>NotStarted</td><td>Start</td><td>InProgress</td><td>其他字段不变</td></tr><tr><td>InProgress</td><td>DefeatEnemy，更新后进度 &lt; 3</td><td>InProgress</td><td>Progress + 1</td></tr><tr><td>InProgress</td><td>DefeatEnemy，更新后进度 = 3</td><td>Completed</td><td>Progress = 3</td></tr><tr><td>Completed</td><td>ClaimReward</td><td>Claimed</td><td>Gold + 100；记录奖励</td></tr><tr><td>Claimed</td><td>ClaimReward</td><td>Claimed</td><td>全部不变</td></tr><tr><td>其他组合</td><td>不符合上述规则</td><td>拒绝</td><td>不产生新快照</td></tr></tbody></table></div>
+<p>首次领奖和重复领奖是两个分支。首次领奖的后置条件是 <code>Gold′ = Gold + 100</code>；重复领奖的后置条件是 <code>s′ = s</code>。不能把“加 100 金币”作为所有领奖请求共同的后置条件。</p><h3>4. 这个实现体现了什么？</h3><ol><li><strong>转移规则集中。</strong> 业务变化由 <code>Apply()</code> 计算，避免随意改动阶段。</li><li><strong>转移条件明确。</strong> 只有 Completed 才能首次领奖。</li><li><strong>转移前后验证不变量。</strong> 不把非法状态当作正常结果。</li><li><strong>计算与存储分离。</strong> Apply 只计算新快照，不写数据库，也不发送网络消息，便于测试。</li></ol>
+<aside><strong>实现的边界</strong><p><code>RewardRecorded</code> 只是快照中的标记，不能独自证明外部奖励系统已经成功发放金币；Validate 也不检查所有后置条件，例如“金币恰好增加 100”。</p><p>公开的 record 仍允许调用方自行构造快照或使用 with。这个示例没有从类型层面强制所有写入都经过状态机；实际系统需要通过封装和存储入口约束写入。</p><p><code>checked</code> 用于检测金币整数溢出；发生溢出时抛出异常，不返回成功结果。异常属于本示例的失败策略。</p></aside></section>
+
+<section id="proof"><div class="eyebrow">05 / 正确性推导</div><h2>正确性不只是一次转移正确</h2><p>如果每次转移都符合前置条件、后置条件和不变量，那么连续执行 100 次、1000 次之后，能保证系统依然满足不变量吗？</p><h3>1. 利用数学归纳法</h3><p>首先，初始状态满足不变量：</p><div class="formula">I(s<sub>0</sub>) = true</div><p>其次，每一次被允许的转移都保持不变量：</p><div class="formula">I(s<sub>n</sub>) ∧ Pre(s<sub>n</sub>, e)<br>⇒ I(s<sub>n+1</sub>)</div><p>在后继状态按转移规则得到的前提下，可以逐步推出：</p><div class="formula">I(s<sub>0</sub>) ⇒ I(s<sub>1</sub>) ⇒ I(s<sub>2</sub>) ⇒ …</div><p>因此，在这些假设成立时，任意有限次合法转移后，不变量仍然成立。这就是<strong>归纳不变量（Inductive Invariant）</strong>的思路。</p><p>但证明要求：<strong>所有能够修改相关状态的操作都遵守这些规则。</strong> 如果其他模块可以绕过状态机直接修改 Gold 或 Phase，就不能只凭状态机的证明保证整个系统正确。</p>
+<h3>2. 安全性与活性</h3><table><thead><tr><th>性质</th><th>关注的问题</th><th>任务系统示例</th></tr></thead><tbody><tr><td>安全性 · Safety</td><td>不应该发生的事情不会发生</td><td>未完成不能领奖；同一奖励不能重复发放</td></tr><tr><td>活性 · Liveness</td><td>在给定假设下，要求的进展最终发生</td><td>任务完成后，玩家持续请求且系统正常处理，最终能够领奖</td></tr></tbody></table>
+<p>一个系统如果永远拒绝所有事件，可能满足某些安全性要求，但玩家永远无法完成任务。<strong>没有发生非法变化，不等于系统能够完成工作。</strong></p><p>严格的活性要求“最终发生”，不只是“存在一条可以成功的路径”。证明活性通常还需要假设事件最终到达、处理不永久阻塞，以及调度具有适当的公平性。</p></section>
+
+<section id="reality"><div class="eyebrow">06 / 执行环境</div><h2>现实中的难点：并发与持久化</h2><p>前面的代码假设转移按顺序执行，而且新快照能够正确保存。真实服务端未必满足这些条件。</p><h3>1. 两个并发的领奖请求</h3><div class="duo"><div class="request"><strong>请求 A</strong><ol><li>读取 Completed</li><li>判断允许领奖</li><li>向钱包发放 100 金币</li></ol></div><div class="request"><strong>请求 B</strong><ol><li>也读取 Completed</li><li>也判断允许领奖</li><li>也向钱包发放 100 金币</li></ol></div></div>
+<p>两个请求各自执行规则时，都可能得到合法判断。但如果各自向钱包发放奖励，就可能重复发奖。</p><blockquote><p><strong>单次转移逻辑正确，不代表多个并发转移组成的执行过程正确。</strong></p></blockquote><p>上面的纯快照函数本身并没有向外部钱包发奖。并发请求各自算出一个“金币 +100”的快照，如何提交、合并或覆盖，还取决于存储层；不能只看函数就推断最终一定重复发奖或一定不会丢失更新。</p>
+<h3>2. 原子性与并发控制</h3><p>如果任务与钱包都在支持事务的同一个数据库中，一个可行流程是：</p><ol><li>开启事务。</li><li>用锁或版本条件保护当前任务状态。</li><li>确认任务仍处于 Completed。</li><li>将任务改为 Claimed，同时增加 100 金币并登记领奖记录。</li><li>在同一事务中提交。</li></ol><p>事务让相关数据要么全部保存，要么全部回滚；锁、条件更新或版本检查用于防止两个请求都依据同一旧状态成功提交。两类保证需要配合。</p><p>如果奖励发放跨越不同服务或数据库，单个本地事务通常不能覆盖全部操作，还需要考虑持久化消息、Outbox、幂等消费等机制。</p>
+<table><thead><tr><th>层次</th><th>保证什么</th></tr></thead><tbody><tr><td>状态转移规则</td><td>逻辑上允许哪些变化</td></tr><tr><td>并发控制</td><td>多个操作不会因错误交错而破坏约束</td></tr><tr><td>持久化与事务</td><td>提交满足规定的原子性与持久性保证</td></tr></tbody></table><p>三者解决不同问题，共同影响系统正确性。</p></section>
+
+<section id="verify"><div class="eyebrow">07 / HOW</div><h2>如何验证一个状态机？</h2><p>可以按照下面的顺序检查。勾选状态仅用于当前页面的阅读记录。</p><div class="check-head"><strong>状态机正确性检查清单</strong><span id="count">0 / 10 已检查</span><button id="reset" type="button">重置</button></div><div class="checklist"><label class="check"><input type="checkbox"><span><strong>状态是否定义清楚？</strong><small>区分阶段枚举与完整业务状态，确定哪些数据会影响转移。</small></span></label><label class="check"><input type="checkbox"><span><strong>初始状态是否合法？</strong><small>明确 s₀，并验证 I(s₀) 成立。</small></span></label><label class="check"><input type="checkbox"><span><strong>合法转移是否完整列出？</strong><small>用状态图或转移表核对事件、条件和目标状态。</small></span></label><label class="check"><input type="checkbox"><span><strong>非法输入如何处理？</strong><small>明确拒绝、报错或保持原状的策略，避免隐式行为。</small></span></label><label class="check"><input type="checkbox"><span><strong>前置条件是否足够？</strong><small>例如首次领奖必须已完成，并满足相关数值限制。</small></span></label><label class="check"><input type="checkbox"><span><strong>后置条件是否准确？</strong><small>对比前后状态；同时检查应变化和不应变化的字段。</small></span></label><label class="check"><input type="checkbox"><span><strong>每次转移是否保持不变量？</strong><small>验证全部成功分支，包括重复请求的自循环。</small></span></label><label class="check"><input type="checkbox"><span><strong>所有写入路径是否受约束？</strong><small>避免其他模块、后台操作或存档加载绕过规则。</small></span></label><label class="check"><input type="checkbox"><span><strong>并发和失败是否被处理？</strong><small>检查竞争、溢出、持久化失败、部分提交和重试。</small></span></label><label class="check"><input type="checkbox"><span><strong>系统是否能够取得进展？</strong><small>在明确的环境与公平性假设下，检查活性要求。</small></span></label></div><p class="caption">原对话中的检查清单控件未包含具体条目；此处按讲解内容补齐。</p><h3>单例测试与属性测试</h3><p>除了检查单个案例，还可以生成随机事件序列，反复调用转移函数，验证每次成功转移后不变量仍然成立。这是<strong>属性测试（Property-Based Testing）</strong>的一种应用。</p><p>也应检查具体后置条件，例如首次领奖恰好加 100、重复领奖完全不变、非法事件不产生新状态。仅检查不变量，可能漏掉“奖励少发”等错误。</p><p><strong>有限测试可以帮助发现错误，但不能单凭测试证明所有可能执行过程都正确。</strong></p></section>
+
+<section id="essence"><div class="eyebrow">08 / 本质</div><h2>从“变化”走向“正确的演化”</h2><h3>第一层：状态机是对变化的建模</h3><p>一个系统的运行可以看成一连串状态：</p><div class="formula">s<sub>0</sub> → s<sub>1</sub> → s<sub>2</sub> → …</div><p>状态机描述哪些变化被允许，以及变化发生的条件。</p><h3>第二层：状态机是约束</h3><p>它不仅描述当前处于什么阶段，还阻止不符合规则的变化。<strong>真正重要的是 Transition 规则，而不仅是 State 枚举。</strong></p><h3>第三层：正确性约束整个演化过程</h3><div class="formula">合法起点 + 合法条件<br>+ 正确结果 + 不变量保持</div><p>涉及并发和持久化时，还必须保证逻辑上的转移能够被正确执行和保存。</p><blockquote><p>状态机定义系统允许如何变化；不变量规定系统绝不能变成什么样；前置条件限制何时允许变化；后置条件规定变化后必须得到什么；并发控制和事务则帮助这些变化在真实环境中可靠地执行。</p></blockquote>
+<h3>下一步可以学习什么？</h3><p><strong>Design by Contract（契约式设计）</strong>与<strong>Hoare Logic（霍尔逻辑）</strong>会进一步回答：如何从“我认为代码正确”，走向“我能基于明确条件，推导代码为什么正确”？</p><p>它们将这里的前置条件、后置条件和不变量，扩展为分析程序正确性的系统方法。</p></section><footer>依据本次对话整理 · 2026-10-17 · 含离线状态图、公式、完整 C# 示例与检查清单。对定义和实现边界做了少量补充说明。</footer></main></div><script>
+document.querySelector('.print').addEventListener('click',()=>window.print());
+document.querySelectorAll('.copy').forEach(button=>button.addEventListener('click',async()=>{
+ const text=button.closest('.code').querySelector('code').textContent;
+ try { if(navigator.clipboard&&window.isSecureContext) await navigator.clipboard.writeText(text);
+ else {const area=document.createElement('textarea');area.value=text;area.style.position='fixed';area.style.opacity='0';document.body.append(area);area.select();const ok=document.execCommand('copy');area.remove();if(!ok)throw new Error('copy');}
+ button.textContent='已复制';setTimeout(()=>button.textContent='复制代码',1500);
+ }catch(e){button.textContent='请选中代码复制';}
+}));
+const boxes=[...document.querySelectorAll('.check input')];
+function update(){document.querySelector('#count').textContent=boxes.filter(x=>x.checked).length+' / '+boxes.length+' 已检查';}
+boxes.forEach(box=>box.addEventListener('change',update));
+document.querySelector('#reset').addEventListener('click',()=>{boxes.forEach(x=>x.checked=false);update();});
+</script></body></html>

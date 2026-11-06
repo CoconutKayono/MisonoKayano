@@ -1,0 +1,35 @@
+Making retries safe with idempotent APIs 
+8 
+ 
+Responding when a customer c hanges request parameters on a 
+subsequent call where the client request ID stays the same 
+ 
+We design our APIs to allow our customers to explicit ly state their intent. Take the situation 
+where we receive a unique client request token  that we have seen before,  but there is  a 
+parameter combination that is different from  the earlier request. We find that  it is safest to 
+assume that the customer intended a different outcome, and that this might not be the same 
+request. In response to this situation , we return a validation error indicating a parameter 
+mismatch between idempotent requests. To  support this deep validation , we also store the 
+parameters used to make the initial request along with the client request identifier.  
+Conclusion 
+Werner Vogels, Amazon CTO, notes that one of the lessons we have learned  at Amazon is to 
+expect the une xpected. He reminds us that failures are a given , and as a consequence it ’s 
+desirable to build systems that embrace failure as a natural occurrence.  Coding around these 
+failures is important , but undifferentiated, work that improves the integrity of the solution 
+being delivered. However, it takes time away from investing in differentiating code.  
+ 
+In the article, ”Timeouts, retries, and backoff with jitter,” discussed earlier, Marc Brooker shows 
+how we can leverage retries to mitigate transient faults, and how automating these retries in 
+SDKs and tooling can improve usability. Building on that article, in this article we explore how 
+AWS leverages idempotent behavior to deliver the benefits of automated retry policies to our 
+customers while still honoring the “at most once” commitment inherent in the API contracts of 
+some operations. 
+ 
+We have found the  approach we’ve outlined  works well, and we have heard that customers 
+appreciate the reduced complexity this approach delivers. However, there is cost and 
+complexity inherent in building services to meet th e contract this article describes , and that 
+complexity is not right for all solutions . Sometimes it’s better to take the extra time to meet 
+the demands of a more rigorous contract as described here, in other cases it’s better to innovate 
+more quickly with a less complex contract because that’s best for our customers. In cases where 
+a more rigorous “at most once” contract is required, we have found the approach in this article 
+to work well to meet our customers’ needs. 

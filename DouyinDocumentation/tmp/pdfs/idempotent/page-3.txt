@@ -1,0 +1,37 @@
+Making retries safe with idempotent APIs 
+2 
+ 
+ 
+ 
+This leaves the provisioning process with a dilemma. I t’s not clear whether the singleton 
+workload is running or not.  Simply retrying the request could result in multiple workloads , 
+which could have dire consequences. To overcome this dilemma the provisioning process has 
+to perform a reconciliation to determine whether this workload is running or not. Th is is a lot 
+of heavy lifting to compensate for an edge case that might happen relatively infrequently. In 
+addition, even in the case of a reconciliation workflow , there might still be some uncertainty. 
+What if the resource is  there but created by another provisioning process? In the simple case 
+that might be fine, but in more complex scenarios it might be important to know whether the 
+resource was created by this process or another process. 
+Reducing client complexity with idempotent API design 
+To allow callers to retry these kinds of operations w e need to make them  idempotent. An 
+idempotent operation is one where a request can be retransmitted or retried with no additional 
+side effects, a property that is very beneficial in distributed systems.  
+ 
+We can significantly simplify client code by delivering a contract that allows the client to make 
+a simplifying assumption that any error that isn’t a validation error can be overcome by retrying 
+the request until it succeeds . However, this introduces some additional complexity to service 
+implementation. In a distributed system with many clients making many calls and with many 
+requests in flight,   the challenge is how do we identify that a request is a repeat of some 
+previous request?  
+ 
+Many approaches could be used to infer whether a request is a duplicate of an earlier request. 
+For example, it might be possible to derive a synthetic token based on the parameters in the 
+request. You could derive a hash of the parameters present and assume that any request from 
+the same caller with identical parameters is a duplicate. On the surface, this seems to simplify 
+both the customer experience and the service implementation. Any request that looks exactly 
+like a previous request is considered a duplicate. However, we have found that this  approach 
+doesn’t work in all cases. For exam ple, it might be reasonable to assume that two exact 
+duplicate requests from the same caller to create a n Amazon DynamoDB table received very 
+close together in time are duplicates of the same request. However, if those requests were for 
+launching an Amazon EC2 instance, then our assumption might not hold. It’s possible that the 
+caller actually wants two identical EC2 instances.  

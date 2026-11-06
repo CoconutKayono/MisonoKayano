@@ -1,0 +1,710 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light"><meta name="description" content="模块化单体架构 Modular Monolith：从本质到设计实践，包含七张内嵌架构图、C# 服务端片段、PostgreSQL 事务、幂等与 Unity 程序集边界。"><title>Modular Monolith · 模块化单体架构图解</title><style>
+:root{--paper:#f7f8fa;--ink:#202a36;--muted:#697581;--line:#e1e6ec;--blue:#2862b7;--nav:#152330;--nav-muted:#aebdca;--code:#172433;--side:272px}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:32px}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.85 "Segoe UI","Microsoft YaHei","PingFang SC",sans-serif;text-rendering:optimizeLegibility}button,a{-webkit-tap-highlight-color:transparent}a{color:var(--blue);text-decoration-thickness:1px;text-underline-offset:4px}a:hover{color:#153f7c}button{font:inherit;cursor:pointer}button:focus-visible,a:focus-visible,pre:focus-visible,.table-scroll:focus-visible{outline:3px solid #74a9ee;outline-offset:4px}.skip-link{position:fixed;left:20px;top:-90px;z-index:100;background:white;padding:12px 20px}.skip-link:focus{top:16px}.progress{position:fixed;left:var(--side);right:0;top:0;height:3px;background:transparent;z-index:30}.progress i{display:block;height:100%;width:0;background:#609bdd}
+.sidebar{position:fixed;inset:0 auto 0 0;width:var(--side);background:var(--nav);color:#fff;padding:36px 23px 22px;display:flex;flex-direction:column;z-index:25}.brand{display:flex;gap:12px;align-items:center;margin:0 7px 32px}.brand-mark{display:grid;place-items:center;width:39px;height:39px;border:1px solid #607689;border-radius:10px;font:bold 14px/1 monospace;letter-spacing:-1px;color:#d1e5f8}.brand b{display:block;font-size:15px;letter-spacing:.6px}.brand small{display:block;font-size:11px;color:var(--nav-muted);letter-spacing:1.3px;margin-top:2px}.toc-title{margin:0 12px 12px;color:#9eafbe;font-size:11px;font-weight:600;letter-spacing:2px}.toc{overflow:auto;scrollbar-width:thin;scrollbar-color:#425464 transparent}.toc a{display:flex;gap:12px;align-items:baseline;text-decoration:none;color:#c5d1dc;font-size:13px;line-height:1.6;border-radius:6px;padding:10px 11px;margin:3px 0}.toc a span{font:11px/1.6 monospace;color:#9caebe;flex:0 0 16px}.toc a:hover,.toc a.active{color:#fff;background:#283e51}.toc a.active{box-shadow:inset 2px 0 #8cb7e5}.sidebar-footer{margin-top:auto;padding:23px 10px 0;font-size:11px;color:#aebdca;line-height:1.7}.sidebar-footer strong{color:#dbe6ef;font-weight:500}.page{margin-left:var(--side);padding:0 48px 64px}.page-inner{max-width:1010px;margin:auto}.topbar{display:flex;align-items:center;justify-content:space-between;padding:27px 0 25px;border-bottom:1px solid var(--line);gap:12px;font-size:12px;color:var(--muted)}.topbar .crumb{letter-spacing:1px}.topbar .tools{display:flex;align-items:center;gap:16px}.print-button{padding:5px 12px;border:1px solid #ccd6e1;background:transparent;border-radius:5px;font-size:12px;color:#526477}.mobile-menu{display:none}.hero{padding:54px 0 36px}.eyebrow{font:600 12px/1.4 "Segoe UI",sans-serif;letter-spacing:2.5px;color:var(--blue);margin:0 0 20px}.hero h1{font-size:clamp(34px,4.6vw,55px);font-weight:750;line-height:1.2;letter-spacing:-2px;margin:0 0 16px}.hero h1 span{font-weight:400;color:#76818e}.hero-sub{font-size:19px;color:#687888;margin:0 0 27px;letter-spacing:.25px}.hero-tags{display:flex;flex-wrap:wrap;gap:9px}.hero-tags span{font-size:11px;padding:3px 10px;border:1px solid #d9e0e7;border-radius:4px;color:#60717f;background:#fff}.essence{margin:0 0 40px;padding:25px 27px;background:#fff;border:1px solid var(--line);border-left:3px solid var(--blue);border-radius:0 9px 9px 0}.essence p{font-size:18px;line-height:1.85;margin:0}.role-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:20px}.role{border-top:1px solid var(--line);padding-top:14px}.role b{font-size:13px;color:#355b87}.role span{display:block;font-size:12px;margin-top:3px;color:var(--muted)}
+article{font-size:15px;line-height:1.95}article>p:first-child{color:var(--muted);font-size:12px}article p{margin:14px 0}article>h2{font-size:25px;line-height:1.55;margin:58px 0 21px;padding-top:25px;border-top:1px solid var(--line);letter-spacing:-.5px;display:flex;align-items:baseline;gap:12px}.chapter-number{font:12px/1.4 monospace;color:#8695a4;letter-spacing:1px;flex:0 0 24px}article h3{font-size:18px;line-height:1.6;margin:30px 0 12px}article strong{font-weight:650}article ul,article ol{padding-left:24px;margin:14px 0}article li{padding-left:3px;margin:7px 0}article blockquote{margin:24px 0;background:#edf3fb;border-left:3px solid #5d86bd;padding:14px 23px;border-radius:0 6px 6px 0;color:#27466b}article blockquote p{margin:0}article p code,article li code,article td code{padding:2px 5px;background:#eaf0f6;border-radius:4px;color:#2b537f;font:12.5px/1.65 Consolas,"Cascadia Code",monospace;overflow-wrap:anywhere}.table-scroll{overflow-x:auto;margin:22px 0;border:1px solid var(--line);border-radius:8px;background:#fff}table{border-collapse:collapse;width:100%;font-size:13px;line-height:1.8}th{text-align:left;font-weight:650;background:#edf1f6;color:#334c67;white-space:nowrap}td,th{padding:13px 16px;vertical-align:top;border-bottom:1px solid var(--line)}tr:last-child td{border-bottom:0}td:first-child{font-weight:500;min-width:120px}pre{white-space:pre;overflow-x:auto;tab-size:4;font:12.5px/1.8 Consolas,"Cascadia Code","Microsoft YaHei",monospace}.flow-block{padding:22px 24px;border:1px solid #d8e0e9;background:#eef2f7;border-radius:8px;color:#36516c;margin:22px 0;line-height:2}.code-card{margin:23px 0 20px;background:var(--code);color:#e2e9f1;border:1px solid #26394b;border-radius:9px;overflow:hidden}.code-toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 18px;background:#203043;border-bottom:1px solid #344557}.code-toolbar strong{font:12px/1.6 Consolas,"Cascadia Code",monospace;letter-spacing:.2px;display:block;color:#e9f1fa}.code-toolbar small{font-size:10px;color:#b4c3d2;display:block;margin-top:1px}.code-actions{display:flex;gap:7px;flex-shrink:0}.code-actions button{font-size:11px;line-height:1.5;border:1px solid #5b6f83;border-radius:4px;background:transparent;color:#d7e6f6;padding:4px 9px}.code-actions button:hover{background:#3a536c;color:white}.code-card pre{padding:20px 23px;margin:0;scrollbar-color:#647c95 transparent}.tok-keyword{color:#a8c8ff}.tok-string{color:#b9dba7}.tok-comment{color:#a8b8c9}.tok-number{color:#efc79b}.end-note{margin-top:54px;padding-top:20px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:16px;font-size:11px;color:var(--muted)}.end-note a{color:#6a7f94}.toast{position:fixed;left:calc(50% + var(--side)/2);bottom:24px;transform:translateX(-50%);background:#20384e;color:#fff;padding:10px 19px;border-radius:7px;font-size:13px;box-shadow:0 4px 18px #0002;opacity:0;transition:opacity .16s;pointer-events:none;z-index:100}.toast.show{opacity:1}
+@media(min-width:1550px){.page{padding-left:80px;padding-right:80px}.hero{padding-top:65px}}
+@media(max-width:1150px){:root{--side:234px}.sidebar{padding-left:15px;padding-right:15px}.toc a{font-size:12px}.page{padding-left:30px;padding-right:30px}.hero h1{font-size:40px}}
+@media(max-width:820px){:root{--side:0px}html{scroll-padding-top:20px}.sidebar{display:none;width:260px}.sidebar.open{display:flex;box-shadow:10px 0 40px #0003}.page{margin-left:0;padding:0 23px 36px}.progress{left:0}.topbar{padding-top:17px;padding-bottom:16px}.topbar .crumb{font-size:11px}.topbar .tools{gap:9px}.mobile-menu{display:inline-block;padding:5px 9px;border:1px solid #ccd6e1;background:white;border-radius:5px;font-size:12px;color:#526477}.hero{padding-top:37px}.hero h1{font-size:37px;letter-spacing:-1px}.hero-sub{font-size:16px}.hero-tags span{font-size:10px}.essence{padding:20px}.essence p{font-size:16px}.role-grid{gap:10px}.role b{font-size:12px}.role span{font-size:11px}article{font-size:14px}article>h2{font-size:22px;margin-top:40px}article h3{font-size:17px}.code-toolbar{padding:11px 12px}.code-card pre{padding:17px 14px;font-size:11.5px}.toast{left:50%}}
+@media(max-width:420px){.page{padding-left:16px;padding-right:16px}.topbar .crumb{letter-spacing:0}.print-button{padding-left:8px;padding-right:8px}.hero h1{font-size:33px}.role-grid{grid-template-columns:1fr}.role{padding-top:8px}.role span{display:inline;margin-left:8px}.code-toolbar{align-items:flex-start}.code-actions{flex-direction:column;gap:5px}.code-actions button{padding:3px 6px}.flow-block{padding:17px 14px;font-size:11px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.toast{transition:none}}
+@media print{@page{margin:16mm}body{background:#fff;font-size:11pt}.sidebar,.topbar,.progress,.code-actions,.toast,.hero-tags,.end-note{display:none!important}.page{margin:0;padding:0}.page-inner{max-width:none}.hero{padding:0 0 16px}.hero h1{font-size:30pt}.hero-sub{font-size:14pt}.essence{margin-bottom:20px;padding:14px 18px}.essence p{font-size:12pt}article{font-size:10pt;line-height:1.65}article>h2{margin-top:26px;padding-top:15px;font-size:17pt;break-after:avoid}article h3{font-size:12pt;break-after:avoid}pre{white-space:pre-wrap;overflow:visible;overflow-wrap:anywhere;font-size:8pt!important}.code-card{background:#f7f8fa;color:#202a36;border-color:#ccd4dc}.code-toolbar{background:#edf1f6;border-color:#ccd4dc}.code-toolbar strong,.code-toolbar small{color:#34495e}.tok-keyword{color:#23558b}.tok-string{color:#3b6133}.tok-comment{color:#657566}.tok-number{color:#8a4b25}.table-scroll{overflow:visible}th,td{padding:8px 9px}.role-grid{grid-template-columns:repeat(3,1fr)}a{color:inherit;text-decoration:none}.flow-block{background:#f4f6f8;color:#30465d}}
+
+.hero h1{letter-spacing:-1.8px}.hero-sub{max-width:720px}.equation{display:block;margin:25px 0;padding:24px 20px;text-align:center;border:1px solid #d7e2ee;border-radius:8px;background:#edf3fa;font:500 23px/1.65 "Cambria Math",Cambria,"Microsoft YaHei",serif;color:#264d79;overflow-wrap:anywhere}.equation sub{font-size:60%;margin-right:3px}.equation-final{font:600 20px/1.7 "Segoe UI","Microsoft YaHei",sans-serif}var{font-family:Cambria,"Times New Roman",serif}.demo{border:1px solid #d6e1ed;border-radius:10px;margin:25px 0;padding:24px;background:#fff}.demo-heading{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;margin-bottom:20px}.demo-heading h3{margin:5px 0 0;font-size:16px;line-height:1.7}.demo-kicker{font-size:10px;color:#6c84a0;letter-spacing:1.3px;font-weight:600}.demo-chip{white-space:nowrap;font-size:10px;background:#edf3fb;color:#43668c;padding:4px 9px;border-radius:4px;align-self:flex-start}.door-layout{display:grid;grid-template-columns:180px 1fr;gap:27px;align-items:center}.door-scene{height:184px;position:relative;display:grid;place-items:center;background:#f0f4f8;border-radius:8px}.door-frame{height:136px;width:88px;border:7px solid #65798b;border-bottom:0;background:#20394a;perspective:400px;z-index:1}.door-leaf{height:100%;background:#c59767;border:3px solid #a2774f;position:relative;transform-origin:left;transition:transform .35s,background .25s}.door-leaf::before{content:"";position:absolute;inset:8px;border:2px solid #a67a50}.door-leaf i{position:absolute;width:7px;height:7px;border-radius:50%;background:#f8df9d;top:58%;right:8px;box-shadow:0 0 0 1px #8c642a}.door-leaf.is-open{transform:rotateY(-65deg)}.door-leaf.is-locked{background:#8b98a3;border-color:#647685}.door-leaf.is-locked::before{border-color:#647685}.door-leaf.is-locked::after{content:"锁";position:absolute;left:23px;top:42px;padding:2px 5px;color:#e9edf2;background:#425564;border-radius:3px;font-size:12px}.door-ground{position:absolute;bottom:22px;width:118px;height:5px;background:#c6d2dd;border-radius:50%}.door-controls label{font-size:12px;color:#60768b;display:block;margin-bottom:5px}.door-controls select{font:13px/1.5 inherit;padding:9px 32px 9px 12px;border:1px solid #becedf;border-radius:5px;background:#fff;color:#344d67;margin-right:7px;margin-bottom:10px;max-width:100%}.action-button,.secondary-button{font-size:12px;padding:9px 14px;border:1px solid #2c609f;border-radius:5px;line-height:1.5;background:#2c609f;color:white}.secondary-button{color:#3e5c7b;background:#f4f7fa;border-color:#cfdae6}.action-button:hover{background:#1f4a7e}.secondary-button:hover{background:#e7eff7}.demo p.demo-result{font-size:13px;line-height:1.85;color:#325675;margin:10px 0 0}.demo-caption{font-size:11.5px!important;color:#708092!important;line-height:1.85!important;margin:16px 0 0!important}.hp-display{display:flex;align-items:baseline;gap:9px}.hp-display output{font:600 48px/1.1 "Segoe UI",sans-serif;letter-spacing:-2px;color:#315d8f}.hp-display span{font-size:14px;color:#8190a0}progress{display:block;width:100%;height:13px;margin:18px 0 22px;accent-color:#3b7baf;border:0;border-radius:5px;overflow:hidden;background:#e9eff6}progress::-webkit-progress-bar{background:#e9eff6;border-radius:5px}progress::-webkit-progress-value{background:#4e85b5;border-radius:5px;transition:width .2s}progress::-moz-progress-bar{background:#4e85b5}.demo-buttons{display:flex;flex-wrap:wrap;gap:8px}.fsm-figure{margin:25px 0}.fsm-states{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.fsm-states>div{padding:16px 12px;border-radius:7px;background:#edf3f9;border:1px solid #d7e3ee;text-align:center}.fsm-states b{display:block;font:600 13px/1.7 Consolas,monospace;color:#375d85}.fsm-states span{font-size:12px;color:#708195}.fsm-states .dead-state{background:#f4eeed;border-color:#e8d8d4}.fsm-states .dead-state b{color:#8a5d52}.editor-note{background:#fff;border:1px solid var(--line);border-radius:8px;padding:20px 24px;margin-top:46px;font-size:12px;color:#657488}.editor-note h3{font-size:14px;margin:0 0 8px}.editor-note p{margin:8px 0}.editor-note summary{cursor:pointer;color:#3f648c;margin-top:12px}.editor-note ul{padding-left:19px}.editor-note a{overflow-wrap:anywhere}.mobile-menu{flex-shrink:0}
+@media(max-width:600px){.hero h1{font-size:34px}.hero-sub{font-size:15px}.door-layout{grid-template-columns:1fr}.door-scene{height:170px}.door-controls{margin-top:-10px}.demo{padding:18px}.demo-heading h3{font-size:15px}.demo-chip{font-size:9px}.equation{font-size:19px;padding:20px 12px}.equation-final{font-size:16px}.fsm-states{grid-template-columns:repeat(2,1fr)}}
+@media(prefers-reduced-motion:reduce){.door-leaf,progress::-webkit-progress-value{transition:none}}
+@media print{.demo{break-inside:avoid;padding:15px}.demo-buttons,.door-controls select,.door-controls label,.door-controls button{display:none}.door-layout{grid-template-columns:130px 1fr}.door-scene{height:160px}.hp-display output{font-size:26pt}.demo-heading h3{font-size:11pt}.equation{font-size:15pt;padding:15px}.fsm-states{grid-template-columns:repeat(4,1fr)}.editor-note{font-size:9pt}.equation-final{font-size:13pt}}
+.hero h1{font-size:clamp(34px,4.2vw,53px)}.hero-sub{max-width:780px}.fraction{display:inline-flex;flex-direction:column;vertical-align:middle;text-align:center;line-height:1.45;margin-left:8px}.fraction>span:first-child{border-bottom:1px solid #6685a8;padding:0 8px}.fraction>span:last-child{font-size:85%;padding-top:3px}.embedded-diagram{margin:27px 0;border:1px solid #d5e1ed;border-radius:9px;background:#fff;overflow:hidden}.diagram-heading{display:flex;align-items:center;justify-content:space-between;gap:15px;padding:15px 19px 10px}.diagram-heading>div{min-width:0}.diagram-heading span{font:10px/1.5 Consolas,monospace;color:#8196aa;display:block;letter-spacing:1px;margin-bottom:4px}.diagram-heading strong{font-size:14px;color:#3a5a7a;line-height:1.75}.diagram-heading button{white-space:nowrap;background:#f7f9fc;border:1px solid #d2dce7;border-radius:4px;color:#71879e;padding:5px 9px;font-size:10px}.diagram-heading button:hover{background:#eaf2fa;color:#3f6489}.svg-scroll{overflow-x:auto;scrollbar-color:#b1c4d6 transparent;scrollbar-width:thin}.svg-scroll svg{width:100%;height:auto;display:block;min-width:640px}.embedded-diagram figcaption{padding:8px 20px 17px;font-size:11px;color:#7b8da0;line-height:1.85;margin:0}.boundary-checklist{margin:25px 0;border:1px solid #d3e0ed;border-radius:9px;background:#fff;padding:24px}.checklist-heading{display:flex;justify-content:space-between;align-items:center;gap:15px}.checklist-heading span{font-size:10px;color:#8b9cad;letter-spacing:1px}.checklist-heading h3{margin:4px 0;font-size:17px}.checklist-heading output{font:600 25px/1.3 "Segoe UI",sans-serif;color:#4272a0;white-space:nowrap}.boundary-checklist progress{height:9px;margin:16px 0 20px}.boundary-checklist fieldset{border:0;margin:0;padding:0}.boundary-checklist label{display:flex;align-items:flex-start;gap:10px;font-size:13px;line-height:1.9;color:#526d87;padding:11px 0;border-bottom:1px solid #e7eef5}.boundary-checklist label:last-child{border-bottom:0}.boundary-checklist input{accent-color:#477cad;cursor:pointer;flex:0 0 auto;margin-top:6px}.checklist-footer{display:flex;justify-content:space-between;gap:13px;align-items:center;border-top:1px solid #dce6ef;margin-top:14px;padding-top:16px}.checklist-footer span{font-size:10px;color:#8294a6;line-height:1.8}.checklist-footer button{font-size:10px;white-space:nowrap;border:1px solid #c9d9e8;border-radius:4px;padding:5px 9px;background:#f5f8fc;color:#5d7b98}.visually-hidden{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}.figure-index{display:flex;flex-wrap:wrap;gap:6px;margin:17px 0 0}.figure-index a{font-size:10px;text-decoration:none;border:1px solid #d7e1ec;padding:3px 8px;border-radius:4px;color:#6a83a0;background:#fff}.figure-index a:hover{background:#eaf2fa}.scope-note{font-size:12px;line-height:1.9;color:#6e8298;margin-top:17px}.toc a{font-size:12px;line-height:1.75}.reference-list{margin-top:15px}.reference-list a{overflow-wrap:anywhere}
+@media(max-width:650px){.diagram-heading{padding:13px 14px 8px;align-items:flex-start}.diagram-heading strong{font-size:12px}.diagram-heading button{font-size:9px;padding:4px 6px}.embedded-diagram figcaption{font-size:10px;padding:8px 14px 14px}.svg-scroll svg{min-width:690px}.boundary-checklist{padding:18px}.boundary-checklist label{font-size:12px}.checklist-heading output{font-size:22px}.checklist-footer{align-items:flex-start}.hero h1{font-size:35px}.scope-note{font-size:11px}.figure-index a{font-size:9px}}
+@media print{.diagram-heading button,.checklist-footer button,.figure-index{display:none!important}.svg-scroll{overflow:visible}.svg-scroll svg{min-width:0!important;width:100%}.embedded-diagram{break-inside:avoid}.diagram-heading{padding:10px 14px 0}.diagram-heading strong{font-size:10pt}.embedded-diagram figcaption{font-size:8pt}.boundary-checklist{break-inside:avoid;padding:15px}.boundary-checklist label{font-size:9pt}.scope-note{font-size:9pt}.toc{display:none}}</style></head><body><a class="skip-link" href="#content">跳到正文</a><div class="progress" aria-hidden="true"><i id="reading-progress"></i></div>
+<aside class="sidebar" id="sidebar" aria-label="文档目录"><div class="brand"><div class="brand-mark" aria-hidden="true">M/M</div><div><b>架构图解</b><small>MODULAR MONOLITH</small></div></div><div class="toc-title">阅读导航 / CONTENTS</div><nav class="toc"><a href="#chapter-1"><span>01</span>What：什么是 Modular Monolith？</a>
+<a href="#chapter-2"><span>02</span>Why：为什么需要 Modular Monolith？</a>
+<a href="#chapter-3"><span>03</span>How：如何设计一个 Modular Monolith？</a>
+<a href="#chapter-4"><span>04</span>C# 实践：一次获得道具，同时更新背包与统计</a>
+<a href="#chapter-5"><span>05</span>跨模块调用：接口还是事件？</a>
+<a href="#chapter-6"><span>06</span>设计权衡：普通单体、模块化单体与微服务</a>
+<a href="#chapter-7"><span>07</span>Unity 中如何应用？</a>
+<a href="#chapter-8"><span>08</span>如何判断设计是否真正模块化？</a>
+<a href="#chapter-9"><span>09</span>直达本质：Modular Monolith 真正控制的是什么？</a></nav><div class="sidebar-footer"><strong>单文件 · 七张内嵌矢量图</strong><br>2026.10.16 · 根据提供原文整理<br>业务边界 · 受控依赖 · 整体部署</div></aside>
+<div class="page"><div class="page-inner"><header class="topbar"><div class="crumb">ARCHITECTURE NOTES / 08</div><div class="tools"><button type="button" class="mobile-menu" id="menu-button" aria-controls="sidebar" aria-expanded="false">目录</button><button type="button" class="print-button" id="print-button">打印 / 保存 PDF</button></div></header>
+<section class="hero" aria-labelledby="page-title"><p class="eyebrow">WHAT / WHY / HOW / TRADEOFFS</p><h1 id="page-title">模块化单体<span>。</span></h1><p class="hero-sub">Modular Monolith · 逻辑有边界，部署是整体。</p><div class="hero-tags"><span>9 个主题</span><span>7 张架构配图</span><span>C# / PostgreSQL</span><span>Unity 边界实践</span></div><div class="figure-index" aria-label="图解快捷导航"><a href="#diagram-1">01 整体部署</a><a href="#diagram-2">02 模块边界</a><a href="#diagram-3">03 控制耦合</a><a href="#diagram-4">04 程序集依赖</a><a href="#diagram-5">05 共同事务</a><a href="#diagram-6">06 协作方式</a><a href="#diagram-7">07 架构权衡</a></div></section>
+<section class="essence" aria-label="核心观点"><p>不必先拆成独立服务，才能拥有清晰的模块。<br><strong>用明确职责和受控依赖，限制变化的传播范围。</strong></p><div class="role-grid"><div class="role"><b>MODULE / 业务边界</b><span>状态与规则各有归属</span></div><div class="role"><b>CONTRACT / 受控协作</b><span>依赖能力，隐藏实现细节</span></div><div class="role"><b>MONOLITH / 整体部署</b><span>保留进程内协作的直接性</span></div></div><p class="scope-note">图解与正文均可离线阅读。手机上可横向滚动大图；每张图可单独下载 SVG。代码用于解释机制，尚不是可直接部署的完整服务端工程。</p></section>
+<main><article id="content"><p><strong>Modular Monolith 的核心思想：在不把系统拆成多个独立服务的前提下，把一个大型程序组织成多个具有明确职责、边界和对外接口的模块。</strong></p>
+<p>它试图解决一个本质的软件工程问题：</p>
+<blockquote>
+<p>随着系统功能不断增加，如何让局部功能的变化，尽可能不影响系统的其他部分？</p>
+</blockquote>
+<p>下面按照 What → Why → How → 设计权衡 → C# 游戏服务端实践，逐层展开。</p>
+<h2 id="chapter-1"><span class="chapter-number">01</span>What：什么是 Modular Monolith？</h2>
+<p>首先拆解名称：</p>
+<ul>
+<li><strong>Modular：</strong> 模块化，把系统组织成具有明确职责和边界的模块。</li>
+<li><strong>Monolith：</strong> 单体，整个应用作为一个整体构建和部署。</li>
+</ul>
+<p>因此：<strong>Modular Monolith = 模块化的内部结构 + 单体化的部署方式。</strong></p>
+<p>模块与单体描述的是两个不同维度。</p>
+<h3 id="monolith">1. 单体 Monolith 到底是什么？</h3>
+<p>假设开发一个游戏服务端，包含 Inventory（背包）、Achievement（成就）、Statistics（统计）和 Shop（商店）。最开始，把它们全部放在一个服务端应用里。</p>
+<figure class="embedded-diagram" id="diagram-1" aria-labelledby="diagram-caption-1"><div class="diagram-heading"><div><span>图 01</span><strong>一个整体部署，多个内部模块</strong></div><button type="button" data-download-figure="1" aria-label="下载图 1 的 SVG">下载 SVG</button></div><div class="svg-scroll" tabindex="0" aria-label="可横向滚动的图解"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 400" role="img" aria-labelledby="fig1-title fig1-desc" font-family="Microsoft YaHei,Segoe UI,sans-serif"><title id="fig1-title">一个整体部署，多个内部模块</title><desc id="fig1-desc">同一游戏服务端应用包含背包、成就、统计、商店；数据库位于应用边界之外。</desc><defs><marker id="f1-blue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#547da7"/></marker><marker id="f1-green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#638d77"/></marker><marker id="f1-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#ad7b70"/></marker></defs><rect width="960" height="400" fill="white"/><rect x="35" y="40" width="650" height="310" rx="10" fill="#f5f8fc" stroke="#547da7" stroke-width="1.5" stroke-dasharray="7 5"/><text x="360" y="77" font-size="18" fill="#34536f" text-anchor="middle" font-weight="600">Game Server · 一个应用实例 / 一个整体部署单元</text><rect x="70" y="110" width="270" height="85" rx="10" fill="#edf4fb" stroke="#d2dfeb" stroke-width="1.5"/><text x="205.0" y="140" font-size="16" fill="#34536f" text-anchor="middle" font-weight="600">Inventory</text><text x="205.0" y="164" font-size="12" fill="#7c91a5" text-anchor="middle" font-weight="400">背包</text><rect x="380" y="110" width="270" height="85" rx="10" fill="#edf4fb" stroke="#d2dfeb" stroke-width="1.5"/><text x="515.0" y="140" font-size="16" fill="#34536f" text-anchor="middle" font-weight="600">Achievement</text><text x="515.0" y="164" font-size="12" fill="#7c91a5" text-anchor="middle" font-weight="400">成就</text><rect x="70" y="225" width="270" height="85" rx="10" fill="#edf4fb" stroke="#d2dfeb" stroke-width="1.5"/><text x="205.0" y="255" font-size="16" fill="#34536f" text-anchor="middle" font-weight="600">Statistics</text><text x="205.0" y="279" font-size="12" fill="#7c91a5" text-anchor="middle" font-weight="400">统计</text><rect x="380" y="225" width="270" height="85" rx="10" fill="#edf4fb" stroke="#d2dfeb" stroke-width="1.5"/><text x="515.0" y="255" font-size="16" fill="#34536f" text-anchor="middle" font-weight="600">Shop</text><text x="515.0" y="279" font-size="12" fill="#7c91a5" text-anchor="middle" font-weight="400">商店</text><polyline points="685,195 755,195" fill="none" stroke="#547da7" stroke-width="2" marker-end="url(#f1-blue)"/><text x="720" y="174" font-size="11" fill="#7c91a5" text-anchor="middle" font-weight="400">数据访问</text><rect x="760" y="140" width="165" height="112" rx="10" fill="#edf4fb" stroke="#d2dfeb" stroke-width="1.5"/><text x="842.5" y="170" font-size="16" fill="#34536f" text-anchor="middle" font-weight="600">Database</text><text x="842.5" y="194" font-size="12" fill="#7c91a5" text-anchor="middle" font-weight="400">可使用一个</text><text x="842.5" y="214" font-size="12" fill="#7c91a5" text-anchor="middle" font-weight="400">或多个数据库</text><text x="480" y="382" font-size="15" fill="#34536f" text-anchor="middle" font-weight="400">单体不等于代码混乱；模块化也不要求增加服务部署单元。</text></svg></div><figcaption id="diagram-caption-1">同一游戏服务端应用包含背包、成就、统计、商店；数据库位于应用边界之外。</figcaption></figure>
+<p>一个服务端应用，一次整体部署；数据库可以是一个，也可以是多个。这是典型的单体部署结构。</p>
+<p><strong>单体本身并不意味着代码混乱。</strong> 一个单体程序完全可以具有优秀的类设计、接口设计和模块设计。Monolith 描述部署和运行边界，不是低质量代码的代名词。</p>
+<p>图示的是单个应用实例；单体应用也可以整体部署多个副本，并不意味着整个系统永远只能运行一个进程。</p>
+<h3 id="module">2. 模块 Module 到底是什么？</h3>
+<p>以 <code>InventoryModule</code> 为例，它负责背包领域中的规则：玩家获得道具、消耗道具、判断容量、管理当前拥有的物品。</p>
+<blockquote>
+<p>模块是一个拥有明确职责、管理自己内部状态与规则，并通过受控接口与外界交互的软件单元。</p>
+</blockquote>
+<figure class="embedded-diagram" id="diagram-2" aria-labelledby="diagram-caption-2"><div class="diagram-heading"><div><span>图 02</span><strong>模块的关键是公开能力与内部实现的边界</strong></div><button type="button" data-download-figure="2" aria-label="下载图 2 的 SVG">下载 SVG</button></div><div class="svg-scroll" tabindex="0" aria-label="可横向滚动的图解"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 430" role="img" aria-labelledby="fig2-title fig2-desc" font-family="Microsoft YaHei,Segoe UI,sans-serif"><title id="fig2-title">模块的关键是公开能力与内部实现的边界</title><desc id="fig2-desc">外部模块只通过 Inventory Public API 调用，不直接依赖领域对象、仓储与内部算法。</desc><defs><marker id="f2-blue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#547da7"/></marker><marker id="f2-green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#638d77"/></marker><marker id="f2-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#ad7b70"/></marker></defs><rect width="960" height="430" fill="white"/><rect x="245" y="35" width="680" height="345" rx="10" fill="#f6f9fc" stroke="#547da7" stroke-width="1.5" stroke-dasharray="7 5"/><text x="585" y="72" font-size="18" fill="#34536f" text-anchor="middle" font-weight="600">Inventory Module · 背包模块</text><rect x="30" y="112" width="165" height="85" rx="10" fill="white" stroke="#d2dfeb" stroke-width="1.5"/><text x="112.5" y="142" font-size="16" fill="#34536f" text-anchor="middle" font-weight="600">外部模块</text><text x="112.5" y="166" font-size="12" fill="#7c91a5" text-anchor="middle" font-weight="400">例如 Shop / Rewards</text><polyline points="195,154 280,154" fill="none" stroke="#547da7" stroke-width="2" marker-end="url(#f2-blue)"/><text x="236" y="103" font-size="11" fill="#7c91a5" text-anchor="middle" font-weight="400">公开契约</text><rect x="280" y="105" width="610" height="85" rx="10" fill="#e4effa" stroke="#9bbbd9" stroke-width="1.5"/><text x="585.0" y="135" font-size="16" fill="#34536f" text-anchor="middle" font-weight="600">Public API</text><text x="585.0" y="159" font-size="12" fill="#7c91a5" text-anchor="middle" font-weight="400">GrantItem · ConsumeItem · GetInventory</text><polyline points="585,190 585,224" fill="none" stroke="#547da7" stroke-width="2" marker-end="url(#f2-blue)"/><rect x="280" y="225" width="610" height="130" rx="10" fill="white" stroke="#d2dfeb" stroke-width="1.5"/><text x="585" y="253" font-size="14" fill="#34536f" text-anchor="middle" font-weight="600">Internal · 不向外部暴露实现细节</text><rect x="300" y="270" width="170" height="67" rx="10" fill="#f1f5f9" stroke="#d2dfeb" stroke-width="1.5"/><text x="385.0" y="300" font-size="16" fill="#34536f" text-anchor="middle" font-weight="600">业务规则</text><text x="385.0" y="324" font-size="12" fill="#7c91a5" text-anchor="middle" font-weight="400">领域对象</text><rect x="500" y="270" width="170" height="67" rx="10" fill="#f1f5f9" stroke="#d2dfeb" stroke-width="1.5"/><text x="585.0" y="300" font-size="16" fill="#34536f" text-anchor="middle" font-weight="600">数据访问</text><text x="585.0" y="324" font-size="12" fill="#7c91a5" text-anchor="middle" font-weight="400">仓储实现</text><rect x="700" y="270" width="170" height="67" rx="10" fill="#f1f5f9" stroke="#d2dfeb" stroke-width="1.5"/><text x="785.0" y="300" font-size="16" fill="#34536f" text-anchor="middle" font-weight="600">内部算法</text><text x="785.0" y="324" font-size="12" fill="#7c91a5" text-anchor="middle" font-weight="400">私有状态</text><text x="480" y="410" font-size="14" fill="#34536f" text-anchor="middle" font-weight="400">模块可由多个类组成；是否拆成独立程序集，应结合规模与约束。</text></svg></div><figcaption id="diagram-caption-2">外部模块只通过 Inventory Public API 调用，不直接依赖领域对象、仓储与内部算法。</figcaption></figure>
+<p>外部通过公开契约交互，不能随意访问内部数据与实现。一个模块不一定只有一个 Class，也不一定对应一个 DLL。</p>
+<p><strong>模块的本质不是文件夹，而是被维护和执行的职责边界。</strong></p>
+<h3 id="section">3. 什么才算真正的模块化？</h3>
+<figure class="embedded-diagram" id="diagram-3" aria-labelledby="diagram-caption-3"><div class="diagram-heading"><div><span>图 03</span><strong>文件夹不等于模块边界</strong></div><button type="button" data-download-figure="3" aria-label="下载图 3 的 SVG">下载 SVG</button></div><div class="svg-scroll" tabindex="0" aria-label="可横向滚动的图解"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 470" role="img" aria-labelledby="fig3-title fig3-desc" font-family="Microsoft YaHei,Segoe UI,sans-serif"><title id="fig3-title">文件夹不等于模块边界</title><desc id="fig3-desc">左图模块间任意访问内部数据；右图通过公开 API 使用能力，内部实现被隐藏。</desc><defs><marker id="f3-blue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#547da7"/></marker><marker id="f3-green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#638d77"/></marker><marker id="f3-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#ad7b70"/></marker></defs><rect width="960" height="470" fill="white"/><text x="240" y="38" font-size="19" fill="#ad7b70" text-anchor="middle" font-weight="600">只有分类，没有约束</text><text x="735" y="38" font-size="19" fill="#547da7" text-anchor="middle" font-weight="600">通过契约维护边界</text><polyline points="140,127 325,117" fill="none" stroke="#ad7b70" stroke-width="1" marker-end="url(#f3-red)" stroke-dasharray="6 4"/><polyline points="140,127 395,242" fill="none" stroke="#ad7b70" stroke-width="1" marker-end="url(#f3-red)" stroke-dasharray="6 4"/><polyline points="140,127 315,372" fill="none" stroke="#ad7b70" stroke-width="1" marker-end="url(#f3-red)" stroke-dasharray="6 4"/><polyline points="140,127 120,362" fill="none" stroke="#ad7b70" stroke-width="1" marker-end="url(#f3-red)" stroke-dasharray="6 4"/><polyline points="140,127 75,237" fill="none" stroke="#ad7b70" stroke-width="1" marker-end="url(#f3-red)" stroke-dasharray="6 4"/><polyline points="325,117 395,242" fill="none" stroke="#ad7b70" stroke-width="1" marker-end="url(#f3-red)" stroke-dasharray="6 4"/><polyline points="325,117 315,372" fill="none" stroke="#ad7b70" stroke-width="1" marker-end="url(#f3-red)" stroke-dasharray="6 4"/><polyline points="325,117 120,362" fill="none" stroke="#ad7b70" stroke-width="1" marker-end="url(#f3-red)" stroke-dasharray="6 4"/><polyline points="325,117 75,237" fill="none" stroke="#ad7b70" stroke-width="1" marker-end="url(#f3-red)" stroke-dasharray="6 4"/><polyline points="395,242 315,372" fill="none" stroke="#ad7b70" stroke-width="1" marker-end="url(#f3-red)" stroke-dasharray="6 4"/><polyline points="395,242 120,362" fill="none" stroke="#ad7b70" stroke-width="1" marker-end="url(#f3-red)" stroke-dasharray="6 4"/><polyline points="395,242 75,237" fill="none" stroke="#ad7b70" stroke-width="1" marker-end="url(#f3-red)" stroke-dasharray="6 4"/><polyline points="315,372 120,362" fill="none" stroke="#ad7b70" stroke-width="1" marker-end="url(#f3-red)" stroke-dasharray="6 4"/><polyline points="315,372 75,237" fill="none" stroke="#ad7b70" stroke-width="1" marker-end="url(#f3-red)" stroke-dasharray="6 4"/><polyline points="120,362 75,237" fill="none" stroke="#ad7b70" stroke-width="1" marker-end="url(#f3-red)" stroke-dasharray="6 4"/><rect x="85" y="100" width="110" height="58" rx="10" fill="#fcf4f1" stroke="#e5cfc9" stroke-width="1.5"/><text x="140.0" y="130" font-size="16" fill="#34536f" text-anchor="middle" font-weight="600">Inventory</text><rect x="270" y="90" width="110" height="58" rx="10" fill="#fcf4f1" stroke="#e5cfc9" stroke-width="1.5"/><text x="325.0" y="120" font-size="16" fill="#34536f" text-anchor="middle" font-weight="600">Shop</text><rect x="340" y="215" width="110" height="58" rx="10" fill="#fcf4f1" stroke="#e5cfc9" stroke-width="1.5"/><text x="395.0" y="245" font-size="16" fill="#34536f" text-anchor="middle" font-weight="600">Statistics</text><rect x="260" y="345" width="110" height="58" rx="10" fill="#fcf4f1" stroke="#e5cfc9" stroke-width="1.5"/><text x="315.0" y="375" font-size="16" fill="#34536f" text-anchor="middle" font-weight="600">Quest</text><rect x="65" y="335" width="110" height="58" rx="10" fill="#fcf4f1" stroke="#e5cfc9" stroke-width="1.5"/><text x="120.0" y="365" font-size="16" fill="#34536f" text-anchor="middle" font-weight="600">Achievement</text><rect x="20" y="210" width="110" height="58" rx="10" fill="#fcf4f1" stroke="#e5cfc9" stroke-width="1.5"/><text x="75.0" y="240" font-size="16" fill="#34536f" text-anchor="middle" font-weight="600">Mail</text><rect x="510" y="180" width="420" height="245" rx="10" fill="#f8fafc" stroke="#b7cce0" stroke-width="1.5" stroke-dasharray="7 5"/><rect x="610" y="78" width="230" height="70" rx="10" fill="#edf4fb" stroke="#d2dfeb" stroke-width="1.5"/><text x="725.0" y="108" font-size="16" fill="#34536f" text-anchor="middle" font-weight="600">Shop / Rewards</text><text x="725.0" y="132" font-size="12" fill="#7c91a5" text-anchor="middle" font-weight="400">明确请求能力</text><rect x="530" y="210" width="180" height="75" rx="10" fill="#edf4fb" stroke="#d2dfeb" stroke-width="1.5"/><text x="620.0" y="240" font-size="16" fill="#34536f" text-anchor="middle" font-weight="600">Inventory API</text><text x="620.0" y="264" font-size="12" fill="#7c91a5" text-anchor="middle" font-weight="400">受控的契约</text><rect x="735" y="210" width="180" height="75" rx="10" fill="#edf4fb" stroke="#d2dfeb" stroke-width="1.5"/><text x="825.0" y="240" font-size="16" fill="#34536f" text-anchor="middle" font-weight="600">Statistics API</text><text x="825.0" y="264" font-size="12" fill="#7c91a5" text-anchor="middle" font-weight="400">受控的契约</text><polyline points="675,148 675,173 620,173 620,210" fill="none" stroke="#547da7" stroke-width="2" marker-end="url(#f3-blue)"/><polyline points="775,148 775,173 825,173 825,210" fill="none" stroke="#547da7" stroke-width="2" marker-end="url(#f3-blue)"/><rect x="530" y="335" width="180" height="68" rx="10" fill="white" stroke="#d2dfeb" stroke-width="1.5"/><text x="620.0" y="365" font-size="16" fill="#34536f" text-anchor="middle" font-weight="600">背包内部实现</text><text x="620.0" y="389" font-size="12" fill="#7c91a5" text-anchor="middle" font-weight="400">不由外部直接访问</text><rect x="735" y="335" width="180" height="68" rx="10" fill="white" stroke="#d2dfeb" stroke-width="1.5"/><text x="825.0" y="365" font-size="16" fill="#34536f" text-anchor="middle" font-weight="600">统计内部实现</text><text x="825.0" y="389" font-size="12" fill="#7c91a5" text-anchor="middle" font-weight="400">不由外部直接访问</text><polyline points="620,285 620,335" fill="none" stroke="#547da7" stroke-width="2" marker-end="url(#f3-blue)"/><polyline points="825,285 825,335" fill="none" stroke="#547da7" stroke-width="2" marker-end="url(#f3-blue)"/><text x="480" y="453" font-size="14" fill="#34536f" text-anchor="middle" font-weight="400">重点是允许哪些依赖，而不是追求模块之间完全没有依赖。</text></svg></div><figcaption id="diagram-caption-3">左图模块间任意访问内部数据；右图通过公开 API 使用能力，内部实现被隐藏。</figcaption></figure>
+<p>有文件夹但没有边界时，各模块仍然随意调用内部方法、访问数据，修改一个功能可能波及其他功能。具有受控边界时，模块通过公开接口合作，内部实现不成为其他模块的依赖。</p>
+<p>模块化不要求模块完全不依赖其他模块。它要求：<strong>依赖有明确方向，而且通过被允许的边界。</strong></p>
+<p>这与未严格模块化的单体的区别，不是物理拆分本身，而是是否建立并维护这些约束。</p>
+<h2 id="chapter-2"><span class="chapter-number">02</span>Why：为什么需要 Modular Monolith？</h2>
+<h3 id="section-1">1. 根本问题：软件的复杂度如何随规模增长？</h3>
+<p>只有两个功能时：</p>
+<pre class="flow-block" tabindex="0"><code class="language-text">Inventory
+Statistics
+</code></pre>
+<p>关系可能很简单。随着功能增加：</p>
+<pre class="flow-block" tabindex="0"><code class="language-text">Inventory
+Statistics
+Achievement
+Quest
+Shop
+Mail
+Battle
+Economy
+Social
+</code></pre>
+<p>如果每个系统都能直接修改其他系统的内部状态，依赖关系可能迅速增加。</p>
+<p>假设 N 个模块之间每对都可以建立一条直接关系，潜在模块对数量为：</p>
+<div class="equation" role="math" aria-label="潜在模块对数量 E 等于 N 乘以 N 减一，再除以二"><var>E</var> = <span class="fraction"><span><var>N</var>(<var>N</var> − 1)</span><span>2</span></span></div>
+<div class="table-scroll" tabindex="0"><table>
+<thead>
+<tr>
+<th>模块数量</th>
+<th>潜在模块对数量</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>5</td>
+<td>10</td>
+</tr>
+<tr>
+<td>10</td>
+<td>45</td>
+</tr>
+<tr>
+<td>20</td>
+<td>190</td>
+</tr>
+<tr>
+<td>50</td>
+<td>1,225</td>
+</tr>
+</tbody>
+</table></div>
+<p>这里计算的是<strong>无向的潜在模块对</strong>，不是实际依赖数量，也不是所有项目都会达到这个数量。若分别计算两个方向的依赖，上界模型也会不同。</p>
+<p>它反映的是：随着规模增加，真正难管理的往往不是代码数量，而是代码之间的关系。</p>
+<h3 id="coupling">2. 耦合 Coupling：变化为什么会传播？</h3>
+<p>看一段游戏服务端代码：</p>
+<div class="code-card" data-filename="概念片段1"><div class="code-toolbar"><div><strong>ShopService · 直接耦合反例</strong><small>.NET / C# · 机制片段，非完整工程</small></div><div class="code-actions"><button type="button" data-action="copy" aria-label="复制 ShopService · 直接耦合反例">复制代码</button></div></div><pre tabindex="0"><code class="language-csharp"><span class="tok-keyword">public</span> <span class="tok-keyword">class</span> ShopService
+{
+    <span class="tok-keyword">public</span> <span class="tok-keyword">void</span> BuyItem(Player player, <span class="tok-keyword">int</span> itemId)
+    {
+        player.Coins -= <span class="tok-number">100</span>;
+
+        player.Inventory.Items.Add(itemId);
+
+        player.Statistics.TotalPurchases++;
+
+        player.Achievements.UpdatePurchaseProgress();
+
+        player.Quests.CheckPurchaseQuest();
+    }
+}
+</code></pre></div>
+<p>短期内它直观且可能正常运行，但商店直接了解并操作了多个系统的内部数据。</p>
+<ul>
+<li>背包改成堆叠存储，商店可能需要修改。</li>
+<li>成就系统改变进度计算方式，商店可能需要修改。</li>
+<li>统计记录需要持久化或额外检查，商店可能还要修改。</li>
+</ul>
+<blockquote>
+<p>一个系统内部实现的变化，迫使另一个系统跟着变化。</p>
+</blockquote>
+<p>这是耦合造成的维护成本之一。但耦合不能完全消除：只要功能需要合作，就存在某种依赖。架构要做的是控制依赖的范围和形式。</p>
+<h3 id="modular-monolith">3. Modular Monolith 如何解决？</h3>
+<p>可以改成通过公开能力协作：</p>
+<div class="code-card" data-filename="概念片段2"><div class="code-toolbar"><div><strong>ShopService · 契约调用片段</strong><small>.NET / C# · 机制片段，非完整工程</small></div><div class="code-actions"><button type="button" data-action="copy" aria-label="复制 ShopService · 契约调用片段">复制代码</button></div></div><pre tabindex="0"><code class="language-csharp"><span class="tok-keyword">public</span> <span class="tok-keyword">class</span> ShopService
+{
+    <span class="tok-keyword">private</span> <span class="tok-keyword">readonly</span> IInventoryCommands _inventory;
+    <span class="tok-keyword">private</span> <span class="tok-keyword">readonly</span> IStatisticsCommands _statistics;
+
+    <span class="tok-keyword">public</span> async Task BuyItemAsync(
+        Guid playerId,
+        <span class="tok-keyword">int</span> itemId,
+        CancellationToken ct)
+    {
+        <span class="tok-comment">// 付款校验与原子事务管理暂时省略</span>
+
+        await _inventory.GrantAsync(
+            playerId, itemId, <span class="tok-number">1</span>, ct);
+
+        await _statistics.RecordPurchaseAsync(
+            playerId, ct);
+    }
+}
+</code></pre></div>
+<p>商店不再知道背包用数组、字典、数据库表还是其他结构保存。它只知道：</p>
+<div class="code-card" data-filename="概念片段3"><div class="code-toolbar"><div><strong>GrantAsync · 调用示意</strong><small>.NET / C# · 机制片段，非完整工程</small></div><div class="code-actions"><button type="button" data-action="copy" aria-label="复制 GrantAsync · 调用示意">复制代码</button></div></div><pre tabindex="0"><code class="language-csharp">_inventory.GrantAsync(...)
+</code></pre></div>
+<p>这个操作请求背包模块授予物品。只要契约稳定，背包内部实现变化通常不要求商店一起改变。这是**信息隐藏（Information Hiding）**的作用。</p>
+<p>上面的代码只演示模块交互，尚未处理购买原子性、并发与幂等；构造注入与相关接口也未完整列出。<code>RecordPurchaseAsync</code> 是购买统计的概念接口，后文 <code>RecordObtainedAsync</code> 属于获得道具场景；不要把这些独立片段直接拼成一个工程。</p>
+<h3 id="section-2">4. 本质：限制变化的影响范围</h3>
+<p>模块化单体不会消除复杂度与所有耦合。它希望做到：</p>
+<ul>
+<li>内部实现可以演化。</li>
+<li>公开契约尽可能稳定。</li>
+<li>其他模块依赖能力，而不是实现细节。</li>
+<li>减少变化向其他模块传播。</li>
+</ul>
+<p>这不是 Modular Monolith 独有的思想，却是其重要基础。Shopify 曾公开介绍在大型单体内按业务领域建立边界的实践：缺少模块边界，不必总通过拆成分布式服务来解决。<a target="_blank" rel="noopener noreferrer" href="https://shopify.engineering/deconstructing-monolith-designing-software-maximizes-developer-productivity">Shopify：Deconstructing the Monolith</a></p>
+<h2 id="chapter-3"><span class="chapter-number">03</span>How：如何设计一个 Modular Monolith？</h2>
+<p>难点不在于创建几个项目，而在于：模块如何划分、暴露哪些能力、如何调用、数据由谁管理、跨模块操作如何保证一致性。</p>
+<h3 id="section-3">1. 根据业务能力划分模块，而不只是技术类型</h3>
+<div class="table-scroll" tabindex="0"><table>
+<thead>
+<tr>
+<th>模块</th>
+<th>拥有什么</th>
+<th>负责什么</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Inventory</td>
+<td>当前拥有的道具</td>
+<td>获得、消耗、查询背包</td>
+</tr>
+<tr>
+<td>Statistics</td>
+<td>累计统计记录</td>
+<td>记录获得总数、比赛次数等</td>
+</tr>
+<tr>
+<td>Achievement</td>
+<td>成就进度与领取状态</td>
+<td>判断成就完成及奖励领取</td>
+</tr>
+<tr>
+<td>Shop</td>
+<td>商品和购买规则</td>
+<td>商品定价、购买条件等</td>
+</tr>
+<tr>
+<td>Rewards</td>
+<td>奖励发放流程</td>
+<td>组织奖励请求、避免重复发放</td>
+</tr>
+</tbody>
+</table></div>
+<p>关键是数据与业务规则的归属：</p>
+<pre class="flow-block" tabindex="0"><code class="language-text">Inventory
+    CurrentItemCount = 5
+
+Statistics
+    TotalObtainedCount = 100
+</code></pre>
+<p>当前数量是背包的状态，累计获得数量是统计的状态。它们可以因同一件事变化，但不意味着必须由同一个模块管理。</p>
+<p>划分也不必一一对应。如果两个功能始终共同变化、规则高度耦合，放在同一个模块可能更合理。依据应是业务职责、规则和变化原因，而不是每张表都建一个模块。</p>
+<h3 id="contracts">2. 定义公开契约 Contracts</h3>
+<p>以背包为例：</p>
+<div class="code-card" data-filename="概念片段4"><div class="code-toolbar"><div><strong>IInventoryCommands · 公开契约</strong><small>.NET / C# · 机制片段，非完整工程</small></div><div class="code-actions"><button type="button" data-action="copy" aria-label="复制 IInventoryCommands · 公开契约">复制代码</button></div></div><pre tabindex="0"><code class="language-csharp"><span class="tok-keyword">namespace</span> Game.Inventory.Contracts;
+
+<span class="tok-keyword">public</span> <span class="tok-keyword">interface</span> IInventoryCommands
+{
+    Task GrantAsync(
+        Guid playerId,
+        <span class="tok-keyword">int</span> itemId,
+        <span class="tok-keyword">int</span> amount,
+        CancellationToken ct);
+
+    Task ConsumeAsync(
+        Guid playerId,
+        <span class="tok-keyword">int</span> itemId,
+        <span class="tok-keyword">int</span> amount,
+        CancellationToken ct);
+}
+</code></pre></div>
+<p>外部可以提出授予、消耗请求，但不能直接修改背包内部集合。内部则维护自己的规则：</p>
+<div class="code-card" data-filename="概念片段5"><div class="code-toolbar"><div><strong>InventoryDomain · 内部规则</strong><small>.NET / C# · 机制片段，非完整工程</small></div><div class="code-actions"><button type="button" data-action="copy" aria-label="复制 InventoryDomain · 内部规则">复制代码</button></div></div><pre tabindex="0"><code class="language-csharp"><span class="tok-keyword">namespace</span> Game.Inventory;
+
+<span class="tok-keyword">internal</span> <span class="tok-keyword">sealed</span> <span class="tok-keyword">class</span> InventoryDomain
+{
+    <span class="tok-keyword">private</span> <span class="tok-keyword">readonly</span> Dictionary&lt;<span class="tok-keyword">int</span>, <span class="tok-keyword">int</span>&gt; _items = <span class="tok-keyword">new</span>();
+
+    <span class="tok-keyword">public</span> <span class="tok-keyword">void</span> Grant(<span class="tok-keyword">int</span> itemId, <span class="tok-keyword">int</span> amount)
+    {
+        <span class="tok-keyword">if</span> (amount &lt;= <span class="tok-number">0</span>)
+            <span class="tok-keyword">throw</span> <span class="tok-keyword">new</span> ArgumentOutOfRangeException(nameof(amount));
+
+        _items.TryGetValue(itemId, <span class="tok-keyword">out</span> <span class="tok-keyword">int</span> current);
+        _items[itemId] = <span class="tok-keyword">checked</span>(current + amount);
+    }
+}
+</code></pre></div>
+<p>这是简化的内部领域逻辑，暂不涉及持久化与并发。<code>internal</code> 限制类型在程序集之外的可见性：</p>
+<pre class="flow-block" tabindex="0"><code class="language-text">Inventory.Contracts
+    IInventoryCommands     public
+
+Inventory
+    InventoryDomain        internal
+    InventoryRepository    internal
+    InventoryCommands      internal
+</code></pre>
+<p>其他模块只依赖契约，不需要了解领域对象如何组织。若多个模块位于同一程序集，<code>internal</code> 无法在它们之间形成隔离；应结合程序集、引用规则与架构测试维护边界。<a target="_blank" rel="noopener noreferrer" href="https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/internal">Microsoft：internal</a></p>
+<h3 id="section-4">3. 模块之间可以调用，但需要遵守边界</h3>
+<p>例如，Rewards 协调发放奖励，调用 Inventory API 和 Statistics API，而不依赖它们的内部类。统计模块提供：</p>
+<div class="code-card" data-filename="概念片段6"><div class="code-toolbar"><div><strong>IStatisticsCommands · 公开契约</strong><small>.NET / C# · 机制片段，非完整工程</small></div><div class="code-actions"><button type="button" data-action="copy" aria-label="复制 IStatisticsCommands · 公开契约">复制代码</button></div></div><pre tabindex="0"><code class="language-csharp"><span class="tok-keyword">namespace</span> Game.Statistics.Contracts;
+
+<span class="tok-keyword">public</span> <span class="tok-keyword">interface</span> IStatisticsCommands
+{
+    Task RecordObtainedAsync(
+        Guid playerId,
+        <span class="tok-keyword">int</span> itemId,
+        <span class="tok-keyword">int</span> amount,
+        CancellationToken ct);
+}
+</code></pre></div>
+<p>模块之间可以直接调用并等待结果，不需要把所有操作都变成事件。这里的 Task/await 可以承载异步 I/O，但仍是调用方明确等待被调用方结果的交互。</p>
+<p><strong>模块化和事件驱动，是两个不同维度的设计选择。</strong></p>
+<h2 id="chapter-4"><span class="chapter-number">04</span>C# 实践：一次获得道具，同时更新背包与统计</h2>
+<p>客户端发来一个请求：</p>
+<pre class="flow-block" tabindex="0"><code class="language-text">GrantItem
+    PlayerId = A
+    ItemId = 1001
+    Amount = 5
+    RequestId = XYZ
+</code></pre>
+<p>业务要求：背包增加五个道具，累计数量增加五；同一请求重试不能重复发放；关键步骤失败时不能只保存一半。</p>
+<p>模块可以各自管理职责，但某个共同业务操作仍然可能需要一个共同事务。本节假设这是<strong>已通过授权和业务可领取校验的奖励操作</strong>，不能让客户端自由决定发奖权限。</p>
+<h3 id="section-5">1. 项目结构</h3>
+<p>一种可能的 .NET 解决方案：</p>
+<pre class="flow-block" tabindex="0"><code class="language-text">GameServer/
+│
+├── GameServer.Host/
+│   └── Program.cs
+│
+├── Modules/
+│   ├── Inventory/
+│   │   ├── Inventory.Contracts/
+│   │   │   └── IInventoryCommands.cs
+│   │   └── Inventory/
+│   │       ├── Domain/
+│   │       ├── Persistence/
+│   │       └── InventoryCommands.cs
+│   │
+│   ├── Statistics/
+│   │   ├── Statistics.Contracts/
+│   │   └── Statistics/
+│   │       ├── Domain/
+│   │       ├── Persistence/
+│   │       └── StatisticsCommands.cs
+│   │
+│   └── Rewards/
+│       ├── Rewards.Contracts/
+│       └── Rewards/
+│           ├── RewardService.cs
+│           └── RewardRequestStore.cs
+│
+└── Shared/
+    └── Persistence/
+        ├── ITransactionRunner.cs
+        └── PgTransactionRunner.cs
+</code></pre>
+<p>这不是固定模板，小型项目可以减少程序集数量。但依赖规则应明确：</p>
+<pre class="flow-block" tabindex="0"><code class="language-text">Rewards
+   ├── Inventory.Contracts
+   ├── Statistics.Contracts
+   └── Shared.Persistence
+
+Inventory
+   ├── Inventory.Contracts
+   └── Shared.Persistence
+
+Statistics
+   ├── Statistics.Contracts
+   └── Shared.Persistence
+</code></pre>
+<figure class="embedded-diagram" id="diagram-4" aria-labelledby="diagram-caption-4"><div class="diagram-heading"><div><span>图 04</span><strong>业务模块的程序集引用方向</strong></div><button type="button" data-download-figure="4" aria-label="下载图 4 的 SVG">下载 SVG</button></div><div class="svg-scroll" tabindex="0" aria-label="可横向滚动的图解"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 445" role="img" aria-labelledby="fig4-title fig4-desc" font-family="Microsoft YaHei,Segoe UI,sans-serif"><title id="fig4-title">业务模块的程序集引用方向</title><desc id="fig4-desc">Rewards 引用 Inventory.Contracts、Statistics.Contracts 和 Shared.Persistence；两个实现模块分别引用自身契约和共享事务设施。</desc><defs><marker id="f4-blue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#547da7"/></marker><marker id="f4-green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#638d77"/></marker><marker id="f4-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#ad7b70"/></marker></defs><rect width="960" height="445" fill="white"/><rect x="360" y="30" width="240" height="75" rx="10" fill="#e3eef9" stroke="#98b8d7" stroke-width="1.5"/><text x="480.0" y="60" font-size="16" fill="#34536f" text-anchor="middle" font-weight="600">Rewards</text><text x="480.0" y="84" font-size="12" fill="#7c91a5" text-anchor="middle" font-weight="400">奖励流程协调</text><rect x="35" y="160" width="255" height="75" rx="10" fill="#edf4fb" stroke="#d2dfeb" stroke-width="1.5"/><text x="162.5" y="190" font-size="16" fill="#34536f" text-anchor="middle" font-weight="600">Inventory.Contracts</text><text x="162.5" y="214" font-size="12" fill="#7c91a5" text-anchor="middle" font-weight="400">公开能力</text><rect x="670" y="160" width="255" height="75" rx="10" fill="#edf4fb" stroke="#d2dfeb" stroke-width="1.5"/><text x="797.5" y="190" font-size="16" fill="#34536f" text-anchor="middle" font-weight="600">Statistics.Contracts</text><text x="797.5" y="214" font-size="12" fill="#7c91a5" text-anchor="middle" font-weight="400">公开能力</text><rect x="35" y="320" width="255" height="75" rx="10" fill="#edf4fb" stroke="#d2dfeb" stroke-width="1.5"/><text x="162.5" y="350" font-size="16" fill="#34536f" text-anchor="middle" font-weight="600">Inventory</text><text x="162.5" y="374" font-size="12" fill="#7c91a5" text-anchor="middle" font-weight="400">内部实现</text><rect x="670" y="320" width="255" height="75" rx="10" fill="#edf4fb" stroke="#d2dfeb" stroke-width="1.5"/><text x="797.5" y="350" font-size="16" fill="#34536f" text-anchor="middle" font-weight="600">Statistics</text><text x="797.5" y="374" font-size="12" fill="#7c91a5" text-anchor="middle" font-weight="400">内部实现</text><rect x="360" y="320" width="240" height="75" rx="10" fill="#eff5f1" stroke="#bed2c7" stroke-width="1.5"/><text x="480.0" y="350" font-size="16" fill="#34536f" text-anchor="middle" font-weight="600">Shared.Persistence</text><text x="480.0" y="374" font-size="12" fill="#7c91a5" text-anchor="middle" font-weight="400">共同事务基础设施</text><polyline points="405,105 405,130 163,130 163,160" fill="none" stroke="#547da7" stroke-width="2" marker-end="url(#f4-blue)"/><polyline points="555,105 555,130 798,130 798,160" fill="none" stroke="#547da7" stroke-width="2" marker-end="url(#f4-blue)"/><polyline points="480,105 480,320" fill="none" stroke="#547da7" stroke-width="2" marker-end="url(#f4-blue)"/><text x="523" y="235" font-size="12" fill="#7c91a5" text-anchor="middle" font-weight="400">引用</text><polyline points="163,320 163,235" fill="none" stroke="#547da7" stroke-width="2" marker-end="url(#f4-blue)"/><polyline points="798,320 798,235" fill="none" stroke="#547da7" stroke-width="2" marker-end="url(#f4-blue)"/><polyline points="290,357 360,357" fill="none" stroke="#547da7" stroke-width="2" marker-end="url(#f4-blue)"/><polyline points="670,357 600,357" fill="none" stroke="#547da7" stroke-width="2" marker-end="url(#f4-blue)"/><text x="480" y="430" font-size="13" fill="#34536f" text-anchor="middle" font-weight="400">箭头表示项目引用，不表示调用时序；Host 装配入口未画出。</text></svg></div><figcaption id="diagram-caption-4">Rewards 引用 Inventory.Contracts、Statistics.Contracts 和 Shared.Persistence；两个实现模块分别引用自身契约和共享事务设施。</figcaption></figure>
+<p>Rewards 不应依赖 Inventory 的内部实现程序集。Host 组合根可以通过模块注册入口装配具体实现；这与业务模块只依赖 Contracts 并不冲突。</p>
+<p>可以通过 <code>.csproj</code> 引用、<code>internal</code> 与架构测试加强约束。可参见 <a target="_blank" rel="noopener noreferrer" href="https://milanjovanovic.tech/blog/what-is-a-modular-monolith">Milan Jovanović：What Is a Modular Monolith?</a> 和 <a target="_blank" rel="noopener noreferrer" href="https://milanjovanovic.tech/blog/5-architecture-tests-you-should-add-to-your-dotnet-projects">Architecture Tests in .NET</a>。</p>
+<h3 id="section-6">2. 奖励模块负责协调业务流程</h3>
+<div class="code-card" data-filename="概念片段7"><div class="code-toolbar"><div><strong>RewardService · 协调流程</strong><small>.NET / C# · 机制片段，非完整工程</small></div><div class="code-actions"><button type="button" data-action="copy" aria-label="复制 RewardService · 协调流程">复制代码</button></div></div><pre tabindex="0"><code class="language-csharp"><span class="tok-keyword">internal</span> <span class="tok-keyword">sealed</span> <span class="tok-keyword">class</span> RewardService
+{
+    <span class="tok-keyword">private</span> <span class="tok-keyword">readonly</span> IInventoryCommands _inventory;
+    <span class="tok-keyword">private</span> <span class="tok-keyword">readonly</span> IStatisticsCommands _statistics;
+    <span class="tok-keyword">private</span> <span class="tok-keyword">readonly</span> IRewardRequestStore _requests;
+    <span class="tok-keyword">private</span> <span class="tok-keyword">readonly</span> ITransactionRunner _transactions;
+
+    <span class="tok-keyword">public</span> RewardService(
+        IInventoryCommands inventory,
+        IStatisticsCommands statistics,
+        IRewardRequestStore requests,
+        ITransactionRunner transactions)
+    {
+        _inventory = inventory;
+        _statistics = statistics;
+        _requests = requests;
+        _transactions = transactions;
+    }
+
+    <span class="tok-keyword">public</span> Task GrantItemAsync(
+        Guid playerId,
+        Guid requestId,
+        <span class="tok-keyword">int</span> itemId,
+        <span class="tok-keyword">int</span> amount,
+        CancellationToken ct)
+    {
+        <span class="tok-keyword">if</span> (amount &lt;= <span class="tok-number">0</span>)
+            <span class="tok-keyword">throw</span> <span class="tok-keyword">new</span> ArgumentOutOfRangeException(nameof(amount));
+
+        <span class="tok-keyword">return</span> _transactions.ExecuteAsync(async token =&gt;
+        {
+            <span class="tok-comment">// 尝试登记本次业务请求</span>
+            <span class="tok-keyword">bool</span> isNew = await _requests.TryInsertAsync(
+                playerId, requestId, itemId, amount, token);
+
+            <span class="tok-keyword">if</span> (!isNew)
+            {
+                <span class="tok-comment">// 相同 RequestId 必须代表相同业务请求</span>
+                <span class="tok-keyword">bool</span> matches = await _requests.MatchesAsync(
+                    playerId, requestId, itemId, amount, token);
+
+                <span class="tok-keyword">if</span> (!matches)
+                    <span class="tok-keyword">throw</span> <span class="tok-keyword">new</span> InvalidOperationException(
+                        <span class="tok-string">&quot;RequestId was reused with different parameters.&quot;</span>);
+
+                <span class="tok-comment">// 已完成的相同请求：直接作为成功处理</span>
+                <span class="tok-keyword">return</span>;
+            }
+
+            <span class="tok-comment">// 背包模块负责背包变化</span>
+            await _inventory.GrantAsync(
+                playerId, itemId, amount, token);
+
+            <span class="tok-comment">// 统计模块负责累计记录</span>
+            await _statistics.RecordObtainedAsync(
+                playerId, itemId, amount, token);
+
+        }, ct);
+    }
+}
+</code></pre></div>
+<p><code>IRewardRequestStore</code> 是奖励模块内部的数据访问契约，负责持久化请求记录，并核对重复请求的参数。</p>
+<div class="table-scroll" tabindex="0"><table>
+<thead>
+<tr>
+<th>组件</th>
+<th>它知道什么</th>
+<th>它不知道什么</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Rewards</td>
+<td>本次奖励要完成哪些操作</td>
+<td>背包和统计如何存储</td>
+</tr>
+<tr>
+<td>Inventory</td>
+<td>如何正确增加道具</td>
+<td>奖励流程的其他步骤</td>
+</tr>
+<tr>
+<td>Statistics</td>
+<td>如何维护累计数据</td>
+<td>完整的道具发放流程</td>
+</tr>
+<tr>
+<td>TransactionRunner</td>
+<td>如何提交、回滚事务</td>
+<td>什么是背包、统计、奖励</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>高内聚：</strong> 同一职责的规则尽量放在一起。<strong>低耦合：</strong> 尽量少了解其他模块的内部细节。</p>
+<h3 id="section-7">3. 事务应该如何实现？</h3>
+<p><code>ExecuteAsync</code> 不能只是普通的回调包装器，必须提供真实数据库事务。使用 PostgreSQL 时，可以让同一请求作用域内的模块使用同一连接与事务。</p>
+<div class="code-card" data-filename="概念片段8"><div class="code-toolbar"><div><strong>ITransactionRunner · 事务契约</strong><small>.NET / C# · 机制片段，非完整工程</small></div><div class="code-actions"><button type="button" data-action="copy" aria-label="复制 ITransactionRunner · 事务契约">复制代码</button></div></div><pre tabindex="0"><code class="language-csharp"><span class="tok-keyword">public</span> <span class="tok-keyword">interface</span> ITransactionRunner
+{
+    Task ExecuteAsync(
+        Func&lt;CancellationToken, Task&gt; action,
+        CancellationToken ct);
+}
+</code></pre></div>
+<div class="code-card" data-filename="概念片段9"><div class="code-toolbar"><div><strong>PgTransactionRunner · 事务核心机制</strong><small>.NET / C# · 机制片段，非完整工程</small></div><div class="code-actions"><button type="button" data-action="copy" aria-label="复制 PgTransactionRunner · 事务核心机制">复制代码</button></div></div><pre tabindex="0"><code class="language-csharp"><span class="tok-keyword">public</span> <span class="tok-keyword">sealed</span> <span class="tok-keyword">class</span> PgTransactionRunner : ITransactionRunner
+{
+    <span class="tok-keyword">private</span> <span class="tok-keyword">readonly</span> PgSession _session;
+
+    <span class="tok-keyword">public</span> PgTransactionRunner(PgSession session)
+    {
+        _session = session;
+    }
+
+    <span class="tok-keyword">public</span> async Task ExecuteAsync(
+        Func&lt;CancellationToken, Task&gt; action,
+        CancellationToken ct)
+    {
+        await _session.Connection.OpenAsync(ct);
+
+        await <span class="tok-keyword">using</span> var transaction =
+            await _session.Connection.BeginTransactionAsync(ct);
+
+        _session.CurrentTransaction = transaction;
+
+        try
+        {
+            await action(ct);
+
+            await transaction.CommitAsync(ct);
+        }
+        catch
+        {
+            await transaction.RollbackAsync(
+                CancellationToken.None);
+
+            <span class="tok-keyword">throw</span>;
+        }
+        finally
+        {
+            _session.CurrentTransaction = <span class="tok-keyword">null</span>;
+        }
+    }
+}
+</code></pre></div>
+<p><code>PgSession</code> 是请求作用域内的会话封装，包含 NpgsqlConnection 与当前 DbTransaction。背包、统计和请求记录仓储必须使用同一个会话及事务。<a target="_blank" rel="noopener noreferrer" href="https://www.npgsql.org/doc/basic-usage.html#transactions">Npgsql：Transactions</a></p>
+<p>本例假设入口连接尚未打开、没有嵌套事务。它省略了会话创建释放、DI 注册、完整异常恢复与嵌套处理，<strong>展示核心机制，不是完整生产实现</strong>。真实实现还应处理连接状态、回滚异常、提交结果不确定及相应重试策略，不能仅凭方法名假设这些能力已经存在。</p>
+<p>模块分别执行自己的 SQL：</p>
+<div class="code-card" data-filename="SQL片段1"><div class="code-toolbar"><div><strong>Inventory · 增加当前数量</strong><small>PostgreSQL · 参数化 SQL 片段，需补充表结构与约束</small></div><div class="code-actions"><button type="button" data-action="copy">复制 SQL</button></div></div><pre tabindex="0"><code class="language-sql">-- Inventory 模块自己的数据
+INSERT INTO inventory.player_items
+    (player_id, item_id, quantity)
+VALUES
+    (@playerId, @itemId, @amount)
+ON CONFLICT (player_id, item_id)
+DO UPDATE SET
+    quantity = player_items.quantity + EXCLUDED.quantity;
+</code></pre></div>
+<div class="code-card" data-filename="SQL片段2"><div class="code-toolbar"><div><strong>Statistics · 增加累计数量</strong><small>PostgreSQL · 参数化 SQL 片段，需补充表结构与约束</small></div><div class="code-actions"><button type="button" data-action="copy">复制 SQL</button></div></div><pre tabindex="0"><code class="language-sql">-- Statistics 模块自己的数据
+INSERT INTO statistics.item_totals
+    (player_id, item_id, total_obtained)
+VALUES
+    (@playerId, @itemId, @amount)
+ON CONFLICT (player_id, item_id)
+DO UPDATE SET
+    total_obtained =
+        item_totals.total_obtained + EXCLUDED.total_obtained;
+</code></pre></div>
+<p>SQL 由所属模块实现，RewardService 不应直接写其他模块的表。示例使用 Npgsql 支持的命名参数，不是可直接粘贴进数据库控制台的完整脚本。</p>
+<p><code>rewards.requests</code> 应有 <code>(player_id, request_id)</code> 唯一约束。<code>TryInsertAsync</code> 通过冲突安全的插入判断是否首次处理，并把参数记录放在同一事务中。唯一性竞争由数据库处理，不能只靠“先查询，再插入”。</p>
+<p>仓储 SQL、隔离级别、等待后的可见性及必要的事务重试也必须正确实现；接口声明本身不保证并发幂等。参见 <a target="_blank" rel="noopener noreferrer" href="https://www.postgresql.org/docs/current/sql-insert.html">PostgreSQL：INSERT / ON CONFLICT</a> 与 <a target="_blank" rel="noopener noreferrer" href="https://www.postgresql.org/docs/current/transaction-iso.html">Transaction Isolation</a>。还需按业务补充数量约束、容量检查与其他并发保护。</p>
+<h3 id="section-8">4. 原子性和模块化是否冲突？</h3>
+<p>不冲突：</p>
+<figure class="embedded-diagram" id="diagram-5" aria-labelledby="diagram-caption-5"><div class="diagram-heading"><div><span>图 05</span><strong>跨模块职责，共同的事务边界</strong></div><button type="button" data-download-figure="5" aria-label="下载图 5 的 SVG">下载 SVG</button></div><div class="svg-scroll" tabindex="0" aria-label="可横向滚动的图解"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 490" role="img" aria-labelledby="fig5-title fig5-desc" font-family="Microsoft YaHei,Segoe UI,sans-serif"><title id="fig5-title">跨模块职责，共同的事务边界</title><desc id="fig5-desc">请求记录、背包、统计必须在同一事务中提交。重复同参请求不再次修改；任一步失败则整体回滚。</desc><defs><marker id="f5-blue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#547da7"/></marker><marker id="f5-green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#638d77"/></marker><marker id="f5-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#ad7b70"/></marker></defs><rect width="960" height="490" fill="white"/><rect x="30" y="30" width="900" height="420" rx="10" fill="#f7fafc" stroke="#547da7" stroke-width="1.5" stroke-dasharray="7 5"/><text x="480" y="68" font-size="20" fill="#34536f" text-anchor="middle" font-weight="600">同一数据库连接 + 同一真实数据库事务</text><rect x="65" y="110" width="240" height="92" rx="10" fill="#edf4fb" stroke="#d2dfeb" stroke-width="1.5"/><text x="185.0" y="140" font-size="16" fill="#34536f" text-anchor="middle" font-weight="600">① Rewards</text><text x="185.0" y="164" font-size="12" fill="#7c91a5" text-anchor="middle" font-weight="400">登记请求与参数</text><text x="185.0" y="184" font-size="12" fill="#7c91a5" text-anchor="middle" font-weight="400">唯一键：playerId + requestId</text><rect x="365" y="110" width="230" height="92" rx="10" fill="#edf4fb" stroke="#d2dfeb" stroke-width="1.5"/><text x="480.0" y="140" font-size="16" fill="#34536f" text-anchor="middle" font-weight="600">② Inventory</text><text x="480.0" y="164" font-size="12" fill="#7c91a5" text-anchor="middle" font-weight="400">本模块增加背包道具</text><rect x="665" y="110" width="230" height="92" rx="10" fill="#edf4fb" stroke="#d2dfeb" stroke-width="1.5"/><text x="780.0" y="140" font-size="16" fill="#34536f" text-anchor="middle" font-weight="600">③ Statistics</text><text x="780.0" y="164" font-size="12" fill="#7c91a5" text-anchor="middle" font-weight="400">本模块增加累计数量</text><polyline points="305,156 365,156" fill="none" stroke="#547da7" stroke-width="2" marker-end="url(#f5-blue)"/><text x="335" y="136" font-size="11" fill="#7c91a5" text-anchor="middle" font-weight="400">新请求</text><polyline points="595,156 665,156" fill="none" stroke="#547da7" stroke-width="2" marker-end="url(#f5-blue)"/><text x="185" y="236" font-size="12" fill="#7c91a5" text-anchor="middle" font-weight="400">重复同参：成功返回，不再发放</text><text x="185" y="258" font-size="12" fill="#7c91a5" text-anchor="middle" font-weight="400">同 ID 不同参数：拒绝</text><rect x="65" y="325" width="300" height="80" rx="10" fill="#fcf0eb" stroke="#dbb8ad" stroke-width="1.5"/><text x="215.0" y="355" font-size="16" fill="#34536f" text-anchor="middle" font-weight="600">ROLLBACK</text><text x="215.0" y="379" font-size="12" fill="#7c91a5" text-anchor="middle" font-weight="400">失败时撤销本次三项数据库变更</text><rect x="595" y="325" width="300" height="80" rx="10" fill="#eaf4ed" stroke="#adccb8" stroke-width="1.5"/><text x="745.0" y="355" font-size="16" fill="#34536f" text-anchor="middle" font-weight="600">COMMIT</text><text x="745.0" y="379" font-size="12" fill="#7c91a5" text-anchor="middle" font-weight="400">成功时三项数据一起提交</text><polyline points="480,202 480,285 215,285 215,325" fill="none" stroke="#ad7b70" stroke-width="2" marker-end="url(#f5-red)"/><text x="377" y="278" font-size="12" fill="#ad7b70" text-anchor="middle" font-weight="400">任一步失败</text><polyline points="780,202 780,325" fill="none" stroke="#638d77" stroke-width="2" marker-end="url(#f5-green)"/><text x="835" y="278" font-size="12" fill="#638d77" text-anchor="middle" font-weight="400">全部成功</text><text x="480" y="478" font-size="13" fill="#34536f" text-anchor="middle" font-weight="400">请求记录与业务数据必须同事务；外部网络、音效等副作用不在此原子性保证内。</text></svg></div><figcaption id="diagram-caption-5">请求记录、背包、统计必须在同一事务中提交。重复同参请求不再次修改；任一步失败则整体回滚。</figcaption></figure>
+<p>只要全部数据变更真正参加同一个支持事务的数据库事务，即使业务属于不同模块，也可以获得其原子性保证。这通常比跨微服务协调独立数据库更直接。<a target="_blank" rel="noopener noreferrer" href="https://www.postgresql.org/docs/current/tutorial-transactions.html">PostgreSQL：Transactions</a></p>
+<p>三个前提不可忽略：</p>
+<ol>
+<li>操作真正加入同一事务，而不是各模块独立保存。</li>
+<li>多个数据库不能假设由普通的单数据库事务覆盖。</li>
+<li>原子提交不等于永远不丢数据；持久性、备份、硬件故障与运维仍需单独处理。</li>
+</ol>
+<h2 id="chapter-5"><span class="chapter-number">05</span>跨模块调用：接口还是事件？</h2>
+<p>“低耦合是不是全部使用事件最好？”答案是不一定。</p>
+<h3 id="section-10">1. 同步调用</h3>
+<div class="code-card" data-filename="概念片段10"><div class="code-toolbar"><div><strong>模块接口 · 等待业务结果</strong><small>.NET / C# · 机制片段，非完整工程</small></div><div class="code-actions"><button type="button" data-action="copy" aria-label="复制 模块接口 · 等待业务结果">复制代码</button></div></div><pre tabindex="0"><code class="language-csharp">await inventory.GrantAsync(...);
+await statistics.RecordObtainedAsync(...);
+</code></pre></div>
+<p>适合流程必须知道结果、需要协调事务的情况。代价是模块间存在明确的执行依赖。这里“同步协作”指业务上等待结果，不代表底层 I/O 必须阻塞线程。</p>
+<h3 id="section-11">2. 事件通知</h3>
+<div class="code-card" data-filename="概念片段11"><div class="code-toolbar"><div><strong>事件发布 · 交互片段</strong><small>.NET / C# · 机制片段，非完整工程</small></div><div class="code-actions"><button type="button" data-action="copy" aria-label="复制 事件发布 · 交互片段">复制代码</button></div></div><pre tabindex="0"><code class="language-csharp">await inventory.GrantAsync(...);
+
+await eventBus.PublishAsync(
+    <span class="tok-keyword">new</span> ItemObtainedEvent(playerId, itemId, amount));
+</code></pre></div>
+<p>Statistics 订阅事件，奖励流程不必直接认识它。但还要回答：</p>
+<ul>
+<li>背包保存成功，事件发布失败怎么办？</li>
+<li>统计处理失败怎么办？</li>
+<li>事件重复处理怎么办？</li>
+<li>事件延迟时，统计是否允许暂时不一致？</li>
+</ul>
+<p>可靠异步事件通常需要考虑 Transactional Outbox、持久化消息、重试与幂等消费。</p>
+<figure class="embedded-diagram" id="diagram-6" aria-labelledby="diagram-caption-6"><div class="diagram-heading"><div><span>图 06</span><strong>直接协作与可靠异步通知的不同边界</strong></div><button type="button" data-download-figure="6" aria-label="下载图 6 的 SVG">下载 SVG</button></div><div class="svg-scroll" tabindex="0" aria-label="可横向滚动的图解"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 500" role="img" aria-labelledby="fig6-title fig6-desc" font-family="Microsoft YaHei,Segoe UI,sans-serif"><title id="fig6-title">直接协作与可靠异步通知的不同边界</title><desc id="fig6-desc">上方为同一事务内直接等待模块结果；下方为业务变更与 Outbox 同事务保存，提交后投递到独立消费者。</desc><defs><marker id="f6-blue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#547da7"/></marker><marker id="f6-green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#638d77"/></marker><marker id="f6-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#ad7b70"/></marker></defs><rect width="960" height="500" fill="white"/><rect x="30" y="35" width="900" height="170" rx="10" fill="#f4f8fc" stroke="#547da7" stroke-width="1.5" stroke-dasharray="7 5"/><text x="480" y="70" font-size="18" fill="#34536f" text-anchor="middle" font-weight="600">方案 A：同库事务内，明确等待每个模块的结果</text><rect x="60" y="105" width="210" height="72" rx="10" fill="#edf4fb" stroke="#d2dfeb" stroke-width="1.5"/><text x="165.0" y="135" font-size="16" fill="#34536f" text-anchor="middle" font-weight="600">Rewards</text><text x="165.0" y="159" font-size="12" fill="#7c91a5" text-anchor="middle" font-weight="400">协调流程</text><rect x="375" y="105" width="210" height="72" rx="10" fill="#edf4fb" stroke="#d2dfeb" stroke-width="1.5"/><text x="480.0" y="135" font-size="16" fill="#34536f" text-anchor="middle" font-weight="600">Inventory API</text><text x="480.0" y="159" font-size="12" fill="#7c91a5" text-anchor="middle" font-weight="400">修改背包</text><rect x="690" y="105" width="210" height="72" rx="10" fill="#edf4fb" stroke="#d2dfeb" stroke-width="1.5"/><text x="795.0" y="135" font-size="16" fill="#34536f" text-anchor="middle" font-weight="600">Statistics API</text><text x="795.0" y="159" font-size="12" fill="#7c91a5" text-anchor="middle" font-weight="400">更新累计</text><polyline points="270,142 375,142" fill="none" stroke="#547da7" stroke-width="2" marker-end="url(#f6-blue)"/><polyline points="585,142 690,142" fill="none" stroke="#547da7" stroke-width="2" marker-end="url(#f6-blue)"/><text x="480" y="258" font-size="18" fill="#34536f" text-anchor="middle" font-weight="600">方案 B：需要可靠的异步通知时，显式安排持久化与投递</text><rect x="40" y="285" width="340" height="135" rx="10" fill="#f2f7f4" stroke="#638d77" stroke-width="1.5" stroke-dasharray="7 5"/><rect x="60" y="307" width="300" height="90" rx="10" fill="#e9f3ec" stroke="#bdd2c5" stroke-width="1.5"/><text x="210.0" y="337" font-size="16" fill="#34536f" text-anchor="middle" font-weight="600">业务数据 + Outbox</text><text x="210.0" y="361" font-size="12" fill="#7c91a5" text-anchor="middle" font-weight="400">在发送侧的同一事务中保存</text><rect x="465" y="307" width="170" height="90" rx="10" fill="#edf4fb" stroke="#d2dfeb" stroke-width="1.5"/><text x="550.0" y="337" font-size="16" fill="#34536f" text-anchor="middle" font-weight="600">投递器 / Worker</text><text x="550.0" y="361" font-size="12" fill="#7c91a5" text-anchor="middle" font-weight="400">提交后转发</text><rect x="730" y="307" width="185" height="90" rx="10" fill="#edf4fb" stroke="#d2dfeb" stroke-width="1.5"/><text x="822.5" y="337" font-size="16" fill="#34536f" text-anchor="middle" font-weight="600">事件消费者</text><text x="822.5" y="361" font-size="12" fill="#7c91a5" text-anchor="middle" font-weight="400">处理并记录消费结果</text><polyline points="380,352 465,352" fill="none" stroke="#547da7" stroke-width="2" marker-end="url(#f6-blue)" stroke-dasharray="6 4"/><polyline points="635,352 730,352" fill="none" stroke="#547da7" stroke-width="2" marker-end="url(#f6-blue)" stroke-dasharray="6 4"/><text x="425" y="329" font-size="11" fill="#7c91a5" text-anchor="middle" font-weight="400">提交后</text><text x="682" y="329" font-size="11" fill="#7c91a5" text-anchor="middle" font-weight="400">可重试</text><text x="480" y="462" font-size="13" fill="#34536f" text-anchor="middle" font-weight="400">Outbox 不等于消费者也在同一事务中；消费仍需幂等、重试及一致性设计。</text></svg></div><figcaption id="diagram-caption-6">上方为同一事务内直接等待模块结果；下方为业务变更与 Outbox 同事务保存，提交后投递到独立消费者。</figcaption></figure>
+<div class="table-scroll" tabindex="0"><table>
+<thead>
+<tr>
+<th>需求</th>
+<th>更直接的设计选择</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>道具与累计获得数量必须一起成功</td>
+<td>同一数据库事务内协调两个模块</td>
+</tr>
+<tr>
+<td>发送获得道具的通知</td>
+<td>可使用异步事件</td>
+</tr>
+<tr>
+<td>更新非关键展示统计</td>
+<td>可考虑异步投影</td>
+</tr>
+<tr>
+<td>必须立即获得业务结果</td>
+<td>直接调用并等待结果通常更直接</td>
+</tr>
+<tr>
+<td>可靠跨数据库通信</td>
+<td>Outbox、消息处理、补偿等机制</td>
+</tr>
+</tbody>
+</table></div>
+<p>即使使用事件，也可在同一事务中由同步处理器更新统计。<strong>事件不天然意味着异步或最终一致性。</strong> Modular Monolith 不规定唯一通信方式。</p>
+<h2 id="chapter-6"><span class="chapter-number">06</span>设计权衡：普通单体、模块化单体与微服务</h2>
+<figure class="embedded-diagram" id="diagram-7" aria-labelledby="diagram-caption-7"><div class="diagram-heading"><div><span>图 07</span><strong>普通单体、模块化单体与微服务</strong></div><button type="button" data-download-figure="7" aria-label="下载图 7 的 SVG">下载 SVG</button></div><div class="svg-scroll" tabindex="0" aria-label="可横向滚动的图解"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 445" role="img" aria-labelledby="fig7-title fig7-desc" font-family="Microsoft YaHei,Segoe UI,sans-serif"><title id="fig7-title">普通单体、模块化单体与微服务</title><desc id="fig7-desc">三个面板比较模块边界与部署单元；模块化单体维持一个部署单元，微服务可独立部署但通常需要网络协作。</desc><defs><marker id="f7-blue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#547da7"/></marker><marker id="f7-green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#638d77"/></marker><marker id="f7-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#ad7b70"/></marker></defs><rect width="960" height="445" fill="white"/><rect x="20" y="25" width="290" height="375" rx="10" fill="#fafbfd" stroke="#d2dfeb" stroke-width="1.5"/><text x="165" y="63" font-size="19" fill="#34536f" text-anchor="middle" font-weight="600">普通单体</text><rect x="335" y="25" width="290" height="375" rx="10" fill="#fafbfd" stroke="#d2dfeb" stroke-width="1.5"/><text x="480" y="63" font-size="19" fill="#34536f" text-anchor="middle" font-weight="600">模块化单体</text><rect x="650" y="25" width="290" height="375" rx="10" fill="#fafbfd" stroke="#d2dfeb" stroke-width="1.5"/><text x="795" y="63" font-size="19" fill="#34536f" text-anchor="middle" font-weight="600">微服务</text><rect x="40" y="95" width="250" height="245" rx="10" fill="#fbf1ed" stroke="#d9bdb3" stroke-width="1.5" stroke-dasharray="7 5"/><polyline points="100,135 220,145" fill="none" stroke="#ad7b70" stroke-width="1" marker-end="url(#f7-red)" stroke-dasharray="6 4"/><polyline points="100,135 115,225" fill="none" stroke="#ad7b70" stroke-width="1" marker-end="url(#f7-red)" stroke-dasharray="6 4"/><polyline points="100,135 220,255" fill="none" stroke="#ad7b70" stroke-width="1" marker-end="url(#f7-red)" stroke-dasharray="6 4"/><polyline points="220,145 115,225" fill="none" stroke="#ad7b70" stroke-width="1" marker-end="url(#f7-red)" stroke-dasharray="6 4"/><polyline points="220,145 220,255" fill="none" stroke="#ad7b70" stroke-width="1" marker-end="url(#f7-red)" stroke-dasharray="6 4"/><polyline points="115,225 220,255" fill="none" stroke="#ad7b70" stroke-width="1" marker-end="url(#f7-red)" stroke-dasharray="6 4"/><rect x="60" y="115" width="80" height="53" rx="10" fill="white" stroke="#e4c9c0" stroke-width="1.5"/><text x="100.0" y="145" font-size="16" fill="#34536f" text-anchor="middle" font-weight="600">背包</text><rect x="180" y="125" width="80" height="53" rx="10" fill="white" stroke="#e4c9c0" stroke-width="1.5"/><text x="220.0" y="155" font-size="16" fill="#34536f" text-anchor="middle" font-weight="600">商店</text><rect x="75" y="205" width="80" height="53" rx="10" fill="white" stroke="#e4c9c0" stroke-width="1.5"/><text x="115.0" y="235" font-size="16" fill="#34536f" text-anchor="middle" font-weight="600">统计</text><rect x="180" y="235" width="80" height="53" rx="10" fill="white" stroke="#e4c9c0" stroke-width="1.5"/><text x="220.0" y="265" font-size="16" fill="#34536f" text-anchor="middle" font-weight="600">成就</text><text x="165" y="374" font-size="12" fill="#7c91a5" text-anchor="middle" font-weight="400">一个整体部署 · 边界可能松散</text><rect x="355" y="95" width="250" height="245" rx="10" fill="#edf4fb" stroke="#547da7" stroke-width="1.5" stroke-dasharray="7 5"/><rect x="372" y="115" width="98" height="80" rx="10" fill="white" stroke="#d2dfeb" stroke-width="1.5"/><text x="421.0" y="145" font-size="16" fill="#34536f" text-anchor="middle" font-weight="600">背包</text><text x="421.0" y="169" font-size="12" fill="#7c91a5" text-anchor="middle" font-weight="400">公开 API</text><rect x="490" y="115" width="98" height="80" rx="10" fill="white" stroke="#d2dfeb" stroke-width="1.5"/><text x="539.0" y="145" font-size="16" fill="#34536f" text-anchor="middle" font-weight="600">商店</text><text x="539.0" y="169" font-size="12" fill="#7c91a5" text-anchor="middle" font-weight="400">公开 API</text><rect x="372" y="220" width="98" height="80" rx="10" fill="white" stroke="#d2dfeb" stroke-width="1.5"/><text x="421.0" y="250" font-size="16" fill="#34536f" text-anchor="middle" font-weight="600">统计</text><text x="421.0" y="274" font-size="12" fill="#7c91a5" text-anchor="middle" font-weight="400">公开 API</text><rect x="490" y="220" width="98" height="80" rx="10" fill="white" stroke="#d2dfeb" stroke-width="1.5"/><text x="539.0" y="250" font-size="16" fill="#34536f" text-anchor="middle" font-weight="600">成就</text><text x="539.0" y="274" font-size="12" fill="#7c91a5" text-anchor="middle" font-weight="400">公开 API</text><polyline points="470,155 490,155" fill="none" stroke="#547da7" stroke-width="2" marker-end="url(#f7-blue)"/><polyline points="470,260 490,260" fill="none" stroke="#547da7" stroke-width="2" marker-end="url(#f7-blue)"/><text x="480" y="374" font-size="12" fill="#7c91a5" text-anchor="middle" font-weight="400">一个整体部署 · 维护内部边界</text><rect x="672" y="95" width="245" height="72" rx="10" fill="#f0f5fa" stroke="#d2dfeb" stroke-width="1.5"/><text x="794.5" y="125" font-size="16" fill="#34536f" text-anchor="middle" font-weight="600">Inventory 服务</text><text x="794.5" y="149" font-size="12" fill="#7c91a5" text-anchor="middle" font-weight="400">独立部署 / 自有数据</text><rect x="672" y="190" width="245" height="72" rx="10" fill="#f0f5fa" stroke="#d2dfeb" stroke-width="1.5"/><text x="794.5" y="220" font-size="16" fill="#34536f" text-anchor="middle" font-weight="600">Statistics 服务</text><text x="794.5" y="244" font-size="12" fill="#7c91a5" text-anchor="middle" font-weight="400">独立部署 / 自有数据</text><rect x="672" y="285" width="245" height="72" rx="10" fill="#f0f5fa" stroke="#d2dfeb" stroke-width="1.5"/><text x="794.5" y="315" font-size="16" fill="#34536f" text-anchor="middle" font-weight="600">Rewards 服务</text><text x="794.5" y="339" font-size="12" fill="#7c91a5" text-anchor="middle" font-weight="400">独立部署 / 自有数据</text><polyline points="795,167 795,190" fill="none" stroke="#547da7" stroke-width="2" marker-end="url(#f7-blue)" stroke-dasharray="6 4"/><polyline points="795,262 795,285" fill="none" stroke="#547da7" stroke-width="2" marker-end="url(#f7-blue)" stroke-dasharray="6 4"/><text x="795" y="384" font-size="12" fill="#7c91a5" text-anchor="middle" font-weight="400">多个部署单元 · 网络协作</text><text x="480" y="433" font-size="13" fill="#34536f" text-anchor="middle" font-weight="400">微服务并不会自动产生良好的业务边界；单体也可以整体横向扩容。</text></svg></div><figcaption id="diagram-caption-7">三个面板比较模块边界与部署单元；模块化单体维持一个部署单元，微服务可独立部署但通常需要网络协作。</figcaption></figure>
+<div class="table-scroll" tabindex="0"><table>
+<thead>
+<tr>
+<th>维度</th>
+<th>普通单体（未严格模块化）</th>
+<th>模块化单体</th>
+<th>微服务</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>部署</td>
+<td>通常整体部署</td>
+<td>整体部署</td>
+<td>各服务可独立部署</td>
+</tr>
+<tr>
+<td>内部边界</td>
+<td>可能松散</td>
+<td>有意维护明确边界</td>
+<td>通过服务接口建立边界</td>
+</tr>
+<tr>
+<td>通信</td>
+<td>直接方法调用常见</td>
+<td>受控的进程内调用</td>
+<td>通常需要网络通信</td>
+</tr>
+<tr>
+<td>数据管理</td>
+<td>容易共享模型与表</td>
+<td>强调数据归属</td>
+<td>通常强调独立数据所有权</td>
+</tr>
+<tr>
+<td>跨模块事务</td>
+<td>较容易协调</td>
+<td>同库场景较容易协调</td>
+<td>通常更复杂</td>
+</tr>
+<tr>
+<td>单模块独立部署扩容</td>
+<td>不支持</td>
+<td>不支持</td>
+<td>可以支持</td>
+</tr>
+<tr>
+<td>故障隔离</td>
+<td>较弱</td>
+<td>进程级隔离仍较弱</td>
+<td>可具有更强隔离</td>
+</tr>
+<tr>
+<td>运维复杂度</td>
+<td>相对较低</td>
+<td>相对较低</td>
+<td>通常较高</td>
+</tr>
+</tbody>
+</table></div>
+<p>这里“普通单体”是比较用语，特指未认真维护模块边界的单体，并非独立的严格标准。单体仍可整体横向扩容；表中讨论的是模块能否独立部署扩容。</p>
+<h3 id="section-13">优势</h3>
+<p><strong>用相对简单的运行与部署模型，获得模块化设计的可维护性收益。</strong></p>
+<p>模块在同一进程内，方法调用通常低延迟，调试与测试较直接。业务演化时可以先调整边界，不必立刻承担服务间协议、独立部署和分布式事务。</p>
+<p>Martin Fowler 在 Monolith First 中讨论过：业务边界尚不稳定时，先在单体内探索边界，有时比起步就拆微服务更合理。<a target="_blank" rel="noopener noreferrer" href="https://martinfowler.com/bliki/MonolithFirst.html">Martin Fowler：Monolith First</a></p>
+<h3 id="section-14">局限</h3>
+<ol>
+<li><strong>共享进程。</strong> 严重错误、内存占用或关键资源阻塞，可能影响整个应用。</li>
+<li><strong>整体部署。</strong> 只改一个模块，通常仍要构建并部署整体服务端。</li>
+<li><strong>主动维护边界。</strong> 为方便直接引用内部实现，可能使架构退化。</li>
+<li><strong>过度模块化有成本。</strong> 小功能却需要很多程序集、接口与适配，可能降低效率。</li>
+</ol>
+<p>目标不是模块数量最多、依赖数量最少，而是职责划分合理。</p>
+<h2 id="chapter-7"><span class="chapter-number">07</span>Unity 中如何应用？</h2>
+<p>Unity 客户端也可以借鉴模块化思想，用 Assembly Definition 建立程序集级依赖边界：</p>
+<pre class="flow-block" tabindex="0"><code class="language-text">Game.Inventory.Contracts.asmdef
+Game.Inventory.Runtime.asmdef
+Game.Shop.Runtime.asmdef
+Game.Statistics.Runtime.asmdef
+</code></pre>
+<p>商店引用背包契约，而不是直接依赖内部实现。<a target="_blank" rel="noopener noreferrer" href="https://docs.unity3d.com/6000.0/Documentation/Manual/assembly-definition-files.html">Unity：Assembly definitions</a></p>
+<ul>
+<li>MonoBehaviour 衔接场景对象与 Unity 生命周期。</li>
+<li>领域类管理核心规则。</li>
+<li>公开接口负责不同功能之间的协作。</li>
+<li>Composition Root（组合根）装配接口与实现。</li>
+</ul>
+<p>背包界面不应直接读取商店内部结构，商店界面也不应直接修改背包内部集合。</p>
+<p>要区分客户端模块化组织代码，与服务端数据库事务维护一致性这两类问题。前面的 PostgreSQL、Npgsql、文件作用域命名空间是 .NET 服务端示例；迁入 Unity 前需要按项目语言版本和运行环境调整，不能当作完整客户端脚本直接使用。</p>
+<p>Modular Monolith 与 ECS、DDD、Clean Architecture 也并不天然冲突，可以在明确职责和范围的前提下组合。</p>
+<h2 id="chapter-8"><span class="chapter-number">08</span>如何判断设计是否真正模块化？</h2>
+<section class="boundary-checklist" aria-labelledby="checklist-title"><div class="checklist-heading"><div><span>诊断辅助 / SELF CHECK</span><h3 id="checklist-title">架构边界自查</h3></div><output id="boundary-score" aria-live="polite">0 / 6</output></div><progress id="boundary-progress" max="6" value="0" aria-label="已勾选的诊断问题">0 / 6</progress><fieldset><legend class="visually-hidden">勾选已能确认的设计特征</legend><label><input type="checkbox" data-boundary-item> 修改 Inventory 内部存储结构，不需要修改 Shop 的业务逻辑</label><label><input type="checkbox" data-boundary-item> 外部模块只能通过 Inventory 的公开契约修改背包</label><label><input type="checkbox" data-boundary-item> Statistics 的累计数据由 Statistics 自己负责维护</label><label><input type="checkbox" data-boundary-item> 跨模块业务流程有明确的协调者与事务边界</label><label><input type="checkbox" data-boundary-item> 依赖关系可以通过程序集引用和测试进行检查</label><label><input type="checkbox" data-boundary-item> 模块可以独立进行大部分业务逻辑的单元测试</label></fieldset><div class="checklist-footer"><span>勾选数不是架构质量分数，也不是认证标准。</span><button type="button" id="reset-boundary">清空勾选</button></div></section>
+<p>这些是诊断问题，不是必须全部满足才算模块化单体的正式标准。</p>
+<p>更直观的测试：把背包从 Dictionary 改为数据库表，或者从普通列表改为堆叠存储。如果大量不相关代码也要修改，内部实现可能已经泄漏。</p>
+<p>反之，如果变化主要集中在背包内部，说明边界起到了作用。</p>
+<h2 id="chapter-9"><span class="chapter-number">09</span>直达本质：Modular Monolith 真正控制的是什么？</h2>
+<p>软件各部分必然存在联系并需要合作。问题是：当一个部分变化时，其他部分是否必须跟着变化？</p>
+<p>Modular Monolith 的设计答案是：</p>
+<ol>
+<li><strong>按职责划分模块：</strong> 让密切相关的状态与行为聚集。</li>
+<li><strong>通过契约约束依赖：</strong> 隐藏内部细节，限制变化传播。</li>
+<li><strong>保持单体部署：</strong> 不为逻辑隔离过早承担分布式运维成本。</li>
+</ol>
+<blockquote>
+<p>通过明确的业务边界和受控依赖限制软件变化的影响范围，同时保留单体系统在部署、调试与事务协调上的简单性。</p>
+</blockquote>
+<p>值得继续追问的不是先加更多项目，而是：<strong>为什么拆成不同类、文件夹甚至程序集后，仍可能没有真正模块化？</strong></p>
+<p>答案会深入到：高内聚（Cohesion）、低耦合（Coupling）、信息隐藏（Information Hiding）与模块边界（Module Boundary）。</p>
+</article><aside class="editor-note" aria-label="整理与引用说明"><h3>整理与引用说明</h3><p>本文依据原文的九个主题整理，保留十一段 C#、两段 PostgreSQL SQL 与八段结构／请求示意，并加入七张原创矢量架构图。图片直接嵌入 HTML，不依赖远程图片、图标或脚本。</p><p>原文中失去布局的模块图、事务流程和六项边界自查已恢复；来源名称与网站图标残片已整理为正文中的可点击引用。补充说明了程序集可见性、部署副本、调用与等待、真实事务、幂等并发及 .NET 服务端与 Unity 客户端的范围区别。</p><p>示例缺少仓储实现、DDL、依赖注入、PgSession、授权入口与完整异常恢复，未在真实 PostgreSQL、Npgsql 或 Unity Editor 环境中执行。不能仅凭此文代码推断系统已经具备生产级一致性保证。</p><div class="reference-list"><strong>官方机制参考：</strong> <a href="https://www.npgsql.org/doc/basic-usage.html#transactions" target="_blank" rel="noopener noreferrer">Npgsql 事务</a> · <a href="https://www.postgresql.org/docs/current/tutorial-transactions.html" target="_blank" rel="noopener noreferrer">PostgreSQL 事务</a> · <a href="https://www.postgresql.org/docs/current/sql-insert.html" target="_blank" rel="noopener noreferrer">ON CONFLICT</a> · <a href="https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/internal" target="_blank" rel="noopener noreferrer">C# internal</a> · <a href="https://docs.unity3d.com/6000.0/Documentation/Manual/assembly-definition-files.html" target="_blank" rel="noopener noreferrer">Unity 程序集定义</a></div></aside></main><footer class="end-note"><span>Modular Monolith · 从本质到设计实践</span><a href="#page-title">回到开头 ↑</a></footer></div></div><div class="toast" id="toast" role="status" aria-live="polite"></div><script>
+(function(){
+  'use strict';
+  const toast=document.getElementById('toast');let timer;
+  function notify(message){toast.textContent=message;toast.classList.add('show');clearTimeout(timer);timer=setTimeout(()=>toast.classList.remove('show'),2300);}
+  async function copyText(text){if(navigator.clipboard&&window.isSecureContext){try{await navigator.clipboard.writeText(text);return;}catch(error){}}const area=document.createElement('textarea');area.value=text;area.style.cssText='position:fixed;left:-9999px;top:0';document.body.appendChild(area);area.select();try{if(!document.execCommand('copy'))throw new Error('copy failed');}finally{area.remove();}}
+  document.querySelectorAll('.code-card').forEach(card=>{card.querySelector('[data-action="copy"]').addEventListener('click',async()=>{try{await copyText(card.querySelector('code').textContent);notify('代码已复制');}catch(error){notify('请在代码框内手动选择并复制。');}});const button=card.querySelector('[data-action="download"]');if(button)button.addEventListener('click',()=>{const blob=new Blob(['\ufeff'+card.querySelector('code').textContent],{type:'text/plain;charset=utf-8'});const url=URL.createObjectURL(blob);const link=document.createElement('a');link.href=url;link.download=card.dataset.filename;document.body.appendChild(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);notify('已准备下载 '+card.dataset.filename);});});
+  document.getElementById('print-button').addEventListener('click',()=>window.print());
+  const menu=document.getElementById('sidebar');const menuButton=document.getElementById('menu-button');
+  function closeMenu(){menu.classList.remove('open');menuButton.setAttribute('aria-expanded','false');}
+  menuButton.addEventListener('click',()=>menuButton.setAttribute('aria-expanded',String(menu.classList.toggle('open'))));menu.querySelectorAll('a').forEach(a=>a.addEventListener('click',closeMenu));document.addEventListener('keydown',e=>{if(e.key==='Escape')closeMenu();});document.addEventListener('click',e=>{if(menu.classList.contains('open')&&!menu.contains(e.target)&&!menuButton.contains(e.target))closeMenu();});
+  const headings=Array.from(document.querySelectorAll('article>h2'));const links=Array.from(menu.querySelectorAll('a'));
+  function updateReading(){const total=document.documentElement.scrollHeight-window.innerHeight;document.getElementById('reading-progress').style.width=(total>0?window.scrollY/total*100:0)+'%';let current=headings[0];for(const h of headings){if(h.getBoundingClientRect().top<180)current=h;}links.forEach(link=>{const active=current&&link.getAttribute('href')==='#'+current.id;link.classList.toggle('active',!!active);if(active)link.setAttribute('aria-current','location');else link.removeAttribute('aria-current');});}
+  window.addEventListener('scroll',updateReading,{passive:true});window.addEventListener('resize',updateReading);updateReading();
+  const checks=Array.from(document.querySelectorAll('[data-boundary-item]'));const score=document.getElementById('boundary-score');const meter=document.getElementById('boundary-progress');
+  function updateChecklist(){const n=checks.filter(item=>item.checked).length;score.textContent=n+' / 6';meter.value=n;meter.textContent=n+' / 6';}
+  checks.forEach(item=>item.addEventListener('change',updateChecklist));document.getElementById('reset-boundary').addEventListener('click',()=>{checks.forEach(item=>item.checked=false);updateChecklist();});updateChecklist();
+  document.querySelectorAll('[data-download-figure]').forEach(button=>button.addEventListener('click',()=>{
+    const number=button.dataset.downloadFigure;const svg=document.querySelector('#diagram-'+number+' svg');const data='<?xml version="1.0" encoding="utf-8"?>\n'+svg.outerHTML;
+    const blob=new Blob([data],{type:'image/svg+xml;charset=utf-8'});const url=URL.createObjectURL(blob);const link=document.createElement('a');link.href=url;link.download='ModularMonolith-Figure-'+number+'.svg';document.body.appendChild(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);notify('已准备下载图 '+number+' 的 SVG。');
+  }));
+})();</script></body></html>

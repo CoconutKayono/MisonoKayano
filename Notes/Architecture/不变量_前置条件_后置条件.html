@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="用 What、Why、How 理解不变量、前置条件与后置条件，包含钱包示例、C# 实现与设计契约。">
+<title>不变量、前置条件与后置条件 · 架构笔记</title>
+<style>
+:root{color-scheme:light;--bg:#f5f5f0;--paper:#fff;--ink:#202d38;--muted:#61707c;--line:#dce3e5;--accent:#176b67;--soft:#eef7f4;--code:#182731}*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:30px}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.95 "Microsoft YaHei","PingFang SC",system-ui,sans-serif}a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}.layout{display:grid;grid-template-columns:235px minmax(0,900px);gap:48px;max-width:1250px;margin:auto;padding:54px 28px 80px}aside{position:sticky;top:35px;align-self:start;font-size:14px}aside .brand{letter-spacing:.16em;font-size:12px;color:var(--muted);margin-bottom:20px}nav a{display:block;padding:8px 0;border-bottom:1px solid var(--line);line-height:1.6}main{min-width:0;background:var(--paper);border:1px solid var(--line);border-radius:20px;padding:48px 52px;box-shadow:0 15px 45px #263d4610}.eyebrow{font-size:12px;color:var(--accent);letter-spacing:.13em;font-weight:700}h1{font-size:clamp(27px,3.2vw,39px);line-height:1.4;letter-spacing:-.03em;margin:12px 0 16px}h2{font-size:25px;line-height:1.5;margin:0 0 22px}h3{font-size:19px;line-height:1.6;margin:30px 0 10px}p{margin:12px 0}strong{font-weight:700}section{padding-top:42px;margin-top:40px;border-top:1px solid var(--line)}.lead{color:var(--muted);font-size:17px}.meta{font-size:12px;color:var(--muted);margin:20px 0 0}.callout,blockquote{margin:24px 0;padding:18px 22px;background:var(--soft);border-left:4px solid var(--accent);border-radius:0 10px 10px 0}.callout p:first-child{margin-top:0}.callout p:last-child{margin-bottom:0}.note{background:#fff8e8;border-left-color:#bf8b27}ul,ol{padding-left:1.5em}li{margin:5px 0}.table-scroll{overflow:auto;margin:22px 0}table{width:100%;border-collapse:collapse;font-size:14px;text-align:left}th,td{padding:12px 14px;border-bottom:1px solid var(--line);vertical-align:top}th{background:#edf3f1;color:#284742}td:first-child{font-weight:600}code{font-family:Consolas,"Cascadia Code",monospace;font-size:.9em;background:#eef1f3;padding:.15em .35em;border-radius:4px}pre{background:var(--code);color:#e1edf3;padding:22px;border-radius:12px;overflow:auto;font-size:14px;line-height:1.75;tab-size:4}pre code{background:none;padding:0;font-size:inherit;color:inherit;white-space:pre}.code-label{font-size:12px;font-weight:600;color:var(--muted);margin-bottom:8px}.formula{background:#f6f8f9;border:1px solid var(--line);padding:15px 20px;text-align:center;font:19px/1.7 Cambria,"Microsoft YaHei",serif;border-radius:10px;margin:20px 0;overflow:auto}.flow{display:grid;gap:12px;margin:24px 0}.step{border:1px solid var(--line);border-radius:12px;padding:15px 20px}.step small{display:block;color:var(--muted);font-size:12px;letter-spacing:.04em}.step b{font-size:19px}.step.accent{border-color:#97c4b9;background:var(--soft)}.arrow{text-align:center;color:var(--accent);line-height:1}.summary{font-size:18px;font-weight:600}footer{margin-top:40px;padding-top:20px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}button{border:1px solid var(--line);background:white;padding:8px 13px;border-radius:7px;color:var(--accent);cursor:pointer;font:inherit;font-size:12px;margin-top:22px}.small{font-size:14px;color:var(--muted)}
+@media(max-width:980px){.layout{grid-template-columns:1fr;gap:25px;max-width:850px;padding:25px 18px}aside{position:static}nav{display:flex;flex-wrap:wrap;gap:5px 18px}nav a{border:0;padding:3px 0}aside .brand{margin-bottom:8px}button{margin-top:12px}main{padding:32px 28px}}@media(max-width:520px){.layout{padding:18px 10px}main{padding:28px 20px;border-radius:12px}body{font-size:15px}h2{font-size:22px}pre{padding:16px;font-size:12px}th,td{padding:10px;min-width:100px}}
+@media print{@page{size:A4;margin:18mm}body{background:white;font-size:11pt}.layout{display:block;max-width:none;padding:0}aside{display:none}main{border:0;padding:0;box-shadow:none;border-radius:0}h1{font-size:25pt}h2{font-size:18pt}section{margin-top:24px;padding-top:24px}h2,h3{break-after:avoid}table,.callout,.step,.formula{break-inside:avoid}pre{white-space:pre-wrap;overflow:visible;font-size:9pt;background:#f1f4f5;color:#182731}pre code{white-space:pre-wrap}a{color:inherit}footer{font-size:9pt}}
+</style>
+</head>
+<body>
+<div class="layout">
+<aside aria-label="文档目录">
+<div class="brand">ARCHITECTURE NOTES</div>
+<nav>
+<a href="#overview">01 · 建立整体认识</a>
+<a href="#what">02 · What：三个概念</a>
+<a href="#why">03 · Why：为什么区分</a>
+<a href="#how">04 · How：C# 实现</a>
+<a href="#transition">05 · 与状态转移的关系</a>
+<a href="#contract">06 · 设计契约与正确性</a>
+<a href="#practice">07 · 实际开发中的细节</a>
+<a href="#summary">08 · 回顾与下一步</a>
+</nav>
+<button type="button" onclick="window.print()">打印 / 另存为 PDF</button>
+<p class="small">单文件 · 支持离线阅读</p>
+</aside>
+<main>
+<header>
+<div class="eyebrow">WHAT / WHY / HOW</div>
+<h1>不变量、前置条件<br>与后置条件</h1>
+<p class="lead">从一次金币消费出发，理解有效状态、操作契约与程序正确性。</p>
+<div class="callout"><strong>一个操作在什么条件下允许执行？执行之后必须保证什么？系统有哪些规则不能被破坏？</strong></div>
+<p>不变量（Invariant）、前置条件（Precondition）、后置条件（Postcondition）共同回答这三个问题。它们帮助我们先规定“什么才算正确”，再讨论“代码怎样实现”。</p>
+<p class="meta">架构学习笔记 · 整理于 2026-10-17 · 示例语言：C#</p>
+</header>
+<section id="overview">
+<h2>01 · 先建立整体认识</h2>
+<p>假设玩家的钱包里有 100 金币，现在准备消费 30 金币。</p>
+<div class="flow" aria-label="消费操作的约束">
+<div class="step"><small>初始状态 · 满足不变量</small><b>100 金币</b><div>余额 ≥ 0，钱包处于有效状态。</div></div>
+<div class="arrow" aria-hidden="true">↓</div>
+<div class="step accent"><small>前置条件 · Precondition</small><b>消费数量为正数，且余额足够</b><div>30 &gt; 0，并且 100 ≥ 30，因此允许执行。</div></div>
+<div class="arrow">执行 <code>Spend(30)</code> ↓</div>
+<div class="step accent"><small>后置条件 · Postcondition</small><b>新余额 = 旧余额 − 消费数量</b><div>100 − 30 = 70。</div></div>
+<div class="arrow" aria-hidden="true">↓</div>
+<div class="step"><small>最终状态 · 继续满足不变量</small><b>70 金币</b><div>余额仍然 ≥ 0，钱包仍处于有效状态。</div></div>
+</div>
+<div class="table-scroll"><table><thead><tr><th>概念</th><th>关心的问题</th><th>时间范围</th></tr></thead><tbody>
+<tr><td>前置条件</td><td>执行之前必须满足什么？</td><td>操作开始前</td></tr><tr><td>后置条件</td><td>执行之后必须保证什么？</td><td>操作结束后</td></tr><tr><td>不变量</td><td>哪些约束必须保持成立？</td><td>对象或系统约定的有效状态</td></tr>
+</tbody></table></div>
+</section>
+<section id="what">
+<h2>02 · What：它们究竟是什么？</h2>
+<h3>1. 不变量：规定什么状态是有效的</h3>
+<p><strong>在规定的作用范围内，系统所有有效状态都必须满足的性质或约束。</strong></p>
+<p>例如钱包的不变量：</p><div class="formula">Balance ≥ 0</div>
+<p>不管执行获得金币、消费金币、购买物品还是领取奖励，只要钱包处于约定的有效状态，余额就不能为负数。</p>
+<div class="table-scroll"><table><thead><tr><th>余额</th><th>是否有效</th></tr></thead><tbody><tr><td>100</td><td>有效</td></tr><tr><td>50</td><td>有效</td></tr><tr><td>0</td><td>有效</td></tr><tr><td>−10</td><td>无效</td></tr></tbody></table></div>
+<p>余额可以从 100 变成 70。数值发生了变化，但 <code>Balance &gt;= 0</code> 这个性质仍然成立。</p>
+<blockquote><strong>不变量要求保持的是某种性质，不是某个具体数值。</strong></blockquote>
+<p>“始终成立”需要明确作用范围。某些操作内部可以暂时经过不满足对象不变量的中间状态，但不能让依赖该不变量的其他操作观察到它，并且必须在约定的操作边界或提交点恢复约束。并发环境还需要同步或事务机制。</p>
+<h3>2. 前置条件：规定什么时候可以执行</h3>
+<p><strong>一个操作能够按照约定正确执行，所要求的事先条件。</strong></p>
+<p>例如 <code>wallet.Spend(30)</code> 可以要求：</p>
+<div class="formula">amount &gt; 0<br>Balance ≥ amount</div>
+<p>它们描述的是<strong>特定操作对输入和当前状态的要求</strong>。</p>
+<p>钱包余额为 20 时，满足不变量 <code>20 &gt;= 0</code>，却不满足消费 30 金币的前置条件 <code>20 &gt;= 30</code>。</p>
+<blockquote><strong>有效状态不代表任意操作都可以执行。</strong></blockquote>
+<p>前置条件可以由调用者确保，也可以由方法内部验证；在契约意义上，它规定的是操作被正确调用的条件。</p>
+<h3>3. 后置条件：规定完成后必须兑现的承诺</h3>
+<p><strong>如果操作在满足前置条件的情况下正常完成，执行之后必须成立的条件。</strong></p>
+<div class="formula">Balance<sub>new</sub> = Balance<sub>old</sub> − amount</div>
+<p>后置条件通常不只是描述最终状态，还会描述<strong>执行前和执行后之间的关系</strong>。</p>
+<p><code>Balance &gt;= 0</code> 只能说明最终余额非负；<code>newBalance == oldBalance - amount</code> 才能说明本次消费扣除了约定的数量。</p>
+<p>假如消费 30 金币，余额从 100 变成了 50：不变量仍然成立，但后置条件被违反了。</p>
+<blockquote><strong>满足不变量，不代表操作执行正确。</strong></blockquote>
+</section>
+<section id="why">
+<h2>03 · Why：为什么需要区分？</h2>
+<p>因为程序的正确性包含不同的问题。考虑这段代码：</p>
+<pre><code>public void Spend(int amount)
+{
+    Balance -= amount;
+}</code></pre>
+<p>余额为 100 时，调用 <code>Spend(30)</code> 得到 70，看起来没有问题。但是：</p>
+<ul><li>调用 <code>Spend(-30)</code>，余额反而增加 30。</li><li>余额为 20 时调用 <code>Spend(30)</code>，余额变成 −10。</li></ul>
+<p>我们描述了操作怎样执行，却没有明确什么行为才算正确。</p>
+<h3>不变量：防止非法状态</h3>
+<p><code>Balance &gt;= 0</code> 约束整个钱包。无论哪个方法修改余额，都不能让钱包在约定边界上进入负余额状态。</p>
+<h3>前置条件：划定操作的有效调用范围</h3>
+<p><code>amount &gt; 0</code> 和 <code>Balance &gt;= amount</code> 说明哪些参数与状态组合允许执行消费。</p>
+<h3>后置条件：判断操作是否实现承诺</h3>
+<p><code>newBalance == oldBalance - amount</code> 用于判断是否按约定扣款。即使输入合法、最终余额非负，扣款仍然可能出错。</p>
+<div class="table-scroll"><table><thead><tr><th>问题</th><th>对应约束</th></tr></thead><tbody><tr><td>钱包出现负余额</td><td>违反不变量</td></tr><tr><td>尝试消费负数金币</td><td>不满足前置条件</td></tr><tr><td>消费 30，却扣除 50</td><td>违反后置条件</td></tr><tr><td>余额非负，但扣错金额</td><td>需要后置条件；仅检查不变量无法发现</td></tr></tbody></table></div>
+<p><strong>三者各有职责，不能互相替代。</strong></p>
+</section>
+<section id="how">
+<h2>04 · How：在 C# 中如何应用？</h2>
+<p>下面的钱包对象通过构造函数建立不变量，通过受控的方法修改余额。</p>
+<div class="code-label">C# · Wallet.cs</div>
+<pre><code>using System;
+using System.Diagnostics;
+
+public sealed class Wallet
+{
+    public int Balance { get; private set; }
+
+    public Wallet(int initialBalance)
+    {
+        if (initialBalance &lt; 0)
+            throw new ArgumentOutOfRangeException(
+                nameof(initialBalance));
+
+        Balance = initialBalance;
+    }
+
+    public void Spend(int amount)
+    {
+        // 前置条件 1：消费数量必须为正数。
+        if (amount &lt;= 0)
+            throw new ArgumentOutOfRangeException(
+                nameof(amount));
+
+        // 前置条件 2：余额必须足够。
+        if (Balance &lt; amount)
+            throw new InvalidOperationException(
+                "金币余额不足");
+
+        // 保存操作之前的状态。
+        int oldBalance = Balance;
+
+        // 执行状态转移。
+        Balance -= amount;
+
+        // 检查后置条件。
+        Debug.Assert(
+            Balance == oldBalance - amount);
+
+        // 检查不变量。
+        Debug.Assert(Balance &gt;= 0);
+    }
+}</code></pre>
+<ol><li><strong>进入操作之前：</strong>验证前置条件。非法调用被拒绝，此时余额没有被修改。</li><li><strong>执行状态转移：</strong>由旧余额得到新余额，完成扣款。</li><li><strong>操作结束之后：</strong>检查后置条件和不变量，辅助发现实现错误。</li></ol>
+<div class="callout note"><p><strong>示例的适用范围</strong></p><p><code>Debug.Assert</code> 是开发阶段的辅助检查，不能替代正式环境中的业务验证；在未定义 <code>DEBUG</code> 时，这些断言调用通常不会编入程序。</p><p>示例假设钱包没有并发修改，并把余额不足定义为异常情况。如果余额不足是正常的业务结果，可以用 <code>TrySpend</code> 返回失败。</p></div>
+<p>契约也会随 API 的定义改变：如果 <code>TrySpend</code> 允许在余额不足时被正常调用，那么“余额足够”就是<strong>成功分支的条件</strong>；方法的后置条件应分别说明“成功时扣款”和“失败时余额不变”。</p>
+</section>
+<section id="transition">
+<h2>05 · 它们与状态、行为、转移的关系</h2>
+<p>用 <var>S</var> 表示旧状态，<var>T</var> 表示状态转移，<var>S′</var> 表示新状态：</p>
+<div class="formula">S′ = T(S)</div>
+<p>带有输入参数时，也可以写成 <code>S′ = T(S, input)</code>。例如消费操作的输入就是 <code>amount</code>。</p>
+<div class="table-scroll"><table><thead><tr><th>记号</th><th>含义</th><th>钱包示例</th></tr></thead><tbody><tr><td>I(S)</td><td>旧状态满足不变量</td><td>旧余额 ≥ 0</td></tr><tr><td>P(S, amount)</td><td>满足操作的前置条件</td><td>amount &gt; 0，且旧余额 ≥ amount</td></tr><tr><td>T</td><td>执行状态转移</td><td>扣除指定数量的金币</td></tr><tr><td>Q(S, S′, amount)</td><td>旧、新状态满足后置关系</td><td>新余额 = 旧余额 − amount</td></tr><tr><td>I(S′)</td><td>新状态继续满足不变量</td><td>新余额 ≥ 0</td></tr></tbody></table></div>
+<p><strong>状态转移描述状态如何改变；前置条件、后置条件和不变量约束这种改变的正确性。</strong></p>
+<p>它们不必指定操作具体怎样实现，而是规定正确实现必须满足什么。消费金币可以通过对象方法、命令处理器或数据库事务实现，但业务要求的正确性约束应保持明确。</p>
+<blockquote>先规定正确性，再选择实现方式。</blockquote>
+</section>
+<section id="contract">
+<h2>06 · 设计契约与程序正确性</h2>
+<p>这三个概念共同构成<strong>契约式设计（Design by Contract）</strong>的核心：把方法看作调用者与实现者之间的契约。</p>
+<ul><li><strong>调用者的责任：</strong>满足前置条件。</li><li><strong>实现者的责任：</strong>在约定条件下执行操作，并保证后置条件与相关不变量。</li></ul>
+<p>形式化方法中的霍尔逻辑（Hoare Logic）使用以下表达：</p>
+<div class="formula">{ P } &nbsp; C &nbsp; { Q }</div>
+<p><var>P</var> 是前置条件，<var>C</var> 是程序，<var>Q</var> 是后置条件。它表示：如果执行前满足 <var>P</var>，程序 <var>C</var> 一旦正常终止，执行后就满足 <var>Q</var>。</p>
+<p>这是<strong>部分正确性</strong>的表述；程序是否一定终止，还需要额外证明。</p>
+<p>引入不变量 <var>I</var>，保持不变量的操作可表示为：</p>
+<div class="formula">{ I ∧ P } &nbsp; C &nbsp; { I ∧ Q }</div>
+<p>开始时既满足不变量，也满足前置条件；正常完成后，既继续满足不变量，也满足后置条件。后置条件若引用旧状态，需要用旧值记号或保存的旧状态来表达。</p>
+<h3>用钱包做一次简单推理</h3>
+<ol><li>已知 <code>oldBalance &gt;= amount</code> 且 <code>amount &gt; 0</code>。</li><li>实现保证 <code>newBalance = oldBalance - amount</code>。</li><li>因此 <code>newBalance &gt;= 0</code>，不变量得以保持。</li></ol>
+<p>这个推理依赖检查与扣款期间余额不被其他操作修改，以及数值运算符合约定。上述 <code>int</code> 消费示例在条件成立时，减法结果处于非负的可表示范围。</p>
+<p>这些概念不仅是写代码时的约定，也可以用于推理和证明程序正确性。</p>
+</section>
+<section id="practice">
+<h2>07 · 实际开发中的重要细节</h2>
+<h3>1. 不是每个条件都应该成为不变量</h3>
+<p><code>Balance &gt;= amount</code> 只需要针对某次消费成立。钱包允许余额为 0，也允许余额不足以支付某笔消费。</p>
+<p><strong>不变量约束有效状态；前置条件约束特定调用。</strong>不要把所有操作要求都塞进对象的不变量。</p>
+<h3>2. 失败时的后置条件需要另外定义</h3>
+<p>消费失败时，我们通常希望：</p>
+<div class="formula">Balance<sub>new</sub> = Balance<sub>old</sub></div>
+<p>但失败后状态不变并非天然保证。需要通过先验证再修改、事务回滚等设计实现。涉及多个对象或数据库时，必须明确失败语义。</p>
+<h3>3. 多个对象之间也可能存在不变量</h3>
+<pre><code>wallet.Balance          // 当前余额
+statistics.TotalEarned  // 历史累计获得量</code></pre>
+<p>字段各自合法，不代表整体业务一致。例如“获得 10 金币”可能要求余额和累计获得量同时增加 10；这是该操作必须兑现的跨对象承诺。</p>
+<p>能否进一步规定 <code>Balance &lt;= TotalEarned</code>，取决于初始余额是否计入累计、所有入账是否被统计等业务定义，不能仅凭字段名称推断。</p>
+<p>跨对象的约束应由能够协调这些对象的业务操作或事务维护。单靠各对象检查自身数值，无法保证整体一致。</p>
+<h3>4. 不变量不能自动解决并发问题</h3>
+<p>假设余额为 100，两个操作同时尝试消费 80。它们可能都在修改前读到 100，并通过余额检查。</p>
+<pre><code>if (Balance &gt;= amount)
+{
+    Balance -= amount;
+}</code></pre>
+<p>这段代码不保证“检查与扣款”是原子的。具体交错方式不同，可能出现超额扣款，也可能出现更新丢失：两次消费都被报告成功，却只扣了一次钱。</p>
+<p>需要锁、合适的数据库事务、带条件的原子更新等机制，确保检查和更新共同满足契约。</p>
+</section>
+<section id="summary">
+<h2>08 · 回顾与下一步</h2>
+<div class="table-scroll"><table><thead><tr><th>概念</th><th>本质</th><th>设计时问自己</th></tr></thead><tbody><tr><td>不变量</td><td>有效状态必须满足的规则</td><td>什么状态不允许存在？在哪些边界上必须保证？</td></tr><tr><td>前置条件</td><td>正确执行所要求的事先条件</td><td>什么输入与当前状态允许这次调用？</td></tr><tr><td>后置条件</td><td>操作完成必须兑现的承诺</td><td>成功后必须成立什么？失败时又保证什么？</td></tr></tbody></table></div>
+<div class="callout summary">不变量规定什么状态合法，前置条件规定什么时候可以执行，后置条件规定执行后必须得到什么结果。</div>
+<h3>接下来：状态机与状态转移的正确性</h3>
+<ol><li>如何把三个概念应用到状态机？</li><li>如何推理某个状态转移不会破坏不变量？</li><li>一个操作同时修改多个对象时，如何维护整体一致性？</li></ol>
+<p>把状态、约束、操作与验证连起来，就能逐步形成一套判断程序是否正确的方法。</p>
+</section>
+<footer>根据本次对话整理。公式、样式与示例均包含在本文件中，无需联网即可阅读。</footer>
+</main>
+</div>
+</body>
+</html>

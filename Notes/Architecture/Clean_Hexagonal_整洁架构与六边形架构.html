@@ -1,0 +1,916 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light"><meta name="description" content="Clean Architecture 与 Hexagonal Architecture：What、Why、How。含六张内嵌图解、C# 游戏服务端示例、Unity 应用方式，以及依赖方向、端口和适配器的准确说明。"><title>Clean / Hexagonal Architecture · 整洁架构与六边形架构</title><style>
+:root{--paper:#f7f8fa;--ink:#202a36;--muted:#697581;--line:#e1e6ec;--blue:#2862b7;--nav:#152330;--nav-muted:#aebdca;--code:#172433;--side:272px}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:32px}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.85 "Segoe UI","Microsoft YaHei","PingFang SC",sans-serif;text-rendering:optimizeLegibility}button,a{-webkit-tap-highlight-color:transparent}a{color:var(--blue);text-decoration-thickness:1px;text-underline-offset:4px}a:hover{color:#153f7c}button{font:inherit;cursor:pointer}button:focus-visible,a:focus-visible,pre:focus-visible,.table-scroll:focus-visible{outline:3px solid #74a9ee;outline-offset:4px}.skip-link{position:fixed;left:20px;top:-90px;z-index:100;background:white;padding:12px 20px}.skip-link:focus{top:16px}.progress{position:fixed;left:var(--side);right:0;top:0;height:3px;background:transparent;z-index:30}.progress i{display:block;height:100%;width:0;background:#609bdd}
+.sidebar{position:fixed;inset:0 auto 0 0;width:var(--side);background:var(--nav);color:#fff;padding:36px 23px 22px;display:flex;flex-direction:column;z-index:25}.brand{display:flex;gap:12px;align-items:center;margin:0 7px 32px}.brand-mark{display:grid;place-items:center;width:39px;height:39px;border:1px solid #607689;border-radius:10px;font:bold 14px/1 monospace;letter-spacing:-1px;color:#d1e5f8}.brand b{display:block;font-size:15px;letter-spacing:.6px}.brand small{display:block;font-size:11px;color:var(--nav-muted);letter-spacing:1.3px;margin-top:2px}.toc-title{margin:0 12px 12px;color:#9eafbe;font-size:11px;font-weight:600;letter-spacing:2px}.toc{overflow:auto;scrollbar-width:thin;scrollbar-color:#425464 transparent}.toc a{display:flex;gap:12px;align-items:baseline;text-decoration:none;color:#c5d1dc;font-size:13px;line-height:1.6;border-radius:6px;padding:10px 11px;margin:3px 0}.toc a span{font:11px/1.6 monospace;color:#9caebe;flex:0 0 16px}.toc a:hover,.toc a.active{color:#fff;background:#283e51}.toc a.active{box-shadow:inset 2px 0 #8cb7e5}.sidebar-footer{margin-top:auto;padding:23px 10px 0;font-size:11px;color:#aebdca;line-height:1.7}.sidebar-footer strong{color:#dbe6ef;font-weight:500}.page{margin-left:var(--side);padding:0 48px 64px}.page-inner{max-width:1010px;margin:auto}.topbar{display:flex;align-items:center;justify-content:space-between;padding:27px 0 25px;border-bottom:1px solid var(--line);gap:12px;font-size:12px;color:var(--muted)}.topbar .crumb{letter-spacing:1px}.topbar .tools{display:flex;align-items:center;gap:16px}.print-button{padding:5px 12px;border:1px solid #ccd6e1;background:transparent;border-radius:5px;font-size:12px;color:#526477}.mobile-menu{display:none}.hero{padding:54px 0 36px}.eyebrow{font:600 12px/1.4 "Segoe UI",sans-serif;letter-spacing:2.5px;color:var(--blue);margin:0 0 20px}.hero h1{font-size:clamp(34px,4.6vw,55px);font-weight:750;line-height:1.2;letter-spacing:-2px;margin:0 0 16px}.hero h1 span{font-weight:400;color:#76818e}.hero-sub{font-size:19px;color:#687888;margin:0 0 27px;letter-spacing:.25px}.hero-tags{display:flex;flex-wrap:wrap;gap:9px}.hero-tags span{font-size:11px;padding:3px 10px;border:1px solid #d9e0e7;border-radius:4px;color:#60717f;background:#fff}.essence{margin:0 0 40px;padding:25px 27px;background:#fff;border:1px solid var(--line);border-left:3px solid var(--blue);border-radius:0 9px 9px 0}.essence p{font-size:18px;line-height:1.85;margin:0}.role-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:20px}.role{border-top:1px solid var(--line);padding-top:14px}.role b{font-size:13px;color:#355b87}.role span{display:block;font-size:12px;margin-top:3px;color:var(--muted)}
+article{font-size:15px;line-height:1.95}article>p:first-child{color:var(--muted);font-size:12px}article p{margin:14px 0}article>h2{font-size:25px;line-height:1.55;margin:58px 0 21px;padding-top:25px;border-top:1px solid var(--line);letter-spacing:-.5px;display:flex;align-items:baseline;gap:12px}.chapter-number{font:12px/1.4 monospace;color:#8695a4;letter-spacing:1px;flex:0 0 24px}article h3{font-size:18px;line-height:1.6;margin:30px 0 12px}article strong{font-weight:650}article ul,article ol{padding-left:24px;margin:14px 0}article li{padding-left:3px;margin:7px 0}article blockquote{margin:24px 0;background:#edf3fb;border-left:3px solid #5d86bd;padding:14px 23px;border-radius:0 6px 6px 0;color:#27466b}article blockquote p{margin:0}article p code,article li code,article td code{padding:2px 5px;background:#eaf0f6;border-radius:4px;color:#2b537f;font:12.5px/1.65 Consolas,"Cascadia Code",monospace;overflow-wrap:anywhere}.table-scroll{overflow-x:auto;margin:22px 0;border:1px solid var(--line);border-radius:8px;background:#fff}table{border-collapse:collapse;width:100%;font-size:13px;line-height:1.8}th{text-align:left;font-weight:650;background:#edf1f6;color:#334c67;white-space:nowrap}td,th{padding:13px 16px;vertical-align:top;border-bottom:1px solid var(--line)}tr:last-child td{border-bottom:0}td:first-child{font-weight:500;min-width:120px}pre{white-space:pre;overflow-x:auto;tab-size:4;font:12.5px/1.8 Consolas,"Cascadia Code","Microsoft YaHei",monospace}.flow-block{padding:22px 24px;border:1px solid #d8e0e9;background:#eef2f7;border-radius:8px;color:#36516c;margin:22px 0;line-height:2}.code-card{margin:23px 0 20px;background:var(--code);color:#e2e9f1;border:1px solid #26394b;border-radius:9px;overflow:hidden}.code-toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 18px;background:#203043;border-bottom:1px solid #344557}.code-toolbar strong{font:12px/1.6 Consolas,"Cascadia Code",monospace;letter-spacing:.2px;display:block;color:#e9f1fa}.code-toolbar small{font-size:10px;color:#b4c3d2;display:block;margin-top:1px}.code-actions{display:flex;gap:7px;flex-shrink:0}.code-actions button{font-size:11px;line-height:1.5;border:1px solid #5b6f83;border-radius:4px;background:transparent;color:#d7e6f6;padding:4px 9px}.code-actions button:hover{background:#3a536c;color:white}.code-card pre{padding:20px 23px;margin:0;scrollbar-color:#647c95 transparent}.tok-keyword{color:#a8c8ff}.tok-string{color:#b9dba7}.tok-comment{color:#a8b8c9}.tok-number{color:#efc79b}.end-note{margin-top:54px;padding-top:20px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:16px;font-size:11px;color:var(--muted)}.end-note a{color:#6a7f94}.toast{position:fixed;left:calc(50% + var(--side)/2);bottom:24px;transform:translateX(-50%);background:#20384e;color:#fff;padding:10px 19px;border-radius:7px;font-size:13px;box-shadow:0 4px 18px #0002;opacity:0;transition:opacity .16s;pointer-events:none;z-index:100}.toast.show{opacity:1}
+@media(min-width:1550px){.page{padding-left:80px;padding-right:80px}.hero{padding-top:65px}}
+@media(max-width:1150px){:root{--side:234px}.sidebar{padding-left:15px;padding-right:15px}.toc a{font-size:12px}.page{padding-left:30px;padding-right:30px}.hero h1{font-size:40px}}
+@media(max-width:820px){:root{--side:0px}html{scroll-padding-top:20px}.sidebar{display:none;width:260px}.sidebar.open{display:flex;box-shadow:10px 0 40px #0003}.page{margin-left:0;padding:0 23px 36px}.progress{left:0}.topbar{padding-top:17px;padding-bottom:16px}.topbar .crumb{font-size:11px}.topbar .tools{gap:9px}.mobile-menu{display:inline-block;padding:5px 9px;border:1px solid #ccd6e1;background:white;border-radius:5px;font-size:12px;color:#526477}.hero{padding-top:37px}.hero h1{font-size:37px;letter-spacing:-1px}.hero-sub{font-size:16px}.hero-tags span{font-size:10px}.essence{padding:20px}.essence p{font-size:16px}.role-grid{gap:10px}.role b{font-size:12px}.role span{font-size:11px}article{font-size:14px}article>h2{font-size:22px;margin-top:40px}article h3{font-size:17px}.code-toolbar{padding:11px 12px}.code-card pre{padding:17px 14px;font-size:11.5px}.toast{left:50%}}
+@media(max-width:420px){.page{padding-left:16px;padding-right:16px}.topbar .crumb{letter-spacing:0}.print-button{padding-left:8px;padding-right:8px}.hero h1{font-size:33px}.role-grid{grid-template-columns:1fr}.role{padding-top:8px}.role span{display:inline;margin-left:8px}.code-toolbar{align-items:flex-start}.code-actions{flex-direction:column;gap:5px}.code-actions button{padding:3px 6px}.flow-block{padding:17px 14px;font-size:11px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.toast{transition:none}}
+@media print{@page{margin:16mm}body{background:#fff;font-size:11pt}.sidebar,.topbar,.progress,.code-actions,.toast,.hero-tags,.end-note{display:none!important}.page{margin:0;padding:0}.page-inner{max-width:none}.hero{padding:0 0 16px}.hero h1{font-size:30pt}.hero-sub{font-size:14pt}.essence{margin-bottom:20px;padding:14px 18px}.essence p{font-size:12pt}article{font-size:10pt;line-height:1.65}article>h2{margin-top:26px;padding-top:15px;font-size:17pt;break-after:avoid}article h3{font-size:12pt;break-after:avoid}pre{white-space:pre-wrap;overflow:visible;overflow-wrap:anywhere;font-size:8pt!important}.code-card{background:#f7f8fa;color:#202a36;border-color:#ccd4dc}.code-toolbar{background:#edf1f6;border-color:#ccd4dc}.code-toolbar strong,.code-toolbar small{color:#34495e}.tok-keyword{color:#23558b}.tok-string{color:#3b6133}.tok-comment{color:#657566}.tok-number{color:#8a4b25}.table-scroll{overflow:visible}th,td{padding:8px 9px}.role-grid{grid-template-columns:repeat(3,1fr)}a{color:inherit;text-decoration:none}.flow-block{background:#f4f6f8;color:#30465d}}
+
+.hero h1{letter-spacing:-1.8px}.hero-sub{max-width:720px}.equation{display:block;margin:25px 0;padding:24px 20px;text-align:center;border:1px solid #d7e2ee;border-radius:8px;background:#edf3fa;font:500 23px/1.65 "Cambria Math",Cambria,"Microsoft YaHei",serif;color:#264d79;overflow-wrap:anywhere}.equation sub{font-size:60%;margin-right:3px}.equation-final{font:600 20px/1.7 "Segoe UI","Microsoft YaHei",sans-serif}var{font-family:Cambria,"Times New Roman",serif}.demo{border:1px solid #d6e1ed;border-radius:10px;margin:25px 0;padding:24px;background:#fff}.demo-heading{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;margin-bottom:20px}.demo-heading h3{margin:5px 0 0;font-size:16px;line-height:1.7}.demo-kicker{font-size:10px;color:#6c84a0;letter-spacing:1.3px;font-weight:600}.demo-chip{white-space:nowrap;font-size:10px;background:#edf3fb;color:#43668c;padding:4px 9px;border-radius:4px;align-self:flex-start}.door-layout{display:grid;grid-template-columns:180px 1fr;gap:27px;align-items:center}.door-scene{height:184px;position:relative;display:grid;place-items:center;background:#f0f4f8;border-radius:8px}.door-frame{height:136px;width:88px;border:7px solid #65798b;border-bottom:0;background:#20394a;perspective:400px;z-index:1}.door-leaf{height:100%;background:#c59767;border:3px solid #a2774f;position:relative;transform-origin:left;transition:transform .35s,background .25s}.door-leaf::before{content:"";position:absolute;inset:8px;border:2px solid #a67a50}.door-leaf i{position:absolute;width:7px;height:7px;border-radius:50%;background:#f8df9d;top:58%;right:8px;box-shadow:0 0 0 1px #8c642a}.door-leaf.is-open{transform:rotateY(-65deg)}.door-leaf.is-locked{background:#8b98a3;border-color:#647685}.door-leaf.is-locked::before{border-color:#647685}.door-leaf.is-locked::after{content:"锁";position:absolute;left:23px;top:42px;padding:2px 5px;color:#e9edf2;background:#425564;border-radius:3px;font-size:12px}.door-ground{position:absolute;bottom:22px;width:118px;height:5px;background:#c6d2dd;border-radius:50%}.door-controls label{font-size:12px;color:#60768b;display:block;margin-bottom:5px}.door-controls select{font:13px/1.5 inherit;padding:9px 32px 9px 12px;border:1px solid #becedf;border-radius:5px;background:#fff;color:#344d67;margin-right:7px;margin-bottom:10px;max-width:100%}.action-button,.secondary-button{font-size:12px;padding:9px 14px;border:1px solid #2c609f;border-radius:5px;line-height:1.5;background:#2c609f;color:white}.secondary-button{color:#3e5c7b;background:#f4f7fa;border-color:#cfdae6}.action-button:hover{background:#1f4a7e}.secondary-button:hover{background:#e7eff7}.demo p.demo-result{font-size:13px;line-height:1.85;color:#325675;margin:10px 0 0}.demo-caption{font-size:11.5px!important;color:#708092!important;line-height:1.85!important;margin:16px 0 0!important}.hp-display{display:flex;align-items:baseline;gap:9px}.hp-display output{font:600 48px/1.1 "Segoe UI",sans-serif;letter-spacing:-2px;color:#315d8f}.hp-display span{font-size:14px;color:#8190a0}progress{display:block;width:100%;height:13px;margin:18px 0 22px;accent-color:#3b7baf;border:0;border-radius:5px;overflow:hidden;background:#e9eff6}progress::-webkit-progress-bar{background:#e9eff6;border-radius:5px}progress::-webkit-progress-value{background:#4e85b5;border-radius:5px;transition:width .2s}progress::-moz-progress-bar{background:#4e85b5}.demo-buttons{display:flex;flex-wrap:wrap;gap:8px}.fsm-figure{margin:25px 0}.fsm-states{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.fsm-states>div{padding:16px 12px;border-radius:7px;background:#edf3f9;border:1px solid #d7e3ee;text-align:center}.fsm-states b{display:block;font:600 13px/1.7 Consolas,monospace;color:#375d85}.fsm-states span{font-size:12px;color:#708195}.fsm-states .dead-state{background:#f4eeed;border-color:#e8d8d4}.fsm-states .dead-state b{color:#8a5d52}.editor-note{background:#fff;border:1px solid var(--line);border-radius:8px;padding:20px 24px;margin-top:46px;font-size:12px;color:#657488}.editor-note h3{font-size:14px;margin:0 0 8px}.editor-note p{margin:8px 0}.editor-note summary{cursor:pointer;color:#3f648c;margin-top:12px}.editor-note ul{padding-left:19px}.editor-note a{overflow-wrap:anywhere}.mobile-menu{flex-shrink:0}
+@media(max-width:600px){.hero h1{font-size:34px}.hero-sub{font-size:15px}.door-layout{grid-template-columns:1fr}.door-scene{height:170px}.door-controls{margin-top:-10px}.demo{padding:18px}.demo-heading h3{font-size:15px}.demo-chip{font-size:9px}.equation{font-size:19px;padding:20px 12px}.equation-final{font-size:16px}.fsm-states{grid-template-columns:repeat(2,1fr)}}
+@media(prefers-reduced-motion:reduce){.door-leaf,progress::-webkit-progress-value{transition:none}}
+@media print{.demo{break-inside:avoid;padding:15px}.demo-buttons,.door-controls select,.door-controls label,.door-controls button{display:none}.door-layout{grid-template-columns:130px 1fr}.door-scene{height:160px}.hp-display output{font-size:26pt}.demo-heading h3{font-size:11pt}.equation{font-size:15pt;padding:15px}.fsm-states{grid-template-columns:repeat(4,1fr)}.editor-note{font-size:9pt}.equation-final{font-size:13pt}}
+.hero h1{font-size:clamp(34px,4.2vw,53px)}.hero-sub{max-width:780px}.fraction{display:inline-flex;flex-direction:column;vertical-align:middle;text-align:center;line-height:1.45;margin-left:8px}.fraction>span:first-child{border-bottom:1px solid #6685a8;padding:0 8px}.fraction>span:last-child{font-size:85%;padding-top:3px}.embedded-diagram{margin:27px 0;border:1px solid #d5e1ed;border-radius:9px;background:#fff;overflow:hidden}.diagram-heading{display:flex;align-items:center;justify-content:space-between;gap:15px;padding:15px 19px 10px}.diagram-heading>div{min-width:0}.diagram-heading span{font:10px/1.5 Consolas,monospace;color:#8196aa;display:block;letter-spacing:1px;margin-bottom:4px}.diagram-heading strong{font-size:14px;color:#3a5a7a;line-height:1.75}.diagram-heading button{white-space:nowrap;background:#f7f9fc;border:1px solid #d2dce7;border-radius:4px;color:#71879e;padding:5px 9px;font-size:10px}.diagram-heading button:hover{background:#eaf2fa;color:#3f6489}.svg-scroll{overflow-x:auto;scrollbar-color:#b1c4d6 transparent;scrollbar-width:thin}.svg-scroll svg{width:100%;height:auto;display:block;min-width:640px}.embedded-diagram figcaption{padding:8px 20px 17px;font-size:11px;color:#7b8da0;line-height:1.85;margin:0}.boundary-checklist{margin:25px 0;border:1px solid #d3e0ed;border-radius:9px;background:#fff;padding:24px}.checklist-heading{display:flex;justify-content:space-between;align-items:center;gap:15px}.checklist-heading span{font-size:10px;color:#8b9cad;letter-spacing:1px}.checklist-heading h3{margin:4px 0;font-size:17px}.checklist-heading output{font:600 25px/1.3 "Segoe UI",sans-serif;color:#4272a0;white-space:nowrap}.boundary-checklist progress{height:9px;margin:16px 0 20px}.boundary-checklist fieldset{border:0;margin:0;padding:0}.boundary-checklist label{display:flex;align-items:flex-start;gap:10px;font-size:13px;line-height:1.9;color:#526d87;padding:11px 0;border-bottom:1px solid #e7eef5}.boundary-checklist label:last-child{border-bottom:0}.boundary-checklist input{accent-color:#477cad;cursor:pointer;flex:0 0 auto;margin-top:6px}.checklist-footer{display:flex;justify-content:space-between;gap:13px;align-items:center;border-top:1px solid #dce6ef;margin-top:14px;padding-top:16px}.checklist-footer span{font-size:10px;color:#8294a6;line-height:1.8}.checklist-footer button{font-size:10px;white-space:nowrap;border:1px solid #c9d9e8;border-radius:4px;padding:5px 9px;background:#f5f8fc;color:#5d7b98}.visually-hidden{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}.figure-index{display:flex;flex-wrap:wrap;gap:6px;margin:17px 0 0}.figure-index a{font-size:10px;text-decoration:none;border:1px solid #d7e1ec;padding:3px 8px;border-radius:4px;color:#6a83a0;background:#fff}.figure-index a:hover{background:#eaf2fa}.scope-note{font-size:12px;line-height:1.9;color:#6e8298;margin-top:17px}.toc a{font-size:12px;line-height:1.75}.reference-list{margin-top:15px}.reference-list a{overflow-wrap:anywhere}
+@media(max-width:650px){.diagram-heading{padding:13px 14px 8px;align-items:flex-start}.diagram-heading strong{font-size:12px}.diagram-heading button{font-size:9px;padding:4px 6px}.embedded-diagram figcaption{font-size:10px;padding:8px 14px 14px}.svg-scroll svg{min-width:690px}.boundary-checklist{padding:18px}.boundary-checklist label{font-size:12px}.checklist-heading output{font-size:22px}.checklist-footer{align-items:flex-start}.hero h1{font-size:35px}.scope-note{font-size:11px}.figure-index a{font-size:9px}}
+@media print{.diagram-heading button,.checklist-footer button,.figure-index{display:none!important}.svg-scroll{overflow:visible}.svg-scroll svg{min-width:0!important;width:100%}.embedded-diagram{break-inside:avoid}.diagram-heading{padding:10px 14px 0}.diagram-heading strong{font-size:10pt}.embedded-diagram figcaption{font-size:8pt}.boundary-checklist{break-inside:avoid;padding:15px}.boundary-checklist label{font-size:9pt}.scope-note{font-size:9pt}.toc{display:none}}
+.hero h1{font-size:clamp(34px,4vw,51px);letter-spacing:-1.6px;line-height:1.3}.hero h1 em{font:inherit;font-style:normal;color:#6b88a5}.hero-sub{font-size:17px;line-height:1.9}.svg-scroll svg{min-width:710px}.scope-note code{font-size:inherit}.code-toolbar strong{overflow-wrap:anywhere}.editor-note p+p{margin-top:12px}.code-toolbar small{max-width:100%}
+@media(max-width:650px){.hero h1{font-size:34px}.hero-sub{font-size:15px}.code-toolbar strong{font-size:11px}.code-toolbar small{font-size:9px}}
+@media print{.svg-scroll svg{min-width:0!important}.hero h1{font-size:27pt}}</style></head><body><a class="skip-link" href="#content">跳到正文</a><div class="progress" aria-hidden="true"><i id="reading-progress"></i></div>
+<aside class="sidebar" id="sidebar" aria-label="文档目录"><div class="brand"><div class="brand-mark" aria-hidden="true">↘</div><div><b>架构图解</b><small>PORTS &amp; POLICIES</small></div></div><div class="toc-title">阅读导航 / CONTENTS</div><nav class="toc"><a href="#chapter-1"><span>01</span>What：Clean Architecture 究竟是什么？</a>
+<a href="#chapter-2"><span>02</span>最难理解的关键：执行方向和代码依赖方向不是一回事</a>
+<a href="#chapter-3"><span>03</span>Why：为什么要这样设计？</a>
+<a href="#chapter-4"><span>04</span>What：Hexagonal Architecture 又是什么？</a>
+<a href="#chapter-5"><span>05</span>Clean 和 Hexagonal 究竟有什么区别？</a>
+<a href="#chapter-6"><span>06</span>How：C# 游戏服务端完整示例</a>
+<a href="#chapter-7"><span>07</span>现在看出 Hexagonal 的价值了吗？</a>
+<a href="#chapter-8"><span>08</span>Unity 中如何应用？</a>
+<a href="#chapter-9"><span>09</span>设计权衡：Clean / Hexagonal 有什么代价？</a>
+<a href="#chapter-10"><span>10</span>它们与 Modular Monolith、DDD 是什么关系？</a>
+<a href="#chapter-11"><span>11</span>直达本质：真正要记住什么？</a></nav><div class="sidebar-footer"><strong>单文件 · 六张内嵌矢量图</strong><br>2026.10.16 · 根据粘贴原文整理<br>让技术实现围绕业务需要提供能力</div></aside>
+<div class="page"><div class="page-inner"><header class="topbar"><div class="crumb">ARCHITECTURE NOTES / 10</div><div class="tools"><button type="button" class="mobile-menu" id="menu-button" aria-controls="sidebar" aria-expanded="false">目录</button><button type="button" class="print-button" id="print-button">打印 / 保存 PDF</button></div></header>
+<section class="hero" aria-labelledby="page-title"><p class="eyebrow">WHAT / WHY / HOW</p><h1 id="page-title">Clean Architecture<br><em>&amp; Hexagonal Architecture</em><span>。</span></h1><p class="hero-sub">整洁架构与六边形架构：业务规则在中心，技术实现由端口连接。</p><div class="hero-tags"><span>11 个主题</span><span>6 张内嵌图解</span><span>C# / .NET / Unity</span><span>完整讲解 · 示例校正</span></div><div class="figure-index" aria-label="图解快捷导航"><a href="#diagram-1">01 向内依赖</a><a href="#diagram-2">02 调用与依赖</a><a href="#diagram-3">03 端口与适配器</a><a href="#diagram-4">04 项目边界</a><a href="#diagram-5">05 原子更新</a><a href="#diagram-6">06 用例交互</a></div></section>
+<section class="essence" aria-label="核心观点"><p>业务需要外部能力，但业务源码可以不绑定外部实现。<br><strong>让机制依赖策略，让适配器连接核心。</strong></p><div class="role-grid"><div class="role"><b>Clean Architecture</b><span>职责层次 · 向内的源码依赖</span></div><div class="role"><b>Hexagonal Architecture</b><span>应用边界 · 端口与适配器</span></div><div class="role"><b>共同目标</b><span>业务独立运行、测试与演化</span></div></div><p class="scope-note">正文、代码、样式与图全部内嵌，支持离线阅读。第六节是补齐上下文并验证的 .NET 8 教学示例；Unity 一节解释客户端的职责与程序集边界。</p></section>
+<main><article id="content"><p>这两种架构有一个非常重要的共同思想：</p>
+<p>业务逻辑不应该被数据库、UI、Unity、网络框架等技术实现所支配。相反，技术实现应该围绕业务需要提供能力。</p>
+<p>它们和我们之前讨论的高内聚、低耦合、信息隐藏、模块边界有直接联系。但这次，我们要再深入一步：依赖应该指向哪里？为什么依赖方向会决定软件的可维护性？</p>
+<p>先给出本质定义。</p>
+<div class="table-scroll" tabindex="0"><table>
+<thead>
+<tr>
+<th>架构</th>
+<th>最核心的原则</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Clean Architecture（整洁架构）</td>
+<td>将业务规则置于中心，让源代码依赖指向更内层的业务策略</td>
+</tr>
+<tr>
+<td>Hexagonal Architecture（六边形架构）</td>
+<td>将应用与外部技术隔离，通过端口与适配器进行交互</td>
+</tr>
+</tbody>
+</table></div>
+<p>它们高度相似，可以组合使用，但不是严格相同的架构规范。</p>
+<p>Clean Architecture 由 Robert C. Martin 系统性阐述，Hexagonal Architecture 则由 Alistair Cockburn 提出。两者都强调业务与外部机制的隔离，但表达方式、关注重点有所不同。</p>
+<h2 id="chapter-1"><span class="chapter-number">01</span>What：Clean Architecture 究竟是什么？</h2>
+<h3 id="section">1. 先理解它要区分的两种东西</h3>
+<p>假设你正在开发一个游戏背包系统。</p>
+<p>它包含两个类别的逻辑。</p>
+<p>第一类：业务规则（Business Rules）。</p>
+<p>例如：</p>
+<ul>
+<li>玩家最多持有 99 个相同道具。</li>
+<li>消耗道具时，数量不能小于零。</li>
+<li>领取过的奖励不能重复发放。</li>
+</ul>
+<p>第二类：技术实现（Technical Details）。</p>
+<p>例如：</p>
+<ul>
+<li>使用 MySQL、PostgreSQL 还是 SQLite。</li>
+<li>使用 Unity MonoBehaviour 还是 ASP.NET Core 接收操作。</li>
+<li>使用 Redis 还是内存字典缓存数据。</li>
+<li>如何将数据转换成 JSON。</li>
+</ul>
+<p>现在思考：</p>
+<p>如果我只是把数据库从 MySQL 换成 PostgreSQL，为什么“道具不能扣成负数”这条业务规则需要修改？</p>
+<p>理论上，它不应该受到影响。</p>
+<p>因为这条规则本身与数据库无关。</p>
+<p>Clean Architecture 就是尝试在软件结构上落实这种区分。</p>
+<h3 id="clean-architecture">2. Clean Architecture 的核心层次</h3>
+<p>常见的 Clean Architecture 将系统划分成下面几种职责层次。</p>
+<figure class="embedded-diagram" id="diagram-1" aria-labelledby="diagram-caption-1"><div class="diagram-heading"><div><span>图 01</span><strong>Clean：源码依赖指向内层策略</strong></div><button type="button" data-download-figure="1" aria-label="下载图 1 的 SVG">下载 SVG</button></div><div class="svg-scroll" tabindex="0" aria-label="可横向滚动的图解"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 500" role="img" aria-labelledby="fig1-title fig1-desc" font-family="Microsoft YaHei,Segoe UI,sans-serif"><title id="fig1-title">Clean：源码依赖指向内层策略</title><desc id="fig1-desc">四个嵌套区域表示职责层次。箭头仅表示源码依赖向内，不表示每次运行必须逐层调用。</desc><defs><marker id="f1-blue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#547da7"/></marker><marker id="f1-green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#638d77"/></marker><marker id="f1-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#ad7b70"/></marker></defs><rect width="960" height="500" fill="white"/><rect x="30" y="25" width="900" height="425" rx="10" fill="#f7f9fc" stroke="#547da7" stroke-width="1.5"/><text x="480" y="60" font-size="20" fill="#34536f" text-anchor="middle" font-weight="600">Frameworks &amp; Drivers</text><text x="480" y="85" font-size="13" fill="#7c91a5" text-anchor="middle" font-weight="400">Unity · ASP.NET Core · SQL · Redis</text><rect x="70" y="125" width="820" height="285" rx="10" fill="#edf4fb" stroke="#b1c6db" stroke-width="1.5"/><text x="480" y="158" font-size="19" fill="#34536f" text-anchor="middle" font-weight="600">Interface Adapters</text><text x="480" y="184" font-size="13" fill="#7c91a5" text-anchor="middle" font-weight="400">Controller · Presenter · 存储适配器</text><rect x="110" y="222" width="740" height="155" rx="10" fill="#e4eef7" stroke="#9fbbd3" stroke-width="1.5"/><text x="480" y="253" font-size="18" fill="#34536f" text-anchor="middle" font-weight="600">Application / Use Cases</text><text x="480" y="277" font-size="13" fill="#7c91a5" text-anchor="middle" font-weight="400">应用用例、流程协调、端口契约</text><rect x="150" y="310" width="660" height="51" rx="10" fill="#e6f1e9" stroke="#a7c5b1" stroke-width="1.5"/><text x="480" y="342" font-size="17" fill="#34536f" text-anchor="middle" font-weight="600">Domain / Entities · 核心状态、规则与不变量</text><polyline points="480,95 480,125" fill="none" stroke="#547da7" stroke-width="2" marker-end="url(#f1-blue)"/><polyline points="480,193 480,222" fill="none" stroke="#547da7" stroke-width="2" marker-end="url(#f1-blue)"/><polyline points="480,285 480,310" fill="none" stroke="#547da7" stroke-width="2" marker-end="url(#f1-blue)"/><text x="480" y="480" font-size="14" fill="#34536f" text-anchor="middle" font-weight="400">层数和名称可调整；内层不引用外层的框架类型与具体实现。</text></svg></div><figcaption id="diagram-caption-1">四个嵌套区域表示职责层次。箭头仅表示源码依赖向内，不表示每次运行必须逐层调用。</figcaption></figure>
+<p>这个图的关键不是必须有四层，也不是必须采用这种文件夹名称。</p>
+<p>关键在于一个规则：</p>
+<blockquote>
+<p>Dependency Rule（依赖规则）：源代码依赖指向内部，而不是让内部依赖外部。</p>
+</blockquote>
+<p>这是 Robert C. Martin 在 <a target="_blank" rel="noopener noreferrer" href="https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html">The Clean Architecture（2012）</a> 中明确提出的核心约束。</p>
+<h3 id="section-1">3. 什么叫依赖指向内部？</h3>
+<p>先看错误的方向。</p>
+<div class="code-card" data-filename="概念片段1"><div class="code-toolbar"><div><strong>InventoryService · 独立示意片段</strong><small>C# · 示意片段，需置于相应上下文</small></div><div class="code-actions"><button type="button" data-action="copy" aria-label="复制 InventoryService · 独立示意片段">复制代码</button></div></div><pre tabindex="0"><code class="language-csharp"><span class="tok-keyword">public</span> <span class="tok-keyword">class</span> InventoryService
+{
+    <span class="tok-keyword">private</span> <span class="tok-keyword">readonly</span> MySqlInventoryRepository _repository;
+
+    <span class="tok-keyword">public</span> InventoryService()
+    {
+        _repository = <span class="tok-keyword">new</span> MySqlInventoryRepository();
+    }
+}
+</code></pre></div>
+<p><code>InventoryService</code> 依赖 <code>MySqlInventoryRepository</code>。</p>
+<p>假设它们分别位于业务层和基础设施层：</p>
+<pre class="flow-block" tabindex="0"><code class="language-text">Application
+    |
+    v
+Infrastructure
+    |
+    v
+MySQL
+</code></pre>
+<p>业务代码知道数据库的具体实现。</p>
+<p>如果换成 PostgreSQL，就可能需要修改业务层。</p>
+<p>Clean Architecture 希望将这个依赖方向反过来：</p>
+<pre class="flow-block" tabindex="0"><code class="language-text">Infrastructure
+       |
+       v
+Application
+       |
+       v
+Domain
+</code></pre>
+<p>但这里产生一个看起来矛盾的问题：</p>
+<p>业务需要读取数据库，如果业务代码不能依赖数据库实现，那它怎么调用数据库？</p>
+<p>答案是：依赖倒置（Dependency Inversion）。</p>
+<p>我们在 Application 层定义业务需要的接口：</p>
+<div class="code-card" data-filename="概念片段2"><div class="code-toolbar"><div><strong>IInventoryRepository · 独立示意片段</strong><small>C# · 示意片段，需置于相应上下文</small></div><div class="code-actions"><button type="button" data-action="copy" aria-label="复制 IInventoryRepository · 独立示意片段">复制代码</button></div></div><pre tabindex="0"><code class="language-csharp"><span class="tok-keyword">public</span> <span class="tok-keyword">interface</span> IInventoryRepository
+{
+    Task&lt;Inventory&gt; LoadAsync(Guid playerId);
+
+    Task SaveAsync(Inventory inventory);
+}
+</code></pre></div>
+<p>Application 层使用接口：</p>
+<div class="code-card" data-filename="概念片段3"><div class="code-toolbar"><div><strong>InventoryService · 独立示意片段</strong><small>C# · 示意片段，需置于相应上下文</small></div><div class="code-actions"><button type="button" data-action="copy" aria-label="复制 InventoryService · 独立示意片段">复制代码</button></div></div><pre tabindex="0"><code class="language-csharp"><span class="tok-keyword">public</span> <span class="tok-keyword">class</span> InventoryService
+{
+    <span class="tok-keyword">private</span> <span class="tok-keyword">readonly</span> IInventoryRepository _repository;
+
+    <span class="tok-keyword">public</span> InventoryService(IInventoryRepository repository)
+    {
+        _repository = repository;
+    }
+}
+</code></pre></div>
+<p>Infrastructure 层负责实现接口：</p>
+<div class="code-card" data-filename="概念片段4"><div class="code-toolbar"><div><strong>SqlInventoryRepository · 独立示意片段</strong><small>C# · 示意片段，需置于相应上下文</small></div><div class="code-actions"><button type="button" data-action="copy" aria-label="复制 SqlInventoryRepository · 独立示意片段">复制代码</button></div></div><pre tabindex="0"><code class="language-csharp"><span class="tok-keyword">public</span> <span class="tok-keyword">class</span> SqlInventoryRepository : IInventoryRepository
+{
+    <span class="tok-keyword">public</span> Task&lt;Inventory&gt; LoadAsync(Guid playerId)
+    {
+        <span class="tok-comment">// 使用数据库读取数据</span>
+        <span class="tok-keyword">throw</span> <span class="tok-keyword">new</span> NotImplementedException();
+    }
+
+    <span class="tok-keyword">public</span> Task SaveAsync(Inventory inventory)
+    {
+        <span class="tok-comment">// 使用数据库保存数据</span>
+        <span class="tok-keyword">throw</span> <span class="tok-keyword">new</span> NotImplementedException();
+    }
+}
+</code></pre></div>
+<p>现在：</p>
+<ul>
+<li><code>InventoryService</code> 只依赖 <code>IInventoryRepository</code>。</li>
+<li><code>SqlInventoryRepository</code> 依赖并实现 <code>IInventoryRepository</code>。</li>
+<li>数据库实现可以更换，而不必要求业务服务修改其源代码。</li>
+</ul>
+<p>这才是依赖方向改变的具体机制。</p>
+<h2 id="chapter-2"><span class="chapter-number">02</span>最难理解的关键：执行方向和代码依赖方向不是一回事</h2>
+<p>这是理解 Clean Architecture 的核心。</p>
+<p>如果这一点没理解，就容易觉得所谓的依赖倒置只是“到处写接口”。</p>
+<p>我们将两个不同概念分开。</p>
+<p>执行方向（Runtime Call Flow）：程序运行时，谁调用谁？</p>
+<p>源代码依赖方向（Source Code Dependency）：编写和编译某段代码时，它需要知道哪些类型或契约？</p>
+<p>例如：</p>
+<div class="code-card" data-filename="概念片段5"><div class="code-toolbar"><div><strong>InventoryService · 独立示意片段</strong><small>C# · 示意片段，需置于相应上下文</small></div><div class="code-actions"><button type="button" data-action="copy" aria-label="复制 InventoryService · 独立示意片段">复制代码</button></div></div><pre tabindex="0"><code class="language-csharp"><span class="tok-keyword">public</span> <span class="tok-keyword">class</span> InventoryService
+{
+    <span class="tok-keyword">private</span> <span class="tok-keyword">readonly</span> IInventoryRepository _repository;
+
+    <span class="tok-keyword">public</span> InventoryService(IInventoryRepository repository)
+    {
+        _repository = repository;
+    }
+
+    <span class="tok-keyword">public</span> Task SaveAsync(Inventory inventory)
+    {
+        <span class="tok-keyword">return</span> _repository.SaveAsync(inventory);
+    }
+}
+</code></pre></div>
+<figure class="embedded-diagram" id="diagram-2" aria-labelledby="diagram-caption-2"><div class="diagram-heading"><div><span>图 02</span><strong>调用方向 ≠ 源码依赖方向</strong></div><button type="button" data-download-figure="2" aria-label="下载图 2 的 SVG">下载 SVG</button></div><div class="svg-scroll" tabindex="0" aria-label="可横向滚动的图解"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 470" role="img" aria-labelledby="fig2-title fig2-desc" font-family="Microsoft YaHei,Segoe UI,sans-serif"><title id="fig2-title">调用方向 ≠ 源码依赖方向</title><desc id="fig2-desc">左侧是运行时调用：业务服务执行 SQL 适配器。右侧是源码依赖：服务使用内层接口，外层适配器实现并依赖该接口。</desc><defs><marker id="f2-blue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#547da7"/></marker><marker id="f2-green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#638d77"/></marker><marker id="f2-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#ad7b70"/></marker></defs><rect width="960" height="470" fill="white"/><text x="230" y="42" font-size="19" fill="#34536f" text-anchor="middle" font-weight="600">运行时：实际执行谁？</text><rect x="55" y="115" width="350" height="83" rx="10" fill="#edf4fb" stroke="#d2dfeb" stroke-width="1.5"/><text x="230.0" y="145" font-size="16" fill="#34536f" text-anchor="middle" font-weight="600">InventoryService</text><text x="230.0" y="169" font-size="12" fill="#7c91a5" text-anchor="middle" font-weight="400">通过接口发起保存</text><rect x="55" y="300" width="350" height="83" rx="10" fill="#edf4fb" stroke="#d2dfeb" stroke-width="1.5"/><text x="230.0" y="330" font-size="16" fill="#34536f" text-anchor="middle" font-weight="600">SqlInventoryRepository</text><text x="230.0" y="354" font-size="12" fill="#7c91a5" text-anchor="middle" font-weight="400">运行时执行数据库操作</text><polyline points="230,198 230,300" fill="none" stroke="#638d77" stroke-width="2" marker-end="url(#f2-green)"/><text x="305" y="255" font-size="13" fill="#638d77" text-anchor="middle" font-weight="400">调用</text><rect x="465" y="70" width="465" height="175" rx="10" fill="#f3f7fb" stroke="#547da7" stroke-width="1.5" stroke-dasharray="7 5"/><text x="698" y="100" font-size="16" fill="#34536f" text-anchor="middle" font-weight="600">Application · 契约归内层所有</text><rect x="485" y="132" width="180" height="80" rx="10" fill="white" stroke="#d2dfeb" stroke-width="1.5"/><text x="575.0" y="162" font-size="16" fill="#34536f" text-anchor="middle" font-weight="600">InventoryService</text><text x="575.0" y="186" font-size="12" fill="#7c91a5" text-anchor="middle" font-weight="400">使用接口</text><rect x="725" y="132" width="185" height="80" rx="10" fill="#e6f1e9" stroke="#d2dfeb" stroke-width="1.5"/><text x="817.5" y="162" font-size="16" fill="#34536f" text-anchor="middle" font-weight="600">IInventoryRepository</text><text x="817.5" y="186" font-size="12" fill="#7c91a5" text-anchor="middle" font-weight="400">输出端口</text><polyline points="665,172 725,172" fill="none" stroke="#547da7" stroke-width="2" marker-end="url(#f2-blue)"/><text x="695" y="155" font-size="11" fill="#7c91a5" text-anchor="middle" font-weight="400">依赖</text><rect x="605" y="325" width="305" height="80" rx="10" fill="#edf4fb" stroke="#d2dfeb" stroke-width="1.5"/><text x="757.5" y="355" font-size="16" fill="#34536f" text-anchor="middle" font-weight="600">SqlInventoryRepository</text><text x="757.5" y="379" font-size="12" fill="#7c91a5" text-anchor="middle" font-weight="400">Infrastructure · 外层实现</text><polyline points="818,325 818,212" fill="none" stroke="#547da7" stroke-width="2" marker-end="url(#f2-blue)"/><text x="725" y="279" font-size="12" fill="#547da7" text-anchor="middle" font-weight="400">依赖并实现</text><text x="480" y="442" font-size="14" fill="#34536f" text-anchor="middle" font-weight="400">Application 不必引用 SQL 实现；Host 负责把具体对象装配给接口。</text></svg></div><figcaption id="diagram-caption-2">左侧是运行时调用：业务服务执行 SQL 适配器。右侧是源码依赖：服务使用内层接口，外层适配器实现并依赖该接口。</figcaption></figure>
+<p>数据库实现依赖 Application 中的接口，Application 不需要引用 SQL 实现。</p>
+<p>调用可以向外发生，但源代码依赖仍然可以指向内层。</p>
+<p>这里依赖的是 C# 的接口和多态机制，而不是某种特殊架构框架。</p>
+<h2 id="chapter-3"><span class="chapter-number">03</span>Why：为什么要这样设计？</h2>
+<h3 id="section-3">1. 隔离变化，而不是消灭依赖</h3>
+<p>假设你的游戏最初保存到本地文件：</p>
+<pre class="flow-block" tabindex="0"><code class="language-text">InventoryService
+       |
+       v
+JsonFileStorage
+</code></pre>
+<p>后来改为数据库：</p>
+<pre class="flow-block" tabindex="0"><code class="language-text">InventoryService
+       |
+       v
+PostgreSQL
+</code></pre>
+<p>如果业务服务依赖具体存储操作，改动很可能波及业务逻辑。</p>
+<p>如果使用抽象：</p>
+<pre class="flow-block" tabindex="0"><code class="language-text">InventoryService
+       |
+       v
+IInventoryRepository
+       ^
+       |
+PostgreSQLRepository
+</code></pre>
+<p>就可以把存储变化主要控制在适配器和程序组装部分。</p>
+<p>Clean Architecture 追求的不是“以后切换数据库只需要一行代码”这种过于乐观的承诺。</p>
+<p>真实的数据库迁移可能涉及数据结构、事务语义、查询性能和迁移工具。</p>
+<p>它能带来的合理收益是：</p>
+<p>尽量不让纯粹的基础设施变化，迫使业务规则也发生变化。</p>
+<h3 id="unity">2. 业务逻辑可以脱离 Unity 或服务器框架测试</h3>
+<p>例如游戏中的规则：</p>
+<div class="code-card" data-filename="概念片段6"><div class="code-toolbar"><div><strong>调用或规则 · 独立示意片段</strong><small>C# · 示意片段，需置于相应上下文</small></div><div class="code-actions"><button type="button" data-action="copy" aria-label="复制 调用或规则 · 独立示意片段">复制代码</button></div></div><pre tabindex="0"><code class="language-csharp"><span class="tok-keyword">public</span> <span class="tok-keyword">void</span> AddItem(<span class="tok-keyword">int</span> itemId, <span class="tok-keyword">int</span> amount)
+{
+    <span class="tok-keyword">if</span> (amount &lt;= <span class="tok-number">0</span>)
+        <span class="tok-keyword">throw</span> <span class="tok-keyword">new</span> ArgumentOutOfRangeException(nameof(amount));
+
+    <span class="tok-comment">// 校验并增加道具</span>
+}
+</code></pre></div>
+<p>这段规则本身不需要：</p>
+<pre class="flow-block" tabindex="0"><code class="language-text">MonoBehaviour
+GameObject
+Transform
+UnityEngine
+</code></pre>
+<p>如果把规则放在普通 C# 类中，就可以直接进行单元测试。</p>
+<p>无需启动 Unity 场景，也无需连接数据库。</p>
+<p>这正是 Clean Architecture 和 Hexagonal Architecture 都高度重视的能力。</p>
+<h3 id="section-4">3. 让业务规则成为系统中相对稳定的部分</h3>
+<p>需要特别区分：</p>
+<p>业务规则重要，不意味着它们永远不会变化。</p>
+<p>例如你的游戏可以改成每组道具最多堆叠 999 个。</p>
+<p>这是真实的业务规则变化。</p>
+<p>Clean Architecture 并不能阻止这种变化。</p>
+<p>它想避免的是另一种情况：</p>
+<blockquote>
+<p>只是换了网络框架、持久化实现或者 UI 技术，却不得不修改道具堆叠规则。</p>
+</blockquote>
+<p>这里的目标是让不同原因引起的变化尽可能分离。</p>
+<h2 id="chapter-4"><span class="chapter-number">04</span>What：Hexagonal Architecture 又是什么？</h2>
+<p>Hexagonal Architecture 通常翻译为六边形架构，也叫 Ports and Adapters Architecture（端口与适配器架构）。</p>
+<p>它由 Alistair Cockburn 在 2005 年提出，参见作者的 <a target="_blank" rel="noopener noreferrer" href="https://alistair.cockburn.us/hexagonal-architecture">Hexagonal Architecture 原始文章</a>。</p>
+<p>原始思想很明确：应用应当能够脱离具体 UI 和数据库运行，并且能够由不同的外部入口驱动。</p>
+<h3 id="section-5">1. 为什么叫六边形？</h3>
+<p>不是因为软件必须有六个模块、六层结构或者六个接口。</p>
+<p>六边形只是用来表达：</p>
+<p>应用存在一个内部与外部之间的边界，而它可以通过多个不同的交互端口与外界通信。</p>
+<figure class="embedded-diagram" id="diagram-3" aria-labelledby="diagram-caption-3"><div class="diagram-heading"><div><span>图 03</span><strong>Hexagonal：核心通过端口连接外部适配器</strong></div><button type="button" data-download-figure="3" aria-label="下载图 3 的 SVG">下载 SVG</button></div><div class="svg-scroll" tabindex="0" aria-label="可横向滚动的图解"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 475" role="img" aria-labelledby="fig3-title fig3-desc" font-family="Microsoft YaHei,Segoe UI,sans-serif"><title id="fig3-title">Hexagonal：核心通过端口连接外部适配器</title><desc id="fig3-desc">绿色连接点表示应用边界上的端口。绿色箭头表示业务交互方向，非源码依赖；输出端口由核心定义，外层适配器依赖其契约。</desc><defs><marker id="f3-blue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#547da7"/></marker><marker id="f3-green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#638d77"/></marker><marker id="f3-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#ad7b70"/></marker></defs><rect width="960" height="475" fill="white"/><polygon points="290,75 670,75 750,235 670,395 290,395 210,235" fill="#f3f7fb" stroke="#9bb9d2" stroke-width="2"/><text x="480" y="115" font-size="17" fill="#34536f" text-anchor="middle" font-weight="600">APPLICATION CORE</text><rect x="330" y="155" width="300" height="82" rx="10" fill="white" stroke="#d2dfeb" stroke-width="1.5"/><text x="480.0" y="185" font-size="16" fill="#34536f" text-anchor="middle" font-weight="600">Application / Use Cases</text><text x="480.0" y="209" font-size="12" fill="#7c91a5" text-anchor="middle" font-weight="400">实现输入端口，使用输出端口</text><rect x="330" y="275" width="300" height="70" rx="10" fill="#e6f1e9" stroke="#d2dfeb" stroke-width="1.5"/><text x="480.0" y="305" font-size="16" fill="#34536f" text-anchor="middle" font-weight="600">Domain</text><text x="480.0" y="329" font-size="12" fill="#7c91a5" text-anchor="middle" font-weight="400">业务规则与不变量</text><polyline points="480,237 480,275" fill="none" stroke="#547da7" stroke-width="2" marker-end="url(#f3-blue)"/><rect x="20" y="173" width="155" height="118" rx="10" fill="white" stroke="#d2dfeb" stroke-width="1.5"/><text x="97.5" y="203" font-size="16" fill="#34536f" text-anchor="middle" font-weight="600">输入适配器</text><text x="97.5" y="227" font-size="12" fill="#7c91a5" text-anchor="middle" font-weight="400">Unity / HTTP</text><text x="97.5" y="247" font-size="12" fill="#7c91a5" text-anchor="middle" font-weight="400">自动化测试</text><rect x="785" y="173" width="155" height="118" rx="10" fill="white" stroke="#d2dfeb" stroke-width="1.5"/><text x="862.5" y="203" font-size="16" fill="#34536f" text-anchor="middle" font-weight="600">输出适配器</text><text x="862.5" y="227" font-size="12" fill="#7c91a5" text-anchor="middle" font-weight="400">SQL / 文件</text><text x="862.5" y="247" font-size="12" fill="#7c91a5" text-anchor="middle" font-weight="400">内存实现</text><polyline points="175,235 330,235" fill="none" stroke="#638d77" stroke-width="2" marker-end="url(#f3-green)"/><polyline points="630,235 785,235" fill="none" stroke="#638d77" stroke-width="2" marker-end="url(#f3-green)"/><circle cx="210" cy="235" r="7" fill="#638d77"/><circle cx="750" cy="235" r="7" fill="#638d77"/><text x="230" y="330" font-size="13" fill="#638d77" text-anchor="middle" font-weight="400">Input Port</text><text x="730" y="330" font-size="13" fill="#638d77" text-anchor="middle" font-weight="400">Output Port</text><text x="480" y="445" font-size="14" fill="#34536f" text-anchor="middle" font-weight="400">端口是交互契约；六个顶点没有固定含义，端口数量也不限于六个。</text></svg></div><figcaption id="diagram-caption-3">绿色连接点表示应用边界上的端口。绿色箭头表示业务交互方向，非源码依赖；输出端口由核心定义，外层适配器依赖其契约。</figcaption></figure>
+<p>这个模型强调：</p>
+<p>应用核心不需要知道是 Unity 按钮、HTTP 请求还是自动化测试触发了某个操作。</p>
+<p>同样，它也不需要知道数据最后保存在 SQL、文件还是内存中。</p>
+<h3 id="port">2. Port（端口）是什么？</h3>
+<p>Port 是应用为了与外部交互而定义的交互契约。</p>
+<p>可以分为两种常见方向。</p>
+<div class="table-scroll" tabindex="0"><table>
+<thead>
+<tr>
+<th>类型</th>
+<th>作用</th>
+<th>游戏示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Driving / Input Port（驱动端口）</td>
+<td>外界使用它来驱动应用行为</td>
+<td><code>IClaimRewardUseCase</code></td>
+</tr>
+<tr>
+<td>Driven / Output Port（被驱动端口）</td>
+<td>应用通过它请求外部提供某种能力</td>
+<td><code>IPlayerStateStore</code></td>
+</tr>
+</tbody>
+</table></div>
+<p>例如：</p>
+<div class="code-card" data-filename="概念片段7"><div class="code-toolbar"><div><strong>IClaimRewardUseCase · 独立示意片段</strong><small>C# · 示意片段，需置于相应上下文</small></div><div class="code-actions"><button type="button" data-action="copy" aria-label="复制 IClaimRewardUseCase · 独立示意片段">复制代码</button></div></div><pre tabindex="0"><code class="language-csharp"><span class="tok-comment">// 外界可以使用的业务能力</span>
+<span class="tok-keyword">public</span> <span class="tok-keyword">interface</span> IClaimRewardUseCase
+{
+    Task&lt;ClaimResult&gt; ExecuteAsync(
+        ClaimRewardCommand command,
+        CancellationToken ct);
+}
+</code></pre></div>
+<p>它表达的是“领取奖励”这项业务能力。</p>
+<p>再看：</p>
+<div class="code-card" data-filename="概念片段8"><div class="code-toolbar"><div><strong>IPlayerStateStore · 独立示意片段</strong><small>C# · 示意片段，需置于相应上下文</small></div><div class="code-actions"><button type="button" data-action="copy" aria-label="复制 IPlayerStateStore · 独立示意片段">复制代码</button></div></div><pre tabindex="0"><code class="language-csharp"><span class="tok-comment">// 应用需要的持久化能力</span>
+<span class="tok-keyword">public</span> <span class="tok-keyword">interface</span> IPlayerStateStore
+{
+    Task&lt;PlayerState&gt; LoadAsync(
+        Guid playerId,
+        CancellationToken ct);
+}
+</code></pre></div>
+<p>它表达的是应用需要加载玩家状态，但没有决定如何加载。</p>
+<p>要注意，Port 是架构概念，不一定必须是 C# <code>interface</code>。它也可以通过函数、协议等形式表达。关键在于它规定了应用边界上的交互契约。</p>
+<h3 id="adapter">3. Adapter（适配器）是什么？</h3>
+<p>Adapter 是连接具体外部技术和应用端口的实现。</p>
+<p>例如：</p>
+<pre class="flow-block" tabindex="0"><code class="language-text">Unity Button
+    ↓
+Unity Adapter
+    ↓
+IClaimRewardUseCase
+    ↓
+Application
+</code></pre>
+<p>输入适配器把 Unity 特有的操作转换成应用能够理解的命令。</p>
+<p>对于数据库：</p>
+<pre class="flow-block" tabindex="0"><code class="language-text">Application
+    ↓
+IPlayerStateStore
+    ↑
+PostgreSqlAdapter
+    ↓
+PostgreSQL
+</code></pre>
+<p>数据库适配器把应用的存取需求转换成具体数据库操作。</p>
+<p>Port 规定应用需要如何交互，Adapter 负责适应外部环境。</p>
+<p>这是整个六边形架构最重要的关系。</p>
+<h2 id="chapter-5"><span class="chapter-number">05</span>Clean 和 Hexagonal 究竟有什么区别？</h2>
+<p>它们可以同时使用，并不需要二选一。</p>
+<h3 id="section-6">两个互补视角</h3>
+<p><strong>Clean：层次与依赖方向。</strong> Infrastructure / UI → Application / Use Cases → Domain，关注源代码依赖是否指向内部。</p>
+<p><strong>Hexagonal：边界与交互。</strong> UI / HTTP 等输入适配器通过端口驱动核心；核心通过输出端口使用 SQL / 文件等外部能力。</p>
+<p>更精确地比较：</p>
+<div class="table-scroll" tabindex="0"><table>
+<thead>
+<tr>
+<th>维度</th>
+<th>Clean Architecture</th>
+<th>Hexagonal Architecture</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>核心关注</td>
+<td>依赖规则与职责分层</td>
+<td>应用边界与交互端口</td>
+</tr>
+<tr>
+<td>典型表达</td>
+<td>同心圆</td>
+<td>六边形及端口</td>
+</tr>
+<tr>
+<td>内部划分</td>
+<td>通常明确区分 Domain、Use Cases 等</td>
+<td>不强制规定同样的内部层次</td>
+</tr>
+<tr>
+<td>外部隔离</td>
+<td>通过向内依赖的规则</td>
+<td>通过 Ports &amp; Adapters</td>
+</tr>
+<tr>
+<td>两者关系</td>
+<td>可以采用端口与适配器实现隔离</td>
+<td>可以在内部采用 Clean 的分层</td>
+</tr>
+</tbody>
+</table></div>
+<p>如果把它们组合起来，可以这样理解：</p>
+<p>Clean Architecture 告诉你应用内部与外部的依赖应当如何组织；Hexagonal Architecture 给出一种清楚表达和实现应用交互边界的方式。</p>
+<h2 id="chapter-6"><span class="chapter-number">06</span>How：C# 游戏服务端完整示例</h2>
+<p>我们设计一个简化的游戏服务端业务：</p>
+<p>玩家获得道具时，既要增加背包数量，也要记录累计获得数量。</p>
+<p>要求同一业务请求重复提交时，只处理一次，而且两项数据必须一起提交。</p>
+<p>我们先采用一个可以直接理解和测试的版本，再说明如何替换为真实数据库。</p>
+<h3 id="section-7">1. 项目结构</h3>
+<pre class="flow-block" tabindex="0"><code class="language-text">GameServer/
+│
+├── Game.Domain/
+│   ├── PlayerState.cs
+│   └── GrantItemResult.cs
+│
+├── Game.Application/
+│   ├── GrantItemCommand.cs
+│   ├── IGrantItemUseCase.cs
+│   ├── IPlayerStateStore.cs
+│   └── GrantItemUseCase.cs
+│
+├── Game.Infrastructure/
+│   └── InMemoryPlayerStateStore.cs
+│
+└── Game.Host/
+    └── Program.cs
+</code></pre>
+<p>依赖关系是：</p>
+<pre class="flow-block" tabindex="0"><code class="language-text">Game.Host
+    ├── Game.Application
+    └── Game.Infrastructure
+
+Game.Infrastructure
+    └── Game.Application
+          └── Game.Domain
+</code></pre>
+<figure class="embedded-diagram" id="diagram-4" aria-labelledby="diagram-caption-4"><div class="diagram-heading"><div><span>图 04</span><strong>示例的项目引用与契约所有权</strong></div><button type="button" data-download-figure="4" aria-label="下载图 4 的 SVG">下载 SVG</button></div><div class="svg-scroll" tabindex="0" aria-label="可横向滚动的图解"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 475" role="img" aria-labelledby="fig4-title fig4-desc" font-family="Microsoft YaHei,Segoe UI,sans-serif"><title id="fig4-title">示例的项目引用与契约所有权</title><desc id="fig4-desc">所有箭头表示项目引用。Domain 不引用 Application；应用命令由 Application 映射成领域操作参数。Host 作为组合根引用外层与内层并组装对象。</desc><defs><marker id="f4-blue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#547da7"/></marker><marker id="f4-green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#638d77"/></marker><marker id="f4-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#ad7b70"/></marker></defs><rect width="960" height="475" fill="white"/><rect x="45" y="45" width="225" height="95" rx="10" fill="#f2f5f9" stroke="#d2dfeb" stroke-width="1.5"/><text x="157.5" y="75" font-size="16" fill="#34536f" text-anchor="middle" font-weight="600">Game.Host</text><text x="157.5" y="99" font-size="12" fill="#7c91a5" text-anchor="middle" font-weight="400">Composition Root</text><text x="157.5" y="119" font-size="12" fill="#7c91a5" text-anchor="middle" font-weight="400">选择与组装具体实现</text><rect x="45" y="300" width="270" height="100" rx="10" fill="#edf4fb" stroke="#d2dfeb" stroke-width="1.5"/><text x="180.0" y="330" font-size="16" fill="#34536f" text-anchor="middle" font-weight="600">Game.Infrastructure</text><text x="180.0" y="354" font-size="12" fill="#7c91a5" text-anchor="middle" font-weight="400">InMemoryPlayerStateStore</text><text x="180.0" y="374" font-size="12" fill="#7c91a5" text-anchor="middle" font-weight="400">实现输出端口</text><rect x="400" y="45" width="505" height="145" rx="10" fill="#e7f0f9" stroke="#d2dfeb" stroke-width="1.5"/><text x="652.5" y="75" font-size="16" fill="#34536f" text-anchor="middle" font-weight="600">Game.Application</text><text x="652.5" y="99" font-size="12" fill="#7c91a5" text-anchor="middle" font-weight="400">GrantItemCommand · IGrantItemUseCase</text><text x="652.5" y="119" font-size="12" fill="#7c91a5" text-anchor="middle" font-weight="400">IPlayerStateStore · GrantItemUseCase</text><rect x="495" y="300" width="410" height="100" rx="10" fill="#e6f1e9" stroke="#d2dfeb" stroke-width="1.5"/><text x="700.0" y="330" font-size="16" fill="#34536f" text-anchor="middle" font-weight="600">Game.Domain</text><text x="700.0" y="354" font-size="12" fill="#7c91a5" text-anchor="middle" font-weight="400">PlayerState · GrantItemResult</text><text x="700.0" y="374" font-size="12" fill="#7c91a5" text-anchor="middle" font-weight="400">不引用 Application 或 Infrastructure</text><polyline points="270,92 400,92" fill="none" stroke="#547da7" stroke-width="2" marker-end="url(#f4-blue)"/><polyline points="155,140 155,300" fill="none" stroke="#547da7" stroke-width="2" marker-end="url(#f4-blue)"/><polyline points="315,330 365,330 365,165 400,165" fill="none" stroke="#547da7" stroke-width="2" marker-end="url(#f4-blue)"/><polyline points="315,365 495,365" fill="none" stroke="#547da7" stroke-width="2" marker-end="url(#f4-blue)"/><polyline points="700,190 700,300" fill="none" stroke="#547da7" stroke-width="2" marker-end="url(#f4-blue)"/><text x="770" y="248" font-size="13" fill="#547da7" text-anchor="middle" font-weight="400">内层依赖</text><text x="480" y="446" font-size="14" fill="#34536f" text-anchor="middle" font-weight="400">命令在 Application；领域方法接收 operationId / itemId / amount。</text></svg></div><figcaption id="diagram-caption-4">所有箭头表示项目引用。Domain 不引用 Application；应用命令由 Application 映射成领域操作参数。Host 作为组合根引用外层与内层并组装对象。</figcaption></figure>
+<p>为了避免无关代码分散注意力，下面将同一个项目中的相关类型展示在一个代码块里。第六节给出可组合编译的 .NET 8 示例，已补齐命名空间与 using；前后章节的同名接口是独立的说明片段。</p>
+<p><strong>依赖归属修正：</strong> <code>GrantItemCommand</code> 属于 Application；Domain 的 <code>GrantOnce</code> 只接收领域操作所需的值，不引用该应用命令。<code>GrantItemResult</code> 是本例内层拥有的不可变结果值。</p>
+<h3 id="domain">2. Domain：只负责业务规则</h3>
+<div class="code-card" data-filename="PlayerState.cs"><div class="code-toolbar"><div><strong>PlayerState.cs</strong><small>C# · 第六节完整源码，按项目组合编译</small></div><div class="code-actions"><button type="button" data-action="copy" aria-label="复制 PlayerState.cs">复制代码</button><button type="button" data-action="download" aria-label="下载 PlayerState.cs">下载 .cs</button></div></div><pre tabindex="0"><code class="language-csharp"><span class="tok-keyword">using</span> System;
+<span class="tok-keyword">using</span> System.Collections.Generic;
+
+<span class="tok-keyword">namespace</span> Game.Domain;
+
+<span class="tok-keyword">public</span> <span class="tok-keyword">sealed</span> <span class="tok-keyword">record</span> GrantItemResult(
+    <span class="tok-keyword">int</span> CurrentCount,
+    <span class="tok-keyword">int</span> TotalObtained);
+
+<span class="tok-keyword">public</span> <span class="tok-keyword">sealed</span> <span class="tok-keyword">class</span> PlayerState
+{
+    <span class="tok-keyword">private</span> <span class="tok-keyword">readonly</span> Dictionary&lt;<span class="tok-keyword">int</span>, <span class="tok-keyword">int</span>&gt; _items = <span class="tok-keyword">new</span>();
+    <span class="tok-keyword">private</span> <span class="tok-keyword">readonly</span> Dictionary&lt;<span class="tok-keyword">int</span>, <span class="tok-keyword">int</span>&gt; _totals = <span class="tok-keyword">new</span>();
+
+    <span class="tok-keyword">private</span> <span class="tok-keyword">readonly</span> Dictionary&lt;Guid,
+        (<span class="tok-keyword">int</span> ItemId, <span class="tok-keyword">int</span> Amount, GrantItemResult Result)&gt;
+        _processed = <span class="tok-keyword">new</span>();
+
+    <span class="tok-keyword">public</span> <span class="tok-keyword">int</span> GetCount(<span class="tok-keyword">int</span> itemId)
+        =&gt; _items.GetValueOrDefault(itemId);
+
+    <span class="tok-keyword">public</span> <span class="tok-keyword">int</span> GetTotal(<span class="tok-keyword">int</span> itemId)
+        =&gt; _totals.GetValueOrDefault(itemId);
+
+    <span class="tok-keyword">public</span> GrantItemResult GrantOnce(
+        Guid operationId, <span class="tok-keyword">int</span> itemId, <span class="tok-keyword">int</span> amount)
+    {
+        <span class="tok-keyword">if</span> (operationId == Guid.Empty ||
+            amount &lt;= <span class="tok-number">0</span>)
+            <span class="tok-keyword">throw</span> <span class="tok-keyword">new</span> ArgumentException(<span class="tok-string">&quot;Invalid grant request.&quot;</span>);
+
+        <span class="tok-keyword">if</span> (_processed.TryGetValue(
+            operationId, <span class="tok-keyword">out</span> <span class="tok-keyword">var</span> previous))
+        {
+            <span class="tok-keyword">if</span> (previous.ItemId != itemId ||
+                previous.Amount != amount)
+                <span class="tok-keyword">throw</span> <span class="tok-keyword">new</span> InvalidOperationException(
+                    <span class="tok-string">&quot;OperationId reused with different parameters.&quot;</span>);
+
+            <span class="tok-keyword">return</span> previous.Result;
+        }
+
+        <span class="tok-keyword">int</span> count = <span class="tok-keyword">checked</span>(
+            GetCount(itemId) + amount);
+
+        <span class="tok-keyword">int</span> total = <span class="tok-keyword">checked</span>(
+            GetTotal(itemId) + amount);
+
+        <span class="tok-keyword">var</span> result = <span class="tok-keyword">new</span> GrantItemResult(count, total);
+
+        _items[itemId] = count;
+        _totals[itemId] = total;
+
+        _processed.Add(
+            operationId,
+            (itemId, amount, result));
+
+        <span class="tok-keyword">return</span> result;
+    }
+
+    <span class="tok-keyword">public</span> PlayerState Copy()
+    {
+        <span class="tok-keyword">var</span> copy = <span class="tok-keyword">new</span> PlayerState();
+
+        <span class="tok-keyword">foreach</span> (<span class="tok-keyword">var</span> (key, value) in _items)
+            copy._items.Add(key, value);
+
+        <span class="tok-keyword">foreach</span> (<span class="tok-keyword">var</span> (key, value) in _totals)
+            copy._totals.Add(key, value);
+
+        <span class="tok-keyword">foreach</span> (<span class="tok-keyword">var</span> (key, value) in _processed)
+            copy._processed.Add(key, value);
+
+        <span class="tok-keyword">return</span> copy;
+    }
+}
+</code></pre></div>
+<p>注意这里没有：</p>
+<div class="code-card" data-filename="概念片段10"><div class="code-toolbar"><div><strong>核心中不应出现的技术引用 · 反例</strong><small>C# · 示意片段，需置于相应上下文</small></div><div class="code-actions"><button type="button" data-action="copy" aria-label="复制 核心中不应出现的技术引用 · 反例">复制代码</button></div></div><pre tabindex="0"><code class="language-csharp"><span class="tok-keyword">using</span> UnityEngine;
+<span class="tok-keyword">using</span> Microsoft.EntityFrameworkCore;
+<span class="tok-keyword">using</span> Npgsql;
+</code></pre></div>
+<p>因为它们与业务规则无关。</p>
+<p><code>PlayerState</code> 只关心道具数量、累计统计和重复操作的规则。</p>
+<p>这里为了集中展示事务一致性，把背包、累计统计和处理记录放在一个简化的玩家状态模型里。这不是要求你必须把它们设计成同一个业务模块。实际项目可以分别拥有 Inventory、Statistics 模块，由 Application 协调同一事务。</p>
+<h3 id="application">3. Application：定义用例和端口</h3>
+<p>首先定义输入端口。</p>
+<div class="code-card" data-filename="IGrantItemUseCase.cs"><div class="code-toolbar"><div><strong>IGrantItemUseCase.cs</strong><small>C# · 第六节完整源码，按项目组合编译</small></div><div class="code-actions"><button type="button" data-action="copy" aria-label="复制 IGrantItemUseCase.cs">复制代码</button><button type="button" data-action="download" aria-label="下载 IGrantItemUseCase.cs">下载 .cs</button></div></div><pre tabindex="0"><code class="language-csharp"><span class="tok-keyword">using</span> System;
+<span class="tok-keyword">using</span> System.Threading;
+<span class="tok-keyword">using</span> System.Threading.Tasks;
+<span class="tok-keyword">using</span> Game.Domain;
+
+<span class="tok-keyword">namespace</span> Game.Application;
+
+<span class="tok-keyword">public</span> <span class="tok-keyword">sealed</span> <span class="tok-keyword">record</span> GrantItemCommand(
+    Guid PlayerId,
+    Guid OperationId,
+    <span class="tok-keyword">int</span> ItemId,
+    <span class="tok-keyword">int</span> Amount);
+
+<span class="tok-keyword">public</span> <span class="tok-keyword">interface</span> IGrantItemUseCase
+{
+    Task&lt;GrantItemResult&gt; ExecuteAsync(
+        GrantItemCommand command,
+        CancellationToken ct);
+}
+</code></pre></div>
+<p>然后定义应用所需的输出端口。</p>
+<div class="code-card" data-filename="IPlayerStateStore.cs"><div class="code-toolbar"><div><strong>IPlayerStateStore.cs</strong><small>C# · 第六节完整源码，按项目组合编译</small></div><div class="code-actions"><button type="button" data-action="copy" aria-label="复制 IPlayerStateStore.cs">复制代码</button><button type="button" data-action="download" aria-label="下载 IPlayerStateStore.cs">下载 .cs</button></div></div><pre tabindex="0"><code class="language-csharp"><span class="tok-keyword">using</span> System;
+<span class="tok-keyword">using</span> System.Threading;
+<span class="tok-keyword">using</span> System.Threading.Tasks;
+<span class="tok-keyword">using</span> Game.Domain;
+
+<span class="tok-keyword">namespace</span> Game.Application;
+
+<span class="tok-keyword">public</span> <span class="tok-keyword">interface</span> IPlayerStateStore
+{
+    Task&lt;T&gt; UpdateAtomicallyAsync&lt;T&gt;(
+        Guid playerId,
+        Func&lt;PlayerState, T&gt; update,
+        CancellationToken ct);
+}
+</code></pre></div>
+<p><code>UpdateAtomicallyAsync</code> 定义了一个语义契约：</p>
+<p>给定玩家，应用可以执行一次状态变化，成功时整体提交，失败时不得留下部分变化。</p>
+<p>然后实现应用用例：</p>
+<div class="code-card" data-filename="GrantItemUseCase.cs"><div class="code-toolbar"><div><strong>GrantItemUseCase.cs</strong><small>C# · 第六节完整源码，按项目组合编译</small></div><div class="code-actions"><button type="button" data-action="copy" aria-label="复制 GrantItemUseCase.cs">复制代码</button><button type="button" data-action="download" aria-label="下载 GrantItemUseCase.cs">下载 .cs</button></div></div><pre tabindex="0"><code class="language-csharp"><span class="tok-keyword">using</span> System.Threading;
+<span class="tok-keyword">using</span> System.Threading.Tasks;
+<span class="tok-keyword">using</span> Game.Domain;
+
+<span class="tok-keyword">namespace</span> Game.Application;
+
+<span class="tok-keyword">public</span> <span class="tok-keyword">sealed</span> <span class="tok-keyword">class</span> GrantItemUseCase : IGrantItemUseCase
+{
+    <span class="tok-keyword">private</span> <span class="tok-keyword">readonly</span> IPlayerStateStore _store;
+
+    <span class="tok-keyword">public</span> GrantItemUseCase(IPlayerStateStore store)
+    {
+        _store = store;
+    }
+
+    <span class="tok-keyword">public</span> Task&lt;GrantItemResult&gt; ExecuteAsync(
+        GrantItemCommand command,
+        CancellationToken ct)
+    {
+        <span class="tok-keyword">return</span> _store.UpdateAtomicallyAsync(
+            command.PlayerId,
+            state =&gt; state.GrantOnce(
+                command.OperationId, command.ItemId, command.Amount),
+            ct);
+    }
+}
+</code></pre></div>
+<p>注意这三个角色的区别：</p>
+<div class="table-scroll" tabindex="0"><table>
+<thead>
+<tr>
+<th>角色</th>
+<th>职责</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>PlayerState</code></td>
+<td>保证道具数量等业务规则</td>
+</tr>
+<tr>
+<td><code>GrantItemUseCase</code></td>
+<td>组织“发放道具”这个业务用例</td>
+</tr>
+<tr>
+<td><code>IPlayerStateStore</code></td>
+<td>规定应用所需要的原子状态保存能力</td>
+</tr>
+</tbody>
+</table></div>
+<p>Application 不知道具体数据库，也没有亲自实现持久化。</p>
+<p>它只声明自己的要求。</p>
+<h3 id="infrastructure">4. Infrastructure：实现输出适配器</h3>
+<p>先用内存存储来演示，方便理解和测试。</p>
+<div class="code-card" data-filename="InMemoryPlayerStateStore.cs"><div class="code-toolbar"><div><strong>InMemoryPlayerStateStore.cs</strong><small>C# · 第六节完整源码，按项目组合编译</small></div><div class="code-actions"><button type="button" data-action="copy" aria-label="复制 InMemoryPlayerStateStore.cs">复制代码</button><button type="button" data-action="download" aria-label="下载 InMemoryPlayerStateStore.cs">下载 .cs</button></div></div><pre tabindex="0"><code class="language-csharp"><span class="tok-keyword">using</span> System;
+<span class="tok-keyword">using</span> System.Collections.Generic;
+<span class="tok-keyword">using</span> System.Threading;
+<span class="tok-keyword">using</span> System.Threading.Tasks;
+<span class="tok-keyword">using</span> Game.Application;
+<span class="tok-keyword">using</span> Game.Domain;
+
+<span class="tok-keyword">namespace</span> Game.Infrastructure;
+
+<span class="tok-keyword">public</span> <span class="tok-keyword">sealed</span> <span class="tok-keyword">class</span> InMemoryPlayerStateStore
+    : IPlayerStateStore
+{
+    <span class="tok-keyword">private</span> <span class="tok-keyword">readonly</span> object _gate = <span class="tok-keyword">new</span>();
+
+    <span class="tok-keyword">private</span> <span class="tok-keyword">readonly</span> Dictionary&lt;Guid, PlayerState&gt;
+        _states = <span class="tok-keyword">new</span>();
+
+    <span class="tok-keyword">public</span> Task&lt;T&gt; UpdateAtomicallyAsync&lt;T&gt;(
+        Guid playerId,
+        Func&lt;PlayerState, T&gt; update,
+        CancellationToken ct)
+    {
+        ct.ThrowIfCancellationRequested();
+
+        <span class="tok-keyword">lock</span> (_gate)
+        {
+            ct.ThrowIfCancellationRequested();
+            <span class="tok-keyword">var</span> working = _states.TryGetValue(
+                playerId, <span class="tok-keyword">out</span> <span class="tok-keyword">var</span> saved)
+                    ? saved.Copy()
+                    : <span class="tok-keyword">new</span> PlayerState();
+
+            T result = update(working);
+
+            _states[playerId] = working;
+
+            <span class="tok-keyword">return</span> Task.FromResult(result);
+        }
+    }
+}
+</code></pre></div>
+<p>这里有几个重要细节。</p>
+<p>首先，这个适配器直接依赖了 <code>PlayerState</code> 和 <code>IPlayerStateStore</code>，即外层依赖内层。</p>
+<p>其次，它通过锁、状态副本和成功后替换的方式，模拟单进程内的一次原子状态更新。</p>
+<p>如果 <code>update</code> 抛出异常，就不会替换原状态。</p>
+<figure class="embedded-diagram" id="diagram-5" aria-labelledby="diagram-caption-5"><div class="diagram-heading"><div><span>图 05</span><strong>原子更新契约，由适配器真正落实</strong></div><button type="button" data-download-figure="5" aria-label="下载图 5 的 SVG">下载 SVG</button></div><div class="svg-scroll" tabindex="0" aria-label="可横向滚动的图解"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 495" role="img" aria-labelledby="fig5-title fig5-desc" font-family="Microsoft YaHei,Segoe UI,sans-serif"><title id="fig5-title">原子更新契约，由适配器真正落实</title><desc id="fig5-desc">同一存储实例内用锁串行化操作，复制玩家状态后更新；成功才替换，异常保留旧状态。该机制不持久化，不能回滚外部 I/O。</desc><defs><marker id="f5-blue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#547da7"/></marker><marker id="f5-green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#638d77"/></marker><marker id="f5-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#ad7b70"/></marker></defs><rect width="960" height="495" fill="white"/><rect x="30" y="30" width="900" height="390" rx="10" fill="#f7fafc" stroke="#547da7" stroke-width="1.5" stroke-dasharray="7 5"/><text x="480" y="65" font-size="18" fill="#34536f" text-anchor="middle" font-weight="600">InMemoryPlayerStateStore · 同一实例的一把全局锁</text><rect x="55" y="105" width="220" height="90" rx="10" fill="#edf4fb" stroke="#d2dfeb" stroke-width="1.5"/><text x="165.0" y="135" font-size="16" fill="#34536f" text-anchor="middle" font-weight="600">读取已保存状态</text><text x="165.0" y="159" font-size="12" fill="#7c91a5" text-anchor="middle" font-weight="400">复制为 working</text><text x="165.0" y="179" font-size="12" fill="#7c91a5" text-anchor="middle" font-weight="400">或创建空状态</text><rect x="355" y="105" width="250" height="90" rx="10" fill="#edf4fb" stroke="#d2dfeb" stroke-width="1.5"/><text x="480.0" y="135" font-size="16" fill="#34536f" text-anchor="middle" font-weight="600">执行领域操作</text><text x="480.0" y="159" font-size="12" fill="#7c91a5" text-anchor="middle" font-weight="400">GrantOnce</text><text x="480.0" y="179" font-size="12" fill="#7c91a5" text-anchor="middle" font-weight="400">校验 · 去重 · 计算两项数量</text><rect x="685" y="105" width="220" height="90" rx="10" fill="#e6f1e9" stroke="#d2dfeb" stroke-width="1.5"/><text x="795.0" y="135" font-size="16" fill="#34536f" text-anchor="middle" font-weight="600">成功后替换状态</text><text x="795.0" y="159" font-size="12" fill="#7c91a5" text-anchor="middle" font-weight="400">_states[playerId]</text><text x="795.0" y="179" font-size="12" fill="#7c91a5" text-anchor="middle" font-weight="400">= working</text><polyline points="275,150 355,150" fill="none" stroke="#547da7" stroke-width="2" marker-end="url(#f5-blue)"/><polyline points="605,150 685,150" fill="none" stroke="#547da7" stroke-width="2" marker-end="url(#f5-blue)"/><rect x="55" y="290" width="330" height="88" rx="10" fill="#eaf3ed" stroke="#d2dfeb" stroke-width="1.5"/><text x="220.0" y="320" font-size="16" fill="#34536f" text-anchor="middle" font-weight="600">重复同参请求</text><text x="220.0" y="344" font-size="12" fill="#7c91a5" text-anchor="middle" font-weight="400">返回首次结果；不再次增加数量</text><rect x="520" y="290" width="385" height="88" rx="10" fill="#fbf0ec" stroke="#dbbdb3" stroke-width="1.5"/><text x="712.5" y="320" font-size="16" fill="#34536f" text-anchor="middle" font-weight="600">参数冲突 / 溢出 / 回调异常</text><text x="712.5" y="344" font-size="12" fill="#7c91a5" text-anchor="middle" font-weight="400">放弃副本；原有内存状态不被替换</text><polyline points="430,195 430,245 220,245 220,290" fill="none" stroke="#638d77" stroke-width="2" marker-end="url(#f5-green)"/><polyline points="535,195 535,245 715,245 715,290" fill="none" stroke="#ad7b70" stroke-width="2" marker-end="url(#f5-red)"/><text x="480" y="455" font-size="14" fill="#34536f" text-anchor="middle" font-weight="400">单实例 · 单进程 · 易失内存；真实数据库仍需事务、并发控制与持久化去重。</text></svg></div><figcaption id="diagram-caption-5">同一存储实例内用锁串行化操作，复制玩家状态后更新；成功才替换，异常保留旧状态。该机制不持久化，不能回滚外部 I/O。</figcaption></figure>
+<p>这个回调必须同步完成，只操作工作副本，不执行外部 I/O，也不能把可变状态引用保存到外部或作为结果泄漏。本例返回不可变 record；副本机制只撤销尚未提交的内存变化，不能撤销已经发送的网络消息或文件写入。全局锁会串行化所有玩家操作；示例在进入锁后再次检查取消，但不声称提交之后的取消能够回滚。</p>
+<p>但这只是内存版教学实现，不是可用于多实例游戏服务端的可靠持久化方案。</p>
+<p>真实数据库适配器需要用数据库事务、并发控制和持久化请求记录实现对应契约。单进程 <code>lock</code> 无法保证跨进程原子性，进程重启也会丢失内存数据。</p>
+<h3 id="host">5. Host：组装整个应用</h3>
+<p>虽然 Application 没有依赖具体存储实现，但运行时必须选择一个实现。</p>
+<div class="code-card" data-filename="Program.cs"><div class="code-toolbar"><div><strong>Program.cs</strong><small>C# · 第六节完整源码，按项目组合编译</small></div><div class="code-actions"><button type="button" data-action="copy" aria-label="复制 Program.cs">复制代码</button><button type="button" data-action="download" aria-label="下载 Program.cs">下载 .cs</button></div></div><pre tabindex="0"><code class="language-csharp"><span class="tok-keyword">using</span> System;
+<span class="tok-keyword">using</span> System.Threading;
+<span class="tok-keyword">using</span> Game.Application;
+<span class="tok-keyword">using</span> Game.Infrastructure;
+
+IPlayerStateStore store =
+    <span class="tok-keyword">new</span> InMemoryPlayerStateStore();
+
+IGrantItemUseCase useCase =
+    <span class="tok-keyword">new</span> GrantItemUseCase(store);
+
+Guid playerId = Guid.NewGuid();
+Guid operationId = Guid.NewGuid();
+
+<span class="tok-keyword">var</span> command = <span class="tok-keyword">new</span> GrantItemCommand(
+    playerId,
+    operationId,
+    ItemId: <span class="tok-number">1001</span>,
+    Amount: <span class="tok-number">5</span>);
+
+<span class="tok-keyword">var</span> first = <span class="tok-keyword">await</span> useCase.ExecuteAsync(
+    command, CancellationToken.None);
+
+<span class="tok-keyword">var</span> second = <span class="tok-keyword">await</span> useCase.ExecuteAsync(
+    command, CancellationToken.None);
+
+Console.WriteLine(first);
+Console.WriteLine(second);
+</code></pre></div>
+<p>输出：</p>
+<pre class="flow-block" tabindex="0"><code class="language-text">GrantItemResult {
+    CurrentCount = 5,
+    TotalObtained = 5
+}
+
+GrantItemResult {
+    CurrentCount = 5,
+    TotalObtained = 5
+}
+</code></pre>
+<p>同一个 <code>OperationId</code> 的第二次执行不会再增加道具，而且返回第一次处理的结果。这是历史结果重放：即使后来发生了其他操作，旧请求仍返回首次结果，不代表查询当前最新数量。</p>
+<p>如果使用不同的 <code>OperationId</code>，则可以代表另一次合法的发放操作。</p>
+<p>这个例子还没有展示游戏业务层如何验证奖励资格。在正式服务端中，客户端不能随意提交 <code>ItemId</code> 和 <code>Amount</code> 要求发放。应该先验证已经获得、可领取的奖励，再由可信的服务端流程调用 <code>GrantItemUseCase</code>。</p>
+<h2 id="chapter-7"><span class="chapter-number">07</span>现在看出 Hexagonal 的价值了吗？</h2>
+<p>刚才的设计可以抽象成：</p>
+<figure class="embedded-diagram" id="diagram-6" aria-labelledby="diagram-caption-6"><div class="diagram-heading"><div><span>图 06</span><strong>一次业务操作，多个可替换入口与存储实现</strong></div><button type="button" data-download-figure="6" aria-label="下载图 6 的 SVG">下载 SVG</button></div><div class="svg-scroll" tabindex="0" aria-label="可横向滚动的图解"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 460" role="img" aria-labelledby="fig6-title fig6-desc" font-family="Microsoft YaHei,Segoe UI,sans-serif"><title id="fig6-title">一次业务操作，多个可替换入口与存储实现</title><desc id="fig6-desc">绿色箭头表示运行时业务调用。输入适配器通过输入端口驱动用例；用例使用领域对象，并通过输出端口请求适配器提供的存储能力。</desc><defs><marker id="f6-blue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#547da7"/></marker><marker id="f6-green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#638d77"/></marker><marker id="f6-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#ad7b70"/></marker></defs><rect width="960" height="460" fill="white"/><rect x="30" y="35" width="270" height="75" rx="10" fill="white" stroke="#d2dfeb" stroke-width="1.5"/><text x="165.0" y="65" font-size="16" fill="#34536f" text-anchor="middle" font-weight="600">HTTP / Unity</text><text x="165.0" y="89" font-size="12" fill="#7c91a5" text-anchor="middle" font-weight="400">接收用户操作</text><rect x="345" y="35" width="270" height="75" rx="10" fill="white" stroke="#d2dfeb" stroke-width="1.5"/><text x="480.0" y="65" font-size="16" fill="#34536f" text-anchor="middle" font-weight="600">自动化测试</text><text x="480.0" y="89" font-size="12" fill="#7c91a5" text-anchor="middle" font-weight="400">直接驱动用例</text><rect x="660" y="35" width="270" height="75" rx="10" fill="white" stroke="#d2dfeb" stroke-width="1.5"/><text x="795.0" y="65" font-size="16" fill="#34536f" text-anchor="middle" font-weight="600">管理命令</text><text x="795.0" y="89" font-size="12" fill="#7c91a5" text-anchor="middle" font-weight="400">可信业务入口</text><rect x="280" y="165" width="400" height="85" rx="10" fill="#edf4fb" stroke="#d2dfeb" stroke-width="1.5"/><text x="480.0" y="195" font-size="16" fill="#34536f" text-anchor="middle" font-weight="600">Input Port · IGrantItemUseCase</text><text x="480.0" y="219" font-size="12" fill="#7c91a5" text-anchor="middle" font-weight="400">由 GrantItemUseCase 实现</text><polyline points="165,110 165,137 480,137 480,165" fill="none" stroke="#638d77" stroke-width="2" marker-end="url(#f6-green)"/><polyline points="480,110 480,137 480,137 480,165" fill="none" stroke="#638d77" stroke-width="2" marker-end="url(#f6-green)"/><polyline points="795,110 795,137 480,137 480,165" fill="none" stroke="#638d77" stroke-width="2" marker-end="url(#f6-green)"/><rect x="30" y="315" width="270" height="85" rx="10" fill="#e6f1e9" stroke="#d2dfeb" stroke-width="1.5"/><text x="165.0" y="345" font-size="16" fill="#34536f" text-anchor="middle" font-weight="600">Domain · PlayerState</text><text x="165.0" y="369" font-size="12" fill="#7c91a5" text-anchor="middle" font-weight="400">执行规则、维护业务不变量</text><rect x="345" y="315" width="270" height="85" rx="10" fill="#edf4fb" stroke="#d2dfeb" stroke-width="1.5"/><text x="480.0" y="345" font-size="16" fill="#34536f" text-anchor="middle" font-weight="600">Output Port</text><text x="480.0" y="369" font-size="12" fill="#7c91a5" text-anchor="middle" font-weight="400">IPlayerStateStore</text><rect x="660" y="315" width="270" height="85" rx="10" fill="white" stroke="#d2dfeb" stroke-width="1.5"/><text x="795.0" y="345" font-size="16" fill="#34536f" text-anchor="middle" font-weight="600">Driven Adapter</text><text x="795.0" y="369" font-size="12" fill="#7c91a5" text-anchor="middle" font-weight="400">InMemory / PostgreSQL</text><polyline points="360,250 360,280 165,280 165,315" fill="none" stroke="#638d77" stroke-width="2" marker-end="url(#f6-green)"/><polyline points="480,250 480,315" fill="none" stroke="#638d77" stroke-width="2" marker-end="url(#f6-green)"/><polyline points="615,357 660,357" fill="none" stroke="#638d77" stroke-width="2" marker-end="url(#f6-green)"/><text x="480" y="440" font-size="14" fill="#34536f" text-anchor="middle" font-weight="400">图示为交互路径；源码中仍由外层适配器依赖内层端口。</text></svg></div><figcaption id="diagram-caption-6">绿色箭头表示运行时业务调用。输入适配器通过输入端口驱动用例；用例使用领域对象，并通过输出端口请求适配器提供的存储能力。</figcaption></figure>
+<p>图中纵向表示业务执行时的调用关系，不表示全部源代码依赖方向。</p>
+<p>假设我们想做一次测试。</p>
+<p>我们完全不必启动 HTTP 服务器，也不必连接真实数据库。</p>
+<p>只需要：</p>
+<div class="code-card" data-filename="概念片段16"><div class="code-toolbar"><div><strong>调用或规则 · 独立示意片段</strong><small>C# · 示意片段，需置于相应上下文</small></div><div class="code-actions"><button type="button" data-action="copy" aria-label="复制 调用或规则 · 独立示意片段">复制代码</button></div></div><pre tabindex="0"><code class="language-csharp"><span class="tok-keyword">var</span> store = <span class="tok-keyword">new</span> InMemoryPlayerStateStore();
+<span class="tok-keyword">var</span> useCase = <span class="tok-keyword">new</span> GrantItemUseCase(store);
+</code></pre></div>
+<p>就可以测试整个用例。</p>
+<p>然后，如果要更换为数据库，只需要由组合根选择符合端口契约的真实数据库适配器。</p>
+<p>应用内核并不知道是谁在驱动自己，也不知道由谁提供存储能力。</p>
+<p>这就是 Ports and Adapters 的核心价值。</p>
+<h2 id="chapter-8"><span class="chapter-number">08</span>Unity 中如何应用？</h2>
+<p>这里需要特别区分 Unity 客户端和权威游戏服务端。</p>
+<p>对于 Unity 客户端，Clean Architecture 可以用于分离游戏规则、用例和 MonoBehaviour。</p>
+<p>例如：</p>
+<pre class="flow-block" tabindex="0"><code class="language-text">Game.Domain
+    Inventory.cs
+
+Game.Application
+    UseItemUseCase.cs
+    IItemRepository.cs
+
+Game.Unity
+    InventoryPanel.cs
+    InventoryPresenter.cs
+
+Game.Infrastructure
+    LocalInventoryRepository.cs
+</code></pre>
+<p><code>InventoryPanel</code> 负责接收玩家点击。</p>
+<p><code>UseItemUseCase</code> 决定这个操作需要执行什么业务流程。</p>
+<p><code>Inventory</code> 负责确保道具的使用规则得到遵守。</p>
+<p><code>LocalInventoryRepository</code> 负责本地持久化。</p>
+<p>Unity 的 Assembly Definition 可以控制程序集引用。在纯规则程序集的 <code>.asmdef</code> 中启用 <strong>No Engine References</strong>，可以取消 Unity 自动添加的 <code>UnityEngine</code> / <code>UnityEditor</code> 引用；同时应约束其他程序集引用，由 Unity 表现层引用内层。参见 <a target="_blank" rel="noopener noreferrer" href="https://docs.unity3d.com/6000.0/Documentation/Manual/class-AssemblyDefinitionImporter.html">Unity 官方 Assembly Definition 属性说明</a>。</p>
+<p>但在联网游戏中：</p>
+<p>客户端的 UseCase 不应该代替权威服务器判定玩家获得了哪些道具。</p>
+<p>Unity 客户端负责提交可信度有限的操作意图，例如请求领取某项奖励；服务端验证请求是否合法，决定是否改变持久化状态。</p>
+<p>同一套架构原则可以分别应用在客户端与服务端，但它们承担的权限和数据正确性责任不同。</p>
+<h2 id="chapter-9"><span class="chapter-number">09</span>设计权衡：Clean / Hexagonal 有什么代价？</h2>
+<p>这些架构不意味着每个项目都应该严格遵守四层结构，或者为每个方法创建接口。</p>
+<div class="table-scroll" tabindex="0"><table>
+<thead>
+<tr>
+<th>维度</th>
+<th>收益</th>
+<th>代价</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>业务独立性</td>
+<td>减少业务对框架、数据库的依赖</td>
+<td>需要维护边界和数据转换</td>
+</tr>
+<tr>
+<td>可测试性</td>
+<td>可以通过替身独立测试业务</td>
+<td>测试替身可能无法反映真实数据库行为</td>
+</tr>
+<tr>
+<td>技术替换</td>
+<td>限制外部实现变化的影响范围</td>
+<td>实际迁移仍可能涉及语义与数据兼容问题</td>
+</tr>
+<tr>
+<td>代码组织</td>
+<td>明确领域、用例、适配器的职责</td>
+<td>文件、类型、接口及间接调用增多</td>
+</tr>
+<tr>
+<td>系统演化</td>
+<td>有利于长期维护复杂业务</td>
+<td>初期设计与认知成本更高</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="section-8">1. 不要把所有类都变成接口</h3>
+<p>下面这种设计通常没有必要：</p>
+<div class="code-card" data-filename="概念片段17"><div class="code-toolbar"><div><strong>IInventory · 独立示意片段</strong><small>C# · 示意片段，需置于相应上下文</small></div><div class="code-actions"><button type="button" data-action="copy" aria-label="复制 IInventory · 独立示意片段">复制代码</button></div></div><pre tabindex="0"><code class="language-csharp"><span class="tok-keyword">public</span> <span class="tok-keyword">interface</span> IInventory
+{
+    <span class="tok-keyword">void</span> AddItem(<span class="tok-keyword">int</span> itemId, <span class="tok-keyword">int</span> amount);
+}
+</code></pre></div>
+<p>假设你只有一个 <code>Inventory</code> 领域对象，没有真正需要替换的实现，那么直接使用具体领域类可能更加清晰。</p>
+<p>Clean Architecture 的重点不是依赖任何接口，而是避免让核心业务依赖不该依赖的外部技术细节。</p>
+<p>不是每个类都需要抽象，也不是每个依赖都需要倒置。</p>
+<h3 id="section-9">2. 不要为了分层而分层</h3>
+<p>对于一个只有几百行代码的游戏原型：</p>
+<pre class="flow-block" tabindex="0"><code class="language-text">Domain
+Application
+Adapters
+Infrastructure
+Presentation
+Persistence
+Contracts
+</code></pre>
+<p>可能太繁琐。</p>
+<p>实际上你可以从：</p>
+<pre class="flow-block" tabindex="0"><code class="language-text">Game.Core
+Game.Unity
+</code></pre>
+<p>开始。</p>
+<p>把纯游戏规则放在 Core，把 MonoBehaviour、资源加载等依赖 Unity 的实现放在 Unity 项目中。</p>
+<p>随着代码规模和业务复杂度增加，再逐步引入必要的端口和适配器。</p>
+<h3 id="clean-architecture-1">3. Clean Architecture 不能自动保证数据可靠性</h3>
+<p>例如：</p>
+<div class="code-card" data-filename="概念片段18"><div class="code-toolbar"><div><strong>调用或规则 · 独立示意片段</strong><small>C# · 示意片段，需置于相应上下文</small></div><div class="code-actions"><button type="button" data-action="copy" aria-label="复制 调用或规则 · 独立示意片段">复制代码</button></div></div><pre tabindex="0"><code class="language-csharp"><span class="tok-keyword">await</span> inventoryStore.SaveAsync(inventory);
+
+<span class="tok-keyword">await</span> statisticsStore.SaveAsync(statistics);
+</code></pre></div>
+<p>即使这两个 Store 都通过接口抽象，依然可能存在第一个保存成功、第二个失败的问题。</p>
+<p>Clean Architecture 解决的是依赖关系与职责组织的问题。</p>
+<p>原子性、并发控制、幂等和持久化可靠性则需要专门的机制。</p>
+<p>要满足之前的“背包增加道具、统计同时增加”的强一致性要求，仍然需要在应用层明确事务边界，并让基础设施适配器正确实现它。</p>
+<h3 id="section-10">4. 不要把“隔离数据库”理解成“业务必须与数据库能力无关”</h3>
+<p>这是更深入的一点。</p>
+<p>业务可能明确要求：</p>
+<ul>
+<li>同一请求不能重复执行。</li>
+<li>两个数据修改必须一起提交。</li>
+<li>并发修改不能覆盖其他已提交的数据。</li>
+</ul>
+<p>这些都可能是应用对持久化的真实要求。</p>
+<p>因此，在 Application 中定义一个具备事务语义的端口是合理的。</p>
+<div class="code-card" data-filename="概念片段19"><div class="code-toolbar"><div><strong>IPlayerTransaction · 独立示意片段</strong><small>C# · 示意片段，需置于相应上下文</small></div><div class="code-actions"><button type="button" data-action="copy" aria-label="复制 IPlayerTransaction · 独立示意片段">复制代码</button></div></div><pre tabindex="0"><code class="language-csharp"><span class="tok-keyword">public</span> <span class="tok-keyword">interface</span> IPlayerTransaction
+{
+    Task ExecuteAsync(
+        Func&lt;CancellationToken, Task&gt; action,
+        CancellationToken ct);
+}
+</code></pre></div>
+<p>业务知道自己需要“原子提交”，但不需要知道底层通过 PostgreSQL 事务还是其他机制实现。</p>
+<p>隐藏技术实现，不等于隐藏业务真正依赖的语义。</p>
+<p>这也是我们此前示例中 <code>UpdateAtomicallyAsync</code> 要明确原子语义的原因。</p>
+<h2 id="chapter-10"><span class="chapter-number">10</span>它们与 Modular Monolith、DDD 是什么关系？</h2>
+<p>这四种思路经常一起出现，但解决的问题不同。</p>
+<div class="table-scroll" tabindex="0"><table>
+<thead>
+<tr>
+<th>概念</th>
+<th>主要回答</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Modular Monolith</td>
+<td>整个应用如何划分成业务模块，又保持整体部署？</td>
+</tr>
+<tr>
+<td>DDD</td>
+<td>如何理解业务领域、建立模型和划分业务边界？</td>
+</tr>
+<tr>
+<td>Clean Architecture</td>
+<td>模块内部的职责与源代码依赖应该如何组织？</td>
+</tr>
+<tr>
+<td>Hexagonal Architecture</td>
+<td>应用如何通过端口和适配器与外界合作？</td>
+</tr>
+</tbody>
+</table></div>
+<p>例如你可以设计一个模块化单体：</p>
+<pre class="flow-block" tabindex="0"><code class="language-text">GameServer
+│
+├── InventoryModule
+│   ├── Domain
+│   ├── Application
+│   └── Infrastructure
+│
+├── StatisticsModule
+│   ├── Domain
+│   ├── Application
+│   └── Infrastructure
+│
+└── ShopModule
+    ├── Domain
+    ├── Application
+    └── Infrastructure
+</code></pre>
+<p>整体采用 Modular Monolith。</p>
+<p>每个模块内部借鉴 Clean Architecture。</p>
+<p>模块与数据库、网络之间借鉴 Hexagonal Architecture。</p>
+<p>模块的业务职责和模型划分可以借鉴 DDD。</p>
+<p>不过，这不是唯一的合理组织方式。实际项目也可以让多个小模块共用基础设施，或减少层次；关键是依赖和所有权仍然清晰。</p>
+<h2 id="chapter-11"><span class="chapter-number">11</span>直达本质：真正要记住什么？</h2>
+<p>Clean Architecture 和 Hexagonal Architecture 可以归结为三个基本判断。</p>
+<p>什么是核心？</p>
+<p>业务规则和业务用例是应用存在的主要理由，而具体框架与数据库是帮助它运行的手段。</p>
+<p>依赖应当指向谁？</p>
+<p>核心尽量不依赖具体外部技术；外部实现通过应用定义的契约提供能力。</p>
+<p>外部如何合作？</p>
+<p>通过明确的交互端口连接具体适配器，让业务可以独立于某个 UI、数据库或框架执行与测试。</p>
+<p>最终可以浓缩成两句话：</p>
+<p>Clean Architecture：让实现机制依赖业务策略，而不是让业务策略依赖实现机制。</p>
+<p>Hexagonal Architecture：将应用看作具有明确端口的独立核心，让外部世界通过适配器连接它。</p>
+<p>还有一个更深层的认识：</p>
+<p>它们并不是在消除程序对数据库、UI 和外部服务的实际需要。它们是在改变这些需要如何体现在代码结构中。</p>
+<p>应用运行时仍然需要访问数据库，但业务逻辑不必在源代码中绑定某个具体的数据库实现。</p>
+<p>这才是两者真正精妙的地方。</p>
+<p><strong>DIP 与 DI 的区别：</strong> 依赖倒置原则（DIP）关心策略与实现之间的依赖关系、抽象由谁拥有；依赖注入（DI）是一种把依赖对象传入使用者的组装技术。即使通过构造函数注入一个具体 SQL 类，也未必满足向内依赖。</p>
+<p>如果继续深入，我建议重点研究 Dependency Inversion Principle（依赖倒置原则），并区分它和 Dependency Injection（依赖注入）。因为这是整个设计最容易被误解、也最值得理解的技术基础：为什么只是把接口放在不同的地方，就能从根本上改变两个模块之间的源代码依赖方向？</p>
+</article><aside class="editor-note" aria-label="整理说明"><h3>整理说明与示例范围</h3><p>根据你粘贴的完整原文整理，保留十一节主线及全部代码、结构示意的内容。原文失去布局的架构图已重绘为六张内嵌矢量图，每张支持单独下载 SVG。原文的站点图标残片已替换为相关原始文章与官方文档链接。</p><p>第六节修正了领域层对应用命令的反向引用：命令保留在 Application，领域方法改为接收 operationId、itemId、amount；不可变结果值由 Domain 定义。补齐 using 与命名空间，并将 Host 中命名参数 itemId 修正为 ItemId。项目树将两个领域类型分文件列出，代码卡为便于阅读合并展示；类型归属一致。其余章节的同名接口、业务类、占位方法是独立示意，不应直接拼成一个工程。</p><p>第六节完整源码已按 Domain → 无外层引用、Application → Domain、Infrastructure → Application / Domain、Host → Application / Infrastructure 的项目结构编译运行。已检查重复请求不再发放、同 ID 参数冲突、溢出与回调异常不留下部分内存变化、玩家隔离及同请求并发处理。这里验证的是内存适配器；没有把它作为真实数据库、多实例服务端或 Unity 工程运行结果。</p><p>内存锁、工作副本与提交后替换，只提供同一实例内的状态更新保证。生产适配器仍需实现事务、持久化、并发与幂等语义。示例中的 record、文件范围命名空间等使用现代 C#；迁移到 Unity 时应按目标编辑器支持的语言与运行时调整语法，架构原则不依赖这些语法。</p><p>本文件无需远程图片、脚本、字体或图表服务。外部参考链接仅在点击时联网；可使用浏览器打印功能保存为 PDF。</p></aside></main><footer class="end-note"><span>策略在中心 · 契约在边界 · 实现在外层</span><a href="#page-title">回到开头 ↑</a></footer></div></div><div class="toast" id="toast" role="status" aria-live="polite"></div><script>
+(function(){
+  'use strict';
+  const toast=document.getElementById('toast');let timer;
+  function notify(message){toast.textContent=message;toast.classList.add('show');clearTimeout(timer);timer=setTimeout(()=>toast.classList.remove('show'),2300);}
+  async function copyText(text){if(navigator.clipboard&&window.isSecureContext){try{await navigator.clipboard.writeText(text);return;}catch(error){}}const area=document.createElement('textarea');area.value=text;area.style.cssText='position:fixed;left:-9999px;top:0';document.body.appendChild(area);area.select();try{if(!document.execCommand('copy'))throw new Error('copy failed');}finally{area.remove();}}
+  document.querySelectorAll('.code-card').forEach(card=>{card.querySelector('[data-action="copy"]').addEventListener('click',async()=>{try{await copyText(card.querySelector('code').textContent);notify('代码已复制');}catch(error){notify('请在代码框内手动选择并复制。');}});const button=card.querySelector('[data-action="download"]');if(button)button.addEventListener('click',()=>{const blob=new Blob(['\ufeff'+card.querySelector('code').textContent],{type:'text/plain;charset=utf-8'});const url=URL.createObjectURL(blob);const link=document.createElement('a');link.href=url;link.download=card.dataset.filename;document.body.appendChild(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);notify('已准备下载 '+card.dataset.filename);});});
+  document.getElementById('print-button').addEventListener('click',()=>window.print());
+  const menu=document.getElementById('sidebar');const menuButton=document.getElementById('menu-button');
+  function closeMenu(){menu.classList.remove('open');menuButton.setAttribute('aria-expanded','false');}
+  menuButton.addEventListener('click',()=>menuButton.setAttribute('aria-expanded',String(menu.classList.toggle('open'))));menu.querySelectorAll('a').forEach(a=>a.addEventListener('click',closeMenu));document.addEventListener('keydown',e=>{if(e.key==='Escape')closeMenu();});document.addEventListener('click',e=>{if(menu.classList.contains('open')&&!menu.contains(e.target)&&!menuButton.contains(e.target))closeMenu();});
+  const headings=Array.from(document.querySelectorAll('article>h2'));const links=Array.from(menu.querySelectorAll('a'));
+  function updateReading(){const total=document.documentElement.scrollHeight-window.innerHeight;document.getElementById('reading-progress').style.width=(total>0?window.scrollY/total*100:0)+'%';let current=headings[0];for(const h of headings){if(h.getBoundingClientRect().top<180)current=h;}links.forEach(link=>{const active=current&&link.getAttribute('href')==='#'+current.id;link.classList.toggle('active',!!active);if(active)link.setAttribute('aria-current','location');else link.removeAttribute('aria-current');});}
+  window.addEventListener('scroll',updateReading,{passive:true});window.addEventListener('resize',updateReading);updateReading();
+  document.querySelectorAll('[data-download-figure]').forEach(button=>button.addEventListener('click',()=>{
+    const number=button.dataset.downloadFigure;const svg=document.querySelector('#diagram-'+number+' svg');const data='<?xml version="1.0" encoding="utf-8"?>\n'+svg.outerHTML;
+    const blob=new Blob([data],{type:'image/svg+xml;charset=utf-8'});const url=URL.createObjectURL(blob);const link=document.createElement('a');link.href=url;link.download='Clean-Hexagonal-Figure-'+number+'.svg';document.body.appendChild(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);notify('已准备下载图 '+number+' 的 SVG。');
+  }));
+})();</script></body></html>

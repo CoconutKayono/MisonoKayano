@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>行为与转移：What、Why、How</title><style>
+:root{color-scheme:light dark;--bg:#f5f7fb;--paper:#fff;--text:#243047;--muted:#64748b;--accent:#087f8c;--line:#dae2ec;--code:#eef2f7}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:17px/1.9 system-ui,"Microsoft YaHei",sans-serif}main{max-width:940px;margin:40px auto;padding:48px 60px;background:var(--paper);border:1px solid var(--line);border-radius:16px}h1{font-size:32px;line-height:1.4}h2{margin-top:44px;border-bottom:1px solid var(--line);padding-bottom:10px;font-size:24px}h3{font-size:20px}p{margin:16px 0}.eyebrow{color:var(--accent);letter-spacing:2px;font-size:13px}.lead,blockquote{border-left:4px solid var(--accent);background:var(--code);padding:16px 22px;margin:24px 0}code{font-family:Consolas,monospace;background:var(--code);padding:2px 5px;border-radius:4px}pre{background:var(--code);padding:22px;overflow:auto;line-height:1.65;border-radius:9px}pre code{padding:0}table{border-collapse:collapse;width:100%;font-size:15px}th,td{padding:12px;border:1px solid var(--line);text-align:left}th{background:var(--code)}.note{color:var(--muted);font-size:15px}.formula{text-align:center;font-size:23px;padding:14px}.flow{display:flex;gap:16px;align-items:center;justify-content:center;flex-wrap:wrap;padding:20px;background:var(--code);border-radius:9px}.state{padding:15px 25px;border:1px solid var(--accent);border-radius:8px;text-align:center}.state strong{display:block;font-size:26px;color:var(--accent)}footer{margin-top:44px;color:var(--muted);font-size:13px}@media(max-width:650px){main{margin:0;padding:26px 20px;border:0;border-radius:0}table{font-size:13px}th,td{padding:8px}}@media(prefers-color-scheme:dark){:root{--bg:#111827;--paper:#182131;--text:#e0e7ef;--muted:#a0aec0;--accent:#53c8cc;--line:#354258;--code:#212d40}}@media print{body{background:white;color:black;font-size:11pt}main{margin:0;padding:0;max-width:none;border:0}pre,table,.flow{break-inside:avoid}h2,h3{break-after:avoid}}
+</style></head><body><main>
+<div class="eyebrow">ARCHITECTURE · 概念笔记</div><h1>行为（Behavior）与转移（Transition）的区别</h1>
+<div class="lead"><strong>行为：对象做什么。<br>转移：对象的状态如何从一种状态变成另一种状态。</strong><p>它们并不是两个互相排斥的概念。一个行为可能引起状态转移，但行为不一定会改变状态。</p></div>
+<h2>一、What：什么是行为？什么是转移？</h2>
+<h3>1. 行为（Behavior）</h3><p>行为描述一个对象能够执行什么操作，以及执行操作时会发生什么。例如，游戏角色可以移动、攻击、跳跃、查看当前生命值、播放动画。</p><p><strong>行为关注的是对象执行的操作，而不是一定产生什么状态变化。</strong></p>
+<pre><code>public int GetHealth()
+{
+    return health;
+}</code></pre><p>这个方法也是一种行为。但是它没有改变对象的状态，只是读取当前生命值。</p>
+<h3>2. 转移（Transition）</h3><p>转移描述状态之间的变化，可以表示为：</p><div class="formula">S<sub>before</sub> → S<sub>after</sub></div><p>其中，S<sub>before</sub> 是转移前的状态，S<sub>after</sub> 是转移后的状态。</p><p>在状态机里，转移通常还规定：什么事件或条件允许这次变化发生。例如，从待机状态转移到攻击状态，需要玩家按下攻击键，并且角色没有死亡、当前可以攻击。</p><p><strong>因此，转移既可以表示发生的状态变化，也可以指规定这种变化的规则。</strong></p>
+<h2>二、Why：为什么需要区分？</h2><p>因为我们要区分两个问题：</p><ul><li><strong>系统要执行什么操作？</strong>这是行为关心的问题。</li><li><strong>系统的状态如何变化？</strong>这是转移关心的问题。</li></ul><p>例如游戏里的 <code>Attack()</code>：</p>
+<pre><code>public void Attack()
+{
+    // 检查是否能够攻击
+    // 消耗弹药
+    // 对敌人造成伤害
+    // 播放攻击动画
+    // 播放攻击音效
+}</code></pre>
+<p>这是一个行为，但它内部涉及多个不同性质的事情：</p><table><thead><tr><th>操作</th><th>观察角度</th><th>原因</th></tr></thead><tbody><tr><td>检查能否攻击</td><td>状态检查</td><td>判断操作是否允许</td></tr><tr><td>弹药 10 → 9</td><td>状态转移</td><td>弹药数量发生变化</td></tr><tr><td>敌人 HP 100 → 80</td><td>状态转移</td><td>敌人的生命值发生变化</td></tr><tr><td>播放攻击音效</td><td>对外部系统的作用</td><td>向音频系统发出播放请求</td></tr><tr><td>播放攻击动画</td><td>对外部系统的作用</td><td>向动画系统发出播放请求</td></tr></tbody></table><p class="note">这些分类不是互斥的。修改弹药、修改敌人生命值，在通常的编程语境下也属于副作用。表格是为了突出各操作的观察重点；音效和动画也可能改变其他系统的内部状态。</p><p><strong>一次行为可能包含零次、一次或多次状态转移，也可能产生输出或其他副作用。</strong></p>
+<h2>三、How：在程序中如何区分？</h2><p>下面是一个可用于 Unity 项目的普通 C# 类：</p>
+<pre><code>using System;
+
+public class Player
+{
+    private int health = 100;
+
+    public void TakeDamage(int damage)
+    {
+        if (damage &lt;= 0 || health &lt;= 0)
+            return;
+
+        health = Math.Max(0, health - damage);
+    }
+
+    public int GetHealth()
+    {
+        return health;
+    }
+}</code></pre>
+<p>这里有两个行为：<code>TakeDamage()</code> 表示受到伤害，<code>GetHealth()</code> 表示查询生命值。只有 <code>TakeDamage()</code> 在符合条件时会引起生命值变化。</p>
+<div class="flow"><div class="state">转移前<strong>100 HP</strong></div><span>TakeDamage(20) →</span><div class="state">转移后<strong>80 HP</strong></div></div><p>如果在生命值为 100 时调用 <code>GetHealth()</code>，返回值是 100，调用后生命值仍然是 100。查询是行为，但没有改变角色的生命值。</p>
+<h3>用数学表达观察角度</h3><p>在一个简化模型中，行为可以抽象成：</p><div class="formula">B(S, I) = (S′, O)</div><ul><li><strong>S</strong>：当前状态。</li><li><strong>I</strong>：输入，例如伤害值。</li><li><strong>S′</strong>：操作后的状态。</li><li><strong>O</strong>：输出，例如返回值或发给外部系统的指令。</li></ul><p>状态转移主要关注其中的状态部分：</p><div class="formula">T(S, I) = S′</div><p>T 是状态转移函数，描述给定当前状态和输入后，下一个状态是什么。这是对确定性转移的一种简化表达；如果某个行为没有改变所观察的状态，那么 S′ = S。</p><p class="note">这里把外部作用抽象为输出指令，方便理解；实际程序也可能直接操作外部系统。另外，在形式化模型中，S′ = S 也可以建模为自转移或保持原状态，不能仅凭数值没变就断言没有执行转移规则。</p><p><strong>转移可以看成行为中关于状态变化的那一部分，也可以作为独立规则建模。</strong></p>
+<h2>四、不同层次的“状态”</h2><p>我们可以说：“玩家执行攻击行为，从待机状态转移到攻击状态。”也可以说：“玩家受到伤害，生命值从 100 变成 80。”两者观察的状态不同。</p><table><thead><tr><th>层次</th><th>示例</th><th>关注点</th></tr></thead><tbody><tr><td>状态机状态</td><td>Idle、Attack、Dead</td><td>当前处于哪个模式，以及如何切换</td></tr><tr><td>对象数据状态</td><td>生命值、弹药、金币</td><td>当前数据是什么，以及如何改变</td></tr></tbody></table><p>广义地说，两者都涉及状态变化。但在状态机设计的语境中，Transition 通常指状态机的转移，不能把每次数值变化都直接当成状态机模式切换。</p><p><strong>判断之前，先明确：我们正在观察哪个对象、哪一层状态？</strong></p>
+<h2>五、三个概念之间的关系</h2><table><thead><tr><th>概念</th><th>核心问题</th><th>例子</th></tr></thead><tbody><tr><td>状态 State</td><td>对象现在是什么样？</td><td>生命值为 100，当前处于 Idle</td></tr><tr><td>行为 Behavior</td><td>对象做什么，以及如何执行？</td><td>受到伤害、查询生命值、攻击</td></tr><tr><td>转移 Transition</td><td>状态如何变化？</td><td>HP 100 → 80；Idle → Attack</td></tr></tbody></table><blockquote><strong>行为强调操作，转移强调状态变化。</strong><br>行为不一定引起状态变化；状态机转移也不一定需要通过显式调用一个对应的业务方法来触发。</blockquote><p>例如，角色生命值归零后，状态机可以根据条件自动进入死亡状态，而不是必须由调用者主动调用 <code>Die()</code>。不过，“自动”仍然需要程序在某个执行时机检查条件并执行转移。</p>
+<footer>根据本次对话整理 · 2026-10-17 · 独立 HTML，支持离线阅读与打印</footer></main></body></html>

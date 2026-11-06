@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="从顶点到像素足迹：渲染管线数值详解：中文详细讲解，包含可复算的数值例子与离线交互图解。"><title>从顶点到像素足迹：渲染管线数值详解</title><style>:root{--ink:#223247;--blue:#164b69;--muted:#6c7c8e;--accent:#bd7140;--line:#dce4eb;--paper:#fff;--wash:#f3f6f8;--plot:#2d7f96;--warning:#aa583e}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:24px}body{margin:0;color:var(--ink);background:var(--wash);font-family:"Microsoft YaHei","PingFang SC",system-ui,sans-serif;font-size:17px;line-height:1.95}a{color:var(--blue);text-underline-offset:4px}a:hover{color:var(--accent)}button,input{font:inherit}button{cursor:pointer}button:focus-visible,a:focus-visible,input:focus-visible,summary:focus-visible{outline:3px solid #dbac7a;outline-offset:4px}nav{position:fixed;top:32px;bottom:24px;left:max(20px,calc((100vw - 1510px)/2));width:222px;overflow:auto;font-size:12px;padding:0 14px 15px 0;scrollbar-width:thin}.nav-caption{font-size:11px;letter-spacing:2px;color:var(--muted);border-bottom:1px solid var(--line);padding:10px 8px 17px;margin-bottom:12px}nav a{display:block;text-decoration:none;padding:8px 10px;color:#526578;border-left:2px solid transparent;line-height:1.7}nav a.active{color:var(--blue);background:#e6edf2;border-left-color:var(--accent)}nav .nav-foot{margin-top:20px;padding:15px 8px;border-top:1px solid var(--line)}nav button{background:white;border:1px solid #cbd6df;border-radius:5px;font-size:12px;padding:6px 11px;color:#4b6075}main{max-width:1150px;margin:28px max(24px,calc((100vw - 1510px)/2)) 55px max(264px,calc((100vw - 1510px)/2 + 254px));padding:60px clamp(28px,4.7vw,74px) 38px;background:var(--paper);border:1px solid var(--line);box-shadow:0 4px 24px #23486606}header{border-bottom:2px solid var(--blue);padding-bottom:28px;margin-bottom:30px}.eyebrow{font-size:11px;letter-spacing:2px;font-weight:700;color:var(--accent)}h1{font-size:41px;line-height:1.4;letter-spacing:.5px;color:var(--blue);margin:16px 0}.subtitle{font-size:19px;color:#6c8192;margin:0 0 24px}.lead{font-size:17px;line-height:2}.meta{font-size:11px;color:var(--muted);letter-spacing:.5px;margin:25px 0 15px}.sibling{font-size:13px;text-decoration:none}.note{border-left:3px solid #83a0b6;background:#f2f6f9;padding:18px 24px;margin:0 0 42px;color:#52687b;font-size:13px;line-height:1.9}.note strong{font-size:12px;letter-spacing:1px}.note p{margin:7px 0}p{margin:0 0 20px;text-align:justify;overflow-wrap:break-word}h2{font-size:26px;line-height:1.65;color:var(--blue);margin:60px 0 25px;border-bottom:1px solid var(--line);padding-bottom:12px}h3{font-size:20px;color:var(--blue);margin:33px 0 18px;line-height:1.7}h4{font-size:14px;font-weight:600;margin:15px 0 8px;color:#5b7083}strong{font-weight:650}var{font-family:Georgia,"Times New Roman",serif}sup,sub{line-height:0}.equation{font-family:"Cambria Math",Cambria,"Microsoft YaHei",serif;font-size:17px;background:#f5f8fb;border:1px solid #e0e9f0;border-radius:5px;padding:19px 23px;margin:24px 0;line-height:2;overflow-wrap:anywhere}.small,.small p{font-size:12px;line-height:1.85;color:#687d8f}.equation.small{font-size:13px;color:#40596d}.callout{border-left:3px solid var(--accent);background:#faf5ef;padding:20px 24px 3px;margin:30px 0;color:#4b5361}.callout>strong{color:#965d33;font-size:14px}.callout p{font-size:15px;margin:8px 0 17px}.table-wrap{max-width:100%;overflow-x:auto;margin:25px 0 28px}table{width:100%;border-collapse:collapse;font-size:13px;line-height:1.85;table-layout:auto}th{text-align:left;background:#edf3f7;color:#466176;font-weight:650}td,th{padding:12px 13px;border-bottom:1px solid #e1e8ed;vertical-align:top}td{font-variant-numeric:tabular-nums}tbody tr:nth-child(even){background:#fafcfd}.result{background:#edf5f7;border:1px solid #cfe1e7;border-radius:6px;padding:22px 25px;margin:28px 0}.result>span{font-size:12px;color:#63818f;display:block}.result>strong{display:block;font-size:25px;font-variant-numeric:tabular-nums;color:#1d6477;line-height:1.7;margin:4px 0 8px}.result p{font-size:13px;line-height:1.9;margin:0;color:#557180}figure{margin:30px 0;padding:18px 18px 14px;border:1px solid #dfe7ed;border-radius:5px;break-inside:avoid}figure img{display:block;width:100%;height:auto}figcaption{margin:15px 0 0;padding-top:12px;border-top:1px solid #e5ebef;font-size:11px;color:#728496;line-height:1.9}details{margin:28px 0;padding:15px 19px;border:1px solid #dde5eb;border-radius:5px;font-size:14px;background:#fbfcfd}summary{cursor:pointer;color:var(--blue);font-weight:600}details p{margin:14px 0 6px;font-size:13px;color:#5e7284;line-height:1.95}pre{background:#142a3e;color:#e2edf5;border-radius:6px;font-family:Consolas,"Cascadia Code",monospace;font-size:12px;line-height:1.95;padding:23px;max-width:100%;overflow:auto;tab-size:4;margin:25px 0}code{font-family:Consolas,"Cascadia Code",monospace;font-size:.9em}pre code{font-size:inherit}.steps{padding-left:24px}.steps li{padding-left:5px;margin-bottom:15px;font-size:15px}.sources{padding-left:24px;font-size:13px;line-height:1.95}.sources li{padding-left:6px;margin-bottom:14px}footer{border-top:2px solid var(--blue);margin-top:55px;padding-top:25px;font-size:13px}footer p{font-size:11px;color:var(--muted);margin-top:13px}#reading-progress{height:3px;position:fixed;top:0;left:0;background:var(--accent);z-index:30;width:0}.mobile-nav{display:none}.lab{margin:30px 0 35px;border:1px solid #cadbe6;border-radius:7px;padding:23px;background:#fcfdfe}.lab-head{display:flex;flex-direction:column;gap:4px;line-height:1.8;margin-bottom:20px}.lab-head>strong{font-size:16px;color:var(--blue)}.lab-head>span{font-size:11px;color:#8495a2}.controls{display:flex;flex-wrap:wrap;gap:14px 24px;align-items:center;margin:18px 0}.controls label{display:flex;flex:1 1 190px;flex-direction:column;font-size:12px;color:#5d7588;line-height:1.85}.controls output{display:inline;font-size:16px;font-weight:600;color:var(--blue);font-variant-numeric:tabular-nums}.controls input[type=range]{width:100%;accent-color:var(--plot);min-height:30px;cursor:ew-resize}.controls button{background:white;color:var(--blue);border:1px solid #c9d9e3;border-radius:5px;padding:7px 12px;font-size:12px;min-height:34px}.controls button:hover{background:#eaf2f6}.diagram{width:100%;overflow:hidden}.diagram svg{display:block;width:100%;height:auto}.diagram svg text{font-family:"Microsoft YaHei",sans-serif;font-size:12px;fill:#577085}.diagram .grid{stroke:#e4ebef;stroke-width:1}.diagram .target{stroke:#374e63;stroke-width:2;fill:none;stroke-dasharray:5 4}.diagram .probe{stroke:#2b809a;stroke-width:1;fill:#54a0b9;fill-opacity:.16}.diagram .point{fill:#176781;stroke:white;stroke-width:1.5}.diagram .axis{stroke:#99adbd;stroke-width:1.2}.metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin:22px 0}.metrics>div{border-top:1px solid #d8e3e9;padding:12px 0 4px;min-width:0}.metrics span{font-size:11px;color:#7c909f;display:block}.metrics strong{font-size:17px;color:#245c77;display:block;font-variant-numeric:tabular-nums;overflow-wrap:anywhere;line-height:1.8}.dual{display:grid;grid-template-columns:1fr 1fr;gap:22px}.dual>div{min-width:0}#triangle-screen{touch-action:none;cursor:crosshair}.pipeline{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin:28px 0}.pipe-track{display:flex;align-items:stretch;flex-direction:column;text-align:center;font-size:13px}.track-label{font-size:12px;color:#6e8294;margin:0 0 12px}.pipe-track div{background:#edf4f8;border:1px solid #d8e5ed;padding:13px 10px;border-radius:4px}.pipe-track b{font-size:11px;color:#8a9eac;font-weight:400;padding:6px 0;min-height:33px}.pipe-merge{grid-column:1/-1;text-align:center;font-size:12px;color:#6d8596;border-top:1px solid #d6e2eb;padding-top:15px}.technical{font-size:14px;color:#607587}
+@media(max-width:1100px){nav{width:192px;left:18px}main{margin-left:225px;margin-right:18px;padding:45px 34px}h1{font-size:34px}h2{font-size:23px}.metrics strong{font-size:15px}.lab{padding:18px}.dual{gap:14px}td,th{padding:10px 11px}}
+@media(max-width:800px){body{font-size:16px;background:white}nav{display:none}main{border:0;margin:0 auto;padding:34px 23px;max-width:760px;box-shadow:none}h1{font-size:32px;line-height:1.45}h1 br{display:none}.subtitle{font-size:17px}.lead{font-size:16px}.meta{font-size:10px;line-height:1.9}h2{font-size:22px;margin-top:44px}h3{font-size:18px}.note{font-size:12px;padding:15px 18px;margin-bottom:30px}.equation{font-size:15px;padding:16px;line-height:2}.table-wrap{margin:22px 0}table{font-size:12px}td,th{padding:10px 9px}figure{padding:12px}.result{padding:18px}.result>strong{font-size:22px}.lab{padding:16px;margin:25px 0}.metrics{gap:12px}.metrics strong{font-size:15px}.dual{grid-template-columns:1fr;gap:14px}.controls{gap:14px}.controls button{min-height:38px}.controls label{flex-basis:100%}.pipeline{gap:12px}.pipe-track{font-size:12px}.pipe-track div{padding:11px 8px}.pipe-track b{font-size:10px}.callout{padding:16px 18px 2px}.callout p{font-size:14px}pre{font-size:11px;padding:16px}.mobile-nav{display:block;margin:0 0 28px;font-size:12px}.mobile-nav a{display:block;text-decoration:none;padding:6px 0;line-height:1.8}.mobile-nav .print-inline{margin-top:12px}#triangle-lab .metrics{grid-template-columns:1fr}.metrics strong{font-size:16px}footer{font-size:12px}}
+@media(max-width:390px){main{padding-left:18px;padding-right:18px}.lab{padding:12px}.metrics{grid-template-columns:1fr}.result>strong{font-size:20px}h1{font-size:29px}.equation{font-size:14px}.pipeline{grid-template-columns:1fr}.pipe-merge{grid-column:1}.pipe-track{font-size:13px}.table-wrap{max-width:100%}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+@media print{@page{size:A4;margin:18mm}body{background:white;color:#111;font-size:10pt;line-height:1.8}nav,.mobile-nav,#reading-progress,.controls{display:none!important}main{padding:0;margin:0;border:0;max-width:none;box-shadow:none}h1{font-size:26pt}h2{font-size:17pt;break-after:avoid;margin-top:26px}h3{font-size:13pt;break-after:avoid}.note{font-size:9pt}table{font-size:8.5pt}.table-wrap{overflow:visible}.equation{font-size:11pt;break-inside:avoid}pre{white-space:pre-wrap;overflow:visible;font-size:8pt;background:#f3f5f7;color:#172a3d;break-inside:auto}figure,.result{break-inside:avoid}.lab{break-inside:auto}.dual{grid-template-columns:1fr 1fr}p{orphans:3;widows:3}.metrics{grid-template-columns:repeat(3,minmax(0,1fr))}.small{font-size:8pt}.lab-head>span{font-size:8pt}footer{font-size:9pt}.diagram svg{max-height:72mm}a{color:inherit}.sources{font-size:8.5pt}.lead{font-size:11pt}}
+</style></head><body><div id="reading-progress" aria-hidden="true"></div><nav aria-label="文章目录"><div class="nav-caption">纹理采样专题 · 02 / 02</div><a href="#answer">1　先直接回答：到底根据哪个坐标采样？</a><a href="#stages">2　颜色是在渲染管线的什么时候算的？</a><a href="#projection">3　算例 A：一个三角形如何投影到屏幕？</a><a href="#interpolation">4　算例 A：屏幕点 P 的 UV 是多少？</a><a href="#color">5　算例 A：从 UV 到四个纹素，再到 RGB</a><a href="#ground">6　算例 B：一个像素为什么覆盖 1 米长、5 厘米宽的地面？</a><a href="#footprint">7　把地面区域换算成纹理足迹</a><a href="#derivatives">8　GPU 怎样知道附近 UV 变化多大？</a><a href="#average">9　为什么要平均，而不能只看中心纹素？</a><a href="#spaces">10　模型空间、世界空间、裁剪空间，各自该怎么记？</a><a href="#sources">11　资料与计算约定</a><div class="nav-foot"><button type="button" data-print>打印 / 存为 PDF</button></div></nav><main><header id="top"><div class="eyebrow">纹理采样专题 · 02 / 02</div><h1>一个屏幕像素<br>怎样找到纹理上的颜色？</h1><p class="subtitle">从模型顶点到片元 UV，再算出细长的 Pixel Footprint</p><p class="lead">常见网格贴图流程中，位置决定三角形落在屏幕哪里，UV 是顶点的另一份属性。光栅化利用投影后的位置确定插值权重，再做透视正确插值，给片元算出 UV。片元着色器用这个 UV 采样纹理；光照与后续处理再决定最终显示颜色。</p><div class="meta">两组完整数值例子 · 三角形插值 · 地面透视 · 交互计算器</div><a class="sibling" href="01_Feline详解_原理与数值算例.html">配套阅读：Feline 如何利用这片区域进行过滤 →</a></header><details class="mobile-nav"><summary>阅读目录</summary><a href="#answer">1　先直接回答：到底根据哪个坐标采样？</a><a href="#stages">2　颜色是在渲染管线的什么时候算的？</a><a href="#projection">3　算例 A：一个三角形如何投影到屏幕？</a><a href="#interpolation">4　算例 A：屏幕点 P 的 UV 是多少？</a><a href="#color">5　算例 A：从 UV 到四个纹素，再到 RGB</a><a href="#ground">6　算例 B：一个像素为什么覆盖 1 米长、5 厘米宽的地面？</a><a href="#footprint">7　把地面区域换算成纹理足迹</a><a href="#derivatives">8　GPU 怎样知道附近 UV 变化多大？</a><a href="#average">9　为什么要平均，而不能只看中心纹素？</a><a href="#spaces">10　模型空间、世界空间、裁剪空间，各自该怎么记？</a><a href="#sources">11　资料与计算约定</a></details>
+<aside class="note"><strong>先把三个“位置”分开</strong><p>屏幕位置 (x<sub>s</sub>, y<sub>s</sub>)、物体表面位置 (X, Y, Z)、纹理坐标 (u, v) 属于不同空间。它们通过几何投影和表面参数化建立关系，但普通 UV 贴图不是把某一个 position 直接塞给采样器。</p><p>下文先假设一个普通不透明三角形、没有 MSAA、没有遮挡和后处理。数学例子采用屏幕原点在左下、y 向上、相机朝 +Z 的约定；这是为了方便计算，不是宣称 Unity 各后端都采用这套坐标符号。</p></aside>
+
+<section id="answer"><h2>1　先直接回答：到底根据哪个坐标采样？</h2>
+<p><strong>通常，根据插值后的 UV 采样。</strong>采样器并不需要知道这个 UV 来自模型空间、世界空间还是别处。它收到的是纹理坐标、过滤设置，以及用于过滤尺度估计的导数或显式 LOD。</p>
+<div class="pipeline"><div class="pipe-track"><span class="track-label">位置这一路</span><div>顶点 positionOS</div><b>↓ M</b><div>世界 positionWS</div><b>↓ V、P</b><div>裁剪 positionCS</div><b>↓ 除以 w、视口变换</b><div>屏幕三角形</div></div><div class="pipe-track"><span class="track-label">属性这一路</span><div>顶点 UV / Mesh.uv</div><b>↓ 顶点着色器传递</b><div>三顶点的 UV</div><b>↓ 利用屏幕权重与 clip.w</b><div>片元的插值 UV</div><b>↓ Sample</b><div>过滤后的纹理颜色</div></div><div class="pipe-merge">两路在光栅化与插值时关联：屏幕位置决定插值权重，顶点 UV 提供插值内容。</div></div>
+<p>例如，同一张网格的顶点位置完全不变，只把某个顶点的 UV 从 (1, 0) 改成 (2, 0)，物体轮廓不会因此改变，贴图却会改变。这说明 <strong>UV 不是由顶点 XYZ 唯一决定的</strong>。UV 通常由建模软件展开后保存，或由程序写入；Unity 的 <code>Mesh.uv</code> 就是第一通道纹理坐标。</p>
+<div class="table-wrap"><table><thead><tr><th>你在使用的方式</th><th>采样 UV 从哪里来？</th></tr></thead><tbody><tr><td>普通模型 UV 贴图</td><td>模型顶点自带的 UV，经透视正确插值得到。</td></tr><tr><td>世界空间平面投影</td><td>Shader 主动计算，例如 uv = positionWS.xz / 4。</td></tr><tr><td>模型空间投影</td><td>Shader 主动从 positionOS 生成；物体移动时图案随模型移动。</td></tr><tr><td>屏幕空间贴图 / 后处理</td><td>从屏幕位置或全屏几何生成 UV，通常再按渲染目标尺寸归一化。</td></tr></tbody></table></div>
+<p>后三种都可以做，但属于你选择的映射方式；不能据此认为普通网格 UV 必须从 position 实时反算。</p>
+</section>
+
+<section id="stages"><h2>2　颜色是在渲染管线的什么时候算的？</h2>
+<p>在常见的光栅化渲染中，可以把逻辑过程理解为以下顺序。实际硬件会重叠执行工作，并可能提前做深度测试。</p>
+<ol class="steps"><li><strong>读取网格。</strong>每个顶点有位置，也可以有 UV、法线、顶点色等相互独立的属性。</li><li><strong>顶点着色器（Vertex Shader）。</strong>把位置变换到裁剪空间，并把需要插值的 UV 等属性输出。</li><li><strong>裁剪、透视除法与视口变换。</strong>得到屏幕上的三角形；越过裁剪边界时也可能生成新的顶点及相应属性。</li><li><strong>光栅化与插值（Rasterization / Interpolation）。</strong>确定哪些采样位置被三角形覆盖，并计算这些位置的属性。</li><li><strong>片元 / 像素着色器（Fragment / Pixel Shader）。</strong>常见做法是在这里采样纹理，计算材质属性；前向渲染通常也在这里计算光照。</li><li><strong>深度、模板、混合及后续处理。</strong>决定结果是否、如何写入目标；再经其他 Pass、色调映射等得到显示图像。</li></ol>
+<p><strong>“采到的纹理 RGB”不一定等于“最终屏幕 RGB”。</strong>Unlit Shader 可以直接输出它；受光照材质会把它当作 Base Color 等输入；延迟渲染可以先写 G-buffer，再在后面的阶段计算光照。</p>
+<details><summary>“一个像素执行一次片元着色器”也有例外</summary><p>同一屏幕像素可能被多个三角形覆盖；MSAA 可以涉及多个覆盖样本；还有辅助调用、过度绘制及采样频率着色。因此像素、片元、采样点、着色器调用不是严格的一一对应关系。本文先研究一个三角形内部的常规采样位置。</p></details>
+</section>
+
+<section id="projection"><h2>3　算例 A：一个三角形如何投影到屏幕？</h2>
+<p>这一组例子专门讲<strong>网格已有 UV 时的插值</strong>。设画面为 800 × 800，焦距 f = 400 像素，对应垂直视场角 90°，主点为 (400, 400)。相机位于世界坐标 (10, 0, 0)，朝本文定义的 +Z 方向。</p>
+<p>模型矩阵 M 只把物体沿 X 轴平移 +10；观察矩阵 V 把相机位置减掉。因此本例中模型空间坐标与相机空间坐标数值相同，世界空间坐标的 X 多 10。这样既能展示变换，也不会让矩阵运算掩盖 UV 插值。</p>
+<div class="table-wrap"><table><thead><tr><th>顶点</th><th>模型位置 positionOS</th><th>UV</th></tr></thead><tbody><tr><td>A</td><td>(−0.74875, −0.74875, 1)</td><td>(0, 0)</td></tr><tr><td>B</td><td>(0.50250, −1.49750, 2)</td><td>(1, 0)</td></tr><tr><td>C</td><td>(−2.99500, 1.00500, 4)</td><td>(0, 1)</td></tr></tbody></table></div>
+<p>这些略带小数的位置是特意反推出来的，为的是投影后落在整齐的像素中心坐标上。以 A 为例：</p>
+<div class="equation">模型空间 A = (−0.74875, −0.74875, 1)<br>世界空间 A = (9.25125, −0.74875, 1)<br>相机空间 A = (−0.74875, −0.74875, 1)</div>
+<p>本例透视投影的相关分量为 x<sub>clip</sub> = X、y<sub>clip</sub> = Y、w<sub>clip</sub> = Z。近、远裁剪面取 0.1、100，采用深度范围 0…1，可令 z<sub>clip</sub> = (100/99.9)Z − 10/99.9。于是 A 的裁剪坐标为：</p>
+<div class="equation">positionCS(A) = (−0.74875, −0.74875, 0.9009009, 1)</div>
+<p>先除以 w 得到 NDC，再进行视口变换：</p>
+<div class="equation">x<sub>NDC</sub> = x<sub>clip</sub>/w<sub>clip</sub>，y<sub>NDC</sub> = y<sub>clip</sub>/w<sub>clip</sub><br>x<sub>s</sub> = 400 + 400 · x<sub>NDC</sub><br>y<sub>s</sub> = 400 + 400 · y<sub>NDC</sub></div>
+<div class="table-wrap"><table><thead><tr><th>顶点</th><th>(xclip, yclip, wclip)</th><th>(xNDC, yNDC)</th><th>屏幕位置</th></tr></thead><tbody><tr><td>A</td><td>(−0.74875, −0.74875, 1)</td><td>(−0.74875, −0.74875)</td><td>(100.5, 100.5)</td></tr><tr><td>B</td><td>(0.50250, −1.49750, 2)</td><td>(0.25125, −0.74875)</td><td>(500.5, 100.5)</td></tr><tr><td>C</td><td>(−2.99500, 1.00500, 4)</td><td>(−0.74875, 0.25125)</td><td>(100.5, 500.5)</td></tr></tbody></table></div>
+<p class="small">表中后两行省略了不参与 UV 透视修正的 clip.z。它们都位于合法深度范围。w = Z 是本例投影约定，不能不加检查地套到所有 Unity 相机矩阵；一般公式始终使用实际输出的 clip.w。</p>
+</section>
+
+<section id="interpolation"><h2>4　算例 A：屏幕点 P 的 UV 是多少？</h2>
+<p>取像素 (300, 250) 的中心 P = (300.5, 250.5)。P 位于上面这个屏幕三角形内部。</p>
+<p>先求<strong>屏幕重心坐标（Barycentric Coordinates）</strong>。它描述 P 在屏幕三角形中的相对位置：</p>
+<div class="equation">λ<sub>B</sub> = (300.5 − 100.5)/400 = 1/2<br>λ<sub>C</sub> = (250.5 − 100.5)/400 = 3/8<br>λ<sub>A</sub> = 1 − 1/2 − 3/8 = 1/8</div>
+<p>如果直接用这些屏幕权重平均顶点 UV，会得到 (0.5, 0.375)。但这是<strong>屏幕空间仿射插值</strong>，本例透视投影下不是正确答案。</p>
+<p>默认的透视正确插值，会对每个顶点使用它的 clip.w：</p>
+<div class="equation">D = Σ(λ<sub>i</sub>/w<sub>i</sub>)<br>UV(P) = Σ(λ<sub>i</sub> · UV<sub>i</sub>/w<sub>i</sub>) / D</div>
+<div class="table-wrap"><table><thead><tr><th>顶点</th><th>屏幕权重 λ</th><th>clip.w</th><th>λ / w</th><th>归一化后 β</th></tr></thead><tbody><tr><td>A</td><td>1/8</td><td>1</td><td>1/8 = 4/32</td><td>4/15</td></tr><tr><td>B</td><td>1/2</td><td>2</td><td>1/4 = 8/32</td><td>8/15</td></tr><tr><td>C</td><td>3/8</td><td>4</td><td>3/32</td><td>3/15</td></tr></tbody></table></div>
+<div class="equation">D = 15/32<br>u(P) = (1/4)/(15/32) = 8/15 ≈ 0.533333<br>v(P) = (3/32)/(15/32) = 3/15 = 0.2</div>
+<p>所以传给常见片元着色器的 UV 是 <strong>(0.533333, 0.2)</strong>。屏幕位置确实参与了计算，因为它决定 λ；但采样坐标来自顶点 UV 的透视正确插值，不是把屏幕 XY 直接当作纹理 UV。</p>
+<p>用同一组 β 插值相机空间位置，可得到 (−0.530667, −0.797333, 2.133333)。再投影回屏幕，恰好得到 P。这说明“P 对应物体表面上的某一点”和“P 获得一个 UV”是同一表面映射的两个描述。实际光栅化通常直接插值属性，无须为每个片元先做一次射线与三角形求交。</p>
+<div class="lab" id="triangle-lab"><div class="lab-head"><strong>屏幕三角形 → 插值 UV</strong><span>点选左侧三角形，或使用预设；拖动也可更新</span></div><div class="controls"><button type="button" data-tri="worked">回到 P = (300.5, 250.5)</button><button type="button" data-tri="center">屏幕重心</button><button type="button" data-tri="nearA">靠近 A</button></div><div class="dual"><div><h4>屏幕空间</h4><div id="triangle-screen" class="diagram"></div></div><div><h4>UV 空间</h4><div id="triangle-uv" class="diagram"></div></div></div><div class="metrics" aria-live="polite"><div><span>屏幕 P</span><strong id="tri-p"></strong></div><div><span>正确 UV</span><strong id="tri-correct"></strong></div><div><span>仿射 UV</span><strong id="tri-affine"></strong></div></div><div class="equation small" id="tri-detail"></div><p class="small">UV 图中的实点表示透视正确结果，空心方块表示仿射结果。交互位置是连续的教学采样点；只有恰好落在 n + 0.5 的点才是本文规则下的像素中心。</p></div>
+<details><summary>为什么要先插值 UV/w 和 1/w，再相除？</summary><p>因为透视投影里屏幕坐标包含除以深度的操作。表面上等距离的点，在屏幕上不再等距离。普通表面属性在三角形上的线性关系，经投影后变成分式关系。UV/w 与 1/w 可以按屏幕重心权重插值，再相除恢复 UV。使用 <code>noperspective</code> 等限定符时，才会主动选择不同的插值规则。</p></details>
+</section>
+
+<section id="color"><h2>5　算例 A：从 UV 到四个纹素，再到 RGB</h2>
+<p>现在取一张 1024 × 1024 的二维纹理。为隔离问题，先<strong>固定第 0 级 Mipmap，使用双线性过滤</strong>；稍后再讨论自动 LOD 与足迹。</p>
+<p>在常见的归一化二维采样约定下，第 i 个纹素中心位于 (i + 0.5)/W。因此换到“整数表示纹素中心”的索引坐标：</p>
+<div class="equation">s = uW − 0.5 = (8/15) · 1024 − 0.5 = 545.633333<br>t = vH − 0.5 = 0.2 · 1024 − 0.5 = 204.3</div>
+<p>所以周围四个纹素索引是 (545, 204)、(546, 204)、(545, 205)、(546, 205)。小数权重为 f<sub>x</sub> = 0.633333、f<sub>y</sub> = 0.3。假设它们解码后的线性 RGB 如下：</p>
+<div class="table-wrap"><table><thead><tr><th>纹素 (s, t)</th><th>线性 RGB</th><th>双线性权重</th></tr></thead><tbody><tr><td>(545, 204)</td><td>(1, 0, 0)，红</td><td>(1 − fx)(1 − fy) = 0.256667</td></tr><tr><td>(546, 204)</td><td>(0, 1, 0)，绿</td><td>fx(1 − fy) = 0.443333</td></tr><tr><td>(545, 205)</td><td>(0, 0, 1)，蓝</td><td>(1 − fx)fy = 0.110000</td></tr><tr><td>(546, 205)</td><td>(1, 1, 1)，白</td><td>fx · fy = 0.190000</td></tr></tbody></table></div>
+<div class="equation">采样 RGB = 0.256667(1,0,0) + 0.443333(0,1,0)<br>　　　　　+ 0.11(0,0,1) + 0.19(1,1,1)<br>　　　　= (0.446667, 0.633333, 0.300000)</div>
+<p>如果 Shader 是 Unlit 并直接返回这个采样值，它就是这次片元输出。若教学用的简单光照因子是 0.8，乘完得到 (0.357333, 0.506667, 0.240000)。真实 PBR 还会涉及法线、光源、BRDF 等；显示前的色彩变换也可能继续改变数值。</p>
+<p class="small">本节 −0.5 是“纹素中心索引坐标”的约定。讨论覆盖长度与导数时，也常用 S = Wu、T = Hv；两者只差常量平移，不影响长度、偏导数和足迹形状。</p>
+<pre><code>// 接近 Unity / HLSL 的流程示意，省略资源声明与具体管线包含文件
+Varyings vert(Attributes input) {
+    Varyings output;
+    float4 positionWS = mul(M, float4(input.positionOS, 1));
+    output.positionCS = mul(VP, positionWS); // 用于投影、覆盖与透视插值
+    output.uv = input.uv;                   // 独立传递模型 UV
+    return output;
+}
+
+float4 frag(Varyings input) : SV_Target {
+    // input.uv 是插值结果；普通隐式 Sample 可利用其屏幕导数
+    float4 baseColor = texture.Sample(samplerState, input.uv);
+    return baseColor; // 这里只演示 Unlit；不是完整的受光照材质
+}</code></pre>
+<p class="small">以上为伪代码，Attributes / Varyings 类型、M / VP 矩阵、纹理及采样器需在实际 Shader 中声明；若只想复现本节固定第 0 级的手算，应改用显式 <code>SampleLevel(..., 0)</code> 和对应双线性采样器。</p>
+</section>
+
+<section id="ground"><h2>6　算例 B：一个像素为什么覆盖 1 米长、5 厘米宽的地面？</h2>
+<p>下面是<strong>另一组独立场景</strong>，专门解释像素足迹。相机位于 (0, 1, 0)，离水平地面 1 米，水平朝 +Z 看。地面为 Y = 0；仍是 800 × 800 画面、f = 400 像素、主点 (400, 400)，远裁剪面设得足够远。</p>
+<p>对地面点 (X, 0, Z)，相机空间坐标是 (X, −1, Z)。于是：</p>
+<div class="equation">x<sub>s</sub> = 400 + 400X/Z<br>y<sub>s</sub> = 400 − 400/Z</div>
+<p>反过来，某个屏幕位置落在地面哪里？解这两式：</p>
+<div class="equation">Z = 400 / (400 − y<sub>s</sub>)<br>X = (x<sub>s</sub> − 400) / (400 − y<sub>s</sub>)</div>
+<p>取屏幕像素 (400, 380)，它的方格边界是 x<sub>s</sub> ∈ [400, 401]、y<sub>s</sub> ∈ [380, 381]，中心是 (400.5, 380.5)。注意，地平线是 y<sub>s</sub> = 400，数值越接近它，地面距离越大。</p>
+<div class="table-wrap"><table><thead><tr><th>像素方格角点</th><th>屏幕 (xs, ys)</th><th>地面 X / 米</th><th>地面 Z / 米</th></tr></thead><tbody><tr><td>近侧左角</td><td>(400, 380)</td><td>0</td><td>20</td></tr><tr><td>近侧右角</td><td>(401, 380)</td><td>0.050000</td><td>20</td></tr><tr><td>远侧左角</td><td>(400, 381)</td><td>0</td><td>21.052632</td></tr><tr><td>远侧右角</td><td>(401, 381)</td><td>0.052632</td><td>21.052632</td></tr></tbody></table></div>
+<div class="result"><span>同一个 1 × 1 屏幕像素，对应的地面区域</span><strong>长约 1.0526 米，宽约 0.05 米</strong><p>真实边界是一个细长梯形：近端宽 5 厘米，远端宽约 5.2632 厘米，纵深跨度约 105.2632 厘米。它不是相机“给地面点加了宽度”，而是这个屏幕方格的四条边界投到地面后张开的区域。</p></div>
+<p>只算中心点，也可以得到一个精确位置：(X, Z) ≈ (0.025641, 20.512821)。但<strong>屏幕像素有面积，不只是它的中心点</strong>；中心周围的许多表面位置最终要由这一个显示像素代表，这就引出了过滤。</p>
+<p>上面的反投影计算是为解释几何关系。正常的光栅化 Shader 不必真的为方格四角各发射一条射线；插值得到的 UV 及其导数已经能提供局部覆盖范围的估计。</p>
+</section>
+
+<section id="footprint"><h2>7　把地面区域换算成纹理足迹</h2>
+<p>给地面设置 UV：每 4 米重复一次 1024 × 1024 的纹理，即 u = X/4、v = Z/4。既可以主动做世界空间投影，也可以在一个足够大的平面网格的各顶点写入同样的 UV；正确插值后，本例平面上的映射一致。</p>
+<div class="equation">纹素密度 = 1024 / 4 = 256 纹素 / 米<br>近端宽 = 0.05 × 256 = 12.8 纹素<br>远端宽 = 0.05263158 × 256 ≈ 13.473684 纹素<br>纵深跨度 = 1.05263158 × 256 ≈ 269.473684 纹素</div>
+<p>于是，那个屏幕像素在纹理上的覆盖区域，大约有 <strong>269 纹素长、13 纹素宽</strong>。中心 UV 是 (0.006410256, 5.128205128)。v 大于 1 不奇怪，因为地面纹理重复；Repeat 地址模式会在采样时处理它。</p>
+<div class="callout"><strong>这就是“细长足迹”的具体来源</strong><p>地面透视让一个像素纵向跨过约 1.05 米、横向只跨过约 5 厘米；再乘同一个纹素密度，变成纹理中的约 269 × 13 纹素。这里没有凭空增加 UV，也不是纹理图片真的被拉长了。</p></div>
+<div class="lab" id="ground-lab"><div class="lab-head"><strong>移动屏幕采样行，看足迹怎样增长</strong><span>相机高 1 米，f = 400，纹理 1024²，每 4 米重复</span></div><div class="controls"><label>像素行编号 <output id="row-output">380</output><input id="row-input" type="range" min="300" max="394" step="1" value="380"></label><button type="button" id="row-reset">回到本例 380 行</button></div><div class="dual"><div><h4>屏幕中的地面与采样位置</h4><div id="ground-screen" class="diagram"></div></div><div><h4>该像素对应的地面区域</h4><div id="ground-patch" class="diagram"></div></div></div><div class="metrics" aria-live="polite"><div><span>地面纵深跨度</span><strong id="ground-length"></strong></div><div><span>近端宽度</span><strong id="ground-width"></strong></div><div><span>纹理纵深跨度</span><strong id="ground-texels"></strong></div></div><div class="table-wrap"><table><thead><tr><th>量</th><th>实时计算结果</th></tr></thead><tbody id="ground-values"></tbody></table></div><p class="small">右图 X、Z 采用相同比例，显示真实的细长比例，局部位置已平移以便观察；屏幕图中的定位圆圈为放大标注，不表示实际像素大小。</p></div>
+</section>
+
+<section id="derivatives"><h2>8　GPU 怎样知道附近 UV 变化多大？</h2>
+<p>在常见片元着色中，屏幕导数来自相邻调用组成的 2 × 2 Quad 的差分。下面仍按本文 y 向上的坐标定义，列出四个相邻像素中心的<strong>未做 Repeat 折返的 UV</strong>：</p>
+<div class="table-wrap"><table><thead><tr><th>中心</th><th>屏幕 (xs, ys)</th><th>u</th><th>v</th></tr></thead><tbody><tr><td>P00</td><td>(400.5, 380.5)</td><td>0.006410256</td><td>5.128205128</td></tr><tr><td>P10</td><td>(401.5, 380.5)</td><td>0.019230769</td><td>5.128205128</td></tr><tr><td>P01</td><td>(400.5, 381.5)</td><td>0.006756757</td><td>5.405405405</td></tr><tr><td>P11</td><td>(401.5, 381.5)</td><td>0.020270270</td><td>5.405405405</td></tr></tbody></table></div>
+<p>以 P00 所在的一行、一列做差，可得到一个教学用的局部差分：</p>
+<div class="equation">ΔUV<sub>x</sub> = P10 − P00 = (0.012820513, 0)<br>ΔUV<sub>y</sub> = P01 − P00 = (0.000346500, 0.277200277)<br>乘上 1024 后：<br>g<sub>x</sub> ≈ (13.128205, 0) 纹素 / 像素<br>g<sub>y</sub> ≈ (0.354816, 283.853084) 纹素 / 像素</div>
+<p>也就是说，向右一个屏幕像素，纹理坐标约跨 13 个纹素；朝地平线方向走一个像素，约跨 284 个纹素。差别非常大。实际 <code>ddx/ddy</code> 的方向符号、粗细差分选择和 Quad 细节与 API、编译器及执行方式有关；这里是对应关系清楚的一组数值差分，不声称所有设备都必须逐位返回这些值。</p>
+<details><summary>为什么这里是 283.85，而前面一个像素的跨度是 269.47？</summary><p>因为它们不是同一个量。269.47 是像素边界 y ∈ [380, 381] 映射到地面的精确跨度；283.85 是两个像素中心 y = 380.5 与 381.5 之间的变化。映射包含 1/(400 − y)，不是线性的，所以不同区间的变化量不同。</p><p>若在中心 y = 380.5 计算数学上的瞬时导数，纹理纵向变化率为 102400/(19.5²) ≈ 269.296515 纹素 / 像素。它与该像素的精确跨度较接近。GPU 的邻域差分和局部椭圆，本来就是对面积变化的估计；不能把“精确边界”“微分”“有限差分”当成完全相同的数字。</p></details>
+<p>采样器可用这些导数决定 Mipmap 层级和各向异性过滤范围。应用也可以用显式梯度或 LOD 指令提供相关信息。普通 Shader 中写一条 <code>Sample(..., uv)</code>，并不意味着 GPU 只知道一个孤立的 UV 点。</p>
+<p class="small">不要为了 Repeat 随手先对 UV 做 <code>frac</code> 再求导：跨过整数边界时，折返会制造突变。常见做法是传入连续 UV，让采样器的地址模式处理重复。特殊 Shader 的不连续映射需要额外处理导数。</p>
+</section>
+
+<section id="average"><h2>9　为什么要平均，而不能只看中心纹素？</h2>
+<p>设纹理纵向是黑、白交替的细条纹，单个纹素宽。一个屏幕像素若覆盖约 269 个这样的纹素，画面已经无法把它们逐条显示出来。此时只查看中心附近的黑或白，会把大量未被解析的高频内容误当成一个确定颜色。</p>
+<p>相机轻微移动后，中心可能从白条跨到黑条，像素颜色突然变化，就可能出现闪烁或摩尔纹。若在适当范围内进行加权平均，黑白条纹通常会趋向中间灰，随运动的变化也更平稳。实际灰度受边界、滤波核、相位等影响，不必恰好等于 0.5。</p>
+<div class="table-wrap"><table><thead><tr><th>过滤方式</th><th>面对约 269 × 13 纹素的足迹</th></tr></thead><tbody><tr><td>只看中心 / 很小范围</td><td>无法代表纵向大量条纹，容易漏采和混叠。</td></tr><tr><td>大范围各向同性过滤</td><td>抑制纵向混叠，但也过度平均了横向原本可保留的细节。</td></tr><tr><td>各向异性过滤</td><td>沿长方向覆盖更大的区域，在短方向尽量保留较高分辨率。</td></tr></tbody></table></div>
+<p>“对这一片区域加权平均”描述的是过滤目标。实时 GPU 通常不会逐一遍历原始图像中所有被覆盖纹素，而是借助<strong>预滤波的 Mipmap、多次过滤探针以及采样器硬件</strong>近似完成。Feline 就是其中一条经典思路。</p>
+<p>本例中心处，按局部微分估计，各向异性比约为 20.51。普通各向同性缩小的层级估计约 log₂(269.3) = 8.07；若能分别保留短方向信息，对应短方向的尺度约 log₂(13.13) = 3.71，再沿长方向组合。这里只比较局部尺度，不是承诺某款 GPU 精确选择这两个 LOD；过滤核约定、最大 AF、层级偏置等都会影响结果。</p>
+</section>
+
+<section id="spaces"><h2>10　模型空间、世界空间、裁剪空间，各自该怎么记？</h2>
+<div class="table-wrap"><table><thead><tr><th>空间 / 属性</th><th>主要作用</th><th>能不能用于生成纹理坐标？</th></tr></thead><tbody><tr><td>模型空间 Object Space</td><td>描述物体自身的几何坐标。</td><td>可以，需 Shader 主动定义投影；普通 Mesh UV 不等于 positionOS.xy。</td></tr><tr><td>世界空间 World Space</td><td>用于物体之间的位置关系、光照等。</td><td>可以，例如地面 world XZ 投影；物体移动时相对世界图案可能滑动。</td></tr><tr><td>相机空间 View Space</td><td>以相机为参照，方便投影。</td><td>可以，但一般会随相机变化，不等于普通模型 UV。</td></tr><tr><td>裁剪空间 Clip Space</td><td>顶点投影输出，包含齐次分量 w。</td><td>可参与投影式贴图；通常还需除以相应 w 等处理，不能把 clip.xy 当成已归一化 UV。</td></tr><tr><td>屏幕空间 Screen Space</td><td>覆盖判定、插值位置、屏幕效果。</td><td>可以，后处理经常使用；不是普通 Mesh UV 的默认来源。</td></tr><tr><td>顶点 UV</td><td>描述表面与纹理的对应关系。</td><td>经插值后，就是常见材质采样所使用的输入。</td></tr></tbody></table></div>
+<div class="callout"><strong>回到最初的问题</strong><p>常见流程不是“挑某种 position，自动变成 UV”。更准确的是：<strong>网格给出位置和 UV → 位置经过投影决定屏幕三角形 → 屏幕采样位置决定插值权重 → clip.w 参与透视修正 → 得到 UV → 根据 UV 和足迹过滤纹理 → 计算片元颜色。</strong></p><p>你也可以明确选择“从世界位置生成 UV”，但那是另一种参数化方式，应该由 Shader 的代码来定义。</p></div>
+</section>
+
+<section id="sources"><h2>11　资料与计算约定</h2><ol class="sources"><li><a href="https://docs.unity3d.com/6000.0/Documentation/ScriptReference/Mesh-uv.html">Unity：Mesh.uv</a>，网格 UV 属性。</li><li><a href="https://learn.microsoft.com/en-us/windows/win32/direct3dhlsl/dx-graphics-hlsl-struct">Microsoft：HLSL 插值限定符</a>，默认插值与 noperspective 等选项。</li><li><a href="https://learn.microsoft.com/en-us/windows/win32/direct3d11/d3d10-graphics-programming-guide-rasterizer-stage-rules">Microsoft：光栅化规则</a>，覆盖、属性插值、MSAA 与 Quad 差分。</li><li><a href="https://learn.microsoft.com/en-us/windows/win32/direct3dhlsl/dx-graphics-hlsl-to-sample">Microsoft：Texture.Sample</a>，采样坐标与采样器设置。</li><li><a href="https://www.pbr-book.org/4ed/Textures_and_Materials/Texture_Sampling_and_Antialiasing">PBRT：纹理采样与抗混叠</a>，图像采样位置与纹理参数的面积关系。</li></ol><p class="small">两组数值场景、颜色与交互由本文构造并计算。屏幕 y 向上只是教学约定；本文不照搬某个 Unity 后端的 Y 翻转或反向 Z。RGB 示例使用线性值；坐标单位、Mipmap 级别与纹素中心约定均在相关章节单独声明。</p></section>
+<footer><a href="01_Feline详解_原理与数值算例.html">继续阅读：Feline 怎样用探针覆盖这个细长足迹 →</a><p>全部图解、计算器与样式已内嵌，支持离线阅读；外部参考链接需要联网。</p></footer>
+</main><script>(() => {
+  const progress = document.getElementById('reading-progress');
+  function updateProgress(){const total=document.documentElement.scrollHeight-innerHeight;progress.style.width=(total>0?scrollY/total*100:0)+'%';}
+  addEventListener('scroll',updateProgress,{passive:true});addEventListener('resize',updateProgress);updateProgress();
+  document.querySelectorAll('[data-print]').forEach(b=>b.addEventListener('click',()=>print()));
+  document.querySelectorAll('.mobile-nav a').forEach(a=>a.addEventListener('click',()=>document.querySelector('.mobile-nav').open=false));
+  const links=[...document.querySelectorAll('nav a[href^="#"]')];
+  const observer=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)links.forEach(a=>a.classList.toggle('active',a.hash==='#'+e.target.id))}),{rootMargin:'0px 0px -70% 0px'});
+  document.querySelectorAll('section[id]').forEach(e=>observer.observe(e));
+})();
+
+(() => {
+  const root=document.getElementById('triangle-lab');
+  const screen=root.querySelector('#triangle-screen'), uv=root.querySelector('#triangle-uv');
+  let b=.5,c=.375, dragging=false;
+  const fmt=(x,n=6)=>x.toFixed(n);
+  function draw(){
+    const a=1-b-c,D=a+b/2+c/4, U=(b/2)/D,V=(c/4)/D;
+    const sx=100.5+400*b,sy=100.5+400*c;
+    root.querySelector('#tri-p').textContent=`(${fmt(sx,2)}, ${fmt(sy,2)})`;
+    root.querySelector('#tri-correct').textContent=`(${fmt(U)}, ${fmt(V)})`;
+    root.querySelector('#tri-affine').textContent=`(${fmt(b)}, ${fmt(c)})`;
+    root.querySelector('#tri-detail').innerHTML=`屏幕权重 λ = (${fmt(a,4)}, ${fmt(b,4)}, ${fmt(c,4)})<br>归一化表面权重 β = (${fmt(a/D,4)}, ${fmt(b/2/D,4)}, ${fmt(c/4/D,4)})<br>D = ${fmt(D)}；正确 u = (λB/2)/D；正确 v = (λC/4)/D`;
+    [screen,uv].forEach((target,index)=>{
+      const width=Math.max(220,target.clientWidth),height=310,m=39;
+      const side=Math.min(width-2*m,height-95),left=(width-side)/2,bottom=height-35;
+      let shapes='';
+      for(let i=0;i<=4;i++){const t=i/4;shapes+=`<line class="grid" x1="${left+t*side}" x2="${left+t*side}" y1="${bottom-side}" y2="${bottom}"/><line class="grid" x1="${left}" x2="${left+side}" y1="${bottom-t*side}" y2="${bottom-t*side}"/>`;}
+      shapes+=`<path d="M${left},${bottom} L${left+side},${bottom} L${left},${bottom-side} Z" fill="#edf4f8" fill-opacity=".5" stroke="#8aa7ba" stroke-width="1.5"/>`;
+      if(index===0){
+        shapes+=`<circle class="point" cx="${left+b*side}" cy="${bottom-c*side}" r="6"/><text x="${Math.min(left+b*side+10,width-22)}" y="${bottom-c*side-10}">P</text><text x="${left-6}" y="${bottom+20}">A</text><text x="${left+side-6}" y="${bottom+20}">B</text><text x="${left-6}" y="${bottom-side-10}">C</text><text x="12" y="16">x、y：屏幕采样位置</text>`;
+      } else {
+        shapes+=`<line x1="${left+b*side}" y1="${bottom-c*side}" x2="${left+U*side}" y2="${bottom-V*side}" stroke="#b77a60" stroke-dasharray="3 3"/><rect x="${left+b*side-5}" y="${bottom-c*side-5}" width="10" height="10" fill="none" stroke="#b26343" stroke-width="2"/><circle class="point" cx="${left+U*side}" cy="${bottom-V*side}" r="6"/><text x="${left-14}" y="${bottom+20}">(0,0)</text><text x="${left+side-20}" y="${bottom+20}">(1,0)</text><text x="${left-14}" y="${bottom-side-10}">(0,1)</text><text x="12" y="16">实点：正确；方块：仿射</text>`;
+      }
+      target.innerHTML=`<svg viewBox="0 0 ${width} ${height}" role="img" aria-label="${index===0?'屏幕三角形及采样点P':'透视正确UV与仿射UV对比'}">${shapes}</svg>`;
+      if(index===0)screen._geometry={left,bottom,side};
+    });
+    root.dataset.u=U;root.dataset.v=V;root.dataset.sx=sx;root.dataset.sy=sy;
+  }
+  function pick(event){
+    const svg=screen.querySelector('svg'),rect=svg.getBoundingClientRect(),g=screen._geometry;
+    const x=event.clientX-rect.left,y=event.clientY-rect.top;
+    b=Math.max(0,Math.min(1,(x-g.left)/g.side));c=Math.max(0,Math.min(1,(g.bottom-y)/g.side));
+    if(b+c>1){const sum=b+c;b/=sum;c/=sum;}
+    draw();
+  }
+  screen.addEventListener('pointerdown',e=>{dragging=true;screen.setPointerCapture(e.pointerId);pick(e);});
+  screen.addEventListener('pointermove',e=>{if(dragging)pick(e);});
+  screen.addEventListener('pointerup',()=>dragging=false);screen.addEventListener('pointercancel',()=>dragging=false);
+  root.querySelectorAll('[data-tri]').forEach(button=>button.addEventListener('click',()=>{const values={worked:[.5,.375],center:[1/3,1/3],nearA:[.1,.1]};[b,c]=values[button.dataset.tri];draw();}));
+  new ResizeObserver(draw).observe(screen);new ResizeObserver(draw).observe(uv);draw();
+})();
+
+(() => {
+  const root=document.getElementById('ground-lab'),input=root.querySelector('#row-input');
+  const screen=root.querySelector('#ground-screen'),patch=root.querySelector('#ground-patch');
+  const fmt=(x,n=6)=>x.toFixed(n);
+  function draw(){
+    const row=Number(input.value),ys=row+.5,q=400-ys;
+    const nearZ=400/(400-row),farZ=400/(399-row),length=farZ-nearZ;
+    const nearW=nearZ/400,farW=farZ/400,z=400/q,x=.5/q,u=x/4,v=z/4;
+    const A=256/q,B=128/(q*q),D=102400/(q*q);
+    const trace=A*A+B*B+D*D,det=A*A*D*D,disc=Math.sqrt(Math.max(0,trace*trace-4*det));
+    const major=Math.sqrt((trace+disc)/2),minor=Math.sqrt((trace-disc)/2);
+    root.querySelector('#row-output').textContent=row;
+    root.querySelector('#ground-length').textContent=fmt(length,4)+' m';
+    root.querySelector('#ground-width').textContent=fmt(nearW*100,3)+' cm';
+    root.querySelector('#ground-texels').textContent=fmt(length*256,3)+' texels';
+    const rows=[['像素中心',`(400.5, ${fmt(ys,1)})`],['中心地面 (X, Z)',`(${fmt(x)}, ${fmt(z)}) 米`],['未折返 UV',`(${fmt(u,9)}, ${fmt(v,9)})`],['近端 / 远端 Z',`${fmt(nearZ)} / ${fmt(farZ)} 米`],['近端 / 远端宽',`${fmt(nearW)} / ${fmt(farW)} 米`],['近端 / 远端纹理宽',`${fmt(nearW*256,3)} / ${fmt(farW*256,3)} 纹素`],['局部微分长 / 短尺度',`${fmt(major,3)} / ${fmt(minor,3)} 纹素/像素`],['局部尺度比',fmt(major/minor,3)]];
+    root.querySelector('#ground-values').innerHTML=rows.map(([a,b])=>`<tr><td>${a}</td><td>${b}</td></tr>`).join('');
+    {
+      const width=Math.max(220,screen.clientWidth),pad=25;
+      const scale=Math.min((width-2*pad)/400,250/220),cx=width/2;
+      const height=70+220*scale;
+      const tx=sx=>cx+(sx-400)*scale,ty=sy=>30+(420-sy)*scale;
+      const yH=ty(400),yBottom=ty(200),left=tx(200),right=tx(600);
+      let marks=`<defs><clipPath id="ground-grid-clip"><rect x="${left}" y="${yH}" width="${right-left}" height="${yBottom-yH}"/></clipPath></defs><rect x="${left}" y="${yH}" width="${right-left}" height="${yBottom-yH}" fill="#f0f5f8"/>`;
+      let lines='';
+      for(let worldX=-8;worldX<=8;worldX+=1)lines+=`<line class="grid" x1="${tx(400+200*worldX)}" y1="${yBottom}" x2="${cx}" y2="${yH}"/>`;
+      [2,4,8,16,32,64,128].forEach(depth=>{const yy=ty(400-400/depth);lines+=`<line class="grid" x1="${left}" x2="${right}" y1="${yy}" y2="${yy}"/>`;});
+      marks+=`<g clip-path="url(#ground-grid-clip)">${lines}</g><line class="axis" x1="${left}" x2="${right}" y1="${yH}" y2="${yH}"/><text x="${left}" y="${yH-8}">地平线 y = 400</text><circle class="point" cx="${tx(400.5)}" cy="${ty(ys)}" r="6"/><line x1="${tx(400.5)+8}" x2="${right}" y1="${ty(ys)}" y2="${ty(ys)}" stroke="#2b809a" stroke-dasharray="3 3"/><text x="${right}" y="${ty(ys)+18}" text-anchor="end">中心 y = ${fmt(ys,1)}</text><text x="${left}" y="${yBottom+21}">屏幕局部：y ∈ [200,420]</text>`;
+      screen.innerHTML=`<svg viewBox="0 0 ${width} ${height}" role="img" aria-label="屏幕第${row}行的像素位于地平线下方">${marks}</svg>`;
+    }
+    {
+      const width=Math.max(220,patch.clientWidth),height=310;
+      const scale=(height-90)/length,cx=width/2,base=height-42,top=48;
+      const x0=cx-farW*scale/2;
+      const nearRight=x0+nearW*scale,farRight=x0+farW*scale;
+      const centerY=base-(z-nearZ)*scale,centerX=x0+x*scale;
+      const marks=`<path d="M${x0},${base} L${nearRight},${base} L${farRight},${top} L${x0},${top} Z" fill="#6aaec1" fill-opacity=".3" stroke="#2b809a" stroke-width="1.5"/><circle class="point" cx="${centerX}" cy="${centerY}" r="4"/><text x="12" y="${top-15}">远端 Z = ${fmt(farZ,3)} m</text><text x="12" y="${base+28}">近端 Z = ${fmt(nearZ,3)} m</text><line class="axis" x1="${cx+40}" x2="${cx+40}" y1="${top}" y2="${base}"/><line class="axis" x1="${cx+35}" x2="${cx+45}" y1="${top}" y2="${top}"/><line class="axis" x1="${cx+35}" x2="${cx+45}" y1="${base}" y2="${base}"/><text x="${width-10}" y="${(top+base)/2}" text-anchor="end">${fmt(length,4)} m</text><text x="${width-10}" y="${(top+base)/2+19}" text-anchor="end">纵深跨度</text>`;
+      patch.innerHTML=`<svg viewBox="0 0 ${width} ${height}" role="img" aria-label="地面覆盖区域纵深${fmt(length,4)}米，近端宽${fmt(nearW,4)}米">${marks}</svg>`;
+    }
+    root.dataset.length=length;root.dataset.nearWidth=nearW;root.dataset.texels=length*256;
+  }
+  input.addEventListener('input',draw);root.querySelector('#row-reset').addEventListener('click',()=>{input.value=380;draw();});
+  new ResizeObserver(draw).observe(screen);new ResizeObserver(draw).observe(patch);draw();
+})();
+</script></body></html>

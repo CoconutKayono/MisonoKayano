@@ -1,0 +1,27 @@
+Making retries safe with idempotent APIs 
+6 
+ 
+ 
+Late arriving requests and the life span of unique client request identifiers  
+ 
+An interesting edge case with idempotent solutions in distributed systems  can occur when 
+requests arrive late.  Consider the hypothetical situation where we have two actors in a service 
+and a scenario where the client creating the resource retries the operation and the subsequent 
+request is delayed. In the interim a second actor deletes the resource: 
+ 
+ 
+ 
+The best way to deal with this scenario can vary from service to service. The approach we have 
+taken for EC2 RunInstances is to honor the initial idempotent contract even in the  scenario we 
+just described. In this situation we  hold with the principle  of least astonishment. This means 
+that a semantically equivalent response, even in cases where the resource has been deleted, is 
+the least surprising approach that still delivers a consistent experience when using tools like 
+the AWS SDK and AWS CLI.  
+ 
+Building on  our earlier EC2 instance launch example , we can model this edge case  by 
+terminating the EC2 instance that we previously launched: 
+ 
+$ aws ec2 terminate-instances --instance-ids i-xxxxxxxxxxxxxxxxx  
+{                                                                                                                                                                                                                                                                                
+    "TerminatingInstances": [                                                                                                                                                                                                                                                    
+        {                                                                                                                                                                                                                                                                        

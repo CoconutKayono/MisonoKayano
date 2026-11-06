@@ -1,0 +1,695 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="MVC 的本质：What、Why、How，以及完整的 Unity C# 分层示例、依赖说明和场景搭建步骤。">
+<meta name="color-scheme" content="light">
+<title>MVC 的本质 · Unity C# 实践</title>
+<style>
+:root{--paper:#f7f8fa;--ink:#202a36;--muted:#697581;--line:#e1e6ec;--blue:#2862b7;--nav:#152330;--nav-muted:#aebdca;--code:#172433;--side:272px}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:32px}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.85 "Segoe UI","Microsoft YaHei","PingFang SC",sans-serif;text-rendering:optimizeLegibility}button,a{-webkit-tap-highlight-color:transparent}a{color:var(--blue);text-decoration-thickness:1px;text-underline-offset:4px}a:hover{color:#153f7c}button{font:inherit;cursor:pointer}button:focus-visible,a:focus-visible,pre:focus-visible,.table-scroll:focus-visible{outline:3px solid #74a9ee;outline-offset:4px}.skip-link{position:fixed;left:20px;top:-90px;z-index:100;background:white;padding:12px 20px}.skip-link:focus{top:16px}.progress{position:fixed;left:var(--side);right:0;top:0;height:3px;background:transparent;z-index:30}.progress i{display:block;height:100%;width:0;background:#609bdd}
+.sidebar{position:fixed;inset:0 auto 0 0;width:var(--side);background:var(--nav);color:#fff;padding:36px 23px 22px;display:flex;flex-direction:column;z-index:25}.brand{display:flex;gap:12px;align-items:center;margin:0 7px 32px}.brand-mark{display:grid;place-items:center;width:39px;height:39px;border:1px solid #607689;border-radius:10px;font:bold 14px/1 monospace;letter-spacing:-1px;color:#d1e5f8}.brand b{display:block;font-size:15px;letter-spacing:.6px}.brand small{display:block;font-size:11px;color:var(--nav-muted);letter-spacing:1.3px;margin-top:2px}.toc-title{margin:0 12px 12px;color:#9eafbe;font-size:11px;font-weight:600;letter-spacing:2px}.toc{overflow:auto;scrollbar-width:thin;scrollbar-color:#425464 transparent}.toc a{display:flex;gap:12px;align-items:baseline;text-decoration:none;color:#c5d1dc;font-size:13px;line-height:1.6;border-radius:6px;padding:10px 11px;margin:3px 0}.toc a span{font:11px/1.6 monospace;color:#9caebe;flex:0 0 16px}.toc a:hover,.toc a.active{color:#fff;background:#283e51}.toc a.active{box-shadow:inset 2px 0 #8cb7e5}.sidebar-footer{margin-top:auto;padding:23px 10px 0;font-size:11px;color:#aebdca;line-height:1.7}.sidebar-footer strong{color:#dbe6ef;font-weight:500}.page{margin-left:var(--side);padding:0 48px 64px}.page-inner{max-width:1010px;margin:auto}.topbar{display:flex;align-items:center;justify-content:space-between;padding:27px 0 25px;border-bottom:1px solid var(--line);gap:12px;font-size:12px;color:var(--muted)}.topbar .crumb{letter-spacing:1px}.topbar .tools{display:flex;align-items:center;gap:16px}.print-button{padding:5px 12px;border:1px solid #ccd6e1;background:transparent;border-radius:5px;font-size:12px;color:#526477}.mobile-menu{display:none}.hero{padding:54px 0 36px}.eyebrow{font:600 12px/1.4 "Segoe UI",sans-serif;letter-spacing:2.5px;color:var(--blue);margin:0 0 20px}.hero h1{font-size:clamp(34px,4.6vw,55px);font-weight:750;line-height:1.2;letter-spacing:-2px;margin:0 0 16px}.hero h1 span{font-weight:400;color:#76818e}.hero-sub{font-size:19px;color:#687888;margin:0 0 27px;letter-spacing:.25px}.hero-tags{display:flex;flex-wrap:wrap;gap:9px}.hero-tags span{font-size:11px;padding:3px 10px;border:1px solid #d9e0e7;border-radius:4px;color:#60717f;background:#fff}.essence{margin:0 0 40px;padding:25px 27px;background:#fff;border:1px solid var(--line);border-left:3px solid var(--blue);border-radius:0 9px 9px 0}.essence p{font-size:18px;line-height:1.85;margin:0}.role-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:20px}.role{border-top:1px solid var(--line);padding-top:14px}.role b{font-size:13px;color:#355b87}.role span{display:block;font-size:12px;margin-top:3px;color:var(--muted)}
+article{font-size:15px;line-height:1.95}article>p:first-child{color:var(--muted);font-size:12px}article p{margin:14px 0}article>h2{font-size:25px;line-height:1.55;margin:58px 0 21px;padding-top:25px;border-top:1px solid var(--line);letter-spacing:-.5px;display:flex;align-items:baseline;gap:12px}.chapter-number{font:12px/1.4 monospace;color:#8695a4;letter-spacing:1px;flex:0 0 24px}article h3{font-size:18px;line-height:1.6;margin:30px 0 12px}article strong{font-weight:650}article ul,article ol{padding-left:24px;margin:14px 0}article li{padding-left:3px;margin:7px 0}article blockquote{margin:24px 0;background:#edf3fb;border-left:3px solid #5d86bd;padding:14px 23px;border-radius:0 6px 6px 0;color:#27466b}article blockquote p{margin:0}article p code,article li code,article td code{padding:2px 5px;background:#eaf0f6;border-radius:4px;color:#2b537f;font:12.5px/1.65 Consolas,"Cascadia Code",monospace;overflow-wrap:anywhere}.table-scroll{overflow-x:auto;margin:22px 0;border:1px solid var(--line);border-radius:8px;background:#fff}table{border-collapse:collapse;width:100%;font-size:13px;line-height:1.8}th{text-align:left;font-weight:650;background:#edf1f6;color:#334c67;white-space:nowrap}td,th{padding:13px 16px;vertical-align:top;border-bottom:1px solid var(--line)}tr:last-child td{border-bottom:0}td:first-child{font-weight:500;min-width:120px}pre{white-space:pre;overflow-x:auto;tab-size:4;font:12.5px/1.8 Consolas,"Cascadia Code","Microsoft YaHei",monospace}.flow-block{padding:22px 24px;border:1px solid #d8e0e9;background:#eef2f7;border-radius:8px;color:#36516c;margin:22px 0;line-height:2}.code-card{margin:23px 0 20px;background:var(--code);color:#e2e9f1;border:1px solid #26394b;border-radius:9px;overflow:hidden}.code-toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 18px;background:#203043;border-bottom:1px solid #344557}.code-toolbar strong{font:12px/1.6 Consolas,"Cascadia Code",monospace;letter-spacing:.2px;display:block;color:#e9f1fa}.code-toolbar small{font-size:10px;color:#b4c3d2;display:block;margin-top:1px}.code-actions{display:flex;gap:7px;flex-shrink:0}.code-actions button{font-size:11px;line-height:1.5;border:1px solid #5b6f83;border-radius:4px;background:transparent;color:#d7e6f6;padding:4px 9px}.code-actions button:hover{background:#3a536c;color:white}.code-card pre{padding:20px 23px;margin:0;scrollbar-color:#647c95 transparent}.tok-keyword{color:#a8c8ff}.tok-string{color:#b9dba7}.tok-comment{color:#a8b8c9}.tok-number{color:#efc79b}.end-note{margin-top:54px;padding-top:20px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:16px;font-size:11px;color:var(--muted)}.end-note a{color:#6a7f94}.toast{position:fixed;left:calc(50% + var(--side)/2);bottom:24px;transform:translateX(-50%);background:#20384e;color:#fff;padding:10px 19px;border-radius:7px;font-size:13px;box-shadow:0 4px 18px #0002;opacity:0;transition:opacity .16s;pointer-events:none;z-index:100}.toast.show{opacity:1}
+@media(min-width:1550px){.page{padding-left:80px;padding-right:80px}.hero{padding-top:65px}}
+@media(max-width:1150px){:root{--side:234px}.sidebar{padding-left:15px;padding-right:15px}.toc a{font-size:12px}.page{padding-left:30px;padding-right:30px}.hero h1{font-size:40px}}
+@media(max-width:820px){:root{--side:0px}html{scroll-padding-top:20px}.sidebar{display:none;width:260px}.sidebar.open{display:flex;box-shadow:10px 0 40px #0003}.page{margin-left:0;padding:0 23px 36px}.progress{left:0}.topbar{padding-top:17px;padding-bottom:16px}.topbar .crumb{font-size:11px}.topbar .tools{gap:9px}.mobile-menu{display:inline-block;padding:5px 9px;border:1px solid #ccd6e1;background:white;border-radius:5px;font-size:12px;color:#526477}.hero{padding-top:37px}.hero h1{font-size:37px;letter-spacing:-1px}.hero-sub{font-size:16px}.hero-tags span{font-size:10px}.essence{padding:20px}.essence p{font-size:16px}.role-grid{gap:10px}.role b{font-size:12px}.role span{font-size:11px}article{font-size:14px}article>h2{font-size:22px;margin-top:40px}article h3{font-size:17px}.code-toolbar{padding:11px 12px}.code-card pre{padding:17px 14px;font-size:11.5px}.toast{left:50%}}
+@media(max-width:420px){.page{padding-left:16px;padding-right:16px}.topbar .crumb{letter-spacing:0}.print-button{padding-left:8px;padding-right:8px}.hero h1{font-size:33px}.role-grid{grid-template-columns:1fr}.role{padding-top:8px}.role span{display:inline;margin-left:8px}.code-toolbar{align-items:flex-start}.code-actions{flex-direction:column;gap:5px}.code-actions button{padding:3px 6px}.flow-block{padding:17px 14px;font-size:11px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.toast{transition:none}}
+@media print{@page{margin:16mm}body{background:#fff;font-size:11pt}.sidebar,.topbar,.progress,.code-actions,.toast,.hero-tags,.end-note{display:none!important}.page{margin:0;padding:0}.page-inner{max-width:none}.hero{padding:0 0 16px}.hero h1{font-size:30pt}.hero-sub{font-size:14pt}.essence{margin-bottom:20px;padding:14px 18px}.essence p{font-size:12pt}article{font-size:10pt;line-height:1.65}article>h2{margin-top:26px;padding-top:15px;font-size:17pt;break-after:avoid}article h3{font-size:12pt;break-after:avoid}pre{white-space:pre-wrap;overflow:visible;overflow-wrap:anywhere;font-size:8pt!important}.code-card{background:#f7f8fa;color:#202a36;border-color:#ccd4dc}.code-toolbar{background:#edf1f6;border-color:#ccd4dc}.code-toolbar strong,.code-toolbar small{color:#34495e}.tok-keyword{color:#23558b}.tok-string{color:#3b6133}.tok-comment{color:#657566}.tok-number{color:#8a4b25}.table-scroll{overflow:visible}th,td{padding:8px 9px}.role-grid{grid-template-columns:repeat(3,1fr)}a{color:inherit;text-decoration:none}.flow-block{background:#f4f6f8;color:#30465d}}
+</style>
+</head>
+<body>
+<a class="skip-link" href="#content">跳到正文</a>
+<div class="progress" aria-hidden="true"><i id="reading-progress"></i></div>
+<aside class="sidebar" id="sidebar" aria-label="文档目录">
+  <div class="brand"><div class="brand-mark" aria-hidden="true">M/V</div><div><b>架构笔记</b><small>UNITY · C# · MVC</small></div></div>
+  <div class="toc-title">阅读导航 / CONTENTS</div>
+  <nav class="toc"><a href="#chapter-1"><span>01</span>一句话抓住本质</a>
+<a href="#chapter-2"><span>02</span>What：MVC 是什么</a>
+<a href="#chapter-3"><span>03</span>Why：为什么需要 MVC</a>
+<a href="#chapter-4"><span>04</span>How：先确定职责与依赖</a>
+<a href="#chapter-5"><span>05</span>Unity C# 完整实现</a>
+<a href="#chapter-6"><span>06</span>在 Unity 场景中搭建与验证</a>
+<a href="#chapter-7"><span>07</span>依赖与职责的准确解释</a>
+<a href="#chapter-8"><span>08</span>最容易误解的三个地方</a>
+<a href="#chapter-9"><span>09</span>如何迁移到实际游戏业务</a>
+<a href="#chapter-10"><span>10</span>最后的本质</a>
+<a href="#chapter-11"><span>11</span>资料与验证范围</a></nav>
+  <div class="sidebar-footer"><strong>单文件 · 可离线阅读</strong><br>2026.10.16 · 根据原对话整理<br>代码可直接复制或下载</div>
+</aside>
+<div class="page"><div class="page-inner">
+<header class="topbar"><div class="crumb">ARCHITECTURE NOTES / 01</div><div class="tools"><button type="button" class="mobile-menu" id="menu-button" aria-controls="sidebar" aria-expanded="false">目录</button><button type="button" class="print-button" id="print-button">打印 / 保存 PDF</button></div></header>
+<section class="hero" aria-labelledby="page-title">
+  <p class="eyebrow">WHAT / WHY / HOW</p>
+  <h1 id="page-title">MVC 的本质<span>。</span></h1>
+  <p class="hero-sub">从职责与依赖出发，落地到 Unity C#。</p>
+  <div class="hero-tags"><span>完整讲解</span><span>5 个配套 C# 文件</span><span>计数器上限 100</span><span>本地 HTML</span></div>
+</section>
+<section class="essence" aria-label="核心观点"><p>把业务是什么、如何展示业务、如何响应用户操作，<br><strong>分配给各自清晰的职责。</strong></p><div class="role-grid"><div class="role"><b>MODEL / 业务</b><span>状态与规则</span></div><div class="role"><b>VIEW / 表现</b><span>读取状态，呈现界面</span></div><div class="role"><b>CONTROLLER / 协调</b><span>响应意图，调用业务</span></div></div></section>
+<main><article id="content"><p>整理日期：2026-10-16<br />
+内容来源：用户补充的《讲解MVC本质》原对话正文。</p>
+<p>本文保留原讲解的核心观点、What / Why / How 结构、计数器示例和三项常见误解，将原文四处 JavaScript 代码全部改写为 C#，并补充 Unity 场景装配、事件生命周期和依赖关系说明。原文中破碎的表格、交互演示已转换为适合本地阅读的表格与文字流程。</p>
+<p>示例继续使用“从 0 开始、每次 +1、上限 100”的设定。为适配持续交互的 Unity UI，完整实现采用 <strong>Model 发出变化通知、View 读取并刷新、Controller 处理操作</strong> 的方式；原文的“Controller 调用 Model 后主动刷新 View”也会单独解释。原文达到上限时抛出异常，本实现用 <code>TryIncrement()</code> 返回 <code>false</code> 表示正常的业务拒绝，计数边界保持相同。</p>
+<h2 id="chapter-1"><span class="chapter-number">01</span>一句话抓住本质</h2>
+<p><strong>MVC 把“业务是什么”“如何展示业务”“如何响应用户操作”这三件不同的事情分开。</strong></p>
+<p>MVC 不是某种算法，也不要求必须创建三个文件夹。它是一种围绕交互组织职责的架构模式。判断是否分离成功，要看业务、界面和操作协调分别由谁负责，以及它们之间依赖什么。</p>
+<h2 id="chapter-2"><span class="chapter-number">02</span>What：MVC 是什么</h2>
+<p>MVC = Model、View、Controller。</p>
+<div class="table-scroll" tabindex="0"><table>
+<thead>
+<tr>
+<th>组成</th>
+<th>核心职责</th>
+<th>本质</th>
+<th>Unity 计数器中的对应物</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Model（模型）</td>
+<td>管理业务状态和业务规则</td>
+<td>业务本身</td>
+<td>当前数值、上限、是否允许增加</td>
+</tr>
+<tr>
+<td>View（视图）</td>
+<td>将状态呈现给用户</td>
+<td>表现</td>
+<td>文本、按钮、布局与显示格式</td>
+</tr>
+<tr>
+<td>Controller（控制器）</td>
+<td>接收操作意图，协调业务操作</td>
+<td>交互协调</td>
+<td>把“请求 +1”转成 Model 方法调用</td>
+</tr>
+</tbody>
+</table></div>
+<p>以计数器为例：屏幕显示 <code>0</code>，用户点击 <code>+1</code>，屏幕变成 <code>1</code>。</p>
+<pre class="flow-block" tabindex="0"><code class="language-text">用户点击 +1
+    ↓
+Controller 处理“增加一次”的意图
+    ↓
+Model 检查上限，修改数值
+    ↓
+View 显示更新后的数值
+</code></pre>
+<p>这个流程描述一次交互的含义，并不要求底层必须按同一种调用链实现。按钮也只是输入入口，键盘、手柄、自动化测试都可以触发同一个业务操作。</p>
+<h3 id="model">Model：业务状态与规则</h3>
+<p>Model 回答：现在是什么状态？允许发生什么变化？</p>
+<p>在本例中，它要保证：初始值合法；计数只能通过受控方法增加；达到上限后不能继续增加。即使调用者绕过按钮，规则仍然有效。</p>
+<p>Model 并非只能存字段。<code>TryIncrement()</code> 中对上限的检查，同样属于 Model 的职责。</p>
+<h3 id="view">View：状态的呈现与输入适配</h3>
+<p>View 回答：把状态显示成什么样？</p>
+<p>它管理文本、按钮、布局、颜色等表现细节。本例也让它把 Unity 按钮回调转换成 <code>IncrementRequested</code> 事件，但它不决定点击后能否增加，也不直接修改业务状态。</p>
+<p>“转发用户意图”和“决定业务处理方式”是不同职责。Unity 的 UI 控件已封装底层输入处理，没有必要为了套用三个名字再造一套按钮系统。</p>
+<h3 id="controller">Controller：操作协调</h3>
+<p>Controller 回答：用户想做什么，应调用哪个业务操作？</p>
+<p>它订阅操作意图，调用 Model。实际项目中还可能协调应用服务、导航或一次完整用例，但不应把余额、库存、伤害等领域规则全塞进 Controller。</p>
+<h2 id="chapter-3"><span class="chapter-number">03</span>Why：为什么需要 MVC</h2>
+<p>假设把业务状态、持久化和显示全部写在一个按钮事件里。下面是原文反例的 Unity C# 版本，<strong>仅用于说明耦合，不是推荐实现</strong>：</p>
+<div class="code-card" data-filename="CoupledCounterExample.cs"><div class="code-toolbar"><div><strong>CoupledCounterExample.cs</strong><small>反例 · 仅用于说明耦合</small></div><div class="code-actions"><button type="button" data-action="copy" aria-label="复制 CoupledCounterExample.cs">复制代码</button><button type="button" data-action="download" aria-label="下载 CoupledCounterExample.cs">下载 .cs</button></div></div><pre tabindex="0"><code class="language-csharp"><span class="tok-keyword">using</span> TMPro;
+<span class="tok-keyword">using</span> UnityEngine;
+
+<span class="tok-keyword">public</span> <span class="tok-keyword">sealed</span> <span class="tok-keyword">class</span> CoupledCounterExample : MonoBehaviour
+{
+    [SerializeField] <span class="tok-keyword">private</span> TMP_Text label;
+    <span class="tok-keyword">private</span> <span class="tok-keyword">int</span> count;
+
+    <span class="tok-comment">// 可由 Inspector 的 Button.onClick 调用。</span>
+    <span class="tok-keyword">public</span> <span class="tok-keyword">void</span> OnIncrementClicked()
+    {
+        count++;                                      <span class="tok-comment">// 修改业务状态</span>
+        PlayerPrefs.SetInt(<span class="tok-string">&quot;Counter.Count&quot;</span>, count);    <span class="tok-comment">// 写入本地偏好数据</span>
+        PlayerPrefs.Save();                           <span class="tok-comment">// 持久化到磁盘</span>
+        label.text = count.ToString();                <span class="tok-comment">// 更新界面</span>
+    }
+}
+</code></pre></div>
+<p>这里用 <code>PlayerPrefs</code> 替代原反例中示意性的 <code>database.save</code>，只是展示“按钮回调同时负责存储”的问题；它不代表数据库方案，也不属于后面的完整实现。API 见 <a target="_blank" rel="noopener noreferrer" href="https://docs.unity3d.com/6000.0/Documentation/ScriptReference/PlayerPrefs.SetInt.html">PlayerPrefs.SetInt</a> 与 <a target="_blank" rel="noopener noreferrer" href="https://docs.unity3d.com/6000.0/Documentation/ScriptReference/PlayerPrefs.Save.html">PlayerPrefs.Save</a>。</p>
+<p>程序小时，这样写很直接。随着需求增长，可能出现：</p>
+<ul>
+<li>主界面和暂停面板都要显示相同数值。</li>
+<li>手机触控、键盘和手柄都要增加数值。</li>
+<li>自动化测试需要验证上限。</li>
+<li>计数不能超过 100。</li>
+<li>存档方式需要更换。</li>
+</ul>
+<p>如果上限判断只写在一个按钮回调里，另一个入口就可能漏掉。如果修改界面时还要复制业务规则，业务便被绑在具体界面上。</p>
+<p>MVC 要解决的核心问题并不是“代码太长”，而是：</p>
+<blockquote>
+<p>不同原因导致的变化，不应该迫使不相关的代码一起变化。</p>
+</blockquote>
+<div class="table-scroll" tabindex="0"><table>
+<thead>
+<tr>
+<th>变化原因</th>
+<th>主要修改位置</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>修改计数上限或增加规则</td>
+<td>Model 或传入的业务配置</td>
+<td>规则最终仍由 Model 执行</td>
+</tr>
+<tr>
+<td>修改字体、布局、颜色</td>
+<td>View</td>
+<td>不需要重写计数规则</td>
+</tr>
+<tr>
+<td>改为长按、手柄或其他输入</td>
+<td>输入适配与 Controller</td>
+<td>业务操作可以继续复用</td>
+</tr>
+<tr>
+<td>更换存档方案</td>
+<td>存储适配或应用服务</td>
+<td>不必改动文本显示代码</td>
+</tr>
+</tbody>
+</table></div>
+<p>这表示变化的主要落点，不承诺每次需求都只修改一个文件。例如新增“批量增加”可能同时需要按钮、操作协调和业务方法。职责分离的价值在于让每处修改有明确原因。</p>
+<h2 id="chapter-4"><span class="chapter-number">04</span>How：先确定职责与依赖</h2>
+<h3 id="controller-1">原文的简化方案：Controller 主动刷新</h3>
+<p>原 JavaScript 的含义可以概括为：</p>
+<pre class="flow-block" tabindex="0"><code class="language-text">Controller 接收操作
+    → Model 增加计数
+    → Controller 读取新状态
+    → Controller 调用 View 显示
+</code></pre>
+<p>这是一种容易理解的交互组织方式。在 Web MVC 中，Controller 常常选择 View 并提供数据；在 Unity 中也能使用类似的主动刷新方式。</p>
+<p>如果一个 Unity View 完全被动，所有显示更新都由中间协调者完成，那么按更细的 GUI 模式分类，这种结构往往更接近 MVP 的 Passive View。不能只凭类名叫 <code>Controller</code> 就断定它属于经典 MVC。</p>
+<h3 id="view-model">本文完整实现：View 观察 Model</h3>
+<p>完整示例采用另一种方式：</p>
+<pre class="flow-block" tabindex="0"><code class="language-text">输入路径：
+Button.onClick → CounterView 转发意图 → CounterController → CounterModel
+
+显示路径：
+CounterModel 状态变化 → Changed 事件 → CounterView 读取状态 → 更新 UI
+</code></pre>
+<p>Controller 不主动调用刷新方法。View 订阅 Model 暴露的变化事件，并通过只读接口读取最新状态。这体现了经典 MVC 中观察模型的一种思路；Unity 按钮的输入转发属于工程上的适配。</p>
+<p>MVC 有不同实现形态。稳定的原则是分离业务与表现，而不是强行规定唯一的调用顺序。关于 MVC、观察同步及 MVP 的区分，可参考 <a target="_blank" rel="noopener noreferrer" href="https://martinfowler.com/eaaDev/uiArchs.html">Martin Fowler 的 GUI Architectures</a>。</p>
+<h3 id="section-2">把代码依赖和运行流程分开看</h3>
+<p>下图中的箭头表示“代码中认识、引用某个类型或接口”，不是事件发生顺序：</p>
+<pre class="flow-block" tabindex="0"><code class="language-text">CounterModel ──────────────→ ICounterState
+CounterView ───────────────→ ICounterState、ICounterInput、Unity UI
+CounterController ────────→ ICounterInput、CounterModel
+CounterSceneRoot ─────────→ CounterModel、CounterView、CounterController
+</code></pre>
+<p>其中 <code>CounterModel</code> 和 <code>CounterView</code> 分别实现相应接口。Model 不引用 Unity、View 或 Controller；Controller 不引用按钮和文本；View 只持有 Model 的只读接口。</p>
+<p><code>CounterSceneRoot</code> 是装配入口：它创建对象、连接引用，并管理生命周期。装配入口认识各部分很正常，不必强行塞进 M、V、C 的某个业务角色。</p>
+<h2 id="chapter-5"><span class="chapter-number">05</span>Unity C# 完整实现</h2>
+<h3 id="section-3">示例范围与文件结构</h3>
+<p>示例使用 Unity 的 GameObject / MonoBehaviour、uGUI Button 和 TextMeshPro 文本。API 参考以 Unity 6 文档为准，不依赖 MVC 框架。</p>
+<p>只把下面五个文件放入项目；前面的 <code>CoupledCounterExample</code> 是独立反例，不参与场景搭建。</p>
+<pre class="flow-block" tabindex="0"><code class="language-text">Assets/Scripts/MvcCounter/
+├── CounterContracts.cs
+├── CounterModel.cs
+├── CounterView.cs
+├── CounterController.cs
+└── CounterSceneRoot.cs
+</code></pre>
+<p>Model 和 Controller 是普通 C# 对象，用 <code>new</code> 创建。View 和场景装配入口继承 <code>MonoBehaviour</code>，挂在 GameObject 上。</p>
+<h3 id="countercontracts.cs">1. CounterContracts.cs：只读状态与操作意图</h3>
+<div class="code-card" data-filename="CounterContracts.cs"><div class="code-toolbar"><div><strong>CounterContracts.cs</strong><small>Unity C# · 配套脚本</small></div><div class="code-actions"><button type="button" data-action="copy" aria-label="复制 CounterContracts.cs">复制代码</button><button type="button" data-action="download" aria-label="下载 CounterContracts.cs">下载 .cs</button></div></div><pre tabindex="0"><code class="language-csharp"><span class="tok-keyword">using</span> System;
+
+<span class="tok-keyword">namespace</span> MvcCounter
+{
+    <span class="tok-keyword">public</span> <span class="tok-keyword">interface</span> ICounterState
+    {
+        <span class="tok-keyword">int</span> Count { get; }
+        <span class="tok-keyword">int</span> Maximum { get; }
+        <span class="tok-keyword">bool</span> CanIncrement { get; }
+        <span class="tok-keyword">event</span> Action Changed;
+    }
+
+    <span class="tok-keyword">public</span> <span class="tok-keyword">interface</span> ICounterInput
+    {
+        <span class="tok-keyword">event</span> Action IncrementRequested;
+    }
+}
+</code></pre></div>
+<p><code>ICounterState</code> 让 View 读取状态、订阅通知，但不向它暴露修改方法。<code>ICounterInput</code> 让 Controller 接收意图，不需要知道输入来自 uGUI Button 还是测试对象。</p>
+<p>接口是本例控制依赖的工具，不是 MVC 必须具备的形式要求。</p>
+<h3 id="countermodel.cs">2. CounterModel.cs：状态与上限规则</h3>
+<div class="code-card" data-filename="CounterModel.cs"><div class="code-toolbar"><div><strong>CounterModel.cs</strong><small>Unity C# · 配套脚本</small></div><div class="code-actions"><button type="button" data-action="copy" aria-label="复制 CounterModel.cs">复制代码</button><button type="button" data-action="download" aria-label="下载 CounterModel.cs">下载 .cs</button></div></div><pre tabindex="0"><code class="language-csharp"><span class="tok-keyword">using</span> System;
+
+<span class="tok-keyword">namespace</span> MvcCounter
+{
+    <span class="tok-keyword">public</span> <span class="tok-keyword">sealed</span> <span class="tok-keyword">class</span> CounterModel : ICounterState
+    {
+        <span class="tok-keyword">public</span> <span class="tok-keyword">int</span> Count { get; <span class="tok-keyword">private</span> set; }
+        <span class="tok-keyword">public</span> <span class="tok-keyword">int</span> Maximum { get; <span class="tok-keyword">private</span> set; }
+        <span class="tok-keyword">public</span> <span class="tok-keyword">bool</span> CanIncrement =&gt; Count &lt; Maximum;
+
+        <span class="tok-keyword">public</span> <span class="tok-keyword">event</span> Action Changed;
+
+        <span class="tok-keyword">public</span> CounterModel(<span class="tok-keyword">int</span> maximum = <span class="tok-number">100</span>, <span class="tok-keyword">int</span> initialCount = <span class="tok-number">0</span>)
+        {
+            <span class="tok-keyword">if</span> (maximum &lt; <span class="tok-number">1</span>)
+                <span class="tok-keyword">throw</span> <span class="tok-keyword">new</span> ArgumentOutOfRangeException(nameof(maximum));
+
+            <span class="tok-keyword">if</span> (initialCount &lt; <span class="tok-number">0</span> || initialCount &gt; maximum)
+                <span class="tok-keyword">throw</span> <span class="tok-keyword">new</span> ArgumentOutOfRangeException(nameof(initialCount));
+
+            Maximum = maximum;
+            Count = initialCount;
+        }
+
+        <span class="tok-keyword">public</span> <span class="tok-keyword">bool</span> TryIncrement()
+        {
+            <span class="tok-keyword">if</span> (!CanIncrement)
+                <span class="tok-keyword">return</span> <span class="tok-keyword">false</span>;
+
+            Count++;
+            Changed?.Invoke();
+            <span class="tok-keyword">return</span> <span class="tok-keyword">true</span>;
+        }
+    }
+}
+</code></pre></div>
+<p>它不知道按钮、文本、GameObject，也不知道调用来自点击还是其他系统。</p>
+<p>规则由 Model 执行：即使某个调用者绕过 UI 连续调用，计数仍不能超过上限。只有真实的状态变化才触发 <code>Changed</code>，达到上限的拒绝操作不触发刷新。</p>
+<p>这里把原文中的“达到上限就抛异常”改成 <code>false</code>，用于表达一种预期内的操作失败。构造参数非法则仍抛异常，因为那属于错误的对象配置。调用者如需显示拒绝提示，可以使用返回值；本例通过禁用 <code>+1</code> 按钮表达上限状态。</p>
+<h3 id="counterview.cs">3. CounterView.cs：呈现状态、转发输入</h3>
+<div class="code-card" data-filename="CounterView.cs"><div class="code-toolbar"><div><strong>CounterView.cs</strong><small>Unity C# · 配套脚本</small></div><div class="code-actions"><button type="button" data-action="copy" aria-label="复制 CounterView.cs">复制代码</button><button type="button" data-action="download" aria-label="下载 CounterView.cs">下载 .cs</button></div></div><pre tabindex="0"><code class="language-csharp"><span class="tok-keyword">using</span> System;
+<span class="tok-keyword">using</span> TMPro;
+<span class="tok-keyword">using</span> UnityEngine;
+<span class="tok-keyword">using</span> UnityEngine.UI;
+
+<span class="tok-keyword">namespace</span> MvcCounter
+{
+    <span class="tok-keyword">public</span> <span class="tok-keyword">sealed</span> <span class="tok-keyword">class</span> CounterView : MonoBehaviour, ICounterInput
+    {
+        [SerializeField] <span class="tok-keyword">private</span> TMP_Text countText;
+        [SerializeField] <span class="tok-keyword">private</span> Button incrementButton;
+
+        <span class="tok-keyword">private</span> ICounterState state;
+        <span class="tok-keyword">private</span> <span class="tok-keyword">bool</span> observing;
+
+        <span class="tok-keyword">public</span> <span class="tok-keyword">event</span> Action IncrementRequested;
+
+        <span class="tok-keyword">public</span> <span class="tok-keyword">bool</span> IsConfigured =&gt;
+            countText != <span class="tok-keyword">null</span> &amp;&amp; incrementButton != <span class="tok-keyword">null</span>;
+
+        <span class="tok-keyword">public</span> <span class="tok-keyword">void</span> Bind(ICounterState newState)
+        {
+            StopObserving();
+            state = newState;
+
+            <span class="tok-keyword">if</span> (isActiveAndEnabled)
+            {
+                StartObserving();
+                Render();
+            }
+        }
+
+        <span class="tok-keyword">private</span> <span class="tok-keyword">void</span> OnEnable()
+        {
+            <span class="tok-keyword">if</span> (!IsConfigured)
+            {
+                Debug.LogError(<span class="tok-string">&quot;CounterView 缺少文本或按钮引用。&quot;</span>, <span class="tok-keyword">this</span>);
+                enabled = <span class="tok-keyword">false</span>;
+                <span class="tok-keyword">return</span>;
+            }
+
+            incrementButton.onClick.AddListener(ForwardIncrement);
+            StartObserving();
+            Render();
+        }
+
+        <span class="tok-keyword">private</span> <span class="tok-keyword">void</span> OnDisable()
+        {
+            <span class="tok-keyword">if</span> (incrementButton != <span class="tok-keyword">null</span>)
+                incrementButton.onClick.RemoveListener(ForwardIncrement);
+
+            StopObserving();
+        }
+
+        <span class="tok-keyword">private</span> <span class="tok-keyword">void</span> StartObserving()
+        {
+            <span class="tok-keyword">if</span> (observing || state == <span class="tok-keyword">null</span>)
+                <span class="tok-keyword">return</span>;
+
+            state.Changed += Render;
+            observing = <span class="tok-keyword">true</span>;
+        }
+
+        <span class="tok-keyword">private</span> <span class="tok-keyword">void</span> StopObserving()
+        {
+            <span class="tok-keyword">if</span> (!observing)
+                <span class="tok-keyword">return</span>;
+
+            state.Changed -= Render;
+            observing = <span class="tok-keyword">false</span>;
+        }
+
+        <span class="tok-keyword">private</span> <span class="tok-keyword">void</span> ForwardIncrement()
+        {
+            IncrementRequested?.Invoke();
+        }
+
+        <span class="tok-keyword">private</span> <span class="tok-keyword">void</span> Render()
+        {
+            <span class="tok-keyword">if</span> (!IsConfigured)
+                <span class="tok-keyword">return</span>;
+
+            <span class="tok-keyword">if</span> (state == <span class="tok-keyword">null</span>)
+            {
+                countText.text = <span class="tok-string">&quot;--&quot;</span>;
+                incrementButton.interactable = <span class="tok-keyword">false</span>;
+                <span class="tok-keyword">return</span>;
+            }
+
+            countText.text = state.Count.ToString();
+            incrementButton.interactable = state.CanIncrement;
+        }
+    }
+}
+</code></pre></div>
+<p>View 做了两类适配：把 <code>state.Count</code> 转成文本、把 <code>state.CanIncrement</code> 转成按钮可用状态；把按钮点击转成操作事件。它没有计算 <code>Count + 1</code>，也没有自行实现 <code>Count &lt; 100</code> 的业务判断。</p>
+<p><code>OnEnable</code> 订阅、<code>OnDisable</code> 退订，并在重新启用时主动读取最新状态。这样，即使面板隐藏期间 Model 被其他系统修改，重新打开后也能显示正确值。</p>
+<p><code>Bind</code> 同样处理订阅和首屏显示，因此不要求不同组件的 <code>Awake</code> / <code>OnEnable</code> 按某个特定先后顺序运行。方法名监听器也方便使用同一委托退订。</p>
+<h3 id="countercontroller.cs">4. CounterController.cs：把意图映射成业务操作</h3>
+<div class="code-card" data-filename="CounterController.cs"><div class="code-toolbar"><div><strong>CounterController.cs</strong><small>Unity C# · 配套脚本</small></div><div class="code-actions"><button type="button" data-action="copy" aria-label="复制 CounterController.cs">复制代码</button><button type="button" data-action="download" aria-label="下载 CounterController.cs">下载 .cs</button></div></div><pre tabindex="0"><code class="language-csharp"><span class="tok-keyword">using</span> System;
+
+<span class="tok-keyword">namespace</span> MvcCounter
+{
+    <span class="tok-keyword">public</span> <span class="tok-keyword">sealed</span> <span class="tok-keyword">class</span> CounterController : IDisposable
+    {
+        <span class="tok-keyword">private</span> <span class="tok-keyword">readonly</span> ICounterInput input;
+        <span class="tok-keyword">private</span> <span class="tok-keyword">readonly</span> CounterModel model;
+        <span class="tok-keyword">private</span> <span class="tok-keyword">bool</span> active;
+        <span class="tok-keyword">private</span> <span class="tok-keyword">bool</span> disposed;
+
+        <span class="tok-keyword">public</span> CounterController(ICounterInput input, CounterModel model)
+        {
+            <span class="tok-keyword">this</span>.input = input ?? <span class="tok-keyword">throw</span> <span class="tok-keyword">new</span> ArgumentNullException(nameof(input));
+            <span class="tok-keyword">this</span>.model = model ?? <span class="tok-keyword">throw</span> <span class="tok-keyword">new</span> ArgumentNullException(nameof(model));
+        }
+
+        <span class="tok-keyword">public</span> <span class="tok-keyword">void</span> Activate()
+        {
+            <span class="tok-keyword">if</span> (disposed)
+                <span class="tok-keyword">throw</span> <span class="tok-keyword">new</span> ObjectDisposedException(nameof(CounterController));
+
+            <span class="tok-keyword">if</span> (active)
+                <span class="tok-keyword">return</span>;
+
+            input.IncrementRequested += HandleIncrement;
+            active = <span class="tok-keyword">true</span>;
+        }
+
+        <span class="tok-keyword">public</span> <span class="tok-keyword">void</span> Deactivate()
+        {
+            <span class="tok-keyword">if</span> (!active)
+                <span class="tok-keyword">return</span>;
+
+            input.IncrementRequested -= HandleIncrement;
+            active = <span class="tok-keyword">false</span>;
+        }
+
+        <span class="tok-keyword">private</span> <span class="tok-keyword">void</span> HandleIncrement()
+        {
+            <span class="tok-comment">// 业务是否允许增加，由 Model 判断。</span>
+            <span class="tok-comment">// 状态变化后的界面刷新，由 View 的模型订阅触发。</span>
+            model.TryIncrement();
+        }
+
+        <span class="tok-keyword">public</span> <span class="tok-keyword">void</span> Dispose()
+        {
+            Deactivate();
+            disposed = <span class="tok-keyword">true</span>;
+        }
+    }
+}
+</code></pre></div>
+<p>Controller 不重复检查上限，也不直接访问文本。<code>Activate</code> / <code>Deactivate</code> 的重复调用不会重复订阅或造成重复处理。</p>
+<p>本例没有展示拒绝操作的额外提示，因此不消费 <code>TryIncrement()</code> 的返回值。需要提示时，可以新增反馈接口或独立提示事件，但上限判断仍应留在 Model。</p>
+<h3 id="countersceneroot.cs">5. CounterSceneRoot.cs：创建与装配</h3>
+<div class="code-card" data-filename="CounterSceneRoot.cs"><div class="code-toolbar"><div><strong>CounterSceneRoot.cs</strong><small>Unity C# · 配套脚本</small></div><div class="code-actions"><button type="button" data-action="copy" aria-label="复制 CounterSceneRoot.cs">复制代码</button><button type="button" data-action="download" aria-label="下载 CounterSceneRoot.cs">下载 .cs</button></div></div><pre tabindex="0"><code class="language-csharp"><span class="tok-keyword">using</span> UnityEngine;
+
+<span class="tok-keyword">namespace</span> MvcCounter
+{
+    <span class="tok-keyword">public</span> <span class="tok-keyword">sealed</span> <span class="tok-keyword">class</span> CounterSceneRoot : MonoBehaviour
+    {
+        [SerializeField] <span class="tok-keyword">private</span> CounterView view;
+        [SerializeField, Min(<span class="tok-number">1</span>)] <span class="tok-keyword">private</span> <span class="tok-keyword">int</span> maximum = <span class="tok-number">100</span>;
+
+        <span class="tok-keyword">private</span> CounterModel model;
+        <span class="tok-keyword">private</span> CounterController controller;
+
+        <span class="tok-keyword">private</span> <span class="tok-keyword">void</span> Awake()
+        {
+            <span class="tok-keyword">if</span> (view == <span class="tok-keyword">null</span> || !view.IsConfigured)
+            {
+                Debug.LogError(<span class="tok-string">&quot;请配置 CounterView 及其 UI 引用。&quot;</span>, <span class="tok-keyword">this</span>);
+                enabled = <span class="tok-keyword">false</span>;
+                <span class="tok-keyword">return</span>;
+            }
+
+            <span class="tok-comment">// Inspector 的 Min 约束之外，Model 仍会验证参数。</span>
+            model = <span class="tok-keyword">new</span> CounterModel(maximum);
+            controller = <span class="tok-keyword">new</span> CounterController(view, model);
+            view.Bind(model);
+        }
+
+        <span class="tok-keyword">private</span> <span class="tok-keyword">void</span> OnEnable()
+        {
+            controller?.Activate();
+        }
+
+        <span class="tok-keyword">private</span> <span class="tok-keyword">void</span> OnDisable()
+        {
+            controller?.Deactivate();
+        }
+
+        <span class="tok-keyword">private</span> <span class="tok-keyword">void</span> OnDestroy()
+        {
+            controller?.Dispose();
+
+            <span class="tok-keyword">if</span> (view != <span class="tok-keyword">null</span>)
+                view.Bind(<span class="tok-keyword">null</span>);
+        }
+    }
+}
+</code></pre></div>
+<p>这个 MonoBehaviour 是 Unity 场景与普通 C# 对象之间的桥梁。业务对象只在 <code>Awake</code> 中创建一次；隐藏再显示面板时，原 Model 继续使用，计数不会因为重新订阅而归零。</p>
+<p>场景卸载并重新创建装配入口时，会创建新的 Model。这个示例没有实现跨场景保留或存档恢复。</p>
+<h2 id="chapter-6"><span class="chapter-number">06</span>在 Unity 场景中搭建与验证</h2>
+<h3 id="section-4">场景搭建</h3>
+<ol>
+<li>确认项目中可使用 Unity UI（uGUI）和 TextMeshPro。若编辑器提示导入 TMP Essential Resources，完成导入。</li>
+<li>将五个文件按上述文件名保存到 <code>Assets/Scripts/MvcCounter/</code>。不要把所有代码粘进同一个文件。</li>
+<li>创建一个 Canvas，在其下创建名为 <code>CounterPanel</code> 的 UI 面板。</li>
+<li>在面板内创建一个 TextMeshPro 文本，用于显示数值；再创建一个 Button，按钮文字设为 <code>+1</code>。</li>
+<li>把 <code>CounterView</code> 和 <code>CounterSceneRoot</code> <strong>都挂在 <code>CounterPanel</code> 上</strong>，让它们通常一起启用和停用。</li>
+<li>在 <code>CounterView</code> 的 Inspector 中，将数值文本拖入 <code>Count Text</code>，将按钮拖入 <code>Increment Button</code>。</li>
+<li>在 <code>CounterSceneRoot</code> 中将同一面板的 <code>CounterView</code> 拖入 <code>View</code>，<code>Maximum</code> 保持 <code>100</code>。</li>
+<li>保持 Button 的 Inspector <code>On Click()</code> 列表为空。代码已经注册监听，重复配置业务回调可能让一次点击执行多次。</li>
+<li>确认场景有 EventSystem，并按项目所用输入方案配置对应 UI Input Module；Canvas 需要正常的 GraphicRaycaster。进入 Play Mode。</li>
+</ol>
+<pre class="flow-block" tabindex="0"><code class="language-text">Canvas
+└── CounterPanel
+    ├── CounterView（组件）
+    ├── CounterSceneRoot（组件）
+    ├── CountText（TextMeshPro 文本）
+    └── IncrementButton（Button）
+
+EventSystem
+</code></pre>
+<h3 id="section-5">预期行为</h3>
+<div class="table-scroll" tabindex="0"><table>
+<thead>
+<tr>
+<th>操作</th>
+<th>预期结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>首次运行</td>
+<td>文本显示 <code>0</code>，按钮可用</td>
+</tr>
+<tr>
+<td>点击一次</td>
+<td>显示 <code>1</code></td>
+</tr>
+<tr>
+<td>继续点击到上限</td>
+<td>显示 <code>100</code>，按钮不可用</td>
+</tr>
+<tr>
+<td>绕过 UI 调用 Model</td>
+<td>达到上限后返回 <code>false</code>，数值保持 <code>100</code></td>
+</tr>
+<tr>
+<td>停用再启用 CounterPanel</td>
+<td>保留当前数值，再次点击只增加一次</td>
+</tr>
+<tr>
+<td>隐藏期间由其他系统修改同一个 Model</td>
+<td>重新启用 View 时显示最新状态</td>
+</tr>
+</tbody>
+</table></div>
+<p>最后一种情况说明重新启用时主动 <code>Render()</code> 的意义；当前最小场景没有提供额外的修改入口。</p>
+<h3 id="section-6">跟踪一次点击</h3>
+<pre class="flow-block" tabindex="0"><code class="language-text">1. Button.onClick 调用 CounterView.ForwardIncrement()
+2. View 发出 IncrementRequested
+3. Controller.HandleIncrement() 调用 Model.TryIncrement()
+4. Model 检查 CanIncrement，通过后修改 Count
+5. Model 发出 Changed
+6. View.Render() 读取 Count 和 CanIncrement
+7. 文本与按钮状态更新
+</code></pre>
+<p>这是普通 C# 事件的同步调用链。它不需要每帧在 <code>Update()</code> 中轮询，也没有通过事件自动创建异步任务。</p>
+<h2 id="chapter-7"><span class="chapter-number">07</span>依赖与职责的准确解释</h2>
+<h3 id="model-view-view">Model 不知道 View，为什么能通知 View</h3>
+<p>Model 只声明通用的 <code>Changed</code> 事件，并调用已注册的委托。订阅者可以是 View、日志记录器或测试对象；Model 的源码不需要引用它们的具体类型。</p>
+<p>但“不依赖 View 的具体类型”不等于“运行时完全没有引用关系”。订阅发生后，事件委托通常会持有订阅者对象的引用，因此必须管理退订，否则长寿命 Model 可能保留已不需要的 View。</p>
+<p>本例中，View 在 <code>OnDisable</code> 退订 Model；Controller 在 <code>Deactivate</code> / <code>Dispose</code> 退订输入。装配入口负责调用 Controller 的生命周期方法。</p>
+<h3 id="view-model-1">View 能不能直接读取 Model</h3>
+<p>可以。本例通过只读接口读取 Model，并在 Model 变化时刷新。把“View 绝不能接触 Model”当作所有 MVC 的固定规则并不准确。</p>
+<p>如果采用被动 View，则可由 Presenter 或 Controller 读取 Model 再把显示数据推给 View。应先明确所用变体，再解释依赖，不能混用几种方案的规则。</p>
+<h3 id="view-1">禁用按钮，是不是把业务规则写进了 View</h3>
+<p>不是。View 使用的是 Model 已经计算出的 <code>CanIncrement</code>，并把它呈现为 <code>Button.interactable</code>。</p>
+<p>真正的规则仍在 Model 中执行。按钮禁用改善交互体验；Model 的检查保证其他入口也不能违反规则。不能只依靠按钮状态保护业务约束。</p>
+<h3 id="model-ccontroller-monobehaviour">Model 一定必须是普通 C#，Controller 一定不能是 MonoBehaviour 吗</h3>
+<p>都不是硬性规定。本例使用普通 C#，是为了让规则与 Unity 场景、UI 和生命周期保持较少依赖，便于独立验证。</p>
+<p>某些实际游戏系统需要 Transform、物理或其他 Unity 能力，可以通过接口适配，或有意识地接受引擎依赖。关键是知道耦合来自哪里，而不是机械禁止某种基类。</p>
+<p><code>MonoBehaviour</code> 是 Unity 的组件与生命周期机制，不是 MVC 中的第四种业务角色。它既可承载 View，也可作为输入适配器、Controller 宿主或装配入口。</p>
+<h3 id="section-8">事件和接口就等于彻底解耦吗</h3>
+<p>不是。接口减少对具体实现的依赖；事件减少发布者对订阅者类型的了解。双方仍然依赖事件含义、调用时机和状态契约。</p>
+<p>本例约定状态先修改、再同步通知；UI 相关调用发生在 Unity 主线程。若未来由后台线程或网络回调修改状态，需要先安排到合适的线程，再触发 Unity UI 更新。</p>
+<h3 id="model-1">为什么不直接使用一个全局 Model</h3>
+<p>全局访问方便，但也容易隐藏依赖和生命周期。本例由装配入口创建 Model 并显式传入。</p>
+<p>多个 View 如果需要展示同一状态，可以绑定同一个 <code>ICounterState</code>；如果 Model 需要比单个面板活得更久，就应把它的所有权移到更长寿命的游戏会话或应用服务。本例的 Model 所有权属于当前场景装配入口。</p>
+<h2 id="chapter-8"><span class="chapter-number">08</span>最容易误解的三个地方</h2>
+<h3 id="model-2">第一，Model 不等于数据库</h3>
+<p>Model 表示业务状态和规则，可能包含领域对象、领域服务，以及与它们协作的应用逻辑。不同架构对“Model”的范围命名并不完全相同。</p>
+<p>数据库只是持久化业务数据的一种手段。一个完全不使用数据库的离线游戏，同样有 Model。</p>
+<p>Unity 中的 <code>PlayerPrefs</code>、JSON 存档或其他存储方案也不自动等同于 Model。通常可以由存储适配器负责读写，由应用服务协调保存、加载和恢复合法状态。</p>
+<h3 id="controller-2">第二，Controller 不应该装满业务规则</h3>
+<p>例如“余额是否足够”“是否有库存”“购买后应扣多少钱”属于业务规则，应由 Model 或相应业务层负责。</p>
+<p>Controller 可以负责“用户点击购买后发起购买用例”，但不能因为操作从这里进入，就把全部规则都写在这里。</p>
+<p>在计数器中，Controller 决定调用 <code>TryIncrement()</code>；Model 决定是否允许增加。这样按钮、手柄和其他调用入口可以共享相同约束。</p>
+<h3 id="mvc">第三，MVC 不等于三层架构</h3>
+<p>MVC 主要解决交互界面的职责分离；表现层、业务层、数据访问层是另一个架构划分维度，两者可以同时存在。</p>
+<div class="table-scroll" tabindex="0"><table>
+<thead>
+<tr>
+<th>划分方式</th>
+<th>主要回答的问题</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>MVC</td>
+<td>业务状态、显示、用户操作协调如何分工？</td>
+</tr>
+<tr>
+<td>三层架构</td>
+<td>表现、业务处理、数据访问如何分层？</td>
+</tr>
+</tbody>
+</table></div>
+<p>不能简单把 Model 等同数据访问层，把 Controller 等同整个业务层，把 View 等同整个表现层。</p>
+<h2 id="chapter-9"><span class="chapter-number">09</span>如何迁移到实际游戏业务</h2>
+<div class="table-scroll" tabindex="0"><table>
+<thead>
+<tr>
+<th>场景</th>
+<th>Model 的规则与状态</th>
+<th>View 的表现</th>
+<th>Controller 的协调</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>生命值</td>
+<td>当前生命、上限、伤害和恢复约束</td>
+<td>血条、数值、受击表现</td>
+<td>将操作或用例映射为伤害、恢复调用</td>
+</tr>
+<tr>
+<td>商店</td>
+<td>余额、库存、价格与购买约束</td>
+<td>商品列表、价格、提示</td>
+<td>发起购买用例，协调结果反馈</td>
+</tr>
+<tr>
+<td>背包</td>
+<td>物品数量、容量、堆叠规则</td>
+<td>格子、图标、数量文本</td>
+<td>把拖拽意图转换成移动或交换操作</td>
+</tr>
+</tbody>
+</table></div>
+<p>这些是职责落点示例，不要求把每种游戏行为都塞进 UI Controller。碰撞、战斗模拟或服务器指令也可通过各自的入口调用业务逻辑。</p>
+<p>ScriptableObject 可以用来保存定义和配置，但采用 ScriptableObject 并不会自动实现 MVC。配置资源与每局游戏的可变状态应按生命周期区分；是否写回资源也需要明确设计。</p>
+<p>简单程序直接写在一个脚本里可能更合适。只有一个短期原型按钮时，拆出接口和装配入口未必划算；当状态共享、入口增多、规则复杂或需要独立验证时，分离职责的收益更明显。</p>
+<p>复杂程序也可能使用 MVP、MVVM、命令模式或其他方式。模式名称服务于设计沟通，不能替代对真实依赖的判断。</p>
+<h2 id="chapter-10"><span class="chapter-number">10</span>最后的本质</h2>
+<p>可以暂时忘记 MVC 这三个名字，先问三个问题：</p>
+<ol>
+<li><strong>什么是正确的业务行为？</strong> → Model。</li>
+<li><strong>如何把业务状态呈现出来？</strong> → View。</li>
+<li><strong>用户要做一件事，谁来协调它？</strong> → Controller。</li>
+</ol>
+<p>MVC 的核心是控制变化的传播范围，降低耦合，让业务逻辑不依附于某一种界面。</p>
+<p>在本例中，最能证明分离有效的事实是：不创建 Canvas、不创建按钮，也可以实例化 <code>CounterModel</code> 并验证它绝不会超过上限。界面负责让规则可见，Controller 负责让操作抵达业务，Model 负责让业务始终正确。</p>
+<h2 id="chapter-11"><span class="chapter-number">11</span>资料与验证范围</h2>
+<h3 id="section-13">参考资料</h3>
+<ul>
+<li>原文：用户在本次对话中补充的《讲解MVC本质》正文。</li>
+<li><a target="_blank" rel="noopener noreferrer" href="https://martinfowler.com/eaaDev/uiArchs.html">Martin Fowler：GUI Architectures</a>：MVC、观察同步与 MVP 等 GUI 架构的区别。</li>
+<li><a target="_blank" rel="noopener noreferrer" href="https://docs.unity3d.com/6000.0/Documentation/ScriptReference/MonoBehaviour.Awake.html">Unity：Awake</a>：初始化与跨组件调用顺序的限制。</li>
+<li><a target="_blank" rel="noopener noreferrer" href="https://docs.unity3d.com/6000.0/Documentation/ScriptReference/MonoBehaviour.OnEnable.html">Unity：OnEnable</a>、<a target="_blank" rel="noopener noreferrer" href="https://docs.unity3d.com/6000.0/Documentation/ScriptReference/MonoBehaviour.OnDisable.html">OnDisable</a>：启用、停用时的生命周期回调。</li>
+<li><a target="_blank" rel="noopener noreferrer" href="https://docs.unity3d.com/6000.0/Documentation/ScriptReference/Events.UnityEvent.RemoveListener.html">Unity：UnityEvent.RemoveListener</a>：移除运行时注册的监听器；Inspector 持久监听不属于这里的移除对象。</li>
+<li><a target="_blank" rel="noopener noreferrer" href="https://docs.unity3d.com/Packages/com.unity.ugui@2.0/manual/script-Button.html">Unity UI：Button</a>：按钮的交互与 On Click 事件。</li>
+</ul>
+<h3 id="section-14">验证说明</h3>
+<p>已从本文提取全部六段 C#（一段反例和五个配套文件），使用 Unity API 测试替身完成语法编译与 256 项断言检查，覆盖计数边界、通知时机、输入退订、重复激活、重新绑定、启用顺序与重新显示。此检查不等同于实际 Unity 程序集编译；未在 Unity Editor 中执行场景或渲染验证。HTML 为单文件，可离线打开；复制和下载按钮仅辅助提取 C#，阅读正文无需联网。</p>
+</article></main>
+<footer class="end-note"><span>MVC 的本质 · Unity C# 实践</span><a href="#page-title">回到开头 ↑</a></footer>
+</div></div>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+<script>
+/* 仅用于本文档的复制、下载和阅读导航；正文中的业务示例全部为 C#。 */
+(function(){
+  'use strict';
+  const toast = document.getElementById('toast');
+  let toastTimer;
+  function notify(message){toast.textContent=message;toast.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>toast.classList.remove('show'),2400);}
+  async function copyText(text){
+    if(navigator.clipboard && window.isSecureContext){try{await navigator.clipboard.writeText(text);return;}catch(error){/* 本地浏览器可能未授予剪贴板权限，继续尝试兼容方式。 */}}
+    const area=document.createElement('textarea');area.value=text;area.style.cssText='position:fixed;left:-9999px;top:0';document.body.appendChild(area);area.select();
+    try{if(!document.execCommand('copy'))throw new Error('copy failed');}finally{area.remove();}
+  }
+  document.querySelectorAll('.code-card').forEach(card=>{
+    card.querySelector('[data-action="copy"]').addEventListener('click',async()=>{try{await copyText(card.querySelector('code').textContent);notify('已复制 '+card.dataset.filename);}catch(error){notify('复制不可用，请在代码框内手动选择复制。');}});
+    card.querySelector('[data-action="download"]').addEventListener('click',()=>{
+      const blob=new Blob(['\ufeff'+card.querySelector('code').textContent],{type:'text/plain;charset=utf-8'});const url=URL.createObjectURL(blob);const link=document.createElement('a');link.href=url;link.download=card.dataset.filename;document.body.appendChild(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);notify('已准备下载 '+card.dataset.filename);
+    });
+  });
+  document.getElementById('print-button').addEventListener('click',()=>window.print());
+  const menu=document.getElementById('sidebar');const menuButton=document.getElementById('menu-button');
+  menuButton.addEventListener('click',()=>{const open=menu.classList.toggle('open');menuButton.setAttribute('aria-expanded',String(open));});
+  menu.querySelectorAll('a').forEach(link=>link.addEventListener('click',()=>{menu.classList.remove('open');menuButton.setAttribute('aria-expanded','false');}));
+  document.addEventListener('keydown',event=>{if(event.key==='Escape'){menu.classList.remove('open');menuButton.setAttribute('aria-expanded','false');}});
+  document.addEventListener('click',event=>{if(menu.classList.contains('open')&&!menu.contains(event.target)&&!menuButton.contains(event.target)){menu.classList.remove('open');menuButton.setAttribute('aria-expanded','false');}});
+  const headings=Array.from(document.querySelectorAll('article>h2'));const links=Array.from(menu.querySelectorAll('a'));
+  function updateReading(){
+    const total=document.documentElement.scrollHeight-window.innerHeight;document.getElementById('reading-progress').style.width=(total>0?window.scrollY/total*100:0)+'%';
+    let current=headings[0];for(const heading of headings){if(heading.getBoundingClientRect().top<180)current=heading;}
+    links.forEach(link=>{const active=current&&link.getAttribute('href')==='#'+current.id;link.classList.toggle('active',!!active);if(active)link.setAttribute('aria-current','location');else link.removeAttribute('aria-current');});
+  }
+  window.addEventListener('scroll',updateReading,{passive:true});window.addEventListener('resize',updateReading);updateReading();
+})();
+</script>
+</body></html>

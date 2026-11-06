@@ -1,0 +1,287 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="按 What、Why、How 讲解池化对象的状态隔离，包含 C# 租约与代次实现、Unity 清理契约及交互演示。"><title>池化对象的状态隔离 · What / Why / How</title><style>
+:root{--bg:#f3f5f8;--paper:#fff;--ink:#243247;--muted:#65748a;--line:#dee5ee;--accent:#126e78;--soft:#eaf6f5;--code:#142236}*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:30px}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.9 -apple-system,BlinkMacSystemFont,"Segoe UI","Microsoft YaHei","PingFang SC",sans-serif}a{color:var(--accent)}.layout{max-width:1350px;margin:auto;display:grid;grid-template-columns:245px minmax(0,1fr);gap:44px;padding:40px 32px}aside{position:sticky;top:30px;align-self:start;max-height:calc(100vh - 60px);overflow:auto;font-size:13px}aside .brand{font-size:17px;font-weight:750;margin-bottom:20px}nav a{display:block;text-decoration:none;color:var(--muted);padding:8px 12px;border-left:2px solid var(--line)}nav a:hover{color:var(--accent);background:var(--soft);border-color:var(--accent)}.tools{display:flex;gap:8px;margin-top:25px;flex-wrap:wrap}main{min-width:0;background:var(--paper);padding:54px 58px 44px;border:1px solid var(--line);border-radius:16px}header{padding-bottom:35px;border-bottom:1px solid var(--line)}.eyebrow{color:var(--accent);font-size:12px;font-weight:750;letter-spacing:1.8px}h1{font-size:40px;line-height:1.35;letter-spacing:-1px;margin:15px 0}header .subtitle{color:var(--muted);font-size:17px}.lead{margin-top:26px;padding:18px 22px;background:var(--soft);border-left:4px solid var(--accent);font-weight:600}.tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:20px}.tags span{font-size:12px;padding:3px 10px;border:1px solid var(--line);border-radius:20px;color:var(--muted)}h2{font-size:26px;line-height:1.5;margin:60px 0 24px;padding-top:20px;border-top:1px solid var(--line)}h3{font-size:19px;line-height:1.6;margin:30px 0 13px}p{margin:15px 0}strong{color:#17394c}blockquote{margin:24px 0;padding:16px 22px;border-left:4px solid var(--accent);background:var(--soft);font-size:17px;font-weight:600}code{font-family:Consolas,"Cascadia Code",monospace;font-size:.88em;background:#eef2f6;padding:2px 5px;border-radius:4px;overflow-wrap:anywhere}.codebox{margin:22px 0;border-radius:9px;overflow:hidden;background:var(--code);color:#e4edf8}.codebar{display:flex;justify-content:space-between;align-items:center;background:#20334b;padding:8px 15px;font-size:12px;color:#b8ccdf}.copy{border:1px solid #526780;background:transparent;color:#d5e5f5;padding:3px 9px;font-size:12px}pre{margin:0;padding:19px 22px;overflow:auto;line-height:1.65;tab-size:4}pre code{font-size:13px;background:transparent;padding:0;color:inherit;overflow-wrap:normal;white-space:pre}.tablewrap{overflow-x:auto;margin:22px 0;border:1px solid var(--line);border-radius:8px}table{border-collapse:collapse;width:100%;font-size:14px;line-height:1.7;text-align:left}td,th{padding:12px 14px;border-bottom:1px solid var(--line);vertical-align:top;min-width:105px}tr:last-child td{border-bottom:0}th{background:#edf3f7;color:#294758;font-weight:650}tbody tr:nth-child(even){background:#fafbfd}ul{padding-left:23px}li{margin:8px 0}button{font:inherit;font-size:13px;cursor:pointer;border:1px solid var(--line);border-radius:6px;padding:8px 12px;background:var(--accent);color:#fff;line-height:1.5}button:hover{filter:brightness(1.08)}button:focus-visible,a:focus-visible{outline:3px solid #d99120;outline-offset:3px}button:disabled{opacity:.4;cursor:default}.secondary,.tools button{background:var(--paper);color:var(--ink)}.demo{border:1px solid #a4ccce;border-radius:12px;padding:25px;background:#f5fbfa;margin:28px 0}.demo h3{margin-top:9px}.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.metrics div{background:var(--paper);border:1px solid var(--line);border-radius:6px;padding:10px;font-size:12px;color:var(--muted)}.metrics b{display:block;font-size:20px;color:var(--accent);line-height:1.6}.actions{display:flex;flex-wrap:wrap;gap:8px}.token{font-size:14px}.demo ol{max-height:220px;overflow:auto;font:13px/1.9 Consolas,"Microsoft YaHei",monospace;padding-left:25px}.ok{color:#127248}.bad{color:#b24b2c}.caption,footer{font-size:12px;color:var(--muted)}footer{margin-top:50px;border-top:1px solid var(--line);padding-top:20px}body.dark{--bg:#0c1520;--paper:#142131;--ink:#d8e3ef;--muted:#a6b7cb;--line:#304258;--accent:#75d4ce;--soft:#183c40;--code:#0c1725}body.dark strong{color:#bce9ed}body.dark th{background:#23364a;color:#c5dfec}body.dark tbody tr:nth-child(even){background:#182738}body.dark code{background:#26374a}body.dark pre code{background:transparent}body.dark .demo{background:#173034}body.dark button{color:#142131}body.dark .secondary,body.dark .tools button{color:var(--ink)}@media(max-width:1000px){.layout{grid-template-columns:190px minmax(0,1fr);gap:23px;padding:25px 20px}main{padding:38px 30px}h1{font-size:34px}}@media(max-width:760px){.layout{display:block;padding:12px}aside{position:static;max-height:none;margin:5px 0 20px}aside .brand{margin-bottom:8px}nav{display:grid;grid-template-columns:1fr 1fr}nav a{font-size:12px;padding:6px 9px}.tools{margin-top:12px}main{padding:30px 20px;border-radius:10px}h1{font-size:30px}h2{font-size:23px;margin-top:45px}.metrics{grid-template-columns:1fr 1fr}.demo{padding:18px}body{font-size:15px}pre{padding:15px}.codebar{padding:8px 12px}}@media print{body{background:white;color:#111;font-size:11pt;line-height:1.65}.layout{display:block;padding:0;max-width:none}aside,.copy,.actions{display:none}main{border:0;padding:0}h1{font-size:28pt}h2{font-size:18pt;break-after:avoid;margin-top:28px}h3{break-after:avoid}table,blockquote,.metrics{break-inside:avoid}.codebox{background:#f5f5f5;color:#111;border:1px solid #ccc;overflow:visible}pre{white-space:pre-wrap;overflow:visible}pre code{white-space:pre-wrap;font-size:9pt}.codebar{background:#eaeaea;color:#333}.demo{background:white}a{text-decoration:none;color:#111}header{padding-bottom:20px}button{display:none}}
+</style></head><body><div class="layout"><aside><div class="brand">状态隔离 · 学习笔记</div><nav aria-label="文档目录"><a href="#s1">01 · What：什么是池化对象的状态隔离？</a><a href="#s2">02 · Why：为什么需要状态隔离？</a><a href="#s3">03 · How：如何实现可靠的状态隔离？</a><a href="#s4">04 · C# 实现：具有状态隔离能力的对象池</a><a href="#s5">05 · Unity 中如何进行完整的状态隔离？</a><a href="#s6">06 · 时间隔离：如何处理旧异步任务？</a><a href="#s7">07 · 怎样从正确性角度验证隔离？</a><a href="#s8">08 · 什么时候不需要复杂的代次与租约？</a><a href="#s9">09 · 回到本质：复用资源，隔离业务</a></nav><div class="tools"><button id="theme">深色阅读</button><button id="print">打印 / 保存 PDF</button></div></aside><main><header><div class="eyebrow">OBJECT POOL · STATE ISOLATION</div><h1>池化对象的状态隔离</h1><div class="subtitle">What、Why、How · 从字段重置，到使用身份与使用权</div><div class="tags"><span>C#</span><span>Unity</span><span>Generation</span><span>Lease</span><span>不变量</span></div><div class="lead">对象可以复用，但一次业务的状态和使用权，不能自动延续到下一次业务。</div></header><h2 id="s1">01 · What：什么是池化对象的状态隔离？</h2><p><strong>池化对象的状态隔离，就是确保同一个对象在不同使用周期之间，不会发生不被允许的状态、行为或影响的继承。</strong></p><p>对象池让不同业务复用同一个物理对象，但一次业务的状态和使用权，不能因为对象被复用就自动延续到下一次业务。</p><div class="tablewrap"><table><thead><tr><th>概念</th><th>回答的问题</th></tr></thead><tbody><tr><td>对象身份 Object Identity</td><td>是不是同一个 C# 实例？</td></tr><tr><td>使用身份 Usage Identity</td><td>属于哪一次业务使用？</td></tr><tr><td>状态 State</td><td>现在保留了哪些数据？</td></tr><tr><td>使用权 Ownership / Lease</td><td>谁有资格读取或修改它？</td></tr></tbody></table></div><h3>1. 从一个子弹例子开始</h3><div class="codebox"><div class="codebar"><span>csharp · 代码片段</span><button class="copy" type="button">复制代码</button></div><pre><code>public class Bullet
+{
+    public int Damage;
+    public float Speed;
+    public int TargetId;
+}
+
+Bullet bullet = pool.Get();
+bullet.Damage = 100;
+bullet.Speed = 10;
+bullet.TargetId = 5;
+pool.Release(bullet);
+
+Bullet nextBullet = pool.Get();
+nextBullet.Damage = 20;
+nextBullet.Speed = 5;
+// 忘记设置 TargetId。</code></pre></div><p>如果池返回刚才的实例，<code>ReferenceEquals(bullet, nextBullet)</code> 就为 <code>true</code>，而 <code>TargetId</code> 仍可能等于 <code>5</code>。第二次发射的子弹，便在不知情的情况下继承了第一次的目标。这是最基本的<strong>状态泄漏（State Leakage）</strong>。</p><h3>2. 物理对象和逻辑使用必须分开</h3><div class="tablewrap"><table><thead><tr><th>物理对象</th><th>第一次使用 Usage #101</th><th>第二次使用 Usage #102</th></tr></thead><tbody><tr><td>Bullet #17，同一个 C# 实例</td><td>Damage = 100，Target = 敌人 A</td><td>Damage = 20，Target = 敌人 B</td></tr><tr><td>身份关系</td><td>与第二次共享物理实例</td><td>是独立的一次业务使用</td></tr></tbody></table></div><p>用 O 表示物理对象、Uᵢ 表示第 i 次使用：两次使用指向相同 O，但 U₁ ≠ U₂。</p><blockquote>物理身份相同，不代表逻辑身份相同。共享的是物理实例，不应共享未经许可的业务状态。</blockquote><h3>3. 状态隔离不等于把全部字段清零</h3><div class="codebox"><div class="codebar"><span>csharp · 代码片段</span><button class="copy" type="button">复制代码</button></div><pre><code>public class Bullet : MonoBehaviour
+{
+    [SerializeField] private MeshRenderer meshRenderer;
+    [SerializeField] private Rigidbody body;
+
+    private int damage;
+    private Transform target;
+    private float remainingLife;
+}</code></pre></div><div class="tablewrap"><table><thead><tr><th>状态</th><th>是否需要重置</th><th>原因</th></tr></thead><tbody><tr><td>MeshRenderer、Rigidbody 组件引用</td><td>通常不需要</td><td>属于对象长期结构</td></tr><tr><td>damage</td><td>每轮重新初始化</td><td>本轮配置可能不同</td></tr><tr><td>target</td><td>清理或覆盖</td><td>不能保留旧目标</td></tr><tr><td>remainingLife</td><td>重置</td><td>不能继承旧剩余时间</td></tr><tr><td>Rigidbody 速度</td><td>通常需要</td><td>不能继承旧动量</td></tr><tr><td>事件订阅</td><td>按其所属生命周期解除</td><td>旧业务关系不应意外延续</td></tr><tr><td>协程、异步任务</td><td>停止或隔离</td><td>旧任务可能在新一轮继续运行</td></tr></tbody></table></div><p>可以将内部状态分为：<strong>S = S持久 + S使用</strong>。这里的加号表示组成，而非数值相加。</p><ul><li><strong>持久状态</strong>：跨使用周期允许保留的组件、资源和数据。</li><li><strong>使用状态</strong>：只属于本次业务使用的目标、伤害、回调、计时器等。</li></ul><p>下一次使用的初始状态，应由新配置与明确允许保留的持久状态决定，不能偶然继承上一次残留的数据。两次状态可以恰好数值相同；关键在于它们的来源符合契约。</p><h2 id="s2">02 · Why：为什么需要状态隔离？</h2><h3>1. 对象池改变了生命周期假设</h3><div class="tablewrap"><table><thead><tr><th>普通创建</th><th>池化复用</th></tr></thead><tbody><tr><td>创建 → 初始化 → 使用 → 结束 → 销毁或等待回收</td><td>创建 → 使用₁ → 归还 → 使用₂ → 归还 → 使用₃</td></tr><tr><td>构造与字段初始化建立初始状态</td><td>再次 Get 不会重新执行构造函数</td></tr></tbody></table></div><p><strong>直接创建对象时依赖的初始化保证，不能直接假定在复用时仍然成立。</strong> 因此对象池必须有专门的复用契约。</p><h3>2. 状态泄漏也包括行为关系</h3><div class="codebox"><div class="codebar"><span>csharp · 代码片段</span><button class="copy" type="button">复制代码</button></div><pre><code>// 第一次使用时注册，结束后忘记解除。
+bullet.OnHit += questSystem.RecordHit;
+
+// 第二次使用时又注册。
+bullet.OnHit += achievementSystem.RecordHit;
+
+// 第二次命中时，两轮业务的订阅者都可能被通知。
+OnHit?.Invoke();</code></pre></div><p>残留的不只是 Damage、Speed 等数值，<strong>旧业务的行为关系也可能被带到新业务中</strong>。反过来，如果子弹订阅了外部目标的事件，外部目标也可能继续持有子弹的回调，必须从对应的事件发布者上解除订阅。</p><h3>3. 字段全部重置，也可能出错</h3><div class="codebox"><div class="codebar"><span>csharp · 代码片段</span><button class="copy" type="button">复制代码</button></div><pre><code>IEnumerator ExplodeLater()
+{
+    yield return new WaitForSeconds(2f);
+    Explode();
+}</code></pre></div><div class="tablewrap"><table><thead><tr><th>时刻</th><th>发生的事情</th></tr></thead><tbody><tr><td>t = 0 秒</td><td>第一次使用，安排两秒后爆炸</td></tr><tr><td>t = 0.5 秒</td><td>归还并重置字段，旧延迟工作尚未失效</td></tr><tr><td>t = 1 秒</td><td>同一物理对象作为新子弹再次使用</td></tr><tr><td>t = 2 秒</td><td>旧操作尝试爆炸，可能影响新子弹</td></tr></tbody></table></div><p>这是概念性时间线：Unity 禁用 GameObject 会停止附着在其 MonoBehaviour 上的协程，但外部调度器、独立任务或其他对象管理的回调不一定随之停止。</p><blockquote>状态隔离既要处理对象里已经保存的数据，也要处理未来可能影响对象的旧操作。</blockquote><p>因此，<strong>正确的状态隔离 ≠ 仅仅重置字段</strong>。必须一起管理数据、行为、引用、使用身份和生命周期。</p><h2 id="s3">03 · How：如何实现可靠的状态隔离？</h2><div class="tablewrap"><table><thead><tr><th>层次</th><th>核心职责</th></tr></thead><tbody><tr><td>数据隔离</td><td>清理或完整覆盖上一轮可变数据</td></tr><tr><td>关系隔离</td><td>解除旧事件订阅、目标引用和业务回调</td></tr><tr><td>时间隔离</td><td>阻止旧延迟操作影响新一轮使用</td></tr><tr><td>使用权隔离</td><td>归还后的旧使用者不能继续控制对象</td></tr></tbody></table></div><p>这四层是分析隔离的四个方面，并非必须分别实现的四种设计模式。</p><h3>1. 定义状态集合与允许的转换</h3><div class="codebox"><div class="codebar"><span>csharp · 代码片段</span><button class="copy" type="button">复制代码</button></div><pre><code>public enum PooledState
+{
+    Available,
+    InUse,
+    Destroyed
+}</code></pre></div><p>正常复用路径是 <strong>Available → 获取并初始化 → InUse → 撤销使用权并清理 → Available</strong>。销毁后的对象不得再次正常分配。</p><ul><li>获取前置条件：State = Available。</li><li>获取后置条件：State = InUse，且业务状态由本轮配置完整建立。</li><li>归还后置条件：旧使用权失效，对象满足空闲契约。</li></ul><p>真正重要的是：<strong>对象被视为可正常使用之前，本轮所需的数据必须已经准备完成。</strong> 在 Unity 中，通常先初始化，再激活会触发 <code>OnEnable()</code> 的 GameObject。</p><h3>2. 定义重置契约</h3><blockquote>归还后，所有只属于上一次使用的业务状态必须失效；下一次使用前，所有需要的业务状态必须重新建立。</blockquote><div class="tablewrap"><table><thead><tr><th>操作</th><th>时机</th><th>职责</th></tr></thead><tbody><tr><td>Create()</td><td>首次创建</td><td>建立长期资源和基本结构</td></tr><tr><td>PrepareForPool()</td><td>本轮结束</td><td>停止活动，清理旧状态</td></tr><tr><td>BeginUse(config)</td><td>每次获取</td><td>建立本轮完整业务状态</td></tr></tbody></table></div><div class="codebox"><div class="codebar"><span>csharp · 代码片段</span><button class="copy" type="button">复制代码</button></div><pre><code>private void PrepareForPool()
+{
+    _damage = 0;
+    _target = null;
+    _remainingLife = 0f;
+    _onHit = null;
+}
+
+private void BeginUse(BulletConfig config)
+{
+    _damage = config.Damage;
+    _target = config.Target;
+    _remainingLife = config.Lifetime;
+    _onHit = config.OnHit;
+}</code></pre></div><p>如果一个字段每次使用前必然被完整覆盖，而且初始化前不会被观察，它未必需要在归还时清零。但旧业务引用、事件订阅和运行中的任务，通常应在本轮结束时及时解除或使其失效。</p><h3>3. 引入使用代次 Generation</h3><p>物理对象始终是 Bullet #17，但第一次使用代次为 1，第二次为 2。一次使用的身份可表达为：</p><p><strong>LeaseId = (ObjectId, Generation)</strong></p><p>旧回调保存旧代次；执行时与当前代次比较，不一致就拒绝修改。它检查的不再只是“是不是同一个对象”，还包括“是不是同一次使用”。</p><div class="demo" aria-labelledby="demo-title"><div class="eyebrow">可操作演示 · 同一对象，不同使用</div><h3 id="demo-title">旧操作还有资格修改它吗？</h3><p>初始已获取 Bullet #17 的代次 1，旧操作保存令牌 (17, 1)。依次点击“归还”“获取”“执行旧操作”。</p><div class="metrics"><div>物理对象<b>#17</b></div><div>当前代次<b id="generation">1</b></div><div>当前状态<b id="status">InUse</b></div><div>有效操作次数<b id="hits">0</b></div></div><p class="token" id="token"></p><div class="actions"><button id="release">Release · 归还</button><button id="acquire">Get · 开始新一轮</button><button id="stale">执行旧操作 · 代次 1</button><button id="current">执行当前操作</button><button id="reset" class="secondary">重置演示</button></div><ol id="log" aria-live="polite"></ol><p class="caption">模拟仅演示资格校验：有效操作累计一次计数，不自动归还对象。旧令牌固定为 (17, 1)。</p><noscript>启用 JavaScript 可操作演示；正文与代码可直接阅读。</noscript></div><h3>4. 引入租约 Lease</h3><p>若 API 直接返回 <code>Bullet</code>，使用者即使已经归还，仍可以长期保存并使用 C# 引用。归还操作不会自动使普通引用失效。</p><p>一种更强的边界是返回 <code>BulletLease</code>：它保存对象引用与获取时的代次，仅暴露 <code>TryHit()</code>、<code>TryRelease()</code> 等受控操作。</p><div class="codebox"><div class="codebar"><span>csharp · 代码片段</span><button class="copy" type="button">复制代码</button></div><pre><code>public readonly struct BulletLease
+{
+    private readonly Bullet _bullet;
+    private readonly long _generation;
+}</code></pre></div><p>所有操作都校验 <strong>InUse 且 Lease.Generation = Object.Generation</strong>。这使使用权边界从口头约定变为代码能检查的规则。前提是不能通过其他 API 绕过租约、直接修改可变对象。</p><h2 id="s4">04 · C# 实现：具有状态隔离能力的对象池</h2><p>下面是完整的纯 C# 教学示例，专注于代次、租约、重置与归还顺序。<strong>全部操作假定在同一线程顺序执行</strong>；没有加入容量限制、池销毁、初始化失败恢复等生产级机制。</p><h3>1. 对象、租约与对象池</h3><div class="codebox"><div class="codebar"><span>csharp · 完整示例</span><button class="copy" type="button">复制代码</button></div><pre><code>using System;
+using System.Collections.Generic;
+
+public sealed class Bullet
+{
+    private long _generation;
+    private bool _inUse;
+    private BulletPool _owner;
+
+    private int _damage;
+    private int _targetId;
+    private Action&lt;int&gt; _onHit;
+
+    internal BulletLease BeginUse(
+        BulletPool owner,
+        int damage,
+        int targetId,
+        Action&lt;int&gt; onHit)
+    {
+        if (_inUse)
+            throw new InvalidOperationException(&quot;对象已在使用中&quot;);
+
+        // 新的使用身份；不能在归还时清零。
+        _generation = checked(_generation + 1);
+
+        // 完整建立当前业务状态。
+        _owner = owner;
+        _damage = damage;
+        _targetId = targetId;
+        _onHit = onHit;
+        _inUse = true;
+
+        return new BulletLease(this, _generation);
+    }
+
+    internal bool IsCurrent(long generation)
+    {
+        return _inUse &amp;&amp; _generation == generation;
+    }
+
+    internal bool TryHit(long generation, int targetId)
+    {
+        if (!IsCurrent(generation))
+            return false;
+
+        if (_targetId != targetId)
+            return false;
+
+        int damage = _damage;
+        Action&lt;int&gt; callback = _onHit;
+
+        // 先结束本轮，避免对外回调重入当前使用。
+        TryRelease(generation);
+        callback?.Invoke(damage);
+        return true;
+    }
+
+    internal bool TryRelease(long generation)
+    {
+        if (!IsCurrent(generation))
+            return false;
+
+        // 先撤销本轮使用权，再进入清理流程。
+        _inUse = false;
+        _owner.Return(this);
+        return true;
+    }
+
+    internal void ResetForPool()
+    {
+        if (_inUse)
+            throw new InvalidOperationException(&quot;不能重置正在使用的对象&quot;);
+
+        _damage = 0;
+        _targetId = 0;
+        _onHit = null;
+        _owner = null;
+
+        // 特意保留 _generation，防止旧租约重新有效。
+    }
+}
+
+public readonly struct BulletLease
+{
+    private readonly Bullet _bullet;
+    private readonly long _generation;
+
+    internal BulletLease(Bullet bullet, long generation)
+    {
+        _bullet = bullet;
+        _generation = generation;
+    }
+
+    public bool IsValid =&gt;
+        _bullet != null &amp;&amp; _bullet.IsCurrent(_generation);
+
+    public bool TryHit(int targetId)
+    {
+        return _bullet != null &amp;&amp;
+               _bullet.TryHit(_generation, targetId);
+    }
+
+    public bool TryRelease()
+    {
+        return _bullet != null &amp;&amp;
+               _bullet.TryRelease(_generation);
+    }
+}
+
+public sealed class BulletPool
+{
+    private readonly Stack&lt;Bullet&gt; _available = new();
+
+    public BulletLease Get(int damage, int targetId, Action&lt;int&gt; onHit)
+    {
+        Bullet bullet = _available.Count &gt; 0
+            ? _available.Pop()
+            : new Bullet();
+
+        return bullet.BeginUse(this, damage, targetId, onHit);
+    }
+
+    internal void Return(Bullet bullet)
+    {
+        // 清理完成后，才能对下一位使用者开放。
+        bullet.ResetForPool();
+        _available.Push(bullet);
+    }
+}</code></pre></div><h3>2. 为什么同时检查 InUse 和 Generation？</h3><p><strong>Valid(Lease) = InUse ∧ (Lease.Generation = Object.Generation)</strong></p><p>第一次归还后、第二次获取前，代次仍是原来的值。只比较 Generation，就会把已经归还的租约误判为有效。InUse 负责判定使用是否仍在进行，Generation 负责判定是否为同一轮。</p><p><code>ResetForPool()</code> 必须在 <code>Push()</code> 之前完成：对象一旦进入可用集合，就应符合安全复用契约。在并发实现中，反过来的顺序还可能让其他线程取到尚未清理的对象；但仅调整顺序并不能使本示例变为线程安全。</p><h3>3. 验证旧租约失效</h3><div class="codebox"><div class="codebar"><span>csharp · 代码片段</span><button class="copy" type="button">复制代码</button></div><pre><code>var pool = new BulletPool();
+
+BulletLease oldLease = pool.Get(
+    damage: 100,
+    targetId: 5,
+    onHit: damage =&gt; Console.WriteLine($&quot;第一次命中：{damage}&quot;));
+
+Console.WriteLine(oldLease.TryRelease()); // True
+
+BulletLease newLease = pool.Get(
+    damage: 20,
+    targetId: 8,
+    onHit: damage =&gt; Console.WriteLine($&quot;第二次命中：{damage}&quot;));
+
+Console.WriteLine(oldLease.TryHit(5));    // False
+Console.WriteLine(oldLease.TryRelease()); // False
+Console.WriteLine(newLease.TryHit(8));
+// 第二次命中：20
+// True</code></pre></div><p>这个例子隔离了旧数据，拒绝旧租约修改或归还新一轮使用，也拒绝同一租约重复归还。它不依赖调用者主动把变量设为 null。</p><p>租约结构体可以被复制，副本表示同一轮使用权；其中一个成功归还后，其他副本也会失效。它本身并不是 C# 类型系统强制的唯一所有权。</p><p>命中回调在归还后执行，回调可能重入并获取同一物理对象，因此 <code>TryHit()</code> 预先保存本轮数据，回调后不再访问对象状态。回调若抛出异常，异常仍会传播；本轮使用已经结束。</p><h2 id="s5">05 · Unity 中如何进行完整的状态隔离？</h2><p>GameObject 的状态分布在多个组件中，清理 C# 字段通常不够。</p><div class="tablewrap"><table><thead><tr><th>状态来源</th><th>常见残留</th><th>常见处理</th></tr></thead><tbody><tr><td>Transform</td><td>位置、旋转、缩放</td><td>按新配置初始化</td></tr><tr><td>Rigidbody</td><td>线速度、角速度</td><td>清零或指定新运动状态</td></tr><tr><td>Animator</td><td>参数与播放进度</td><td>按业务重置参数、播放状态</td></tr><tr><td>ParticleSystem</td><td>旧粒子</td><td>Stop、Clear</td></tr><tr><td>TrailRenderer</td><td>上轮轨迹</td><td>Clear()</td></tr><tr><td>C# 事件</td><td>上一轮回调</td><td>解除对应订阅</td></tr><tr><td>Coroutine</td><td>未结束协程</td><td>停止对应协程</td></tr><tr><td>异步任务</td><td>未完成加载、计算</td><td>取消并校验使用身份</td></tr><tr><td>业务组件</td><td>目标、生命值、计时器、Buff</td><td>按业务契约重置</td></tr></tbody></table></div><h3>1. 清理方法示意</h3><p>以下代码假定字段已经定义和初始化，使用 Unity 6 的 Rigidbody 属性名称。实际需要按组件是否存在、物理模拟状态与订阅情况调整。</p><div class="codebox"><div class="codebar"><span>csharp · 代码片段</span><button class="copy" type="button">复制代码</button></div><pre><code>private void PrepareForPool()
+{
+    // 1. 终止当前业务身份。
+    _inUse = false;
+
+    // 2. 只停止当前 MonoBehaviour 管理的协程。
+    StopAllCoroutines();
+
+    // 3. 解除对旧目标的订阅。
+    if (_target != null)
+    {
+        _target.OnDied -= HandleTargetDied;
+        _target = null;
+    }
+
+    // 4. 重置运动状态。
+    _rigidbody.linearVelocity = Vector3.zero;
+    _rigidbody.angularVelocity = Vector3.zero;
+
+    // 5. 清理视觉状态。
+    _trailRenderer.Clear();
+
+    // 6. 清理业务状态。
+    _damage = 0;
+    _remainingLife = 0f;
+    _onHit = null;
+
+    // 7. 最后禁用对象。
+    gameObject.SetActive(false);
+}</code></pre></div><p><code>StopAllCoroutines()</code> 只影响当前 MonoBehaviour 上启动的协程，无法停止其他组件或外部系统的工作。</p><h3>2. OnDisable() 能否承担全部责任？</h3><p>它可以承担一部分清理，但它既可能由归还触发，也可能由父对象禁用、场景卸载或组件关闭触发。它不必然表示一次池化业务正常结束。</p><p>还需区分：禁用 GameObject 会停止其 MonoBehaviour 上的协程；仅设置 <code>MonoBehaviour.enabled = false</code> 不会自动停止这些协程。</p><p>通常更清晰的流程是：<strong>Release → 撤销使用权 → 停止本轮工作 → 清理业务状态 → 禁用 GameObject → 放回空闲池</strong>。</p><p>OnDisable 处理组件被禁用时的生命周期事项，必要时作为额外防护；应避免它再度递归归还对象。</p><blockquote>对象不可见，不代表业务使用已经正确结束。</blockquote><h2 id="s6">06 · 时间隔离：如何处理旧异步任务？</h2><h3>1. 为什么 CancellationToken 不够？</h3><p><code>Cancel()</code> 发出取消请求，并不保证所有工作立即停止。异步操作必须配合取消协议；有些工作已经完成，或回调已经排队。</p><p>因此，一个稳妥策略是：<strong>取消旧操作 + 使用身份校验</strong>。前者尽量节省旧工作，后者拒绝迟到结果。</p><h3>2. 使用代次检查异步结果</h3><p>以下是片段示意，假设 FetchAsync、ApplyResult 等已经定义，并且检查与结果应用被安排在 Unity 主线程，期间不会发生让出执行权的操作。</p><div class="codebox"><div class="codebar"><span>csharp · 代码片段</span><button class="copy" type="button">复制代码</button></div><pre><code>private long _generation;
+private bool _inUse;
+private CancellationTokenSource _cts;
+
+private async Task LoadAsync(
+    long expectedGeneration,
+    CancellationToken token)
+{
+    try
+    {
+        var result = await FetchAsync(token);
+        token.ThrowIfCancellationRequested();
+
+        if (!_inUse || expectedGeneration != _generation)
+            return;
+
+        ApplyResult(result);
+    }
+    catch (OperationCanceledException)
+        when (token.IsCancellationRequested)
+    {
+        // 本次使用已经被取消。
+    }
+}
+
+private void EndUse()
+{
+    _inUse = false;
+    _cts?.Cancel();
+}</code></pre></div><p>这里的 <code>CancellationTokenSource</code> 还需在相关工作结束、不会再使用时正确 Dispose。Dispose 本身不会请求取消；新一轮使用也应建立自己的取消上下文，不能复用已取消的令牌来源。</p><p>如果延续可能跨线程执行，必须把 Unity API 调用切回主线程。<strong>Generation 检查不能单独解决“检查后、修改前”的竞态</strong>；应使用同步协议，或把身份检查与修改统一安排在同一主线程步骤中。若检查后再次 await、调度或执行可能重入的外部代码，应重新考虑有效性检查的位置。</p><h3>3. 旧操作失去的是资格</h3><p>第一次使用 Generation 1 启动加载，归还后对象进入 Generation 2。第一次加载返回时，对象仍存在，C# 引用也有效，但这不赋予旧加载修改新使用的权利。</p><blockquote>旧操作被拒绝，是因为它所属的那次业务已经结束。</blockquote><h2 id="s7">07 · 怎样从正确性角度验证隔离？</h2><h3>1. 空闲状态不变量</h3><p>当 State = Available，应满足：<strong>InUse = false，没有有效的旧业务使用权，ReadyForReuse = true</strong>。</p><p>ReadyForReuse 不要求所有字段为零，而要求：旧业务行为不能继续污染对象，旧使用者不能再修改本轮状态，旧业务关联已经按契约处理，并且可以安全进入下一轮初始化。</p><h3>2. 使用状态不变量</h3><p>当 State = InUse，应满足：配置有效、当前代次有效、业务状态已初始化。不能把尚未准备完成的对象暴露成一个可正常运行的业务对象。</p><h3>3. 归还的前置与后置条件</h3><p><strong>{ InUse(o, g) } Release(o, g) { Available(o) ∧ ¬Valid(o, g) }</strong></p><p>含义是：对象 o 正处于代次 g 时，成功归还后，它可以复用，而旧代次的使用权已失效。这针对正常执行且清理成功的情况，并假定中间没有再次分配对象。</p><p>如果 ResetForPool 抛出异常，不应把未知清理状态的对象交给下一位使用者。应将其隔离为不可复用，再按资源类型清理或销毁。</p><h3>4. 跨使用周期测试</h3><div class="tablewrap"><table><thead><tr><th>测试场景</th><th>应验证的结果</th></tr></thead><tbody><tr><td>归还后再次获取</td><td>本轮状态由新配置建立</td></tr><tr><td>旧租约修改新使用</td><td>被拒绝</td></tr><tr><td>同一租约重复归还</td><td>第二次失败</td></tr><tr><td>上次事件迟到</td><td>不影响新使用</td></tr><tr><td>上次异步结果迟到</td><td>不影响新使用</td></tr><tr><td>归还到错误池</td><td>被拒绝或无法通过公开 API 表达</td></tr><tr><td>重置发生异常</td><td>不进入可用集合</td></tr><tr><td>多线程同时获取</td><td>不产生两个相互独立的有效使用者</td></tr></tbody></table></div><p>这些测试检查隔离规则，而不只检查某个字段是否等于零。上面的教学代码只演示其中一部分；并发、异常恢复等要求需要额外实现。</p><h2 id="s8">08 · 什么时候不需要复杂的代次与租约？</h2><p>对于完全内部使用的临时集合：</p><div class="codebox"><div class="codebar"><span>csharp · 代码片段</span><button class="copy" type="button">复制代码</button></div><pre><code>var list = pool.Get();
+try
+{
+    list.Clear();
+    // 在本同步调用范围内使用 list。
+}
+finally
+{
+    pool.Release(list);
+}</code></pre></div><p>如果操作在同步范围内结束，没有异步任务，没有逃逸引用或跨周期订阅，并且调用者遵守契约，那么清理配合 try/finally 通常足够。</p><p>Unity 的 <code>PooledObject&lt;T&gt;</code> 也可配合 using，在作用域结束时归还对象。但 using 不能阻止你把内部可变引用泄漏给其他代码。</p><div class="tablewrap"><table><thead><tr><th>场景</th><th>按需要采用的机制</th></tr></thead><tbody><tr><td>局部临时集合</td><td>清理 + try/finally 或 using</td></tr><tr><td>普通同步子弹、特效</td><td>明确初始化、清理和使用状态检查</td></tr><tr><td>有延迟回调的对象</td><td>加入 Generation</td></tr><tr><td>多个业务系统长期持有</td><td>Lease 或受控访问接口</td></tr><tr><td>跨线程对象池</td><td>线程安全容器 + 同步 + 使用权协议</td></tr></tbody></table></div><p>这些是按风险选机制的参考，并非互斥分类。Unity 内置 ObjectPool 的重复归还检查也不能替代业务隔离；检查行为应以所用版本为准。内置 ObjectPool 本身不提供线程安全保证。</p><h2 id="s9">09 · 回到本质：复用资源，隔离业务</h2><div class="tablewrap"><table><thead><tr><th>概念</th><th>解决的问题</th></tr></thead><tbody><tr><td>对象池 Object Pool</td><td>如何复用物理对象？</td></tr><tr><td>重置 Reset</td><td>如何处理上轮残留状态？</td></tr><tr><td>状态隔离 State Isolation</td><td>如何使不同使用周期互不污染？</td></tr><tr><td>使用权 Ownership</td><td>谁有资格操作对象？</td></tr><tr><td>租约 Lease</td><td>如何表示并限制这次使用权？</td></tr><tr><td>使用代次 Generation</td><td>如何识别某次特定使用？</td></tr><tr><td>不变量 Invariant</td><td>如何定义始终应成立的约束？</td></tr></tbody></table></div><ul><li><strong>复用与状态</strong>：对象可复用，业务状态不能无意继承。</li><li><strong>状态与行为</strong>：字段全重置，旧操作仍可能污染新使用。</li><li><strong>身份与使用权</strong>：必须区分当前与过期使用者，并拒绝过期操作。</li></ul><p><strong>状态隔离 = 状态边界 + 生命周期边界 + 使用权边界。</strong> 这是分析问题的思维模型，并非必须照搬的代码公式。</p><blockquote>Reset 解决“过去留下了什么”；Lease 和 Generation 解决“过去是否还能影响现在”。</blockquote><p>两类问题都得到妥善处理，复用才具有可靠的隔离性。</p><footer>根据本次对话讲解整理 · 代码区分完整教学示例与上下文片段 · 文档、样式与演示均内置，可离线阅读。<br>演示用于理解使用身份与隔离规则；具体资源的清理应遵循项目自身契约。</footer></main></div><script>
+const $=id=>document.getElementById(id);
+let generation=1,inUse=true,hits=0;
+function log(message,ok){const li=document.createElement('li');li.textContent=message;li.className=ok?'ok':'bad';$('log').prepend(li);while($('log').children.length>12)$('log').lastChild.remove();}
+function render(){ $('generation').textContent=generation;$('status').textContent=inUse?'InUse':'Available';$('hits').textContent=hits;$('token').textContent='旧令牌：(17, 1)　｜　当前有效令牌：'+(inUse?'(17, '+generation+')':'无');$('acquire').disabled=inUse;$('release').disabled=!inUse;}
+function operate(expected){const valid=inUse&&expected===generation;if(valid)hits++;log((valid?'允许':'拒绝')+'：操作代次 '+expected+'，对象代次 '+generation+'，状态 '+(inUse?'InUse':'Available'),valid);render();}
+$('release').onclick=()=>{if(!inUse)return;inUse=false;log('Release：撤销使用权并完成清理；代次保留为 '+generation,true);render();};
+$('acquire').onclick=()=>{if(inUse)return;generation++;inUse=true;log('Get：完成本轮初始化，新代次为 '+generation,true);render();};
+$('stale').onclick=()=>operate(1);$('current').onclick=()=>operate(generation);
+$('reset').onclick=()=>{generation=1;inUse=true;hits=0;$('log').replaceChildren();log('已重置：代次 1 正在使用，旧操作已保存令牌 (17, 1)。',true);render();};
+document.querySelectorAll('.copy').forEach(b=>b.addEventListener('click',async()=>{const text=b.closest('.codebox').querySelector('code').textContent;try{if(navigator.clipboard&&window.isSecureContext){await navigator.clipboard.writeText(text);}else{const ta=document.createElement('textarea');ta.value=text;ta.style.position='fixed';ta.style.opacity='0';document.body.append(ta);ta.select();const ok=document.execCommand('copy');ta.remove();if(!ok)throw Error('copy');}b.textContent='已复制';}catch{b.textContent='请选中代码复制';}setTimeout(()=>b.textContent='复制代码',1800);}));
+$('theme').onclick=()=>{document.body.classList.toggle('dark');$('theme').textContent=document.body.classList.contains('dark')?'浅色阅读':'深色阅读';};$('print').onclick=()=>window.print();
+log('代次 1 正在使用，旧操作已保存令牌 (17, 1)。',true);render();
+</script></body></html>

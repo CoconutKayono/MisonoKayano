@@ -1,0 +1,264 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="按 What、Why、How 理解资源生命周期与逻辑生命周期，含对象池时间线、世代句柄、Unity/C# 示例与不变量检查。"><title>Resource Lifetime 与 Logical Lifetime · 资源与逻辑生命周期</title><style>
+:root{--bg:#f5f5f0;--paper:#fff;--ink:#202d3a;--muted:#637181;--line:#dce3e8;--blue:#315fac;--green:#247660;--soft:#edf3fa;--warm:#fff7e8;--code:#182331}*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:24px}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.85 system-ui,-apple-system,"Segoe UI","Microsoft YaHei","PingFang SC",sans-serif}a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}.layout{max-width:1320px;margin:auto;display:grid;grid-template-columns:230px minmax(0,1fr);gap:36px;padding:40px 28px 64px}aside{position:sticky;top:30px;align-self:start;font-size:14px}.brand{font-size:11px;letter-spacing:.14em;color:var(--muted);font-weight:700}aside nav a{display:block;padding:8px 10px;border-left:2px solid var(--line);color:var(--muted)}aside nav a:hover{border-color:var(--blue);color:var(--blue);text-decoration:none}.aside-note{padding:15px 10px;color:var(--muted);font-size:12px}main{min-width:0}header{padding:42px;background:#172c42;color:#fff;border-radius:18px;margin-bottom:30px}header .eyebrow{font-size:12px;letter-spacing:.1em;color:#abc9ed}h1{font-size:clamp(29px,4vw,43px);line-height:1.25;letter-spacing:-.025em;margin:16px 0}header .subtitle{font-size:20px;color:#dce7f3;margin:10px 0 24px}header p{color:#d2dfea}.tags{display:flex;gap:8px;flex-wrap:wrap}.tags span{font-size:12px;padding:4px 10px;border:1px solid #46617b;border-radius:20px}.paper{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:32px 40px}section+section{margin-top:55px;padding-top:32px;border-top:1px solid var(--line)}h2{font-size:28px;line-height:1.4;margin:0 0 24px}h2 small{display:block;color:var(--blue);font-size:12px;letter-spacing:.13em;margin-bottom:8px}h3{font-size:21px;line-height:1.5;margin:30px 0 12px}h4{font-size:17px;margin:22px 0 8px}p{margin:12px 0}strong{font-weight:700}li{margin:5px 0}ul,ol{padding-left:1.55em}.callout{padding:18px 22px;border-left:4px solid var(--blue);background:var(--soft);border-radius:0 8px 8px 0;margin:22px 0}.callout p{margin:5px 0}.warning{background:var(--warm);border-color:#c08c32}.cards{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:22px 0}.card{border:1px solid var(--line);border-top:3px solid var(--blue);border-radius:9px;padding:20px}.card.logical{border-top-color:var(--green)}.card h3{margin:0 0 8px;font-size:18px}.card p{margin:6px 0}.en{color:var(--muted);font-size:13px}.table-wrap{overflow:auto;margin:20px 0}table{border-collapse:collapse;width:100%;font-size:14px;min-width:540px}th,td{padding:12px 14px;border:1px solid var(--line);text-align:left;vertical-align:top}th{background:#edf2f6;font-weight:650}tbody tr:nth-child(even){background:#fafbfd}code{font:0.9em/1.6 ui-monospace,SFMono-Regular,Consolas,"Liberation Mono",monospace}p code,li code,td code{background:#edf1f5;padding:2px 5px;border-radius:4px}.code{margin:20px 0;border-radius:9px;overflow:hidden;background:var(--code);color:#e3edf5}.codebar{display:flex;justify-content:space-between;align-items:center;background:#243447;color:#aec1d3;font-size:12px;padding:9px 16px}.copy{font:inherit;color:inherit;background:transparent;border:1px solid #536679;border-radius:5px;padding:4px 10px;cursor:pointer}pre{margin:0;padding:20px;overflow:auto;tab-size:4;line-height:1.65}pre code{font-size:13px}.formula{text-align:center;padding:17px;background:#f4f7fa;border-radius:8px;margin:18px 0;overflow:auto;font:15px/1.8 ui-monospace,Consolas,monospace}.figure{border:1px solid var(--line);border-radius:10px;padding:18px;margin:22px 0;overflow:auto}.figure svg{display:block;max-width:100%;height:auto;margin:auto;min-width:440px}.caption{font-size:12px;color:var(--muted);margin:10px 0 0}.steps{counter-reset:step;display:grid;gap:10px;padding:0;list-style:none}.steps li{padding:12px 15px 12px 50px;background:#f4f7fa;border-radius:7px;position:relative}.steps li:before{counter-increment:step;content:counter(step);position:absolute;left:15px;top:14px;font-size:12px;border-radius:50%;background:#dce7f4;color:var(--blue);width:24px;height:24px;line-height:24px;text-align:center}.check{background:#f0f7f3;border:1px solid #d9e8df;padding:18px 22px;border-radius:10px;margin-top:16px}.check h3{margin-top:0}footer{padding:20px 4px;color:var(--muted);font-size:12px}.top{display:inline-block;margin-top:20px;font-size:13px}.no-break{break-inside:avoid}button:focus-visible,a:focus-visible{outline:3px solid #86b7ef;outline-offset:3px}@media(max-width:1000px){.layout{grid-template-columns:185px minmax(0,1fr);gap:20px;padding:24px 18px}.paper{padding:28px}header{padding:30px}}@media(max-width:760px){.layout{display:block;padding:14px}aside{position:static;margin-bottom:20px}aside nav{display:flex;flex-wrap:wrap;gap:4px}aside nav a{font-size:12px;border:1px solid var(--line);border-radius:20px;padding:5px 10px}.aside-note{display:none}.brand{margin-bottom:9px}header{padding:25px 22px;border-radius:12px}.paper{padding:24px 20px;border-radius:12px}.cards{grid-template-columns:1fr}h2{font-size:25px}h3{font-size:20px}.figure{padding:12px}.formula{text-align:left;font-size:12px}}@media print{body{background:white;font-size:10.5pt;color:#111}.layout{display:block;max-width:none;padding:0}aside,.copy,.top{display:none}header{background:white;color:#111;padding:0 0 18px;border-radius:0;border-bottom:2px solid #315fac}header p,header .subtitle,header .eyebrow{color:#333}h1{font-size:27pt}.tags span{color:#333;border-color:#aaa}.paper{border:0;padding:15px 0}section+section{margin-top:25px;padding-top:20px}h2{font-size:20pt;break-after:avoid}h3,h4{break-after:avoid}pre{white-space:pre-wrap;overflow-wrap:anywhere}.code{background:#f4f6f8;color:#111;border:1px solid #ccd3da;break-inside:auto}.codebar{background:#e8ecf1;color:#222}pre code{font-size:8pt}.table-wrap{overflow:visible}table{min-width:0;font-size:9pt}tr{break-inside:avoid}.figure,.callout,.cards{break-inside:avoid}.figure svg{min-width:0}.formula{white-space:normal;overflow-wrap:anywhere}a{color:#222}footer{border-top:1px solid #ccc}@page{margin:18mm}}
+</style></head><body id="top"><div class="layout"><aside><div class="brand">LIFETIME · 学习笔记</div><nav aria-label="文档目录"><a href="#essence">核心认识</a><a href="#what">01 · What：概念与区别</a><a href="#why">02 · Why：问题与动机</a><a href="#how">03 · How：设计与代码</a><a href="#verify">04 · 不变量与验证</a><a href="#ownership">05 · 所有权与借用</a><a href="#references">官方资料入口</a></nav><div class="aside-note">适合离线阅读<br>支持代码复制与浏览器打印</div></aside><main><header><div class="eyebrow">WHAT · WHY · HOW</div><h1>Resource Lifetime<br>与 Logical Lifetime</h1><div class="subtitle">资源生命周期与逻辑生命周期</div><p>同一个实例可以承载多轮生命；同一项业务也可以跨越多个资源。理解“仍然存在”与“仍然有效”的不同边界。</p><div class="tags"><span>资源管理</span><span>对象池</span><span>Generation</span><span>Unity / C#</span></div></header><article class="paper">
+<section id="essence"><h2><small>核心认识</small>存在，不等于有效</h2>
+<p>理解这两个概念，关键在于先区分两个问题：一个资源是否仍然存在、仍被持有？某个业务身份或活动是否仍然有效？</p>
+<div class="cards"><div class="card"><h3>Resource Lifetime</h3><div class="en">资源生命周期</div><p>资源从获取、创建到释放、销毁的时间区间。</p><strong>关注资源的存续与可用边界。</strong></div><div class="card logical"><h3>Logical Lifetime</h3><div class="en">逻辑生命周期</div><p>业务身份、职责或操作从生效到失效的时间区间。</p><strong>关注业务语义的有效边界。</strong></div></div>
+<div class="callout"><p><strong>资源仍然存在，不代表过去的操作仍然可以合法使用它。</strong></p><p>一个敌人已经死亡，但承载它的对象仍在池中；一场战斗还在继续，但承载画面的旧场景资源已经被替换。</p></div>
+<p>这两种情况都说明：资源的存续边界，不一定等于业务语义的有效边界。</p></section>
+
+<section id="what"><h2><small>01 · WHAT</small>它们究竟是什么？</h2>
+<h3>1. 资源生命周期：某个资源持续存在多久</h3>
+<p>这里的资源是广义概念，可以是内存、文件句柄、数据库连接、网络套接字、Unity 的 <code>GameObject</code>、<code>RenderTexture</code>，或对象池中的实例。</p>
+<p><strong>先说明正在观察哪个资源层级，再谈它的生命周期。</strong></p>
+<ul><li>文件句柄：从打开到关闭。</li><li>C# 托管对象：从分配到不再存活、其内存得以回收。</li><li>Unity 原生对象：从创建到对应原生对象被销毁。</li><li>池中实例：从实例创建到最终销毁；使用者的一次获取到归还，则是单次占用或租约。</li></ul>
+<p>“释放”也取决于层级。归还池结束的是本次使用权，通常并不意味着底层实例被销毁。一份资源可以有多个嵌套的持有周期。</p>
+<h3>2. 逻辑生命周期：某种业务语义成立多久</h3>
+<p>Logical 强调的不是物理存在，而是<strong>某种业务身份、职责、操作或状态是否仍然成立</strong>。</p>
+<ul><li>敌人：从生成到死亡或退场。</li><li>攻击：从开始到结束。</li><li>UI 窗口的一次打开：从打开到关闭。</li><li>异步请求：从发起到完成、取消或失效。</li><li>游戏对局：从开始到结束。</li></ul>
+<p>这些业务概念结束后，对应的内存和底层资源不一定立即释放。</p>
+<h3>3. 两者的时间关系</h3>
+<div class="figure"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 250" role="img" aria-labelledby="tl-title tl-desc"><title id="tl-title">一个资源承载两轮不同的逻辑生命</title><desc id="tl-desc">蓝色长条从创建持续到销毁，绿色短条分别代表敌人一与敌人二的逻辑生命周期，二者之间资源闲置。</desc><g font-family="system-ui,Microsoft YaHei,sans-serif" font-size="15" fill="#516375"><text x="145" y="28">创建</text><text x="693" y="28">销毁</text><text x="15" y="83">资源生命</text><text x="15" y="143">逻辑生命 A</text><text x="15" y="203">逻辑生命 B</text></g><line x1="155" y1="45" x2="728" y2="45" stroke="#becad6" stroke-dasharray="5 5"/><rect x="155" y="60" width="570" height="34" rx="7" fill="#315fac"/><rect x="230" y="120" width="175" height="34" rx="7" fill="#247660"/><rect x="490" y="180" width="150" height="34" rx="7" fill="#247660"/><g fill="white" text-anchor="middle" font-family="system-ui,Microsoft YaHei,sans-serif" font-size="15"><text x="440" y="83">同一个资源实例</text><text x="318" y="143">敌人 #1</text><text x="565" y="203">敌人 #2</text></g><g stroke="#a6b8c8" stroke-dasharray="4 4"><line x1="230" y1="95" x2="230" y2="119"/><line x1="405" y1="95" x2="405" y2="119"/><line x1="490" y1="95" x2="490" y2="179"/><line x1="640" y1="95" x2="640" y2="179"/></g><g font-size="13" fill="#637181" text-anchor="middle"><text x="190" y="239">等待</text><text x="448" y="239">池中闲置</text><text x="685" y="239">闲置</text></g></svg><p class="caption">示意时间线，不按真实时间比例。蓝色表示底层实例存活，绿色表示不同的业务生命。</p></div>
+<p><strong>一个资源生命周期，可以承载多个彼此独立的逻辑生命周期。</strong></p>
+<p>但两者并非必然包含：一个逻辑活动也可能跨越多个先后创建的资源实例。例如切换场景时重新创建 UI，或会话持续期间重新建立网络连接。</p>
+<h3>4. 核心对比</h3>
+<div class="table-wrap"><table><thead><tr><th>维度</th><th>Resource Lifetime</th><th>Logical Lifetime</th></tr></thead><tbody>
+<tr><td>关注点</td><td>资源是否仍被持有、是否已释放</td><td>业务语义是否仍然有效</td></tr><tr><td>起点</td><td>分配、创建、获取</td><td>生成、激活、开始</td></tr><tr><td>终点</td><td>释放、销毁；本次持有也可因归还而结束</td><td>死亡、关闭、结束、失效</td></tr><tr><td>由谁决定</td><td>资源所有者与资源管理机制</td><td>业务规则与状态机</td></tr><tr><td>常见错误</td><td>内存或句柄泄漏、重复释放、使用已释放资源</td><td>过期回调、错误复活、重复结算、跨轮次状态污染</td></tr><tr><td>主要保证</td><td>不泄漏，不使用已释放资源</td><td>失效的身份不能继续执行有效业务操作</td></tr>
+</tbody></table></div>
+<p>可用两个条件辅助思考：<code>resourceAlive</code> 表示资源可供合法访问；<code>logicallyActive</code> 表示当前业务生命有效。资源可用而业务失效，完全可能是正常状态，例如池中闲置对象、已经关闭但被缓存的窗口。</p></section>
+
+<section id="why"><h2><small>02 · WHY</small>为什么必须区分它们？</h2>
+<h3>1. 资源管理与业务管理解决不同的问题</h3>
+<p>敌人生命值归零后，业务系统需要让它死亡：不再受伤、攻击、参与目标搜索；碰撞是否继续存在，也由死亡后的玩法规则决定。<strong>这决定的是业务有效性。</strong></p>
+<p>资源管理器则可以将对应对象留在池中，未来再次使用，必要时才执行 <code>Destroy</code>。因此，敌人死亡时，真正需要的操作不一定是销毁实例。</p>
+<div class="formula">业务系统 → 决定何时失效<br>资源管理器 → 决定何时释放</div>
+<p>对象可以提前创建、延迟销毁，而不改变一轮业务生命的含义。</p>
+<h3>2. 同一个对象，可以代表不同的逻辑实体</h3>
+<ol class="steps"><li>创建 Enemy 实例 A。</li><li>A 代表敌人 #1001。</li><li>敌人 #1001 死亡，A 被归还池。</li><li>再次取出 A，A 代表敌人 #2035。</li></ol>
+<p>C# 引用仍然指向同一个实例 A，但敌人 #1001 与敌人 #2035 是不同的业务身份。</p>
+<div class="table-wrap"><table><thead><tr><th>概念</th><th>回答的问题</th></tr></thead><tbody><tr><td>Object Identity · 对象身份</td><td>是不是同一个 C# 对象实例？</td></tr><tr><td>Logical Identity · 逻辑身份</td><td>是不是同一个特定的敌人、同一轮业务生命？</td></tr><tr><td>Resource Ownership · 资源所有权</td><td>谁负责管理并最终释放这个实例？</td></tr></tbody></table></div>
+<div class="callout"><strong>对象引用相同，不意味着它仍然代表同一个逻辑实体。</strong></div>
+<h3>3. 有效的引用，也可能执行过期的操作</h3>
+<ol class="steps"><li>敌人 A 出现，生命值为 100。</li><li>玩家释放技能，安排 2 秒后造成伤害，回调持有 A 的引用。</li><li>A 在 1 秒后死亡，被归还对象池。</li><li>同一个实例被取出，代表新敌人 B。</li><li>旧回调执行，对该实例造成 30 点伤害，结果伤害了 B。</li></ol>
+<p>对象没有被回收，引用也可能完全有效。这不是典型的内存访问失效，而是<strong>将资源的可访问性误认为业务操作的合法性</strong>。</p>
+<div class="formula">CanOperate(r, l, t)<br>= ResourceValid(r, t)<br>∧ LogicalValid(l, t)<br>∧ BelongsTo(r, l, t)</div>
+<p>这个简化条件要求：资源当前可用；目标逻辑生命有效；资源当前承载的正是该次逻辑生命。仅检查 <code>enemy != null</code> 或 <code>enemy.IsActive</code>，无法判断敌人是否已经换了一轮。</p>
+<h3>4. 逻辑生命也可能比单个资源更长</h3>
+<p>一次商城会话开始后，UI 对象 A 被创建；切换界面时 A 被销毁，UI 对象 B 被创建；购物车仍保留，最后商城会话才结束。</p>
+<p>商城会话是逻辑概念，UI 是承载形式。逻辑状态可以放在独立的 Session、Model 或领域对象中，让不同的 UI 实例先后呈现。</p>
+<div class="callout"><strong>不要把必须长期存在的业务状态，错误地绑定到一个短期资源实例上。</strong></div>
+<h3>5. 边界混淆会产生哪些故障？</h3>
+<div class="table-wrap"><table><thead><tr><th>错误设计</th><th>可能的后果</th></tr></thead><tbody><tr><td>逻辑结束就强制销毁资源</td><td>增加创建与销毁开销，无法有效池化</td></tr><tr><td>资源存在就认为逻辑有效</td><td>已死亡敌人继续行动，关闭窗口继续接收回调</td></tr><tr><td>归还池时不终止逻辑活动</td><td>事件、延迟任务等继续影响对象</td></tr><tr><td>重新使用时不重置状态</td><td>上一轮生命值、Buff、目标残留</td></tr><tr><td>只检查引用，不检查逻辑身份</td><td>旧操作作用到新实体</td></tr><tr><td>长期状态存放在短命资源中</td><td>场景切换、UI 重建时数据丢失</td></tr><tr><td>逻辑结束后忘记释放独占资源</td><td>文件、连接、纹理或订阅长期占用</td></tr></tbody></table></div>
+<p>资源生命周期错误主要破坏资源管理的正确性，逻辑生命周期错误主要破坏业务行为的正确性。它们可能互相影响，但不能简单地用同一种清理机制替代。</p></section>
+
+<section id="how"><h2><small>03 · HOW</small>如何设计两种生命周期？</h2>
+<div class="callout"><strong>把资源的创建与销毁、逻辑的开始与结束，设计为不同的操作。</strong></div>
+<h3>1. 首先明确四种组合状态</h3>
+<div class="table-wrap"><table><thead><tr><th>资源可用</th><th>逻辑有效</th><th>含义</th></tr></thead><tbody><tr><td>是</td><td>是</td><td>资源为当前逻辑活动服务</td></tr><tr><td>是</td><td>否</td><td>资源闲置、缓存或等待复用</td></tr><tr><td>否</td><td>否</td><td>资源释放，逻辑活动结束</td></tr><tr><td>否</td><td>是</td><td>原资源不可用，逻辑仍有效，需要恢复或重新绑定资源</td></tr></tbody></table></div>
+<p>如果业务必须依赖某个特定资源，资源失效后就不能继续使用它。若业务状态与资源实现解耦，例如持久会话与临时 UI，则可以换一个资源继续运行。</p>
+<h3>2. 用两个状态机表达边界</h3>
+<div class="figure"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 280" role="img" aria-label="资源与逻辑具有不同的状态机"><defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#64788a"/></marker></defs><g font-family="system-ui,Microsoft YaHei,sans-serif" text-anchor="middle"><text x="390" y="24" font-size="15" fill="#315fac">底层实例：创建与销毁</text><g fill="#edf3fa" stroke="#b9ccdf"><rect x="35" y="49" width="170" height="44" rx="8"/><rect x="305" y="49" width="170" height="44" rx="8"/><rect x="575" y="49" width="170" height="44" rx="8"/></g><g fill="#203246" font-size="15"><text x="120" y="77">未创建</text><text x="390" y="77">存在</text><text x="660" y="77">已销毁</text></g><g stroke="#64788a" marker-end="url(#arrow)"><path d="M205 71H300"/><path d="M475 71H570"/></g><g font-size="12" fill="#637181"><text x="255" y="59">Create</text><text x="525" y="59">Destroy</text></g><text x="390" y="145" font-size="15" fill="#247660">逻辑生命：每轮开始产生新的身份</text><g fill="#eff7f3" stroke="#a6cbbb"><rect x="130" y="179" width="170" height="44" rx="8"/><rect x="480" y="179" width="170" height="44" rx="8"/></g><g fill="#203246" font-size="15"><text x="215" y="207">Inactive</text><text x="565" y="207">Active</text></g><g fill="none" stroke="#64788a" marker-end="url(#arrow)"><path d="M300 190H475"/><path d="M480 214H305"/></g><g font-size="12" fill="#637181"><text x="390" y="179">BeginLife</text><text x="390" y="238">EndLife</text></g><text x="390" y="270" font-size="12" fill="#637181">两个状态机有关联，但不能简单合并成同一个状态机。</text></g></svg></div>
+<p>资源生命周期由其所有者管理；逻辑生命周期由负责业务规则的对象或系统管理。两者需要协调，但含义不同。</p>
+<h3>3. 显式区分 BeginLife 与 EndLife</h3>
+<p>下面先展示最基础的 Unity/C# 示例：开始与结束一轮敌人生命，但不负责分配与销毁实例。</p>
+<div class="code"><div class="codebar"><span>C# · 核心示例</span><button class="copy" type="button">复制代码</button></div><pre><code>using System;
+using UnityEngine;
+
+public sealed class Enemy : MonoBehaviour
+{
+    private bool _alive;
+    private int _health;
+
+    public bool IsAlive =&gt; _alive;
+
+    // 开始新的一轮逻辑生命
+    public void BeginLife(int health)
+    {
+        if (_alive)
+            throw new InvalidOperationException(&quot;Enemy is already alive.&quot;);
+
+        _health = health;
+        _alive = true;
+        gameObject.SetActive(true);
+    }
+
+    // 结束当前逻辑生命，不销毁实例
+    public void EndLife()
+    {
+        if (!_alive)
+            return;
+
+        _alive = false;
+        _health = 0;
+        gameObject.SetActive(false);
+    }
+
+    public void TakeDamage(int damage)
+    {
+        if (!_alive)
+            return;
+
+        _health = Math.Max(0, _health - damage);
+    }
+}</code></pre></div><div class="code"><div class="codebar"><span>C# · 核心示例</span><button class="copy" type="button">复制代码</button></div><pre><code>Enemy enemy = pool.Get();
+enemy.BeginLife(100);  // 新的一轮逻辑生命
+
+// ... 游戏逻辑 ...
+
+enemy.EndLife();       // 当前业务身份失效
+pool.Release(enemy);   // 放弃本轮占用，归还池</code></pre></div>
+<p><code>EndLife()</code> 结束业务身份，<code>Release()</code> 结束使用者对实例的本轮占用。Unity 的 <code>ObjectPool&lt;T&gt;</code> 可通过获取、归还和销毁回调配置对应处理；归还时若池已满，也可能实际销毁实例。</p>
+<div class="callout warning"><strong>只检查 _alive 仍有漏洞。</strong><p>对象被再次使用后，<code>_alive</code> 又为 true，旧回调仍可能伤害新敌人。因此，状态有效并不足以证明“还是原来的那一轮”。</p></div>
+<h3>4. 用 Generation 区分每一轮逻辑生命</h3>
+<p>给每次 <code>BeginLife()</code> 分配一个新的世代号 Generation。旧回调携带第 1 轮标识，而对象当前已处于第 3 轮，即使实例可用且激活，也必须拒绝旧操作。</p>
+<div class="formula">Handle = (Object Reference, Generation)<br>句柄 =（对象引用，逻辑世代）</div>
+<div class="code"><div class="codebar"><span>C# · 核心示例</span><button class="copy" type="button">复制代码</button></div><pre><code>using System;
+using UnityEngine;
+
+public readonly struct EnemyHandle
+{
+    public readonly Enemy Enemy;
+    public readonly long Generation;
+
+    public EnemyHandle(Enemy enemy, long generation)
+    {
+        Enemy = enemy;
+        Generation = generation;
+    }
+}
+
+public sealed class Enemy : MonoBehaviour
+{
+    private long _generation;
+    private bool _alive;
+    private int _health;
+
+    public EnemyHandle BeginLife(int health)
+    {
+        if (_alive)
+            throw new InvalidOperationException(&quot;Already active.&quot;);
+
+        _generation = checked(_generation + 1);
+        _health = health;
+        _alive = true;
+        gameObject.SetActive(true);
+
+        return new EnemyHandle(this, _generation);
+    }
+
+    public bool IsCurrent(EnemyHandle handle)
+    {
+        return _alive
+            &amp;&amp; ReferenceEquals(handle.Enemy, this)
+            &amp;&amp; handle.Generation == _generation;
+    }
+
+    public void TakeDamage(EnemyHandle handle, int damage)
+    {
+        if (!IsCurrent(handle))
+            return;
+
+        _health = Math.Max(0, _health - damage);
+    }
+
+    public bool EndLife(EnemyHandle handle)
+    {
+        if (!IsCurrent(handle))
+            return false;
+
+        _alive = false;
+        _health = 0;
+        gameObject.SetActive(false);
+        return true;
+    }
+}</code></pre></div><div class="code"><div class="codebar"><span>C# · 核心示例</span><button class="copy" type="button">复制代码</button></div><pre><code>// 第一轮
+EnemyHandle oldHandle = enemy.BeginLife(100);
+enemy.EndLife(oldHandle);
+
+// 第二轮，复用同一个对象
+EnemyHandle newHandle = enemy.BeginLife(200);
+
+enemy.TakeDamage(oldHandle, 50); // 旧攻击：被拒绝
+enemy.TakeDamage(newHandle, 50); // 当前攻击：生效</code></pre></div>
+<p>两次句柄引用相同实例，但 Generation 不同。句柄表达的是<strong>操作目标属于哪一轮逻辑生命</strong>，不只是对象在哪里。</p>
+<p>这可以防止过期句柄（Stale Handle）错误，也与 ABA 问题有相似之处：底层位置未变，但其代表的身份已经经历变化。</p>
+<p>管理器归还对象时，同样需要校验：只有 <code>EndLife(handle)</code> 成功，才允许执行 <code>pool.Release(enemy)</code>，否则旧退场请求可能归还已经重生的对象。</p>
+<div class="callout warning"><p><strong>示例边界：</strong>基础版 Enemy 与句柄版 Enemy 是两个逐步演进的版本，使用时选择一个。以上展示核心机制，未实现完整的死亡流程、伤害参数校验、事件清理与池管理。</p><p>Generation 校验按 Unity 主线程串行访问理解；若多线程并发操作，“校验并修改”还需要同步。世代号必须避免重复，示例用 <code>checked</code> 防止溢出后静默回绕。</p></div>
+<h3>5. 异步任务：结束业务不等于工作已经停止</h3>
+<p>窗口打开后加载数据，关闭又重新打开；旧加载这时完成，可能把旧结果写入新一轮窗口。这与池化敌人的问题相同。</p>
+<div class="table-wrap"><table><thead><tr><th>机制</th><th>解决什么</th></tr></thead><tbody><tr><td>Cancellation · 取消</td><td>请求停止上一轮不再需要的工作</td></tr><tr><td>Generation / Identity · 身份校验</td><td>拒绝已经过期的操作与结果</td></tr></tbody></table></div>
+<div class="code"><div class="codebar"><span>C# · 核心示例</span><button class="copy" type="button">复制代码</button></div><pre><code>using System;
+using System.Threading;
+using System.Threading.Tasks;
+
+// 置于相应的类中
+private async Task ApplyDelayedDamage(
+    EnemyHandle handle,
+    CancellationToken cancellationToken)
+{
+    try
+    {
+        await Task.Delay(2000, cancellationToken);
+    }
+    catch (OperationCanceledException)
+    {
+        return;
+    }
+
+    // 假设此处在 Unity 主线程执行
+    if (handle.Enemy != null)
+    {
+        // TakeDamage 内部再次检查本轮身份
+        handle.Enemy.TakeDamage(handle, 30);
+    }
+}</code></pre></div>
+<p>取消通常是协作式的，不能单独作为逻辑正确性的最终保障。即使工作没能及时停止，最后的身份校验仍能拒绝旧操作。</p>
+<p>涉及 Unity API 的调用必须满足主线程要求。生产实现也应清理本轮事件订阅、效果状态、定时器与其他专属数据。</p>
+<h3>6. 不要将 Unity 回调普遍等同于业务生命周期</h3>
+<p><code>OnEnable</code> / <code>OnDisable</code> 反映组件与对象启用状态的变化；<code>OnDestroy</code> 反映对象或组件的销毁阶段。禁用也可能与销毁、场景卸载或脚本重载有关。</p>
+<p>所以不能普遍认定 <code>OnEnable == BeginLife</code>、<code>OnDisable == EndLife</code>。例如，<code>SetActive(false)</code> 可能只是暂停显示，不代表敌人死亡。</p>
+<div class="code"><div class="codebar"><span>C# · 核心示例</span><button class="copy" type="button">复制代码</button></div><pre><code>BeginLife();
+Suspend();
+Resume();
+EndLife();</code></pre></div>
+<p>对于语义严格的对象，先明确这些业务操作，再决定是否调用 <code>SetActive()</code>。Unity 回调可维护与启用状态相匹配的订阅、注册等，但不应无条件解释为业务出生与死亡。</p>
+<p>调用 <code>Destroy()</code> 与销毁完成也有时间差：Unity 会安排稍后的实际销毁，因此一旦业务失效，就应立即拒绝相应业务操作。</p>
+<h3>7. 区分 Dispose、Lease 与 Logical Lifetime</h3>
+<p><code>IDisposable</code> 是显式清理或释放资源的协议，并不天然定义业务结束规则。</p>
+<div class="code"><div class="codebar"><span>C# · 核心示例</span><button class="copy" type="button">复制代码</button></div><pre><code>using (var stream = System.IO.File.OpenRead(path))
+{
+    LoadData(stream);
+} // Dispose 及时释放底层资源，托管对象不一定立即被 GC 回收</code></pre></div>
+<p><strong>Lease（租约 / 使用权周期）</strong>表示使用者暂时持有资源的权利。例如底层数据库连接先借给请求 A，A 完成后归还，再借给请求 B，最终池关闭时物理连接才被释放。</p>
+<div class="table-wrap"><table><thead><tr><th>层级</th><th>生命周期</th></tr></thead><tbody><tr><td>物理资源</td><td>底层连接从创建到释放</td></tr><tr><td>Lease</td><td>请求对连接的一次占用</td></tr><tr><td>Logical</td><td>请求本身从开始到完成的业务周期</td></tr></tbody></table></div>
+<p>一次请求可以使用多个连接，一个连接也可以先后服务很多请求。<strong>Dispose、Return、EndLife、Destroy 是不同层级的操作。</strong>具体 API 可以把其中几个动作组合起来，仍应明确它实际结束了哪个周期。</p></section>
+
+<section id="verify"><h2><small>04 · 验证</small>用不变量约束生命周期</h2>
+<p>不要仅观察程序是否“看起来正常运行”，应明确哪些条件在任何合法执行中都必须成立。</p>
+<div class="check"><h3>① 失效的逻辑身份不能修改业务状态</h3><div class="formula">¬LogicalActive(h) ⇒ ¬CanMutate(h)</div><p>旧句柄不得改变新一轮的生命值、Buff、位置与业务状态。</p></div>
+<div class="check"><h3>② 一次租借至多有效归还一次</h3><div class="formula">ReleaseCount(lease) ≤ 1</div><p>记录的是某次占用，而不是实例的整个生命。同一实例可以借还多次，但一次租借不能被重复归还。</p></div>
+<div class="check"><h3>③ 新生命不能意外继承旧状态</h3><div class="formula">State_new = Initialize(Config, InitialState)</div><p>生命值、临时 Buff、目标、定时器、协程与事件订阅，都要有明确的重置或继承策略。</p></div>
+<div class="check"><h3>④ 互斥的独占租借不能重叠</h3><div class="formula">ExclusiveLeaseCount(resource) ≤ 1</div><p>若资源允许共享，则改用符合共享语义的并发与引用计数规则。</p></div>
+<div class="check"><h3>⑤ 结束与释放都有明确责任方</h3><p>谁调用 <code>EndLife()</code>？谁调用 <code>Release()</code>？谁最终调用 <code>Destroy()</code>？回答不清楚，就容易遗漏清理或重复释放。</p></div>
+<h3>最值得测试的场景</h3><ul><li>旧回调在对象重新生成后才执行。</li><li>旧句柄请求退场时，对象已属于新一轮。</li><li>同一租借被重复归还。</li><li>窗口关闭又打开后，旧异步结果才到达。</li><li>复用对象时，旧 Buff、目标、订阅与计时器是否残留。</li></ul></section>
+
+<section id="ownership"><h2><small>05 · 关联</small>所有权、借用与两种生命周期</h2>
+<div class="table-wrap"><table><thead><tr><th>概念</th><th>必须回答的问题</th></tr></thead><tbody><tr><td>Ownership · 所有权</td><td>谁拥有资源，谁最终负责释放？</td></tr><tr><td>Resource Lifetime</td><td>所讨论的资源从何时开始存在或被持有，何时释放？</td></tr><tr><td>Borrowing / Lease</td><td>当前谁被允许使用它，权限与占用周期何时结束？</td></tr><tr><td>Logical Lifetime</td><td>操作属于哪一轮业务生命，何时失效？</td></tr></tbody></table></div>
+<p>常见复用系统中，Owner 管理资源，使用者通过借用或租约获得使用权，再利用资源承载业务活动。但所有系统不必严格按照同一种层级嵌套。</p>
+<p>若资源 R 被连续复用 n 次，而且每次逻辑活动都依赖此特定资源，可用时间区间表达：</p>
+<div class="formula">L₁, L₂, …, Lₙ ⊆ R</div>
+<p>这里的包含指时间区间包含，不表示逻辑活动必须连续、相同，或资源与业务必然一一对应。若逻辑活动可以更换资源，就不能普遍套用这种包含关系。</p>
+<div class="callout"><p><strong>资源生命周期定义资源的存续和可用边界；逻辑生命周期定义业务身份、职责和操作的有效边界。</strong></p><p>设计的目标，是明确各自边界，并在越界时让该失效的操作失效，让仍可复用的资源继续发挥作用。</p></div>
+<h3>四个设计问题，贯穿实现</h3><ol><li>我操作的是哪一个资源层级？</li><li>我持有的是实例引用，还是某轮逻辑身份？</li><li>逻辑结束时，哪些工作、订阅和结果必须失效？</li><li>使用权结束时，谁归还资源；资源最终结束时，谁释放它？</li></ol>
+</section>
+<section id="references"><h2><small>附录</small>官方资料入口</h2><p>本文依据所提供的讲解整理。以下链接供进一步查阅相关 API；原对话的内部引用标记未保留。</p><ul><li><a href="https://docs.unity3d.com/ScriptReference/Pool.ObjectPool_1.html">Unity · ObjectPool&lt;T&gt;</a></li><li><a href="https://docs.unity3d.com/ScriptReference/MonoBehaviour.OnEnable.html">Unity · OnEnable</a> / <a href="https://docs.unity3d.com/ScriptReference/MonoBehaviour.OnDisable.html">OnDisable</a> / <a href="https://docs.unity3d.com/ScriptReference/MonoBehaviour.OnDestroy.html">OnDestroy</a></li><li><a href="https://docs.unity3d.com/ScriptReference/Object.Destroy.html">Unity · Object.Destroy</a></li><li><a href="https://learn.microsoft.com/dotnet/standard/garbage-collection/implementing-dispose">.NET · 实现 Dispose 方法</a></li><li><a href="https://learn.microsoft.com/dotnet/standard/threading/cancellation-in-managed-threads">.NET · 托管线程中的取消</a></li></ul><a href="#top" class="top">返回顶部 ↑</a></section>
+</article><footer>概念讲解与核心示例 · 无外部脚本、字体或样式依赖 · 可直接保存、离线打开与打印</footer></main></div><script>
+document.querySelectorAll('.copy').forEach(button => button.addEventListener('click', async () => {
+  const text = button.closest('.code').querySelector('code').textContent;
+  let copied = false;
+  try { await navigator.clipboard.writeText(text); copied = true; }
+  catch { const area = document.createElement('textarea'); area.value = text; area.style.position = 'fixed'; area.style.opacity = '0'; document.body.appendChild(area); area.select(); copied = document.execCommand('copy'); area.remove(); }
+  button.textContent = copied ? '已复制' : '请选中代码复制';
+  setTimeout(() => { button.textContent = '复制代码'; }, 1800);
+}));
+</script></body></html>

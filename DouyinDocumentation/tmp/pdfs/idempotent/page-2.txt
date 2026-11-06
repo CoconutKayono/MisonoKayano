@@ -1,0 +1,43 @@
+Making retries safe with idempotent APIs 
+1 
+ 
+At Amazon, we often see patterns in our services in which a complex operation is decomposed 
+into a controlling process making calls to a number of smaller service s, each responsible for 
+one part of the overall workflow . For example, consider the launch of an Amazon Elastic 
+Compute Cloud (EC2) instance. “Under the hood” this involves calls to services responsible for 
+making placement decisions, creating Amazon Elastic Block Store ( EBS) volumes, creating 
+elastic network Interfaces, and provisioning a virtual machine (VM). On occasion, one or more 
+of these service calls might fail.  To deliver a good customer experience we want to drive this 
+workflow to success . To achieve this, we look to the controlling process to shepherd all 
+decomposed services into a known good state.  
+ 
+We’ve found that in many cases the simplest solution is the best solution. In the  scenario I just 
+described, it would be best to simply retry these calls until they succeed. Interestingly, as Marc 
+Brooker explains in  the article Timeouts, retries, and backoff with jitter , a surprisingly large 
+number of transient or random faults can be overcome by simply retrying the call. As simple as 
+it seems, this pattern has proven so effective that we have baked default retry behavior into 
+some of our AWS SDK implementations . These implementations automatically retry requests 
+that fail as a result of network IO issues, server-side fault, or service rate limiting. Being able to 
+simply retry requests reduces the number of edge cases that need to be dealt with by the client. 
+As a result , it  reduces the amount of undiffer entiated boilerplate code needed in calling 
+services. Undifferentiated boilerplate code in this context refers to the code need ed to wrap 
+service calls to remote services to handle various fault scenarios that might arise. 
+ 
+However, retrying a service call  as mitigation for a transient fault is based on a simplifying 
+assumption that an operation can be retried without any side effects. Put another way, we want 
+to make sure that the result of the call happens only once , even if we need to make that call 
+multiple times as part of our retry loop. Going back to our earlier example , it would be 
+undesirable for the EC2 instance launch workflow to retry a failed call to create an EBS volume 
+and end up with two EBS volumes. In this article, we discuss how AWS leverages idempotent 
+API operations to mitigate some of the potential undesirable side effects of retrying in order 
+to deliver a more robust service while still leveraging the benefits of retries to  simplifying 
+client-side code. 
+ 
+Retrying and the potential for undesirable side effects  
+To dive into this more deeply let’s consider a hypothetical scenario where a customer is using 
+the Amazon EC2 RunInstances API  operation. In our scenario , our customer wants to run a 
+singleton workload, which is a workload that requires “at most one” EC2 instance running at 
+any time. To achieve this, our customer’s provisioning process asks Amazon EC2 to launch this 
+new workload. However,  for some reason, perhaps due to a network timeout, the provisioning 
+process receives no response. 
+ 
