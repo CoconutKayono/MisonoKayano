@@ -1,0 +1,599 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>UI 文本对象（UI Text GameObjects） · uGUI 2.7 中文文档</title><link rel="stylesheet" href="../assets/style.css"></head><body><button class="menu-toggle" aria-controls="sidebar" aria-expanded="false">目录</button><aside id="sidebar"><a class="brand" href="../index.html"><span class="brand-mark">U</span><span>uGUI 中文手册<small>2.7.0 · 离线阅读</small></span></a><a class="side-home" href="../index.html">目录与全文搜索</a><details><summary>起步与基础</summary><a class="" href="../pages/48-index.html"><span>01</span>Unity UI（uGUI）概述（Unity UI (uGUI)）</a><a class="" href="../pages/49-UICanvas.html"><span>02</span>Canvas 概述（Canvas）</a><a class="" href="../pages/50-UIBasicLayout.html"><span>03</span>基础布局（Basic Layout）</a><a class="" href="../pages/01-UIAutoLayout.html"><span>04</span>自动布局（Auto Layout）</a><a class="" href="../pages/44-UIReference.html"><span>05</span>UI 组件参考总览（UI Reference）</a><a class="" href="../pages/26-class-RectTransform.html"><span>06</span>矩形变换（Rect Transform）</a><a class="" href="../pages/30-script-SafeArea.html"><span>07</span>安全区域（Safe Area）</a><a class="" href="../pages/04-class-Canvas.html"><span>08</span>画布（Canvas）</a></details><details><summary>Canvas 与自动布局</summary><a class="" href="../pages/05-comp-CanvasComponents.html"><span>09</span>画布组件（Canvas Components）</a><a class="" href="../pages/08-script-CanvasScaler.html"><span>10</span>画布缩放器（Canvas Scaler）</a><a class="" href="../pages/06-class-CanvasGroup.html"><span>11</span>画布组（Canvas Group）</a><a class="" href="../pages/07-class-CanvasRenderer.html"><span>12</span>画布渲染器（Canvas Renderer）</a><a class="" href="../pages/02-comp-UIAutoLayout.html"><span>13</span>自动布局组件参考（Auto Layout）</a><a class="" href="../pages/60-script-LayoutElement.html"><span>14</span>布局元素（Layout Element）</a><a class="" href="../pages/61-script-ContentSizeFitter.html"><span>15</span>内容大小适配器（Content Size Fitter）</a><a class="" href="../pages/62-script-AspectRatioFitter.html"><span>16</span>宽高比适配器（Aspect Ratio Fitter）</a><a class="" href="../pages/63-script-HorizontalLayoutGroup.html"><span>17</span>水平布局组（Horizontal Layout Group）</a><a class="" href="../pages/45-script-VerticalLayoutGroup.html"><span>18</span>垂直布局组（Vertical Layout Group）</a><a class="" href="../pages/15-script-GridLayoutGroup.html"><span>19</span>网格布局组（Grid Layout Group）</a></details><details><summary>视觉与交互组件</summary><a class="" href="../pages/46-UIVisualComponents.html"><span>20</span>视觉组件概述（Visual Components）</a><a class="" href="../pages/18-UIInteractionComponents.html"><span>21</span>交互组件概述（Interaction Components）</a><a class="" href="../pages/00-UIAnimationIntegration.html"><span>22</span>动画集成（Animation Integration）</a><a class="" href="../pages/41-script-Tweening.html"><span>23</span>补间动画（Tweening）</a><a class="" href="../pages/47-comp-UIVisual.html"><span>24</span>视觉组件参考（Visual Components）</a><a class="" href="../pages/37-script-Text.html"><span>25</span>传统文本控件（Text）</a><a class="" href="../pages/16-script-Image.html"><span>26</span>图像（Image）</a><a class="" href="../pages/24-script-RawImage.html"><span>27</span>原始图像（Raw Image）</a><a class="" href="../pages/51-script-Mask.html"><span>28</span>遮罩（Mask）</a><a class="" href="../pages/27-script-RectMask2D.html"><span>29</span>二维矩形遮罩（RectMask2D）</a><a class="" href="../pages/42-comp-UIEffects.html"><span>30</span>UI 效果组件（UI Effect Components）</a><a class="" href="../pages/52-script-Shadow.html"><span>31</span>阴影（Shadow）</a><a class="" href="../pages/53-script-Outline.html"><span>32</span>描边（Outline）</a><a class="" href="../pages/23-script-PositionAsUV1.html"><span>33</span>将位置写入 UV1（Position as UV1）</a><a class="" href="../pages/19-comp-UIInteraction.html"><span>34</span>交互组件参考（Interaction Components）</a><a class="" href="../pages/32-script-Selectable.html"><span>35</span>可选择组件基类（Selectable Base Class）</a><a class="" href="../pages/54-script-SelectableTransition.html"><span>36</span>过渡选项（Transition Options）</a><a class="" href="../pages/22-script-SelectableNavigation.html"><span>37</span>导航选项（Navigation Options）</a><a class="" href="../pages/03-script-Button.html"><span>38</span>按钮（Button）</a><a class="" href="../pages/40-script-Toggle.html"><span>39</span>开关（Toggle）</a><a class="" href="../pages/55-script-ToggleGroup.html"><span>40</span>开关组（Toggle Group）</a><a class="" href="../pages/56-script-Slider.html"><span>41</span>滑动条（Slider）</a><a class="" href="../pages/31-script-Scrollbar.html"><span>42</span>滚动条（Scrollbar）</a><a class="" href="../pages/57-script-Dropdown.html"><span>43</span>下拉列表（Dropdown）</a><a class="" href="../pages/58-script-InputField.html"><span>44</span>输入框（Input Field）</a><a class="" href="../pages/59-script-ScrollRect.html"><span>45</span>滚动矩形（Scroll Rect）</a></details><details><summary>事件与消息系统</summary><a class="" href="../pages/11-EventSystem.html"><span>46</span>事件系统（Event System）</a><a class="" href="../pages/21-MessagingSystem.html"><span>47</span>消息系统（Messaging System）</a><a class="" href="../pages/17-InputModules.html"><span>48</span>输入模块（Input Modules）</a><a class="" href="../pages/36-SupportedEvents.html"><span>49</span>支持的事件（Supported Events）</a><a class="" href="../pages/25-Raycasters.html"><span>50</span>射线检测器（Raycasters）</a><a class="" href="../pages/64-EventSystemReference.html"><span>51</span>事件组件参考（Event System Reference）</a><a class="" href="../pages/65-script-EventSystem.html"><span>52</span>事件系统管理器（Event System Manager）</a><a class="" href="../pages/66-script-GraphicRaycaster.html"><span>53</span>图形射线检测器（Graphic Raycaster）</a><a class="" href="../pages/67-script-PanelEventHandler.html"><span>54</span>面板事件处理器（Panel Event Handler）</a><a class="" href="../pages/68-script-PanelRaycaster.html"><span>55</span>面板射线检测器（Panel Raycaster）</a><a class="" href="../pages/69-script-PhysicsRaycaster.html"><span>56</span>物理射线检测器（Physics Raycaster）</a><a class="" href="../pages/70-script-Physics2DRaycaster.html"><span>57</span>二维物理射线检测器（Physics 2D Raycaster）</a><a class="" href="../pages/71-script-StandaloneInputModule.html"><span>58</span>独立输入模块（Standalone Input Module）</a><a class="" href="../pages/12-script-EventTrigger.html"><span>59</span>事件触发器（Event Trigger）</a></details><details open><summary>TextMesh Pro</summary><a class="" href="../pages/39-index.html"><span>60</span>TextMesh Pro 文档与入门</a><a class="" href="../pages/10-TMPObjects.html"><span>61</span>创建文本（Creating text）</a><a class="active" aria-current="page" href="../pages/79-TMPObjectUIText.html"><span>62</span>UI 文本对象（UI Text GameObjects）</a><a class="" href="../pages/80-TMPObject3DText.html"><span>63</span>三维文本对象（3D Text GameObjects）</a><a class="" href="../pages/13-FontAssets.html"><span>64</span>字体资源（Font Assets）</a><a class="" href="../pages/81-FontAssetsProperties.html"><span>65</span>字体资源属性（Font Asset Properties）</a><a class="" href="../pages/82-FontAssetsCreator.html"><span>66</span>字体资源创建器（Font Asset Creator）</a><a class="" href="../pages/83-FontAssetsLineMetrics.html"><span>67</span>行度量（Line metrics.）</a><a class="" href="../pages/84-FontAssetsSDF.html"><span>68</span>有符号距离场字体（Signed Distance Fields）</a><a class="" href="../pages/85-FontAssetsDynamicFonts.html"><span>69</span>动态字体资源（Dynamic fonts assets）</a><a class="" href="../pages/86-FontAssetsSubsetting.html"><span>70</span>通过字体子集化优化字体文件（Optimize font files with font subsetting）</a><a class="" href="../pages/87-FontAssetsMigration.html"><span>71</span>将静态字体资源迁移到高级文本生成器（Migrate static font assets to the Advanced Text Generator）</a><a class="" href="../pages/88-FontAssetsFallback.html"><span>72</span>后备字体资源（Fallback font assets）</a><a class="" href="../pages/09-ColorEmojis.html"><span>73</span>彩色表情符号（Color emojis）</a><a class="" href="../pages/29-RichText.html"><span>74</span>TextMesh Pro 富文本（Rich Text）</a><a class="" href="../pages/89-RichTextSupportedTags.html"><span>75</span>支持的富文本标签（Supported Rich Text Tags）</a><a class="" href="../pages/90-RichTextAlignment.html"><span>76</span>文本对齐（Text Alignment）</a><a class="" href="../pages/20-RichTextLetterCase.html"><span>77</span>大小写与小型大写（Lowercase, Uppercase, Smallcaps）</a><a class="" href="../pages/38-RichTextOpacity.html"><span>78</span>文本透明度（Text Opacity / Alpha）</a><a class="" href="../pages/91-RichTextBoldItalic.html"><span>79</span>粗体与斜体（Bold and Italic）</a><a class="" href="../pages/92-RichTextColor.html"><span>80</span>文本颜色（Text Color）</a><a class="" href="../pages/93-RichTextCharacterSpacing.html"><span>81</span>字符间距（Character Spacing）</a><a class="" href="../pages/94-RichTextFont.html"><span>82</span>字体与材质（Font）</a><a class="" href="../pages/95-RichTextFontWeight.html"><span>83</span>字体粗细（Font weight）</a><a class="" href="../pages/96-RichTextGradient.html"><span>84</span>颜色渐变（Gradient）</a><a class="" href="../pages/97-RichTextIndentation.html"><span>85</span>缩进（Indentation）</a><a class="" href="../pages/98-RichTextLineHeight.html"><span>86</span>行高（Line Height）</a><a class="" href="../pages/99-RichTextLineIndentation.html"><span>87</span>行缩进（Line Indentation）</a><a class="" href="../pages/100-RichTextLink.html"><span>88</span>文本链接（Text Link）</a><a class="" href="../pages/101-RichTextMargins.html"><span>89</span>边距（Margin）</a><a class="" href="../pages/102-RichTextMark.html"><span>90</span>文本标记与高亮（Mark）</a><a class="" href="../pages/103-RichTextMonospace.html"><span>91</span>等宽间距（Monospacing）</a><a class="" href="../pages/104-RichTextNoBreak.html"><span>92</span>禁止换行（No Break）</a><a class="" href="../pages/105-RichTextNoParse.html"><span>93</span>禁止标签解析（Noparse）</a><a class="" href="../pages/106-RichTextPageBreak.html"><span>94</span>分页（Page Break）</a><a class="" href="../pages/107-RichTextPos.html"><span>95</span>水平位置（Horizontal Position）</a><a class="" href="../pages/108-RichTextRotate.html"><span>96</span>字符旋转（Rotate）</a><a class="" href="../pages/109-RichTextStrikethroughUnderline.html"><span>97</span>删除线与下划线（Strikethrough and Underline）</a><a class="" href="../pages/110-RichTextSize.html"><span>98</span>字号（Font Size）</a><a class="" href="../pages/111-RichTextSpace.html"><span>99</span>水平空白（Horizontal Space）</a><a class="" href="../pages/112-RichTextSprite.html"><span>100</span>内嵌精灵（Sprite）</a><a class="" href="../pages/113-RichTextStyle.html"><span>101</span>文本样式（Style）</a><a class="" href="../pages/114-RichTextSubSuper.html"><span>102</span>下标与上标（Subscript and Superscript）</a><a class="" href="../pages/115-RichTextVOffset.html"><span>103</span>垂直偏移（Vertical Offset）</a><a class="" href="../pages/116-RichTextWidth.html"><span>104</span>文本区域宽度（Text Width）</a><a class="" href="../pages/117-StyleSheets.html"><span>105</span>样式表（Style Sheets）</a><a class="" href="../pages/118-Sprites.html"><span>106</span>精灵资源（Sprites）</a><a class="" href="../pages/119-ColorGradients.html"><span>107</span>颜色渐变（Color Gradients）</a><a class="" href="../pages/120-ColorGradientsTypes.html"><span>108</span>颜色渐变类型（Color Gradient Types）</a><a class="" href="../pages/14-ColorGradientsPresets.html"><span>109</span>渐变预设（Gradient Presets）</a><a class="" href="../pages/35-Shaders.html"><span>110</span>TextMesh Pro 着色器（Shaders）</a><a class="" href="../pages/121-ShadersDistanceField.html"><span>111</span>距离场与距离场叠加着色器（Distance Field / Distance Field Overlay Shaders）</a><a class="" href="../pages/122-ShadersDistanceFieldSurface.html"><span>112</span>距离场表面着色器（Distance Field (Surface) Shader）</a><a class="" href="../pages/123-ShadersDistanceFieldMobile.html"><span>113</span>移动端距离场与叠加着色器（Distance Field / Distance Field Overlay Mobile Shaders）</a><a class="" href="../pages/124-ShadersDistanceFieldMaskingMobile.html"><span>114</span>移动端距离场遮罩着色器（Distance Field Masking Mobile Shader）</a><a class="" href="../pages/125-ShadersDistanceFieldSurfaceMobile.html"><span>115</span>移动端距离场表面着色器（Distance Field (Surface) Mobile Shader）</a><a class="" href="../pages/126-ShadersBitmap.html"><span>116</span>位图着色器（Bitmap Shader）</a><a class="" href="../pages/127-ShadersBitmapCustomAtlas.html"><span>117</span>自定义图集位图着色器（Bitmap Custom Atlas Shader）</a><a class="" href="../pages/33-Settings.html"><span>118</span>TextMesh Pro 设置（Settings）</a><a class="" href="../pages/128-RichTextLineBreak.html"><span>119</span>显式换行（Line Break）</a></details><details><summary>传统富文本与实用指南</summary><a class="" href="../pages/28-StyledText.html"><span>120</span>传统富文本（Rich Text）</a><a class="" href="../pages/43-UIHowTos.html"><span>121</span>UI 实用指南目录（UI How Tos）</a><a class="" href="../pages/72-HOWTO-UIMultiResolution.html"><span>122</span>为多种分辨率设计 UI（Designing UI for Multiple Resolutions）</a><a class="" href="../pages/73-HOWTO-UIFitContentSize.html"><span>123</span>让 UI 元素适应内容大小（Making UI elements fit the size of their content）</a><a class="" href="../pages/74-HOWTO-UIWorldSpace.html"><span>124</span>创建世界空间 UI（Creating a World Space UI）</a><a class="" href="../pages/75-HOWTO-UICreateFromScripting.html"><span>125</span>通过脚本创建 UI 元素（Creating UI elements from scripting）</a><a class="" href="../pages/76-HOWTO-UIScreenTransition.html"><span>126</span>创建界面过渡（Creating Screen Transitions）</a><a class="" href="../pages/77-HOWTO-ShaderGraph.html"><span>127</span>使用 Shader Graph 创建自定义 UI 效果（Create Custom UI Effects With Shader Graph）</a><a class="" href="../pages/78-ProfilerUI.html"><span>128</span>UI 与 UI Details 性能分析器（UI (Canvas) and UI Details (Canvas) Profiler module reference）</a></details><a class="side-home" href="../glossary.html">中英术语速查</a></aside><main><div class="breadcrumb"><a href="../index.html">文档目录</a> / TextMesh Pro <span>62 / 128</span></div><header class="page-header"><h1 id="ui-text-gameobjects">UI 文本对象（UI Text GameObjects）</h1><p class="tools"><a href="../english/79-TMPObjectUIText.html">离线英文原文</a><a href="https://docs.unity3d.com/Packages/com.unity.ugui@2.7/manual/TextMeshPro/TMPObjectUIText.html" target="_blank" rel="noopener">Unity 在线原文 ↗</a><button class="print">打印本页</button></p></header><nav class="pager" aria-label="顺序阅读导航"><a rel="prev" href="10-TMPObjects.html"><small>上一页</small>创建文本（Creating text）</a><a rel="next" href="80-TMPObject3DText.html"><small>下一页</small>三维文本对象（3D Text GameObjects）</a></nav><details class="page-toc"><summary>本页内容</summary><a href="#properties-overview">属性概览</a><a href="#text-input">文本输入（Text Input）</a><a href="#main-settings">主要设置（Main Settings）</a><a href="#font">字体（Font）</a><a href="#color">颜色（Color）</a><a href="#spacing">间距（Spacing）</a><a href="#alignment">对齐（Alignment）</a><a href="#wrapping-and-overflow">换行与溢出（Wrapping and Overflow）</a><a href="#uv-mapping">UV 映射（UV Mapping）</a><a href="#extra-settings">额外设置（Extra Settings）</a></details><article class="doc-content" id="content">
+<p>默认情况下，TextMesh Pro UI 文本 GameObject 包含以下组件：</p>
+<ul>
+<li><strong>Rect Transform：</strong> 控制 GameObject 在 Canvas 上的位置与大小。更多信息请参阅 Unity 手册中的 <a href="https://docs.unity3d.com/Manual/class-RectTransform.html" target="_blank" rel="noopener noreferrer" class="external">Rect Transform</a> 文档。<br><br></li>
+<li><strong>Canvas Renderer：</strong> 在 Canvas 上渲染 GameObject。更多信息请参阅 Unity 手册中的 <a href="https://docs.unity3d.com/Manual/class-CanvasRenderer.html" target="_blank" rel="noopener noreferrer" class="external">Canvas Renderer</a> 文档。<br><br></li>
+<li><strong>TextMeshPro - Text (UI)：</strong> 包含要显示的文本，以及控制文本外观与行为的 <a href="79-TMPObjectUIText.html#properties-overview">属性</a> 。 <br><br></li>
+<li><strong>材质（Material）：</strong> 使用 TextMesh Pro 着色器的 Unity 材质，用于进一步控制文本外观。更多信息请参阅 <a href="35-Shaders.html">着色器</a> 章节。</li>
+</ul>
+<h2 id="properties-overview">属性概览</h2>
+<p><img src="../assets/official-de50a8270987aaf9.png" alt="Example image" loading="lazy"></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td><strong>文本输入</strong></td>
+</tr>
+<tr>
+<td><strong></strong></td>
+<td><strong><a href="79-TMPObjectUIText.html#text-input">Text</a>:</strong> 输入要显示的文本，也可加入 <a href="29-RichText.html">富文本标记</a>.</td>
+</tr>
+<tr>
+<td></td>
+<td><strong>主要设置</strong></td>
+</tr>
+<tr>
+<td><strong>B</strong></td>
+<td><strong><a href="79-TMPObjectUIText.html#font">字体（Font）</a>:</strong> 指定使用的字体及其基本属性，例如大小、样式等。</td>
+</tr>
+<tr>
+<td><strong>C</strong></td>
+<td><strong><a href="79-TMPObjectUIText.html#color">颜色（Color）</a>:</strong> 定义文本的基础颜色或 <a href="119-ColorGradients.html">颜色渐变</a> 。</td>
+</tr>
+<tr>
+<td><strong>D</strong></td>
+<td><strong><a href="79-TMPObjectUIText.html#spacing">间距（Spacing）</a>:</strong> 控制字符、单词、行和段落之间的间距。</td>
+</tr>
+<tr>
+<td><strong>E</strong></td>
+<td><strong><a href="79-TMPObjectUIText.html#alignment">对齐（Alignment）</a>:</strong> 控制文本的水平与垂直对齐。</td>
+</tr>
+<tr>
+<td><strong>F</strong></td>
+<td><strong><a href="79-TMPObjectUIText.html#wrapping-and-overflow">换行与溢出（Wrapping and Overflow）</a>:</strong> 控制自动换行，以及文本超出显示区域时的处理方式。</td>
+</tr>
+<tr>
+<td><strong>G</strong></td>
+<td><strong><a href="79-TMPObjectUIText.html#uv-mapping">UV 映射（UV Mapping）</a>:</strong> 控制纹理如何映射到文本的字面和描边。</td>
+</tr>
+<tr>
+<td><strong>H</strong></td>
+<td><strong><a href="79-TMPObjectUIText.html#extra-settings">额外设置（Extra Settings）</a>:</strong> 用于控制文本外观与行为的其他选项。</td>
+</tr>
+</tbody>
+</table>
+<h2 id="text-input">文本输入（Text Input）</h2>
+<p>在文本区域中输入要显示的内容，并可通过以下方式自定义： <a href="29-RichText.html">富文本标记</a>.</p>
+<p><img src="../assets/official-44fd9f0cd3483ca3.png" alt="Example image" loading="lazy"></p>
+<table>
+<thead>
+<tr>
+<th>属性：</th>
+<th></th>
+<th>功能：</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Text</strong></td>
+<td></td>
+<td>输入要显示的文本。</td>
+</tr>
+<tr>
+<td><strong>启用 RTL 编辑器（Enable RTL Editor）</strong></td>
+<td></td>
+<td>启用后，文本从右到左显示，而不是从左到右。 <br><br>Inspector 会显示额外的输入框，可以查看反转后的文本并直接编辑。 <br><br>文本在屏幕显示或渲染前会先反转。</td>
+</tr>
+<tr>
+<td><strong>文本样式（Text Style）</strong></td>
+<td></td>
+<td>选择在以下资源中配置的文本样式： <a href="117-StyleSheets.html">样式表</a>.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="main-settings">主要设置（Main Settings）</h2>
+<p>Main Settings 包含定义文本基本外观所需的属性。还可通过更换或编辑文本的以下资源，进一步定制外观： <a href="35-Shaders.html">材质</a>.</p>
+<h3 id="font">字体（Font）</h3>
+<p>字体设置面板用于选择文本字体并自定义字体样式。</p>
+<p><img src="../assets/official-ab5e2f222c5e2214.png" alt="Example image" loading="lazy"></p>
+<table>
+<thead>
+<tr>
+<th>属性：</th>
+<th></th>
+<th>功能：</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>字体资源（Font Asset）</strong></td>
+<td></td>
+<td>为 TextMesh Pro GameObject 选择 <a href="13-FontAssets.html">字体资源</a> 。 <br><br> TextMesh Pro 附带多个字体资源，也可以从 TrueType（ttf）等标准字体文件创建其他资源。 <br><br> <strong>注意：</strong> 新文本对象的默认字体资源可在以下位置设置： <a href="33-Settings.html">TextMesh Pro 设置</a>.</td>
+</tr>
+<tr>
+<td><strong>材质预设（Material Preset）</strong></td>
+<td></td>
+<td>为字体选择材质。 <br><br> 每个字体资源都有默认材质，也可以为其创建自定义材质。 <br><br> 预设列表包含名称中含有字体资源名称，并使用对应字体图集纹理的所有材质。</td>
+</tr>
+<tr>
+<td><strong>字体样式（Font Style）</strong></td>
+<td></td>
+<td>启用标准文本样式选项。 <br><br> 这些选项可以任意组合，但小写、大写和小型大写这三个大小写选项相互排斥。</td>
+</tr>
+<tr>
+<td></td>
+<td>B</td>
+<td>将文本设为粗体。 <br><br> 粗体文本的外观在字体资源属性中定义。</td>
+</tr>
+<tr>
+<td></td>
+<td>I</td>
+<td>将文本设为斜体。 <br><br> 斜体文本的外观在字体资源属性中定义。</td>
+</tr>
+<tr>
+<td></td>
+<td>U</td>
+<td>为文本添加下划线。 <br><br> 在基线下方额外绘制一条线。</td>
+</tr>
+<tr>
+<td></td>
+<td>S</td>
+<td>为文本添加删除线。 <br><br> 在基线上方额外绘制一条线。</td>
+</tr>
+<tr>
+<td></td>
+<td>ab</td>
+<td>渲染前将文本转换为小写。 <br><br> 此操作不会改变 <strong>Text</strong> 字段中的文本大小写。</td>
+</tr>
+<tr>
+<td></td>
+<td>AB</td>
+<td>渲染前将文本转换为大写。 <br><br> 此操作不会改变 <strong>Text</strong> 字段中的文本大小写。</td>
+</tr>
+<tr>
+<td></td>
+<td>SC</td>
+<td>使用小型大写（small caps）。 <br><br> 文本全部以大写显示，但原本输入为大写的字母会显示得更大。</td>
+</tr>
+<tr>
+<td><strong>字号（Font Size）</strong></td>
+<td></td>
+<td>指定文本显示大小，单位为点（point）。</td>
+</tr>
+<tr>
+<td><strong>自动字号（Auto Size）</strong></td>
+<td></td>
+<td>启用后，根据以下选项自动设置字号： <strong>自动字号选项（Auto Size Options）</strong>. <br><br> 启用后，TextMesh Pro 会多次排版文本，以找到合适的字号。这一过程开销较大，因此应避免对频繁变化的动态文本使用自动字号。 <br><br> <strong>提示：</strong> 对于静态文本，可以先启用 <strong>自动字号（Auto Size）</strong>，记下 Font Size 字段显示的计算结果，再关闭 Auto Size，手动应用该字号。</td>
+</tr>
+<tr>
+<td><strong>自动字号选项（Auto Size Options）</strong></td>
+<td></td>
+<td>定义自动调整文本字号的基本规则。</td>
+</tr>
+<tr>
+<td></td>
+<td>最小</td>
+<td>指定允许的最小字号，单位为点。</td>
+</tr>
+<tr>
+<td></td>
+<td>Max（最大）</td>
+<td>指定允许的最大字号，单位为点。</td>
+</tr>
+<tr>
+<td></td>
+<td>WD%</td>
+<td>指定自动调整字号时，字符宽度允许缩小的最大百分比。 <br><br> TextMesh Pro 会挤压字符，使其看起来更高。通常只有数字适合这种处理。</td>
+</tr>
+<tr>
+<td></td>
+<td>行（Line）</td>
+<td>调整行高。 <br><br> 这有助于在给定空间中容纳更大的字号。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="color">颜色（Color）</h3>
+<p>TextMesh Pro 使用顶点颜色给文本着色。可以应用统一颜色，也可以应用 <a href="119-ColorGradients.html">渐变</a> ，最多包含四种颜色。</p>
+<p><img src="../assets/official-71528c2323732fab.png" alt="Example image" loading="lazy"></p>
+<table>
+<thead>
+<tr>
+<th>属性：</th>
+<th></th>
+<th>功能：</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>顶点颜色（Vertex Color）</strong></td>
+<td></td>
+<td>选择文本的主颜色。 <br><br> TextMesh Pro GameObject 或其材质中定义的所有颜色与纹理，都会与该颜色相乘。</td>
+</tr>
+<tr>
+<td><strong>颜色渐变（Color Gradient）</strong></td>
+<td></td>
+<td>启用后，为每个字符精灵应用 <a href="119-ColorGradients.html">颜色渐变</a> 。 <br><br> 随后可设置渐变类型与颜色，也可应用 <a href="14-ColorGradientsPresets.html">颜色渐变预设</a>. <br><br> 渐变颜色会与以下颜色相乘： <strong>顶点颜色（Vertex Color）</strong>。如果 <strong>顶点颜色（Vertex Color）</strong> 设为白色，只会看到渐变颜色；设为黑色，则完全看不到渐变颜色。</td>
+</tr>
+<tr>
+<td><strong>颜色预设（Color Preset）</strong></td>
+<td></td>
+<td>为 TextMesh Pro GameObject 选择 <a href="14-ColorGradientsPresets.html">颜色渐变预设</a>. <br><br> 应用预设后，它的 <strong>颜色模式（Color Mode）</strong> 和 <strong>颜色（Colors）</strong> 会取代 Inspector 中文本自身的局部属性。 <br><br> 编辑这些属性会修改预设，进而影响所有使用该预设的 TextMesh Pro GameObject。 <br><br> 将此属性设为 <strong>无（None）</strong> 可恢复文本自身的渐变属性。</td>
+</tr>
+<tr>
+<td><strong>颜色模式（Color Mode）</strong></td>
+<td></td>
+<td>选择要应用的颜色渐变类型。 <br><br> TextMesh Pro 会分别对每个字符应用渐变。</td>
+</tr>
+<tr>
+<td></td>
+<td>单色（Single）</td>
+<td>用统一颜色修改基础 <strong>顶点颜色（Vertex Color）</strong>.</td>
+</tr>
+<tr>
+<td></td>
+<td>水平渐变（Horizontal Gradient）</td>
+<td>两种颜色分别从字符的左右两侧渐变。</td>
+</tr>
+<tr>
+<td></td>
+<td>垂直渐变（Vertical Gradient）</td>
+<td>两种颜色分别从字符顶部和底部渐变。</td>
+</tr>
+<tr>
+<td></td>
+<td>四角渐变（Four Corners Gradient）</td>
+<td>四种颜色分别从字符的四个角渐变。</td>
+</tr>
+<tr>
+<td><strong>颜色（Colors）</strong></td>
+<td></td>
+<td>选择每一种渐变颜色。 <br><br> 可设置的颜色数量取决于渐变类型；颜色字段的排列与颜色在渐变中的位置对应，例如左／右、上／下，或四角渐变的两行两列。 <br><br> 可以通过以下任一方式设置颜色：<br><br> <strong>色块（Swatch）：</strong> 单击打开颜色选择器。 <br><br> <strong>吸管（Eyedropper）：</strong> 单击从屏幕任意位置拾取颜色。 <br><br> <strong>十六进制值（Hex Value）：</strong> 直接输入 RGBA 十六进制值。</td>
+</tr>
+<tr>
+<td><strong>覆盖标签（Override Tags）</strong></td>
+<td></td>
+<td>启用后，忽略以下标记中改变文本颜色的标签： <a href="29-RichText.html">富文本标签</a> 。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="spacing">间距（Spacing）</h3>
+<p>这些选项控制字符、单词、行与段落之间的间距，可用于微调单个 TextMesh Pro GameObject 的文本，而不必调整其 <a href="13-FontAssets.html">字体资源</a>.</p>
+<p><img src="../assets/official-1585fdb6f8da5f1c.png" alt="Example image" loading="lazy"></p>
+<p>要调整同一 TextMesh Pro GameObject 内部不同部分的间距，请使用 <a href="29-RichText.html">富文本标签</a>.</p>
+<table>
+<thead>
+<tr>
+<th>属性：</th>
+<th></th>
+<th>功能：</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>字符（Character）</td>
+<td></td>
+<td>设置该 TextMesh Pro GameObject 的字符间距。</td>
+</tr>
+<tr>
+<td>单词（Word）</td>
+<td></td>
+<td>设置该 TextMesh Pro GameObject 的单词间距。</td>
+</tr>
+<tr>
+<td>行（Line）</td>
+<td></td>
+<td>设置该 TextMesh Pro GameObject 的行间距。</td>
+</tr>
+<tr>
+<td>段落（Paragraph）</td>
+<td></td>
+<td>设置该 TextMesh Pro GameObject 的段落间距。 <br><br> 显式换行符用于划分段落。</td>
+</tr>
+<tr>
+<td>字符水平缩放（Character Horizontal Scale）</td>
+<td></td>
+<td>缩放该 TextMesh Pro GameObject 中字符的水平尺寸。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="alignment">对齐（Alignment）</h3>
+<p>水平与垂直对齐选项决定文本在显示区域中的位置。</p>
+<p><img src="../assets/official-99ec2aee67397809.png" alt="Example image" loading="lazy"></p>
+<table>
+<thead>
+<tr>
+<th>属性：</th>
+<th></th>
+<th>功能：</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>[水平对齐选项]</strong></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>Left、Center、Right（左对齐、居中、右对齐）</td>
+<td>在显示区域中沿水平方向定位文本，不改变文本本身。</td>
+</tr>
+<tr>
+<td></td>
+<td>Justified、Flush（两端对齐、完全两端对齐）</td>
+<td>通过增大单词和字符之间的距离，将文本拉伸到显示区域的整个宽度。 <br><br>   <strong>间距混合（Wrap Mix）</strong> 选项控制单词间距与字符间距的分配比例。 <br><br> <strong>Justified</strong> 模式不会拉伸段落的最后一行，而 <strong>Flush</strong> 模式会拉伸最后一行。</td>
+</tr>
+<tr>
+<td></td>
+<td>几何居中（Geometry Center）</td>
+<td>根据文本网格而不是文本度量进行居中。 <br><br> 差异并非总是明显，但某些情况下，此模式比普通 Center 对齐的视觉效果更好。</td>
+</tr>
+<tr>
+<td><strong>[垂直对齐选项]</strong></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>Top、Middle、Bottom（顶部、居中、底部）</td>
+<td>在显示区域中沿垂直方向定位文本，不改变文本本身。</td>
+</tr>
+<tr>
+<td></td>
+<td>基线（Baseline）</td>
+<td>使文本行的基线与显示区域的中部对齐。 <br><br> 适用于单行文本。</td>
+</tr>
+<tr>
+<td></td>
+<td>中线（Midline）</td>
+<td>可作为 Middle 对齐的替代方式。 <br><br> 此选项根据文本网格的边界而非以下度量决定垂直位置： <a href="83-FontAssetsLineMetrics.html#line-metrics">行度量</a>。在空间紧凑、上伸部和下伸部可能超出过多时，这种方式很有用。</td>
+</tr>
+<tr>
+<td></td>
+<td>大写字母线（Capline）</td>
+<td>使第一行文本的中部与显示区域的中部对齐。</td>
+</tr>
+<tr>
+<td><strong>间距混合（Wrap Mix，W &lt;-&gt; C）</strong></td>
+<td></td>
+<td>水平对齐设为以下模式时，调整额外单词间距与字符间距的分配比例： <strong>Justified</strong> 或 <strong>Flush</strong>.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="wrapping-and-overflow">换行与溢出（Wrapping and Overflow）</h3>
+<p>换行用于拆分文本行，使其不超过显示区域的宽度。通常在单词边界处换行，但长度超过整行的单词也会被拆分。溢出设置决定文本无法完全容纳于显示区域时的处理方式。</p>
+<p><img src="../assets/official-e58bd4c2de960287.png" alt="Example image" loading="lazy"></p>
+<p>某些溢出选项会优先于换行设置。例如 Overflow 设为 Truncate 时，文本一到显示区域边缘便被截断，无论是否启用 Wrapping。</p>
+<table>
+<thead>
+<tr>
+<th>属性：</th>
+<th></th>
+<th>功能：</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>文本换行模式（Text Wrapping Mode）</strong></td>
+<td></td>
+<td>控制文本的换行模式。</td>
+</tr>
+<tr>
+<td></td>
+<td>不换行（No Wrap）</td>
+<td>禁用自动换行。</td>
+</tr>
+<tr>
+<td></td>
+<td>常规（Normal）</td>
+<td>启用自动换行。</td>
+</tr>
+<tr>
+<td></td>
+<td>保留空白（Preserve Whitespace）</td>
+<td>启用自动换行，同时保留空白字符。</td>
+</tr>
+<tr>
+<td></td>
+<td>保留空白且不换行（Preserve Whitespace No Wrap）</td>
+<td>禁用自动换行，同时保留空白字符。</td>
+</tr>
+<tr>
+<td><strong>溢出（Overflow）</strong></td>
+<td></td>
+<td>指定文本无法完全容纳于显示区域时的处理方式。</td>
+</tr>
+<tr>
+<td></td>
+<td>溢出（Overflow）</td>
+<td>允许文本超出显示区域边界，但仍会在启用以下选项时换行： <strong>换行（Wrapping）</strong> 。</td>
+</tr>
+<tr>
+<td></td>
+<td>省略号（Ellipsis）</td>
+<td>截断文本并插入省略号（…），表示省略了部分内容。</td>
+</tr>
+<tr>
+<td></td>
+<td>遮罩（Masking）</td>
+<td>类似于 <strong>溢出（Overflow）</strong>，但着色器会隐藏显示区域之外的所有内容。</td>
+</tr>
+<tr>
+<td></td>
+<td>截断（Truncate）</td>
+<td>文本无法继续容纳时，截断文本。</td>
+</tr>
+<tr>
+<td></td>
+<td>Scroll Rect</td>
+<td>这是类似于以下模式的旧版模式： <strong>遮罩（Masking）</strong>。此选项仅用于兼容较旧的 TextMesh Pro 项目。新项目应改用 Masking 模式。</td>
+</tr>
+<tr>
+<td></td>
+<td>分页（Page）</td>
+<td>将文本拆分为多个页面，每页都能容纳于显示区域。 <br><br> 可以选择要显示的页面，也可使用富文本手动插入分页符。 <br><br> <strong>注意：</strong> 垂直对齐选项分别作用于每个页面。</td>
+</tr>
+<tr>
+<td></td>
+<td>链接（Linked）</td>
+<td>将超出的文本继续显示到所选择的另一个 TextMesh Pro GameObject 中。 <br><br> 适用于创建多栏文本。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="uv-mapping">UV 映射（UV Mapping）</h3>
+<p>部分 <a href="35-Shaders.html">TextMesh Pro 着色器</a> 允许为文本应用一张或多张图像纹理。以下选项控制纹理如何拉伸以适配文本。</p>
+<p><img src="../assets/official-aaa684856970fa3d.png" alt="Example image" loading="lazy"></p>
+<p>还可以在着色器自身中编辑其专有的纹理选项。可用选项取决于使用的着色器。</p>
+<p>为文本添加纹理时，必须确保纹理资源的 <strong>环绕模式（Wrap Mode）</strong> 设为 <strong>重复（Repeat）</strong>，否则应用到文本时，纹理很可能严重变形。更多信息请参阅 <a href="https://docs.unity3d.com/Manual/class-RenderTexture.html" target="_blank" rel="noopener noreferrer" class="external">渲染纹理文档</a> ，位于 Unity 手册中。</p>
+<table>
+<thead>
+<tr>
+<th>属性：</th>
+<th></th>
+<th>功能：</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>水平映射（Horizontal Mapping）</strong></td>
+<td></td>
+<td>使用支持纹理的着色器时，指定纹理如何在水平方向映射到文本。</td>
+</tr>
+<tr>
+<td></td>
+<td>字符（Character）</td>
+<td>将纹理在水平方向拉伸到每个字符精灵的宽度。</td>
+</tr>
+<tr>
+<td></td>
+<td>行（Line）</td>
+<td>将纹理在水平方向拉伸到每一行的整个宽度。</td>
+</tr>
+<tr>
+<td></td>
+<td>段落（Paragraph）</td>
+<td>将纹理在水平方向拉伸到全部文本的宽度。</td>
+</tr>
+<tr>
+<td></td>
+<td>匹配宽高比（Match Aspect）</td>
+<td>在水平方向缩放纹理，保持其宽高比并避免变形。 <br><br> 使用此水平映射模式时， <strong>垂直映射（Vertical Mapping）</strong> 决定纹理如何映射到文本，且必须设为以下模式以外的值： <strong>匹配宽高比（Match Aspect）</strong>.</td>
+</tr>
+<tr>
+<td><strong>垂直映射（Vertical Mapping）</strong></td>
+<td></td>
+<td>使用支持纹理的着色器时，指定纹理如何在垂直方向映射到文本。</td>
+</tr>
+<tr>
+<td></td>
+<td>字符（Character）</td>
+<td>将纹理在垂直方向拉伸到每个字符精灵的高度。</td>
+</tr>
+<tr>
+<td></td>
+<td>行（Line）</td>
+<td>将纹理在垂直方向拉伸到每行的整个宽度。</td>
+</tr>
+<tr>
+<td></td>
+<td>段落（Paragraph）</td>
+<td>将纹理在垂直方向拉伸到全部文本。</td>
+</tr>
+<tr>
+<td></td>
+<td>匹配宽高比（Match Aspect）</td>
+<td>在垂直方向缩放纹理，保持其宽高比并避免变形。 <br><br> 使用此垂直映射模式时， <strong>水平映射（Horizontal Mapping）</strong> 决定纹理如何映射到文本，且必须设为以下模式以外的值： <strong>匹配宽高比（Match Aspect）</strong>.</td>
+</tr>
+<tr>
+<td><strong>行偏移（Line Offset）</strong></td>
+<td></td>
+<td>Horizontal Mapping 设为 Line、 <strong>段落（Paragraph）</strong>或是 <strong>匹配宽高比（Match Aspect）</strong>时，可设置此值，为后续每一行依次增加水平纹理偏移。 <br><br> 此值会加到着色器中指定的 <strong>Offset X</strong> 值上。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="extra-settings">额外设置（Extra Settings）</h3>
+<p>本节包含进一步控制文本外观与行为的选项。</p>
+<p><img src="../assets/official-609aaf3396692797.png" alt="Example image" loading="lazy"></p>
+<table>
+<thead>
+<tr>
+<th>属性：</th>
+<th></th>
+<th>功能：</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>边距（Margins）</strong></td>
+<td></td>
+<td>设置正值可增大文本与文本容器边界之间的距离。 <br><br> 可分别设置  <strong>左（Left）</strong>、 <strong>上（Top）</strong>、 <strong>右（Right）</strong>和 <strong>下（Bottom）</strong> 四个边距。 <br><br> 负值会使文本超出文本容器的边界。 <br><br> 也可在 Scene 视图中拖动文本容器控件（黄色矩形）的手柄调整边距。</td>
+</tr>
+<tr>
+<td><strong>几何排序（Geometry Sorting）</strong></td>
+<td></td>
+<td>每个字符都位于一个四边形中。 <strong>几何排序（Geometry Sorting）</strong> 控制 TextMesh Pro 对这些四边形的排序方式，决定两个四边形重叠时哪个字符显示在上方。</td>
+</tr>
+<tr>
+<td></td>
+<td>常规（Normal）</td>
+<td>TextMesh Pro 按四边形在网格中的顺序绘制。重叠时，“较晚”的四边形显示在“较早”的四边形上方。</td>
+</tr>
+<tr>
+<td></td>
+<td>反向（Reverse）</td>
+<td>TextMesh Pro 按反向顺序绘制四边形。重叠时，“较早”的四边形显示在“较晚”的四边形上方。</td>
+</tr>
+<tr>
+<td><strong>缩放是否静态（Is Scale Static）</strong></td>
+<td></td>
+<td>启用后，将该 TextMesh Pro GameObject 的缩放视为静态，使其不参与 InternalUpdate 回调。该回调用于在对象或其父对象缩放时更新 SDF Scale。</td>
+</tr>
+<tr>
+<td><strong>富文本</strong></td>
+<td></td>
+<td>禁用此选项可关闭以下功能： <a href="29-RichText.html">富文本</a> ，作用于该 TextMesh Pro GameObject。 <br><br> 关闭富文本支持时，不会解析标签，而是将其作为普通文本渲染。</td>
+</tr>
+<tr>
+<td><strong>射线检测目标（Raycast Target）</strong></td>
+<td></td>
+<td>启用后，使该 TextMesh Pro GameObject 成为射线检测目标。 <br><br> 禁用后，UI 在判断光标与哪个对象交互时，会忽略该 TextMesh Pro GameObject。</td>
+</tr>
+<tr>
+<td><strong>可遮罩（Maskable）</strong></td>
+<td></td>
+<td>启用后，允许对该 TextMesh Pro GameObject 进行遮罩处理。</td>
+</tr>
+<tr>
+<td><strong>解析转义字符（Parse Escape Characters）</strong></td>
+<td></td>
+<td>启用后，TextMesh Pro 会将反斜杠转义的字符解释为特殊字符。 <br><br> 例如， <code>\n</code> 会被解释为换行符， <code>\t</code> 会被解释为制表符，依此类推。 <br><br> <strong>注意：</strong> 此设置作用于渲染的文本。在代码中，转义字符已经由编译器解析。</td>
+</tr>
+<tr>
+<td><strong>可见下伸部（Visible Descender）</strong></td>
+<td></td>
+<td>通过脚本逐渐显示文本时，可使用此选项。 <br><br> 启用后，文本从底部开始显示；随着新行出现，已有内容向上移动。 <br><br> 禁用后，文本从上向下显示。 <br><br> 要设置此类逐渐显示效果，还必须将垂直对齐设为 Bottom。</td>
+</tr>
+<tr>
+<td><strong>表情符号后备支持（Emoji Fallback Support）</strong></td>
+<td></td>
+<td>禁用此选项可关闭以下功能： <a href="09-ColorEmojis.html">彩色表情符号</a> ，作用于该 TextMesh Pro GameObject。</td>
+</tr>
+<tr>
+<td><strong>精灵资源（Sprite Asset）</strong></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><strong>样式表资源（Style Sheet Asset）</strong></td>
+<td></td>
+<td>文本对象使用的样式表，会覆盖默认样式表。</td>
+</tr>
+<tr>
+<td><strong>字体特性（Font Features）</strong></td>
+<td></td>
+<td>控制启用哪些 <a href="10-TMPObjects.html#opentype-fontfeature">OpenType 字体特性（FontFeatures）</a> 。</td>
+</tr>
+<tr>
+<td><strong>额外内边距（Extra Padding）</strong></td>
+<td></td>
+<td>启用后，为字符精灵增加额外内边距。 <br><br> TextMesh Pro 创建的精灵会尽量贴合可见文本，但结果并非始终完美。此设置可以减少字形在精灵边界处被裁切的概率。</td>
+</tr>
+</tbody>
+</table>
+</article><nav class="pager" aria-label="顺序阅读导航"><a rel="prev" href="10-TMPObjects.html"><small>上一页</small>创建文本（Creating text）</a><a rel="next" href="80-TMPObject3DText.html"><small>下一页</small>三维文本对象（3D Text GameObjects）</a></nav><footer>依据 Unity uGUI 2.7.0 官方手册翻译整理 · 技术名称、API、代码和图片中的英文保留 · 非 Unity 官方译文 · <a href="../版权与来源.html">版权与来源</a></footer></main><script src="../assets/app.js"></script></body></html>
