@@ -1,129 +1,206 @@
 <!doctype html>
-<html lang="zh-CN">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="color-scheme" content="light">
-<title>动律 · 运动曲线实验室</title>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light"><title>动律 · 运动曲线实验室</title>
 <style>
-:root{--ink:#242339;--muted:#66677c;--line:#e4e4ee;--brand:#6751df;--pale:#f1efff;--paper:#f7f8fc;font-family:Inter,"Segoe UI","Microsoft YaHei","PingFang SC",sans-serif;color:var(--ink);background:var(--paper);font-synthesis:none}
-*{box-sizing:border-box}body{margin:0}button,input,select{font:inherit}button,select,summary,input[type=range]{cursor:pointer}button{color:inherit}button:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible,a:focus-visible{outline:3px solid #9884f7;outline-offset:3px}button{border:0;background:none}h1,h2,h3,p{margin:0}header{background:#fff;border-bottom:1px solid var(--line)}.nav,main{max-width:1450px;margin:auto;padding:0 clamp(16px,3.5vw,60px)}.nav{height:66px;display:flex;align-items:center;gap:16px}.identity{display:flex;align-items:center;gap:10px;font-size:22px;font-weight:800}.logo{width:35px;height:35px;border-radius:10px;background:var(--brand);display:grid;place-items:center;color:#fff}.logo svg{width:25px;height:25px}.wordmark,.mono,.label-en,.stat,output{font-family:"IBM Plex Mono",Consolas,monospace;font-variant-numeric:tabular-nums}.wordmark{font-size:13px;color:#737287;letter-spacing:.06em;border-left:1px solid var(--line);padding-left:16px}.guide{display:flex;align-items:center;gap:8px;margin-left:auto;color:#55556b;font-size:14px;padding:9px 12px;border:1px solid var(--line);border-radius:9px;background:white}.ico{width:18px;height:18px;display:inline-block;vertical-align:middle;fill:none;stroke:currentColor;stroke-width:1.65;stroke-linecap:round;stroke-linejoin:round}.intro{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:30px 0 24px}.intro h1{font-size:clamp(28px,2.7vw,40px);letter-spacing:-.045em;font-weight:760}.intro p{color:var(--muted);margin-top:7px;line-height:1.65}.signature{width:186px;height:62px;opacity:.84}.layout{display:grid;grid-template-columns:clamp(220px,20vw,274px) minmax(0,1fr);gap:20px;align-items:start}.panel{border:1px solid var(--line);border-radius:16px;background:white;box-shadow:0 3px 14px #26234d04;overflow:hidden}.libhead,.head{display:flex;align-items:center;gap:9px}.libhead{padding:20px 16px 17px;border-bottom:1px solid var(--line)}h2{font-size:18px;letter-spacing:-.03em}.head>.ico,.libhead>.ico{color:#6c59c8}.count{margin-left:auto;font:13px Consolas,monospace;color:#6553c0;background:#f2efff;padding:4px 8px;border-radius:6px}.group{padding:15px 10px 8px}.group+.group{border-top:1px solid var(--line);margin-top:4px}.group h3{font-weight:600;color:#75758a;font-size:13px;margin:0 8px 9px;display:flex;align-items:center;gap:7px}.group h3 small{font:12px Consolas,monospace;color:#8b8d9d}.option{cursor:pointer;display:flex;align-items:center;gap:10px;margin:3px 0;padding:8px;border-radius:9px;border:1px solid transparent;position:relative}.option:hover{background:#f7f7fb}.option.on{background:var(--tint);border-color:color-mix(in srgb,var(--c) 23%,white)}.sample{width:34px;height:30px;flex:none}.optname{font-size:14px;font-weight:650;display:block}.optcode{font:12px/1.5 Consolas,monospace;color:var(--muted)}.option input{appearance:none;-webkit-appearance:none;margin:0 0 0 auto;border:1.4px solid #cbcbd8;width:16px;height:16px;border-radius:5px;background:#fff;flex:none}.option input:checked{background:var(--c);border-color:var(--c)}.option input:checked:after{content:"";display:block;width:7px;height:4px;border-left:2px solid white;border-bottom:2px solid white;transform:translate(3px,3px) rotate(-45deg)}.libfoot{padding:13px 16px;background:#fafafe;color:var(--muted);font-size:13px;border-top:1px solid var(--line)}.right{display:grid;gap:16px}.graphhead{padding:20px 22px 12px;display:flex;justify-content:space-between;gap:10px;align-items:center}.label-en{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:#818096}.plotarea{padding:0 15px 0 10px}.plot{width:100%;height:clamp(240px,28vh,340px);display:block;touch-action:none;cursor:crosshair}.legend{min-height:41px;display:flex;gap:8px;align-items:center;justify-content:center;flex-wrap:wrap;padding:6px 12px 13px}.chip{font-size:12px;font-weight:600;border-radius:6px;padding:4px 9px;background:var(--tint);color:var(--ink);display:inline-flex;gap:7px;align-items:center}.chip i{width:15px;height:3px;border-radius:3px;background:var(--c)}.transport{padding:14px 19px;display:flex;align-items:center;gap:10px;background:#faf9ff;border-top:1px solid var(--line)}.primary{display:flex;align-items:center;justify-content:center;gap:7px;background:var(--brand);color:white;height:37px;border-radius:8px;min-width:80px;font-size:14px;font-weight:600}.primary:hover{background:#5440c7}.iconbtn{border:1px solid var(--line);background:white;border-radius:8px;width:36px;height:36px;display:grid;place-items:center;flex:none}.iconbtn.active{background:var(--pale);color:var(--brand);border-color:#bcaff8}.timeline{flex:1;min-width:60px;accent-color:var(--brand);height:20px}.clock{font:13px Consolas,monospace;white-space:nowrap;color:#555469}.speed{background:white;border:1px solid var(--line);border-radius:7px;height:36px;padding:0 26px 0 10px;color:var(--ink);appearance:none;background-image:linear-gradient(45deg,transparent 50%,#767487 50%),linear-gradient(135deg,#767487 50%,transparent 50%);background-size:5px 5px;background-position:calc(100% - 12px) 52%,calc(100% - 7px) 52%;background-repeat:no-repeat}.tracks,.formulas{padding:19px 22px}.sectionhead{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:16px}.tracks .label-en{color:#747387}.track{display:grid;grid-template-columns:85px minmax(0,1fr) 60px;align-items:center;gap:10px;margin:6px 0;font-size:14px}.trackname{display:flex;gap:7px;align-items:center;font-weight:600}.dot{width:7px;height:7px;border-radius:50%;background:var(--c);flex:none}.rail{height:26px;position:relative;background-image:radial-gradient(#dedfe9 .9px,transparent 1px);background-size:8px 8px;border-radius:5px}.rail:before{content:"";position:absolute;left:var(--origin);right:calc(100% - var(--target));top:50%;border-top:1px solid #d8d7e4}.rail:after{content:"";position:absolute;left:var(--target);height:18px;top:4px;border-left:2px dotted #aaa8bb}.ball{position:absolute;top:50%;transform:translate(-50%,-50%);height:14px;width:14px;border-radius:50%;background:var(--c);box-shadow:0 0 0 4px var(--tint);z-index:1}.trail{height:3px;position:absolute;top:calc(50% - 1px);background:var(--c);opacity:.42}.value{font:13px Consolas,monospace;text-align:right}.tracknote{font-size:13px;color:var(--muted);line-height:1.5}.formula-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,225px),1fr));gap:10px}.formula{border-radius:10px;background:#fafafd;border:1px solid var(--line);padding:14px;min-width:0}.formula h3{font-size:15px;display:flex;gap:8px;align-items:center}.formula code,.modal code{display:block;font:14px/1.65 Consolas,monospace;margin:10px 0;color:#4c4076;overflow-wrap:anywhere;white-space:pre-line}.formula p,.notation{font-size:14px;line-height:1.7;color:var(--muted)}.notation{margin-bottom:12px}.parameter{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:11px 13px;background:#fffaef;border:1px solid #f0e2c5;border-radius:8px;margin-bottom:12px;font-size:14px}.parameter input{accent-color:#bb790e;flex:1;max-width:175px}.parameter output{min-width:35px}.empty{color:var(--muted);font-size:14px;padding:12px}.modal{border:1px solid var(--line);border-radius:16px;padding:24px;max-width:min(520px,92vw);color:var(--ink);box-shadow:0 16px 80px #25233b30}.modal::backdrop{background:#23213a69}.modal .sectionhead{margin-bottom:18px}.modal h3{font-size:16px;margin:16px 0 5px}.modal p{font-size:15px;line-height:1.8;color:#56566a}.modal code{background:var(--pale);padding:8px 12px;border-radius:7px}main{padding-bottom:36px}[hidden]{display:none!important}aside details summary{display:none}
-@media(max-width:980px){.layout{grid-template-columns:205px minmax(0,1fr);gap:12px}.transport{flex-wrap:wrap}.clock{font-size:12px}.transport{gap:6px;padding:12px}.graphhead,.tracks,.formulas{padding-left:16px;padding-right:16px}.track{grid-template-columns:76px minmax(0,1fr) 54px;gap:6px}.trackname{font-size:13px}.sectionhead{flex-wrap:wrap}}
-@media(max-width:720px){.nav{height:55px}.intro{padding:22px 0 16px}.intro p{font-size:14px}.signature{display:none}.layout{display:block}.library{margin-bottom:12px}.libhead{padding:12px 15px}.group{padding:9px 10px}.choices{display:grid;grid-template-columns:repeat(auto-fit,minmax(135px,1fr));gap:3px}.option{gap:5px;padding:5px}.sample{width:24px}.libfoot{display:none}aside details summary{display:block;cursor:pointer;list-style:none;font-size:14px;padding:9px 15px;color:var(--brand)}summary::-webkit-details-marker{display:none}.right{gap:12px}.plot{height:245px}.transport .timeline{order:8;flex-basis:calc(100% - 20px)}.clock{margin-right:auto}.intro h1{font-size:28px}.wordmark{padding-left:10px;font-size:12px}.nav{gap:10px}.label-en{font-size:12px}.tracks,.formulas{padding:15px}.graphhead{padding-top:16px}.guide{padding:7px 9px}.signature{display:none}}
-</style>
-</head>
-<body>
-<header><div class="nav"><div class="identity"><span class="logo" aria-hidden="true"><svg viewBox="0 0 28 28" fill="none"><path d="M3 20C11 20 8 6 16 6s3 15 10 12M3 24c7 0 8-12 14-12" stroke="currentColor" stroke-linecap="round" stroke-width="2.4"/></svg></span>动律</div><span class="wordmark" lang="en">Motion Atlas</span><button class="guide" id="guide"><span data-icon="book"></span>阅读指南</button></div></header>
-<main><div class="intro"><div><h1>运动曲线实验室</h1><p>把不同的运动放在同一条时间轴上，观察加速、减速与回弹。</p></div><canvas class="signature" id="signature" aria-hidden="true"></canvas></div>
-<div class="layout"><aside class="panel library"><div class="libhead"><span data-icon="layers"></span><h2>曲线库</h2><span class="count" id="count"></span></div><details id="libraryBox" open><summary id="libraryToggle">选择对比曲线</summary><div id="library"></div><div class="libfoot">勾选曲线即可同步对比</div></details></aside>
-<div class="right"><section class="panel"><div class="graphhead"><div class="head"><span data-icon="chart"></span><h2>位移曲线</h2></div><span class="label-en">Position / Time</span></div><div class="plotarea"><canvas class="plot" id="plot" aria-label="位移随时间变化的曲线图，可点击或拖动定位时间。键盘可用下方进度滑块。"></canvas></div><div id="legend" class="legend"></div>
-<div class="transport"><button class="primary" id="play"></button><button class="iconbtn" id="reset" title="回到起点" aria-label="回到起点"><span data-icon="reset"></span></button><input class="timeline" id="seek" type="range" min="0" max="1000" step="1" value="0" aria-label="播放进度"><span class="clock" id="clock"></span><select class="speed" id="speed" title="播放速度" aria-label="播放速度"><option value="0.25">0.25×</option><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="1.5">1.5×</option><option value="2">2×</option><option value="4">4×</option></select><button class="iconbtn" id="loop" aria-label="循环播放" aria-pressed="false" title="循环播放"><span data-icon="loop"></span></button></div></section>
-<section class="panel tracks"><div class="sectionhead"><div class="head"><span data-icon="motion"></span><h2>运动对照</h2></div><span class="tracknote">虚线标记目标位置 100%</span></div><div id="tracks"></div></section>
-<section class="panel formulas"><div class="sectionhead"><div class="head"><span data-icon="formula"></span><h2>公式与用途</h2></div><span class="label-en">Functions</span></div><p class="notation">u = t / T 为时间进度，T = 2 秒。位移 x = 0 对应起点，x = 1 对应目标。</p><div class="parameter" id="params" hidden><label for="zeta">弹簧阻尼比 ζ</label><input id="zeta" type="range" min=".12" max="2" step=".01" value=".32"><output id="zval" for="zeta"></output><span id="regime"></span></div><div id="formulas" class="formula-grid"></div></section></div></div></main>
-<dialog class="modal" id="help"><div class="sectionhead"><h2>怎样阅读运动曲线</h2><button class="iconbtn" id="closeHelp" aria-label="关闭"><span data-icon="close"></span></button></div><h3>从斜率读出速度</h3><p>横轴是经过的时间，纵轴是位移。曲线越陡，物体运动越快。水平切线表示瞬时速度为零，向下的曲线表示物体正在往回走。</p><h3>时间曲线怎样定义运动？</h3><p>缓动函数把时间进度 u 映射为位移进度 f(u)。给定起点 A、终点 B 和时长 T，就可以逐帧计算位置。</p><code>位置 = A + (B − A) × f(t / T)</code><h3>弹簧也可以是 Easing 吗？</h3><p>可以把一次弹簧运动采样成时间曲线。物理模型用力、位置和速度决定下一刻怎样运动。若固定参数、初始状态和目标，它的解就是一条可以用来缓动的曲线。交互中途换目标时，物理模型还能沿用当时的位置与速度。</p><h3>试着比较</h3><p>同时勾选「末端回弹」和「阻尼弹簧」，观察它们越过 100% 后怎样返回。拖动阻尼比到 1，再看弹簧的振荡如何消失。可拖动图中游标或进度条逐帧观察，空格键控制播放。</p></dialog>
+:root{--ink:#282538;--muted:#696779;--violet:#694bd2;--lav:#f3efff;--line:#e5e2ea;--bg:#f7f7fb;color:var(--ink);background:var(--bg);font-family:Inter,"Microsoft YaHei","PingFang SC",sans-serif}*{box-sizing:border-box}body{margin:0}button,select,input{font:inherit}button,select,summary,input[type=range]{cursor:pointer}button,select{color:inherit}button{border:1px solid var(--line);background:white;border-radius:7px}button:hover,summary:hover{background:#f5f3fb}button:focus-visible,summary:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #aa99ed;outline-offset:3px}h1,h2,h3,p{margin:0}.wrap{max-width:1500px;padding-inline:clamp(14px,3.6vw,58px);margin:auto}header{background:white;border-bottom:1px solid var(--line)}.nav,.row,.between,.legend,.tabs,.presets,.transport,.name{display:flex;align-items:center;gap:9px}.between{justify-content:space-between}.nav{height:62px;gap:12px}.brand{font-size:23px;font-weight:750}.logo{background:var(--violet);border-radius:9px;display:grid;place-items:center;width:35px;height:35px;color:#fff}.word,.en,.clock,.percent,.count,code,output{font-family:Consolas,"Microsoft YaHei",monospace;font-variant-numeric:tabular-nums}.word{font-size:13px;border-left:1px solid var(--line);padding-left:13px;letter-spacing:.06em;color:var(--muted)}.guide{margin-left:auto;padding:7px 13px;font-size:14px;color:var(--muted)}.intro{padding:26px 0 19px;display:flex;justify-content:space-between;align-items:center}.intro h1{font-size:clamp(28px,2.8vw,40px);letter-spacing:-.04em}.intro p,.notation,.help p{color:var(--muted);line-height:1.7}.intro p{margin-top:6px}.signature{width:165px;height:55px}.layout{display:grid;grid-template-columns:clamp(260px,24vw,328px) minmax(0,1fr);gap:16px;align-items:start;padding-bottom:30px}.panel{background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:0 3px 13px #22213f04}.right{display:grid;gap:15px;min-width:0}.pad{padding:17px 20px}.head{display:flex;align-items:center;gap:8px}h2{font-size:18px}.glyph{color:var(--violet);width:21px;text-align:center;font:22px/1 Consolas,monospace}.en,.sub{color:var(--muted);font-size:12px}.en{letter-spacing:.045em}.count{background:var(--lav);color:var(--violet);padding:4px 8px;border-radius:6px;font-size:13px}.tabs{margin:0 15px 8px;padding:3px;background:#f3f2f7;border-radius:8px;gap:3px}.tabs button{background:transparent;border:0;flex:1;padding:8px 0;color:var(--muted);font-size:14px}.tabs button[aria-pressed=true]{background:white;color:var(--violet);box-shadow:0 1px 4px #302b5517;font-weight:650}.libBody{padding:0 15px 13px}.family{padding:10px 0;border-bottom:1px solid #eeedf2}.family:last-child{border-bottom:0}.family-title{display:flex;align-items:center;gap:8px;margin-bottom:6px;font-size:14px;font-weight:650}.family-title small,.physics small{color:var(--muted);font:12px Consolas,monospace}.spark{width:38px;height:23px;flex:none}.pills{display:flex;gap:4px}.option{position:relative;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;border:1px solid var(--line);border-radius:6px;padding:4px 7px;color:var(--muted);font-size:13px;min-height:27px}.option input{position:absolute;inset:0;opacity:0;margin:0;width:100%;height:100%;cursor:pointer}.option:focus-within{outline:2px solid #9b89e1;outline-offset:2px}.option.on{background:var(--tint);border-color:var(--color);color:var(--color);font-weight:650}.option.on:before{content:"✓";font-size:12px;margin-right:3px}.physics{display:flex;justify-content:flex-start;gap:7px;padding:9px;margin:7px 0}.physics:before{order:3;margin-left:auto}.physics strong,.physics small{display:block}.physics strong{font-size:14px}.libFoot{padding:12px 15px;background:#faf9fc;border-top:1px solid var(--line);color:var(--muted);font-size:13px}.library summary{list-style:none;cursor:default;pointer-events:none}.library summary::-webkit-details-marker{display:none}.mobileFold{display:none}.presets{flex-wrap:wrap;margin-bottom:16px}.presets>span{font-size:14px;color:var(--muted);margin-right:2px}.presets button{font-size:13px;padding:6px 11px;border-radius:16px}.presets button[aria-pressed=true]{border-color:#c2b6eb;background:var(--lav);color:#6244bd}.plot{width:100%;height:clamp(225px,29vh,340px);display:block;touch-action:none;cursor:crosshair}.graph{padding:0 16px 0 9px}.legend{flex-wrap:wrap;justify-content:center;padding:7px 15px 14px}.chip{display:inline-flex;align-items:center;gap:6px;font-size:13px;background:var(--tint);border-radius:6px;padding:3px 8px}.dash,.dot{background:var(--color);display:inline-block}.dash{width:13px;height:3px}.dot{width:8px;height:8px;border-radius:50%;flex:none}.transport{padding:13px 17px;background:#faf9ff;border-top:1px solid var(--line);gap:9px}.transport button,.transport select{height:36px}.primary{background:var(--violet);color:white;border:0;min-width:79px;font-weight:650}.primary:hover{background:#583cb9}.primary:disabled{opacity:.45}.sbtn{min-width:36px;font-size:19px}.sbtn[aria-pressed=true]{color:var(--violet);background:var(--lav);border-color:#b7a8eb}.seek{min-width:45px;flex:1;accent-color:var(--violet)}.clock,.percent{font-size:13px;white-space:nowrap}.transport select,.parameter select{background:white;border:1px solid var(--line);border-radius:7px;padding:0 7px}.note,.notation,.card p,.empty{color:var(--muted);font-size:14px;line-height:1.65}.sectionTitle{margin-bottom:12px}.track{display:grid;grid-template-columns:minmax(88px,118px) 1fr 65px;gap:8px;align-items:center;min-height:32px}.name{font-size:14px;font-weight:600}.rail{height:26px;position:relative;background:radial-gradient(#dcdce7 1px,transparent 1px);background-size:8px 8px;border-radius:5px}.rail:before{content:"";position:absolute;top:50%;left:var(--zero);right:calc(100% - var(--one));border-top:1px solid #d6d4de}.rail:after{content:"";position:absolute;top:3px;bottom:3px;left:var(--one);border-left:2px dotted #aaa7b8}.ball{position:absolute;top:50%;transform:translate(-50%,-50%);width:14px;height:14px;border-radius:50%;background:var(--color);box-shadow:0 0 0 4px var(--tint);z-index:1}.trail{position:absolute;top:calc(50% - 1px);height:3px;background:var(--color);opacity:.4}.percent{text-align:right}.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,235px),1fr));gap:10px;margin-top:12px}.card{background:#faf9fc;border:1px solid var(--line);border-radius:9px;padding:13px;min-width:0}.card h3{font-size:15px}.card code{display:block;white-space:pre-wrap;overflow-wrap:anywhere;margin:10px 0;font-size:14px;line-height:1.6;color:#514677}.parameter{margin-top:10px;padding:9px 12px;border-radius:7px;background:var(--lav);display:flex;align-items:center;gap:9px;flex-wrap:wrap;font-size:14px}.parameter input{width:min(145px,100%);accent-color:var(--violet)}.parameter output{font-size:13px}.help{max-width:min(540px,92vw);border:1px solid var(--line);border-radius:15px;padding:22px;color:var(--ink)}.help::backdrop{background:#25213966}.help h3{font-size:16px;margin:18px 0 4px}.help button{padding:5px 10px}.help p{font-size:15px}[hidden]{display:none!important}
+@media(max-width:930px){.layout{grid-template-columns:238px minmax(0,1fr)}.transport{flex-wrap:wrap;gap:6px}.seek{flex-basis:70px}.pad{padding:15px}.track{grid-template-columns:95px 1fr 56px}.name{font-size:13px}.sectionTitle{flex-wrap:wrap}.pills{flex-wrap:wrap}}
+@media(max-width:720px){.nav{height:54px}.intro{padding:20px 0 14px}.intro p{font-size:14px}.signature{display:none}.layout{display:block}.library{margin-bottom:12px}.library summary{cursor:pointer;pointer-events:auto}.mobileFold{display:inline;font-size:12px;color:var(--muted)}.libBody{max-height:48vh;overflow:auto}.presets{gap:5px}.presets button{padding:5px 8px}.track{grid-template-columns:90px minmax(0,1fr) 54px;gap:5px}.transport .seek{order:7;flex-basis:100%}.clock{margin-right:auto}.plot{height:232px}.note{font-size:12px}.right{gap:12px}}
+</style></head><body>
+<header><div class="wrap nav"><span class="logo" aria-hidden="true"><svg viewBox="0 0 28 28" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M3 20C11 20 8 6 16 6s3 15 10 12M3 24c7 0 8-12 14-12"/></svg></span><span class="brand">动律</span><span class="word">Motion Atlas</span><button id="guide" class="guide">阅读指南</button></div></header>
+<main class="wrap"><div class="intro"><div><h1>运动曲线实验室</h1><p>把不同的运动放在同一条时间轴上，观察加速、减速与回弹。</p></div><canvas id="signature" class="signature" aria-hidden="true"></canvas></div>
+<div class="presets" id="presets"><span>对照实验</span></div>
+<div class="layout"><details open id="libraryBox" class="panel library"><summary class="between pad"><span class="head"><span class="glyph" aria-hidden="true">≋</span><strong>曲线库</strong><span class="mobileFold">展开 / 收起</span></span><span class="count" id="count"></span></summary><div class="tabs" aria-label="曲线分类"><button id="easeTab">缓动曲线</button><button id="physicalTab">物理模型</button></div><div id="library" class="libBody"></div><div class="libFoot">可跨类别勾选，同时比较多种运动。</div></details>
+<div class="right"><section class="panel"><div class="between pad"><div class="head"><span class="glyph">∿</span><h2>位移曲线</h2></div><span class="en">POSITION / TIME</span></div><div class="graph"><canvas class="plot" id="plot" aria-label="位移随时间变化的曲线图，点击或拖动可定位时间"></canvas></div><div class="legend" id="legend"></div>
+<div class="transport"><button class="primary" id="play">▶ 播放</button><button class="sbtn" id="reset" title="回到起点" aria-label="回到起点">↺</button><input class="seek" id="seek" type="range" min="0" max="1000" value="0" aria-label="播放进度"><output class="clock" id="clock"></output><select id="speed" aria-label="播放速度"><option value=".25">0.25×</option><option value=".5">0.5×</option><option value="1" selected>1×</option><option value="1.5">1.5×</option><option value="2">2×</option><option value="4">4×</option></select><button class="sbtn" id="loop" title="循环播放" aria-label="循环播放" aria-pressed="false">↻</button></div></section>
+<section class="panel pad"><div class="sectionTitle between"><div class="head"><span class="glyph">⇢</span><h2>运动对照</h2></div><span class="note">虚线标记参考位移 100%</span></div><div id="tracks"></div></section>
+<section class="panel pad"><div class="sectionTitle between"><div class="head"><span class="glyph">ƒ</span><h2>公式与用途</h2></div><span class="en">FUNCTIONS</span></div><p class="notation">t 为秒数，T = 2 秒，u = t / T。图和轨道都显示归一化位移 x；物理模型中的 100% 由各自的参考距离定义。</p><div class="parameter" id="springParam" hidden><label for="zeta">弹簧阻尼比 ζ</label><input id="zeta" type="range" min=".12" max="2" step=".01" value=".32"><output for="zeta" id="zval"></output></div><div class="parameter" id="impactParam" hidden><label for="rest">碰撞恢复系数 e</label><input id="rest" type="range" min="0" max=".95" step=".01" value=".55"><output for="rest" id="rval"></output></div><div class="cards" id="formulas"></div></section></div></div></main>
+<dialog class="help" id="help"><div class="between"><h2>怎样阅读运动曲线</h2><button id="closeHelp">关闭</button></div><h3>看斜率，读速度</h3><p>越陡的线，代表越快的运动。水平切线表示瞬时速度为零；向下的曲线表示物体沿反方向运动。拖动图表或进度条，让小球停在你想观察的瞬间。空格键可以播放或暂停。</p><h3>时间曲线与物理模型有什么关系？</h3><p>缓动函数把时间进度 u 映射为位移进度 f(u)。物理模型则给出力、加速度或碰撞规律。固定初始状态、参数和外力后，物理模型的解也能画成一条时间曲线。实际交互中，弹簧可以在中途换目标，并接着当前的速度运动。</p><h3>从同形曲线开始</h3><p>选择「重力与二次曲线」。自由落体的位移正比于时间的平方，归一化后，两条线完全重合。再选择「落地反弹」，改变恢复系数，看看哪一条曲线的下一次落点随之改变。</p><h3>读懂物理模型的终点</h3><p>本页统一观察前 2 秒。弹簧的 100% 是平衡位置，抛体的 100% 是最高点。理想振子会持续运动。切换倍速只改变播放速度，图中的物理时间和参数保持一致。</p></dialog>
 <script>
 'use strict';
 const $=id=>document.getElementById(id);
-const paths={book:'<path d="M3 5c3-1 6-1 9 1 3-2 6-2 9-1v14c-3-1-6-1-9 1-3-2-6-2-9-1zM12 6v14"/>',layers:'<path d="m3 7 9-5 9 5-9 5zM3 12l9 5 9-5M3 17l9 5 9-5"/>',chart:'<path d="M3 3v17h18M6 16c8 0 4-13 14-12"/>',motion:'<path d="M3 7h8M2 12h6M4 17h7"/><circle cx="16" cy="12" r="5"/>',formula:'<path d="M5 19c5 2 5-3 6-9s2-9 6-7M7 10h9M16 15l5 6m0-6-5 6"/>',reset:'<path d="M4 10a8 8 0 1 1 1 7M4 4v6h6"/>',loop:'<path d="M4 11V8a2 2 0 0 1 2-2h13l-3-3m3 3-3 3M20 13v3a2 2 0 0 1-2 2H5l3 3m-3-3 3-3"/>',play:'<path d="m7 4 13 8-13 8z" fill="currentColor" stroke="none"/>',pause:'<path d="M7 5v14M17 5v14" stroke-width="4"/>',close:'<path d="m5 5 14 14M19 5 5 19"/>'};
-function icon(k){return '<svg aria-hidden="true" class="ico" viewBox="0 0 24 24">'+paths[k]+'</svg>'}
-document.querySelectorAll('[data-icon]').forEach(el=>el.outerHTML=icon(el.dataset.icon));
-const duration=2,omega=10;
-let z=.32,time=0,playing=false,repeat=false,prev=null,speed=1,frame=0,plotBox,scale,curves=new Map();
+const T=2,pi=Math.PI;
+const models=[],families=[];
+let damping=.32,restitution=.55;
+function addFamily(key,title,en,base,expression,description){
+ const family={key,title,en,members:[]};families.push(family);
+ const variants=[
+  ['in','渐入',base,'x = F(u)','适合先蓄势、后加速的离场。'],
+  ['out','渐出',u=>1-base(1-u),'x = 1 − F(1 − u)','适合迅速进入、在终点收势的出现动画。'],
+  ['io','渐入渐出',u=>u<.5?base(2*u)/2:1-base(2-2*u)/2,'u < ½：x = F(2u) / 2\nu ≥ ½：x = 1 − F(2 − 2u) / 2','可观察速度怎样在前后两段衔接，适合两端都需要过渡的位移。']
+ ];
+ for(const [suffix,label,fn,composition,use] of variants){
+  const model={id:key+'-'+suffix,name:title+'·'+label,label,fn,formula:expression+'\n'+composition,note:description+use};family.members.push(model);models.push(model);
+ }
+}
+const linear={id:'linear',name:'匀速',label:'匀速',fn:u=>u,formula:'x = u',note:'斜率恒定，适合扫描线，也可以作为比较其他曲线的基准。'};
+models.push(linear);families.push({key:'linear',title:'线性',en:'Linear',members:[linear]});
+for(const [n,zh,en,sup] of [[2,'二次','Quad','²'],[3,'三次','Cubic','³'],[4,'四次','Quart','⁴'],[5,'五次','Quint','⁵']]){
+ addFamily(en.toLowerCase(),zh,en,u=>u**n,'F(q) = q'+sup,'幂次越高，越多位移集中在较短的一段时间内。');
+}
+addFamily('sine','正弦','Sine',u=>1-Math.cos(pi*u/2),'F(q) = 1 − cos(πq / 2)','用正弦波的一段形成柔和的速度过渡。');
+// The symmetric cosine uses the classic Sine In Out, rather than two stitched quarter waves.
+const sineIO=models.find(m=>m.id==='sine-io');
+sineIO.fn=u=>(1-Math.cos(pi*u))/2;sineIO.formula='x = (1 − cos(πu)) / 2';
+addFamily('expo','指数','Expo',u=>(2**(10*u)-1)/1023,'F(q) = (2^(10q) − 1) / 1023','指数变化让快慢区间分明。此处将端点精确归一化到 0 和 1。');
+addFamily('circ','圆弧','Circ',u=>1-Math.sqrt(1-u*u),'F(q) = 1 − √(1 − q²)','四分之一圆弧在一端具有竖直切线，接近该点时速度变化很强。');
+addFamily('back','回弹','Back',u=>2.70158*u**3-1.70158*u*u,'F(q) = 2.70158q³ − 1.70158q²','三次多项式先向反方向偏移；镜像后的渐出会越过目标再返回。');
+addFamily('elastic','弹性','Elastic',u=>u*(2**(9*(u-1)))*Math.cos(4*pi*u),'F(q) = q · 2^[9(q−1)] · cos(4πq)','余弦控制摆动次数，指数包络控制幅度。这是一条预设的弹性曲线。');
+function bounceOut(u){const k=2.75;if(u<1/k)return 7.5625*u*u;if(u<2/k)return 7.5625*(u-1.5/k)**2+.75;if(u<2.5/k)return 7.5625*(u-2.25/k)**2+.9375;return 7.5625*(u-2.625/k)**2+.984375}
+addFamily('bounce','弹跳','Bounce',u=>1-bounceOut(1-u),'F(q) = 1 − B(1 − q)\nB(s) = (121/16)(s − a)² + b\n按 s 选择 (a, b)：\ns < 4/11：(0, 0)\ns < 8/11：(6/11, 3/4)\ns < 10/11：(9/11, 15/16)\n其余：(21/22, 63/64)','用分段抛物线规定每一跳的高度与落点。');
 function spring(u){
- const a=omega*u*duration;
+ const a=10*T*u,z=damping;
  if(z===1)return 1-(1+a)*Math.exp(-a);
  if(z<1){const b=Math.sqrt(1-z*z);return 1-Math.exp(-z*a)*(Math.cos(b*a)+z/b*Math.sin(b*a))}
  const b=Math.sqrt(z*z-1),r1=-z+b,r2=-z-b;
  return 1-(r2*Math.exp(r1*a)-r1*Math.exp(r2*a))/(r2-r1);
 }
-function bounce(u){const b=2.75;if(u<1/b)return 7.5625*u*u;if(u<2/b)return 7.5625*(u-1.5/b)**2+.75;if(u<2.5/b)return 7.5625*(u-2.25/b)**2+.9375;return 7.5625*(u-2.625/b)**2+.984375}
-const items=[
- ['linear','匀速','Linear','#7357db',u=>u,'x = u','等距时间内移动相同距离，适合传送带、扫描线等匀速运动。'],
- ['in','渐入','Ease In Cubic','#4573c4',u=>u**3,'x = u³','从静止开始加速，适合物体加速离场。'],
- ['out','渐出','Ease Out Cubic','#008d83',u=>1-(1-u)**3,'x = 1 − (1 − u)³','起步快，接近目标时逐渐停稳，适合面板入场。'],
- ['both','渐入渐出','Ease In Out Cubic','#ad588d',u=>u<.5?4*u**3:1-4*(1-u)**3,'u < ½：x = 4u³\nu ≥ ½：x = 1 − 4(1 − u)³','两端平缓，中段移动最快，适合镜头在两个静止位置间平移。'],
- ['sine','正弦过渡','Sine In Out','#397c98',u=>(1-Math.cos(Math.PI*u))/2,'x = (1 − cos(πu)) / 2','加减速平滑。与三次渐入渐出比较，速度在中段较舒缓。'],
- ['back','末端回弹','Back Out','#c16455',u=>1+2.70158*(u-1)**3+1.70158*(u-1)**2,'v = u − 1\nx = 1 + 2.70158v³ + 1.70158v²','越过目标一次再退回，适合强调按钮或标签出现的一刻。'],
- ['bounce','落地弹跳','Bounce Out','#887028',bounce,'x = (121/16)(u − a)² + b\n(a, b) 按区间依次取\nu < 4/11：(0, 0)\nu < 8/11：(6/11, 3/4)\nu < 10/11：(9/11, 15/16)\n其余：(21/22, 63/64)','用抛物线片段模仿落地碰撞。每次碰到目标都反向运动，反弹幅度逐次变小。'],
- ['spring','阻尼弹簧','Damped Spring','#c57a19',spring,'x″ + 2ζωx′ + ω²(x − 1) = 0\nx(0) = 0，x′(0) = 0\nω = 10 rad/s','弹性力把物体拉向目标，阻尼耗散能量。适合拖拽释放后的回位。导数针对秒 t，图中展示前 2 秒的真实响应。'],
- ['drag','阻力滑行','Viscous Drag','#5977ae',u=>1-Math.exp(-3*u*duration),'v′ = −3v，v(0) = 3\nx(t) = 1 − exp(−3t)','速度随时间指数衰减，适合模拟滑动释放后的惯性。初速度决定最终滑行距离。此处 100% 是渐近位置。']
-].map(([id,name,en,color,fn,formula,note],idx)=>({id,name,en,color,fn,formula,note,physical:idx>=7}));
-const selected=new Set(['linear','out','spring']);
-function active(){return items.filter(m=>selected.has(m.id))}
-function theme(m){return '--c:'+m.color+';--tint:'+m.color+'10'}
-function setupCanvas(canvas){
- const rect=canvas.getBoundingClientRect(),dpr=Math.min(window.devicePixelRatio||1,3);
- if(!rect.width||!rect.height)return null;
- const w=Math.round(rect.width*dpr),h=Math.round(rect.height*dpr);
- if(canvas.width!==w||canvas.height!==h){canvas.width=w;canvas.height=h}
- const g=canvas.getContext('2d');g.setTransform(dpr,0,0,dpr,0,0);g.clearRect(0,0,rect.width,rect.height);return {g,w:rect.width,h:rect.height};
+function impact(u){
+ // Initial drop from rest. Distances are in drop heights, with down positive.
+ const t=T*u,first=.5,e=restitution;
+ if(t<=first)return (t/first)**2;
+ let age=t-first,flight=2*first*e;
+ if(e===0||age>=flight/(1-e))return 1;
+ while(age>=flight&&flight>1e-9){age-=flight;flight*=e}
+ if(flight<=1e-9)return 1;
+ return 1-4*age*(flight-age);
 }
-function library(){
- $('library').innerHTML=[false,true].map(physics=>'<section class="group"><h3>'+(physics?'物理模型 <small>Dynamics</small>':'时间曲线 <small>Easing</small>')+'</h3><div class="choices">'+items.filter(m=>m.physical===physics).map(m=>'<label class="option" style="'+theme(m)+'"><canvas class="sample" id="mini-'+m.id+'" aria-hidden="true"></canvas><span><span class="optname">'+m.name+'</span><span class="optcode">'+m.en+'</span></span><input type="checkbox" data-id="'+m.id+'" '+(selected.has(m.id)?'checked':'')+'></label>').join('')+'</div></section>').join('');
- $('library').addEventListener('change',e=>{const id=e.target.dataset.id;if(!id)return;e.target.checked?selected.add(id):selected.delete(id);rebuild()});
+function physical(id,name,en,fn,formula,note){models.push({id,name,en,fn,formula,note,physical:true})}
+physical('spring','阻尼弹簧','Damped spring',spring,'x″ + 2ζωx′ + ω²(x − 1) = 0\nx(0) = x′(0) = 0，ω = 10 rad/s','适合拖拽释放后的回位。100% 是平衡位置。ζ 小于 1 时会越过平衡点，ζ 等于 1 时达到临界阻尼。');
+physical('drag','阻力滑行','Viscous drag',u=>1-Math.exp(-3*T*u),'v′ = −3v，v(0) = 3\nx(t) = 1 − exp(−3t)','阻力与速度成正比。滑动初期减速较快，随后缓慢靠近极限距离 100%。');
+physical('fall','自由落体','Free fall',u=>u*u,'s = gt² / 2，g = 9.8 m/s²\nH = gT² / 2 = 19.6 m\nx = s / H = u²','从静止释放，向下为正。以 2 秒内的下落距离为 100%，位移曲线与二次渐入完全重合。');
+physical('impact','碰撞反弹','Gravity + collision',impact,'x″ = 8 s⁻²，x(0) = x′(0) = 0\n地面 x = 1，碰撞瞬间 v⁺ = −e v⁻\n两次碰撞之间：\nx = x₀ + v₀Δt + 4Δt²','向下为正，落地时位移达到 100%。第 0.5 秒首次触地，下一跳的高度是上一跳的 e² 倍。调节 e 可以改变落点时刻。');
+physical('osc','简谐振子','Harmonic oscillator',u=>1-Math.cos(2*pi*T*u),'x″ + ω²(x − 1) = 0\nω = 2π rad/s\nx(t) = 1 − cos(ωt)','无阻尼、无外力。小球围绕 100% 的平衡点来回摆动，每秒完成一次等幅振荡。');
+physical('friction','干摩擦滑停','Sliding friction',u=>{const t=Math.min(T*u,1.25);return 1.6*t-.64*t*t},'v₀ = 1.6，a = −1.28\nτ = min(t, 1.25 s)\nx = 1.6τ − 0.64τ²','物体在水平面上受恒定动摩擦力，速度线性降低，第 1.25 秒滑到 100% 后静止。可与阻力滑行的长尾对比。');
+physical('throw','竖直上抛','Vertical throw',u=>4*u*(1-u),'h = v₀t − gt² / 2\nv₀ = 9.8 m/s，g = 9.8 m/s²\nx = h / 4.9 m = 4u(1 − u)','向上为正，100% 对应最高点。第 1 秒速度为零，随后反向下落，第 2 秒返回抛出位置。');
+</script>
+<script>
+const byId=new Map(models.map(m=>[m.id,m]));
+const experiments=[
+ ['基础对照',['linear','cubic-out','spring']],
+ ['幂次与速度',['quad-in','cubic-in','quint-in']],
+ ['重力与二次曲线',['quad-in','fall']],
+ ['弹性与弹簧',['elastic-out','back-out','spring','osc']],
+ ['落地反弹',['bounce-out','impact']],
+ ['两种滑停',['drag','friction']]
+];
+const palette=['#7355d3','#00877c','#bd7411','#c24e73','#426ab5','#8a663a','#398094','#65782e'];
+const selected=new Set(experiments[0][1]);
+let physicsTab=false,time=0,playing=false,repeat=false,rate=1,previous=null,frame=0;
+let displayed=[],minimum=0,maximum=1,plotBox;
+const colors=new Map();
+function color(id){return colors.get(id)||'#6854b1'}
+function setColors(){
+ for(const id of colors.keys())if(!selected.has(id))colors.delete(id);
+ for(const id of selected){
+  if(colors.has(id))continue;
+  const available=palette.find(c=>!Array.from(colors.values()).includes(c));
+  colors.set(id,available||'hsl('+((models.indexOf(byId.get(id))*137.508)%360)+' 50% 36%)');
+ }
 }
-function miniatures(){
- for(const m of items){const ctx=setupCanvas($('mini-'+m.id));if(!ctx)continue;const {g,w,h}=ctx;
- g.strokeStyle='#dcdce6';g.lineWidth=1;g.beginPath();g.moveTo(2,4);g.lineTo(2,h-3);g.lineTo(w-2,h-3);g.stroke();
- g.strokeStyle=m.color;g.lineWidth=1.9;g.beginPath();
- for(let i=0;i<=70;i++){const u=i/70,xx=3+u*(w-5),yy=h-4-m.fn(u)*(h-7)/(m.id==='spring'?1.55:1.1);if(i===0)g.moveTo(xx,yy);else g.lineTo(xx,yy)}g.stroke()}
+function theme(id){return '--color:'+color(id)+';--tint:color-mix(in srgb,'+color(id)+' 10%,white)'}
+const active=()=>Array.from(selected,id=>byId.get(id));
+function option(m){
+ const checked=selected.has(m.id);
+ return '<label class="option '+(checked?'on ':'')+(m.physical?'physics':'')+'" style="'+theme(m.id)+'"><input aria-label="'+m.name+'" type="checkbox" data-id="'+m.id+'" '+(checked?'checked':'')+'>'+(m.physical?'<canvas class="spark" data-sample="'+m.id+'" aria-hidden="true"></canvas><span><strong>'+m.name+'</strong><small>'+m.en+'</small></span>':m.label)+'</label>';
 }
-function signature(){const ctx=setupCanvas($('signature'));if(!ctx)return;const {g,w,h}=ctx;
- for(let i=0;i<8;i++){g.strokeStyle=['#c5bbef','#a99be6','#9785dd','#8975d6','#8875cf','#9b8dd6','#ad9ae4','#bdafea'][i];g.lineWidth=1.4;g.beginPath();
- for(let j=0;j<=160;j++){const u=j/160,v=u*1.5-.25+i*.035;const y=h*.82-(h*.57)*(1/(1+Math.exp(-11*(v-.45))))-11*Math.sin(v*9+i*.19)*Math.exp(-8*(v-.55)**2)+i*.65; j?g.lineTo(3+u*(w-6),y):g.moveTo(3,y)}g.stroke()}}
+function showLibrary(){
+ $('easeTab').setAttribute('aria-pressed',String(!physicsTab));$('physicalTab').setAttribute('aria-pressed',String(physicsTab));
+ $('library').innerHTML=physicsTab?models.filter(m=>m.physical).map(option).join(''):
+ families.map(f=>'<section class="family"><div class="family-title"><canvas class="spark" data-sample="'+(f.members[1]||f.members[0]).id+'" aria-hidden="true"></canvas>'+f.title+' <small>'+f.en+'</small></div><div class="pills">'+f.members.map(option).join('')+'</div></section>').join('');
+ drawMinis();
+}
+function canvasContext(canvas){
+ const {width:w,height:h}=canvas.getBoundingClientRect();if(!w||!h)return;
+ const ratio=Math.min(devicePixelRatio||1,3),pw=Math.round(w*ratio),ph=Math.round(h*ratio);
+ if(canvas.width!==pw||canvas.height!==ph){canvas.width=pw;canvas.height=ph}
+ const g=canvas.getContext('2d');g.setTransform(ratio,0,0,ratio,0,0);g.clearRect(0,0,w,h);return {g,w,h};
+}
+function path(g,points){g.beginPath();points.forEach(([x,y],i)=>i?g.lineTo(x,y):g.moveTo(x,y));g.stroke()}
+function drawMinis(){
+ for(const canvas of document.querySelectorAll('[data-sample]')){
+  const ctx=canvasContext(canvas);if(!ctx)continue;
+  const {g,w,h}=ctx,m=byId.get(canvas.dataset.sample),values=Array.from({length:71},(_,i)=>m.fn(i/70));
+  const lo=Math.min(0,...values),hi=Math.max(1,...values);
+  g.lineWidth=1;g.strokeStyle='#dedbe9';path(g,[[2,2],[2,h-2],[w-1,h-2]]);
+  g.lineWidth=1.8;g.strokeStyle=color(m.id);path(g,values.map((v,i)=>[3+i/70*(w-5),h-3-(v-lo)/(hi-lo)*(h-6)]));
+ }
+}
+function signature(){
+ const ctx=canvasContext($('signature'));if(!ctx)return;const {g,w,h}=ctx;
+ for(let j=0;j<8;j++){g.strokeStyle='hsl('+(254+j)+' 46% '+(64+j*2)+'%)';g.lineWidth=1.2;path(g,Array.from({length:121},(_,i)=>{const u=i/120,s=u*(5+j*.25);return [u*w,h*.78-(1-Math.exp(-s)*Math.cos(s*1.7))*(h*.53)+j*.55]}))}
+}
 function rebuild(){
- const list=active();curves.clear();let min=0,max=1;
- for(const m of list){const samples=Array.from({length:501},(_,i)=>m.fn(i/500));curves.set(m.id,samples);min=Math.min(min,...samples);max=Math.max(max,...samples)}
- scale={min:Math.min(0,Math.floor(min*4)/4),max:Math.max(1,Math.ceil((max-.00000001)*4)/4)};
- $('count').textContent=list.length+' / '+items.length;
- $('libraryToggle').textContent='选择对比曲线（已选 '+list.length+' 条）';
- document.querySelectorAll('.option').forEach(el=>el.classList.toggle('on',el.querySelector('input').checked));
- $('legend').innerHTML=list.map(m=>'<span class="chip" style="'+theme(m)+'"><i></i>'+m.name+'</span>').join('')||'<span class="empty">请从曲线库中选择曲线</span>';
- $('tracks').innerHTML=list.map(m=>'<div class="track" style="'+theme(m)+'"><span class="trackname"><i class="dot"></i>'+m.name+'</span><div class="rail"><i class="trail"></i><i class="ball"></i></div><output class="value"></output></div>').join('')||'<p class="empty">选中的曲线会在这里同步运动。</p>';
- $('formulas').innerHTML=list.map(m=>'<article class="formula" style="'+theme(m)+'"><h3><i class="dot"></i>'+m.name+'</h3><code></code><p>'+m.note+'</p></article>').join('');
- list.forEach((m,i)=>$('formulas').children[i].querySelector('code').textContent=m.formula);
- $('params').hidden=!selected.has('spring');$('zval').textContent=z.toFixed(2);$('regime').textContent=z<1?'欠阻尼 · 振荡趋稳':z===1?'临界阻尼 · 无振荡':'过阻尼 · 缓慢回位';
- if(!list.length)pause();$('play').disabled=!list.length;miniatures();render();
+ setColors();displayed=active().map(m=>({m,samples:Array.from({length:601},(_,i)=>m.fn(i/600))}));
+ minimum=0;maximum=1;
+ for(const {samples} of displayed){minimum=Math.min(minimum,...samples);maximum=Math.max(maximum,...samples)}
+ minimum=Math.floor((minimum+1e-8)*4)/4;maximum=Math.ceil((maximum-1e-8)*4)/4;
+ $('count').textContent='已选 '+selected.size+' / '+models.length;
+ for(const el of document.querySelectorAll('.option input')){const id=el.dataset.id;el.checked=selected.has(id);el.parentElement.classList.toggle('on',el.checked);el.parentElement.style.cssText=theme(id)}
+ document.querySelectorAll('#presets button').forEach((el,i)=>{const ids=experiments[i][1];el.setAttribute('aria-pressed',String(ids.length===selected.size&&ids.every(id=>selected.has(id))))});
+ $('legend').innerHTML=displayed.map(({m})=>'<span class="chip" style="'+theme(m.id)+'"><i class="dash"></i>'+m.name+'</span>').join('')||'<span class="empty">在曲线库中勾选要观察的运动。</span>';
+ $('tracks').innerHTML=displayed.map(({m})=>'<div class="track" style="'+theme(m.id)+'"><span class="name"><i class="dot"></i>'+m.name+'</span><div class="rail"><i class="trail"></i><i class="ball"></i></div><output class="percent"></output></div>').join('')||'<p class="empty">选中的运动会在这里同步播放。</p>';
+ $('formulas').innerHTML=displayed.map(({m})=>'<article class="card" style="'+theme(m.id)+'"><h3 class="name"><i class="dot"></i>'+m.name+'</h3><code></code><p>'+m.note+'</p></article>').join('');
+ displayed.forEach(({m},i)=>$('formulas').children[i].querySelector('code').textContent=m.formula);
+ $('springParam').hidden=!selected.has('spring');$('impactParam').hidden=!selected.has('impact');
+ $('zval').textContent=damping.toFixed(2)+' · '+(damping<1?'欠阻尼':damping===1?'临界阻尼':'过阻尼');
+ $('rval').textContent=restitution.toFixed(2)+' · 反弹高度 '+Math.round(100*restitution**2)+'%';
+ if(!displayed.length)pause();$('play').disabled=!displayed.length;drawMinis();render();
 }
-function draw(){
- const ctx=setupCanvas($('plot'));if(!ctx)return;const {g,w,h}=ctx;
- const x0=49,x1=w-17,y0=h-34,y1=24,X=u=>x0+u*(x1-x0),Y=v=>y0-(v-scale.min)*(y0-y1)/(scale.max-scale.min);
- plotBox={x0,x1};g.font='12px Consolas, "Microsoft YaHei", sans-serif';g.fillStyle='#74768a';
- g.textAlign='left';g.fillText('位移 (%)',5,13);
- for(let q=0;q<=4;q++){const u=q/4,x=X(u);g.strokeStyle='#e5e5ee';g.setLineDash([3,4]);g.beginPath();g.moveTo(x,y1);g.lineTo(x,y0);g.stroke();g.fillStyle='#77788b';g.textAlign=q===4?'right':'center';g.fillText((u*duration).toFixed(1)+' s',x,h-10)}
- for(let v=scale.min;v<=scale.max+.001;v+=.25){const y=Y(v);g.strokeStyle=v===1?'#aaa6bf':'#e5e5ee';g.setLineDash(v===1?[5,4]:[3,4]);g.beginPath();g.moveTo(x0,y);g.lineTo(x1,y);g.stroke();g.fillStyle='#77788b';g.textAlign='right';g.fillText(String(Math.round(v*100)),x0-9,y+4)}
- g.setLineDash([]);for(const m of active()){g.strokeStyle=m.color;g.lineWidth=2.7;g.lineJoin='round';g.beginPath();curves.get(m.id).forEach((v,i)=>{if(i===0)g.moveTo(X(0),Y(v));else g.lineTo(X(i/500),Y(v))});g.stroke()}
- const u=time/duration;g.strokeStyle='#56526c';g.lineWidth=1;g.setLineDash([3,4]);g.beginPath();g.moveTo(X(u),y1-3);g.lineTo(X(u),y0);g.stroke();g.setLineDash([]);
- for(const m of active()){g.beginPath();g.arc(X(u),Y(m.fn(u)),4.8,0,Math.PI*2);g.fillStyle=m.color;g.fill();g.lineWidth=1.7;g.strokeStyle='#fff';g.stroke()}g.lineWidth=1;
+function drawPlot(){
+ const ctx=canvasContext($('plot'));if(!ctx)return;const {w,h,g}=ctx;
+ const left=48,right=w-15,top=23,bottom=h-30;
+ const X=u=>left+u*(right-left),Y=v=>bottom-(v-minimum)/(maximum-minimum)*(bottom-top);
+ plotBox={left,right};g.font='12px Consolas, "Microsoft YaHei", monospace';g.fillStyle='#767284';g.textAlign='left';g.fillText('位移 (%)',4,13);
+ for(let i=0;i<=4;i++){
+  const x=X(i/4);g.lineWidth=1;g.setLineDash([3,4]);g.strokeStyle='#e4e2eb';path(g,[[x,top],[x,bottom]]);
+  g.textAlign=i===4?'right':'center';g.fillText((T*i/4).toFixed(1)+' s',x,h-8);
+ }
+ const step=maximum-minimum>1.75?.5:.25;
+ for(let v=minimum;v<=maximum+.001;v+=step){const y=Y(v);g.strokeStyle='#e4e2eb';g.setLineDash([3,4]);path(g,[[left,y],[right,y]]);g.textAlign='right';g.fillText(Math.round(v*100),left-8,y+4)}
+ g.setLineDash([5,4]);g.strokeStyle='#aaa5b9';path(g,[[left,Y(1)],[right,Y(1)]]);
+ displayed.forEach(({m,samples},i)=>{g.lineWidth=2.6;g.lineJoin='round';g.strokeStyle=color(m.id);g.setLineDash(m.id==='fall'&&selected.has('quad-in')?[7,6]:[]);path(g,samples.map((v,j)=>[X(j/600),Y(v)]))});
+ const u=time/T;g.lineWidth=1;g.strokeStyle='#6e677f';g.setLineDash([3,4]);path(g,[[X(u),top],[X(u),bottom]]);g.setLineDash([]);
+ for(const {m} of displayed){g.beginPath();g.arc(X(u),Y(m.fn(u)),4.6,0,pi*2);g.fillStyle=color(m.id);g.fill();g.strokeStyle='#fff';g.lineWidth=1.6;g.stroke()}
 }
 function render(){
- draw();$('seek').value=Math.round(1000*time/duration);$('seek').setAttribute('aria-valuetext',time.toFixed(2)+' 秒');$('clock').textContent=time.toFixed(2)+' / 2.00 s';
- const toPct=v=>3+94*(v-scale.min)/(scale.max-scale.min);
- active().forEach((m,i)=>{const row=$('tracks').children[i],value=m.fn(time/duration),p=toPct(value),start=toPct(0);row.style.setProperty('--origin',start+'%');row.style.setProperty('--target',toPct(1)+'%');row.querySelector('.ball').style.left=p+'%';row.querySelector('.trail').style.left=Math.min(start,p)+'%';row.querySelector('.trail').style.width=Math.abs(p-start)+'%';row.querySelector('output').textContent=(100*value).toFixed(1)+'%'});
+ drawPlot();$('seek').value=Math.round(time/T*1000);$('seek').setAttribute('aria-valuetext',time.toFixed(2)+' 秒');$('clock').textContent=time.toFixed(2)+' / 2.00 s';
+ const position=v=>3+94*(v-minimum)/(maximum-minimum),zero=position(0);
+ displayed.forEach(({m},i)=>{const el=$('tracks').children[i],v=m.fn(time/T),p=position(v);
+  el.style.setProperty('--zero',zero+'%');el.style.setProperty('--one',position(1)+'%');el.querySelector('.ball').style.left=p+'%';
+  const trail=el.querySelector('.trail');trail.style.left=Math.min(zero,p)+'%';trail.style.width=Math.abs(p-zero)+'%';el.querySelector('output').textContent=(100*v).toFixed(1)+'%';
+ });
 }
-function playLabel(){$('play').innerHTML=playing?icon('pause')+'暂停':icon('play')+(time>=duration?'重播':'播放')}
-function pause(){playing=false;cancelAnimationFrame(frame);prev=null;playLabel()}
+function playLabel(){$('play').textContent=playing?'Ⅱ 暂停':time>=T?'▶ 重播':'▶ 播放'}
+function pause(){playing=false;previous=null;cancelAnimationFrame(frame);playLabel()}
 function tick(now){
  if(!playing)return;
- if(prev!==null)time+=(now-prev)*speed/1000;prev=now;
- if(time>=duration){if(repeat)time%=duration;else{time=duration;pause()}}
+ if(previous!==null)time+=(now-previous)*rate/1000;previous=now;
+ if(time>=T){if(repeat)time%=T;else{time=T;pause()}}
  render();if(playing)frame=requestAnimationFrame(tick);
 }
-function toggle(){if(playing){pause();return}if(!selected.size)return;if(time>=duration)time=0;playing=true;prev=null;playLabel();frame=requestAnimationFrame(tick)}
-function seek(u){pause();time=Math.min(1,Math.max(0,u))*duration;playLabel();render()}
-$('play').onclick=toggle;$('reset').onclick=()=>seek(0);$('seek').oninput=e=>seek(+e.target.value/1000);$('speed').onchange=e=>{speed=+e.target.value;prev=null};
-$('loop').onclick=()=>{repeat=!repeat;$('loop').classList.toggle('active',repeat);$('loop').setAttribute('aria-pressed',String(repeat))};
-function plotSeek(e){if(plotBox)seek((e.clientX-$('plot').getBoundingClientRect().left-plotBox.x0)/(plotBox.x1-plotBox.x0))}
-$('plot').onpointerdown=e=>{if(e.button!==0)return;$('plot').setPointerCapture(e.pointerId);plotSeek(e)};
-$('plot').onpointermove=e=>{if($('plot').hasPointerCapture(e.pointerId))plotSeek(e)};
-$('zeta').oninput=e=>{z=+e.target.value;rebuild()};
+function toggle(){
+ if(playing){pause();return}
+ if(!selected.size)return;
+ if(time>=T)time=0;playing=true;previous=null;playLabel();frame=requestAnimationFrame(tick);
+}
+function seek(u){pause();time=T*Math.min(1,Math.max(0,u));playLabel();render()}
+$('presets').insertAdjacentHTML('beforeend',experiments.map(([name],i)=>'<button data-index="'+i+'">'+name+'</button>').join(''));
+$('presets').onclick=e=>{const btn=e.target.closest('button');if(!btn)return;pause();time=0;selected.clear();colors.clear();experiments[Number(btn.dataset.index)][1].forEach(id=>selected.add(id));playLabel();rebuild()};
+$('easeTab').textContent='缓动曲线 '+models.filter(m=>!m.physical).length;$('physicalTab').textContent='物理模型 '+models.filter(m=>m.physical).length;
+$('easeTab').onclick=()=>{physicsTab=false;showLibrary()};$('physicalTab').onclick=()=>{physicsTab=true;showLibrary()};
+$('library').onchange=e=>{const id=e.target.dataset.id;if(!id)return;e.target.checked?selected.add(id):selected.delete(id);rebuild()};
+$('zeta').oninput=e=>{damping=Number(e.target.value);rebuild()};$('rest').oninput=e=>{restitution=Number(e.target.value);rebuild()};
+$('play').onclick=toggle;$('reset').onclick=()=>seek(0);$('seek').oninput=e=>seek(Number(e.target.value)/1000);
+$('speed').onchange=e=>{rate=Number(e.target.value);previous=null};
+$('loop').onclick=()=>{repeat=!repeat;$('loop').setAttribute('aria-pressed',String(repeat))};
+function graphSeek(e){if(plotBox)seek((e.clientX-$('plot').getBoundingClientRect().left-plotBox.left)/(plotBox.right-plotBox.left))}
+$('plot').onpointerdown=e=>{if(e.button===0){$('plot').setPointerCapture(e.pointerId);graphSeek(e)}};
+$('plot').onpointermove=e=>{if($('plot').hasPointerCapture(e.pointerId))graphSeek(e)};
 $('guide').onclick=()=>{pause();$('help').showModal()};$('closeHelp').onclick=()=>$('help').close();
-$('help').onclick=e=>{if(e.target===$('help')){const r=e.target.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)e.target.close()}};
-document.addEventListener('keydown',e=>{if(e.code==='Space'&&!e.repeat&&!$('help').open&&!e.target.closest('button,input,select,summary')){e.preventDefault();toggle()}});
+document.addEventListener('keydown',e=>{if(e.code==='Space'&&!e.repeat&&!$('help').open&&!e.target.closest('input,button,summary,select')){e.preventDefault();toggle()}});
 document.addEventListener('visibilitychange',()=>{if(document.hidden&&playing)pause()});
-const narrow=matchMedia('(max-width:720px)');function sizeLibrary(){$('libraryBox').open=!narrow.matches}
-narrow.addEventListener('change',sizeLibrary);$('libraryBox').ontoggle=miniatures;
-library();sizeLibrary();rebuild();playLabel();signature();
-new ResizeObserver(()=>{draw();miniatures();signature()}).observe(document.querySelector('.layout'));
-</script>
-</body></html>
+const small=matchMedia('(max-width:720px)');
+function widthChanged(){$('libraryBox').open=!small.matches}
+small.addEventListener('change',widthChanged);$('libraryBox').ontoggle=drawMinis;
+widthChanged();setColors();showLibrary();rebuild();signature();
+new ResizeObserver(()=>{drawPlot();drawMinis();signature()}).observe(document.querySelector('.layout'));
+</script></body></html>
