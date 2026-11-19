@@ -1,0 +1,196 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>移动端距离场遮罩着色器（Distance Field Masking Mobile Shader） · uGUI 2.7 中文文档</title><link rel="stylesheet" href="../assets/style.css"></head><body><button class="menu-toggle" aria-controls="sidebar" aria-expanded="false">目录</button><aside id="sidebar"><a class="brand" href="../index.html"><span class="brand-mark">U</span><span>uGUI 中文手册<small>2.7.0 · 离线阅读</small></span></a><a class="side-home" href="../index.html">目录与全文搜索</a><details><summary>起步与基础</summary><a class="" href="../pages/48-index.html"><span>01</span>Unity UI（uGUI）概述（Unity UI (uGUI)）</a><a class="" href="../pages/49-UICanvas.html"><span>02</span>Canvas 概述（Canvas）</a><a class="" href="../pages/50-UIBasicLayout.html"><span>03</span>基础布局（Basic Layout）</a><a class="" href="../pages/01-UIAutoLayout.html"><span>04</span>自动布局（Auto Layout）</a><a class="" href="../pages/44-UIReference.html"><span>05</span>UI 组件参考总览（UI Reference）</a><a class="" href="../pages/26-class-RectTransform.html"><span>06</span>矩形变换（Rect Transform）</a><a class="" href="../pages/30-script-SafeArea.html"><span>07</span>安全区域（Safe Area）</a><a class="" href="../pages/04-class-Canvas.html"><span>08</span>画布（Canvas）</a></details><details><summary>Canvas 与自动布局</summary><a class="" href="../pages/05-comp-CanvasComponents.html"><span>09</span>画布组件（Canvas Components）</a><a class="" href="../pages/08-script-CanvasScaler.html"><span>10</span>画布缩放器（Canvas Scaler）</a><a class="" href="../pages/06-class-CanvasGroup.html"><span>11</span>画布组（Canvas Group）</a><a class="" href="../pages/07-class-CanvasRenderer.html"><span>12</span>画布渲染器（Canvas Renderer）</a><a class="" href="../pages/02-comp-UIAutoLayout.html"><span>13</span>自动布局组件参考（Auto Layout）</a><a class="" href="../pages/60-script-LayoutElement.html"><span>14</span>布局元素（Layout Element）</a><a class="" href="../pages/61-script-ContentSizeFitter.html"><span>15</span>内容大小适配器（Content Size Fitter）</a><a class="" href="../pages/62-script-AspectRatioFitter.html"><span>16</span>宽高比适配器（Aspect Ratio Fitter）</a><a class="" href="../pages/63-script-HorizontalLayoutGroup.html"><span>17</span>水平布局组（Horizontal Layout Group）</a><a class="" href="../pages/45-script-VerticalLayoutGroup.html"><span>18</span>垂直布局组（Vertical Layout Group）</a><a class="" href="../pages/15-script-GridLayoutGroup.html"><span>19</span>网格布局组（Grid Layout Group）</a></details><details><summary>视觉与交互组件</summary><a class="" href="../pages/46-UIVisualComponents.html"><span>20</span>视觉组件概述（Visual Components）</a><a class="" href="../pages/18-UIInteractionComponents.html"><span>21</span>交互组件概述（Interaction Components）</a><a class="" href="../pages/00-UIAnimationIntegration.html"><span>22</span>动画集成（Animation Integration）</a><a class="" href="../pages/41-script-Tweening.html"><span>23</span>补间动画（Tweening）</a><a class="" href="../pages/47-comp-UIVisual.html"><span>24</span>视觉组件参考（Visual Components）</a><a class="" href="../pages/37-script-Text.html"><span>25</span>传统文本控件（Text）</a><a class="" href="../pages/16-script-Image.html"><span>26</span>图像（Image）</a><a class="" href="../pages/24-script-RawImage.html"><span>27</span>原始图像（Raw Image）</a><a class="" href="../pages/51-script-Mask.html"><span>28</span>遮罩（Mask）</a><a class="" href="../pages/27-script-RectMask2D.html"><span>29</span>二维矩形遮罩（RectMask2D）</a><a class="" href="../pages/42-comp-UIEffects.html"><span>30</span>UI 效果组件（UI Effect Components）</a><a class="" href="../pages/52-script-Shadow.html"><span>31</span>阴影（Shadow）</a><a class="" href="../pages/53-script-Outline.html"><span>32</span>描边（Outline）</a><a class="" href="../pages/23-script-PositionAsUV1.html"><span>33</span>将位置写入 UV1（Position as UV1）</a><a class="" href="../pages/19-comp-UIInteraction.html"><span>34</span>交互组件参考（Interaction Components）</a><a class="" href="../pages/32-script-Selectable.html"><span>35</span>可选择组件基类（Selectable Base Class）</a><a class="" href="../pages/54-script-SelectableTransition.html"><span>36</span>过渡选项（Transition Options）</a><a class="" href="../pages/22-script-SelectableNavigation.html"><span>37</span>导航选项（Navigation Options）</a><a class="" href="../pages/03-script-Button.html"><span>38</span>按钮（Button）</a><a class="" href="../pages/40-script-Toggle.html"><span>39</span>开关（Toggle）</a><a class="" href="../pages/55-script-ToggleGroup.html"><span>40</span>开关组（Toggle Group）</a><a class="" href="../pages/56-script-Slider.html"><span>41</span>滑动条（Slider）</a><a class="" href="../pages/31-script-Scrollbar.html"><span>42</span>滚动条（Scrollbar）</a><a class="" href="../pages/57-script-Dropdown.html"><span>43</span>下拉列表（Dropdown）</a><a class="" href="../pages/58-script-InputField.html"><span>44</span>输入框（Input Field）</a><a class="" href="../pages/59-script-ScrollRect.html"><span>45</span>滚动矩形（Scroll Rect）</a></details><details><summary>事件与消息系统</summary><a class="" href="../pages/11-EventSystem.html"><span>46</span>事件系统（Event System）</a><a class="" href="../pages/21-MessagingSystem.html"><span>47</span>消息系统（Messaging System）</a><a class="" href="../pages/17-InputModules.html"><span>48</span>输入模块（Input Modules）</a><a class="" href="../pages/36-SupportedEvents.html"><span>49</span>支持的事件（Supported Events）</a><a class="" href="../pages/25-Raycasters.html"><span>50</span>射线检测器（Raycasters）</a><a class="" href="../pages/64-EventSystemReference.html"><span>51</span>事件组件参考（Event System Reference）</a><a class="" href="../pages/65-script-EventSystem.html"><span>52</span>事件系统管理器（Event System Manager）</a><a class="" href="../pages/66-script-GraphicRaycaster.html"><span>53</span>图形射线检测器（Graphic Raycaster）</a><a class="" href="../pages/67-script-PanelEventHandler.html"><span>54</span>面板事件处理器（Panel Event Handler）</a><a class="" href="../pages/68-script-PanelRaycaster.html"><span>55</span>面板射线检测器（Panel Raycaster）</a><a class="" href="../pages/69-script-PhysicsRaycaster.html"><span>56</span>物理射线检测器（Physics Raycaster）</a><a class="" href="../pages/70-script-Physics2DRaycaster.html"><span>57</span>二维物理射线检测器（Physics 2D Raycaster）</a><a class="" href="../pages/71-script-StandaloneInputModule.html"><span>58</span>独立输入模块（Standalone Input Module）</a><a class="" href="../pages/12-script-EventTrigger.html"><span>59</span>事件触发器（Event Trigger）</a></details><details open><summary>TextMesh Pro</summary><a class="" href="../pages/39-index.html"><span>60</span>TextMesh Pro 文档与入门</a><a class="" href="../pages/10-TMPObjects.html"><span>61</span>创建文本（Creating text）</a><a class="" href="../pages/79-TMPObjectUIText.html"><span>62</span>UI 文本对象（UI Text GameObjects）</a><a class="" href="../pages/80-TMPObject3DText.html"><span>63</span>三维文本对象（3D Text GameObjects）</a><a class="" href="../pages/13-FontAssets.html"><span>64</span>字体资源（Font Assets）</a><a class="" href="../pages/81-FontAssetsProperties.html"><span>65</span>字体资源属性（Font Asset Properties）</a><a class="" href="../pages/82-FontAssetsCreator.html"><span>66</span>字体资源创建器（Font Asset Creator）</a><a class="" href="../pages/83-FontAssetsLineMetrics.html"><span>67</span>行度量（Line metrics.）</a><a class="" href="../pages/84-FontAssetsSDF.html"><span>68</span>有符号距离场字体（Signed Distance Fields）</a><a class="" href="../pages/85-FontAssetsDynamicFonts.html"><span>69</span>动态字体资源（Dynamic fonts assets）</a><a class="" href="../pages/86-FontAssetsSubsetting.html"><span>70</span>通过字体子集化优化字体文件（Optimize font files with font subsetting）</a><a class="" href="../pages/87-FontAssetsMigration.html"><span>71</span>将静态字体资源迁移到高级文本生成器（Migrate static font assets to the Advanced Text Generator）</a><a class="" href="../pages/88-FontAssetsFallback.html"><span>72</span>后备字体资源（Fallback font assets）</a><a class="" href="../pages/09-ColorEmojis.html"><span>73</span>彩色表情符号（Color emojis）</a><a class="" href="../pages/29-RichText.html"><span>74</span>TextMesh Pro 富文本（Rich Text）</a><a class="" href="../pages/89-RichTextSupportedTags.html"><span>75</span>支持的富文本标签（Supported Rich Text Tags）</a><a class="" href="../pages/90-RichTextAlignment.html"><span>76</span>文本对齐（Text Alignment）</a><a class="" href="../pages/20-RichTextLetterCase.html"><span>77</span>大小写与小型大写（Lowercase, Uppercase, Smallcaps）</a><a class="" href="../pages/38-RichTextOpacity.html"><span>78</span>文本透明度（Text Opacity / Alpha）</a><a class="" href="../pages/91-RichTextBoldItalic.html"><span>79</span>粗体与斜体（Bold and Italic）</a><a class="" href="../pages/92-RichTextColor.html"><span>80</span>文本颜色（Text Color）</a><a class="" href="../pages/93-RichTextCharacterSpacing.html"><span>81</span>字符间距（Character Spacing）</a><a class="" href="../pages/94-RichTextFont.html"><span>82</span>字体与材质（Font）</a><a class="" href="../pages/95-RichTextFontWeight.html"><span>83</span>字体粗细（Font weight）</a><a class="" href="../pages/96-RichTextGradient.html"><span>84</span>颜色渐变（Gradient）</a><a class="" href="../pages/97-RichTextIndentation.html"><span>85</span>缩进（Indentation）</a><a class="" href="../pages/98-RichTextLineHeight.html"><span>86</span>行高（Line Height）</a><a class="" href="../pages/99-RichTextLineIndentation.html"><span>87</span>行缩进（Line Indentation）</a><a class="" href="../pages/100-RichTextLink.html"><span>88</span>文本链接（Text Link）</a><a class="" href="../pages/101-RichTextMargins.html"><span>89</span>边距（Margin）</a><a class="" href="../pages/102-RichTextMark.html"><span>90</span>文本标记与高亮（Mark）</a><a class="" href="../pages/103-RichTextMonospace.html"><span>91</span>等宽间距（Monospacing）</a><a class="" href="../pages/104-RichTextNoBreak.html"><span>92</span>禁止换行（No Break）</a><a class="" href="../pages/105-RichTextNoParse.html"><span>93</span>禁止标签解析（Noparse）</a><a class="" href="../pages/106-RichTextPageBreak.html"><span>94</span>分页（Page Break）</a><a class="" href="../pages/107-RichTextPos.html"><span>95</span>水平位置（Horizontal Position）</a><a class="" href="../pages/108-RichTextRotate.html"><span>96</span>字符旋转（Rotate）</a><a class="" href="../pages/109-RichTextStrikethroughUnderline.html"><span>97</span>删除线与下划线（Strikethrough and Underline）</a><a class="" href="../pages/110-RichTextSize.html"><span>98</span>字号（Font Size）</a><a class="" href="../pages/111-RichTextSpace.html"><span>99</span>水平空白（Horizontal Space）</a><a class="" href="../pages/112-RichTextSprite.html"><span>100</span>内嵌精灵（Sprite）</a><a class="" href="../pages/113-RichTextStyle.html"><span>101</span>文本样式（Style）</a><a class="" href="../pages/114-RichTextSubSuper.html"><span>102</span>下标与上标（Subscript and Superscript）</a><a class="" href="../pages/115-RichTextVOffset.html"><span>103</span>垂直偏移（Vertical Offset）</a><a class="" href="../pages/116-RichTextWidth.html"><span>104</span>文本区域宽度（Text Width）</a><a class="" href="../pages/117-StyleSheets.html"><span>105</span>样式表（Style Sheets）</a><a class="" href="../pages/118-Sprites.html"><span>106</span>精灵资源（Sprites）</a><a class="" href="../pages/119-ColorGradients.html"><span>107</span>颜色渐变（Color Gradients）</a><a class="" href="../pages/120-ColorGradientsTypes.html"><span>108</span>颜色渐变类型（Color Gradient Types）</a><a class="" href="../pages/14-ColorGradientsPresets.html"><span>109</span>渐变预设（Gradient Presets）</a><a class="" href="../pages/35-Shaders.html"><span>110</span>TextMesh Pro 着色器（Shaders）</a><a class="" href="../pages/121-ShadersDistanceField.html"><span>111</span>距离场与距离场叠加着色器（Distance Field / Distance Field Overlay Shaders）</a><a class="" href="../pages/122-ShadersDistanceFieldSurface.html"><span>112</span>距离场表面着色器（Distance Field (Surface) Shader）</a><a class="" href="../pages/123-ShadersDistanceFieldMobile.html"><span>113</span>移动端距离场与叠加着色器（Distance Field / Distance Field Overlay Mobile Shaders）</a><a class="active" aria-current="page" href="../pages/124-ShadersDistanceFieldMaskingMobile.html"><span>114</span>移动端距离场遮罩着色器（Distance Field Masking Mobile Shader）</a><a class="" href="../pages/125-ShadersDistanceFieldSurfaceMobile.html"><span>115</span>移动端距离场表面着色器（Distance Field (Surface) Mobile Shader）</a><a class="" href="../pages/126-ShadersBitmap.html"><span>116</span>位图着色器（Bitmap Shader）</a><a class="" href="../pages/127-ShadersBitmapCustomAtlas.html"><span>117</span>自定义图集位图着色器（Bitmap Custom Atlas Shader）</a><a class="" href="../pages/33-Settings.html"><span>118</span>TextMesh Pro 设置（Settings）</a><a class="" href="../pages/128-RichTextLineBreak.html"><span>119</span>显式换行（Line Break）</a></details><details><summary>传统富文本与实用指南</summary><a class="" href="../pages/28-StyledText.html"><span>120</span>传统富文本（Rich Text）</a><a class="" href="../pages/43-UIHowTos.html"><span>121</span>UI 实用指南目录（UI How Tos）</a><a class="" href="../pages/72-HOWTO-UIMultiResolution.html"><span>122</span>为多种分辨率设计 UI（Designing UI for Multiple Resolutions）</a><a class="" href="../pages/73-HOWTO-UIFitContentSize.html"><span>123</span>让 UI 元素适应内容大小（Making UI elements fit the size of their content）</a><a class="" href="../pages/74-HOWTO-UIWorldSpace.html"><span>124</span>创建世界空间 UI（Creating a World Space UI）</a><a class="" href="../pages/75-HOWTO-UICreateFromScripting.html"><span>125</span>通过脚本创建 UI 元素（Creating UI elements from scripting）</a><a class="" href="../pages/76-HOWTO-UIScreenTransition.html"><span>126</span>创建界面过渡（Creating Screen Transitions）</a><a class="" href="../pages/77-HOWTO-ShaderGraph.html"><span>127</span>使用 Shader Graph 创建自定义 UI 效果（Create Custom UI Effects With Shader Graph）</a><a class="" href="../pages/78-ProfilerUI.html"><span>128</span>UI 与 UI Details 性能分析器（UI (Canvas) and UI Details (Canvas) Profiler module reference）</a></details><a class="side-home" href="../glossary.html">中英术语速查</a></aside><main><div class="breadcrumb"><a href="../index.html">文档目录</a> / TextMesh Pro <span>114 / 128</span></div><header class="page-header"><h1 id="distance-field-masking-mobile-shader">移动端距离场遮罩着色器（Distance Field Masking Mobile Shader）</h1><p class="tools"><a href="../english/124-ShadersDistanceFieldMaskingMobile.html">离线英文原文</a><a href="https://docs.unity3d.com/Packages/com.unity.ugui@2.7/manual/TextMeshPro/ShadersDistanceFieldMaskingMobile.html" target="_blank" rel="noopener">Unity 在线原文 ↗</a><button class="print">打印本页</button></p></header><nav class="pager" aria-label="顺序阅读导航"><a rel="prev" href="123-ShadersDistanceFieldMobile.html"><small>上一页</small>移动端距离场与叠加着色器（Distance Field / Distance Field Overlay Mobile Shaders）</a><a rel="next" href="125-ShadersDistanceFieldSurfaceMobile.html"><small>下一页</small>移动端距离场表面着色器（Distance Field (Surface) Mobile Shader）</a></nav><details class="page-toc"><summary>本页内容</summary><a href="#properties">属性</a><a href="#face">字面（Face）</a><a href="#outline">描边（Outline）</a><a href="#underlay">底层效果（Underlay）</a><a href="#debug-settings">调试设置（Debug Settings）</a></details><article class="doc-content" id="content">
+<p>Distance Field 与 Distance Field Overlay 是 TextMesh Pro 有符号距离场（SDF）着色器的两个近乎相同的变体。Overlay 变体始终将 TextMesh Pro 对象绘制在场景中其他所有对象上方；普通 Distance Field 按场景的正常遮挡关系渲染，位于文本前面的对象会覆盖文本。</p>
+<p><img src="../assets/official-0db3f1689ae21d67.svg" alt="Example image" loading="lazy"></p>
+<p>这两个变体都不受光照影响，不与场景灯光交互，但可以模拟局部方向光效果。</p>
+<h2 id="properties">属性</h2>
+<p>Distance Field 和 Distance Field Overlay 着色器的属性完全相同，可在 TextMesh Pro 对象的 Inspector 中编辑。</p>
+<p>属性分为多个区域；其中部分区域必须先启用，才能激活其属性组。</p>
+<p><img src="../assets/official-f92599d844e0a30e.png" alt="Example image" loading="lazy"></p>
+<p><img src="../assets/official-db7e75abef978302.png" alt="Example image" loading="lazy"> <strong><a href="124-ShadersDistanceFieldMaskingMobile.html#face">字面（Face）</a>:</strong> 控制文本的整体外观。</p>
+<p><img src="../assets/official-99783d4ce692badc.png" alt="Example image" loading="lazy"> <strong><a href="124-ShadersDistanceFieldMaskingMobile.html#outline">描边（Outline）</a>:</strong> 为文本添加带颜色和／或纹理的描边。</p>
+<p><img src="../assets/official-7949347f14d600ab.png" alt="Example image" loading="lazy"> <strong><a href="124-ShadersDistanceFieldMaskingMobile.html#underlay">底层效果（Underlay）</a>:</strong> 在原始文本下方再渲染一层文本，例如用于添加投影。</p>
+<p><img src="../assets/official-54fe322849d7014e.png" alt="Example image" loading="lazy"> <strong><a href="124-ShadersDistanceFieldMaskingMobile.html#debug-settings">调试设置（Debug Settings）</a>:</strong> 显示内部着色器属性，有时可用于排查问题。</p>
+<p><a name="Face"></a></p>
+<h3 id="face">字面（Face）</h3>
+<p>字面属性控制了文本的整体外观。</p>
+<p><img src="../assets/official-32f5cecdbce6a81c.png" alt="Example image" loading="lazy"></p>
+<table>
+<thead>
+<tr>
+<th>属性：</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>颜色（Color）</strong></td>
+<td>调整文本的字面颜色。<br><br>你在这里设置的值乘以顶点 <strong>颜色（Colors）</strong> 相乘；该顶点颜色在 TextMeshPro 组件中设置。<br><br>设置为白色以使用原始顶点颜色。<br><br>设为黑色可抵消顶点颜色。<br><br>同样，设置Alpha为 <strong>1</strong> 使用原始顶点颜色的Alpha,同时设置为 <strong>0</strong> 使原始顶点颜色中的 Alpha 不再起作用。</td>
+</tr>
+<tr>
+<td><strong>柔化（Softness）</strong></td>
+<td>调整文本边缘的柔和程度。<br><br>数值为 <strong>0</strong> 会产生清晰的抗锯齿边缘。<br><br>数值大于 <strong>0</strong> 会使边缘越来越柔和／模糊。<br><br>此设置同时作用于文本字面和描边。</td>
+</tr>
+<tr>
+<td><strong>膨胀（Dilate）</strong></td>
+<td>调整文本轮廓在字体以下资源中的位置： <a href="84-FontAssetsSDF.html">距离场</a>.<br><br>数值为 <strong>0</strong> 将轮廓放在渐变中点，对应原始字体的轮廓。<br><br>负值使字符变细，正值使字符变粗。</td>
+</tr>
+</tbody>
+</table>
+<p><a name="Outline"></a></p>
+<h3 id="outline">描边（Outline）</h3>
+<p>描边属性允许为文本添加描边并控制其外观。必须设置以下值后，描边才会可见： <strong>厚度（Thickness）</strong> 值大于 <strong>0</strong>.</p>
+<p><img src="../assets/official-4e09028a1a7a3abe.png" alt="Example image" loading="lazy"></p>
+<table>
+<thead>
+<tr>
+<th>属性：</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>颜色（Color）</strong></td>
+<td>调整文本描边的颜色。</td>
+</tr>
+<tr>
+<td><strong>厚度（Thickness）</strong></td>
+<td>调整描边厚度，数值越大，线越粗。<br><br>描边沿文本轮廓绘制，一半厚度在轮廓内，另一半在轮廓外。<br><br>可通过调整以下属性，让描边进一步向内或向外移动： <strong>Face &gt; Dilate（字面 &gt; 膨胀）</strong> 属性中。</td>
+</tr>
+</tbody>
+</table>
+<p><a name="Underlay"></a></p>
+<h3 id="underlay">底层效果（Underlay）</h3>
+<p>Underlay 在原始文本下方额外渲染一层文本，可用于添加投影效果。</p>
+<p><img src="../assets/official-c171a36eb40a83d1.png" alt="Example image" loading="lazy"></p>
+<table>
+<thead>
+<tr>
+<th>属性：</th>
+<th></th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>底层效果类型（Underlay Type）</strong></td>
+<td></td>
+<td>选择要渲染的底层效果类型。</td>
+</tr>
+<tr>
+<td></td>
+<td>无（None）</td>
+<td>不使用底层效果。</td>
+</tr>
+<tr>
+<td></td>
+<td>常规（Normal）</td>
+<td>将底层效果呈现在原始文本下面。<br><br>产生标准的投影效果。</td>
+</tr>
+<tr>
+<td></td>
+<td>内部（Inner）</td>
+<td>反转底层效果，并使用原始文本对它进行遮罩，使其仅在原始字母轮廓内部可见。<br><br>产生类似透过镂空文字看到的投影效果。<br><br>要看到 <strong>内部（Inner）</strong> 底层效果时，必须将文本字面设为透明，即将 Alpha 设为 <strong>0</strong>.</td>
+</tr>
+<tr>
+<td><strong>颜色（Color）</strong></td>
+<td></td>
+<td>设置底层效果文本的颜色.默认是半透明的黑色。</td>
+</tr>
+<tr>
+<td><strong>水平／垂直偏移（Offset X/Offset Y）</strong></td>
+<td></td>
+<td>设置底层文本相对于原始文本的水平和垂直偏移。<br><br>例如，用底层效果创建投影时，可通过调整位置来表现特定光照方向。</td>
+</tr>
+<tr>
+<td><strong>膨胀（Dilate）</strong></td>
+<td></td>
+<td>调整底层文本轮廓在字体以下资源中的位置： <a href="84-FontAssetsSDF.html">距离场</a>.<br><br>数值为 <strong>0</strong> 将轮廓放在渐变中点，对应原始字体的轮廓。<br><br>负值使字符变细，正值使字符变粗。</td>
+</tr>
+<tr>
+<td><strong>柔化（Softness）</strong></td>
+<td></td>
+<td>调整底层文本边缘的柔和程度。<br><br>数值为 <strong>0</strong> 会产生清晰的抗锯齿边缘。<br><br>数值大于 <strong>0</strong> 会使边缘越来越柔和／模糊。<br><br>用底层效果创建投影时，可通过此设置让阴影边缘更硬或更柔和。</td>
+</tr>
+</tbody>
+</table>
+<p><a name="DebugSettings"></a></p>
+<h3 id="debug-settings">调试设置（Debug Settings）</h3>
+<p>调试区域包含定义和控制遮罩的选项，也提供部分着色器内部属性，便于排查问题。</p>
+<p><img src="../assets/official-42544c98ee986d0a.png" alt="Example image" loading="lazy"></p>
+<table>
+<thead>
+<tr>
+<th>属性：</th>
+<th></th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>字体图集（Font Atlas）</strong></td>
+<td></td>
+<td>指向字体资源所使用的图集纹理。</td>
+</tr>
+<tr>
+<td><strong>渐变缩放（Gradient Scale）</strong></td>
+<td></td>
+<td>表示字体以下数据的扩展范围： <a href="84-FontAssetsSDF.html">有符号距离场</a>.<br><br>这决定了以下材质属性的有效范围，例如  <strong>Outline &gt; Width（描边宽度）（Outline &gt; Width）</strong> 和 <strong>Underlay &gt; Offset X/Y（底层偏移）（Underlay &gt; Offset X/Y）</strong>.<br><br>此值等于 Padding + 1，其中 Padding 是 <strong>内边距</strong> 在创建字体资源时设置的值。<br><br><strong>注意：</strong> 此值仅用于调试，不应手动编辑。</td>
+</tr>
+<tr>
+<td><strong>纹理宽度／高度（Texture Width/Texture Height）</strong></td>
+<td></td>
+<td>显示以下设置中指定的纹理图集宽度和高度： <strong>图集分辨率（Atlas Resolution）</strong> ，这些值在创建字体资源时确定。</td>
+</tr>
+<tr>
+<td><strong>Scale X／Scale X（原文字段名称如此）</strong></td>
+<td></td>
+<td>设置 SDF 缩放的乘数。<br><br>设为 <strong>0</strong>时，字符会渲染成块状。<br><br>负值使字符更柔和，正值使字符看起来更锐利。</td>
+</tr>
+<tr>
+<td><strong>透视过滤（Perspective Filter）</strong></td>
+<td></td>
+<td>使用透视摄像机时，调整此设置，使文本在以较大倾斜角度观察时看起来更柔和。<br><br>默认值 <strong>0.875</strong> 在多数情况下足够。<br><br>使用正交摄像机时，将此值设为 <strong>0</strong>.</td>
+</tr>
+<tr>
+<td><strong>水平／垂直偏移（Offset X/Offset Y）</strong></td>
+<td></td>
+<td>在 X 和 Y 方向偏移各字符的顶点位置。<br><br>可通过脚本改变这些值，模拟爬行或滚动效果。</td>
+</tr>
+<tr>
+<td><strong>遮罩纹理（Mask Texture）</strong></td>
+<td></td>
+<td>选择用作遮罩的纹理文件。黑白图像效果最好。 <br><br>默认情况下，图像的黑色区域遮住文本，白色区域显示文本。</td>
+</tr>
+<tr>
+<td><strong>反转遮罩（Inverse Mask）</strong></td>
+<td></td>
+<td>反转遮罩：图像中的白色区域遮住文本，黑色区域显示文本。</td>
+</tr>
+<tr>
+<td><strong>边缘颜色（Edge Color）</strong></td>
+<td></td>
+<td>使用指定颜色为遮罩边缘着色。 <br><br>边缘越柔和，着色区域越大。</td>
+</tr>
+<tr>
+<td><strong>边缘柔化（Edge Softness）</strong></td>
+<td></td>
+<td>调整遮罩边缘的软硬程度。 <br><br>数值为 <strong>0.5</strong> 按原样应用遮罩。更大值使边缘柔化，更小值使边缘锐化。</td>
+</tr>
+<tr>
+<td><strong>擦除位置（Wipe Position）</strong></td>
+<td></td>
+<td>控制文本被遮罩的程度。 <br><br> 数值为 <strong>0.5</strong> 严格按照以下设置对文本应用遮罩： <strong>遮罩纹理（Mask Texture）</strong>. <br><br>数值为 <strong>0</strong> 完全显示文本（不应用遮罩）。 <br><br> 数值为 <strong>1</strong> 隐藏文本（所有文本均被遮罩）。</td>
+</tr>
+<tr>
+<td><strong>Softness X／Softness Y（水平／垂直柔化）</strong></td>
+<td></td>
+<td>在任一轴上对文本应用软遮罩。 <br><br>增加 <strong>X</strong> 值，在文本左右两侧添加软遮罩。增大 <strong>Y</strong> 值，在文本顶部和底部添加软遮罩。 <br><br>此遮罩会与以下选项定义的遮罩叠加： <strong>遮罩纹理（Mask Texture）</strong>.</td>
+</tr>
+<tr>
+<td><strong>裁剪矩形（Clip Rect）</strong></td>
+<td></td>
+<td>Clip Rect 定义遮罩矩形的左（<strong>L</strong>）、下（<strong>B</strong>）、右（<strong>R</strong>）和上（<strong>T</strong>）边界的世界空间坐标。<br><br> 通常由以下组件自动设置： <strong>二维矩形遮罩（2D RectMask）</strong>。不过，使用普通的 <strong>TextMeshPro</strong> 组件时，可通过此属性设置或控制遮罩区域。</td>
+</tr>
+</tbody>
+</table>
+</article><nav class="pager" aria-label="顺序阅读导航"><a rel="prev" href="123-ShadersDistanceFieldMobile.html"><small>上一页</small>移动端距离场与叠加着色器（Distance Field / Distance Field Overlay Mobile Shaders）</a><a rel="next" href="125-ShadersDistanceFieldSurfaceMobile.html"><small>下一页</small>移动端距离场表面着色器（Distance Field (Surface) Mobile Shader）</a></nav><footer>依据 Unity uGUI 2.7.0 官方手册翻译整理 · 技术名称、API、代码和图片中的英文保留 · 非 Unity 官方译文 · <a href="../版权与来源.html">版权与来源</a></footer></main><script src="../assets/app.js"></script></body></html>

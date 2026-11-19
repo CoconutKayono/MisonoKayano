@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>从 GAMES101 到现代引擎：光栅化、光追与路径追踪</title>
+<style>
+:root{--bg:#f5f3ed;--paper:#fffef9;--ink:#202e32;--muted:#596a70;--line:#d9dfd9;--green:#076854;--soft:#e5f0e9;--orange:#a84b24;--blue:#286aa0;--red:#c45251;--radius:16px}*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:90px}body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.85 "Segoe UI","Microsoft YaHei",system-ui,sans-serif}a{color:var(--green);text-underline-offset:4px}a:hover{color:var(--orange)}button,input,select{font:inherit}button{cursor:pointer}button:focus-visible,a:focus-visible,input:focus-visible,summary:focus-visible{outline:3px solid var(--orange);outline-offset:4px}header{max-width:1180px;margin:auto;padding:74px 44px 42px}.eyebrow,.num{font-size:12px;font-weight:700;letter-spacing:2px;color:var(--green)}h1{font-size:clamp(34px,5vw,60px);line-height:1.2;letter-spacing:-1.5px;max-width:950px;margin:22px 0}h1 em{font-style:normal;color:var(--green)}.lead{font-size:21px;max-width:850px;color:var(--muted)}.meta{font-size:13px;color:var(--muted);margin-top:28px}.shell{max-width:1180px;margin:auto;padding:0 44px 70px;display:grid;grid-template-columns:180px minmax(0,1fr);gap:48px}aside{position:sticky;top:30px;align-self:start;padding-top:25px}aside a{display:block;text-decoration:none;color:var(--muted);font-size:14px;padding:6px 0;border-left:2px solid transparent;padding-left:13px}aside a.active{border-color:var(--green);color:var(--green);font-weight:700}aside .small{margin-top:25px;padding-left:15px;font-size:12px}main{min-width:0}section{padding:37px 0 40px;border-top:1px solid var(--line)}h2{font-size:29px;line-height:1.4;letter-spacing:-.5px;margin:12px 0 23px}h3{font-size:21px;line-height:1.5;margin:28px 0 12px}p{margin:13px 0}strong{font-weight:700}small,.small{font-size:13px;color:var(--muted)}.callout{background:var(--soft);border-left:4px solid var(--green);padding:18px 23px;margin:24px 0;border-radius:0 12px 12px 0}.callout p:first-child{margin-top:0}.callout p:last-child{margin-bottom:0}.note{background:#f8ede1;border-left-color:var(--orange)}.answer{font-size:22px;line-height:1.6}.tag{display:inline-block;padding:2px 10px;background:var(--soft);border-radius:5px;font-size:12px;color:var(--green);font-weight:700;vertical-align:middle}.tag.beta{background:#f8ede1;color:var(--orange)}.two{display:grid;grid-template-columns:1fr 1fr;gap:24px}.card{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:23px}.card h3{margin:0 0 12px}.whywhat{display:grid;grid-template-columns:55px 1fr;gap:12px;margin:16px 0}.whywhat b{font-size:12px;color:var(--green);padding-top:4px;letter-spacing:1px}.whywhat p{margin:0}.table-wrap{overflow:auto;margin:23px 0}table{width:100%;border-collapse:collapse;font-size:14px;line-height:1.75}th{text-align:left;background:#e9eee8;color:var(--green);font-weight:700}th,td{padding:15px 13px;border-bottom:1px solid var(--line);vertical-align:top}td:first-child{font-weight:700;min-width:125px}table.compare{min-width:680px}.cite{font-size:12px;color:var(--muted);margin:9px 0 24px}.cite a{color:var(--muted)}.formula{text-align:center;font-size:19px;padding:23px 10px;background:var(--paper);border-radius:12px;margin:22px 0}.formula span{display:inline-block;padding:4px 10px}.controls{display:flex;flex-wrap:wrap;gap:9px;margin:16px 0 20px}.controls button,.action{border:1px solid var(--line);background:var(--paper);border-radius:8px;color:var(--ink);padding:9px 15px;font-size:14px;line-height:1.5}.controls button[aria-pressed="true"]{background:var(--green);color:#fff;border-color:var(--green)}.diagram{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:21px;margin:23px 0}.diagram svg{width:100%;height:auto;display:block}.diagram svg text{font-family:"Microsoft YaHei","Segoe UI",sans-serif;fill:var(--ink);font-size:16px}.diagram svg .label{font-size:13px;fill:var(--muted)}.diagram svg .ray{fill:none;stroke-width:3.5;stroke-linejoin:round}.diagram svg .ghost{stroke:#aab5b3;stroke-width:1.6;stroke-dasharray:6 6;fill:none}.diagram svg .hit{fill:var(--orange);stroke:white;stroke-width:2}.caption{min-height:90px;font-size:15px;border-top:1px solid var(--line);padding-top:15px;margin-top:5px}.caption strong{color:var(--green)}.legend{display:flex;gap:18px;flex-wrap:wrap;font-size:12px;color:var(--muted)}.legend i{display:inline-block;width:18px;border-top:3px solid var(--blue);margin:0 6px 3px 0}.flow{display:grid;grid-template-columns:1fr 24px 1fr 24px 1fr;align-items:center;text-align:center;margin:26px 0;gap:8px;font-size:14px}.flow .box{padding:18px 10px;border:1px solid var(--line);border-radius:10px;background:var(--paper)}.flow .box strong{display:block;color:var(--green)}.flow .arrow{color:var(--muted);font-size:23px}.tree{border-left:3px solid var(--green);padding:5px 0 5px 22px;margin:20px 0}.tree div{padding:5px 0}.tree .indent{padding-left:24px;color:var(--muted)}details{border-bottom:1px solid var(--line);padding:17px 0}summary{font-weight:700;cursor:pointer;line-height:1.6}details p{font-size:15px;margin-left:20px}.sources{font-size:13px;line-height:1.8;padding-left:23px}.sources li{padding:7px 0}.sample-area{display:grid;grid-template-columns:180px 1fr;gap:25px;align-items:center}canvas{width:180px;height:140px;image-rendering:pixelated;border-radius:8px;background:#eee}.sample-controls label{display:block;font-size:15px}.sample-controls input{width:100%;accent-color:var(--green)}.recap{font-size:21px;line-height:1.8;padding:25px 0;border-top:2px solid var(--green);border-bottom:2px solid var(--green)}footer{font-size:12px;color:var(--muted);margin-top:35px}.quiz-feedback{font-size:15px;margin-top:12px;color:var(--green)}.quiz{margin-top:22px}.quiz legend{font-weight:700}.quiz fieldset{border:0;padding:0;margin:0}.quiz label{display:block;font-size:15px;margin:9px 0;cursor:pointer}.quiz input{accent-color:var(--green);margin-right:8px}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+@media(max-width:900px){header{padding:45px 25px 30px}.shell{padding:0 25px 50px;grid-template-columns:1fr;gap:0}aside{position:static;display:flex;gap:12px;overflow:auto;white-space:nowrap;padding:0 0 20px}aside a{padding:4px 8px;border-left:0}aside .small{display:none}h2{font-size:26px}}
+@media(max-width:560px){body{font-size:16px}.two{grid-template-columns:1fr;gap:15px}header{padding-top:35px}.lead{font-size:18px}.shell{padding-left:19px;padding-right:19px}.diagram{padding:12px}.diagram svg{min-width:470px}.svg-wrap{overflow:auto}.flow{grid-template-columns:1fr;gap:3px}.flow .arrow{transform:rotate(90deg)}.sample-area{grid-template-columns:1fr}canvas{width:100%;height:auto;max-width:260px}.caption{min-height:135px}.answer{font-size:20px}.whywhat{grid-template-columns:48px 1fr}.controls button{flex:1 1 auto}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+@media print{body{background:white;font-size:12pt}.shell{display:block;padding:0}header{padding:0 0 20px}aside,.controls,.action,.quiz{display:none}section{padding:20px 0}h1{font-size:30pt}h2{font-size:20pt}.diagram,.card{break-inside:avoid}.table-wrap{overflow:visible}table.compare{min-width:0}.cite a{overflow-wrap:anywhere}details{display:block}details p{display:block}.caption{min-height:0}footer{margin-top:20px}}
+</style>
+</head>
+<body>
+<header>
+<div class="eyebrow">GAMES101 → REAL-TIME ENGINES · 图形学概念桥梁</div>
+<h1>一帧画面，<br>可以由<em>几种渲染方法</em>共同完成。</h1>
+<p class="lead">从「光栅化 / 光线追踪 / 路径追踪」走到 Unity URP、HDRP 和虚幻引擎。先理解为什么这样设计，再认识它们各自负责什么。</p>
+<div class="meta">中文学习讲义 · 按 Why → What 展开 · 含交互图解 · 核对日期：2026-09-25</div>
+</header>
+<div class="shell">
+<aside aria-label="文章目录">
+<a href="#answer">01 · 先回答你的问题</a><a href="#questions">02 · 拆开两个问题</a><a href="#methods">03 · 三种方法的关系</a><a href="#hybrid">04 · 为什么要混合</a><a href="#unity">05 · Unity 两条管线</a><a href="#unreal">06 · 虚幻与 Lumen</a><a href="#shaders">补充 · 我写的 Shader 呢？</a><a href="#confusions">07 · 容易混淆的概念</a><a href="#review">08 · 检查你的理解</a><a href="#sources">09 · 版本与资料</a>
+<div class="small">建议先顺序阅读。<br>图解可切换，问答可展开。<br><button class="action" id="print" type="button">打印 / 保存 PDF</button></div>
+</aside>
+<main>
+<section id="answer">
+<div class="num">01 / THE ANSWER</div><h2>它们不是只能三选一。</h2>
+<p class="answer"><strong>URP、HDRP 和虚幻的常规实时渲染，都以光栅化为重要基础；部分光照效果可以交给光线追踪。HDRP 和虚幻还提供单独的路径追踪模式。</strong></p>
+<div class="callout note"><p><strong>先校准版本：Unity 6.7 目前是 Beta。</strong>截至核对日期，官方已在 2026 年 9 月 17 日宣布公测。因此本文说的是 <strong>6.7 Beta 已公布的能力</strong>，不能把它当成已发布的 6.7 LTS 最终功能清单。</p><p class="small">特别是 URP 6.7 的 Surface Cache GI，让「URP 不支持任何光追」这个旧结论不再成立。<a href="https://discussions.unity.com/t/unity-6-7-beta-is-now-available/1736830">官方 Beta 公告</a> · <a href="https://discussions.unity.com/t/6-7-lts-beta-sweepstakes-your-chance-to-win-a-gpu-switch-or-unity-swag/1736728">Beta 新功能说明</a></p></div>
+<div class="table-wrap"><table class="compare"><thead><tr><th>引擎 / 管线</th><th>常规实时画面</th><th>光追在其中做什么？</th><th>完整画面路径追踪</th></tr></thead><tbody>
+<tr><td>Unity 6.7 URP<br><span class="tag beta">Beta 新能力</span></td><td>以光栅化为基础，配合所选光照方案。</td><td>启用 Surface Cache GI 时，用光追辅助计算动态漫反射间接光；有硬件路径，也有计算着色器回退。</td><td>未在此次核对资料中找到与 HDRP Path Tracing 对应的内置模式；SCGI 不等于整帧路径追踪。</td></tr>
+<tr><td>Unity HDRP</td><td>光栅化基础，可选实时光追效果，形成混合渲染。</td><td>可为反射、阴影、环境遮蔽、间接光等效果启用光追，视功能及平台配置而定。</td><td>有。Path Tracing 持续积累样本，适合高质量输出和参考画面。</td></tr>
+<tr><td>虚幻引擎 UE5</td><td>常规桌面渲染通常采用延迟渲染；也有前向等路径。高画质项目常结合 Lumen。</td><td>Lumen 用多种追踪方法求动态间接光与反射；可选软件 / 硬件光追。</td><td>有。独立 Path Tracer，常用于影视、建筑可视化和参考渲染。</td></tr>
+</tbody></table></div>
+<p class="cite">依据：<a href="https://discussions.unity.com/t/surface-cache-gi-preview/1720494">Unity SCGI 技术说明</a> · <a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.high-definition@17.3/manual/Ray-Tracing-Getting-Started.html">HDRP 光追</a> · <a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.high-definition@17.3/manual/path-tracing-understand.html">HDRP 路径追踪</a> · <a href="https://dev.epicgames.com/documentation/en-us/unreal-engine/forward-shading-renderer-in-unreal-engine">UE 渲染路径</a> · <a href="https://dev.epicgames.com/documentation/en-us/unreal-engine/lumen-technical-details-in-unreal-engine">Lumen</a> · <a href="https://dev.epicgames.com/documentation/en-us/unreal-engine/path-tracer-in-unreal-engine">UE Path Tracer</a>。HDRP 引用版本范围见文末。</p>
+<p>理解这张表的关键是：<strong>“引擎支持某技术”不等于“这个项目启用了它”，更不等于“每一个像素、每一种效果都由它计算”。</strong>一款游戏可能只给反射开光追，阴影仍用阴影贴图，间接光仍读取烘焙结果。</p>
+</section>
+<section id="questions">
+<div class="num">02 / TWO DIFFERENT QUESTIONS</div><h2>生成一张图，至少要回答两件事。</h2>
+<div class="two"><div class="card"><h3>① 相机看到了谁？</h3><p>某个像素对应红墙、白球，还是背景？球挡在墙前面时，哪个表面离相机更近？</p><p><strong>这是可见性问题。</strong>光栅化配合深度测试，或从相机发射射线，都可以解决它。</p></div><div class="card"><h3>② 看到的表面有多亮？</h3><p>白球收到了灯的多少光？红墙有没有把光反射到球上？球的光滑部分映出了什么？</p><p><strong>这是光照与光传输问题。</strong>需要知道光从哪里来，以及材质怎样散射它。</p></div></div>
+<p>GAMES101 往往先分开教光栅化、着色和光追，便于理解算法。进入引擎后，这些知识会重新组合：<strong>先用光栅化找到表面，再从这个表面发射射线查询反射或遮挡，完全合理。</strong></p>
+<div class="formula"><span>像素的颜色</span> ≈ <span>可见表面</span> ＋ <span>材质对光的响应</span> ＋ <span>到达它的光</span></div>
+<p class="small">上式是思维拆分，不是可以逐项相加的物理公式。真实着色还涉及方向、可见性、积分以及相机曝光等。</p>
+<h3>同一个房间，直接光和间接光有什么区别？</h3>
+<p>设想一盏灯、一面红墙和一个白球。灯直接照到球上，是<strong>直接光</strong>；灯先照红墙，墙把一部分偏红的光反射到球上，是<strong>间接光</strong>。所以即使球本身是白的，靠近墙的一侧也可能微微泛红。</p>
+<div class="diagram">
+<div class="controls" role="group" aria-label="光传输类型"><button type="button" data-light="direct" aria-pressed="true">直接光</button><button type="button" data-light="indirect" aria-pressed="false">间接光 / 颜色渗透</button><button type="button" data-light="reverse" aria-pressed="false">从相机反向追踪</button></div>
+<div class="svg-wrap"><svg viewBox="0 0 720 310" role="img" aria-labelledby="room-title room-desc"><title id="room-title">灯、红墙和白球之间的光传输</title><desc id="room-desc">切换按钮可显示灯到球的直接光、经红墙到球的间接光，以及从相机开始的反向路径。</desc><defs><marker id="arr-light" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6" fill="#a84b24"/></marker><marker id="arr-view" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6" fill="#286aa0"/></marker><radialGradient id="ball"><stop offset="0" stop-color="#fffef9"/><stop offset="1" stop-color="#d4dad7"/></radialGradient></defs>
+<path d="M70 260 H665" stroke="#bdc8c0" stroke-width="2"/><rect x="74" y="70" width="22" height="190" rx="4" fill="#c45251"/><text x="51" y="48">红墙</text><rect x="292" y="30" width="105" height="17" rx="5" fill="#e6ac40"/><text x="314" y="18">光源</text><ellipse cx="355" cy="259" rx="85" ry="11" fill="#dce2dc"/><circle cx="355" cy="205" r="54" fill="url(#ball)" stroke="#a5b3ad"/><circle id="red-bounce" cx="355" cy="205" r="54" fill="#de7373" opacity="0"/><text x="324" y="293">白球</text><rect x="602" y="99" width="57" height="37" rx="6" fill="#dde6e1" stroke="#687d73"/><path d="M602 109 L583 101 V135 L602 126Z" fill="#687d73"/><text x="600" y="164">相机</text><g id="light-paths"><path class="ray" d="M345 48 L355 150" stroke="#a84b24" marker-end="url(#arr-light)"/><path class="ray" d="M355 150 L582 118" stroke="#a84b24" marker-end="url(#arr-light)"/></g></svg></div>
+<div class="legend"><span><i style="border-color:var(--orange)"></i>橙色箭头：真实光能的传播方向</span><span><i></i>蓝色箭头：算法查询方向</span></div>
+<div class="caption" id="light-caption" aria-live="polite"><strong>直接光：</strong>光源 → 白球 → 相机。计算球的亮度时，还要检查球与光源之间是否被遮挡；这一步可以用阴影贴图，也可以用阴影射线。</div>
+</div>
+<p>“全局光照”（Global Illumination，GI）关注物体之间相互影响的光照，尤其是间接光。<strong>GI 是要解决的问题；路径追踪、烘焙、探针或动态缓存，是解决它的不同办法。</strong></p>
+</section>
+<section id="methods">
+<div class="num">03 / WHY → WHAT</div><h2>三种方法分别擅长什么？</h2>
+<h3>光栅化 Rasterization：高效地把三角形落实到像素。</h3>
+<div class="whywhat"><b>WHY</b><p>游戏要持续输出画面。模型主要由三角形组成，而 GPU 极其擅长并行处理大量三角形和片元。我们需要一种能高效判断“哪些屏幕采样点被哪些三角形覆盖”的方法。</p></div>
+<div class="whywhat"><b>WHAT</b><p>把三角形投影到屏幕，生成覆盖的片元，再通过深度测试等步骤确定可见表面。片元随后如何变成颜色，要由着色及相关光照数据决定。</p></div>
+<p>它<strong>不会仅凭三角形覆盖关系，就自动知道球背后有哪些物体能被镜子反射</strong>，也不会自动算出红墙给白球的反弹光。因此光栅化渲染器会配合阴影贴图、反射探针、烘焙、屏幕空间效果，或光线追踪。</p>
+<h3>光线追踪 Ray Tracing：沿一个方向，去问场景。</h3>
+<div class="whywhat"><b>WHY</b><p>许多光照问题其实是在问：朝灯的方向有没有遮挡？沿反射方向能看到什么？光穿过玻璃后会碰到谁？这些都是沿空间方向进行查询的问题。</p></div>
+<div class="whywhat"><b>WHAT</b><p>从一个起点沿一个方向发出射线，求它与场景的交点，再按具体算法决定下一步。射线可以来自相机，也可以来自光栅化已经找到的表面，或场景中的采样点。</p></div>
+<p>所以，“使用光追”可能仅指每个选中的表面发一条阴影射线。<strong>光追是一类技术，不能仅凭这两个字推断弹射次数、间接光质量，或整帧的生成方式。</strong></p>
+<h3>路径追踪 Path Tracing：随机采样光的完整传播路径。</h3>
+<div class="whywhat"><b>WHY</b><p>如果光能从四面八方到达一个表面，每个方向后面又可能连着更多反弹，逐一枚举所有路线是不可能的。我们需要用有限计算估计这个巨大积分。</p></div>
+<div class="whywhat"><b>WHAT</b><p>路径追踪用蒙特卡洛方法采样光传输路径：常见做法是从相机出发，在表面按材质与概率规则采样后续方向，并估计与光源的连接，最后对许多带权样本求平均。</p></div>
+<div class="callout"><p><strong>路径追踪属于光线追踪。</strong>区别不能简化成“光追弹一次，路径追踪弹很多次”。传统递归光追也能有多次反射和折射；路径追踪的关键是用随机采样估计光传输积分，包括漫反射的间接光。</p></div>
+<p class="cite">概念参考：<a href="https://pbr-book.org/4ed/Light_Transport_I_Surface_Reflection/Path_Tracing">PBRT 第四版：Path Tracing</a>。这里讲的是算法原理，不是在描述某个引擎的全部实现。</p>
+<div class="tree"><div><strong>光线追踪：沿射线查询场景的一大类方法</strong></div><div class="indent">├─ 某个效果的光追：例如只计算阴影或反射</div><div class="indent">├─ 传统递归光追：例如递归处理镜面反射、折射</div><div class="indent">└─ 路径追踪：随机采样光传输路径并估计积分</div></div>
+<h3>看图比较：第一处可见表面，到底怎么找到？</h3>
+<div class="diagram">
+<div class="controls" role="group" aria-label="渲染方式"><button type="button" data-method="raster" aria-pressed="true">光栅化</button><button type="button" data-method="hybrid" aria-pressed="false">混合渲染</button><button type="button" data-method="path" aria-pressed="false">路径追踪</button></div>
+<div class="svg-wrap"><svg viewBox="0 0 720 300" role="img" aria-labelledby="method-title"><title id="method-title">三种渲染方式的概念路径图</title><defs><marker id="arr-green" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6" fill="#076854"/></marker></defs><rect x="120" y="90" width="78" height="125" fill="#edf0e9" stroke="#a9b9b0"/><path d="M146 90V215 M172 90V215 M120 115H198 M120 140H198 M120 165H198 M120 190H198" stroke="#c5d0c8"/><text x="125" y="243">像素网格</text><circle cx="53" cy="155" r="19" fill="#e5f0e9" stroke="#076854"/><text x="26" y="200">相机</text><path d="M382 76 L478 238 L299 238 Z" fill="#dde8de" stroke="#076854" stroke-width="2"/><text x="333" y="268">场景表面 A</text><path d="M618 94V242" stroke="#c45251" stroke-width="16"/><text x="569" y="270">表面 B</text><rect x="470" y="23" width="94" height="14" rx="4" fill="#e6ac40"/><text x="496" y="16">光源</text><g id="method-paths"><path class="ghost" d="M382 76 L153 104 M478 238 L190 198 M299 238 L129 198"/><polygon points="153,104 190,198 129,198" fill="#076854" opacity=".24"/><path class="ray" d="M310 110 L211 142" stroke="#076854" marker-end="url(#arr-green)"/></g></svg></div>
+<div class="caption" id="method-caption" aria-live="polite"><strong>光栅化：</strong>把三角形 A 投影到像素网格，确定覆盖关系，再做深度测试与着色。绿色投影回答“相机看到了谁”，图中没有自动求解 A 与 B 之间的光传输。</div>
+<p class="small">示意图不按透视比例绘制；连线用于表达数据查询关系，不代表某个引擎内部完整的执行顺序。</p>
+</div>
+</section>
+<section id="hybrid">
+<div class="num">04 / WHY HYBRID RENDERING</div><h2>为什么不直接把一切都交给路径追踪？</h2>
+<p><strong>因为实时渲染有截止时间。</strong>60 FPS 意味着每帧约 16.7 毫秒；120 FPS 则只有约 8.3 毫秒。GPU 的几何处理、材质、光照、后处理等都要分享这段时间。CPU 工作虽然可以并行，也必须跟上帧节奏。</p>
+<p>路径追踪只取少量样本时，不同像素碰巧采到的路径差异很大，于是出现噪点。增加样本能让估计更稳定，但需要更多求交和着色计算。<strong>同一个 60 FPS 目标，允许的路径数远比离线渲染少。</strong></p>
+<div class="diagram"><h3 style="margin-top:0">拖动看看：为什么少量样本会不稳定？</h3><div class="sample-area"><canvas id="noise" width="180" height="140" role="img" aria-label="样本增多时噪声下降的统计示意图"></canvas><div class="sample-controls"><label for="samples">样本数：<strong id="sample-count">1</strong></label><input id="samples" type="range" min="0" max="8" step="1" value="0"><p class="small">1 → 256 个样本。对简单独立采样，误差的典型尺度约随 1/√N 下降：想让它减半，往往需要约 4 倍样本。</p></div></div><p class="small">这是人为构造的统计噪声示意，并非真实路径追踪器，也不是引擎性能或画质测试。</p></div>
+<p>混合渲染的思路很直接：<strong>把有限计算花在最能改善画面的地方。</strong>先高效找到可见表面；需要查看屏幕外信息的反射、复杂遮挡等，再用射线。光追结果常结合降噪、历史帧复用和缓存，来减少本帧需要追踪的数量。</p>
+<div class="flow"><div class="box"><strong>光栅化</strong>找到可见表面<br>得到深度、法线、材质等</div><div class="arrow">→</div><div class="box"><strong>选定光照效果</strong>光追 / 贴图 / 探针<br>按目标与预算组合</div><div class="arrow">→</div><div class="box"><strong>组合与重建</strong>着色、降噪、后处理<br>形成最终画面</div></div>
+<p class="small">这是概念流程；实际引擎会交错执行多个 Pass，也不一定全部写入同一种缓冲。</p>
+<div class="callout"><p>路径追踪本身并不等于“只能离线”。它可以用于实时系统，但通常需要更高硬件预算、较少样本以及强力重建。这里讨论的 <strong>HDRP Path Tracing 和 UE Path Tracer 产品模式</strong>，主要采用渐进累积，不能直接理解成所有普通游戏的默认渲染方式。</p></div>
+</section>
+<section id="unity">
+<div class="num">05 / UNITY</div><h2>URP 与 HDRP：目标不同，工具组合也不同。</h2>
+<p>渲染管线（Render Pipeline）是把场景变成画面的一套组织方案。它规定哪些步骤要执行、哪些数据要准备、哪些效果可以组合。<strong>URP 和 HDRP 是管线产品名，不是两种与光栅化、光追并列的基础算法。</strong></p>
+<h3>URP：让多种平台承担得起。</h3>
+<div class="whywhat"><b>WHY</b><p>手机、XR 设备、主机和桌面 GPU 的能力差异很大。统一的开发体验需要可伸缩的画质与成本，而不能要求所有设备每帧都追踪大量光线。</p></div>
+<div class="whywhat"><b>WHAT</b><p>URP 的常规画面仍以光栅化组织。光照可以搭配实时灯光、阴影贴图、烘焙数据、探针等；前向与延迟路径负责安排几何和着色工作。</p></div>
+<p class="cite">参考：<a href="https://docs.unity.com/en-us/engine/6000.6/manual/render-pipelines/universal-render-pipeline">URP 定位</a> · <a href="https://docs.unity.com/ja-jp/engine/6000.7/manual/render-pipelines/rendering-paths-introduction">Unity 6.7 渲染路径说明（英文正文）</a>。</p>
+<h3>6.7 的新增重点：Surface Cache GI <span class="tag beta">Beta / 预览能力</span></h3>
+<div class="whywhat"><b>WHY</b><p>如果门会打开、墙会被拆除、太阳会移动，预先烘焙好的间接光就很难完整响应。开发时反复烘焙也会打断调光流程。我们需要能随场景变化更新的间接光。</p></div>
+<div class="whywhat"><b>WHAT</b><p>SCGI 是 URP 的动态<strong>漫反射间接光</strong>方案。可把 Surface Cache 理解为“把表面附近的光照计算结果存起来并复用”。官方说明它基于 UnifiedRayTracing：可用时使用硬件光追，否则使用计算着色器回退。</p></div>
+<p>回到红墙和白球：它关心的是“红墙反射出去的光怎样影响球”。<strong>它不是完整的镜面反射方案</strong>，镜面部分还可配合反射探针、SSR 等。其计算中可以包含路径采样，但缓存式 GI 与从每个相机像素进行完整路径追踪，仍是不同的渲染组织方式。</p>
+<p class="cite">依据：<a href="https://discussions.unity.com/t/surface-cache-gi-preview/1720494">Unity 图形工程师发布的 SCGI 说明与 FAQ</a>；6.7 中的 SCGI 与 SSR 由<a href="https://discussions.unity.com/t/6-7-lts-beta-sweepstakes-your-chance-to-win-a-gpu-switch-or-unity-swag/1736728">官方 Beta 说明</a>确认。具体开关与限制应以安装的 Beta 构建和包为准。</p>
+<div class="callout"><p><strong>更准确地描述 URP 6.7：</strong>“以光栅化为基础；启用 SCGI 时，间接光阶段会使用光线追踪相关计算。”一句“URP 是纯光栅化”会遗漏这层能力；一句“URP 已经变成路径追踪引擎”又会夸大它。</p></div>
+<h3>HDRP：为高画质提供更多选择。</h3>
+<div class="whywhat"><b>WHY</b><p>如果目标设备有更充足的预算，开发者会希望减少屏幕空间反射缺失、复杂阴影等近似带来的问题，并使用更丰富的材质与光照表现。</p></div>
+<div class="whywhat"><b>WHAT</b><p>HDRP 同样有光栅化的常规渲染基础。打开某项光追效果，就是在相应环节使用射线来获取更完整的场景信息，并不自动把所有着色都改成路径追踪。</p></div>
+<p>例如，金属球的反射可以使用光追，而画面中哪些三角形首先可见仍由光栅化处理。是否实际启用，取决于项目设置、效果设置和平台支持。</p>
+<p class="cite">依据：<a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.high-definition@17.3/manual/index.html">HDRP 概览</a> · <a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.high-definition@17.3/manual/Ray-Tracing-Getting-Started.html">HDRP 光追设置与能力</a>。所核对的 HDRP 17.3 文档规定其这套光追路径使用 Windows / DirectX 12；不能据此把 URP SCGI 的计算着色器回退也当作同样限制。</p>
+<h3>HDRP Path Tracing：进入另一种输出模式。</h3>
+<p>当你明确启用 Path Tracing，HDRP 会用路径追踪统一计算受支持的光照效果，逐步积累每个像素的样本；相机移动会让累积重新开始。它很适合理解“光实际怎样在这个场景传播”，也可用于高质量静帧或录制输出。</p>
+<p><strong>它不是把 Ray Tracing 的质量滑块拉到最高。</strong>它改变了整幅图像光照的求解方式，且有自己支持和不支持的功能范围。</p>
+<p class="cite">依据：<a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.high-definition@17.3/manual/path-tracing-understand.html">Understand path tracing</a> · <a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.high-definition@17.3/manual/Ray-Tracing-Path-Tracing.html">Path tracing 文档入口与限制</a>。</p>
+</section>
+<section id="unreal">
+<div class="num">06 / UNREAL ENGINE, WITHOUT PREREQUISITES</div><h2>虚幻也用光栅化；Lumen 是它的光照系统。</h2>
+<p>你不用先学虚幻的操作界面。只要先区分三个名称：<strong>常规渲染器负责组织画面，Lumen 解决动态间接光与反射，Path Tracer 提供路径追踪输出。</strong></p>
+<h3>Lumen 为什么存在？</h3>
+<div class="whywhat"><b>WHY</b><p>在可探索的动态世界里，太阳、灯光、角色和场景状态都会变化。开发者希望反弹光与反射跟着变化，尽量减少反复烘焙和手工补光，同时保持交互帧率。</p></div>
+<div class="whywhat"><b>WHAT</b><p>Lumen 是动态 GI 与反射系统。它组合屏幕空间追踪、场景追踪、光照缓存等技术。通常先利用屏幕内已有信息，再通过其他追踪方法补充；场景追踪可以使用软件光追，也可以使用硬件光追。</p></div>
+<div class="two"><div class="card"><h3>软件光追</h3><p>在 Lumen 中，主要对<strong>距离场</strong>进行追踪。距离场记录空间位置到表面的距离，让算法沿射线逐步寻找表面。</p><p class="small">“软件”不等于 CPU 在慢慢算。它可以运行在 GPU 上，只是不依赖专用光追硬件执行同一种求交路径。</p></div><div class="card"><h3>硬件光追</h3><p>借助硬件加速追踪场景中的<strong>三角形</strong>，可覆盖更广的几何类型，并改善某些反射的几何准确性。</p><p class="small">加速的是查询能力；它不会自动替你决定用 Lumen、路径追踪还是只算阴影。</p></div></div>
+<p><strong>Lumen 不是 UE Path Tracer。</strong>即使 Lumen 算了多次反弹，它仍通过缓存、复用和分摊更新来满足实时预算；不能把“多次反弹”直接等同于“每像素完整路径追踪”。</p>
+<p class="cite">依据：<a href="https://dev.epicgames.com/documentation/en-us/unreal-engine/lumen-technical-details-in-unreal-engine">Epic：Lumen Technical Details</a>。软件 / 硬件模式是否启用及默认值取决于版本、模板、平台和项目设置，不能只凭“使用 UE5”判断。</p>
+<h3>那 Nanite 又是什么？</h3>
+<p>Nanite 主要解决<strong>高几何细节怎样高效呈现</strong>的问题，是虚拟化几何系统，涉及细节选择、流送和高效光栅化等。它与 Lumen 可以协同工作，但不会因为模型使用了 Nanite，就变成路径追踪。</p>
+<p class="cite">参考：<a href="https://dev.epicgames.com/documentation/en-us/unreal-engine/nanite-virtualized-geometry-in-unreal-engine">Epic：Nanite Virtualized Geometry</a>。</p>
+<h3>UE Path Tracer 在哪里？</h3>
+<p>这是单独的渐进式路径追踪模式，可持续累积样本，并结合 Movie Render Queue 输出高质量镜头。它适合影视、可视化，以及对照实时渲染中的近似误差。<strong>开启硬件光追、启用 Lumen、切换到 Path Tracer，是三个不同层面的决定。</strong></p>
+<p class="cite">依据：<a href="https://dev.epicgames.com/documentation/en-us/unreal-engine/path-tracer-in-unreal-engine">Epic：Path Tracer</a>。普通游戏还可以选择其他光照方案，不是所有 UE 项目都使用 Lumen。</p>
+</section>
+<section id="shaders">
+<div class="num">补充 / 从你写的 SHADER 看渲染流程 · 2026-09-26</div><h2>我写的 Unity Shader，属于光栅化还是光追？</h2>
+<p class="answer"><strong>如果你写的是常见的 <code>vert + frag</code> 材质 Shader，这个 Pass 通常参与的是光栅化渲染流程。但你一般没有亲手实现“光栅化算法”——GPU 的光栅器负责这一步。</strong></p>
+<p>还没看到你的具体代码，因此这里先以普通网格材质 Shader 为例。Shader 是运行在 GPU 上的程序；它并不是“光栅化”的同义词，光追也需要 Shader。判断时要看<strong>哪个 Pass 被调用、由什么命令启动，以及代码实际做了什么</strong>。</p>
+<h3>Why：为什么我写了顶点和颜色，就能画出整个三角形？</h3>
+<p>因为你是在给引擎已有的渲染流程提供几个可编程步骤。引擎提交模型与绘制命令，GPU 在这些步骤之间完成三角形装配、裁剪、光栅化等工作。无需在每个材质 Shader 中重新写一遍“三角形覆盖了哪些像素”的算法。</p>
+<h3>What：你写的代码在这里。</h3>
+<div class="diagram"><ol>
+<li><strong>Unity / 渲染管线：</strong>提交网格、材质与绘制命令。</li>
+<li><strong>你写的顶点 Shader：<code>vert</code></strong>。处理顶点，输出裁剪空间位置，并准备 UV、法线等后续需要的数据。</li>
+<li><strong>GPU 管线与光栅器：</strong>装配、裁剪、投影相关处理，确定三角形对屏幕采样点的覆盖，生成片元并按规则插值。</li>
+<li><strong>你写的片元 Shader：<code>frag</code></strong>。拿到片元输入后，计算颜色或写入其他渲染目标数据。</li>
+<li><strong>GPU 输出相关步骤：</strong>深度 / 模板测试、混合、写入目标。部分测试可以提前执行。</li>
+</ol></div>
+<div class="callout"><p><strong>光栅化通常发生在顶点处理之后、片元着色之前。</strong><code>vert</code> 不等于光栅化，<code>frag</code> 也不等于光栅化：它们是光栅化渲染流程中两个可编程阶段。</p></div>
+<p>例如，下面只是用来辨认阶段的代码片段，省略了结构体、ShaderLab 外壳与头文件：</p>
+<pre style="overflow:auto;padding:20px;background:var(--paper);border:1px solid var(--line);border-radius:12px;font-size:14px;line-height:1.8"><code>#pragma vertex vert
+#pragma fragment frag
+
+Varyings vert(Attributes input)
+{
+    Varyings output;
+    output.positionCS = TransformObjectToHClip(input.positionOS.xyz);
+    return output; // 提供位置；不是在这里枚举三角形覆盖的像素
+}
+
+half4 frag(Varyings input) : SV_Target
+{
+    return half4(0.2, 0.7, 0.4, 1.0); // 给已经生成的片元提供颜色
+}</code></pre>
+<p>这段 <code>frag</code> 连灯光都没有计算，却照样能显示有颜色的模型。说明<strong>“把形状画出来”和“计算物理光照”本来就是两件事</strong>。如果是延迟渲染，相关片元 Pass 还可能主要输出材质属性到 G-buffer，最终光照在其他 Pass 中计算。</p>
+<p class="cite">参考：<a href="https://docs.unity3d.com/cn/6000.0/Manual/urp/writing-shaders-urp-basic-unlit-structure.html">Unity 官方：URP 基础 Unlit Shader 的顶点与片元入口</a>。代码仅展示长期通用的阶段结构，不是完整可复制的工程。</p>
+<h3>在哪里“写光栅化”？</h3>
+<p><strong>普通 Unity 材质开发里，你通常不写光栅器，而是配置并使用它。</strong>你在 <code>.shader</code> 的 Pass 中写顶点 / 片元逻辑，在 ShaderLab 中用 <code>Cull</code>、<code>ZTest</code>、<code>ZWrite</code>、<code>Blend</code> 等配置相关管线状态。这些状态不是自己实现像素覆盖算法。</p>
+<p>如果你要像 GAMES101 作业那样亲手写“包围盒遍历、点在三角形内判定、重心坐标插值”，那是在<strong>实现一个光栅器</strong>，可以作为单独的 CPU 程序或计算着色器练习；这不属于普通材质 Shader 的日常职责。</p>
+<h3>在哪里“写光线追踪”？先区分两种工作。</h3>
+<div class="two"><div class="card"><h3>使用引擎已有光追</h3><p>你主要设置材质和光照，并启用管线支持的效果。光线如何生成、求交、降噪等工作，通常由引擎实现。</p><p>例如 HDRP 中使用支持光追的材质与效果，不要求每位材质作者都亲手写 <code>TraceRay</code>。自定义材质则需满足相应光追 Pass / 材质兼容要求。</p></div><div class="card"><h3>自己实现光追算法</h3><p>你要决定射线从哪里发出、朝哪里走、命中后如何处理、结果存到哪里，并让 C# 或渲染管线准备场景数据和启动计算。</p><p>这已经超出“给普通模型写一个片元颜色函数”的范围。</p></div></div>
+<p>以 Unity 常见的独立硬件光追路径为例，各部分的职责是：</p>
+<div class="table-wrap"><table><thead><tr><th>位置 / 阶段</th><th>你在定义什么？</th></tr></thead><tbody>
+<tr><td>C# / 渲染调度代码</td><td>准备光追场景加速结构、输出纹理、参数，并发起光追任务。</td></tr>
+<tr><td><code>.raytrace</code><br><code>raygeneration</code></td><td>定义射线起点和方向，发起追踪，例如调用 <code>TraceRay</code>。同类文件也可以包含 miss 程序。</td></tr>
+<tr><td>光追材质 Pass<br><code>closesthit</code> 等</td><td>定义射线命中表面后的行为，例如读取材质属性、计算贡献或继续追踪。Unity 的 <code>.shader</code> 文件也能包含这种 Pass。</td></tr>
+<tr><td><code>miss</code></td><td>定义射线没有命中时的处理，例如采样天空或返回背景贡献。</td></tr>
+<tr><td>GPU / 光追系统</td><td>根据加速结构执行遍历与求交；你通常不必自己遍历每一个三角形。</td></tr>
+</tbody></table></div>
+<pre style="overflow:auto;padding:20px;background:var(--paper);border:1px solid var(--line);border-radius:12px;font-size:14px;line-height:1.8"><code>// 概念伪代码；省略参数、资源绑定和有效 HLSL 签名
+RayGeneration:
+    ray = 构造射线(起点, 方向)
+    result = 追踪场景(ray)
+    写入输出纹理(result)
+
+ClosestHit:
+    读取命中点与材质
+    计算这条射线的贡献
+
+Miss:
+    返回天空 / 背景贡献</code></pre>
+<p class="cite">参考：<a href="https://docs.unity3d.com/kr/6000.0/ScriptReference/Rendering.RayTracingShader.html">Unity：RayTracingShader</a> · <a href="https://docs.unity3d.com/6000.0/Documentation/ScriptReference/Rendering.RayTracingShader.SetShaderPass.html">Unity：SetShaderPass 与光追材质 Pass 示例</a>。这是常见独立光追管线的结构；API 与支持条件需对应项目版本。</p>
+<h3>不能只看扩展名，也不能只看有没有 <code>frag</code>。</h3>
+<p><code>.compute</code> 表示通用 GPU 计算入口：它既能处理粒子，也能由你实现软件求交、光追乃至路径追踪；并不天然属于某一种。光追还可以通过内联射线查询等方式嵌入其他 Shader 阶段，具体取决于平台与 Unity 支持。</p>
+<p>甚至可以先光栅化一个全屏三角形，再在它的 <code>frag</code> 中手写射线与球的求交：<strong>用于启动片元的是光栅化，片元内部生成场景图像的方法却可以是光追。</strong>因此看到 <code>vert / frag</code> 能识别所处阶段，不能证明函数内部没有追踪射线。</p>
+<div class="callout note"><p><strong>一个非常常见的误会：计算“光方向”不等于追踪光线。</strong></p><p><code>max(dot(normal, lightDirection), 0)</code> 只是根据表面朝向计算受光强弱；<code>reflect(direction, normal)</code> 只是计算反射方向。两者都没有回答“沿这个方向遇到了谁”。要得到这个答案，还需要场景求交、屏幕空间追踪或其他可见性数据。</p></div>
+<p>若你用 Shader Graph，Base Color、Normal、Metallic、Smoothness 等节点主要描述材质。目标管线负责生成并运行相应 Pass；支持的 HDRP Graph 还可以生成光追所需代码。<strong>节点本身不把整个渲染器唯一归类为光栅化或光追。</strong></p>
+<div class="recap">对于普通 Unity 材质 Shader：你常写的是<strong>光栅化之前的顶点处理</strong>和<strong>光栅化之后的片元着色</strong>。只有当你或引擎额外进行射线查询，才涉及光追；是否属于路径追踪，还要看是否用路径采样来估计光传输。</div>
+</section>
+<section id="confusions">
+<div class="num">07 / CLEAR THE CONFUSION</div><h2>把几个常见名词放回正确的位置。</h2>
+<details open><summary>Forward、Forward+、Deferred，也是光追吗？</summary><p><strong>它们主要描述光栅化渲染中，几何和光照计算怎么组织。</strong>Forward 在绘制物体时计算光照；Deferred 通常先把可见表面的法线、材质等写入 G-buffer，再用这些数据处理光照。Forward+ 借助空间划分等手段筛选需要计算的灯光。名字中的“前向”也不是“从光源向相机追踪”。</p><p>Why：灯多不多、带宽够不够、透明物体怎么处理，都会影响效率。What：这是工作顺序与数据组织的选择，和“是否在某个环节发射射线”属于不同维度。</p><p class="cite"><a href="https://docs.unity.com/ja-jp/engine/6000.7/manual/render-pipelines/rendering-paths-introduction">Unity：Rendering paths</a> · <a href="https://dev.epicgames.com/documentation/en-us/unreal-engine/forward-shading-renderer-in-unreal-engine">Epic：Forward Shading Renderer</a></p></details>
+<details><summary>PBR 是不是意味着用了路径追踪？</summary><p>不是。PBR（Physically Based Rendering）强调用较符合物理的材质与光照模型，例如能量守恒和合理的反射响应。光栅化渲染器也可以使用 PBR 材质；路径追踪器也需要材质模型。<strong>材质怎样响应光，与用什么方法估计到达它的光，是不同问题。</strong></p></details>
+<details><summary>有反射、软阴影、红墙染色，就证明开了光追？</summary><p>不能。反射可能来自反射探针、平面反射或 SSR；软阴影也可能由阴影贴图及滤波产生；颜色渗透可能已经烘焙进数据。<strong>画面呈现什么效果，不能唯一反推出计算算法。</strong></p></details>
+<details><summary>SSR 为什么有时会在物体出屏幕后丢失反射？</summary><p>SSR（Screen Space Reflections）复用当前视图的深度与颜色等信息来寻找反射。Why：这些数据已经有了，复用很划算。What：它主要查询屏幕空间可用的信息；屏幕外或被前方物体遮住的信息往往缺失，所以需要回退方案。场景光追能查询所维护的场景表示，但它也会受裁剪、距离与表示精度限制。</p></details>
+<details><summary>烘焙时用了路径追踪，游戏运行时就是路径追踪吗？</summary><p>不是。<strong>算法在哪里运行、什么时候运行，很关键。</strong>烘焙可以预先通过大量采样求出光照，存成光照贴图或探针数据；游戏每帧只读取这些结果。就像提前算好一张表，查表时不需要重做全部推导。</p><p>因此，“制作阶段用路径追踪 + 运行阶段用光栅化”并不矛盾。动态物体能采样烘焙探针，也不意味着这些探针在实时重新求解全场景 GI。</p></details>
+<details><summary>RTX 显卡、硬件光追与路径追踪是什么关系？</summary><p>硬件光追提供加速结构遍历、求交等能力；路径追踪是使用这些能力的一种算法。<strong>硬件不自动决定渲染算法。</strong>有硬件支持，项目仍可只用光栅化；没有专用光追单元，理论上仍可实现光追或路径追踪，只是性能与产品支持范围不同。</p></details>
+<details><summary>降噪是不是“多追踪了一些正确的光线”？</summary><p>不是。Why：每帧样本少时噪声太明显。What：降噪器利用邻近像素、历史帧、法线、深度等信息，估计更稳定的结果。它可以大幅改善观感，也可能抹去细节或产生拖影；它不等于凭空获得更多真实样本。</p></details>
+</section>
+<section id="review">
+<div class="num">08 / A BETTER QUESTION TO ASK</div><h2>以后看一个引擎功能，先问这四句。</h2>
+<ol><li><strong>它解决的是可见性，还是某一类光照？</strong>例如找第一个表面，与计算反弹光，是不同任务。</li><li><strong>它查询的是什么数据？</strong>当前屏幕、场景三角形、距离场，还是提前存好的贴图和缓存？</li><li><strong>它什么时候计算？</strong>离线烘焙、运行时每帧更新，还是跨多帧积累？</li><li><strong>为实时性能做了什么取舍？</strong>少样本、缓存、较粗表示、有限范围，还是降噪与历史复用？</li></ol>
+<div class="card quiz"><fieldset><legend>小检查：一个 URP 6.7 场景开启了 SCGI，以下哪句最准确？</legend><label><input type="radio" name="check" value="a">整幅画面已经变成 HDRP 那样的 Path Tracing。</label><label><input type="radio" name="check" value="b">常规可见性仍可由光栅化完成，动态漫反射间接光使用 SCGI。</label><label><input type="radio" name="check" value="c">如果没有专用光追硬件，就一定不能使用 SCGI。</label></fieldset><div class="quiz-feedback" id="quiz-feedback" role="status">选一个答案，检查你是否区分了“渲染整帧”和“求解某种光照”。</div></div>
+<h3>把 GAMES101 与引擎连起来。</h3>
+<p>课上学到的三角形投影、深度测试，仍在生成现代游戏画面的第一层可见性；光线求交让引擎能查看屏幕外的场景；渲染方程与蒙特卡洛采样解释了为什么间接光难算，也解释了路径追踪的噪点。工程系统再用缓存、降噪、烘焙与时间复用，把这些方法放进毫秒级预算。</p>
+<div class="recap">你真正要判断的，不只是“这个引擎是哪种渲染方式”，而是：<strong>这一帧的哪一部分，用什么方法，在什么时间，求出了什么信息。</strong></div>
+</section>
+<section id="sources">
+<div class="num">09 / VERSION NOTES & SOURCES</div><h2>版本边界与延伸阅读</h2>
+<p class="small">本文只用官方材料与原始技术教材核对技术主张。Unity 6.7 尚处 Beta：新功能依据 6.7 官方公告与 SCGI 工程师说明。HDRP 的原理和现有模式以可访问的 <strong>17.3 包文档</strong>核对，未把它冒充为已逐项验证的 6.7 最终包清单。虚幻部分参考当前页面标注为 <strong>UE 5.8</strong> 的官方文档，重点讲 UE5 的渲染结构；不假定所有平台、模板或旧版本拥有相同功能。</p>
+<p class="small">“URP 未发现对应的内置整帧路径追踪模式”表示本次所核对官方资料的范围；不排除自定义渲染器、研究实现或第三方插件。本文没有对设备性能作实测。</p>
+<ol class="sources">
+<li><a href="https://discussions.unity.com/t/unity-6-7-beta-is-now-available/1736830">Unity 6.7 Beta is now available</a> — 2026-09-17，确定版本状态。</li>
+<li><a href="https://discussions.unity.com/t/6-7-lts-beta-sweepstakes-your-chance-to-win-a-gpu-switch-or-unity-swag/1736728">Unity 6.7 Beta 官方功能说明</a> — 明确包含 URP SCGI 与 SSR。</li>
+<li><a href="https://discussions.unity.com/t/surface-cache-gi-preview/1720494">Surface Cache GI Preview</a> — 优先读主帖 FAQ：硬件 / 计算回退，以及仅漫反射的范围；后续工程师回复解释表面缓存采样。</li>
+<li><a href="https://docs.unity.com/ja-jp/engine/6000.7/manual/render-pipelines/rendering-paths-introduction">Unity 6.7：Rendering paths in Unity</a> — 前向与延迟的区别，页面为英文正文。</li>
+<li><a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.high-definition@17.3/manual/Ray-Tracing-Getting-Started.html">HDRP 17.3：Set up ray tracing</a> — 支持条件和逐项开启效果的方式。</li>
+<li><a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.high-definition@17.3/manual/path-tracing-understand.html">HDRP 17.3：Understand path tracing</a> — 统一光照、随机采样、噪点与累积。</li>
+<li><a href="https://dev.epicgames.com/documentation/en-us/unreal-engine/lumen-technical-details-in-unreal-engine">Epic：Lumen Technical Details</a> — 屏幕追踪、Surface Cache、软件 / 硬件光追。</li>
+<li><a href="https://dev.epicgames.com/documentation/en-us/unreal-engine/path-tracer-in-unreal-engine">Epic：Path Tracer</a> — 与实时渲染的区分，以及高质量输出用途。</li>
+<li><a href="https://dev.epicgames.com/documentation/en-us/unreal-engine/nanite-virtualized-geometry-in-unreal-engine">Epic：Nanite Virtualized Geometry</a> — 几何系统的角色。</li>
+<li><a href="https://pbr-book.org/4ed/Light_Transport_I_Surface_Reflection/Path_Tracing">PBRT 第四版：Path Tracing</a> — 学完 GAMES101 后深入路径积分与估计器的教材入口。</li>
+</ol>
+<footer>本讲义为离线可读的单文件 HTML，无外部字体、脚本或图片依赖。图形均为教学示意，不是 Unity / Unreal 截图。交互逻辑在本地运行；官方参考链接需要联网打开。</footer>
+</section>
+</main></div>
+<script>
+(() => {
+const byId=id=>document.getElementById(id);
+const setPressed=(selector,current)=>document.querySelectorAll(selector).forEach(b=>b.setAttribute('aria-pressed',String(b===current)));
+const ray=(d,color,marker)=>`<path class="ray" d="${d}" stroke="${color}" marker-end="url(#${marker})"/>`;
+const lightStates={
+direct:{paths:ray('M345 48 L355 150','#a84b24','arr-light')+ray('M355 150 L582 118','#a84b24','arr-light'),red:0,text:'<strong>直接光：</strong>光源 → 白球 → 相机。计算球的亮度时，还要检查球与光源之间是否被遮挡；这一步可以用阴影贴图，也可以用阴影射线。'},
+indirect:{paths:ray('M320 48 L99 120','#a84b24','arr-light')+ray('M99 120 L355 150','#a84b24','arr-light')+ray('M355 150 L582 118','#a84b24','arr-light'),red:.17,text:'<strong>间接光：</strong>光源 → 红墙 → 白球 → 相机。红墙吸收与反射不同波长的光，送到白球的光偏红；球的材质不需要变成红色，收到的光变了。'},
+reverse:{paths:ray('M582 118 L355 150','#286aa0','arr-view')+ray('M355 150 L99 120','#286aa0','arr-view')+ray('M99 120 L320 48','#286aa0','arr-view'),red:.17,text:'<strong>反向追踪：</strong>相机 → 白球 → 红墙 → 光源。这是常见相机路径追踪的查询方向，和真实光能传播方向相反。实际算法按概率采样方向，也常主动采样光源连接，并非靠随机射线总能恰好撞中小灯。'}
+};
+document.querySelectorAll('[data-light]').forEach(b=>b.addEventListener('click',()=>{const s=lightStates[b.dataset.light];setPressed('[data-light]',b);byId('light-paths').innerHTML=s.paths;byId('red-bounce').setAttribute('opacity',s.red);byId('light-caption').innerHTML=s.text;}));
+const raster='<path class="ghost" d="M382 76 L153 104 M478 238 L190 198 M299 238 L129 198"/><polygon points="153,104 190,198 129,198" fill="#076854" opacity=".24"/>'+ray('M310 110 L211 142','#076854','arr-green');
+const methods={
+raster:{paths:raster,text:'<strong>光栅化：</strong>把三角形 A 投影到像素网格，确定覆盖关系，再做深度测试与着色。绿色投影回答“相机看到了谁”，图中没有自动求解 A 与 B 之间的光传输。'},
+hybrid:{paths:raster+ray('M421 150 L607 120','#286aa0','arr-view')+'<circle class="hit" cx="421" cy="150" r="6"/>',text:'<strong>混合渲染：</strong>先用光栅化得到可见的表面 A，再从 A 发射射线查询表面 B。例如计算反射：相机的第一处可见性来自光栅化，反射方向的可见性来自光追。蓝线表示附加查询。'},
+path:{paths:ray('M73 155 L420 155','#286aa0','arr-view')+ray('M422 155 L608 120','#286aa0','arr-view')+ray('M607 120 L528 40','#286aa0','arr-view')+'<circle class="hit" cx="422" cy="155" r="6"/><circle class="hit" cx="608" cy="120" r="6"/>',text:'<strong>路径追踪：</strong>示意的一条样本路径从相机穿过像素，命中 A，再到 B，并连接光源。实际会采样大量不同路径并累计带权贡献；这不是“把所有可能路径都列出来”。箭头表示反向查询。'}
+};
+document.querySelectorAll('[data-method]').forEach(b=>b.addEventListener('click',()=>{const s=methods[b.dataset.method];setPressed('[data-method]',b);byId('method-paths').innerHTML=s.paths;byId('method-caption').innerHTML=s.text;}));
+const canvas=byId('noise'),ctx=canvas.getContext('2d');
+function drawNoise(){const n=2**Number(byId('samples').value);byId('sample-count').textContent=n;let seed=137;const random=()=>{seed=(seed*1664525+1013904223)>>>0;return seed/4294967296;};const img=ctx.createImageData(180,140);for(let y=0;y<140;y++)for(let x=0;x<180;x++){const nx=(x-90)/47,ny=(y-70)/47,r=nx*nx+ny*ny;let base=r<1?130+90*Math.sqrt(1-r)-28*nx-23*ny:190-30*y/140;const jitter=(random()+random()+random()-1.5)*145/Math.sqrt(n);let i=(y*180+x)*4;img.data[i]=base+jitter;img.data[i+1]=base+jitter+5;img.data[i+2]=base+jitter;img.data[i+3]=255;}ctx.putImageData(img,0,0);canvas.setAttribute('aria-label',`统计示意：${n} 个样本，噪声尺度随样本增加而降低`);}
+byId('samples').addEventListener('input',drawNoise);drawNoise();
+document.querySelectorAll('input[name="check"]').forEach(input=>input.addEventListener('change',()=>{byId('quiz-feedback').textContent=input.value==='b'?'正确。你区分了主画面的可见性与动态间接光求解；启用某种光照系统，并不自动替换整帧渲染方式。':input.value==='a'?'再想一步：SCGI 主要计算漫反射间接光。使用光追或路径采样，不等于整个相机画面都采用路径追踪。':'再想一步：SCGI 基于 UnifiedRayTracing，除了硬件路径，也有计算着色器回退。具体能否运行还要看平台与构建支持。';}));
+byId('print').addEventListener('click',()=>window.print());
+const observer=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){document.querySelectorAll('aside a').forEach(a=>a.classList.toggle('active',a.hash==='#'+e.target.id));}}),{rootMargin:'-5% 0px -75% 0px'});document.querySelectorAll('main section').forEach(s=>observer.observe(s));
+})();
+</script>
+</body></html>

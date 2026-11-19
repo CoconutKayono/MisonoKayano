@@ -1,0 +1,610 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>3D Text GameObjects · uGUI 2.7 中文文档</title><link rel="stylesheet" href="../assets/style.css"></head><body><button class="menu-toggle" aria-controls="sidebar" aria-expanded="false">目录</button><aside id="sidebar"><a class="brand" href="../index.html"><span class="brand-mark">U</span><span>uGUI 中文手册<small>2.7.0 · 离线阅读</small></span></a><a class="side-home" href="../index.html">目录与全文搜索</a><details><summary>起步与基础</summary><a class="" href="../english/48-index.html"><span>01</span>Unity UI（uGUI）概述（Unity UI (uGUI)）</a><a class="" href="../english/49-UICanvas.html"><span>02</span>Canvas 概述（Canvas）</a><a class="" href="../english/50-UIBasicLayout.html"><span>03</span>基础布局（Basic Layout）</a><a class="" href="../english/01-UIAutoLayout.html"><span>04</span>自动布局（Auto Layout）</a><a class="" href="../english/44-UIReference.html"><span>05</span>UI 组件参考总览（UI Reference）</a><a class="" href="../english/26-class-RectTransform.html"><span>06</span>矩形变换（Rect Transform）</a><a class="" href="../english/30-script-SafeArea.html"><span>07</span>安全区域（Safe Area）</a><a class="" href="../english/04-class-Canvas.html"><span>08</span>画布（Canvas）</a></details><details><summary>Canvas 与自动布局</summary><a class="" href="../english/05-comp-CanvasComponents.html"><span>09</span>画布组件（Canvas Components）</a><a class="" href="../english/08-script-CanvasScaler.html"><span>10</span>画布缩放器（Canvas Scaler）</a><a class="" href="../english/06-class-CanvasGroup.html"><span>11</span>画布组（Canvas Group）</a><a class="" href="../english/07-class-CanvasRenderer.html"><span>12</span>画布渲染器（Canvas Renderer）</a><a class="" href="../english/02-comp-UIAutoLayout.html"><span>13</span>自动布局组件参考（Auto Layout）</a><a class="" href="../english/60-script-LayoutElement.html"><span>14</span>布局元素（Layout Element）</a><a class="" href="../english/61-script-ContentSizeFitter.html"><span>15</span>内容大小适配器（Content Size Fitter）</a><a class="" href="../english/62-script-AspectRatioFitter.html"><span>16</span>宽高比适配器（Aspect Ratio Fitter）</a><a class="" href="../english/63-script-HorizontalLayoutGroup.html"><span>17</span>水平布局组（Horizontal Layout Group）</a><a class="" href="../english/45-script-VerticalLayoutGroup.html"><span>18</span>垂直布局组（Vertical Layout Group）</a><a class="" href="../english/15-script-GridLayoutGroup.html"><span>19</span>网格布局组（Grid Layout Group）</a></details><details><summary>视觉与交互组件</summary><a class="" href="../english/46-UIVisualComponents.html"><span>20</span>视觉组件概述（Visual Components）</a><a class="" href="../english/18-UIInteractionComponents.html"><span>21</span>交互组件概述（Interaction Components）</a><a class="" href="../english/00-UIAnimationIntegration.html"><span>22</span>动画集成（Animation Integration）</a><a class="" href="../english/41-script-Tweening.html"><span>23</span>补间动画（Tweening）</a><a class="" href="../english/47-comp-UIVisual.html"><span>24</span>视觉组件参考（Visual Components）</a><a class="" href="../english/37-script-Text.html"><span>25</span>传统文本控件（Text）</a><a class="" href="../english/16-script-Image.html"><span>26</span>图像（Image）</a><a class="" href="../english/24-script-RawImage.html"><span>27</span>原始图像（Raw Image）</a><a class="" href="../english/51-script-Mask.html"><span>28</span>遮罩（Mask）</a><a class="" href="../english/27-script-RectMask2D.html"><span>29</span>二维矩形遮罩（RectMask2D）</a><a class="" href="../english/42-comp-UIEffects.html"><span>30</span>UI 效果组件（UI Effect Components）</a><a class="" href="../english/52-script-Shadow.html"><span>31</span>阴影（Shadow）</a><a class="" href="../english/53-script-Outline.html"><span>32</span>描边（Outline）</a><a class="" href="../english/23-script-PositionAsUV1.html"><span>33</span>将位置写入 UV1（Position as UV1）</a><a class="" href="../english/19-comp-UIInteraction.html"><span>34</span>交互组件参考（Interaction Components）</a><a class="" href="../english/32-script-Selectable.html"><span>35</span>可选择组件基类（Selectable Base Class）</a><a class="" href="../english/54-script-SelectableTransition.html"><span>36</span>过渡选项（Transition Options）</a><a class="" href="../english/22-script-SelectableNavigation.html"><span>37</span>导航选项（Navigation Options）</a><a class="" href="../english/03-script-Button.html"><span>38</span>按钮（Button）</a><a class="" href="../english/40-script-Toggle.html"><span>39</span>开关（Toggle）</a><a class="" href="../english/55-script-ToggleGroup.html"><span>40</span>开关组（Toggle Group）</a><a class="" href="../english/56-script-Slider.html"><span>41</span>滑动条（Slider）</a><a class="" href="../english/31-script-Scrollbar.html"><span>42</span>滚动条（Scrollbar）</a><a class="" href="../english/57-script-Dropdown.html"><span>43</span>下拉列表（Dropdown）</a><a class="" href="../english/58-script-InputField.html"><span>44</span>输入框（Input Field）</a><a class="" href="../english/59-script-ScrollRect.html"><span>45</span>滚动矩形（Scroll Rect）</a></details><details><summary>事件与消息系统</summary><a class="" href="../english/11-EventSystem.html"><span>46</span>事件系统（Event System）</a><a class="" href="../english/21-MessagingSystem.html"><span>47</span>消息系统（Messaging System）</a><a class="" href="../english/17-InputModules.html"><span>48</span>输入模块（Input Modules）</a><a class="" href="../english/36-SupportedEvents.html"><span>49</span>支持的事件（Supported Events）</a><a class="" href="../english/25-Raycasters.html"><span>50</span>射线检测器（Raycasters）</a><a class="" href="../english/64-EventSystemReference.html"><span>51</span>事件组件参考（Event System Reference）</a><a class="" href="../english/65-script-EventSystem.html"><span>52</span>事件系统管理器（Event System Manager）</a><a class="" href="../english/66-script-GraphicRaycaster.html"><span>53</span>图形射线检测器（Graphic Raycaster）</a><a class="" href="../english/67-script-PanelEventHandler.html"><span>54</span>面板事件处理器（Panel Event Handler）</a><a class="" href="../english/68-script-PanelRaycaster.html"><span>55</span>面板射线检测器（Panel Raycaster）</a><a class="" href="../english/69-script-PhysicsRaycaster.html"><span>56</span>物理射线检测器（Physics Raycaster）</a><a class="" href="../english/70-script-Physics2DRaycaster.html"><span>57</span>二维物理射线检测器（Physics 2D Raycaster）</a><a class="" href="../english/71-script-StandaloneInputModule.html"><span>58</span>独立输入模块（Standalone Input Module）</a><a class="" href="../english/12-script-EventTrigger.html"><span>59</span>事件触发器（Event Trigger）</a></details><details open><summary>TextMesh Pro</summary><a class="" href="../english/39-index.html"><span>60</span>TextMesh Pro 文档与入门</a><a class="" href="../english/10-TMPObjects.html"><span>61</span>创建文本（Creating text）</a><a class="" href="../english/79-TMPObjectUIText.html"><span>62</span>UI 文本对象（UI Text GameObjects）</a><a class="active" aria-current="page" href="../english/80-TMPObject3DText.html"><span>63</span>三维文本对象（3D Text GameObjects）</a><a class="" href="../english/13-FontAssets.html"><span>64</span>字体资源（Font Assets）</a><a class="" href="../english/81-FontAssetsProperties.html"><span>65</span>字体资源属性（Font Asset Properties）</a><a class="" href="../english/82-FontAssetsCreator.html"><span>66</span>字体资源创建器（Font Asset Creator）</a><a class="" href="../english/83-FontAssetsLineMetrics.html"><span>67</span>行度量（Line metrics.）</a><a class="" href="../english/84-FontAssetsSDF.html"><span>68</span>有符号距离场字体（Signed Distance Fields）</a><a class="" href="../english/85-FontAssetsDynamicFonts.html"><span>69</span>动态字体资源（Dynamic fonts assets）</a><a class="" href="../english/86-FontAssetsSubsetting.html"><span>70</span>通过字体子集化优化字体文件（Optimize font files with font subsetting）</a><a class="" href="../english/87-FontAssetsMigration.html"><span>71</span>将静态字体资源迁移到高级文本生成器（Migrate static font assets to the Advanced Text Generator）</a><a class="" href="../english/88-FontAssetsFallback.html"><span>72</span>后备字体资源（Fallback font assets）</a><a class="" href="../english/09-ColorEmojis.html"><span>73</span>彩色表情符号（Color emojis）</a><a class="" href="../english/29-RichText.html"><span>74</span>TextMesh Pro 富文本（Rich Text）</a><a class="" href="../english/89-RichTextSupportedTags.html"><span>75</span>支持的富文本标签（Supported Rich Text Tags）</a><a class="" href="../english/90-RichTextAlignment.html"><span>76</span>文本对齐（Text Alignment）</a><a class="" href="../english/20-RichTextLetterCase.html"><span>77</span>大小写与小型大写（Lowercase, Uppercase, Smallcaps）</a><a class="" href="../english/38-RichTextOpacity.html"><span>78</span>文本透明度（Text Opacity / Alpha）</a><a class="" href="../english/91-RichTextBoldItalic.html"><span>79</span>粗体与斜体（Bold and Italic）</a><a class="" href="../english/92-RichTextColor.html"><span>80</span>文本颜色（Text Color）</a><a class="" href="../english/93-RichTextCharacterSpacing.html"><span>81</span>字符间距（Character Spacing）</a><a class="" href="../english/94-RichTextFont.html"><span>82</span>字体与材质（Font）</a><a class="" href="../english/95-RichTextFontWeight.html"><span>83</span>字体粗细（Font weight）</a><a class="" href="../english/96-RichTextGradient.html"><span>84</span>颜色渐变（Gradient）</a><a class="" href="../english/97-RichTextIndentation.html"><span>85</span>缩进（Indentation）</a><a class="" href="../english/98-RichTextLineHeight.html"><span>86</span>行高（Line Height）</a><a class="" href="../english/99-RichTextLineIndentation.html"><span>87</span>行缩进（Line Indentation）</a><a class="" href="../english/100-RichTextLink.html"><span>88</span>文本链接（Text Link）</a><a class="" href="../english/101-RichTextMargins.html"><span>89</span>边距（Margin）</a><a class="" href="../english/102-RichTextMark.html"><span>90</span>文本标记与高亮（Mark）</a><a class="" href="../english/103-RichTextMonospace.html"><span>91</span>等宽间距（Monospacing）</a><a class="" href="../english/104-RichTextNoBreak.html"><span>92</span>禁止换行（No Break）</a><a class="" href="../english/105-RichTextNoParse.html"><span>93</span>禁止标签解析（Noparse）</a><a class="" href="../english/106-RichTextPageBreak.html"><span>94</span>分页（Page Break）</a><a class="" href="../english/107-RichTextPos.html"><span>95</span>水平位置（Horizontal Position）</a><a class="" href="../english/108-RichTextRotate.html"><span>96</span>字符旋转（Rotate）</a><a class="" href="../english/109-RichTextStrikethroughUnderline.html"><span>97</span>删除线与下划线（Strikethrough and Underline）</a><a class="" href="../english/110-RichTextSize.html"><span>98</span>字号（Font Size）</a><a class="" href="../english/111-RichTextSpace.html"><span>99</span>水平空白（Horizontal Space）</a><a class="" href="../english/112-RichTextSprite.html"><span>100</span>内嵌精灵（Sprite）</a><a class="" href="../english/113-RichTextStyle.html"><span>101</span>文本样式（Style）</a><a class="" href="../english/114-RichTextSubSuper.html"><span>102</span>下标与上标（Subscript and Superscript）</a><a class="" href="../english/115-RichTextVOffset.html"><span>103</span>垂直偏移（Vertical Offset）</a><a class="" href="../english/116-RichTextWidth.html"><span>104</span>文本区域宽度（Text Width）</a><a class="" href="../english/117-StyleSheets.html"><span>105</span>样式表（Style Sheets）</a><a class="" href="../english/118-Sprites.html"><span>106</span>精灵资源（Sprites）</a><a class="" href="../english/119-ColorGradients.html"><span>107</span>颜色渐变（Color Gradients）</a><a class="" href="../english/120-ColorGradientsTypes.html"><span>108</span>颜色渐变类型（Color Gradient Types）</a><a class="" href="../english/14-ColorGradientsPresets.html"><span>109</span>渐变预设（Gradient Presets）</a><a class="" href="../english/35-Shaders.html"><span>110</span>TextMesh Pro 着色器（Shaders）</a><a class="" href="../english/121-ShadersDistanceField.html"><span>111</span>距离场与距离场叠加着色器（Distance Field / Distance Field Overlay Shaders）</a><a class="" href="../english/122-ShadersDistanceFieldSurface.html"><span>112</span>距离场表面着色器（Distance Field (Surface) Shader）</a><a class="" href="../english/123-ShadersDistanceFieldMobile.html"><span>113</span>移动端距离场与叠加着色器（Distance Field / Distance Field Overlay Mobile Shaders）</a><a class="" href="../english/124-ShadersDistanceFieldMaskingMobile.html"><span>114</span>移动端距离场遮罩着色器（Distance Field Masking Mobile Shader）</a><a class="" href="../english/125-ShadersDistanceFieldSurfaceMobile.html"><span>115</span>移动端距离场表面着色器（Distance Field (Surface) Mobile Shader）</a><a class="" href="../english/126-ShadersBitmap.html"><span>116</span>位图着色器（Bitmap Shader）</a><a class="" href="../english/127-ShadersBitmapCustomAtlas.html"><span>117</span>自定义图集位图着色器（Bitmap Custom Atlas Shader）</a><a class="" href="../english/33-Settings.html"><span>118</span>TextMesh Pro 设置（Settings）</a><a class="" href="../english/128-RichTextLineBreak.html"><span>119</span>显式换行（Line Break）</a></details><details><summary>传统富文本与实用指南</summary><a class="" href="../english/28-StyledText.html"><span>120</span>传统富文本（Rich Text）</a><a class="" href="../english/43-UIHowTos.html"><span>121</span>UI 实用指南目录（UI How Tos）</a><a class="" href="../english/72-HOWTO-UIMultiResolution.html"><span>122</span>为多种分辨率设计 UI（Designing UI for Multiple Resolutions）</a><a class="" href="../english/73-HOWTO-UIFitContentSize.html"><span>123</span>让 UI 元素适应内容大小（Making UI elements fit the size of their content）</a><a class="" href="../english/74-HOWTO-UIWorldSpace.html"><span>124</span>创建世界空间 UI（Creating a World Space UI）</a><a class="" href="../english/75-HOWTO-UICreateFromScripting.html"><span>125</span>通过脚本创建 UI 元素（Creating UI elements from scripting）</a><a class="" href="../english/76-HOWTO-UIScreenTransition.html"><span>126</span>创建界面过渡（Creating Screen Transitions）</a><a class="" href="../english/77-HOWTO-ShaderGraph.html"><span>127</span>使用 Shader Graph 创建自定义 UI 效果（Create Custom UI Effects With Shader Graph）</a><a class="" href="../english/78-ProfilerUI.html"><span>128</span>UI 与 UI Details 性能分析器（UI (Canvas) and UI Details (Canvas) Profiler module reference）</a></details><a class="side-home" href="../glossary.html">中英术语速查</a></aside><main><div class="breadcrumb"><a href="../index.html">文档目录</a> / TextMesh Pro <span>63 / 128</span></div><header class="page-header"><h1 id="3d-text-gameobjects">3D Text GameObjects</h1><p class="tools"><a href="../pages/80-TMPObject3DText.html">中文译文</a><a href="https://docs.unity3d.com/Packages/com.unity.ugui@2.7/manual/TextMeshPro/TMPObject3DText.html" target="_blank" rel="noopener">Unity 在线原文 ↗</a><button class="print">打印本页</button></p></header><nav class="pager" aria-label="顺序阅读导航"><a rel="prev" href="79-TMPObjectUIText.html"><small>上一页</small>UI 文本对象（UI Text GameObjects）</a><a rel="next" href="13-FontAssets.html"><small>下一页</small>字体资源（Font Assets）</a></nav><details class="page-toc"><summary>本页内容</summary><a href="#properties-overview">Properties Overview</a><a href="#text-input">Text Input</a><a href="#main-settings">Main Settings</a><a href="#font">Font</a><a href="#color">Color</a><a href="#spacing">Spacing</a><a href="#alignment">Alignment</a><a href="#wrapping-and-overflow">Wrapping and Overflow</a><a href="#uv-mapping">UV Mapping</a><a href="#extra-settings">Extra Settings</a></details><article class="doc-content" id="content">
+<p>By default, a TextMesh Pro 3D Text GameObject has the following components:</p>
+<ul>
+<li><strong>Rect Transform:</strong> Controls the GameObject's position and size. For more information, see the <a href="https://docs.unity3d.com/Manual/class-RectTransform.html" target="_blank" rel="noopener noreferrer" class="external">Rect Transform</a> documentation in the Unity Manual.</li>
+</ul>
+<div class="NOTE">
+<h5>Note</h5>
+<p><strong>Note:</strong> If you want to use the Rect Transform component's anchoring system, the TextMesh Pro component's parent GameObject must also have a Rect Transform component.</p>
+</div>
+<ul>
+<li><strong>Mesh Renderer:</strong> Renders the GameObject. For more information, see the <a href="https://docs.unity3d.com/Manual/class-MeshRenderer.html" target="_blank" rel="noopener noreferrer" class="external">Mesh Renderer</a> documentation in the Unity Manual.</li>
+<li><strong>TextMeshPro - Text:</strong> Contains the text to display, and the <a href="80-TMPObject3DText.html#properties-overview">properties</a> that control its appearance and behavior.</li>
+<li><strong>Material:</strong> A Unity material that uses one of the TextMesh Pro shaders to further control the text's appearance. For more information see the <a href="35-Shaders.html">Shaders</a> section.</li>
+</ul>
+<h2 id="properties-overview">Properties Overview</h2>
+<p><img src="../assets/official-ab466e2974601ae0.png" alt="Example image" loading="lazy"></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td><strong>Text input</strong></td>
+</tr>
+<tr>
+<td><strong>A</strong></td>
+<td><strong><a href="80-TMPObject3DText.html#text-input">Text</a>:</strong> Where you enter the text to display, along with any <a href="29-RichText.html">rich text markup</a>.</td>
+</tr>
+<tr>
+<td></td>
+<td><strong>Main settings</strong></td>
+</tr>
+<tr>
+<td><strong>B</strong></td>
+<td><strong><a href="80-TMPObject3DText.html#font">Font</a>:</strong> Specifies the font to use, as well as basic font attributes (size, style, and so on).</td>
+</tr>
+<tr>
+<td><strong>C</strong></td>
+<td><strong><a href="80-TMPObject3DText.html#color">Color</a>:</strong> Defines the base color or <a href="119-ColorGradients.html">color gradient</a> for the text</td>
+</tr>
+<tr>
+<td><strong>D</strong></td>
+<td><strong><a href="80-TMPObject3DText.html#spacing">Spacing</a>:</strong> Controls spacing between characters, words, lines and, paragraphs.</td>
+</tr>
+<tr>
+<td><strong>E</strong></td>
+<td><strong><a href="80-TMPObject3DText.html#alignment">Alignment</a>:</strong> Controls horizontal and vertical text alignment.</td>
+</tr>
+<tr>
+<td><strong>F</strong></td>
+<td><strong><a href="80-TMPObject3DText.html#wrapping-and-overflow">Wrapping and Overflow</a>:</strong> Controls word wrapping and defines what happens when text doesn't fit inside its display area.</td>
+</tr>
+<tr>
+<td><strong>G</strong></td>
+<td><strong><a href="80-TMPObject3DText.html#uv-mapping">UV Mapping</a>:</strong> Controls how textures are mapped to the face and outline of the text.</td>
+</tr>
+<tr>
+<td><strong>H</strong></td>
+<td><strong><a href="80-TMPObject3DText.html#extra-settings">Extra Settings</a>:</strong> Additional options for controlling the appearance and behavior of text.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="text-input">Text Input</h2>
+<p>The text section is where you enter the text to display, and optionally customize it using <a href="29-RichText.html">rich text markup</a>.</p>
+<p><img src="../assets/official-44fd9f0cd3483ca3.png" alt="Example image" loading="lazy"></p>
+<table>
+<thead>
+<tr>
+<th>Property:</th>
+<th></th>
+<th>Function:</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Text</strong></td>
+<td></td>
+<td>The input field for text to display.</td>
+</tr>
+<tr>
+<td><strong>Enable RTL Editor</strong></td>
+<td></td>
+<td>Enable this option to display text right-to-left instead of left-to-right. <br><br>The Inspector displays an additional input field where you can view the reversed text and edit it directly. <br><br>The text is reversed before it is displayed on screen or rendered.</td>
+</tr>
+<tr>
+<td><strong>Text Style</strong></td>
+<td></td>
+<td>Select the text style configured in the <a href="117-StyleSheets.html">style sheet</a>.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="main-settings">Main Settings</h2>
+<p>The Main Settings section contains the properties needed to define the basic appearance of text. You can further customize the look of text by changing or editing its <a href="35-Shaders.html">material</a>.</p>
+<h3 id="font">Font</h3>
+<p>The fonts settings panel is where you choose a font for your text, and customize the font style.</p>
+<p><img src="../assets/official-ab5e2f222c5e2214.png" alt="Example image" loading="lazy"></p>
+<table>
+<thead>
+<tr>
+<th>Property:</th>
+<th></th>
+<th>Function:</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Font Asset</strong></td>
+<td></td>
+<td>Choose a <a href="13-FontAssets.html">font Asset</a> for the TextMesh Pro GameObject to use. <br><br> TextMesh Pro ships with several font assets, and you can create others from standard font files such as truetype (ttf) fonts. <br><br> <strong>Note:</strong> You can set the default font Asset for new text objects in the <a href="33-Settings.html">TextMesh Pro settings</a>.</td>
+</tr>
+<tr>
+<td><strong>Material Preset</strong></td>
+<td></td>
+<td>Choose a material for your font. <br><br> Each font Asset has a default material, but you can also create customized materials for it. <br><br> This preset list includes all materials whose names contain the font Asset's name, and use the corresponding font atlas texture.</td>
+</tr>
+<tr>
+<td><strong>Font Style</strong></td>
+<td></td>
+<td>Enable standard text styling options. <br><br> You can use these options in any combination, except for the casing options (lowercase, uppercase, and small caps), which are mutually exclusive.</td>
+</tr>
+<tr>
+<td></td>
+<td>B</td>
+<td>Bold the text. <br><br> The appearance of bold text is defined in the font Asset properties.</td>
+</tr>
+<tr>
+<td></td>
+<td>I</td>
+<td>Italicize the text. <br><br> The appearance of italicized text is defined in the font Asset properties.</td>
+</tr>
+<tr>
+<td></td>
+<td>U</td>
+<td>Underline the text. <br><br> This renders an extra line below the baseline.</td>
+</tr>
+<tr>
+<td></td>
+<td>S</td>
+<td>Add a strikethrough line to the text. <br><br> This renders an extra line above the baseline.</td>
+</tr>
+<tr>
+<td></td>
+<td>ab</td>
+<td>Convert the text to lowercase before rendering. <br><br> This does not change text casing in the <strong>Text</strong> field.</td>
+</tr>
+<tr>
+<td></td>
+<td>AB</td>
+<td>Convert the text to uppercase before rendering. <br><br> This does not change text casing in the <strong>Text</strong> field.</td>
+</tr>
+<tr>
+<td></td>
+<td>SC</td>
+<td>Use small caps. <br><br> The text is displayed in all uppercase, but letters you actually entered in uppercase are larger.</td>
+</tr>
+<tr>
+<td><strong>Font Size</strong></td>
+<td></td>
+<td>Specify the text display size, in points.</td>
+</tr>
+<tr>
+<td><strong>Auto Size</strong></td>
+<td></td>
+<td>Enable this option to set the font size automatically, based on the <strong>Auto Size Options</strong>. <br><br> When this option is enabled, TextMesh Pro lays out the text multiple times to find a good fit. This is a resource intensive process, so avoid auto-sizing dynamic text that changes frequently. <br><br> <strong>Tip:</strong> For static text, you can enable <strong>Auto Size</strong>, note the calculated font size (displayed  in the Font Size field), then disable Auto Size and apply the calculated size manually.</td>
+</tr>
+<tr>
+<td><strong>Auto Size Options</strong></td>
+<td></td>
+<td>Define the basic rules for auto-sizing text.</td>
+</tr>
+<tr>
+<td></td>
+<td>Min</td>
+<td>Specify the smallest acceptable font size, in points.</td>
+</tr>
+<tr>
+<td></td>
+<td>Max</td>
+<td>Specify the largest acceptable font size, in points.</td>
+</tr>
+<tr>
+<td></td>
+<td>WD%</td>
+<td>Specify the maximum acceptable amount to reduce character width when sizing the text. <br><br> TextMesh Pro squeezes characters to make them taller. This is usually only acceptable for digits.</td>
+</tr>
+<tr>
+<td></td>
+<td>Line</td>
+<td>Adjust the line height. <br><br> This is useful for fitting a larger font into a given space.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="color">Color</h3>
+<p>TextMesh Pro uses vertex colors to tint the text. You can apply a uniform color as well a <a href="119-ColorGradients.html">gradient</a> of up to four colors.</p>
+<p><img src="../assets/official-71528c2323732fab.png" alt="Example image" loading="lazy"></p>
+<table>
+<thead>
+<tr>
+<th>Property:</th>
+<th></th>
+<th>Function:</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Vertex Color</strong></td>
+<td></td>
+<td>Choose the main color for the text. <br><br> Any colors and textures defined in the TextMesh Pro GameObject or its material ar multiplied with this color.</td>
+</tr>
+<tr>
+<td><strong>Color Gradient</strong></td>
+<td></td>
+<td>Enable this option to apply a <a href="119-ColorGradients.html">color gradient</a> to each character sprite. <br><br> You can then set the gradient’s type and colors, or apply a <a href="14-ColorGradientsPresets.html">color gradient preset</a>. <br><br> Gradient colors are multiplied with the <strong>Vertex Color</strong>. If <strong>Vertex Color</strong> is set to white you see only the gradient colors. If it’s set to black you don’t see the gradient colors at all.</td>
+</tr>
+<tr>
+<td><strong>Color Preset</strong></td>
+<td></td>
+<td>Choose a <a href="14-ColorGradientsPresets.html">color gradient preset</a>. <br><br> When you apply a preset its <strong>Color Mode</strong> and <strong>Colors</strong> replace the text's local properties in the Inspector. <br><br> Editing these properties modifies the preset, which affects every TextMesh Pro GameObject that uses it. <br><br> Set this property to <strong>None</strong> to revert to the text’s local gradient properties.</td>
+</tr>
+<tr>
+<td><strong>Color Mode</strong></td>
+<td></td>
+<td>Choose the type of color gradient to apply. <br><br> TextMesh Pro applies gradients to each character individually.</td>
+</tr>
+<tr>
+<td></td>
+<td>Single</td>
+<td>A uniform color that modifies the base <strong>Vertex Color</strong>.</td>
+</tr>
+<tr>
+<td></td>
+<td>Horizontal Gradient</td>
+<td>A two-color gradient with each color emanating from one side of the character.</td>
+</tr>
+<tr>
+<td></td>
+<td>Vertical Gradient</td>
+<td>A two-color gradient with one color emanating from the top of the character, and the other from the bottom.</td>
+</tr>
+<tr>
+<td></td>
+<td>Four Corners Gradient</td>
+<td>A four-color gradient with each color emanating from a different corner of the character.</td>
+</tr>
+<tr>
+<td><strong>Colors</strong></td>
+<td></td>
+<td>Choose each gradient color. <br><br> The number of available colors depends on the type of gradient, and the color fields are arranged to match the position of each color in the gradient (left and right, top and bottom, 2 rows of 2 for four-corner gradients). <br><br> You can set the color in any of the following ways:<br><br> <strong>Swatch:</strong> Click to open a color picker. <br><br> <strong>Eyedropper:</strong> Click to choose a color from any part of the screen. <br><br> <strong>Hex Value:</strong> Enter the RGBA hex value directly.</td>
+</tr>
+<tr>
+<td><strong>Override Tags</strong></td>
+<td></td>
+<td>Enable this option to ignore any <a href="29-RichText.html">rich text tags</a> that change text color.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="spacing">Spacing</h3>
+<p>These options control spacing between characters, words, lines and, paragraphs.  You can use them to fine-tune the text for individual TextMesh Pro GameObjects, without adjusting their <a href="13-FontAssets.html">font assets</a>.</p>
+<p><img src="../assets/official-1585fdb6f8da5f1c.png" alt="Example image" loading="lazy"></p>
+<p>To control spacing within a single TextMesh Pro GameObject, use <a href="29-RichText.html">rich text tags</a>.</p>
+<table>
+<thead>
+<tr>
+<th>Property:</th>
+<th></th>
+<th>Function:</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Character</td>
+<td></td>
+<td>Set the spacing between characters for this TextMesh Pro GameObject.</td>
+</tr>
+<tr>
+<td>Word</td>
+<td></td>
+<td>Set the spacing between words for this TextMesh Pro GameObject.</td>
+</tr>
+<tr>
+<td>Line</td>
+<td></td>
+<td>Set the spacing between lines for this TextMesh Pro GameObject.</td>
+</tr>
+<tr>
+<td>Paragraph</td>
+<td></td>
+<td>Set the spacing between paragraphs for this TextMesh Pro GameObject. <br><br> Paragraphs are defined by explicit line breaks.</td>
+</tr>
+<tr>
+<td>Character Horizontal Scale</td>
+<td></td>
+<td>Scale the horizontal size of characters for this TextMesh Pro GameObject.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="alignment">Alignment</h3>
+<p>The horizontal and vertical alignment options control how text is placed in the display area.</p>
+<p><img src="../assets/official-99ec2aee67397809.png" alt="Example image" loading="lazy"></p>
+<table>
+<thead>
+<tr>
+<th>Property:</th>
+<th></th>
+<th>Function:</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>[Horizontal Alignment Options]</strong></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>Left, Center, Right</td>
+<td>Position the text horizontally in the display area, without changing the text itself.</td>
+</tr>
+<tr>
+<td></td>
+<td>Justified, Flush</td>
+<td>Stretch the text to fill the width of the display area by increasing the distance between words and characters. <br><br> The  <strong>Wrap Mix</strong> option controls the balance between word and character spacing. <br><br> <strong>Justified</strong> mode does not stretch the last lines of paragraphs, while <strong>Flush</strong> mode does.</td>
+</tr>
+<tr>
+<td></td>
+<td>Geometry Center</td>
+<td>Centers the text based on the mesh rather than the text metrics. <br><br> The difference is not always noticeable, but in some cases this mode yields better looking results than regular Center alignment.</td>
+</tr>
+<tr>
+<td><strong>[Vertical Alignment Options]</strong></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>Top, Middle, Bottom</td>
+<td>Position the text vertically in the display area, without changing the text itself.</td>
+</tr>
+<tr>
+<td></td>
+<td>Baseline</td>
+<td>Position the text so the baseline of the line is aligned with the middle of the display area. <br><br> This is useful when working with a single line of text.</td>
+</tr>
+<tr>
+<td></td>
+<td>Midline</td>
+<td>Use this as an alternative to Middle alignnment. <br><br> This option determine vertical placement using the bounds of the text mesh, rather than <a href="83-FontAssetsLineMetrics.html#line-metrics">line metrics</a>. This is useful in tight spaces when ascenders and descenders might otherwise extend too far.</td>
+</tr>
+<tr>
+<td></td>
+<td>Capline</td>
+<td>Position the text so the middle of the first the line is aligned with the middle of the display area.</td>
+</tr>
+<tr>
+<td><strong>Wrap Mix (W &lt;-&gt; C)</strong></td>
+<td></td>
+<td>Adjust the balance between  extra word spacing and extra character spacing when horizontal alignment is set to <strong>Justified</strong> or <strong>Flush</strong>.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="wrapping-and-overflow">Wrapping and Overflow</h3>
+<p>Wrapping splits lines of text to ensure that they don't get wider than the display area. Lines are normally wrapped at word boundaries, but words that are longer than an entire line are split as well. Overflow controls what happens when the text doesn't fit inside the display area.</p>
+<p><img src="../assets/official-e58bd4c2de960287.png" alt="Example image" loading="lazy"></p>
+<p>Some overflow options supersede wrapping. For example, if Overflow is set to truncate, the text is truncated when it reaches the edge of the display area, irrespective of whether Wrapping is enabled.</p>
+<table>
+<thead>
+<tr>
+<th>Property:</th>
+<th></th>
+<th>Function:</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Text Wrapping Mode</strong></td>
+<td></td>
+<td>Control the text wrapping mode.</td>
+</tr>
+<tr>
+<td></td>
+<td>No Wrap</td>
+<td>Disable word wrapping.</td>
+</tr>
+<tr>
+<td></td>
+<td>Normal</td>
+<td>Enable word wrapping.</td>
+</tr>
+<tr>
+<td></td>
+<td>Preserve Whitespace</td>
+<td>Enable word wrapping while preserving whitespace.</td>
+</tr>
+<tr>
+<td></td>
+<td>Preserve Whitespace No Wrap</td>
+<td>Disable word wrapping while preserving whitespace.</td>
+</tr>
+<tr>
+<td><strong>Overflow</strong></td>
+<td></td>
+<td>Specify what happens when the text doesn't fit inside the display area.</td>
+</tr>
+<tr>
+<td></td>
+<td>Overflow</td>
+<td>Extends the text beyond the bounds of the display area, but still wraps it if <strong>Wrapping</strong> is enabled.</td>
+</tr>
+<tr>
+<td></td>
+<td>Ellipsis</td>
+<td>Cuts off the text and inserts an ellipsis (…) to indicate that some of the text is omitted.</td>
+</tr>
+<tr>
+<td></td>
+<td>Masking</td>
+<td>Like <strong>Overflow</strong>, but the shader hides everything outside of the display area.</td>
+</tr>
+<tr>
+<td></td>
+<td>Truncate</td>
+<td>Cuts off the text when it no longer fits.</td>
+</tr>
+<tr>
+<td></td>
+<td>Scroll Rect</td>
+<td>A legacy mode that’s similar to <strong>Masking</strong>. This option is available strictly for compatibility with older TextMesh Pro projects. For new projects, use Masking mode instead.</td>
+</tr>
+<tr>
+<td></td>
+<td>Page</td>
+<td>Cuts the text into several pages that each fit inside the display area. <br><br> You can choose which page to display. You can also use rich text to manually insert page breaks. <br><br> <strong>Note:</strong> The vertical alignment options work on a per-page basis.</td>
+</tr>
+<tr>
+<td></td>
+<td>Linked</td>
+<td>Extends the text into another TextMesh Pro GameObject that you select. <br><br> This is useful for creating multi-column text.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="uv-mapping">UV Mapping</h3>
+<p>Some <a href="35-Shaders.html">TextMesh Pro shaders</a> allow you to apply one or more image textures to text. These options control how those textures stretch to fit the text.</p>
+<p><img src="../assets/official-aaa684856970fa3d.png" alt="Example image" loading="lazy"></p>
+<p>You can also edit shader-specific texturing options in the shaders themselves. The available options depend on the shader you use.</p>
+<p>When texturing text,  make sure that your texture assets have their <strong>Wrap Mode</strong> set to <strong>Repeat</strong>. Otherwise the texture is likely to be heavily distorted when applied to the text. See the <a href="https://docs.unity3d.com/Manual/class-RenderTexture.html" target="_blank" rel="noopener noreferrer" class="external">Render Texture documentation</a> in the Unity Manual for more information.</p>
+<table>
+<thead>
+<tr>
+<th>Property:</th>
+<th></th>
+<th>Function:</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Horizontal Mapping</strong></td>
+<td></td>
+<td>Specify how textures map to text horizontally when you use a shader that supports textures.</td>
+</tr>
+<tr>
+<td></td>
+<td>Character</td>
+<td>Stretches the texture horizontally across each character's sprite.</td>
+</tr>
+<tr>
+<td></td>
+<td>Line</td>
+<td>Stretches the texture horizontally across the entire width of each line.</td>
+</tr>
+<tr>
+<td></td>
+<td>Paragraph</td>
+<td>Stretches the texture horizontally across the entire text.</td>
+</tr>
+<tr>
+<td></td>
+<td>Match Aspect</td>
+<td>Scales the texture horizontally so it maintains its aspect ratio, and is not deformed. <br><br> When you use this horizontal mapping mode, the <strong>Vertical Mapping</strong> setting determines how the texture is mapped to the text, and must be set to something other than <strong>Match Aspect</strong>.</td>
+</tr>
+<tr>
+<td><strong>Vertical Mapping</strong></td>
+<td></td>
+<td>Specify how textures map to text vertically when you use a shader that supports textures.</td>
+</tr>
+<tr>
+<td></td>
+<td>Character</td>
+<td>Stretches the texture vertically across each character's sprite.</td>
+</tr>
+<tr>
+<td></td>
+<td>Line</td>
+<td>Stretches the texture vertically across the entire width of each line.</td>
+</tr>
+<tr>
+<td></td>
+<td>Paragraph</td>
+<td>Stretches the texture vertically across the entire text.</td>
+</tr>
+<tr>
+<td></td>
+<td>Match Aspect</td>
+<td>Scales the texture vertically so it maintains its aspect ratio, and is not deformed. <br><br> When you use this vertical mapping mode, the <strong>Horizontal Mapping</strong> setting determines how the texture is mapped to the text, and must be set to something other than <strong>Match Aspect</strong>.</td>
+</tr>
+<tr>
+<td><strong>Line Offset</strong></td>
+<td></td>
+<td>When Horizontal Mapping is set to Line, <strong>Paragraph</strong>, or <strong>Match Aspect</strong>, set this value to add a horizontal texture offset to each successive line. <br><br> This value is added to the <strong>Offset X</strong> value you specify in the shader.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="extra-settings">Extra Settings</h3>
+<p>This section contains assorted options for further controlling the appearance and behavior of text.</p>
+<p><img src="../assets/official-f6dca99ac76da8b9.png" alt="Example image" loading="lazy"></p>
+<table>
+<thead>
+<tr>
+<th>Property:</th>
+<th></th>
+<th>Function:</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Margins</strong></td>
+<td></td>
+<td>Set positive values to increase the distance between the text and the boundaries of the text container. <br><br> Set negative values to make the text extend beyond the boundaries of the text container. <br><br> You set the  <strong>Left</strong>, <strong>Top</strong>, <strong>Right</strong>, and <strong>Bottom</strong> margins separately. <br><br> You can also adjust the margins by dragging the handles of the text container Widget (yellow rectangle) in the Scene view.</td>
+</tr>
+<tr>
+<td><strong>Sorting Layer</strong></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><strong>Order in Layer</strong></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><strong>Geometry Sorting</strong></td>
+<td></td>
+<td>Each character is contained in a quad. <strong>Geometry Sorting</strong> controls how TextMesh Pro sorts these quads. This determines which character appears on top when two quads overlap.</td>
+</tr>
+<tr>
+<td></td>
+<td>Normal</td>
+<td>TextMesh Pro draws quads in the order that they appear in the mesh. When two quads overlap, the "later" quad appears on top of the "earlier" one.</td>
+</tr>
+<tr>
+<td></td>
+<td>Reverse</td>
+<td>TextMesh Pro draws quads in reverse order. When two quads overlap, the "earlier" quad appears on top of the "later" one.</td>
+</tr>
+<tr>
+<td><strong>Is Scale Static</strong></td>
+<td></td>
+<td>Enable to set the scale of this TextMesh Pro GameObject to static, which excludes the object from the InternalUpdate callback used to handle SDF Scale updates when the object or its parent(s) are scaled.</td>
+</tr>
+<tr>
+<td><strong>Orthographic Mode</strong></td>
+<td></td>
+<td>Enable this option when creating camera-aligned text with an orthographic camera. <br><br> It prevents the TextMesh Pro shader from using perspective correction.</td>
+</tr>
+<tr>
+<td><strong>Rich Text</strong></td>
+<td></td>
+<td>Enable this option to turn off rich text support for the TextMesh Pro GameObject. <br><br> When rich text support is disabled, tags are not parsed and are rendered as plain text.</td>
+</tr>
+<tr>
+<td><strong>Parse Escape Characters</strong></td>
+<td></td>
+<td>Enable this option to make TextMesh Pro interpret backslash-escaped characters as special characters. <br><br> For example <code>\n</code> is interpreted as a newline, <code>\t</code> as a tab, and so on. <br><br> <strong>Note:</strong> This applies to rendered text. In code, escaped characters are already parsed by the compiler.</td>
+</tr>
+<tr>
+<td><strong>Visible Descender</strong></td>
+<td></td>
+<td>Use this option when using a script to slowly reveal text. <br><br> Enable it to reveal the text at the bottom and move up as new lines are revealed. <br><br> Disable it to reveal the text from top to bottom. <br><br> To set up this type of text reveal, you must also set the vertical alignment to Bottom.</td>
+</tr>
+<tr>
+<td><strong>Emoji Fallback Support</strong></td>
+<td></td>
+<td>Disable this option to turn off <a href="09-ColorEmojis.html">color emoji</a> support for the TextMesh Pro GameObject.</td>
+</tr>
+<tr>
+<td><strong>Sprite Asset</strong></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><strong>Style Sheet Asset</strong></td>
+<td></td>
+<td>Style sheet used by the text object, overriding the default style sheet.</td>
+</tr>
+<tr>
+<td><strong>Font Features</strong></td>
+<td></td>
+<td>Control which <a href="10-TMPObjects.html#opentype-fontfeature">OpenType FontFeatures</a> are enabled.</td>
+</tr>
+<tr>
+<td><strong>Extra Padding</strong></td>
+<td></td>
+<td>Enable this option to add extra padding to character sprites. <br><br> TextMesh Pro creates sprites to fit the visible text, but the result isn't always perfect. This setting reduces the chances that glyphs are cut off at the boundaries of their sprites.</td>
+</tr>
+</tbody>
+</table>
+</article><nav class="pager" aria-label="顺序阅读导航"><a rel="prev" href="79-TMPObjectUIText.html"><small>上一页</small>UI 文本对象（UI Text GameObjects）</a><a rel="next" href="13-FontAssets.html"><small>下一页</small>字体资源（Font Assets）</a></nav><footer>依据 Unity uGUI 2.7.0 官方手册翻译整理 · 技术名称、API、代码和图片中的英文保留 · 非 Unity 官方译文 · <a href="../版权与来源.html">版权与来源</a></footer></main><script src="../assets/app.js"></script></body></html>

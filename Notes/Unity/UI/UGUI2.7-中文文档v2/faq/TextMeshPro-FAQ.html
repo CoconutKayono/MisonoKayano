@@ -1,0 +1,381 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>TextMesh Pro FAQ：Why · What · How · 从直觉到使用</title><meta name="description" content="从文字放大与SDF直觉出发理解TMP，包含中文字体配置、代码、28个FAQ与离线交互实验。"><link rel="stylesheet" href="../assets/style.css"><link rel="stylesheet" href="../assets/tmp-faq.css"></head><body class="faq-page"><button class="menu-toggle" aria-controls="sidebar" aria-expanded="false">目录</button><aside id="sidebar"><a class="brand" href="../index.html"><span class="brand-mark">U</span><span>uGUI 中文手册<small>2.7.0 · 离线阅读</small></span></a><a class="side-home" href="../index.html">目录与全文搜索</a><a class="side-home faq-nav active" data-tmp-faq-nav="1" href="TextMeshPro-FAQ.html">TMP 直觉入门与 FAQ</a><details><summary>起步与基础</summary><a class="" href="../pages/48-index.html"><span>01</span>Unity UI（uGUI）概述（Unity UI (uGUI)）</a><a class="" href="../pages/49-UICanvas.html"><span>02</span>Canvas 概述（Canvas）</a><a class="" href="../pages/50-UIBasicLayout.html"><span>03</span>基础布局（Basic Layout）</a><a class="" href="../pages/01-UIAutoLayout.html"><span>04</span>自动布局（Auto Layout）</a><a class="" href="../pages/44-UIReference.html"><span>05</span>UI 组件参考总览（UI Reference）</a><a class="" href="../pages/26-class-RectTransform.html"><span>06</span>矩形变换（Rect Transform）</a><a class="" href="../pages/30-script-SafeArea.html"><span>07</span>安全区域（Safe Area）</a><a class="" href="../pages/04-class-Canvas.html"><span>08</span>画布（Canvas）</a></details><details><summary>Canvas 与自动布局</summary><a class="" href="../pages/05-comp-CanvasComponents.html"><span>09</span>画布组件（Canvas Components）</a><a class="" href="../pages/08-script-CanvasScaler.html"><span>10</span>画布缩放器（Canvas Scaler）</a><a class="" href="../pages/06-class-CanvasGroup.html"><span>11</span>画布组（Canvas Group）</a><a class="" href="../pages/07-class-CanvasRenderer.html"><span>12</span>画布渲染器（Canvas Renderer）</a><a class="" href="../pages/02-comp-UIAutoLayout.html"><span>13</span>自动布局组件参考（Auto Layout）</a><a class="" href="../pages/60-script-LayoutElement.html"><span>14</span>布局元素（Layout Element）</a><a class="" href="../pages/61-script-ContentSizeFitter.html"><span>15</span>内容大小适配器（Content Size Fitter）</a><a class="" href="../pages/62-script-AspectRatioFitter.html"><span>16</span>宽高比适配器（Aspect Ratio Fitter）</a><a class="" href="../pages/63-script-HorizontalLayoutGroup.html"><span>17</span>水平布局组（Horizontal Layout Group）</a><a class="" href="../pages/45-script-VerticalLayoutGroup.html"><span>18</span>垂直布局组（Vertical Layout Group）</a><a class="" href="../pages/15-script-GridLayoutGroup.html"><span>19</span>网格布局组（Grid Layout Group）</a></details><details><summary>视觉与交互组件</summary><a class="" href="../pages/46-UIVisualComponents.html"><span>20</span>视觉组件概述（Visual Components）</a><a class="" href="../pages/18-UIInteractionComponents.html"><span>21</span>交互组件概述（Interaction Components）</a><a class="" href="../pages/00-UIAnimationIntegration.html"><span>22</span>动画集成（Animation Integration）</a><a class="" href="../pages/41-script-Tweening.html"><span>23</span>补间动画（Tweening）</a><a class="" href="../pages/47-comp-UIVisual.html"><span>24</span>视觉组件参考（Visual Components）</a><a class="" href="../pages/37-script-Text.html"><span>25</span>传统文本控件（Text）</a><a class="" href="../pages/16-script-Image.html"><span>26</span>图像（Image）</a><a class="" href="../pages/24-script-RawImage.html"><span>27</span>原始图像（Raw Image）</a><a class="" href="../pages/51-script-Mask.html"><span>28</span>遮罩（Mask）</a><a class="" href="../pages/27-script-RectMask2D.html"><span>29</span>二维矩形遮罩（RectMask2D）</a><a class="" href="../pages/42-comp-UIEffects.html"><span>30</span>UI 效果组件（UI Effect Components）</a><a class="" href="../pages/52-script-Shadow.html"><span>31</span>阴影（Shadow）</a><a class="" href="../pages/53-script-Outline.html"><span>32</span>描边（Outline）</a><a class="" href="../pages/23-script-PositionAsUV1.html"><span>33</span>将位置写入 UV1（Position as UV1）</a><a class="" href="../pages/19-comp-UIInteraction.html"><span>34</span>交互组件参考（Interaction Components）</a><a class="" href="../pages/32-script-Selectable.html"><span>35</span>可选择组件基类（Selectable Base Class）</a><a class="" href="../pages/54-script-SelectableTransition.html"><span>36</span>过渡选项（Transition Options）</a><a class="" href="../pages/22-script-SelectableNavigation.html"><span>37</span>导航选项（Navigation Options）</a><a class="" href="../pages/03-script-Button.html"><span>38</span>按钮（Button）</a><a class="" href="../pages/40-script-Toggle.html"><span>39</span>开关（Toggle）</a><a class="" href="../pages/55-script-ToggleGroup.html"><span>40</span>开关组（Toggle Group）</a><a class="" href="../pages/56-script-Slider.html"><span>41</span>滑动条（Slider）</a><a class="" href="../pages/31-script-Scrollbar.html"><span>42</span>滚动条（Scrollbar）</a><a class="" href="../pages/57-script-Dropdown.html"><span>43</span>下拉列表（Dropdown）</a><a class="" href="../pages/58-script-InputField.html"><span>44</span>输入框（Input Field）</a><a class="" href="../pages/59-script-ScrollRect.html"><span>45</span>滚动矩形（Scroll Rect）</a></details><details><summary>事件与消息系统</summary><a class="" href="../pages/11-EventSystem.html"><span>46</span>事件系统（Event System）</a><a class="" href="../pages/21-MessagingSystem.html"><span>47</span>消息系统（Messaging System）</a><a class="" href="../pages/17-InputModules.html"><span>48</span>输入模块（Input Modules）</a><a class="" href="../pages/36-SupportedEvents.html"><span>49</span>支持的事件（Supported Events）</a><a class="" href="../pages/25-Raycasters.html"><span>50</span>射线检测器（Raycasters）</a><a class="" href="../pages/64-EventSystemReference.html"><span>51</span>事件组件参考（Event System Reference）</a><a class="" href="../pages/65-script-EventSystem.html"><span>52</span>事件系统管理器（Event System Manager）</a><a class="" href="../pages/66-script-GraphicRaycaster.html"><span>53</span>图形射线检测器（Graphic Raycaster）</a><a class="" href="../pages/67-script-PanelEventHandler.html"><span>54</span>面板事件处理器（Panel Event Handler）</a><a class="" href="../pages/68-script-PanelRaycaster.html"><span>55</span>面板射线检测器（Panel Raycaster）</a><a class="" href="../pages/69-script-PhysicsRaycaster.html"><span>56</span>物理射线检测器（Physics Raycaster）</a><a class="" href="../pages/70-script-Physics2DRaycaster.html"><span>57</span>二维物理射线检测器（Physics 2D Raycaster）</a><a class="" href="../pages/71-script-StandaloneInputModule.html"><span>58</span>独立输入模块（Standalone Input Module）</a><a class="" href="../pages/12-script-EventTrigger.html"><span>59</span>事件触发器（Event Trigger）</a></details><details open=""><summary>TextMesh Pro</summary><a class="" href="../pages/39-index.html"><span>60</span>TextMesh Pro 文档与入门</a><a class="" href="../pages/10-TMPObjects.html"><span>61</span>创建文本（Creating text）</a><a class="" href="../pages/79-TMPObjectUIText.html"><span>62</span>UI 文本对象（UI Text GameObjects）</a><a class="" href="../pages/80-TMPObject3DText.html"><span>63</span>三维文本对象（3D Text GameObjects）</a><a class="" href="../pages/13-FontAssets.html"><span>64</span>字体资源（Font Assets）</a><a class="" href="../pages/81-FontAssetsProperties.html"><span>65</span>字体资源属性（Font Asset Properties）</a><a class="" href="../pages/82-FontAssetsCreator.html"><span>66</span>字体资源创建器（Font Asset Creator）</a><a class="" href="../pages/83-FontAssetsLineMetrics.html"><span>67</span>行度量（Line metrics.）</a><a class="" href="../pages/84-FontAssetsSDF.html"><span>68</span>有符号距离场字体（Signed Distance Fields）</a><a class="" href="../pages/85-FontAssetsDynamicFonts.html"><span>69</span>动态字体资源（Dynamic fonts assets）</a><a class="" href="../pages/86-FontAssetsSubsetting.html"><span>70</span>通过字体子集化优化字体文件（Optimize font files with font subsetting）</a><a class="" href="../pages/87-FontAssetsMigration.html"><span>71</span>将静态字体资源迁移到高级文本生成器（Migrate static font assets to the Advanced Text Generator）</a><a class="" href="../pages/88-FontAssetsFallback.html"><span>72</span>后备字体资源（Fallback font assets）</a><a class="" href="../pages/09-ColorEmojis.html"><span>73</span>彩色表情符号（Color emojis）</a><a class="" href="../pages/29-RichText.html"><span>74</span>TextMesh Pro 富文本（Rich Text）</a><a class="" href="../pages/89-RichTextSupportedTags.html"><span>75</span>支持的富文本标签（Supported Rich Text Tags）</a><a class="" href="../pages/90-RichTextAlignment.html"><span>76</span>文本对齐（Text Alignment）</a><a class="" href="../pages/20-RichTextLetterCase.html"><span>77</span>大小写与小型大写（Lowercase, Uppercase, Smallcaps）</a><a class="" href="../pages/38-RichTextOpacity.html"><span>78</span>文本透明度（Text Opacity / Alpha）</a><a class="" href="../pages/91-RichTextBoldItalic.html"><span>79</span>粗体与斜体（Bold and Italic）</a><a class="" href="../pages/92-RichTextColor.html"><span>80</span>文本颜色（Text Color）</a><a class="" href="../pages/93-RichTextCharacterSpacing.html"><span>81</span>字符间距（Character Spacing）</a><a class="" href="../pages/94-RichTextFont.html"><span>82</span>字体与材质（Font）</a><a class="" href="../pages/95-RichTextFontWeight.html"><span>83</span>字体粗细（Font weight）</a><a class="" href="../pages/96-RichTextGradient.html"><span>84</span>颜色渐变（Gradient）</a><a class="" href="../pages/97-RichTextIndentation.html"><span>85</span>缩进（Indentation）</a><a class="" href="../pages/98-RichTextLineHeight.html"><span>86</span>行高（Line Height）</a><a class="" href="../pages/99-RichTextLineIndentation.html"><span>87</span>行缩进（Line Indentation）</a><a class="" href="../pages/100-RichTextLink.html"><span>88</span>文本链接（Text Link）</a><a class="" href="../pages/101-RichTextMargins.html"><span>89</span>边距（Margin）</a><a class="" href="../pages/102-RichTextMark.html"><span>90</span>文本标记与高亮（Mark）</a><a class="" href="../pages/103-RichTextMonospace.html"><span>91</span>等宽间距（Monospacing）</a><a class="" href="../pages/104-RichTextNoBreak.html"><span>92</span>禁止换行（No Break）</a><a class="" href="../pages/105-RichTextNoParse.html"><span>93</span>禁止标签解析（Noparse）</a><a class="" href="../pages/106-RichTextPageBreak.html"><span>94</span>分页（Page Break）</a><a class="" href="../pages/107-RichTextPos.html"><span>95</span>水平位置（Horizontal Position）</a><a class="" href="../pages/108-RichTextRotate.html"><span>96</span>字符旋转（Rotate）</a><a class="" href="../pages/109-RichTextStrikethroughUnderline.html"><span>97</span>删除线与下划线（Strikethrough and Underline）</a><a class="" href="../pages/110-RichTextSize.html"><span>98</span>字号（Font Size）</a><a class="" href="../pages/111-RichTextSpace.html"><span>99</span>水平空白（Horizontal Space）</a><a class="" href="../pages/112-RichTextSprite.html"><span>100</span>内嵌精灵（Sprite）</a><a class="" href="../pages/113-RichTextStyle.html"><span>101</span>文本样式（Style）</a><a class="" href="../pages/114-RichTextSubSuper.html"><span>102</span>下标与上标（Subscript and Superscript）</a><a class="" href="../pages/115-RichTextVOffset.html"><span>103</span>垂直偏移（Vertical Offset）</a><a class="" href="../pages/116-RichTextWidth.html"><span>104</span>文本区域宽度（Text Width）</a><a class="" href="../pages/117-StyleSheets.html"><span>105</span>样式表（Style Sheets）</a><a class="" href="../pages/118-Sprites.html"><span>106</span>精灵资源（Sprites）</a><a class="" href="../pages/119-ColorGradients.html"><span>107</span>颜色渐变（Color Gradients）</a><a class="" href="../pages/120-ColorGradientsTypes.html"><span>108</span>颜色渐变类型（Color Gradient Types）</a><a class="" href="../pages/14-ColorGradientsPresets.html"><span>109</span>渐变预设（Gradient Presets）</a><a class="" href="../pages/35-Shaders.html"><span>110</span>TextMesh Pro 着色器（Shaders）</a><a class="" href="../pages/121-ShadersDistanceField.html"><span>111</span>距离场与距离场叠加着色器（Distance Field / Distance Field Overlay Shaders）</a><a class="" href="../pages/122-ShadersDistanceFieldSurface.html"><span>112</span>距离场表面着色器（Distance Field (Surface) Shader）</a><a class="" href="../pages/123-ShadersDistanceFieldMobile.html"><span>113</span>移动端距离场与叠加着色器（Distance Field / Distance Field Overlay Mobile Shaders）</a><a class="" href="../pages/124-ShadersDistanceFieldMaskingMobile.html"><span>114</span>移动端距离场遮罩着色器（Distance Field Masking Mobile Shader）</a><a class="" href="../pages/125-ShadersDistanceFieldSurfaceMobile.html"><span>115</span>移动端距离场表面着色器（Distance Field (Surface) Mobile Shader）</a><a class="" href="../pages/126-ShadersBitmap.html"><span>116</span>位图着色器（Bitmap Shader）</a><a class="" href="../pages/127-ShadersBitmapCustomAtlas.html"><span>117</span>自定义图集位图着色器（Bitmap Custom Atlas Shader）</a><a class="" href="../pages/33-Settings.html"><span>118</span>TextMesh Pro 设置（Settings）</a><a class="" href="../pages/128-RichTextLineBreak.html"><span>119</span>显式换行（Line Break）</a></details><details><summary>传统富文本与实用指南</summary><a class="" href="../pages/28-StyledText.html"><span>120</span>传统富文本（Rich Text）</a><a class="" href="../pages/43-UIHowTos.html"><span>121</span>UI 实用指南目录（UI How Tos）</a><a class="" href="../pages/72-HOWTO-UIMultiResolution.html"><span>122</span>为多种分辨率设计 UI（Designing UI for Multiple Resolutions）</a><a class="" href="../pages/73-HOWTO-UIFitContentSize.html"><span>123</span>让 UI 元素适应内容大小（Making UI elements fit the size of their content）</a><a class="" href="../pages/74-HOWTO-UIWorldSpace.html"><span>124</span>创建世界空间 UI（Creating a World Space UI）</a><a class="" href="../pages/75-HOWTO-UICreateFromScripting.html"><span>125</span>通过脚本创建 UI 元素（Creating UI elements from scripting）</a><a class="" href="../pages/76-HOWTO-UIScreenTransition.html"><span>126</span>创建界面过渡（Creating Screen Transitions）</a><a class="" href="../pages/77-HOWTO-ShaderGraph.html"><span>127</span>使用 Shader Graph 创建自定义 UI 效果（Create Custom UI Effects With Shader Graph）</a><a class="" href="../pages/78-ProfilerUI.html"><span>128</span>UI 与 UI Details 性能分析器（UI (Canvas) and UI Details (Canvas) Profiler module reference）</a></details><a class="side-home" href="../glossary.html">中英术语速查</a></aside><main><div class="breadcrumb"><a href="../index.html">文档目录</a> / TextMesh Pro / FAQ</div><header class="page-header"><span class="faq-source-label">原创学习指南 · uGUI 2.7</span><h1 id="faq-title">TextMesh Pro<br>从直觉到使用的 FAQ</h1><p class="faq-intro">先问一个问题：屏幕上的字为什么会模糊？再理解文字怎样变成像素，最后配置字体、写代码、解决常见问题。</p><p class="tools"><a href="TextMeshPro-FAQ.md">Markdown 源文</a><a href="examples/ScoreLabel.cs">分数更新示例</a><a href="examples/DialogueReveal.cs">打字机示例</a><button class="print">打印全文</button></p></header><nav class="faq-route" aria-label="学习路线快捷入口"><a href="#why">Why · 解决什么问题</a><a href="#what">What · 它是什么</a><a href="#how">How · 第一次使用</a><a href="#faq">28 个常见问题</a></nav><details class="page-toc" open><summary>本页学习路线</summary><a href="#why">Why：为什么需要 TextMesh Pro？</a><a href="#what">What：TextMesh Pro 是什么？</a><a href="#how">How：先做出一个可用的中文标签</a><a href="#faq">FAQ：先根据现象定位，再调整参数</a><a href="#diagnosis">把知识变成排错顺序</a><a href="#exercises">三个练习与自检</a><a href="#reading">下一步读哪一页？</a><a href="#references">依据与说明</a></details><article class="doc-content" id="content"><p><strong>阅读目标：</strong>看到一块文字时，能解释它如何从字符串变成像素；遇到方框、模糊、裁切或卡顿时，知道先检查哪一层。</p>
+<p>本文参考 GAMES101 从基础原理走向应用的组织方式，采用“观察现象 → 提出问题 → 建立模型 → 做实验 → 回到工程”的路线。下面的类比、实验与 FAQ 是原创学习讲解，技术依据为 uGUI 2.7 官方文档，并非 GAMES101 课程内容或 Unity 官方译文。</p>
+<p>如果只有五分钟，读完 <strong>Why、What 和第一次使用</strong>；如果正在排错，直接跳到 FAQ。没有图形学基础也可以读，数学只用于解释一个边界。</p>
+<h2 id="why">Why：为什么需要 TextMesh Pro？</h2>
+<h3 id="_1">从一个字开始：放大“你好”会发生什么？</h3>
+<p>想象把一张写着“你好”的小截图放大八倍。截图保存的是一格格像素。放大后，最近邻采样会露出方块；用双线性过滤把相邻像素混合，边缘又可能变软。<strong>过滤能平滑已有信息，却不能凭空补回没有记录的轮廓细节。</strong></p>
+<p>但游戏里的文字不是一张固定尺寸的截图。同一句话可能出现在手机按钮上、不同分辨率的窗口中、世界空间的角色头顶，还要缩放、描边、发光。与此同时，文字还要自动换行、对齐、支持中文和表情。问题因此分成两类：<strong>怎样画得清楚，以及怎样排得正确。</strong></p>
+<h3 id="_2">能不能直接把字体纹理做得很大？</h3>
+<p>可以提高质量，但会付出纹理空间和生成成本。只有数字和英文时，字符集合较小；中文界面、玩家昵称和多语言内容，会把问题推向另一种规模。假设同格式单张图集从 1024 × 1024 增加到 2048 × 2048，像素数量会变为四倍。实际显存还与纹理格式、mipmap、图集数量有关。</p>
+<p>于是我们希望：<strong>用有限的纹理记录足够有用的轮廓信息，让着色器在屏幕上重新判断边缘；同时把字体选择和排版交给专门的文本组件。</strong>这就是理解 TMP 的入口。</p>
+<h3 id="tmp">TMP 解决了哪几件事？</h3>
+<table>
+<thead>
+<tr>
+<th>想解决的问题</th>
+<th>TMP 提供的能力</th>
+<th>仍要自己决定的事情</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>字体缩放、变换后边缘质量不稳定</td>
+<td>SDF 字体与相应着色器</td>
+<td>图集分辨率、采样字号、目标屏幕尺度</td>
+</tr>
+<tr>
+<td>每个文字效果都单独做图片很麻烦</td>
+<td>材质控制描边、底层投影等效果</td>
+<td>选择支持该效果的着色器、合理内边距</td>
+</tr>
+<tr>
+<td>对齐、换行、溢出和间距不好控制</td>
+<td>文本布局、丰富的属性和富文本标签</td>
+<td>文本框大小、布局规则和交互需求</td>
+</tr>
+<tr>
+<td>一个字体资源装不下所有字符</td>
+<td>动态字体、后备字体与多图集等机制</td>
+<td>字符覆盖、包体、内存和首次生成成本</td>
+</tr>
+</tbody>
+</table>
+<p>不要把这张表读成“用了 TMP 就一定更快”。SDF 改善的是轮廓表示与渲染方式；频繁生成字形、重新排版、打断合批，仍然可能很贵。实际性能需要看 Profiler。<a href="../pages/39-index.html">继续核对：TMP 概述</a>、<a href="../pages/84-FontAssetsSDF.html">SDF 字体</a>。</p>
+<h3 id="_3">为什么描边也能从同一张纹理得到？</h3>
+<p>如果只记录“这里有墨／这里没墨”，描边需要另找边界。如果记录“离边界有多远”，就可以把判断条件从“在字里面”改成“在字里面，或距离字的边缘足够近”。同一份距离信息因此可以服务于字面和描边。具体效果还取决于 TMP 所选着色器，不能把所有着色器视为同一个功能集合。</p>
+<h2 id="what">What：TextMesh Pro 是什么？</h2>
+<h3 id="pipeline">先画出一条完整的路径</h3>
+<div class="pipeline" role="img" aria-label="字符串经过字体查找、排版和网格生成，再由材质和渲染器输出到屏幕">
+<div><b>① 字符串</b><small>“你好，Unity”<br>文本和标签</small></div><i>→</i>
+<div><b>② 字体与字形</b><small>找到对应字形<br>不够时查后备字体</small></div><i>→</i>
+<div><b>③ 排版与网格</b><small>位置、换行、对齐<br>字符的顶点与 UV</small></div><i>→</i>
+<div><b>④ 材质与渲染</b><small>采样图集、判断边缘<br>Canvas 或场景渲染</small></div>
+</div>
+
+<p>这是理解标准 TMP 工作流的简化图，不包含所有文字塑形或渲染内部步骤。它的用途是帮助定位问题：方框先看字体与字形，换行先看排版，颜色和描边先看材质，整个对象不可见先看渲染与布局。</p>
+<p>TMP 是 Unity 中用于显示、排版和渲染文字的一套组件与资源。在当前 uGUI 2.7 文档中，其内容位于 TextMesh Pro 章节。它既能生成 Canvas 上的 UI 文字，也能生成场景中的文字网格。</p>
+<h3 id="_4">几个看起来相似的名词，分别负责什么？</h3>
+<table>
+<thead>
+<tr>
+<th>名词</th>
+<th>直觉</th>
+<th>它负责什么</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>字符（Character）</td>
+<td>你输入了哪个符号</td>
+<td>文本中的字符身份，例如 Unicode 码位</td>
+</tr>
+<tr>
+<td>字形（Glyph）</td>
+<td>这个符号具体长什么样</td>
+<td>字体中用于表现字符的形状；字符与字形不总是一一对应</td>
+</tr>
+<tr>
+<td>字体文件（TTF/OTF 等）</td>
+<td>字体的原始设计资料</td>
+<td>提供轮廓、度量和字体特性等数据</td>
+</tr>
+<tr>
+<td>TMP Font Asset</td>
+<td>TMP 的字体资料包</td>
+<td>字符与字形表、度量、图集和相关配置</td>
+</tr>
+<tr>
+<td>Font Atlas</td>
+<td>很多字形拼在一起的一张纹理</td>
+<td>提供渲染所需采样数据，可能有多张</td>
+</tr>
+<tr>
+<td>Material / Shader</td>
+<td>最后怎么着色</td>
+<td>字面颜色、距离判断、描边和其他支持的效果</td>
+</tr>
+<tr>
+<td>TextMeshProUGUI</td>
+<td>Canvas 上的文本显示组件</td>
+<td>配合 Rect Transform 和 Canvas Renderer</td>
+</tr>
+<tr>
+<td>TextMeshPro</td>
+<td>场景中的文本显示组件</td>
+<td>使用 Mesh Renderer，不要求放在 Canvas 下</td>
+</tr>
+<tr>
+<td>TMP_Text</td>
+<td>两种显示组件的共同基类</td>
+<td>脚本中访问共享的文本属性与方法</td>
+</tr>
+</tbody>
+</table>
+<p>“把 TTF 拖进项目”与“把字体配置给 TMP”是两个步骤。通常需要从字体文件创建 TMP Font Asset，再把它赋给文本对象的 Font Asset。改变 Font Size 是改变显示字号，不是在重新导入 TTF。<a href="../pages/13-FontAssets.html">字体资源</a>和 <a href="https://docs.unity3d.com/Packages/com.unity.ugui@2.7/api/TMPro.TMP_Text.html">TMP_Text API</a>提供具体定义。</p>
+<h3 id="sdf">SDF：把“有没有墨”换成“离边界多远”</h3>
+<p>把字的轮廓想象成海岸线。普通位图像是在每个采样位置记“陆地／海水”或覆盖程度；SDF 则记录到海岸线的距离，并用正负号区分两侧。</p>
+<p>为便于讲解，本文约定字内距离为正，字外为负，轮廓上为 0。这个符号约定用于教学，具体存储与着色器实现可以采用其他约定。纹理中的值经过归一化后常用灰度表达，所以你在图集中看到的是字形周围的灰度渐变，不是最终文字颜色。</p>
+<div class="equation"><b>d &gt; 0</b>：字内　｜　<b>d = 0</b>：轮廓　｜　<b>d &lt; 0</b>：字外</div>
+
+<p>GPU 采样距离纹理后，着色器以边界阈值重建轮廓，并在边界附近加入与屏幕采样尺度相适应的平滑过渡。用抽象表达写，就是 <code>alpha ≈ smoothstep(-w, w, d)</code>。这里 <code>w</code> 表示过渡宽度，不是实际 TMP Shader 的完整代码。想增加外描边，可在 <code>-t ≤ d &lt; 0</code> 的区域着另一种颜色；<code>t</code> 控制向外延伸的距离。</p>
+<p><strong>SDF 不是每帧把 TTF 的向量轮廓重新画一遍，也不是无限分辨率。</strong>它仍是离散纹理：源图集太小、细笔画采样不足、字特别小或极端放大时，信息与屏幕像素都会形成限制。复杂汉字尤其值得在目标设备上检查。<a href="../pages/84-FontAssetsSDF.html">官方 SDF 说明</a>可对照其图集和渲染结果。</p>
+<h3 id="experiment">动手实验：同一份小图集，放大后有什么区别？</h3>
+<div id="sdf-lab" class="lab">
+<p>下图用圆环代替字母 O，并从同一个 24 × 24 采样网格构造位图和 SDF。拖动滑块，先看轮廓，再看描边。</p>
+<div class="lab-controls"><label for="lab-size">显示尺寸 <output id="lab-size-value">192 px</output><input id="lab-size" type="range" min="48" max="256" step="16" value="192"></label><label for="lab-outline">SDF 外描边 <output id="lab-outline-value">0.8 单位</output><input id="lab-outline" type="range" min="0" max="2" step="0.1" value="0.8"></label></div>
+<div class="lab-canvases"><figure><canvas id="lab-nearest" width="280" height="280" role="img" aria-label="位图最近邻采样的圆环">需要支持 Canvas 的浏览器。</canvas><figcaption>位图 · 最近邻<br>放大时可见像素阶梯</figcaption></figure><figure><canvas id="lab-linear" width="280" height="280" role="img" aria-label="位图双线性采样的圆环"></canvas><figcaption>位图 · 双线性<br>混合已有覆盖值</figcaption></figure><figure><canvas id="lab-sdf" width="280" height="280" role="img" aria-label="SDF 重建的圆环及外描边"></canvas><figcaption>SDF · 双线性 + 阈值<br>由距离重建边缘</figcaption></figure></div>
+<p id="lab-status" aria-live="polite">拖动滑块可比较三种显示。</p><p class="lab-note">这是 CPU Canvas 实现的二维教学模型，不是 Unity 或 TMP 的实时输出。位图同样由解析形状进行子像素覆盖采样；SDF 在固定网格上采样距离，之后双线性插值。它展示“保存的数据不同”，不构成性能或质量基准。小圆环比复杂汉字容易重建。</p>
+</div>
+
+<p>先把尺寸调大：最近邻放大的是像素块，双线性位图混合的是覆盖值，SDF 插值的是距离后再判断边界。再增加描边：第三幅图无需更换图集，就能从字外的距离区间生成描边。最后把尺寸调小：再精巧的轮廓表示，也不能让只有几个屏幕像素的字保留全部细节。</p>
+<div class="checkpoint"><b>检查理解：</b>如果把灰度 SDF 纹理当成普通颜色图片直接显示，会看到什么？<details><summary>展开答案</summary><p>会看到模糊的距离渐变，而不是目标文字。灰度是编码的数据，需要适配的着色器解释它。字体图集和材质不能随意交叉搭配。</p></details></div>
+
+<h2 id="how">How：先做出一个可用的中文标签</h2>
+<h3 id="first-use">第一次使用：一个能验证结果的小实验</h3>
+<ol>
+<li><strong>准备资源。</strong>首次使用时，按提示导入 TMP Essential Resources；也可使用 <code>Window &gt; TextMeshPro &gt; Import TMP Essential Resources</code>。Examples &amp; Extras 是额外示例，不是运行基础文本的必选资源。</li>
+<li><strong>准备中文字体。</strong>选择包含目标汉字的 TTF/OTF，确认项目可使用它。通过 <code>Window &gt; TextMesh Pro &gt; Font Asset Creator</code> 创建 Font Asset。先用小字符集 <code>你好世界分数0123456789：</code> 验证整个链条，采用 SDF 生成模式并保存；不要一开始就塞入所有 Unicode 字符。</li>
+<li><strong>创建 UI 文本。</strong>通过 <code>GameObject &gt; UI &gt; Text - TextMeshPro</code> 或编辑器中对应的 TextMeshPro UI 菜单创建对象。菜单分组会随 Unity 编辑器变化；结果应具有 <code>TextMeshProUGUI</code>、<code>Rect Transform</code>、<code>Canvas Renderer</code>，并位于 Canvas 下。</li>
+<li><strong>接上字体。</strong>将刚创建的 Font Asset 指定到文本组件。输入 <code>你好，Unity</code> 时，测试字符集还需要包含逗号与英文字符；否则它们可能使用后备字体或变成缺失字形。也可先输入上述字符集覆盖的 <code>你好世界</code>。</li>
+<li><strong>固定条件。</strong>暂时关闭 Auto Size，给足够大的文本矩形，设明确字号、白色顶点颜色和合适对齐。先证明文字能正确显示，再加入自动布局和效果。</li>
+<li><strong>验证覆盖范围。</strong>追加一个没有烘焙的汉字，例如 <code>猫</code>。若出现方框，说明“输入了字符”不等于“Font Asset 含有此字形”。这是理解字符覆盖的第一步。</li>
+<li><strong>添加效果。</strong>在匹配该字体的材质预设中添加适度描边。需要独立外观时使用独立预设，避免无意修改其他对象共享的材质。</li>
+</ol>
+<p>对应文档：<a href="../pages/39-index.html">导入资源</a>、<a href="../pages/82-FontAssetsCreator.html">创建字体</a>、<a href="../pages/79-TMPObjectUIText.html">UI 文本组件</a>。</p>
+<h3 id="font-plan">静态、动态与后备字体，按内容选择</h3>
+<table>
+<thead>
+<tr>
+<th>场景</th>
+<th>一个可起步的配置</th>
+<th>原因与代价</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>已知的按钮、标题和固定剧情</td>
+<td>静态 SDF + 从真实内容提取字符集</td>
+<td>提前烘焙，运行时不需要为新字形生成图集；新增内容要重新核对字符集</td>
+</tr>
+<tr>
+<td>只有分数、倒计时</td>
+<td>小型静态数字字体</td>
+<td>字符少，易控制图集与外观；别忘小数点、负号和单位</td>
+</tr>
+<tr>
+<td>玩家输入的昵称、聊天</td>
+<td>含足够源字符的动态字体或动态后备字体</td>
+<td>实际使用时加入字形；要保留源字体，并管理首次生成与图集增长</td>
+</tr>
+<tr>
+<td>多语言 UI</td>
+<td>按语言组织字体资源与后备链</td>
+<td>控制覆盖和资源加载；注意不同字体的字重、基线与材质</td>
+</tr>
+</tbody>
+</table>
+<p>这是工程起点，不是每个项目都必须采用的模板。动态字体只会从源字体中取字形，源文件里没有的字仍然生成不了。静态资源的字符集也不等于整个 TTF 的字符集。后备字体允许继续搜索其他资源，但查找和额外材质／图集可能带来开销。<a href="../pages/85-FontAssetsDynamicFonts.html">动态字体</a>、<a href="../pages/88-FontAssetsFallback.html">后备链</a>。</p>
+<h3 id="code-score">代码例一：值改变时才更新分数</h3>
+<p>将以下代码保存为 <code>ScoreLabel.cs</code>，挂到 GameObject 上，在 Inspector 中给 <code>label</code> 赋值。游戏逻辑改变分数时调用 <code>SetScore</code>，无需每帧把同一个字符串写回去。</p>
+<pre><code class="language-csharp">using TMPro;
+using UnityEngine;
+
+public sealed class ScoreLabel : MonoBehaviour
+{
+    [SerializeField] private TMP_Text label;
+    private int lastScore;
+    private bool hasScore;
+
+    public void SetScore(int score)
+    {
+        if (label == null || (hasScore &amp;&amp; score == lastScore))
+            return;
+
+        hasScore = true;
+        lastScore = score;
+        label.SetText("分数：{0:0}", (float)score);
+    }
+}
+</code></pre>
+<p><code>TMP_Text</code> 可引用 UI 与场景中的两种 TMP 显示组件。数值版 <code>SetText</code> 接受格式与数值，能避免调用方反复进行字符串拼接；这里真正最先减少的工作是“不更新没变化的值”。这不代表整条 UI 更新路径零分配或零重建。示例使用 float 格式化，适合普通游戏分数；超过 float 连续整数精度范围（约 1677 万）的大整数应选择准确的整数转字符串方式，并仍只在数值改变时更新。<a href="https://docs.unity3d.com/Packages/com.unity.ugui@2.7/api/TMPro.TMP_Text.html#TMPro_TMP_Text_SetText_System_String_System_Single_">SetText API</a>。</p>
+<h3 id="code-reveal">代码例二：打字机效果先设置全文，再控制可见数量</h3>
+<p>逐帧截取字符串容易把富文本标签截断，也会反复改变输入。可先交给 TMP 完整文本，再增加 <code>maxVisibleCharacters</code>。</p>
+<pre><code class="language-csharp">using System.Collections;
+using TMPro;
+using UnityEngine;
+
+public sealed class DialogueReveal : MonoBehaviour
+{
+    [SerializeField] private TMP_Text label;
+    [SerializeField, Min(1f)] private float charactersPerSecond = 25f;
+    private Coroutine reveal;
+
+    public void Play(string content)
+    {
+        if (label == null) return;
+        if (reveal != null) StopCoroutine(reveal);
+        reveal = StartCoroutine(Reveal(content ?? string.Empty));
+    }
+
+    private IEnumerator Reveal(string content)
+    {
+        label.text = content;
+        label.maxVisibleCharacters = 0;
+        label.ForceMeshUpdate(); // Active text object; get current parsed count.
+        int total = label.textInfo.characterCount;
+        float shown = 0f;
+
+        while (label.maxVisibleCharacters &lt; total)
+        {
+            shown += Time.unscaledDeltaTime * Mathf.Max(1f, charactersPerSecond);
+            label.maxVisibleCharacters = Mathf.Min(total, Mathf.FloorToInt(shown));
+            yield return null;
+        }
+
+        label.maxVisibleCharacters = total;
+        reveal = null;
+    }
+
+    private void OnDisable()
+    {
+        if (reveal != null) StopCoroutine(reveal);
+        reveal = null;
+    }
+}
+</code></pre>
+<p>此示例假设调用时 GameObject 和文本组件处于活动状态，全文已经具备可用字形；未处理停用后自动续播。完整内容先参与布局，所以通常比逐步扩展字符串更容易保持段落位置。这里的计数是 TMP 解析后的字符计数，不保证等于用户感知的每个完整字素：组合字符、复杂文字和 Emoji 序列需要额外验证。<code>ForceMeshUpdate</code> 用于这次读取布局数据前同步网格，不应因此放进所有对象的每帧循环。<a href="https://docs.unity3d.com/Packages/com.unity.ugui@2.7/api/TMPro.TMP_Text.html">可见字符数与网格更新 API</a>。</p>
+<h3 id="_5">用富文本局部强调，而不是拆成一堆对象</h3>
+<pre><code class="language-text">任务：收集 &lt;color=#FFB84D&gt;5&lt;/color&gt; 个果实
+&lt;b&gt;重要&lt;/b&gt;：不要离开营地
+按下 &lt;sprite index=0&gt; 继续
+</code></pre>
+<p>颜色与粗体标签需要开启 Rich Text；<code>sprite</code> 还要求可用的 Sprite Asset，以及正确索引。字体、字号、颜色和图标的局部变化，不一定要拆成多个 GameObject。但复杂的交互区域或不同布局关系，仍可能更适合独立组件。<a href="../pages/89-RichTextSupportedTags.html">标签速查</a>、<a href="../pages/118-Sprites.html">精灵资源</a>。</p>
+<h2 id="faq">FAQ：先根据现象定位，再调整参数</h2>
+<div class="faq-tools"><label for="faq-filter">筛选常见问题</label><input id="faq-filter" type="search" placeholder="例如：方框、模糊、描边、打字机、GC" autocomplete="off"><p id="faq-filter-status" aria-live="polite">可按问题或答案中的关键词筛选。</p><button id="faq-expand" type="button">展开当前问题</button><button id="faq-collapse" type="button">收起当前问题</button></div>
+
+<details class="faq-question" id="q01"><summary>Q01｜我已经导入了中文 TTF，为什么仍然显示方框？</summary><div class="faq-answer"><p><strong>直觉：</strong>原始字体像仓库，Font Asset 像拿到柜台上的库存。仓库有货，不代表柜台已摆上。</p>
+<p>先看对象的 Font Asset 是否就是你创建的资源；再看缺失汉字是否在 Character Table 中。静态资源需在生成时包含该字符，动态资源需有正确的 Source Font File、允许加入字形且源字体包含该字。最后检查后备链是否提供它。可以用 <code>你好ABC123猫</code> 将汉字、英文和数字分开测试，同时读 Console 中的 missing character 警告。<strong>放大字号不会补回缺失字符。</strong><a href="../pages/81-FontAssetsProperties.html">字体属性</a>。</p>
+</div></details><details class="faq-question" id="q02"><summary>Q02｜动态字体是不是能显示所有文字？</summary><div class="faq-answer"><p>不能。“动态”指按使用需求生成字形，不是在线下载或创造源字体不存在的字形。还会受图集空间、允许扩展的配置以及资源加载影响。先确认源字体覆盖目标字符，再确认动态生成与后备资源。不要在验证成功后删掉动态字体依赖的源文件。<a href="../pages/85-FontAssetsDynamicFonts.html">动态字体</a>。</p>
+</div></details><details class="faq-question" id="q03"><summary>Q03｜静态和动态怎样选，中文是不是必须用动态？</summary><div class="faq-answer"><p>中文并不天然要求动态。固定 UI 和已知剧情可从真实文本提取字符集，静态烘焙；不可预测的聊天、昵称更适合动态或动态后备。项目可以同时使用多种策略。决定因素是“字符是否事先可知”和运行成本，而不是语言名称。<a href="../pages/82-FontAssetsCreator.html">字体创建器</a>。</p>
+</div></details><details class="faq-question" id="q04"><summary>Q04｜后备字体为什么导致同一句话中某些字看起来不一样？</summary><div class="faq-answer"><p>字符从不同字体资源找到时，字重、设计风格、度量和材质可能不同。先查该字实际来自主字体还是后备字体，再比较两者的字号度量与材质。优先选择风格兼容的字体，并检查同屏混排。后备的作用是补充覆盖，不能保证外观自动一致。<a href="../pages/88-FontAssetsFallback.html">后备链</a>。</p>
+</div></details><details class="faq-question" id="q05"><summary>Q05｜图集已经很大，为什么还放不下中文？</summary><div class="faq-answer"><p>一张图集空间有限。字符数量、采样字号、字形尺寸和 Padding 会共同占用它。先去掉从未使用的字符，再在目标字号下权衡采样质量。若使用支持扩展的动态资源，可检查 Multi Atlas Textures；每增加图集也可能增加内存和渲染成本。不要只通过增大图集解决所有问题。<a href="../pages/81-FontAssetsProperties.html">生成设置</a>。</p>
+</div></details><details class="faq-question" id="q06"><summary>Q06｜用了 SDF，文字为什么还是模糊？</summary><div class="faq-answer"><p>按顺序隔离：确认 Font Asset 与材质匹配且使用 SDF 模式；将对象缩放恢复到简单设置，移除大幅 Softness 和效果；检查图集对当前显示尺寸是否足够。若文字被摄像机或 Render Texture 先渲染成低分辨率位图，之后再放大，最后一步仍会损失质量。极小文字又受屏幕像素限制。拿同一文本在简单 Canvas 上对照，可以分清“字体问题”与“后续渲染问题”。<a href="../pages/84-FontAssetsSDF.html">SDF</a>、<a href="../pages/49-UICanvas.html">Canvas</a>。</p>
+</div></details><details class="faq-question" id="q07"><summary>Q07｜细汉字笔画消失、尖角变圆，应该调 Font Size 吗？</summary><div class="faq-answer"><p>先区分<strong>显示字号</strong>和<strong>生成图集时的采样字号</strong>。若字形细节在生成图集中已经缺失，显示时把 Font Size 加大也不会重新生成源轮廓。重新生成时检查采样字号、图集大小和 SDF 模式，再在目标设备的小字号下测试。提高过采样能帮助生成距离数据，但不能消除所有最终分辨率限制。<a href="../pages/82-FontAssetsCreator.html">字体创建器</a>。</p>
+</div></details><details class="faq-question" id="q08"><summary>Q08｜Padding、Margin 和描边 Width 都像“加宽”，有什么区别？</summary><div class="faq-answer"><p>Padding 给图集字形周围留采样和效果余量；Margin 决定文本在容器中的可用布局区域；Outline Width 是着色器中的视觉效果参数。它们属于三个位置。增加 Margin 不会增加 SDF 纹理的有效距离范围，增加 Padding 也不等于缩进文本。<a href="../pages/82-FontAssetsCreator.html">创建器</a>、<a href="../pages/79-TMPObjectUIText.html">文本组件</a>、<a href="../pages/121-ShadersDistanceField.html">距离场着色器</a>。</p>
+</div></details><details class="faq-question" id="q09"><summary>Q09｜描边、阴影或发光被切掉，先检查什么？</summary><div class="faq-answer"><p>先暂时关闭 Mask/RectMask2D，看裁切是否来自 UI 遮罩；再减小效果宽度，判断是否超出字形可用采样与网格范围。随后检查字体生成的 Padding、文本的 Extra Padding，以及着色器支持的效果范围。Extra Padding 可以减轻网格边界裁切，不能补造原图集没有的距离信息。切在文本框边界与切在每个字的边界，常对应不同问题。<a href="../pages/121-ShadersDistanceField.html">字面与效果</a>。</p>
+</div></details><details class="faq-question" id="q10"><summary>Q10｜修改一个标签的颜色或描边，为什么其他标签也变了？</summary><div class="faq-answer"><p>它们可能共享同一材质预设。需要整组统一改动时，共享是正确行为；只修改某个对象的外观时，使用独立材质预设或明确管理的实例。大量独立材质也可能打断合批，所以先划分真实的样式种类，再复用预设。仅想改变文本整体颜色，优先考虑组件的 Vertex Color。<a href="../pages/79-TMPObjectUIText.html#color">颜色与预设</a>。</p>
+</div></details><details class="faq-question" id="q11"><summary>Q11｜为什么设置红色后显示成黑色，或渐变颜色很奇怪？</summary><div class="faq-answer"><p>最终字面颜色受顶点颜色、材质字面颜色和纹理等相乘影响。红色乘绿色可得到黑色，任何颜色乘黑色都会为黑色。诊断时将 Vertex Color 与材质 Face Color 暂时设为白色，检查 Alpha，再逐项恢复。渐变也会与基础顶点颜色相乘，不是自动替换所有颜色。<a href="../pages/119-ColorGradients.html">颜色渐变</a>。</p>
+</div></details><details class="faq-question" id="q12"><summary>Q12｜普通文字完全不可见，但也没出现方框，如何排查？</summary><div class="faq-answer"><p>先换成确定被字体覆盖的 <code>ABC123</code>，设白色且不透明，关闭裁切和复杂效果。UI 文本检查 Canvas、对象活动状态、Rect Transform 尺寸／位置、CanvasGroup Alpha、遮罩和层级遮挡；场景文字检查摄像机是否看向它、Layer、材质和深度遮挡。字体缺字通常会留下警告或占位表现，整块不可见时不要只盯着字体图集。<a href="../pages/79-TMPObjectUIText.html">UI 文本</a>、<a href="../pages/80-TMPObject3DText.html">三维文本</a>。</p>
+</div></details><details class="faq-question" id="q13"><summary>Q13｜TextMeshPro 与 TextMeshProUGUI 选哪个？</summary><div class="faq-answer"><p>菜单、HUD、按钮标题以及使用 Canvas 布局／遮罩的文字，通常选 TextMeshProUGUI。独立场景文字可以选 TextMeshPro。<strong>World Space Canvas 里的文字仍然是 UI 文本</strong>，不因处于三维世界就必须改为 TextMeshPro。判断依据是渲染和布局路径，而不是你能否在场景里看到它。<a href="../pages/10-TMPObjects.html">两种对象</a>。</p>
+</div></details><details class="faq-question" id="q14"><summary>Q14｜为什么写成 UnityEngine.UI.Text 的脚本不能接 TMP？</summary><div class="faq-answer"><p>它们是不同的组件类型。将公共显示文本引用改为 <code>TMP_Text</code>，并引入 <code>using TMPro;</code>；需要 UI 专用功能时可用 <code>TextMeshProUGUI</code>。然后在 Inspector 重新指定组件引用，已有序列化引用不一定自动迁移。输入框使用 <code>TMP_InputField</code>，别把文本显示组件当输入组件。<a href="https://docs.unity3d.com/Packages/com.unity.ugui@2.7/api/TMPro.TMP_Text.html">TMP_Text API</a>、<a href="https://docs.unity3d.com/Packages/com.unity.ugui@2.7/api/TMPro.TMP_InputField.html">TMP_InputField API</a>。</p>
+</div></details><details class="faq-question" id="q15"><summary>Q15｜为什么 Auto Size 让相邻按钮的字大小不一致？</summary><div class="faq-answer"><p>Auto Size 为每个对象在自身可用空间内寻找能容纳文本的字号。不同长度或不同容器得到不同结果是预期行为。需要整组视觉一致时，使用统一字号和布局约束；必须自动缩放时，限制 Min/Max 并验证最长语言。Auto Size 会增加排版尝试，对频繁变化的文本要考虑成本。<a href="../pages/79-TMPObjectUIText.html#font">字体与 Auto Size</a>。</p>
+</div></details><details class="faq-question" id="q16"><summary>Q16｜想自动换行，却出现省略号或直接被截断？</summary><div class="faq-answer"><p>换行与溢出分别回答“如何分行”和“空间不够时怎么办”。先查看 Text Wrapping Mode，再看 Overflow，最后核对文本矩形的实际宽高、Margin 与父布局。省略号、截断和分页是不同策略。仅启用换行不保证容器高度能放下全部行。<a href="../pages/79-TMPObjectUIText.html#wrapping-and-overflow">换行与溢出</a>。</p>
+</div></details><details class="faq-question" id="q17"><summary>Q17｜垂直居中后视觉上仍然偏上或偏下？</summary><div class="faq-answer"><p>排版框与可见笔画的几何中心不是同一个东西。字体的 Ascender、Descender、Baseline 等度量会影响布局；不同语言的可见区域也不同。先比较 Middle 与 Midline／几何相关对齐方式，再看混用后备字体是否带来不同度量。全项目改字体度量会影响所有使用者，应先证明问题来自度量。<a href="../pages/83-FontAssetsLineMetrics.html">行度量</a>、<a href="../pages/79-TMPObjectUIText.html#alignment">对齐</a>。</p>
+</div></details><details class="faq-question" id="q18"><summary>Q18｜如何让背景跟着文字变大，为什么布局不停跳？</summary><div class="faq-answer"><p>可以使用 Layout Group、Content Size Fitter 和 TMP 提供的首选尺寸组成布局。先明确“谁控制文本宽度，谁控制容器高度”。若父布局组控制子对象尺寸，子对象又用适配器控制同一轴，可能争夺控制权；自动字号再改变文本尺寸时，问题更难判断。先固定字号与宽度，让一个控制者负责每个轴，再逐步加功能。<a href="../pages/73-HOWTO-UIFitContentSize.html">适应内容大小</a>。</p>
+</div></details><details class="faq-question" id="q19"><summary>Q19｜富文本标签为什么被直接显示，或半句话突然全变色？</summary><div class="faq-answer"><p>确认 Rich Text 开启、标签拼写与属性值正确，并检查结束标签的作用范围。先用 <code>&lt;color=#FF0000&gt;红色&lt;/color&gt; 普通文字</code> 验证。若用户输入需按字面显示，按产品需求关闭标签解析或进行明确处理，不要把任意输入都当排版指令。<code>&lt;noparse&gt;</code> 适用于需要展示标签的特定文本片段。<a href="../pages/89-RichTextSupportedTags.html">标签速查</a>、<a href="../pages/105-RichTextNoParse.html">禁止解析</a>。</p>
+</div></details><details class="faq-question" id="q20"><summary>Q20｜Emoji 或 &lt;sprite&gt; 为什么不显示？</summary><div class="faq-answer"><p>先分清两条路：Unicode Emoji 查字体／表情后备支持；<code>&lt;sprite&gt;</code> 标签从 Sprite Asset 取图像，需正确的资源、索引或名称。彩色 Emoji 还依赖相应资源与配置；组合序列是否得到一个完整图形不能只靠单个字符测试。优先在目标平台验证，而不是用浏览器显示结果推断 Unity 一定相同。<a href="../pages/09-ColorEmojis.html">彩色表情</a>、<a href="../pages/112-RichTextSprite.html">内嵌精灵</a>。</p>
+</div></details><details class="faq-question" id="q21"><summary>Q21｜改成 TMP 后仍然有卡顿和 GC，先优化什么？</summary><div class="faq-answer"><p>先用 Profiler 确认 CPU、GC、布局或渲染哪个部分上涨。典型起点是：值未变化时不更新，避免每帧拼字符串，限制 Auto Size，检查动态字形首次生成、布局重建和材质数量。数值更新可尝试 <code>SetText</code> 格式重载，稳定标签可缓存引用。TMP 不会替你阻止业务代码生成临时字符串，也不会让整个 Canvas 免于重建。<a href="../pages/78-ProfilerUI.html">UI Profiler</a>。</p>
+</div></details><details class="faq-question" id="q22"><summary>Q22｜用了后备字体或多图集，Draw Call 为什么增多？</summary><div class="faq-answer"><p>不同图集、材质及遮罩状态可能需要不同渲染批次；实际合批还受层级、裁切和 Canvas 条件影响。先在 UI Profiler 中读 Batch Breaking Reason，而不是假设“一个文本对象必定一次绘制”。减少不必要的材质变体、按真实字符覆盖组织字体，再验证效果。<a href="../pages/78-ProfilerUI.html">UI Profiler</a>、<a href="../pages/88-FontAssetsFallback.html">后备字体</a>。</p>
+</div></details><details class="faq-question" id="q23"><summary>Q23｜编辑器正常，打包后中文缺字或效果消失？</summary><div class="faq-answer"><p>检查构建实际包含的 Font Asset、图集、材质、源字体和后备资源，特别是按需加载的资源是否已经加载。动态字体仍需要源字体；启用字体子集化后，子集外字符不会因为它们曾存在于完整字体中而自动可用。再比对目标平台的材质／着色器和构建日志。若问题只在某种字符出现，用最小文本在真实构建中复现。<a href="../pages/86-FontAssetsSubsetting.html">字体子集化</a>。</p>
+</div></details><details class="faq-question" id="q24"><summary>Q24｜打字机效果为什么会跳行、闪烁，或露出半个标签？</summary><div class="faq-answer"><p>逐帧用 <code>Substring</code> 改变文本，可能改变换行位置并截断富文本。先设置完整文本，再控制 <code>maxVisibleCharacters</code>，可让布局基于完整内容。还要检查垂直对齐与 Visible Descender 设置；复杂 Emoji、组合文字要按实际文本测试。示例见本文 <a href="#code-reveal">打字机代码</a>。</p>
+</div></details><details class="faq-question" id="q25"><summary>Q25｜设置 text 后立即读 characterCount，为什么还是旧值？</summary><div class="faq-answer"><p>文本数据变了，不意味着所有布局与网格都已在同一时刻更新。需要同步读取解析结果时，可对活动对象调用 <code>ForceMeshUpdate()</code>，再读 <code>textInfo</code>。常规显示通常让组件按正常更新流程处理即可；不要为了保险每帧强制更新全部文本。父级 Canvas 布局刷新与文本自身网格更新也不完全是同一件事。<a href="https://docs.unity3d.com/Packages/com.unity.ugui@2.7/api/TMPro.TMP_Text.html#TMPro_TMP_Text_ForceMeshUpdate_System_Boolean_System_Boolean_">网格更新 API</a>。</p>
+</div></details><details class="faq-question" id="q26"><summary>Q26｜中文输入框有拼音组合输入，应该读哪个 text？</summary><div class="faq-answer"><p>使用 <code>TMP_InputField</code> 管理编辑，而不是从它内部显示文本的 TMP 组件读取最终业务值。通常读 <code>inputField.text</code>，并按需求使用 <code>onValueChanged</code>、<code>onEndEdit</code> 或提交相关事件。IME 组合阶段不等于用户已确认的最终字符串，应在目标平台测试组合、删除、焦点切换与提交，不要只测试英文按键。<a href="https://docs.unity3d.com/Packages/com.unity.ugui@2.7/api/TMPro.TMP_InputField.html">输入框 API</a>。</p>
+</div></details><details class="faq-question" id="q27"><summary>Q27｜换个 Font Asset 就能解决阿拉伯文、RTL 和所有复杂排版吗？</summary><div class="faq-answer"><p>字形覆盖、文字塑形与双向排版是不同问题。字体有字形只是第一步，连字、组合、阅读方向和标点顺序还取决于文本生成路径及其支持程度。不要把 Enable RTL Editor 的显示／编辑行为当成完整语言塑形保证。应使用实际语言样本测试项目所用的标准或高级文本生成器，并核对其约束。<a href="../pages/79-TMPObjectUIText.html#text-input">UI 文本</a>、<a href="../pages/87-FontAssetsMigration.html">高级文本生成器迁移</a>。</p>
+</div></details><details class="faq-question" id="q28"><summary>Q28｜打开 Advanced Text Generator 后，静态字体为什么要迁移？</summary><div class="faq-answer"><p>uGUI 2.7 文档明确说明，高级文本生成器不支持静态字体资源。启用相关路径后，应按迁移工具说明转换或更换资源，而不是继续沿用“静态图集一定可用”的假设。转换可能把字体子集数据嵌入构建，还应检查字体许可及保留图集／旧表的选择。本文前面的 SDF 模型和小例子以标准 TMP 使用路径为起点，并不说明所有生成器具有完全相同的资源要求。<a href="../pages/87-FontAssetsMigration.html">官方迁移说明</a>。</p>
+</div></details><h2 id="diagnosis">把知识变成排错顺序</h2>
+<table>
+<thead>
+<tr>
+<th>观察到什么</th>
+<th>先隔离哪一层</th>
+<th>一个最小验证</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>方框／某些字缺失</td>
+<td>字体覆盖与后备链</td>
+<td>测 <code>ABC123你好猫</code>，看字符表与 Console</td>
+</tr>
+<tr>
+<td>整块不见</td>
+<td>对象、布局与渲染</td>
+<td>白色不透明、足够大矩形、关闭遮罩</td>
+</tr>
+<tr>
+<td>字边糊或笔画丢失</td>
+<td>图集采样与最终屏幕尺度</td>
+<td>简单 Canvas、匹配材质、禁用额外软化</td>
+</tr>
+<tr>
+<td>描边被切</td>
+<td>遮罩、图集余量与网格</td>
+<td>关闭遮罩，再减小描边</td>
+</tr>
+<tr>
+<td>换行／居中异常</td>
+<td>文本矩形、度量与布局</td>
+<td>固定字号和尺寸，对齐只改一个选项</td>
+</tr>
+<tr>
+<td>首次输入卡顿</td>
+<td>动态字形生成与资源加载</td>
+<td>比较同字符第一次和第二次出现</td>
+</tr>
+<tr>
+<td>持续更新卡顿</td>
+<td>业务更新、排版与 Canvas</td>
+<td>停止文本写入，对比 Profiler</td>
+</tr>
+</tbody>
+</table>
+<p>每次先改一个变量。若同时换字体、改字号、开自动布局、换材质，即使问题消失，也不知道真正原因。</p>
+<h2 id="exercises">三个练习与自检</h2>
+<ol>
+<li><strong>字符覆盖实验。</strong>生成只包含 <code>AB12你好</code> 的静态字体，输入 <code>AB12你好猫</code>，预测哪个位置缺字；配置包含 <code>猫</code> 的后备字体，再观察风格与批次。学到的是“查找路径”，不是猜字号。</li>
+<li><strong>缩放实验。</strong>保持显示对象不变，只更换不同生成采样条件的 Font Asset；再保持 Font Asset 不变，改变显示字号。分别记录尖角、小笔画和描边。你应该能区分采样字号、显示字号与屏幕像素。</li>
+<li><strong>更新实验。</strong>让同一个计分标签在“每帧写入”和“值改变才写入”之间切换，使用 Profiler 比较；再单独开关 Auto Size。记下设备与条件，不凭肉眼判断哪个实现更省。</li>
+</ol>
+<details class="checkpoint"><summary>自检：为什么聊天框可能需要动态字体，而固定菜单不一定需要？</summary><p>聊天字符不可预测，需要运行时补字形；固定菜单可以提前提取字符集并烘焙。动态的便利来自运行时生成与源字体依赖，并非免费的无限字符库。</p></details>
+
+<details class="checkpoint"><summary>自检：增大 Font Size 能修好所有模糊问题吗？</summary><p>不能。它只改变显示尺寸；源图集采样、材质、后续低分辨率渲染和屏幕像素仍可能限制质量。先找到信息在哪一步丢失。</p></details>
+
+<h2 id="reading">下一步读哪一页？</h2>
+<table>
+<thead>
+<tr>
+<th>你想继续理解什么</th>
+<th>建议入口</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>第一次创建文本与字体</td>
+<td><a href="../pages/10-TMPObjects.html">创建文本</a> → <a href="../pages/82-FontAssetsCreator.html">字体创建器</a></td>
+</tr>
+<tr>
+<td>Inspector 中每个选项</td>
+<td><a href="../pages/79-TMPObjectUIText.html">UI 文本对象完整属性表</a>／<a href="../pages/80-TMPObject3DText.html">三维文本对象</a></td>
+</tr>
+<tr>
+<td>中文与多语言覆盖</td>
+<td><a href="../pages/85-FontAssetsDynamicFonts.html">动态字体</a> → <a href="../pages/88-FontAssetsFallback.html">后备字体</a> → <a href="../pages/86-FontAssetsSubsetting.html">子集化</a></td>
+</tr>
+<tr>
+<td>SDF 与视觉效果</td>
+<td><a href="../pages/84-FontAssetsSDF.html">SDF 字体</a> → <a href="../pages/35-Shaders.html">着色器</a> → <a href="../pages/121-ShadersDistanceField.html">距离场属性</a></td>
+</tr>
+<tr>
+<td>局部颜色、字号、图标</td>
+<td><a href="../pages/89-RichTextSupportedTags.html">富文本标签速查</a> → <a href="../pages/118-Sprites.html">精灵资源</a></td>
+</tr>
+<tr>
+<td>自动布局与性能</td>
+<td><a href="../pages/73-HOWTO-UIFitContentSize.html">适应内容大小</a> → <a href="../pages/78-ProfilerUI.html">UI Profiler</a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="references">依据与说明</h2>
+<p>教学组织参考 <a href="https://sites.cs.ucsb.edu/~lingqi/teaching/games101.html">GAMES101 课程介绍</a>中从基础原理到实际应用、建立全局理解的取向。本文不复述其课程或模仿授课者个人语言。</p>
+<p>技术说明基于本地保存的 <a href="https://docs.unity3d.com/Packages/com.unity.ugui@2.7/manual/TextMeshPro/index.html">uGUI 2.7 TextMesh Pro 官方文档</a>及对应的字体、对象、着色器、富文本和 Profiler 页面。上文链接优先连接到本地手册，便于离线核对。脚本成员另核对了 <a href="https://docs.unity3d.com/Packages/com.unity.ugui@2.7/api/TMPro.TMP_Text.html">TMP_Text</a>、<a href="https://docs.unity3d.com/Packages/com.unity.ugui@2.7/api/TMPro.TextMeshProUGUI.html">TextMeshProUGUI</a> 与 <a href="https://docs.unity3d.com/Packages/com.unity.ugui@2.7/api/TMPro.TMP_InputField.html">TMP_InputField</a> API。</p>
+<p>版本依据：uGUI 2.7.0；核对日期：2026-10-01。菜单会因编辑器而异。交互实验不调用 Unity，示例代码需在实际 Unity 工程中挂载、赋值并验证。本文的推导、工程起步配置与排错建议属于学习性说明，不能取代目标项目中的性能与平台测试。</p></article><footer>本页为原创学习讲解，依据 Unity uGUI 2.7 文档与 API 核对 · 教学实验不调用 Unity · <a href="../版权与来源.html">版权与来源</a></footer></main><script src="../assets/app.js"></script><script src="../assets/tmp-faq.js"></script></body></html>
